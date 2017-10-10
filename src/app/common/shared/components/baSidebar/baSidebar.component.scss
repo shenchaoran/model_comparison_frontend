@@ -1,0 +1,203 @@
+@import '../../theme/sass/conf/conf';
+
+$sidebar-scroll-width: 4px;
+$angle-left: '\f100';
+$angle-right: '\f101';
+
+@mixin default-sublist() {
+  padding: 0;
+  list-style: none;
+  position: relative;
+  display: none;
+  &.expanded {
+    display: block;
+  }
+  > ba-menu-item > li {
+    display: block;
+    float: none;
+    padding: 0;
+    border-bottom: none;
+    position: relative;
+    height: 40px;
+    text-indent: 40px;
+    position: relative;
+    &:hover{
+      color:#fff;
+      &:before{
+          content:'';
+          display: block;
+          width: 3px;
+          background: #00a3ec;
+          height: 40px;
+          position: absolute;
+          left: 0;
+        }
+    }
+    
+    a {
+      display: block;
+      text-shadow: none;
+      font-size: 14px;
+      text-decoration: none;
+      color: #b1b1b1;
+      height: auto;
+      line-height: 40px;
+    }
+    &.selected:not(.with-sub-menu) > a {
+      border: none;
+      // background-color: $primary;
+      &:hover {
+        color: $sidebar-text;
+      }
+    }
+
+  }
+}
+
+:host /deep/ {
+  .al-sidebar {
+    width: $sidebar-width;
+    // top: $top-height;
+    // left: 0;
+    // z-index: 1001;
+    display: block;
+    background-color: $sidebar;
+    height: 100%;
+    // position: fixed;
+  }
+
+  .al-sidebar-list {
+    margin: 0;
+    overflow: hidden;
+    padding: 0 0 0 0;
+    list-style: none;
+  }
+
+  .al-sidebar-sublist .subitem-submenu-list {
+    padding-left: 15px;
+  }
+
+  .subitem-submenu-link {
+    .fa {
+      top: 7px;
+    }
+  }
+
+  .al-sidebar-list-item {
+    display: block;
+    position: relative;
+    float: none;
+    padding: 0;
+  }
+
+  .ba-sidebar-item-expanded {
+    > ul.al-sidebar-sublist {
+      display: block !important;
+    }
+
+  }
+
+  .al-sidebar-list-item, .ba-sidebar-sublist-item {
+    &.ba-sidebar-item-expanded {
+      > .al-sidebar-list-link {
+        b {
+          transform: rotate(180deg);
+        }
+      }
+
+      > .al-sidebar-sublist {
+        display: block;
+      }
+    }
+  }
+  .al-sidebar-list-item.with-sub-menu{
+    &:hover{
+       background:#333;
+    }
+  }
+
+  a.al-sidebar-list-link {
+    display: block;
+    height: 49px;
+    padding-left: 18px;
+    text-shadow: none;
+    font-size: 14px;
+    text-decoration: none;
+    color: #b1b1b1;
+    line-height: 49px;
+    white-space: nowrap;
+    overflow: hidden;
+    cursor: pointer;
+    // border-bottom: 1px solid #484848;
+    &:hover {
+      background:#333;
+      color: #fff;
+      i{
+        color: $primary;
+      }
+    }
+    i {
+      font-size: 20px;
+      margin-right: 18px;
+      width: 16px;
+      display: inline-block;
+    }
+    b {
+      display: block;
+      opacity: 1;
+      width: 14px;
+      height: 14px;
+      line-height: 14px;
+      text-shadow: none;
+      font-size: 18px;
+      position: absolute;
+      right: 10px;
+      top: 18px;
+      padding: 0;
+      text-align: center;
+      // color: $sidebar-text;
+      transition: transform 0.2s linear;
+    }
+  }
+
+  .slimScrollBar, .slimScrollRail {
+    border-radius: 0 !important;
+    width: $sidebar-scroll-width !important;
+    left: $sidebar-width - $sidebar-scroll-width;
+  }
+
+  .slimScrollDiv >ul >ba-menu-item>li{
+    border-bottom:1px solid #484848;
+  }
+
+    .slimScrollDiv >ul >ba-menu-item>li>ul{
+      padding:5px 0;
+    }
+
+  .al-sidebar-sublist {
+    @include default-sublist();
+  }
+
+  .sidebar-hover-elem {
+    width: $sidebar-scroll-width;
+    background: $primary;
+    position: absolute;
+    top: -150px;
+    left: $sidebar-width - $sidebar-scroll-width;
+    transition: all 0.5s ease;
+    transition-property: top, height;
+    height: 42px;
+    display: block;
+  }
+
+  .sidebar-select-elem {
+    display: block;
+    top: 94px;
+  }
+
+  .menu-collapsed {
+    .slimScrollBar, .slimScrollRail {
+      display: none !important;
+    }
+  }
+}

@@ -1,0 +1,83 @@
+<!-- <ul nz-menu [nzMode]="'horizontal'">
+    <li nz-submenu>
+        <span title>
+            <a routerLink="./main-window" routerLinkActive="active">
+                <i class="anticon anticon-appstore"></i> Navigation Two
+            </a>
+        </span>
+        <ul>
+            <li nz-submenu>
+                <span title>
+                    <a routerLink="./a" routerLinkActive="active">
+                        <i class="anticon anticon-appstore"></i> Navigation Two
+                    </a>
+                </span>
+                <ul>
+                    <li nz-submenu>
+                        <span title>
+                            <a routerLink="a" routerLinkActive="active">
+                                <i class="anticon anticon-appstore"></i> Navigation Two
+                            </a>
+                        </span>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+    <li nz-submenu>
+        <span title>
+            <a routerLink="./main-window" routerLinkActive="active">
+                <i class="anticon anticon-appstore"></i> Navigation Two
+            </a>
+        </span>
+        <ul>
+            <li nz-submenu>
+                <span title>
+                    <a routerLink="./a" routerLinkActive="active">
+                        <i class="anticon anticon-appstore"></i> Navigation Two
+                    </a>
+                </span>
+                <ul>
+                    <li nz-submenu>
+                        <span title>
+                            <a routerLink="a" routerLinkActive="active">
+                                <i class="anticon anticon-appstore"></i> Navigation Two
+                            </a>
+                        </span>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+    <li nz-submenu>
+        <span title>
+            <a routerLink="./main-window" routerLinkActive="active">
+                <i class="anticon anticon-appstore"></i> Navigation Two
+            </a>
+        </span>
+        <ul>
+            <li nz-submenu>
+                <span title>
+                    <a routerLink="./a" routerLinkActive="active">
+                        <i class="anticon anticon-appstore"></i> Navigation Two
+                    </a>
+                </span>
+                <ul>
+                    <li nz-submenu>
+                        <span title>
+                            <a routerLink="a" routerLinkActive="active">
+                                <i class="anticon anticon-appstore"></i> Navigation Two
+                            </a>
+                        </span>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+</ul> -->
+
+<!-- <app-testRecur></app-testRecur> -->
+
+<ul nz-menu [nzMode]="'horizontal'">
+    <app-subMenu *ngFor="let menuItem of menuItems" class="ant-menu-submenu ant-menu-submenu-horizontal" [subMenu]="menuItem"></app-subMenu>
+</ul>

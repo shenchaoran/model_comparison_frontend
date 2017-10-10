@@ -1,0 +1,38 @@
+<div class="title-top clearfix">
+
+    <div class="title-content">
+        <div class="title-logo">
+            <img src='./assets/img/app/cityfun-logo-blue.png'>
+        </div>
+        <div class="title-section">
+            <span>{{title}}</span>
+        </div>
+    </div>
+    <div class="right-menu">
+        <div class="ring">
+            <span class="ring-icon"></span>
+        </div>
+        <div class="user-info" (click)="showUserOperation($event)">
+            <span class="user-icon"></span>
+            <p>{{nickname}}</p>
+            <i class="ion-ios-arrow-down" [ngClass]="{'rotate90': menuDropDown, 'rotate180': !menuDropDown}"></i>
+        </div>
+        <div class="user-operation">
+            <ul>
+                <li><span></span>
+                    <p>我的任务</p>
+                </li>
+                <li><span></span>
+                    <p>我的日历</p>
+                </li>
+                <li><span></span>
+                    <p>设置</p>
+                </li>
+                <li (click)="logout()"><span></span>
+                    <p>退出</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</div>

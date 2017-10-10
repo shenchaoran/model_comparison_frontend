@@ -1,0 +1,46 @@
+#pop-header {
+    /*margin-top: 3px;*/
+    margin-bottom: 5px;
+    border-bottom: 1px solid black;
+}
+
+.exit-button {
+    text-align: right;
+    cursor: pointer;
+}
+
+.pop-row {
+    margin-top: 3px;
+}
+
+.pop-footer {
+    margin-top: 5px;
+    border-top: 1px solid #d3d3d3;
+    height: 25px;
+    line-height: 25px;
+    padding: 0 10px;
+}
+
+.pop-footer > div {
+    float: right;
+    margin-left: 10px;
+}
+
+.pop-link {
+    color: #336699 !important;
+    cursor: pointer;
+}
+
+.no-margin {
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+}
+
+.no-padding {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+}
+
+.text-right {
+    text-align: right;
+}

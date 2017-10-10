@@ -1,0 +1,110 @@
+{
+  "version": "v1.0.0",
+  "href": "",
+  "ticket": "3DA397BEA3A3B7D3AD4AEBA5C8F5FC4034E1B70A3CA2A8F710B40279A406C20E55AD0E16C178EBC6AA5F9715A16B1FD12E68780802C837E3890C4F410D36E1FA03097491561E787B39F52131B9955A76D5B0E95C0ED303D289ED3E3A02536C0F03A20376D7311798",
+  "status": {
+    "code": "200",
+    "desc": "操作成功"
+  },
+  "data": [
+    {
+      "id": "3F0398F4-69CA-443B-98E0-BD5687CE2F1B",
+      "encode": "YWTJmodule",
+      "name": "业务统计模块",
+      "children": [
+        {
+          "id": "9E2AA057-9FA2-498D-848D-69899911F62D",
+          "encode": "planinguseland",
+          "name": "规划用地",
+          "children": []
+        },
+        {
+          "id": "0B39EDB5-C1B3-414F-92BD-C48CAE271D52",
+          "encode": "demolitionData",
+          "name": "拆迁数据",
+          "children": []
+        },
+        {
+          "id": "1F4B27A6-F41D-45F6-8753-66A7BB3BB09D",
+          "encode": "corporateData",
+          "name": "企业数据",
+          "children": []
+        },
+        {
+          "id": "731BB382-94D0-4BDE-B27E-AAC80A39E790",
+          "encode": "assetsData",
+          "name": "资产数据",
+          "children": []
+        },
+        {
+          "id": "CFFB96F9-2D6C-48FA-AED4-020B641FD23B",
+          "encode": "populationData",
+          "name": "人口数据",
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "9405CA69-05ED-4256-83C3-12D356B11E50",
+      "encode": "sidebar",
+      "name": "左侧菜单栏",
+      "children": []
+    },
+    {
+      "id": "43A4B713-0DA5-4E13-B736-AB8DFA44DB1D",
+      "encode": "mapmodule",
+      "name": "地图模块",
+      "children": [
+        {
+          "id": "14ee1545-4219-4099-94c3-89c38d726916",
+          "encode": "toolbar",
+          "name": "工具条",
+          "children": []
+        },
+        {
+          "id": "aeda05e7-7f80-461a-b6fa-6f1048db4a54",
+          "encode": "map",
+          "name": "地图",
+          "children": []
+        },
+        {
+          "id": "b49374dd-b11e-4dcf-8fbe-e875ba64108c",
+          "encode": "layerstree",
+          "name": "图层树",
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "4323D0F9-0BBA-428A-9063-1F8911814748",
+      "encode": "YWCXModule",
+      "name": "业务查询模块",
+      "children": [
+        {
+          "id": "afe65ad4-c88f-4758-94a6-64db5f490552",
+          "encode": "assetsSearch",
+          "name": "资产查询",
+          "children": []
+        },
+        {
+          "id": "270c8f21-dbcc-44e8-b988-f58189fc3b82",
+          "encode": "corporateInfor",
+          "name": "法人信息",
+          "children": []
+        },
+        {
+          "id": "43ccf75b-d497-41dc-b700-be7c71483341",
+          "encode": "populationSearch",
+          "name": "人口查询",
+          "children": []
+        }
+      ]
+    }
+  ],
+  "template": {
+    "enCode": "编号",
+    "fullName": "全称",
+    "children": "值是个数组，数组每个元素格式跟当前对象格式一样。如果数组里面有内容，表明当前功能有下拉列表"
+  },
+  "userid": "b3ed7217-a489-4973-ac52-9658768ec5ac"
+}

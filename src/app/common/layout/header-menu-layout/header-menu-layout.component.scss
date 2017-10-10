@@ -1,0 +1,39 @@
+.wrapper {
+    height: 100vh;
+    width: 100%;
+    padding: 0px;
+    display: grid;
+    justify-items: stretch;
+    align-items: stretch;
+    grid-template-columns: auto;
+    grid-template-rows: 64px auto;
+}
+
+.header {
+    /* autoprefixer: off */
+    grid-column: 1/2;
+    grid-row: 1/2;
+    z-index: 3000;
+    padding: 5px 5px 0 5px;
+    display: flex;
+    border-bottom: 1px solid #e9e9e9;
+}
+
+.content {
+    /* autoprefixer: off */
+    grid-column: 1/2;
+    grid-row: 2/3;
+    z-index: 1000;
+    overflow: hidden;
+}
+
+:host ::ng-deep .logo {
+    margin: auto 16px;
+    float: left;
+}
+
+app-baheaderMenu {
+    // float: left;
+    // line-height: 64px;
+    align-self: flex-end;
+}

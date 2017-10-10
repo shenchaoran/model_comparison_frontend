@@ -4,6 +4,7 @@
 /dist
 /tmp
 /out-tsc
+/docs/build
 
 # dependencies
 /node_modules
@@ -40,3 +41,9 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+e2e
+node_modules
+.github
+.vscode
+/package.json
+/node_modules.zip

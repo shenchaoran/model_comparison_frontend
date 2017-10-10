@@ -1,0 +1,39 @@
+.card {
+    background-color: #fff;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+ .btn-full-screen {
+    width: 16px;
+    height: 16px;
+    background-image: url("/assets/img/components/card/home_icon.png");
+    background-repeat: no-repeat;
+    background-position: -48px 0;
+    cursor: pointer;
+}
+
+.btn-close-full-screen {
+    width: 16px;
+    height: 16px;
+    background-image: url("/assets/img/components/card/home_icon.png");
+    background-repeat: no-repeat;
+    background-position: -64px 0;
+    cursor: pointer;
+}
+
+.full-screen {
+    width:100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    // z-index: 1000;
+
+    .cityfun-card{
+        position: relative;
+    }
+}

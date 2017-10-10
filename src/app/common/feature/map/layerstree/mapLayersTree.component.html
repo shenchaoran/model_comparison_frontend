@@ -1,0 +1,70 @@
+<div id="div_container">
+    <div class="mode" #baseLayerMode id="baseLayerMode" [ngClass]="{mode_selected: selectedMode === baseLayerMode.id}">
+        <div class="mode_button" (click)="onChangeBaseMap(baseLayerMode.id);">
+            <span class="mode_basemap"></span>
+            <span class="mode_text">底图</span>
+        </div>
+        <div class="div_dropdown" (click)="onLayerModeChange(baseLayerMode.id);">
+            <span class="dropdown_icon"></span>
+        </div>
+    </div>
+
+    <div class="mode" #imageLayerMode id="imageLayerMode" [ngClass]="{mode_selected: selectedMode === imageLayerMode.id}">
+        <div class="mode_button" (click)="onChangeBaseMap(imageLayerMode.id);">
+            <span class="mode_img"></span>
+            <span class="mode_text">影像</span>
+        </div>
+        <div class="div_dropdown" (click)="onLayerModeChange(imageLayerMode.id);">
+            <span class="dropdown_icon"></span>
+        </div>
+    </div>
+
+    <!-- <div class="mode" #layerTreeMode id="layerTreeMode" (click)="onLayerModeChange(layerTreeMode.id);" [ngClass]="{mode_selected: selectedMode === layerTreeMode.id}">
+        <div class="mode_button">
+            <span class="mode_layer"></span>
+            <span class="mode_text">图层</span>
+        </div>
+    </div> -->
+</div>
+
+<div *ngIf="selectedMode === baseLayerMode.id" class="box-container mode-panel">
+    <div class="list-container scrollbar">
+        <perfect-scrollbar class="scrollbar-element">
+            <div class="mode-item" *ngFor="let child of baseLayer.children;let i = index" (click)="onChangeBaseMap(baseLayerMode.id, child.id)" [ngClass]="{mode_item_selected: selectedMap[baseLayerMode.id] === child.id,rightItem: i%2}">
+                <img src="{{child.icon}}" />
+                <div>{{child.value}}</div>
+            </div>
+        </perfect-scrollbar>
+    </div>
+</div>
+
+<div *ngIf="selectedMode === imageLayerMode.id" class="box-container mode-panel">
+    <div class="list-container scrollbar">
+        <perfect-scrollbar class="scrollbar-element">
+            <div class="mode-image" *ngFor="let child of imageLayer.children" (click)="onChangeBaseMap(imageLayerMode.id, child.id)" [ngClass]="{mode_item_selected: selectedMap[imageLayerMode.id] === child.id}">
+                <div class="line-main">
+                    <span class="item-line"></span>
+                    <span class="item-text">{{child.value}}</span>
+                    <img class="item-image" src="{{child.icon}}" />
+                </div>
+                <div class="line-bottom">
+                    <img src="./assets/img/map/tag_line.png" />
+                </div>
+            </div>
+        </perfect-scrollbar>
+    </div>
+</div>
+
+<!-- <div id="div_layerTree" [ngStyle]="{display: selectedMode !== layerTreeMode.id ? 'none' : 'block'}" class="mode-panel">
+    <div class="tree-head">
+        <span id='img_clear' (click)="clearSelected();"></span>
+    </div>
+    
+    <tree
+        [tree]="layersTree" [settings]="settings" [height]="height"
+          (nodeSelected)="onNodeSelected($event)"
+		  (nodeUnSelected)="onNodeUnSelected($event)"
+		  (moveLayerLevel)="onMoveLayerLevel($event)"
+		  (changeLayerOpacity)="onChangeLayerOpacity($event)">
+    </tree>
+</div> -->

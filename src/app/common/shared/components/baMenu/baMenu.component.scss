@@ -1,0 +1,57 @@
+@import '../../theme/sass/conf/conf';
+
+.menu-top{
+    height:50px; 
+    border-bottom:1px solid #484848;
+    overflow: hidden;
+    width:$sidebar-width;
+    }
+.menu-top img{ 
+    float: left; 
+    // width:50px; 
+    height:50px; 
+    }
+.menu-top span{
+    font-size: 20px; 
+    color:#fff; 
+    font-weight: bold; 
+    line-height: 50px;
+    letter-spacing: 2px;
+    }
+.toggle-icon{
+    width:$sidebar-width;
+    height:50px;
+    overflow: hidden;
+}
+.toggle-icon a{
+    display: block; 
+    width:30px; 
+    height:30px; 
+    margin:13px 10px; 
+    background: #333;
+    border-radius: 2px;
+    text-align: center; 
+    line-height:30px; 
+    font-size: 26px;
+    color:#b1b1b1 !important;
+    cursor: pointer;
+    }
+.hover-item-show{
+    background-color: #333;
+    position: absolute;
+     left: 52px; 
+     width: 160px; 
+     display:none;
+}
+.hover-item-show li ul{
+    margin:5px 0;
+    padding-left: 0px;
+    text-indent: 20px;
+}
+.hover-item-show > ba-menu-hover-item > li > a >span{
+    color:#fff;
+}
+.hover-item-show li ul li a.al-sidebar-list-link{
+    height:40px;
+    line-height:40px;
+}

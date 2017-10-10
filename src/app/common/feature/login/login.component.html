@@ -1,0 +1,55 @@
+<div class="auth-main">
+    <div class="list-container">
+        <perfect-scrollbar class="scrollbar-element scrollbar">
+            <div class="website-header">
+                <div class="website-inline">
+                    <img src="./assets/img/login/login_logo.png">
+                </div>
+            </div>
+            <div class="website-center">
+                <div class="website-background">
+                    <div class="website-inline">
+                        <div class="auth-block">
+                            <!-- <h1>Sign in</h1> -->
+
+                            <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)" class="form-horizontal">
+                                <div class="row" [ngClass]="{'has-error': (!account.valid && account.touched), 'has-success': (account.valid && account.touched)}">v
+                                    <div class="col-sm-12 form-account">
+                                        <input [formControl]="account" type="text" class="form-control" id="input_account" placeholder="请输入账号">
+                                    </div>
+                                </div>
+                                <div class="row" [ngClass]="{'has-error': (!password.valid && password.touched), 'has-success': (password.valid && password.touched)}">
+                                    <div class="col-sm-12 form-password">
+                                        <input [formControl]="password" type="password" class="form-control" id="input_password" placeholder="请输入密码">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 form-checkbox">
+                                        <span class="checkbox-img" [ngClass]="{'checkbox-img-selected': remembered}" (click)="rememberAccount()"></span>
+                                        <span class="checkbox-span">Remember</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 form-button">
+                                        <button nz-button [nzLoading]="submitted" [ngSwitch]="submitted" id="submit" [disabled]="!form.valid" type="submit" class="btn btn-default btn-auth">
+											<span *ngSwitchCase="false">Sign in</span>
+											<span *ngSwitchCase="true">loading</span>
+										</button>
+                                    </div>
+                                </div>
+                                <div class="row message">
+                                    <div class="col-sm-12 form-message">
+                                        {{loginErrorInfo}}
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="website-bottom">
+                <span>Nanjing Normal University, Open Geographic Geomodelling and Simulation.</span>
+            </div>
+        </perfect-scrollbar>
+    </div>
+</div>

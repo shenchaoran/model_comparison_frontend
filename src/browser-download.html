@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <style type="text/css">
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            min-height: 100%;
+            min-width: 850px;
+        }
+
+        .header {
+            width: 100%;
+            height: 30px;
+            background: #a1a1a1;
+        }
+
+        .middle {
+            width: 100%;
+            height: 140px;
+            padding-top: 80px;
+            background: #e0e0e0;
+        }
+
+        .middle>span {
+            display: block;
+            text-align: center;
+            margin-bottom: 10px;
+            font: 14px "Microsoft YaHei";
+            color: #000000;
+        }
+
+
+        .bottom {
+            width: 100%;
+            height: calc(100% - 290px);
+            min-height: 100px;
+            background: #fff;
+            padding-top: 40px;
+        }
+
+        .browser {
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .chrome,
+        .firefox,
+        .ie {
+            cursor: pointer;
+            display: inline-table;
+        }
+
+        .recommend {
+            width: 48px;
+            height: 24px;
+            margin: 0 auto;
+            margin-top: 6px;
+            border: 1px solid #45c927;
+            border-radius: 4px;
+            font: bold 14px "Microsoft YaHei";
+            color: #45c927;
+        }
+
+        .firefox {
+            margin: 0 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header"></div>
+    <div class="middle">
+        <span>您的浏览器暂不支持系统访问，请使用以下浏览器进行访问。</span>
+        <span>（点击各浏览器图标，下载安装）</span>
+    </div>
+    <div class="bottom">
+        <div class="browser">
+            <div class="chrome" title="chrome" onclick="clickBrowser('chrome')">
+                <img src="./assets/img/browser/icon_chrome.png" />
+                <div class="recommend">推荐</div>
+            </div>
+            <div class="firefox" title="firfox" onclick="clickBrowser('firefox')">
+                <img src="./assets/img/browser/icon_firefox.png" />
+            </div>
+            <div class="ie" title="ie" onclick="clickBrowser('ie')">
+                <img src="./assets/img/browser/icon_ie11.png" />
+            </div>
+        </div>
+    </div>
+
+
+    <script language="javascript">
+        function clickBrowser(Browser) {
+            var os_bit = getCPU();
+            var elemIF = document.createElement("iframe");
+            elemIF.style.display = "none";
+            switch (Browser) {
+                case 'chrome':
+                    if (os_bit == 'x64')
+                        elemIF.src = './assets/browser/ChromeSetupx64.exe';
+                    else
+                        elemIF.src = './assets/browser/ChromeSetupx86.exe';
+                    break;
+                case 'firefox':
+                    if (os_bit == 'x64')
+                        elemIF.src = './assets/browser/FirefoxSetupx64.exe';
+                    else
+                        elemIF.src = './assets/browser/FirefoxSetupx86.exe';
+                    break;
+                case 'ie':
+                    if (os_bit == 'x64')
+                        elemIF.src = './assets/browser/IE11WIN7Setupx64.exe';
+                    else
+                        elemIF.src = './assets/browser/IE11WIN7Setupx86.exe';
+                    break;
+            }
+            document.body.appendChild(elemIF);
+        }
+
+        function getCPU() {
+            var agent = navigator.userAgent.toLowerCase();
+            if (agent.indexOf("win64") >= 0 || agent.indexOf("wow64") >= 0) return "x64";
+            return navigator.cpuClass;
+        }
+    </script>
+</body>
+
+</html>

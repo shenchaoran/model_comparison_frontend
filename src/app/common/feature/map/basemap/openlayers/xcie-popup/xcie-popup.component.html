@@ -1,0 +1,47 @@
+<div class="box-container" [style.height.px]="270" [style.width.px]="340">
+    <div class="pop-title">
+        <span>{{_popContent.popAttributes["企业名称"]}}</span>
+    </div>
+    <div class="center-index">
+        <div>
+            <div>
+                <span>{{_taxInfo['亩均销售']}}</span>
+            </div>
+            <div>
+                <span>2016亩均销售(万元)</span>
+            </div>
+        </div>
+        <div>
+            <div>
+                <span>{{_taxInfo['亩均税收']}}</span>
+            </div>
+            <div>
+                <span>2016亩均税收(万元)</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="center-tags">
+        <div class="logos">
+            <!-- <img src="{{_level}}" alt=""> -->
+            <!-- <span>分类标签</span> -->
+            <span>{{_ydlb}}</span>
+        </div>
+        <div class="center-content">
+            <div>
+                <div class="menus" *ngFor="let tag of _tagsArray">
+                    {{tag.attribute['企业分类类别']}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="link-more">
+        <div style="width: 120px; height: 32px;" (click)="showModal()">
+            <span>企业详情</span>
+        </div>
+        <div style="width: 120px; height: 32px;" (click)="showDkxqModal()">
+            <span>地块详情</span>
+        </div>
+    </div>
+</div>

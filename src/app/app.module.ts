@@ -1,16 +1,40 @@
+import { NgModule, ApplicationRef } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { AppComponent } from './app.component';
+import { RouterModule } from '@angular/router';
+
+import { AppTranslationModule } from './app.translation.module';
+
+import { NgxSharedModule } from './common/ngx-shared/ngx-shared.module';
+import { SharedModule } from './common/shared/shared.module';
+import { CoreModule } from './common/core/core.module';
+
+import { routing } from './app.routing';
+import { App } from './app.component';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+	bootstrap: [App],
+	declarations: [
+		App
+	],
+	imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+		BrowserAnimationsModule,
+
+		RouterModule,
+		routing,
+
+		NgxSharedModule,
+		AppTranslationModule,
+		SharedModule.forRoot(),
+		CoreModule,
+	],
+	providers: [
+
+	]
 })
-export class AppModule { }
+export class AppModule {
+
+}

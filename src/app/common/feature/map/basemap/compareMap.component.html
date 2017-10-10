@@ -1,0 +1,21 @@
+<div class="compare-map-container">
+    <div class="compare-map-menu">
+        <img src='./assets/img/map/arrow_left.png' (click)='backSingleMap()' />
+        <span class="compare-map-menu-span">图层双框对比</span>
+    </div>
+
+   <div class="compare-map-layer">
+        <div class="LayerSwipe" id="compare-map-contrast" >
+            <div id="moveableNode" class="vertical" >
+                <div class="handleContainer">
+                </div>
+            </div>
+        </div>
+        <!-- <arcgis-maps [mapId]="mapId1" mapType="compare" class="left-map"></arcgis-maps>
+        <arcgis-maps [mapId]="mapId2" mapType="compare" class="right-map"></arcgis-maps> -->
+        <openlayers-maps [mapId]="mapId1" mapType="compare" class="left-map"></openlayers-maps>
+        <openlayers-maps [mapId]="mapId2" mapType="compare" class="right-map"></openlayers-maps>
+        <layers-tree [mapId]="mapId1" class="left-layerstree"></layers-tree>
+        <layers-tree [mapId]="mapId2" class="right-layerstree"></layers-tree>
+    </div>
+</div>

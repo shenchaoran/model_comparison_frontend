@@ -1,0 +1,18 @@
+<div class="box-container" [style.height.px]="150">
+    
+    <div class="list-container">
+        <perfect-scrollbar class="scrollbar-element">
+            <div *ngFor="let bodyItem of popContent.popBody" class="pop-row no-margin">
+                <span class="no-padding col-key text-right">{{bodyItem.colTitle}}</span>
+                <span class="no-padding col-colon">:</span>
+                <span class="no-padding col-value">{{bodyItem.value}}</span>
+            </div>
+        </perfect-scrollbar>
+    </div>	
+
+    <div class="pop-footer">
+        <div *ngFor="let footerItem of popContent.popFooter">
+            <a class="pop-link" (click)="linkShowMore(footerItem.value)">{{footerItem.key}}</a>
+        </div>
+    </div>
+</div>

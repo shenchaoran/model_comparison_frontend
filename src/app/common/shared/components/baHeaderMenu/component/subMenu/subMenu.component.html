@@ -1,0 +1,11 @@
+<li *ngIf="subMenu && subMenu.path" nz-submenu>
+    <span title>
+        <a routerLink="{{subMenu.path}}" routerLinkActive="active">
+            <i *ngIf="subMenu.data && subMenu.data.menu && subMenu.data.menu.icon" class="anticon anticon-{{subMenu.data.menu.icon}}"></i> 
+            {{subMenu.data.menu.title}}
+        </a>
+    </span>
+    <ul *ngIf="subMenu.children">
+        <app-subMenu *ngFor="let subMenu of subMenu.children" class="ant-menu-submenu ant-menu-submenu-horizontal" [subMenu]="subMenu"></app-subMenu>
+    </ul>
+</li>

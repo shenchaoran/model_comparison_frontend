@@ -1,0 +1,23 @@
+<div class="swipe-map-container">
+    <div class="swipe-map-menu">
+        <img src='./assets/img/map/arrow_left.png' (click)='backSingleMap()' />
+        <span class="swipe-map-menu-span" >图层拉框对比</span>
+    </div>
+
+    <div class="swipe-map-layer">
+        <div class="LayerSwipe" id="swipe-map-contrast">
+            <div title="Drag to see underlying layer" id="moveableNode" class="vertical">
+                <div class="handleContainer">
+                    <div class="handle"></div>
+                </div>
+            </div>
+        </div>
+        <!-- <arcgis-maps [mapId]="mapId2" mapType="swipe" class="arcgismap"></arcgis-maps>
+        <arcgis-maps id='clip-map' [mapId]="mapId1" mapType="swipe" class="arcgismap"></arcgis-maps> -->
+        <openlayers-maps [mapId]="mapId2" mapType="swipe" class="swipe-map"></openlayers-maps>
+        <openlayers-maps id='clip-map' [mapId]="mapId1" mapType="swipe" class="swipe-map"></openlayers-maps>
+        <layers-tree [mapId]="mapId1" class="left-layerstree"></layers-tree>
+        <layers-tree [mapId]="mapId2" class="right-layerstree"></layers-tree>
+    </div>
+
+</div>
