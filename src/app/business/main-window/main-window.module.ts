@@ -4,29 +4,33 @@ import { MainWindowRoutingRoutes } from "./main-window-routing.module";
 import { NgxSharedModule } from "../../common/ngx-shared/ngx-shared.module";
 import { SharedModule } from "../../common/shared/shared.module";
 
+import {
+  MainWindowComponent,
+  SiderTabsComponent,
+  ModelToolLibTreeComponent,
+  ModelToolLibListComponent,
+  DataToolLibListComponent,
+  
+} from "./index";
 
 import {
-    MainWindowComponent,
-    SiderTabsComponent,
-    ToolLibTreeComponent,
-}
-from './index';
+    ModelToolService,
+    DataToolService,
+} from './services/index';
 
 const COMPONENTS = [
-    MainWindowComponent,
-    SiderTabsComponent,
-    ToolLibTreeComponent,
+  MainWindowComponent,
+  SiderTabsComponent,
+  ModelToolLibTreeComponent,
+  ModelToolLibListComponent,
+  DataToolLibListComponent
 ];
 
-@NgModule({
-  imports: [
-    NgxSharedModule,
-    SharedModule,
+const SERVICES = [ModelToolService, DataToolService];
 
-    MainWindowRoutingRoutes
-  ],
-  declarations: [
-       ...COMPONENTS,
-    ]
+@NgModule({
+  imports: [NgxSharedModule, SharedModule, MainWindowRoutingRoutes],
+  declarations: [...COMPONENTS],
+  providers: [...SERVICES]
 })
 export class MainWindowModule {}

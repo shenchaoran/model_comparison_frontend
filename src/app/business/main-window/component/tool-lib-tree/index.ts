@@ -1,1 +1,0 @@
-export * from './tool-lib-tree.component';
