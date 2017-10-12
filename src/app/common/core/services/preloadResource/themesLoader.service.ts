@@ -34,9 +34,9 @@ private getThemeCodes(): Observable<any> {
           observer.complete();
         });
 
-      postal.channel("DATA_INQUIRE_CHANNEL").publish("data.inquire", {
+      postal.channel("DATA_INQUIRE_CHANNEL").publish('data.inquire.get', {
         serviceId: "getThemeCodes",
-        params: {
+        query: {
           apikey: 111
         },
         callback: "PRELOADSESSIONSTORAGE_INQUIRE_CHANNEL#getThemeCodes"

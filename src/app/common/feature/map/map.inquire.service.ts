@@ -67,10 +67,10 @@ export class MapInquireService { //implements Resolve<any>
             params.push(mapPoint);
 
             postal.channel('DATA_INQUIRE_CHANNEL')
-                .publish('data.inquire', {
+                .publish('data.inquire.get', {
                                             'serviceId': item.serviceId,
                                             'templateId': item.templateId,
-                                            'params': {'POINTWKT': mapPoint, 'PageSize': 10, 'PageNo': 1},
+                                            'query': {'POINTWKT': mapPoint, 'PageSize': 10, 'PageNo': 1},
                                             'callback': 'MAP_INQUIRE_CHANNEL#identifyQuery.callback'
                                         });
         });
@@ -97,10 +97,10 @@ export class MapInquireService { //implements Resolve<any>
         });
 
         postal.channel('DATA_INQUIRE_CHANNEL')
-                .publish('data.inquire.mock', {
+                .publish('data.inquire.get', {
                                             'serviceId': serviceId,
                                             // 'templateId': templeateId,
-                                            'params': null,
+                                            'query': null,
                                             'callback': 'TEST_CHANNEL#showQueryResults'
                                         });
     }

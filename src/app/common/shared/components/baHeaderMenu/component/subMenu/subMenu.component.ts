@@ -12,7 +12,7 @@ export class SubMenuComponent implements OnInit {
     @Input() 
     set subMenu(v){
         this._subMenu = v;
-        console.log(v.path);
+        // console.log(v.path);
     }
     get subMenu(){
         return this._subMenu;

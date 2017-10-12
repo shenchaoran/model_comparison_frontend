@@ -20,7 +20,6 @@ export class ModulesConfigService implements Resolve<any> {
     resolve() {
         return this.readConfig().then((config)=> {
             sessionStorage.setItem('moduleMeataList', JSON.stringify(config));
-
             return true;
         });
     }
@@ -107,7 +106,6 @@ export class ModulesConfigService implements Resolve<any> {
               .catch(this.handleError);
         }
     }
-
 
     private handleError(error: any) {
         let errMsg = (error.message) ? error.message :

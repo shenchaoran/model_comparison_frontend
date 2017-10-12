@@ -1,4 +1,5 @@
 import { NgModule } from "@angular/core";
+import { NzNotificationService } from 'ng-zorro-antd';
 
 import { MainWindowRoutingRoutes } from "./main-window-routing.module";
 import { NgxSharedModule } from "../../common/ngx-shared/ngx-shared.module";
@@ -26,7 +27,11 @@ const COMPONENTS = [
   DataToolLibListComponent
 ];
 
-const SERVICES = [ModelToolService, DataToolService];
+const SERVICES = [
+    ModelToolService, 
+    DataToolService,
+    NzNotificationService
+];
 
 @NgModule({
   imports: [NgxSharedModule, SharedModule, MainWindowRoutingRoutes],

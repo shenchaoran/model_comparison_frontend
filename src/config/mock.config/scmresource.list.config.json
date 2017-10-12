@@ -9,15 +9,53 @@
     "data": {
         "token": "111",
         "items": [{
-                "uid": "getModelList",
-                "name": "获取模型清单",
-                "url": "http://172.21.213.146:8060/modelser/json/all"
+                "uid": "getModelTools",
+                "name": "",
+                "url": "http://127.0.0.1:9999/model-tools"
             },
             {
-                "uid": "getModelDetail",
-                "name": "获取模型详情",
-                "url": "http://172.21.213.146:8060/modelser/json/:msid"
+                "uid": "getModelTool",
+                "name": "",
+                "url": "http://127.0.0.1:9999/model-tools/:id"
+            },
+            {
+                "uid": "getModelInput",
+                "name": "",
+                "url": "http://127.0.0.1:9999/model-tools/:id/input"
+            },
+            {
+                "uid": "invokeModelTool",
+                "name": "",
+                "url": "http://127.0.0.1:9999/model-tools/:id/invoke"
+            },
+
+            {
+                "uid": "getDataTools",
+                "name": "",
+                "url": "http://127.0.0.1:9999/data-tools"
+            },
+            {
+                "uid": "getDataTool",
+                "name": "",
+                "url": "http://127.0.0.1:9999/data-tools/:id"
+            },
+            {
+                "uid": "getDataInput",
+                "name": "",
+                "url": "http://127.0.0.1:9999/data-tools/:id/input"
+            },
+            {
+                "uid": "invokeDataTool",
+                "name": "",
+                "url": "http://127.0.0.1:9999/data-tools/:id/invoke"
+            },
+
+            {
+                "uid": "data",
+                "name": "",
+                "url": "http://127.0.0.1:9999/data"
             }
+
         ]
     },
     "template": {

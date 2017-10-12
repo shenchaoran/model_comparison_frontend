@@ -7,7 +7,6 @@ import { TranslateModule } from "@ngx-translate/core";
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 
-
 @NgModule({
     declarations: [
 
