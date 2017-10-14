@@ -69,7 +69,7 @@ export class DataInquireService implements Resolve<any> {
         let url = service.url;
         if (params) {
             _.forIn(params, (value, key) => {
-                _.replace(url, ':' + key, value);
+                url = _.replace(url, ':' + key, value);
             });
         }
 
@@ -81,8 +81,8 @@ export class DataInquireService implements Resolve<any> {
             });
         }
 
-        console.log(`url: {url}`);
-        console.log(`method: {type}`);
+        console.log(`url: ${url}`);
+        console.log(`method: ${type}`);
 
         let observable;
         switch (type) {

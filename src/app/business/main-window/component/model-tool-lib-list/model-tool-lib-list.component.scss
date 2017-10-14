@@ -1,0 +1,19 @@
+ul {
+    height: 100%;
+    overflow: scroll;
+    user-select: none;
+}
+
+li div {
+    margin-left: 10px;
+    height: 35px;
+    line-height: 35px;
+    border-bottom: 1px solid rgba(97, 97, 97, 0.07);
+}
+
+.selected-li,
+li:hover {
+    background: #F3F3F3;
+    color: #285eb8;
+    cursor: pointer;
+}

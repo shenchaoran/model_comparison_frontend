@@ -1,5 +1,9 @@
-<ul nz-menu [nzMode]="'inline'" style="width: 100%;">
-    <li nz-menu-item *ngFor="let model of models">
-        <span title>{{model.ms_model.m_name}}</span>
-    </li>
-</ul>
+<div id="container" (window:resize)="onResize()">
+    <ul>
+        <li *ngFor="let model of models" (click)="onModelToolClick(model);" [class.selected-li]='selectedModelId === model._id'>
+            <div>
+                <span title>{{model.ms_model.m_name}}</span>
+            </div>
+        </li>
+    </ul>
+</div>

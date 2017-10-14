@@ -1,0 +1,1 @@
+export * from './model-invoke-config.component';

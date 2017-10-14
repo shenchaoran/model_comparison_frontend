@@ -6,7 +6,7 @@
     justify-items: stretch;
     align-items: stretch;
     grid-template-columns: auto;
-    grid-template-rows: 64px auto;
+    grid-template-rows: 50px auto;
 }
 
 .header {
@@ -14,7 +14,7 @@
     grid-column: 1/2;
     grid-row: 1/2;
     z-index: 3000;
-    padding: 5px 5px 0 5px;
+    padding: 0 5px;
     display: flex;
     border-bottom: 1px solid #e9e9e9;
 }

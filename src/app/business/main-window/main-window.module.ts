@@ -11,6 +11,7 @@ import {
   ModelToolLibTreeComponent,
   ModelToolLibListComponent,
   DataToolLibListComponent,
+  ModelInvokeConfigComponent,
   
 } from "./index";
 
@@ -24,7 +25,8 @@ const COMPONENTS = [
   SiderTabsComponent,
   ModelToolLibTreeComponent,
   ModelToolLibListComponent,
-  DataToolLibListComponent
+  DataToolLibListComponent,
+  ModelInvokeConfigComponent
 ];
 
 const SERVICES = [

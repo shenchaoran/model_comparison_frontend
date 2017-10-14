@@ -1,0 +1,75 @@
+#container {
+    height: 100%;
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    font-size: 13px;
+}
+
+.box-item {
+    margin: 5px 0;
+    border-bottom: 1px solid rgba(97, 97, 97, 0.1);
+}
+
+#states {
+    flex: 4;
+}
+
+#data-info-div {
+    flex: 1;
+}
+
+.sub-header {
+    // border-bottom: 1px dotted rgba(97, 97, 97, 0.1);
+    font-size: 15px;
+    height: 35px;
+    line-height: 35px;
+    color: #0F0F0F;
+}
+
+.third-header {
+    font-size: 14px;
+    height: 30px;
+    line-height: 30px;
+    color: #232323;
+}
+
+.event-selected,
+.event-row:hover {
+    background: #F7F7F7;
+    color: #285eb8;
+    cursor: pointer;
+}
+
+.col-2-row,
+.col-2-row-equal {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    height: 30px;
+    line-height: 30px;
+}
+
+.col-2-row label {
+    flex: 2;
+}
+
+.col-2-row span {
+    flex: 5;
+}
+
+.col-2-row-equal label,
+.col-2-row-equal span {
+    flex: 1;
+}
+
+.col-2-row span nz-select,
+.col-2-row span nz-input {
+    width: 70%;
+}
+
+.indent {
+    padding: 0 10px;
+}

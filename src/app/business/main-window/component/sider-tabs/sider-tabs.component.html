@@ -1,9 +1,9 @@
-<nz-tabset [nzTabPosition]="'top'" [nzType]="'card'">
+<nz-tabset [nzTabPosition]="'top'" [nzType]="'card'" (window:resize)="onResize()">
     <nz-tab>
         <ng-template #nzTabHeading>
             Models
         </ng-template>
-        <div>
+        <div class="tab-content">
             <app-model-tool-lib-list></app-model-tool-lib-list>
         </div>
     </nz-tab>
@@ -11,7 +11,7 @@
         <ng-template #nzTabHeading>
             Data
         </ng-template>
-        <div>
+        <div class="tab-content">
             <app-data-tool-lib-list></app-data-tool-lib-list>
         </div>
     </nz-tab>
@@ -19,7 +19,7 @@
         <ng-template #nzTabHeading>
             Map
         </ng-template>
-        <div>
+        <div class="tab-content">
 
         </div>
     </nz-tab>
