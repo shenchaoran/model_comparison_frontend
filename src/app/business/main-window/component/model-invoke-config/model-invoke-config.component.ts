@@ -23,15 +23,14 @@ export class ModelInvokeConfigComponent implements OnInit, AfterViewInit {
 
     ngAfterViewInit() {
         jQuery('.ant-spin-container').css('height', '100%');
-
         jQuery('#invork-card .ant-card-head').css('height', '38px');
         jQuery('#invork-card .ant-card-head').css('line-height', '38px');
-        jQuery('#invork-card .ant-card-head h3').css('font-size', '16px');
         jQuery('#invork-card .ant-card-head').css('padding', '0 5px');
+        jQuery('#invork-card .ant-card-head h3').css('font-size', '16px');
         jQuery('#invork-card .ant-card-extra').css('right', '13px');
         jQuery('#invork-card .ant-card-extra').css('top', '13px');
         jQuery('#invork-card .ant-card-body').css('padding', '5px');
-        jQuery('#invork-card .ant-card-body').css('height', '100%');
+        jQuery('#invork-card .ant-card-body').css('flex', '1');
     }
 
     checkExecBtn() {

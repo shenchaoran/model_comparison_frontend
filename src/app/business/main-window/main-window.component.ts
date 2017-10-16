@@ -102,12 +102,16 @@ export class MainWindowComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit() {
-        jQuery('#manager-card .ant-card-head').css('height', '38px');
-        jQuery('#manager-card .ant-card-head').css('line-height', '38px');
-        jQuery('#manager-card .ant-card-head').css('padding', '0 5px');
+        jQuery('#manager-card .ant-card-head').css({
+            'height': '38px',
+            'line-height': '38px',
+            'padding': '0 5px',
+        });
         jQuery('#manager-card .ant-card-head h3').css('font-size', '16px');
-        jQuery('#manager-card .ant-card-body').css('padding', '5px');
-        jQuery('#manager-card .ant-card-body').css('height', '100%');
+        jQuery('#manager-card .ant-card-body').css({
+            'padding': '5px',
+            'flex': '1'
+        });
     }
 
     toggleLayout() {

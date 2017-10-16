@@ -46,7 +46,7 @@
     "ng2-slim-loading-bar": "4.0.0",
     "ng2-tree": "git+https://github.com/dyh333/ng2-tree.git#ng4-only-tree",
     "ngx-perfect-scrollbar": "^4.5.2",
-    "ngx-uploader": "2.2.5",
+    "ngx-uploader": "^2.2.5",
     "normalize.css": "6.0.0",
     "openlayers": "^4.2.0",
     "postal": "^2.0.5",

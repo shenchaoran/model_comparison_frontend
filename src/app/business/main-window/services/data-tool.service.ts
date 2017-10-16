@@ -3,12 +3,9 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class DataToolService implements Resolve<any> {
+    resolve() {
+        return Promise.resolve();
+    }
 
-resolve() {
-    return Promise.resolve();
-}
-
-constructor(private route: ActivatedRoute) { }
-
-
+    constructor(private route: ActivatedRoute) {}
 }

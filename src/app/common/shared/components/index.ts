@@ -6,6 +6,7 @@ export * from './baSidebar';
 export * from './baMenu';
 export * from './fileUploader';
 export * from './baHeaderMenu';
+export * from './right-click-menu';
 // export * from './baMessageBox';
 //
 // export * from './baFloatWindow';

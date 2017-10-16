@@ -32,14 +32,9 @@ nz-card {
     width: 100%;
 }
 
-#invork-card {
+#invork-card,
+#manager-card {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
-}
-
-#invork-card .ant-card-body {
-    flex: 1 1;
-    width: 100%;
-    background: #FFF1F1
 }

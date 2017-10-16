@@ -1,43 +1,54 @@
-import { NgModule } from "@angular/core";
+import { NgModule } from '@angular/core';
 import { NzNotificationService } from 'ng-zorro-antd';
+import { NgUploaderModule } from 'ngx-uploader';
 
-import { MainWindowRoutingRoutes } from "./main-window-routing.module";
-import { NgxSharedModule } from "../../common/ngx-shared/ngx-shared.module";
-import { SharedModule } from "../../common/shared/shared.module";
+import { DataInquireService } from "../../common/core/services/data.inquire.service";
+import { MainWindowRoutingRoutes } from './main-window-routing.module';
+import { NgxSharedModule } from '../../common/ngx-shared/ngx-shared.module';
+import { SharedModule } from '../../common/shared/shared.module';
 
 import {
-  MainWindowComponent,
-  SiderTabsComponent,
-  ModelToolLibTreeComponent,
-  ModelToolLibListComponent,
-  DataToolLibListComponent,
-  ModelInvokeConfigComponent,
-  
-} from "./index";
+    MainWindowComponent,
+    SiderTabsComponent,
+    ModelToolLibTreeComponent,
+    ModelToolLibListComponent,
+    DataToolLibListComponent,
+    ModelInvokeConfigComponent,
+    DataListComponent
+} from './index';
 
 import {
     ModelToolService,
     DataToolService,
+    DataListService
 } from './services/index';
 
 const COMPONENTS = [
-  MainWindowComponent,
-  SiderTabsComponent,
-  ModelToolLibTreeComponent,
-  ModelToolLibListComponent,
-  DataToolLibListComponent,
-  ModelInvokeConfigComponent
+    MainWindowComponent,
+    SiderTabsComponent,
+    ModelToolLibTreeComponent,
+    ModelToolLibListComponent,
+    DataToolLibListComponent,
+    ModelInvokeConfigComponent,
+    DataListComponent
 ];
 
 const SERVICES = [
-    ModelToolService, 
+    DataInquireService,
+    NzNotificationService,
+    ModelToolService,
     DataToolService,
-    NzNotificationService
+    DataListService
 ];
 
 @NgModule({
-  imports: [NgxSharedModule, SharedModule, MainWindowRoutingRoutes],
-  declarations: [...COMPONENTS],
-  providers: [...SERVICES]
+    imports: [
+        NgxSharedModule,
+        SharedModule,
+        MainWindowRoutingRoutes,
+        NgUploaderModule
+    ],
+    declarations: [...COMPONENTS],
+    providers: [...SERVICES]
 })
 export class MainWindowModule {}

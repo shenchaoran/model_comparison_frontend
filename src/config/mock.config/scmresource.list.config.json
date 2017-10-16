@@ -29,6 +29,7 @@
                 "url": "http://127.0.0.1:9999/model-tools/:id/invoke"
             },
 
+
             {
                 "uid": "getDataTools",
                 "name": "",
@@ -50,8 +51,9 @@
                 "url": "http://127.0.0.1:9999/data-tools/:id/invoke"
             },
 
+
             {
-                "uid": "data",
+                "uid": "postData",
                 "name": "",
                 "url": "http://127.0.0.1:9999/data"
             }

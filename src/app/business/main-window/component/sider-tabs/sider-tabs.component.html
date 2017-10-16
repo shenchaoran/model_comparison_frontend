@@ -1,7 +1,7 @@
-<nz-tabset [nzTabPosition]="'top'" [nzType]="'card'" (window:resize)="onResize()">
+<nz-tabset id='manager-tab' [nzTabPosition]="'top'" [nzType]="'card'" (window:resize)="onResize()">
     <nz-tab>
         <ng-template #nzTabHeading>
-            Models
+            Model
         </ng-template>
         <div class="tab-content">
             <app-model-tool-lib-list></app-model-tool-lib-list>
@@ -12,7 +12,7 @@
             Data
         </ng-template>
         <div class="tab-content">
-            <app-data-tool-lib-list></app-data-tool-lib-list>
+            <app-data-list></app-data-list>
         </div>
     </nz-tab>
     <nz-tab>
@@ -20,6 +20,22 @@
             Map
         </ng-template>
         <div class="tab-content">
+
+        </div>
+    </nz-tab>
+    <nz-tab>
+        <ng-template #nzTabHeading>
+            Refactor
+        </ng-template>
+        <div class='tab-content'>
+            <app-data-tool-lib-list></app-data-tool-lib-list>
+        </div>
+    </nz-tab>
+    <nz-tab>
+        <ng-template #nzTabHeading>
+            Preprocess
+        </ng-template>
+        <div class='tab-content'>
 
         </div>
     </nz-tab>

@@ -6,6 +6,7 @@
     flex-direction: column;
     flex-wrap: nowrap;
     font-size: 13px;
+    overflow: scroll;
 }
 
 .box-item {
@@ -60,9 +61,12 @@
     flex: 5;
 }
 
-.col-2-row-equal label,
+.col-2-row-equal label {
+    flex: 2;
+}
+
 .col-2-row-equal span {
-    flex: 1;
+    flex: 3;
 }
 
 .col-2-row span nz-select,

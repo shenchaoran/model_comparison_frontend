@@ -17,6 +17,7 @@ import {
     BaHeaderMenuComponent,
     TestRecurComponent,
     SubMenuComponent,
+    RightClickMenuComponent,
     // BaMessageBox,
     //
     // BaFloatWindow,
@@ -54,6 +55,7 @@ const CITYFUN_COMPONENTS = [
   BaHeaderMenuComponent,
   TestRecurComponent,
   SubMenuComponent,
+  RightClickMenuComponent,
 	// BaMessageBox,
 	//
 	// BaFloatWindow,

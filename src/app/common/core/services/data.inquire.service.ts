@@ -120,6 +120,18 @@ export class DataInquireService implements Resolve<any> {
             .catch(this.handleError);
     }
 
+    public getServiceById (id: string) {
+        const service: any = _.find(this.items, function(item) {
+            return (<any>item).uid === id;
+        });
+        if (service === undefined || service === null) {
+            return this.handleError(new Error("can't find service"));
+        }
+        else{
+            return service;
+        }
+    }
+
     private lowercaseResponse(res) {
         for (let key in res) {
             if (key === 'Status') {

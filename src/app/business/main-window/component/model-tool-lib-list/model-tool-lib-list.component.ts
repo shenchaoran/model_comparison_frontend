@@ -28,16 +28,11 @@ export class ModelToolLibListComponent implements OnInit, AfterViewInit {
     }
 
     onResize() {
-        jQuery('nz-tabset').css('height', '100%');
-        let sectionH = jQuery('section').css('height');
-        let tabH = jQuery('nz-tabs-nav').css('height');
-        let remainH = parseInt(sectionH) - parseInt(tabH) - 16;
-
-        jQuery('#container').css('height', remainH + 'px');
+        
     }
 
     onModelToolClick(model) {
-        jQuery('#container li').removeClass('selected-li');
+        // jQuery('#container li').removeClass('selected-li');
         this.selectedModelId = model._id;
         postal.channel('LAYOUT_CHANNEL').publish('invoke-panel.show', model);
     }
