@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { NzNotificationService } from 'ng-zorro-antd';
 import { NgUploaderModule } from 'ngx-uploader';
 
 import { DataInquireService } from "../../common/core/services/data.inquire.service";
@@ -34,8 +33,7 @@ const COMPONENTS = [
 ];
 
 const SERVICES = [
-    DataInquireService,
-    NzNotificationService,
+    // DataInquireService,
     ModelToolService,
     DataToolService,
     DataListService

@@ -1,4 +1,4 @@
-<div id="container">
+<div id="container" *ngIf='modelInput'>
     <div id='states' class='box-item'>
         <p class='sub-header'>
             Model Run States:
@@ -10,38 +10,38 @@
                 </ng-template>
                 <div class="tab-content">
                     <div>
-                        <p class='third-header'>State Information: </p>
+                        <p class='third-header row-kv'>State Information: </p>
                         <div class='indent'>
-                            <div class='col-2-row'>
+                            <div class='col-2-row row-kv'>
                                 <label>Type: </label><span>{{state.$.type}}</span>
                             </div>
-                            <div class='col-2-row'>
+                            <div class='col-2-row row-kv'>
                                 <label>Description: </label><span>{{state.$.description}}</span>
                             </div>
                         </div>
                     </div>
                     <div *ngIf='state.inputs.length !== 0'>
-                        <p class='third-header'>Input Data: </p>
+                        <p class='third-header row-kv'>Input Data: </p>
                         <div class='indent'>
-                            <div *ngFor='let input of state.inputs' (click)='selectedEvent=input' class='event-row col-2-row' [class.event-selected]='selectedEvent && selectedEvent.name === input.name'>
+                            <div *ngFor='let input of state.inputs' (click)='selectedEvent=input' class='event-row col-2-row row-kv' [class.event-selected]='selectedEvent && selectedEvent.name === input.name'>
                                 <label>{{input.name}}</label>
                                 <span>
-                                                <nz-select [ngModel]="selectedDataOptions" (ngModel)='input.selected=$event; checkExecBtn()' nzAllowClear>
-                                                        <nz-option *ngFor="let option of dataOptions" [nzLabel]="option.label" [nzValue]="option">
-                                                        </nz-option>
-                                                    </nz-select>
-                                        </span>
+                                    <nz-select [ngModel]="input.geodata" (ngModelChange)='input.geodata=$event; checkExecBtn()' nzAllowClear>
+                                        <nz-option *ngFor="let option of dataOptions" [nzLabel]="option.filename" [nzValue]="option">
+                                        </nz-option>
+                                    </nz-select>
+                                </span>
                             </div>
                         </div>
                     </div>
                     <div>
-                        <p class='third-header'>Output Data: </p>
+                        <p class='third-header row-kv'>Output Data: </p>
                         <div class='indent'>
-                            <div *ngFor='let output of state.outputs' (click)='selectedEvent=output' class='event-row col-2-row' [class.event-selected]='selectedEvent && selectedEvent.name === output.name'>
+                            <div *ngFor='let output of state.outputs' (click)='selectedEvent=output' class='event-row col-2-row row-kv' [class.event-selected]='selectedEvent && selectedEvent.name === output.name'>
                                 <label>{{output.name}}</label>
                                 <span>
-                                <nz-input [ngModel]='output.filename' (ngModel)='output.filename=$event; checkExecBtn()' [nzPlaceHolder]="'filename...'"></nz-input>
-                            </span>
+                                    <nz-input [ngModel]='output.filename' (ngModelChange)='output.filename=$event; checkExecBtn()' [nzPlaceHolder]="'filename...'"></nz-input>
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -55,7 +55,7 @@
                 Data Information:
             </p>
             <div class='indent'>
-                <div nz-row [nzGutter]='8'>
+                <div nz-row [nzGutter]='8' class='row-kv'>
                     <div nz-col [nzSpan]='12' class='col-2-row-equal'>
                         <label>Name: </label> <span>{{selectedEvent.name}}</span>
                     </div>
@@ -63,7 +63,7 @@
                         <label>Type: </label> <span>{{selectedEvent.type}}</span>
                     </div>
                 </div>
-                <div nz-row [nzGutter]='8'>
+                <div nz-row [nzGutter]='8' class='row-kv'>
                     <div nz-col [nzSpan]='12' class='col-2-row-equal'>
                         <label>Optional: </label> <span>{{selectedEvent.optional}}</span>
                     </div>
@@ -73,7 +73,7 @@
                 </div>
 
                 <div>
-                    <label>Data Schema: </label>
+                    <label class='row-kv'>Data Schema: </label>
                     <pre>
                         {{modelInput.schemas[selectedEvent.schema]}}
                     </pre>
@@ -82,7 +82,7 @@
         </div>
     </div>
     <div id='operator-div' class='box-item indent'>
-        <button nz-button [nzType]="'default'" [disabled]='disabledExecuteBtn'>
+        <button nz-button [nzType]="'default'" [disabled]='disabledExecuteBtn' [nzLoading]='loadingExecuteBtn' (click)='execute()'>
             <i class="anticon anticon-caret-right"></i>
             <span>Execute</span>
         </button>

@@ -1,7 +1,7 @@
-<div id='data-tab-content' class='flex-col-div' (mousedown)='showMenu($event)' (mouseup)='$event.stopPropagation(); $event.preventDefault();'>
+<div id='data-tab-content' class='flex-col-div' (contextmenu)='showMenu($event)'>
     <div class='flex-item' id='data-list-div'>
         <ul>
-            <li *ngFor='let data of dataList' (click)='onDataItemSelected(data)' [class.selected-li]='selectedLi===data'>
+            <li *ngFor='let data of dataList' (click)='selectedLi = data' [class.selected-li]='selectedLi===data'>
                 <div>
                     <span>{{data.filename}}</span>
                 </div>
@@ -9,7 +9,7 @@
         </ul>
     </div>
     <div class='flex-item' id='upload-progress'>
-
+        <nz-progress [nzStatus]="'active'" [ngModel]='uploadProgress'></nz-progress>
     </div>
     <app-right-click-menu id='contextMenu' [id]='"contextMenu"' [menuCfg]='menuCfg'></app-right-click-menu>
     <input #fileUpload ngFileSelect type='file' name='"myfile"' [options]="fileUploaderOptions" (onUpload)="_onFileUpload($event)" (beforeUpload)="beforeFileUpload($event)" hidden="true">

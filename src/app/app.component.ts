@@ -1,4 +1,4 @@
-import { Component, ViewContainerRef } from '@angular/core';
+import { Component, ViewContainerRef, OnInit } from '@angular/core';
 
 // import { GlobalState } from './global.state';
 import { BaImageLoaderService, BaThemePreloader, BaThemeSpinner } from './common/core/services';
@@ -14,7 +14,7 @@ import { layoutPaths } from './common/shared/theme/theme.constants';
 	templateUrl: './app.component.html',
 	styleUrls: ['./app.component.scss']
 })
-export class App {
+export class App implements OnInit {
 
 	isMenuCollapsed: boolean = false;
 
@@ -35,13 +35,17 @@ export class App {
 			postal.channel('MENU_CHANNEL').subscribe('menu.isCollapsed', (data, envelope) => {
 				this.isMenuCollapsed = data.isCollapsed;
 			});
-		}
+        }
+        
+    ngOnInit() {
+    }
 
 	public ngAfterViewInit(): void {
 		// hide spinner once all loaders are completed
 		BaThemePreloader.load().then((values) => {
 			this._spinner.hide();
-		});
+        });
+        
 	}
 
 	// private _loadImages(): void {

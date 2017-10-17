@@ -5,39 +5,46 @@ import {
     Renderer,
     ViewChild,
     ElementRef,
-    EventEmitter
+    EventEmitter,
+    AfterViewInit
 } from '@angular/core';
 import { NgUploaderOptions } from 'ngx-uploader';
+import { NzNotificationService } from 'ng-zorro-antd';
 
-import { DataInquireService } from "../../../../common/core/services/data.inquire.service";
+import { DataInquireService } from '../../../../common/core/services/data.inquire.service';
 import { DataListService } from '../../services/data-list.service';
 import { SubMenu } from '../../../../common/shared/components/right-click-menu/sub-menu';
+import { GeoDataType, GeoData } from './geo-data';
 
 @Component({
     selector: 'app-data-list',
     templateUrl: './data-list.component.html',
     styleUrls: ['./data-list.component.scss']
 })
-export class DataListComponent implements OnInit {
-    dataList: Array<any>;
+export class DataListComponent implements OnInit, AfterViewInit {
+    dataList: Array<GeoData> = [];
     selectedLi;
     menuCfg: Array<SubMenu>;
+    uploadProgress: number = 0;
     fileUploaderOptions: NgUploaderOptions;
     @ViewChild('fileUpload') public _fileUpload: ElementRef;
     @Output() onFileUpload = new EventEmitter<any>();
     @Output() onFileUploadCompleted = new EventEmitter<any>();
-    public uploadFileInProgress: boolean;
 
     constructor(
         private dataListService: DataListService,
         private renderer: Renderer,
-        private dataInquireService: DataInquireService
+        private dataInquireService: DataInquireService,
+        private _notification: NzNotificationService
     ) {
-        const postDataService = this.dataInquireService.getServiceById('postData');
+        const postDataService = this.dataInquireService.getServiceById(
+            'postData'
+        );
         this.fileUploaderOptions = {
-            url: postDataService.uid,
+            url: postDataService.url,
             data: {
-                gd_tag: ''
+                tag: '',
+                type: ''
             },
             fieldName: 'geo_data'
         };
@@ -46,10 +53,22 @@ export class DataListComponent implements OnInit {
     ngOnInit() {
         this.menuCfg = this.dataListService.initContextMenuCfg();
 
+        this.registerContextMenuEvent();
+
+        postal
+            .channel('DATA_CHANNEL')
+            .subscribe('data.add', (data, envelope) => {
+                this.dataList = _.concat(this.dataList, data);
+            });
+    }
+
+    registerContextMenuEvent() {
         postal
             .channel('MENU_CHANNEL')
             .subscribe('data.add.raw', (data, envelope) => {
                 console.log('data.add.raw');
+                this.fileUploaderOptions.data.type = GeoDataType.RAW;
+                this.uploadProgress = 0;
                 this.renderer.invokeElementMethod(
                     this._fileUpload.nativeElement,
                     'click'
@@ -59,7 +78,9 @@ export class DataListComponent implements OnInit {
         postal
             .channel('MENU_CHANNEL')
             .subscribe('data.add.UDX', (data, envelope) => {
+                this.fileUploaderOptions.data.type = GeoDataType.UDX;
                 console.log('data.add.UDX');
+                this.uploadProgress = 0;
                 this.renderer.invokeElementMethod(
                     this._fileUpload.nativeElement,
                     'click'
@@ -71,35 +92,21 @@ export class DataListComponent implements OnInit {
             .subscribe('menu.hide', (data, envelope) => {
                 jQuery('#contextMenu').hide();
             });
-
-        // window.onclick = (e: any) => {
-        //     if (jQuery('#contextMenu').css('display') !== 'none') {
-        //         if (e.target.id !== 'data-list-div') {
-        //             jQuery('#contextMenu').hide();
-        //         }
-        //     }
-        // };
     }
 
-    onDataItemSelected(data) {
-        this.selectedLi = data;
-    }
+    ngAfterViewInit() {}
 
-    showMenu(e) {
+    showMenu(e: any) {
         if (e.target.id === 'data-list-div') {
-            e.stopPropagation();
+            jQuery('#contextMenu')
+                .css({
+                    top: e.clientY,
+                    left: e.clientX
+                })
+                .show();
             e.preventDefault();
-            if (e.button === 0) {
-                jQuery('#contextMenu')
-                    .css({
-                        top: e.clientY,
-                        left: e.clientX
-                    })
-                    .show();
-            }
-            // else if (e.button === 0) {
-            //     jQuery('#contextMenu').hide();
-            // }
+            e.stopPropagation();
+            e.cancelBubble = true;
         }
     }
 
@@ -107,20 +114,42 @@ export class DataListComponent implements OnInit {
         let files = this._fileUpload.nativeElement.files;
         if (files.length) {
             const file = files[0];
-            this.uploadFileInProgress = true;
         }
+        jQuery('#upload-progress').css('display', 'block');
     }
 
     _onFileUpload(data) {
         if (data['done'] || data['abort'] || data['error']) {
+            jQuery('#upload-progress').css('display', 'none');
             this._onFileUploadCompleted(data);
         } else {
+            jQuery('#upload-progress').css('display', 'block');
             this.onFileUpload.emit(data);
+            this.uploadProgress = data.progress.percent;
         }
     }
 
     _onFileUploadCompleted(data) {
-        this.uploadFileInProgress = false;
         this.onFileUploadCompleted.emit(data);
+
+        if (!data.abort && data.done && !data.error) {
+            const response = JSON.parse(data.response);
+            if (_.startsWith(_.get(response, 'status.code'), '200')) {
+                this._notification.create(
+                    'success',
+                    'Info:',
+                    'loading data successed!'
+                );
+                postal
+                    .channel('DATA_CHANNEL')
+                    .publish('data.add', response.data);
+            } else {
+                this._notification.create(
+                    'warning',
+                    'Warning:',
+                    'loading data failed, please retry later!'
+                );
+            }
+        }
     }
 }

@@ -14,9 +14,19 @@ export class RightClickMenuComponent implements OnInit, AfterViewInit {
 
     ngOnInit() {}
 
-    publishClick(cb) {
+    publishClick(e, cb) {
         const postalInfo = cb.split('#');
+        postal.channel('MENU_CHANNEL').publish('menu.hide');
         postal.channel(postalInfo[0]).publish(postalInfo[1], {});
+        e.preventDefault();
+        e.stopPropagation();
+        e.cancelBubble = true;
+    }
+
+    onClickMenu(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        e.cancelBubble = true;
     }
 
     ngAfterViewInit() {
@@ -28,11 +38,5 @@ export class RightClickMenuComponent implements OnInit, AfterViewInit {
         //     'height': '30px',
         //     'line-height': '30px'
         // });
-    }
-
-    hideContextMenu(e){
-        e.stopPropagation();
-        e.preventDefault();
-        postal.channel('MENU_CHANNEL').publish('menu.hide');
     }
 }

@@ -81,8 +81,7 @@ export class DataInquireService implements Resolve<any> {
             });
         }
 
-        console.log(`url: ${url}`);
-        console.log(`method: ${type}`);
+        console.log(`${type}: ${url}`);
 
         let observable;
         switch (type) {

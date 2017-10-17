@@ -1,15 +1,12 @@
 #data-tab-content {
     height: 100%;
-}
-
-.flex-col-div {
     display: flex;
     flex-flow: column nowrap;
-    overflow: scroll;
 }
 
 #data-list-div {
     flex: 1;
+    overflow: scroll;
 }
 
 #upload-progress {

@@ -2,6 +2,8 @@ import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
 import { NzNotificationService } from 'ng-zorro-antd';
 
 import { ModelToolService } from '../../services/model-tool.service';
+import { GeoData } from '../data-list/geo-data';
+import { ModelInput } from './modelInput';
 
 @Component({
     selector: 'app-model-invoke-config',
@@ -9,45 +11,172 @@ import { ModelToolService } from '../../services/model-tool.service';
     styleUrls: ['./model-invoke-config.component.scss']
 })
 export class ModelInvokeConfigComponent implements OnInit, AfterViewInit {
-    @Input() modelInput;
+    @Input() modelInput: ModelInput;
     selectedEvent = null;
-    dataOptions;
-    selectedDataOptions;
+    dataOptions: Array<GeoData> = [];
     disabledExecuteBtn = true;
+    loadingExecuteBtn = false;
+    msrid: string = null;
+
     constructor(
         private modelToolService: ModelToolService,
         private _notification: NzNotificationService
     ) {}
 
-    ngOnInit() {}
+    ngOnInit() {
+        postal
+            .channel('DATA_CHANNEL')
+            .subscribe('data.add', (data, envelope) => {
+                this.dataOptions = _.concat(this.dataOptions, data);
+                // this.dataOptions.push(data);
+                console.log(this.dataOptions);
+            });
+
+        postal
+            .channel('MODEL_TOOL_CHANNEL')
+            .subscribe('invokeModelTool', (data, envelope) => {
+                if (data.successed) {
+                    this.msrid = data.result.msrid;
+                    const params = {
+                        id: this.msrid
+                    };
+                    const query = undefined;
+                    const body = undefined;
+                    this.modelToolService.getInvokeRecord(params, query, body);
+                } else {
+                    this._notification.create(
+                        'warning',
+                        'Warning:',
+                        `invoke model ${this.modelInput.msname} failed, please retry later!`
+                    );
+                }
+            });
+
+        postal
+            .channel('MODEL_TOOL_CHANNEL')
+            .subscribe('getInvokeRecord', (data, envelope) => {
+                if (data.successed) {
+                    const msr = data.result;
+                    if (msr.msr_time === 0) {
+                        setTimeout(() => {
+                            const params = {
+                                id: this.msrid
+                            };
+                            const query = undefined;
+                            const body = undefined;
+                            this.modelToolService.getInvokeRecord(
+                                params,
+                                query,
+                                body
+                            );
+                        }, 5000);
+                    }
+                    else {
+                        this._notification.create(
+                            'success',
+                            'Info:',
+                            `model ${this.modelInput.msname} run successed!`
+                        );
+                        // add msr output to data options
+                        let newdatas = [];
+                        const outputs = msr.msr_output;
+                        _.map(outputs, output => {
+                            newdatas.push({
+                                gdid: output.DataId,
+                                filename: output.Tag,
+                                tag: output.Tag,
+                                path: '',
+                                type: null
+                            });
+                        });
+                        postal
+                            .channel('DATA_CHANNEL')
+                            .publish('data.add', newdatas);
+                        this.disabledExecuteBtn = false;
+                        this.loadingExecuteBtn = false;
+                    }
+                } else {
+                    this._notification.create(
+                        'warning',
+                        'Warning:',
+                        'get invoke record failed, please retry later!'
+                    );
+                }
+            });
+    }
 
     ngAfterViewInit() {
         jQuery('.ant-spin-container').css('height', '100%');
-        jQuery('#invork-card .ant-card-head').css('height', '38px');
-        jQuery('#invork-card .ant-card-head').css('line-height', '38px');
-        jQuery('#invork-card .ant-card-head').css('padding', '0 5px');
-        jQuery('#invork-card .ant-card-head h3').css('font-size', '16px');
-        jQuery('#invork-card .ant-card-extra').css('right', '13px');
-        jQuery('#invork-card .ant-card-extra').css('top', '13px');
-        jQuery('#invork-card .ant-card-body').css('padding', '5px');
-        jQuery('#invork-card .ant-card-body').css('flex', '1');
     }
 
     checkExecBtn() {
         let disabled = false;
         _.map(this.modelInput.states, state => {
             _.map(state.inputs, input => {
-                if(input.selected === undefined || input.selected === null){
+                if (input.geodata === undefined || input.geodata === null) {
                     disabled = true;
                 }
             });
 
             _.map(state.outputs, output => {
-                if(output.filename === undefined || output.filename === null){
+                if (
+                    output.filename === undefined ||
+                    output.filename === null ||
+                    output.filename === ''
+                ) {
                     disabled = true;
                 }
             });
         });
         this.disabledExecuteBtn = disabled;
+    }
+
+    execute() {
+        let inputdata = [];
+        let outputdata = [];
+        _.chain(this.modelInput.states)
+            .map(state => {
+                _.chain(state.inputs)
+                    .map(input => {
+                        inputdata.push({
+                            DataId: input.geodata.gdid,
+                            Destroyed: false,
+                            Event: input.name,
+                            Optional: input.optional,
+                            StateDes: state.$.description,
+                            StateId: state.$.id,
+                            StateName: state.$.name,
+                            Tag: input.geodata.filename
+                        });
+                    })
+                    .value();
+                _.chain(state.outputs)
+                    .map(output => {
+                        outputdata.push({
+                            Destroyed: false,
+                            Event: output.name,
+                            StateDes: state.$.description,
+                            StateId: state.$.id,
+                            StateName: state.$.name,
+                            Tag: output.filename
+                        });
+                    })
+                    .value();
+            })
+            .value();
+
+        const query = {
+            ac: 'run',
+            auth: '',
+            inputdata: JSON.stringify(inputdata),
+            outputdata: JSON.stringify(outputdata)
+        };
+        const params = {
+            id: this.modelInput.msid
+        };
+        const body = undefined;
+        this.modelToolService.invokeModelTool(params, query, body);
+        // this.disabledExecuteBtn = true;
+        this.loadingExecuteBtn = true;
     }
 }

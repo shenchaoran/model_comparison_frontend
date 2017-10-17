@@ -6,20 +6,21 @@
     flex-direction: column;
     flex-wrap: nowrap;
     font-size: 13px;
-    overflow: scroll;
 }
 
 .box-item {
     margin: 5px 0;
-    border-bottom: 1px solid rgba(97, 97, 97, 0.1);
+    border-bottom: 1px solid #e9e9e9;
 }
 
 #states {
-    flex: 4;
+    flex: 3 3 auto;
+    overflow: scroll;
 }
 
 #data-info-div {
-    flex: 1;
+    flex: 1 1 auto;
+    overflow: scroll;
 }
 
 .sub-header {
@@ -32,8 +33,6 @@
 
 .third-header {
     font-size: 14px;
-    height: 30px;
-    line-height: 30px;
     color: #232323;
 }
 
@@ -49,12 +48,10 @@
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    height: 30px;
-    line-height: 30px;
 }
 
 .col-2-row label {
-    flex: 2;
+    flex: 4;
 }
 
 .col-2-row span {
@@ -71,9 +68,14 @@
 
 .col-2-row span nz-select,
 .col-2-row span nz-input {
-    width: 70%;
+    width: 100%;
 }
 
 .indent {
     padding: 0 10px;
+}
+
+.row-kv {
+    height: 30px;
+    line-height: 30px;
 }
