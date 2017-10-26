@@ -1,5 +1,6 @@
 import { GeoData } from './../data-list/geo-data';
 
+// 模型调用相关，EventMetaInfo中保存了input 和output
 export class ModelInput {
     states: Array<{
         $: StateMetaInfo,

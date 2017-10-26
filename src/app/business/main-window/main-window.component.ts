@@ -2,7 +2,8 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { NzNotificationService } from 'ng-zorro-antd';
 
 import { ModelToolService } from './services/model-tool.service';
-import { ModelInput } from './component/model-invoke-config/modelInput';
+import { ModelInput } from './component/property-panel/modelInput';
+import { PropertyPanelShowType } from './component/property-panel/property-panel-show-type';
 
 @Component({
     selector: 'app-main-window',
@@ -34,8 +35,11 @@ export class MainWindowComponent implements OnInit, AfterViewInit {
         }
     ];
     _InputLoading: boolean = true;
-    model;
-    modelInput: ModelInput = null;
+    propertiesTitle;
+    panelData: {
+        type: PropertyPanelShowType,
+        data: ModelInput
+    } = null;
 
     constructor(
         private modelToolService: ModelToolService,
@@ -53,16 +57,20 @@ export class MainWindowComponent implements OnInit, AfterViewInit {
 
         postal
             .channel('LAYOUT_CHANNEL')
-            .subscribe('invoke-panel.show', (data, envelope) => {
-                this.model = data;
+            .subscribe('propertity-panel.model.show', (data, envelope) => {
+                const propertyPanelData = data;
+                this.propertiesTitle = data.ms_model.m_name;
                 postal
                     .channel('MODEL_TOOL_CHANNEL')
                     .subscribe('getModelInput', (data, envelope) => {
                         this._InputLoading = false;
                         if (data.successed) {
-                            this.modelInput = data.result;
-                            this.modelInput.msid = this.model._id;
-                            this.modelInput.msname = this.model.ms_model.m_name;
+                            data.result.msid = propertyPanelData._id;
+                            data.result.msname = propertyPanelData.ms_model.m_name;
+                            this.panelData = {
+                                type: PropertyPanelShowType.MODEL,
+                                data: data.result
+                            };
                             this.toggleLayout();
                         } else {
                             this._notification.create(
@@ -83,8 +91,15 @@ export class MainWindowComponent implements OnInit, AfterViewInit {
 
         postal
             .channel('LAYOUT_CHANNEL')
-            .subscribe('invoke-panel.hide', (data, envelope) => {
-                jQuery('#invoke-panel').css('display', 'none');
+            .subscribe('propertity-panel.data.show', (data, envelope) => {
+                this.propertiesTitle = data.filename;
+                
+            });
+
+        postal
+            .channel('LAYOUT_CHANNEL')
+            .subscribe('propertity-panel.hide', (data, envelope) => {
+                jQuery('#propertity-panel').css('display', 'none');
                 this.nzSpans = [
                     {
                         xs: 4,
@@ -142,7 +157,7 @@ export class MainWindowComponent implements OnInit, AfterViewInit {
     }
 
     toggleLayout() {
-        jQuery('#invoke-panel').css('display', 'block');
+        jQuery('#propertity-panel').css('display', 'block');
         this.nzSpans = [
             {
                 xs: 4,
@@ -169,6 +184,6 @@ export class MainWindowComponent implements OnInit, AfterViewInit {
     }
 
     closePanel() {
-        postal.channel('LAYOUT_CHANNEL').publish('invoke-panel.hide', {});
+        postal.channel('LAYOUT_CHANNEL').publish('propertity-panel.hide', {});
     }
 }

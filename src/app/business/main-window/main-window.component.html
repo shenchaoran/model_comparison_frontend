@@ -6,25 +6,25 @@
                     Manager
                 </ng-template>
                 <ng-template #body>
-                    <app-siderTabs></app-siderTabs>
+                    <app-managerPanel></app-managerPanel>
                 </ng-template>
             </nz-card>
         </div>
     </div>
-    <div id="invoke-panel" class="box-item" nz-col [nzXs]="nzSpans[1].xs" [nzSm]="nzSpans[1].sm" [nzMd]="nzSpans[1].md" [nzLg]="nzSpans[1].lg" [nzXl]="nzSpans[1].xl">
+    <div id="propertity-panel" class="box-item" nz-col [nzXs]="nzSpans[1].xs" [nzSm]="nzSpans[1].sm" [nzMd]="nzSpans[1].md" [nzLg]="nzSpans[1].lg" [nzXl]="nzSpans[1].xl">
         <div class='box-item-container'>
             <nz-spin [nzSpinning]='_InputLoading'>
                 <nz-card id='invork-card'>
                     <ng-template #title>
-                        <ng-container *ngIf='model'>
-                            Properties: {{model.ms_model.m_name}}
+                        <ng-container *ngIf='propertiesTitle'>
+                            Properties: {{title}}
                         </ng-container>
                     </ng-template>
                     <ng-template #extra>
                         <a (click)="closePanel()"><i class="anticon anticon-close"></i></a>
                     </ng-template>
                     <ng-template #body>
-                        <app-model-invoke-config [modelInput]='modelInput'></app-model-invoke-config>
+                        <app-property-panel [panelData]='panelData'></app-property-panel>
                     </ng-template>
                 </nz-card>
             </nz-spin>

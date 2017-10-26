@@ -4,14 +4,18 @@ import { NzNotificationService } from 'ng-zorro-antd';
 import { ModelToolService } from '../../services/model-tool.service';
 import { GeoData } from '../data-list/geo-data';
 import { ModelInput } from './modelInput';
+import { PropertyPanelShowType } from './property-panel-show-type';
 
 @Component({
-    selector: 'app-model-invoke-config',
-    templateUrl: './model-invoke-config.component.html',
-    styleUrls: ['./model-invoke-config.component.scss']
+    selector: 'app-property-panel',
+    templateUrl: './property-panel.component.html',
+    styleUrls: ['./property-panel.component.scss']
 })
-export class ModelInvokeConfigComponent implements OnInit, AfterViewInit {
-    @Input() modelInput: ModelInput;
+export class PropertyPanelComponent implements OnInit, AfterViewInit {
+    @Input() panelData: {
+        type: PropertyPanelShowType
+        data:ModelInput
+    };
     selectedEvent = null;
     dataOptions: Array<GeoData> = [];
     disabledExecuteBtn = true;
@@ -33,7 +37,7 @@ export class ModelInvokeConfigComponent implements OnInit, AfterViewInit {
             });
 
         postal
-            .channel('MODEL_TOOL_CHANNEL')
+            .channel('MODEL_TOOL_CHANNEL')    
             .subscribe('invokeModelTool', (data, envelope) => {
                 if (data.successed) {
                     this.msrid = data.result.msrid;
@@ -47,7 +51,7 @@ export class ModelInvokeConfigComponent implements OnInit, AfterViewInit {
                     this._notification.create(
                         'warning',
                         'Warning:',
-                        `invoke model ${this.modelInput.msname} failed, please retry later!`
+                        `invoke model ${this.panelData.data.msname} failed, please retry later!`
                     );
                 }
             });
@@ -75,7 +79,7 @@ export class ModelInvokeConfigComponent implements OnInit, AfterViewInit {
                         this._notification.create(
                             'success',
                             'Info:',
-                            `model ${this.modelInput.msname} run successed!`
+                            `model ${this.panelData.data.msname} run successed!`
                         );
                         // add msr output to data options
                         let newdatas = [];
@@ -111,7 +115,7 @@ export class ModelInvokeConfigComponent implements OnInit, AfterViewInit {
 
     checkExecBtn() {
         let disabled = false;
-        _.map(this.modelInput.states, state => {
+        _.map(this.panelData.data.states, state => {
             _.map(state.inputs, input => {
                 if (input.geodata === undefined || input.geodata === null) {
                     disabled = true;
@@ -134,7 +138,7 @@ export class ModelInvokeConfigComponent implements OnInit, AfterViewInit {
     execute() {
         let inputdata = [];
         let outputdata = [];
-        _.chain(this.modelInput.states)
+        _.chain(this.panelData.data.states)
             .map(state => {
                 _.chain(state.inputs)
                     .map(input => {
@@ -172,7 +176,7 @@ export class ModelInvokeConfigComponent implements OnInit, AfterViewInit {
             outputdata: JSON.stringify(outputdata)
         };
         const params = {
-            id: this.modelInput.msid
+            id: this.panelData.data.msid
         };
         const body = undefined;
         this.modelToolService.invokeModelTool(params, query, body);

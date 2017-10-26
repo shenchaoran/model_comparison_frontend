@@ -1,11 +1,11 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 
 @Component({
-  selector: 'app-siderTabs',
-  templateUrl: './sider-tabs.component.html',
-  styleUrls: ['./sider-tabs.component.scss']
+  selector: 'app-managerPanel',
+  templateUrl: './manager-panel.component.html',
+  styleUrls: ['./manager-panel.component.scss']
 })
-export class SiderTabsComponent implements OnInit, AfterViewInit {
+export class ManagerPanelComponent implements OnInit, AfterViewInit {
 
   constructor() { }
 

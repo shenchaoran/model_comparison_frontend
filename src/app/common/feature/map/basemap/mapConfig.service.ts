@@ -31,23 +31,15 @@ export class MapConfigService implements Resolve<any> {
         return this.readConfig();
     }
 
-    // readConfig(): Promise<any> {
-    //     let serviceInfo = this.rootService.getServiceMetaInfo(root_service_key);
-        
-    //     return this.http.get(serviceInfo.uri)
-    //                 .toPromise()
-    //                 .then((res: Response)=> { return res.json().data; })
-    //                 .catch(this.handleError);
-    // }
-
     readConfig(): Observable<any> {
         let serviceMetaInfo: ServiceMetaInfo = this.serviceMetaInfoService.getServiceMetaInfo(ROOT_SERVICE_KEY);
 
         let uri = this.serviceMetaInfoService.addTicket(serviceMetaInfo.uri);
 
-        return this.http.get(uri)
-                    .map(res => _.get(res, 'data'))
-                    .catch(this.handleError);
+        return this.http
+                        .get(uri)
+                        .map(res => _.get(res, 'data'))
+                        .catch(this.handleError);
     }
 
     // getTokens(mapConfig){

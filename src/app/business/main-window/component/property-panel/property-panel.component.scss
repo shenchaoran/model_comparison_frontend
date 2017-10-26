@@ -8,6 +8,11 @@
     font-size: 13px;
 }
 
+ng-container {
+    height: 100%;
+    width: 100%;
+}
+
 .box-item {
     margin: 5px 0;
     border-bottom: 1px solid #e9e9e9;

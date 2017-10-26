@@ -3,21 +3,21 @@ import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
 import { SubMenu } from './sub-menu';
 
 @Component({
-    selector: 'app-right-click-menu',
-    templateUrl: './right-click-menu.component.html',
-    styleUrls: ['./right-click-menu.component.scss']
+    selector: 'app-context-menu',
+    templateUrl: './context-menu.component.html',
+    styleUrls: ['./context-menu.component.scss']
 })
-export class RightClickMenuComponent implements OnInit, AfterViewInit {
+export class ContextMenuComponent implements OnInit, AfterViewInit {
     @Input() menuCfg: Array<SubMenu>;
     @Input() id: string;
     constructor() {}
 
     ngOnInit() {}
 
-    publishClick(e, cb) {
+    publishClick(e, cb, params) {
         const postalInfo = cb.split('#');
         postal.channel('MENU_CHANNEL').publish('menu.hide');
-        postal.channel(postalInfo[0]).publish(postalInfo[1], {});
+        postal.channel(postalInfo[0]).publish(postalInfo[1], params);
         e.preventDefault();
         e.stopPropagation();
         e.cancelBubble = true;

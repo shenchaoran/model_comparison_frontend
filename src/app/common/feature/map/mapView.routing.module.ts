@@ -9,7 +9,9 @@ import { MapConfigService } from './basemap/mapConfig.service';
 
 const routes: Routes = [
     {
-        path: '', component: MapView, resolve: {
+        path: '', 
+        component: MapView, 
+        resolve: {
             // esriModules: EsriMapResolveService,
             mapConfig: MapConfigService,
             // mapInquireService: MapInquireService

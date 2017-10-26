@@ -28,6 +28,11 @@
                 "name": "",
                 "url": "http://127.0.0.1:9999/model-tools/:id/invoke"
             },
+            {
+                "uid": "getInvokeRecord",
+                "name": "",
+                "url": "http://127.0.0.1:9999/model-tools/records/:id"
+            },
 
 
             {
@@ -55,14 +60,18 @@
             {
                 "uid": "postData",
                 "name": "",
-                "url": "http://127.0.0.1:9999/data"
+                "url": "http://127.0.0.1:9999/data/upload"
             },
             {
-                "uid": "getInvokeRecord",
+                "uid": "getDataInfo",
                 "name": "",
-                "url": "http://127.0.0.1:9999/model-tools/records/:id"
+                "url": "http://127.0.0.1:9999/data/:id/visualization"
+            },
+            {
+                "uid": "downloadData",
+                "name": "",
+                "url": "http://127.0.0.1:9999/data/:id/download"
             }
-
         ]
     },
     "template": {

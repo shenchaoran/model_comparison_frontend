@@ -12,8 +12,8 @@ import { NgUploaderOptions } from 'ngx-uploader';
 import { NzNotificationService } from 'ng-zorro-antd';
 
 import { DataInquireService } from '../../../../common/core/services/data.inquire.service';
-import { DataListService } from '../../services/data-list.service';
-import { SubMenu } from '../../../../common/shared/components/right-click-menu/sub-menu';
+import { DataListService, ContextMenuType } from '../../services/data-list.service';
+import { SubMenu } from '../../../../common/shared/components/context-menu/sub-menu';
 import { GeoDataType, GeoData } from './geo-data';
 
 @Component({
@@ -51,14 +51,18 @@ export class DataListComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit() {
-        this.menuCfg = this.dataListService.initContextMenuCfg();
-
         this.registerContextMenuEvent();
 
         postal
             .channel('DATA_CHANNEL')
             .subscribe('data.add', (data, envelope) => {
                 this.dataList = _.concat(this.dataList, data);
+            });
+
+        postal
+            .channel('DATA_CHANNEL')
+            .subscribe('data.download', (data, envelope) => {
+                this.dataListService.downloadData({id: data.gdid}, {filename: data.filename}, undefined);
             });
     }
 
@@ -96,8 +100,10 @@ export class DataListComponent implements OnInit, AfterViewInit {
 
     ngAfterViewInit() {}
 
-    showMenu(e: any) {
-        if (e.target.id === 'data-list-div') {
+    showMenu(e: any, menuType: ContextMenuType, geoData?: GeoData) {
+        this.menuCfg = this.dataListService.getContextMenuCfg(menuType, geoData);
+        
+        // if (e.target.id === 'data-list-div') {
             jQuery('#contextMenu')
                 .css({
                     top: e.clientY,
@@ -107,7 +113,7 @@ export class DataListComponent implements OnInit, AfterViewInit {
             e.preventDefault();
             e.stopPropagation();
             e.cancelBubble = true;
-        }
+        // }
     }
 
     beforeFileUpload(uploadingFile) {
@@ -151,5 +157,11 @@ export class DataListComponent implements OnInit, AfterViewInit {
                 );
             }
         }
+    }
+
+    onDataToolClick(data) {
+        // jQuery('#container li').removeClass('selected-li');
+        this.selectedLi = data
+        postal.channel('LAYOUT_CHANNEL').publish('propertity-panel.data.show', this.selectedLi);
     }
 }

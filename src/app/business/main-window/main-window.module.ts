@@ -8,11 +8,11 @@ import { SharedModule } from '../../common/shared/shared.module';
 
 import {
     MainWindowComponent,
-    SiderTabsComponent,
+    ManagerPanelComponent,
     ModelToolLibTreeComponent,
     ModelToolLibListComponent,
     DataToolLibListComponent,
-    ModelInvokeConfigComponent,
+    PropertyPanelComponent,
     DataListComponent
 } from './index';
 
@@ -24,11 +24,11 @@ import {
 
 const COMPONENTS = [
     MainWindowComponent,
-    SiderTabsComponent,
+    ManagerPanelComponent,
     ModelToolLibTreeComponent,
     ModelToolLibListComponent,
     DataToolLibListComponent,
-    ModelInvokeConfigComponent,
+    PropertyPanelComponent,
     DataListComponent
 ];
 
