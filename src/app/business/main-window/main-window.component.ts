@@ -1,16 +1,18 @@
+import { ErrorHandle } from './../../common/core/base/error-handle';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { NzNotificationService } from 'ng-zorro-antd';
 
 import { ModelToolService } from './services/model-tool.service';
 import { ModelInput } from './component/property-panel/modelInput';
 import { PropertyPanelShowType } from './component/property-panel/property-panel-show-type';
+import { DataListService } from './services/data-list.service';
 
 @Component({
     selector: 'app-main-window',
     templateUrl: './main-window.component.html',
     styleUrls: ['./main-window.component.scss']
 })
-export class MainWindowComponent implements OnInit, AfterViewInit {
+export class MainWindowComponent extends ErrorHandle implements OnInit, AfterViewInit {
     nzSpans: Array<any> = [
         {
             xs: 4,
@@ -43,8 +45,11 @@ export class MainWindowComponent implements OnInit, AfterViewInit {
 
     constructor(
         private modelToolService: ModelToolService,
+        private dataListService: DataListService,
         private _notification: NzNotificationService
-    ) {}
+    ) {
+        super();
+    }
 
     ngOnInit() {
         window.document.onclick = (e) => {
@@ -93,7 +98,22 @@ export class MainWindowComponent implements OnInit, AfterViewInit {
             .channel('LAYOUT_CHANNEL')
             .subscribe('propertity-panel.data.show', (data, envelope) => {
                 this.propertiesTitle = data.filename;
-                
+                this.dataListService.parseUDX(data.gdid)
+                    .toPromise()
+                    .then((response) => {
+                        if (_.startsWith(_.get(response, 'status.code'), '200')) {
+                            const data = _.get(response, 'data');
+                            
+                        }
+                        else {
+                            this._notification.create(
+                                'warning',
+                                'Warning:',
+                                'parse data properties failed, please retry later!'
+                            );
+                        }
+                    })
+                    .catch(this.handleError);
             });
 
         postal

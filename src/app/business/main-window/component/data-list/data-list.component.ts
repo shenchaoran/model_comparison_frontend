@@ -10,6 +10,7 @@ import {
 } from '@angular/core';
 import { NgUploaderOptions } from 'ngx-uploader';
 import { NzNotificationService } from 'ng-zorro-antd';
+import { HttpHeaders } from '@angular/common/http';
 
 import { DataInquireService } from '../../../../common/core/services/data.inquire.service';
 import { DataListService, ContextMenuType } from '../../services/data-list.service';
@@ -41,7 +42,7 @@ export class DataListComponent implements OnInit, AfterViewInit {
             'postData'
         );
         this.fileUploaderOptions = {
-            url: postDataService.url,
+            url: postDataService,
             data: {
                 tag: '',
                 type: ''
@@ -62,7 +63,8 @@ export class DataListComponent implements OnInit, AfterViewInit {
         postal
             .channel('DATA_CHANNEL')
             .subscribe('data.download', (data, envelope) => {
-                this.dataListService.downloadData({id: data.gdid}, {filename: data.filename}, undefined);
+                const downloadService = this.dataInquireService.getServiceById('downloadData', {id: data.gdid}, {filename: data.filename});
+                window.open(downloadService);
             });
     }
 

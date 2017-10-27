@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Resolve } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
+import { ErrorHandle } from '../../../common/core/base/error-handle';
 
 import { ServiceMetaInfoService } from '../services/serviceMetaInfo.service';
 import { ServiceMetaInfo } from '../metainfo/service.metaInfo';
@@ -9,7 +10,7 @@ import { ServiceMetaInfo } from '../metainfo/service.metaInfo';
 const ROOT_SERVICE_KEY: string = 'scmresource';
 
 @Injectable()
-export class DataInquireService implements Resolve<any> {
+export class DataInquireService extends ErrorHandle implements Resolve<any> {
     private token: string;
     public items: any;
     private channel: any;
@@ -42,6 +43,7 @@ export class DataInquireService implements Resolve<any> {
         private http: HttpClient,
         private serviceMetaInfoService: ServiceMetaInfoService
     ) {
+        super();
         this.channel = postal.channel('DATA_INQUIRE_CHANNEL');
         const TYPES = ['get', 'post', 'delete', 'put'];
         _.map(TYPES, type => {
@@ -119,44 +121,27 @@ export class DataInquireService implements Resolve<any> {
             .catch(this.handleError);
     }
 
-    public getServiceById (id: string) {
+    public getServiceById (id: string, params?: any, query?: any): string {
         const service: any = _.find(this.items, function(item) {
             return (<any>item).uid === id;
         });
         if (service === undefined || service === null) {
-            return this.handleError(new Error("can't find service"));
-        }
-        else{
-            return service;
-        }
-    }
-
-    private lowercaseResponse(res) {
-        for (let key in res) {
-            if (key === 'Status') {
-                let status = res['Status'];
-                for (let key in status) {
-                    status[key.toLowerCase()] = status[key];
-                    delete status[key];
-                }
-                res['status'] = status;
-                delete res['Status'];
-            } else if (key === 'Data') {
-                res[key.toLowerCase()] = res[key];
-                delete res[key];
-            }
+            this.handleError(new Error("can't find service"));
+            return undefined;
         }
 
-        return res;
-    }
-
-    private handleError(error: any) {
-        let errMsg = error.message
-            ? error.message
-            : error.status
-              ? `${error.status} - ${error.statusText}`
-              : 'Server error';
-        console.error(errMsg); // log to console instead
-        return Observable.throw(errMsg);
+        let url = service.url;
+        if (params) {
+            _.forIn(params, (value, key) => {
+                url = _.replace(url, ':' + key, value);
+            });
+        }
+        url += '?token=' + encodeURIComponent(this.token);
+        if (query) {
+            _.forIn(query, (value, key) => {
+                url += '&' + key + '=' + value;
+            });
+        }
+        return url;
     }
 }

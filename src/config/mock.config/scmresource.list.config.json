@@ -63,14 +63,14 @@
                 "url": "http://127.0.0.1:9999/data/upload"
             },
             {
-                "uid": "getDataInfo",
-                "name": "",
-                "url": "http://127.0.0.1:9999/data/:id/visualization"
-            },
-            {
                 "uid": "downloadData",
                 "name": "",
                 "url": "http://127.0.0.1:9999/data/:id/download"
+            },
+            {
+                "uid": "parseUDX",
+                "name": "",
+                "url": "http://127.0.0.1:9999/data/:id/parse"
             }
         ]
     },

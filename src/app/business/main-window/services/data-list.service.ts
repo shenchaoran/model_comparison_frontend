@@ -1,19 +1,32 @@
 import { Injectable } from '@angular/core';
+import { RequestOptions, Headers, ResponseContentType } from '@angular/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Resolve, ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
 
+import { ErrorHandle } from './../../../common/core/base/error-handle';
 import {
     SubMenuType,
     SubMenu
 } from '../../../common/shared/components/context-menu/sub-menu';
 import { GeoData } from '../component/data-list/geo-data';
+import { DataInquireService } from '../../../common/core/services/data.inquire.service';
 
 export enum ContextMenuType {
     BLACK = 1,
     DATAITEM = 2
 }
 
+
 @Injectable()
-export class DataListService {
-    constructor() {}
+export class DataListService extends ErrorHandle {
+    constructor(
+        private http: HttpClient,
+        private route: ActivatedRoute,
+        private dataInquireService: DataInquireService
+    ) {
+        super();
+    }
 
     getContextMenuCfg(type: ContextMenuType, geoData?: GeoData): Array<SubMenu> {
         if (type === ContextMenuType.BLACK) {
@@ -74,23 +87,10 @@ export class DataListService {
         }
     }
 
-    getDataInfo(params, query, body) {
-        postal.channel('DATA_INQUIRE_CHANNEL').publish('data.inquire.get', {
-            serviceId: 'getDataInfo',
-            callback: 'MODEL_TOOL_CHANNEL#getDataInfo',
-            query: query,
-            body: body,
-            params: params
-        });
-    }
-
-    downloadData(params, query, body) {
-        postal.channel('DATA_INQUIRE_CHANNEL').publish('data.inquire.get', {
-            serviceId: 'downloadData',
-            callback: 'MODEL_TOOL_CHANNEL#downloadData',
-            query: query,
-            body: body,
-            params: params
-        });
+    parseUDX(gdid: string): Observable<any> {
+        const url = this.dataInquireService.getServiceById('parseUDX', {id: gdid});
+        console.log('get: ' + url);
+        const options = undefined;
+        return this.http.get(url, options);
     }
 }
