@@ -4,8 +4,8 @@ import { Resolve } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { ErrorHandle } from '../../../common/core/base/error-handle';
 
-import { ServiceMetaInfoService } from '../services/serviceMetaInfo.service';
 import { ServiceMetaInfo } from '../metainfo/service.metaInfo';
+import { APIS } from '../../core/config/api.config';
 
 const ROOT_SERVICE_KEY: string = 'scmresource';
 
@@ -13,46 +13,29 @@ const ROOT_SERVICE_KEY: string = 'scmresource';
 export class DataInquireService extends ErrorHandle implements Resolve<any> {
     private token: string;
     public items: any;
-    private channel: any;
 
     resolve() {
-        return this.readConfig().then(config => {
-            this.token = config.token;
-            this.items = config.items;
-            return;
-        });
-    }
-
-    private readConfig(): Promise<any> {
-        let serviceMetaInfo: ServiceMetaInfo = this.serviceMetaInfoService.getServiceMetaInfo(
-            ROOT_SERVICE_KEY
-        );
-
-        let uri = this.serviceMetaInfoService.addTicket(serviceMetaInfo.uri);
-
-        return this.http
-            .get(uri)
-            .toPromise()
-            .then((res: Response) => {
-                return _.get(res, 'data');
-            })
-            .catch(this.handleError);
-    }
-
-    constructor(
-        private http: HttpClient,
-        private serviceMetaInfoService: ServiceMetaInfoService
-    ) {
-        super();
-        this.channel = postal.channel('DATA_INQUIRE_CHANNEL');
-        const TYPES = ['get', 'post', 'delete', 'put'];
-        _.map(TYPES, type => {
-            this.channel.subscribe(`data.inquire.${type}`, (data, envelope) => {
-                this.dataInquire(data, type);
+        return new Promise((resolve, reject) => {
+            this.items = APIS;
+            // TODO add token from local storage
+            this.token = '1';
+    
+            // subscribe data inquire event
+            const TYPES = ['get', 'post', 'delete', 'put'];
+            _.map(TYPES, type => {
+                postal.channel('DATA_INQUIRE_CHANNEL').subscribe(`data.inquire.${type}`, (data, envelope) => {
+                    this.dataInquire(data, type);
+                });
             });
+            return resolve();
         });
     }
 
+    constructor(private http: HttpClient) {
+        super(); 
+    }
+
+    // 以发布订阅的方式进行http请求
     private dataInquire(data: any, type: string) {
         const serviceId = data.serviceId;
         const params = data.params;
@@ -121,6 +104,7 @@ export class DataInquireService extends ErrorHandle implements Resolve<any> {
             .catch(this.handleError);
     }
 
+    // 根据serviceId获取url，如果传入了params和query，则根据两个参数解析url
     public getServiceById (id: string, params?: any, query?: any): string {
         const service: any = _.find(this.items, function(item) {
             return (<any>item).uid === id;
@@ -144,4 +128,6 @@ export class DataInquireService extends ErrorHandle implements Resolve<any> {
         }
         return url;
     }
+
+    
 }

@@ -17,11 +17,11 @@
                 <nz-card id='invork-card'>
                     <ng-template #title>
                         <ng-container *ngIf='propertiesTitle'>
-                            Properties: {{title}}
+                            Properties: {{propertiesTitle}}
                         </ng-container>
                     </ng-template>
                     <ng-template #extra>
-                        <a (click)="closePanel()"><i class="anticon anticon-close"></i></a>
+                        <a (click)="hidePanel()"><i class="anticon anticon-close"></i></a>
                     </ng-template>
                     <ng-template #body>
                         <app-property-panel [panelData]='panelData'></app-property-panel>

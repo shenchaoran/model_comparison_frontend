@@ -76,7 +76,7 @@ export class MainWindowComponent extends ErrorHandle implements OnInit, AfterVie
                                 type: PropertyPanelShowType.MODEL,
                                 data: data.result
                             };
-                            this.toggleLayout();
+                            this.showPanel();
                         } else {
                             this._notification.create(
                                 'warning',
@@ -94,26 +94,18 @@ export class MainWindowComponent extends ErrorHandle implements OnInit, AfterVie
                 );
             });
 
-        postal
-            .channel('LAYOUT_CHANNEL')
-            .subscribe('propertity-panel.data.show', (data, envelope) => {
-                this.propertiesTitle = data.filename;
-                this.dataListService.parseUDX(data.gdid)
-                    .toPromise()
-                    .then((response) => {
-                        if (_.startsWith(_.get(response, 'status.code'), '200')) {
-                            const data = _.get(response, 'data');
-                            
-                        }
-                        else {
-                            this._notification.create(
-                                'warning',
-                                'Warning:',
-                                'parse data properties failed, please retry later!'
-                            );
-                        }
-                    })
-                    .catch(this.handleError);
+        this.dataListService.subscribeGetDataProp()
+            .then((filename) => {
+                this.showPanel();
+                this.panelData = {
+                    type: PropertyPanelShowType.DATA,
+                    data: null
+                };
+                this.propertiesTitle = filename;
+                this._InputLoading = false;
+            })
+            .catch((err) => {
+
             });
 
         postal
@@ -176,7 +168,7 @@ export class MainWindowComponent extends ErrorHandle implements OnInit, AfterVie
         });
     }
 
-    toggleLayout() {
+    showPanel() {
         jQuery('#propertity-panel').css('display', 'block');
         this.nzSpans = [
             {
@@ -203,7 +195,7 @@ export class MainWindowComponent extends ErrorHandle implements OnInit, AfterVie
         ];
     }
 
-    closePanel() {
+    hidePanel() {
         postal.channel('LAYOUT_CHANNEL').publish('propertity-panel.hide', {});
     }
 }

@@ -22,6 +22,21 @@ export class PropertyPanelComponent implements OnInit, AfterViewInit {
     loadingExecuteBtn = false;
     msrid: string = null;
 
+    hotTableIsLoading: boolean = true;
+    hotTableColumns: Array<{
+        data: string;
+        title: string;
+        type?: string;
+    }> = null;
+    hotTableData: Array<any> = null;
+    hotTableSettings: object = {
+        afterLoadData: (firstLoad) => {
+            if(!firstLoad) {
+              this.hotTableIsLoading = false;
+            }
+          },
+    };
+
     constructor(
         private modelToolService: ModelToolService,
         private _notification: NzNotificationService
@@ -106,6 +121,13 @@ export class PropertyPanelComponent implements OnInit, AfterViewInit {
                         'get invoke record failed, please retry later!'
                     );
                 }
+            });
+        postal
+            .channel('DATA_CHANNEL')
+            .subscribe('propertity-panel.data.bind', (data,envelope) => {
+                this.hotTableColumns = data.columns;
+                this.hotTableData = data.data;
+                this.hotTableIsLoading = false;
             });
     }
 

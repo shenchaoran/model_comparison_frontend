@@ -91,7 +91,7 @@
     </ng-container>
 
     <ng-container *ngIf='panelData.type === 2'>
-        <hot-table></hot-table>
+        <hot-table height='500' [rowHeaders]='true' [colHeaders]='true' [settings]='hotTableSettings' [columns]='hotTableColumns' [data]='hotTableData'></hot-table>
     </ng-container>
 
     <ng-container *ngIf='panelData.type === 3'>

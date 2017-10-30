@@ -7,6 +7,7 @@ import {
 
 import { throwIfAlreadyLoaded } from './module-import-guard';
 import { TranslatorService } from './translator/translator.service';
+// import { TokenService } from './net/token/token.service';
 
 import {
     RootService,
@@ -36,7 +37,11 @@ const CITYFUN_SERVICES = [
 @NgModule({
     declarations: [],
     imports: [],
-    providers: [TranslatorService, ...CITYFUN_SERVICES]
+    providers: [
+        TranslatorService,
+        ...CITYFUN_SERVICES,
+        // TokenService
+    ]
 })
 export class CoreModule {
     constructor(

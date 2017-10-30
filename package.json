@@ -25,6 +25,7 @@
     "@ngx-translate/core": "^7.2.0",
     "@ngx-translate/http-loader": "^1.0.2",
     "angular-handsontable": "^1.0.0-beta3",
+    "angular-web-storage": "^1.0.0",
     "angular2-esri-loader": "^1.0.0",
     "animate.css": "3.5.2",
     "bootstrap": "4.0.0-alpha.6",
