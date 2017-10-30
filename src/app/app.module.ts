@@ -14,27 +14,21 @@ import { routing } from './app.routing';
 import { App } from './app.component';
 
 @NgModule({
-	bootstrap: [App],
-	declarations: [
-		App
-	],
-	imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-		BrowserAnimationsModule,
+    bootstrap: [App],
+    declarations: [App],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        BrowserAnimationsModule,
 
-		RouterModule,
-		routing,
+        RouterModule,
+        routing,
 
-		NgxSharedModule,
-		AppTranslationModule,
-		SharedModule.forRoot(),
-		CoreModule,
-	],
-	providers: [
-
-	]
+        NgxSharedModule,
+        AppTranslationModule,
+        SharedModule.forRoot(),
+        CoreModule
+    ],
+    providers: []
 })
-export class AppModule {
-
-}
+export class AppModule {}

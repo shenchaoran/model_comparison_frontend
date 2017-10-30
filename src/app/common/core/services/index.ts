@@ -6,7 +6,6 @@ export * from './data.inquire.service';
 
 export * from './auth.guard';
 
-export * from './baImageLoader';
 export * from './baThemePreloader';
 export * from './baThemeSpinner';
 // export * from './sessionStorage.service';
