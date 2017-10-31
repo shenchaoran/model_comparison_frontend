@@ -107,6 +107,7 @@ export class DataListService extends ErrorHandle {
                 .channel('LAYOUT_CHANNEL')
                 .subscribe('propertity-panel.data.show', (data, envelope) => {
                     const filename = data.filename;
+                    const gdid = data.gdid;
                     this.parseUDX(data.gdid)
                         .toPromise()
                         .then(response => {
@@ -118,6 +119,7 @@ export class DataListService extends ErrorHandle {
                             ) {
 
                                 const data = _.get(response, 'data');
+                                _.set(data, 'gdid', gdid);
                                 postal
                                     .channel('DATA_CHANNEL')
                                     .publish('propertity-panel.data.bind', data);

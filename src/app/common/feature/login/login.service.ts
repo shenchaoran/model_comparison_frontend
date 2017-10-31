@@ -5,13 +5,12 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/throw';
 
-import { AppMetaInfoService } from '../../core/services/appMetaInfo.service';
 import { ServiceMetaInfoService } from '../../core/services/serviceMetaInfo.service';
-
 import { AuthInfo } from '../../core/metainfo/auth.metaInfo';
 import { AppMetaInfo } from '../../core/metainfo/app.metaInfo';
 import { ServiceMetaInfo } from '../../core/metainfo/service.metaInfo';
 import { LoginPostData } from './login.post.data';
+import { APP_CONFIG } from '../../core/config/app.config';
 
 const ROOT_SERVICE_KEY: string = 'login';
 
@@ -20,18 +19,15 @@ export class LoginService {
     constructor(
         private http: HttpClient,
         private router: Router,
-        private appMetaInfoService: AppMetaInfoService,
         private serviceMetaInfoService: ServiceMetaInfoService
     ) {}
 
-    public verifyLogin(userid: string, userpsd: string): Observable<any> {
+    public verifyLogin(username: string, userpsd: string): Observable<any> {
         return Observable.create(observer => {
-            let appMetaInfo: AppMetaInfo = this.appMetaInfoService.getAppMetaInfo();
-
             this.requestLoginService(
-                userid,
+                username,
                 userpsd,
-                appMetaInfo.appid
+                APP_CONFIG.appId
             ).subscribe({
                 next: configData => {
                     if (configData.status.code !== '200') {
@@ -43,7 +39,7 @@ export class LoginService {
 
                         // this.router.navigate(['/login']);
                     } else {
-                        // let authInfo = new AuthInfo(true, configData.ticket, configData.data[0].linfo.logintime, configData.data[0].linfo.loginip, configData.data[0].uinfo.nickname);
+                        // let authInfo = new AuthInfo(true, configData.token, configData.data[0].linfo.logintime, configData.data[0].linfo.loginip, configData.data[0].uinfo.nickname);
                         // sessionStorage.setItem('authInfo', authInfo.parse2Json());
                         sessionStorage.setItem(
                             'authInfo',
@@ -53,7 +49,7 @@ export class LoginService {
                         );
 
                         // observer.next(null);
-                        this.router.navigate(['/' + appMetaInfo.defaultroute]);
+                        this.router.navigate(['/' + APP_CONFIG.defaultroute]);
                     }
                 },
                 error: err => this.handleError(err),

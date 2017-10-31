@@ -7,13 +7,13 @@ import {
 
 import { throwIfAlreadyLoaded } from './module-import-guard';
 import { TranslatorService } from './translator/translator.service';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from './net/token/token.interceptor';
 // import { TokenService } from './net/token/token.service';
 
 import {
     RootService,
-    AppMetaInfoService,
     ServiceMetaInfoService,
-    ModulesConfigService,
     DataInquireService,
     AuthGuard,
     BaThemePreloader,
@@ -23,9 +23,7 @@ import {
 
 const CITYFUN_SERVICES = [
     RootService,
-    AppMetaInfoService,
     ServiceMetaInfoService,
-    ModulesConfigService,
     DataInquireService,
     AuthGuard,
 
@@ -40,7 +38,7 @@ const CITYFUN_SERVICES = [
     providers: [
         TranslatorService,
         ...CITYFUN_SERVICES,
-        // TokenService
+        { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
     ]
 })
 export class CoreModule {

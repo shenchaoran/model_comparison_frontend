@@ -7,8 +7,6 @@ import { ErrorHandle } from '../../../common/core/base/error-handle';
 import { ServiceMetaInfo } from '../metainfo/service.metaInfo';
 import { APIS } from '../../core/config/api.config';
 
-const ROOT_SERVICE_KEY: string = 'scmresource';
-
 @Injectable()
 export class DataInquireService extends ErrorHandle implements Resolve<any> {
     private token: string;

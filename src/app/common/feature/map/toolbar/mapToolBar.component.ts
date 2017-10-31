@@ -1,8 +1,7 @@
 import { Component, Input, ViewChild, ViewEncapsulation, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { ModulesConfigService } from '../../../core/services/modules.config.service';
-import { MapToolBarService } from './mapToolBar.service';
+import { MapFunctionsClass, MAP_TOOLBAR_CONFIG } from '../../../core/config/map.config';
 
 @Component({
     selector: 'map-tool-bar',
@@ -22,20 +21,13 @@ export class MapToolBar {
 
     private cbSubscriptionList: Array<any>;
 
-    constructor(private router: Router, private activatedRoute: ActivatedRoute, private modulesConfigService: ModulesConfigService, private mapToolBarService: MapToolBarService) {
+    constructor(private router: Router, private activatedRoute: ActivatedRoute) {
         this.cbSubscriptionList = new Array<any>();
-
-        this.mapToolBarService.readConfig().subscribe(
-            toolBar => { this.toolBar = toolBar; }
-        );
-
+        this.toolBar = MAP_TOOLBAR_CONFIG;
     }
 
     ngOnInit() {
-        this.modulesConfigService.getModuleFunctions(this.parentModuleEncode, this.moduleEncode)
-        .then((moduleFunctions) => {
-            this.moduleFunctions = moduleFunctions;
-        });
+        this.moduleFunctions = MapFunctionsClass
     }
 
     ngAfterViewInit() {

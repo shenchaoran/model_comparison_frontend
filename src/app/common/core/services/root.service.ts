@@ -25,7 +25,6 @@ export class RootService implements Resolve<any> {
     private loadRootConfig(env: string) {
         this.readConfig(env).subscribe({
             next: configData => {
-                sessionStorage.setItem('appMetaInfo', JSON.stringify(configData.info));
                 sessionStorage.setItem('serviceMetaList', JSON.stringify(configData.servicelist));
                 sessionStorage.setItem('arcgisPath', JSON.stringify(configData.arcgispath));
             },

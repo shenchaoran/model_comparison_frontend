@@ -8,7 +8,7 @@
     "servicelist": [{
             "id": "login",
             "name": "登录验证接口",
-            "uri": "http://localhost:9999/login",
+            "uri": "http://localhost:9999/auth/login",
             "type": 3,
             "version": "v1.0.0",
             "des": ""
@@ -43,30 +43,6 @@
             "uri": "./config/map.toolbar.config.json",
             "type": 1,
             "version": "v0.0.1",
-            "des": ""
-        },
-        {
-            "id": "modules",
-            "name": "系统模块清单",
-            "uri": "./config/mock.config/modules.config.json",
-            "type": 1,
-            "version": "v1.0.0",
-            "des": ""
-        },
-        {
-            "id": "moduleconfig",
-            "name": "模块包含功能清单",
-            "uri": "./config/mock.config/module.functions.config.json",
-            "type": 1,
-            "version": "v1.0.0",
-            "des": ""
-        },
-        {
-            "id": "scmresource",
-            "name": "数据服务清单",
-            "uri": "./config/mock.config/scmresource.list.config.json",
-            "type": 1,
-            "version": "v1.0.0",
             "des": ""
         }
     ],

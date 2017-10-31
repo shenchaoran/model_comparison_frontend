@@ -1,7 +1,5 @@
 export * from './root.service';
-export * from './appMetaInfo.service';
 export * from './serviceMetaInfo.service';
-export * from './modules.config.service';
 export * from './data.inquire.service';
 
 export * from './auth.guard';

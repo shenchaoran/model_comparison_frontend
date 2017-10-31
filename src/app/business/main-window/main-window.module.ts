@@ -6,6 +6,8 @@ import { DataInquireService } from "../../common/core/services/data.inquire.serv
 import { MainWindowRoutingRoutes } from './main-window-routing.module';
 import { NgxSharedModule } from '../../common/ngx-shared/ngx-shared.module';
 import { SharedModule } from '../../common/shared/shared.module';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from '../../common/core/net/token/token.interceptor';
 
 import {
     MainWindowComponent,
@@ -49,6 +51,9 @@ const SERVICES = [
         MainWindowRoutingRoutes,
     ],
     declarations: [...COMPONENTS],
-    providers: [...SERVICES]
+    providers: [
+        ...SERVICES,
+        { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
+    ]
 })
 export class MainWindowModule {}

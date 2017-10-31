@@ -1,7 +1,7 @@
 {
     "version": "v1.0.0",
     "href": null,
-    "ticket": "111",
+    "token": "111",
     "status": {
         "code": "200",
         "desc": "操作成功"
@@ -34,5 +34,5 @@
             "loginip": "登录ip地址"
         }
     },
-    "userid": "b3ed7217-a489-4973-ac52-9658768ec5ac"
+    "username": "b3ed7217-a489-4973-ac52-9658768ec5ac"
 }

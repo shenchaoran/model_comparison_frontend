@@ -4,7 +4,6 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
 import { MapServiceImpl } from '../map.service';
-import { MapConfigService } from '../mapConfig.service';
 
 import { ESRI_MAP_DRAW_TYPE } from '../map.draw.type';
 

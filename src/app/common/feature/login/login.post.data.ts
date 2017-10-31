@@ -15,14 +15,14 @@ export class LoginData{
 }
 
 export class LoginPostData{
-    // private ticket: string;
-    // private userid: string;
+    // private token: string;
+    // private username: string;
 
     private data: LoginData;
 
     constructor(appid: string, account: string, password: string, logintype?: string){
-        // this.ticket = ticket;
-        // this.userid = userid;
+        // this.token = token;
+        // this.username = username;
 
         this.data = new LoginData(appid, account, password, logintype);
     }

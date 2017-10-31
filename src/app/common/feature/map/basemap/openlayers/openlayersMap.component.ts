@@ -1,9 +1,8 @@
 import { Component, Inject, HostListener, Input, Output } from '@angular/core';
-
 import { ActivatedRoute } from '@angular/router';
 
-
 import { OpenLayersService } from './openlayersMap.service';
+import { MAP_CONFIG } from '../../../../core/config/map.config';
 
 
 @Component({
@@ -24,18 +23,12 @@ export class OpenLayersMaps {
     private containerWidth;
 
 
-    constructor(private activatedRoute: ActivatedRoute, @Inject('mapService') private mapService) {
+    constructor(@Inject('mapService') private mapService) {
 
     }
 
     ngOnInit() {
-        let mapConfig = this.activatedRoute.snapshot.data['mapConfig'];
-
-        if (mapConfig) {
-            this.mapService.setMapConfig(mapConfig);
-        } else {
-            console.error('#map.component#mapConfig is undefined');
-        }
+        this.mapService.setMapConfig(MAP_CONFIG);
     }
 
     ngAfterViewInit() {

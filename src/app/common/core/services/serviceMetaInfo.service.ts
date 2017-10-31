@@ -17,7 +17,7 @@ export class ServiceMetaInfoService {
     }
 
     public addTicket(uri: string): string {
-        let ticket = JSON.parse(sessionStorage.getItem('authInfo')).ticket;
-        return uri + '?ticket='+ ticket;
+        let token = JSON.parse(sessionStorage.getItem('authInfo')).token;
+        return uri + '?token='+ token;
     }
 }

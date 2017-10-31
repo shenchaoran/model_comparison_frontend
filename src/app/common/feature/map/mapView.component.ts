@@ -2,6 +2,7 @@ import { Component, Inject, ElementRef, ViewEncapsulation, ViewChild } from '@an
 import { ActivatedRoute } from '@angular/router';
 
 import { MapInquireService } from './map.inquire.service';
+import { MAP_CONFIG } from '../../core/config/map.config';
 
 @Component({
     selector: 'map-view',
@@ -13,21 +14,13 @@ import { MapInquireService } from './map.inquire.service';
 
 export class MapView {
 
-    constructor(private activatedRoute: ActivatedRoute, private mapInquireService: MapInquireService, @Inject('mapService') private mapService) {
-
+    constructor(private mapInquireService: MapInquireService, @Inject('mapService') private mapService) {
     }
 
     ngOnInit() {
         this.mapInquireService.subscribeTopics();
-
-        let mapConfig = this.activatedRoute.snapshot.data['mapConfig'];
-
-        if (mapConfig) {
-            this.mapService.subscribeTopics();
-            this.mapService.setMapConfig(mapConfig);
-        } else {
-            console.error('#map.component#mapConfig is undefined');
-        }
+        this.mapService.subscribeTopics();
+        this.mapService.setMapConfig(MAP_CONFIG);
     }
 
     ngOnDestroy() {

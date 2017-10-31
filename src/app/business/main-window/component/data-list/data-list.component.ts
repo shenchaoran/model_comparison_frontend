@@ -49,6 +49,13 @@ export class DataListComponent implements OnInit, AfterViewInit {
             },
             fieldName: 'geo_data'
         };
+        this.dataList.push({
+            gdid: 'gd_4d840810-bddd-11e7-8997-5576787ba1b7',
+            filename: 'hours_UDX.xml',
+            path: '',
+            type: 2,
+            tag: 'hours_UDX.xml'
+        });
     }
 
     ngOnInit() {

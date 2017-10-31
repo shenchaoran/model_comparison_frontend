@@ -1,25 +1,24 @@
 {
     "version": "v0.0.1",
     "href": "",
-    "ticket": "fdasgr35gfdsgfdsgfdfdsaggg45fdsafdsa",
+    "token": "fdasgr35gfdsgfdsgfdfdsaggg45fdsafdsa",
     "token": "adfadsgagf",
     "status": {
         "code": "200",
         "desc": "登录成功"
     },
-    "data": [
-        {
+    "data": [{
             "id": "fullExtent",
             "title": "全图",
             "publish": "MAP_CHANNEL#map.fullExtent"
         },
         {
-            "id": "zoomIn", 
+            "id": "zoomIn",
             "title": "放大",
             "publish": "MAP_CHANNEL#map.zoomIn"
         },
         {
-            "id": "zoomOut", 
+            "id": "zoomOut",
             "title": "缩小",
             "publish": "MAP_CHANNEL#map.zoomOut"
         },

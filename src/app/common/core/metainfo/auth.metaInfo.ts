@@ -12,10 +12,10 @@ export class AuthInfo {
         this._islogin = val;
     }
 
-    public get ticket() {
+    public get token() {
         return this._ticket;
     }
-	public set ticket(val: string) {
+	public set token(val: string) {
         this._ticket = val;
     }
 
@@ -40,9 +40,9 @@ export class AuthInfo {
         this._nickname = val;
     }
 
-    constructor(islogin, ticket, loginTime, loginIp, nickname){
+    constructor(islogin, token, loginTime, loginIp, nickname){
         this.islogin = islogin;
-        this.ticket = ticket;
+        this.token = token;
         this.loginTime = loginTime;
         this.loginIp = loginIp;
         this.nickname = nickname;
@@ -51,7 +51,7 @@ export class AuthInfo {
     public parse2Json(){
         let object: any = {};
         object.islogin = this.islogin;
-        object.ticket = this.ticket;
+        object.token = this.token;
         object.loginTime = this.loginTime;
         object.loginIp = this.loginIp;
         object.nickname = this.nickname;

@@ -1,14 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router, Routes } from '@angular/router';
-
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 
-import { ServiceMetaInfo } from '../../../../core/metainfo/service.metaInfo';
-import { ServiceMetaInfoService } from '../../../../core/services/serviceMetaInfo.service';
-
-const ROOT_SERVICE_KEY: string = 'menu';
+import { MENUS } from '../../../../core/config/menu.config';
 
 @Injectable()
 export class BaMenuService {
@@ -17,29 +13,12 @@ export class BaMenuService {
 
 	protected _currentMenuItem = {};
 
-	constructor(
-        private http: HttpClient, private _router: Router, 
-		private serviceMetaInfoService: ServiceMetaInfoService) { 
+	constructor(private http: HttpClient, private _router: Router) { 
 
 		postal.channel('MENU_CHANNEL').subscribe('menu.update', (data, envelope) => {
-			this.updateMenu();
+            this.updateMenuByRoutes(<Routes>MENUS);
+            this.updateHeaderMenuByRoutes(<Routes>MENUS)
 		})
-	}
-
-	public updateMenu() {
-		const serviceMetaInfo: ServiceMetaInfo = this.serviceMetaInfoService.getServiceMetaInfo(ROOT_SERVICE_KEY);
-
-		const uri = this.serviceMetaInfoService.addTicket(serviceMetaInfo.uri);
-
-		this.http.get(uri)
-			// .map(res => res.json())
-			.toPromise()
-			.then(res => {
-				let data = _.get(res, 'data');
-				this.updateMenuByRoutes(<Routes>data);
-                this.updateHeaderMenuByRoutes(<Routes>data)
-			})
-			.catch(this.handleError);
 	}
 
     public updateHeaderMenuByRoutes(routes: Routes){
@@ -65,11 +44,6 @@ export class BaMenuService {
         }
     }
 
-	/**
-	 * Updates the routes in the menu
-	 *
-	 * @param {Routes} routes Type compatible with app.menu.ts
-	 */
 	public updateMenuByRoutes(routes: Routes) {
 		let convertedRoutes = this.convertRoutesToMenus(_.cloneDeep(routes));
 		this.menuItems.next(convertedRoutes);

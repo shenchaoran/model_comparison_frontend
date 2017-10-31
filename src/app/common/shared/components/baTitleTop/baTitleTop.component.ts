@@ -1,5 +1,6 @@
 import { Router } from '@angular/router';
 import { Component, Input } from '@angular/core';
+import { APP_CONFIG } from '../../../core/config/app.config';
 
 @Component({
 	selector: 'ba-title-top',
@@ -17,7 +18,7 @@ export class BaTitleTop {
 
 	ngOnInit() {
 		if (this.title === undefined) {
-			this.title = JSON.parse(sessionStorage.getItem('appMetaInfo')).name;
+			this.title = APP_CONFIG.name;
 		}
 		this.nickname = JSON.parse(sessionStorage.getItem('authInfo')).nickname;
 	}

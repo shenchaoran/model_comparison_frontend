@@ -3,7 +3,6 @@ import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
 import { BaMenuService } from './services/baMenu.service';
-// import { ModulesConfigService } from '../../services/modules.config.service';
 // import { GlobalState } from '../../../../global.state';
 
 @Component({
@@ -34,24 +33,12 @@ export class BaMenu {
 
 	constructor(private _activatedRoute: ActivatedRoute, private _router: Router,
 		private _service: BaMenuService,
-		// private _state: GlobalState, private modulesConfigService: ModulesConfigService
 	) {
 	}
 
 	public updateMenu(newMenuItems) {
 		this.menuItems = newMenuItems;
 		this.selectMenuAndNotify();
-
-		// let modulesConfig = this._activatedRoute.snapshot.data['modulesConfigService'];
-		// if (modulesConfig) {
-		// 	this.modulesConfigService.getModuleFunctions(null, this.moduleEncode).then((moduleFunctions) => {
-		// 		this.moduleFunctions = moduleFunctions;
-
-		// 		this.filterMenuItems(this.menuItems, this.moduleFunctions);
-		// 	});
-		// } else {
-		// 	console.error('#baMenu.component#modulesConfig is undefined');
-		// }
 	}
 
 	public selectMenuAndNotify(): void {

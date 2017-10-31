@@ -1,5 +1,6 @@
 import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
 import { NzNotificationService } from 'ng-zorro-antd';
+import { HotRegisterer } from 'angular-handsontable';
 
 import { ModelToolService } from '../../services/model-tool.service';
 import { GeoData } from '../data-list/geo-data';
@@ -36,11 +37,30 @@ export class PropertyPanelComponent implements OnInit, AfterViewInit {
             }
           },
     };
+    hotInstance: string = null;
+    hotContextMenu: any = null;
 
     constructor(
         private modelToolService: ModelToolService,
-        private _notification: NzNotificationService
-    ) {}
+        private _notification: NzNotificationService,
+        private hotRegisterer: HotRegisterer
+    ) {
+        const self = this;
+        this.hotContextMenu = {
+            items: {
+                'chart': {
+                    name: 'chart',
+                    callback: function(key, options) {
+                        // console.log(key, options);
+                        const hot = self.hotRegisterer.getInstance(self.hotInstance);
+                        const range = hot.getSelected();
+                        console.log(hot.getData(range[0], range[1], range[2], range[3]));
+                    }
+                },
+                'copy': {}
+            }
+        };
+    }
 
     ngOnInit() {
         postal
@@ -127,6 +147,9 @@ export class PropertyPanelComponent implements OnInit, AfterViewInit {
             .subscribe('propertity-panel.data.bind', (data,envelope) => {
                 this.hotTableColumns = data.columns;
                 this.hotTableData = data.data;
+
+                this.hotInstance = data.gdid;
+                const hot = this.hotRegisterer.getInstance(this.hotInstance);
                 this.hotTableIsLoading = false;
             });
     }
@@ -204,5 +227,16 @@ export class PropertyPanelComponent implements OnInit, AfterViewInit {
         this.modelToolService.invokeModelTool(params, query, body);
         // this.disabledExecuteBtn = true;
         this.loadingExecuteBtn = true;
+    }
+
+    hotAfterSelectionEnd(e) {
+        const hot = this.hotRegisterer.getInstance(this.hotInstance);
+        const range = hot.getSelected();
+        hot.getData(range[0], range[1], range[2], range[3]);
+    }
+
+    hotSetMenu(e) {
+        console.log(e);
+
     }
 }

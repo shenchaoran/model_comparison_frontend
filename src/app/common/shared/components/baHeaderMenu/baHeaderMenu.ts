@@ -1,5 +1,3 @@
-// 
-
 export class HeaderMenuMetaInfo {
     path: string;
     data?: {

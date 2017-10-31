@@ -11,7 +11,7 @@ export class LoggerMetaInfo {
     constructor(appId, moduleId, componentId, buttonId, content?){
         // this._guid = guid;
         // this._appId = appId;
-        this._ticket = JSON.parse(sessionStorage.getItem('authInfo')).ticket;
+        this._ticket = JSON.parse(sessionStorage.getItem('authInfo')).token;
         this._moduleId = moduleId;
         this._componentId = componentId;
         this._buttonId = buttonId;
