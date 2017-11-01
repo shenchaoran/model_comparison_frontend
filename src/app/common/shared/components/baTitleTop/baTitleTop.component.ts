@@ -9,7 +9,7 @@ import { APP_CONFIG } from '../../../core/config/app.config';
 })
 export class BaTitleTop {
 	@Input() title: string;
-	public nickname: string;
+	public username: string;
 	public menuDropDown: boolean = false;
 
 	constructor(
@@ -20,7 +20,7 @@ export class BaTitleTop {
 		if (this.title === undefined) {
 			this.title = APP_CONFIG.name;
 		}
-		this.nickname = JSON.parse(sessionStorage.getItem('authInfo')).nickname;
+		this.username = JSON.parse(localStorage.getItem('jwt')).username;
 	}
 	showUserOperation($event) {
 		this.menuDropDown = !this.menuDropDown;
@@ -29,8 +29,8 @@ export class BaTitleTop {
 	}
 
 	logout() {
-		sessionStorage.clear();
-		this.router.navigate(["./login"]);
+		localStorage.clear();
+		this.router.navigate(["/login"]);
 	}
 	
 }

@@ -1,7 +1,7 @@
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { ModuleWithProviders } from '@angular/core';
 
-import { RootService } from './common/core/services/root.service';
+import { DataInquireService } from './common/core/services/data.inquire.service';
 
 export const routes: Routes = [
 	{ path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -9,7 +9,7 @@ export const routes: Routes = [
 		path: 'login',
 		loadChildren: './common/feature/login/login.module#LoginModule',
 		resolve: {
-            rootService: RootService
+            dataInquireService: DataInquireService
         }
     },
     {

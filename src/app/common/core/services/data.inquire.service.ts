@@ -1,23 +1,16 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Resolve } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { ErrorHandle } from '../../../common/core/base/error-handle';
 
-import { ServiceMetaInfo } from '../metainfo/service.metaInfo';
 import { APIS } from '../../core/config/api.config';
 
 @Injectable()
 export class DataInquireService extends ErrorHandle implements Resolve<any> {
-    private token: string;
-    public items: any;
 
     resolve() {
         return new Promise((resolve, reject) => {
-            this.items = APIS;
-            // TODO add token from local storage
-            this.token = '1';
-    
             // subscribe data inquire event
             const TYPES = ['get', 'post', 'delete', 'put'];
             _.map(TYPES, type => {
@@ -42,7 +35,7 @@ export class DataInquireService extends ErrorHandle implements Resolve<any> {
         const options = data.options;
         const cb = data.callback;
 
-        const service: any = _.find(this.items, function(item) {
+        const service: any = _.find(APIS, function(item) {
             return (<any>item).uid === serviceId;
         });
         if (service === undefined || service === null) {
@@ -56,7 +49,6 @@ export class DataInquireService extends ErrorHandle implements Resolve<any> {
             });
         }
 
-        url += '?token=' + encodeURIComponent(this.token);
         // attention: body and query can't exist both
         if (query) {
             _.forIn(query, (value, key) => {
@@ -104,7 +96,7 @@ export class DataInquireService extends ErrorHandle implements Resolve<any> {
 
     // 根据serviceId获取url，如果传入了params和query，则根据两个参数解析url
     public getServiceById (id: string, params?: any, query?: any): string {
-        const service: any = _.find(this.items, function(item) {
+        const service: any = _.find(APIS, function(item) {
             return (<any>item).uid === id;
         });
         if (service === undefined || service === null) {
@@ -118,7 +110,6 @@ export class DataInquireService extends ErrorHandle implements Resolve<any> {
                 url = _.replace(url, ':' + key, value);
             });
         }
-        url += '?token=' + encodeURIComponent(this.token);
         if (query) {
             _.forIn(query, (value, key) => {
                 url += '&' + key + '=' + value;
@@ -126,6 +117,4 @@ export class DataInquireService extends ErrorHandle implements Resolve<any> {
         }
         return url;
     }
-
-    
 }

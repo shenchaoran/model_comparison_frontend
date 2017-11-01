@@ -12,25 +12,22 @@ const routes: Routes = [
     path: "",
     component: HeaderMenuLayoutComponent,
     canActivate: [AuthGuard],
-    resolve: {
-      dataInquireService: DataInquireService,
-    },
     children: [
       { 
-          path: 'main-window',
+          path: 'home',
           loadChildren: './main-window/main-window.module#MainWindowModule'
       },
       {
-        path: ':account',
+        path: ':username',
         loadChildren: './profile/profile.module#ProfileModule'
       },
       {
-          path: 'main-window/a',
+          path: 'home/a',
           loadChildren: './main-window/main-window.module#MainWindowModule'
       },
       {
           path: '**',
-          redirectTo: 'main-window'
+          redirectTo: 'home'
       }
 
     ]

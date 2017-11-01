@@ -17,11 +17,11 @@ export const MENUS = [
         path: 'webNJGIS',
         children: [
             {
-                path: 'main-window',
+                path: 'home',
                 data: {
                     menu: {
                         title: 'Geomodelling',
-                        id: 'main-window',
+                        id: 'home',
                         icon: 'appstore',
                         selected: true,
                         expanded: false,
@@ -40,11 +40,11 @@ export const MENUS = [
                 ]
             },
             {
-                path: ':account',
+                path: ':username',
                 data: {
                     menu: {
                         title: 'profile',
-                        id: ':account',
+                        id: ':username',
                         icon: 'appstore',
                         selected: true,
                         expanded: false,

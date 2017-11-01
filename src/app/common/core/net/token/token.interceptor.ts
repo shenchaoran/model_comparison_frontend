@@ -26,49 +26,99 @@ import 'rxjs/add/observable/throw';
  */
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
+    constructor(private injector: Injector) {}
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<any> {
-        console.log('token interceptor');
-        // return next.handle(req);
-        // process response...
-        const customReq = req.clone({
-            headers: req.headers.set('token', 'i am a token')
-        })
-
-        return next
-            .handle(customReq)
-            .do((event: any) => {
-                // process response...
-                if (event instanceof HttpResponse) {
-                    // my wrapped http standard resource
-                    if(_.has(event.body, 'status')) {
-                        if(!_.startsWith(_.get(event.body, 'status.code'), '200')) {
-                            // success
-                            return Observable.create(observer => observer.next(event));
-                        }
-                        else {
-                            // failed
-                            return Observable.create(observer => observer.error(event));
-                        }
-                    }
-                    else {
-                        // static resource
-                        return Observable.create(observer => observer.next(event));
-                    }
+        // region 跳过不需要登录认证的url
+        const url = req.url;
+        const skipUrls = [
+            'login',
+            'register',
+            'find-psw',
+            'config/',
+            'assets/'
+        ];
+        let shouldSkiped = false;
+        _.map(skipUrls, skipUrl => {
+            if (!shouldSkiped) {
+                if (url.indexOf(skipUrl) !== -1) {
+                    shouldSkiped = true;
                 }
-            })
-            .catch((res: HttpResponse<any>) => {
-                switch (res.status) {
-                    case 401:
-                        // please login first
-                        break;
-                    case 200:
-                        console.log('业务错误');
-                        break;
-                    case 404:
-                        break;
-                }
-                return Observable.throw(res);
+            }
+        });
+        if (shouldSkiped) {
+            return next.handle(req).do((event: any) => {
+                return Observable.create(observer => observer.next(event));
             });
+        }
+        // endregion
+
+        const jwtStr = localStorage.getItem('jwt');
+        if (jwtStr !== undefined) {
+            const jwt = JSON.parse(jwtStr);
+            if (jwt !== null && jwt.expires > Date.now()) {
+                // token is available
+                const token = jwt.token;
+                const customReq = req.clone({
+                    headers: req.headers.set('Authorization', `bearer ${token}`)
+                });
+                return next
+                    .handle(customReq)
+                    .do((event: any) => {
+                        if (event instanceof HttpResponse) {
+                            // my wrapped http standard resource
+                            if (_.has(event.body, 'app')) {
+                                if (
+                                    !_.startsWith(
+                                        _.get(event.body, 'status.code'),
+                                        '200'
+                                    )
+                                ) {
+                                    // success
+                                    return Observable.create(observer =>
+                                        observer.next(event)
+                                    );
+                                } else {
+                                    // failed
+                                    return Observable.create(observer =>
+                                        observer.error(event)
+                                    );
+                                }
+                            } else {
+                                // download resource
+                                return Observable.create(observer =>
+                                    observer.next(event)
+                                );
+                            }
+                        }
+                    })
+                    .catch((res: HttpResponse<any>) => {
+                        switch (res.status) {
+                            case 401:
+                                // please login first
+                                break;
+                            case 200:
+                                console.log('业务错误');
+                                break;
+                            case 404:
+                                break;
+                        }
+                        return Observable.throw(res);
+                    });
+            } else {
+                // token has experied
+                return next.handle(req).do((event: any) => {
+                    this.redirect2Login();
+                    return Observable.create(observer =>
+                        observer.error({ status: 401 })
+                    );
+                });
+            }
+        }
+    }
+
+    redirect2Login() {
+        const router = this.injector.get(Router);
+        this.injector.get(Router).navigate(['/login']);
     }
 }

@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 
-import { ServiceMetaInfo } from '../../core/metainfo/service.metaInfo';
-
 @Injectable()
 export class MapInquireService { //implements Resolve<any>
 

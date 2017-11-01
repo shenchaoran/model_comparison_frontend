@@ -11,7 +11,7 @@ import { LoginService } from './login.service';
 })
 export class Login {
 	form: FormGroup;
-	account: AbstractControl;
+	username: AbstractControl;
 	password: AbstractControl;
 	remembered: boolean = false;
 	submitted: boolean = false;
@@ -23,8 +23,8 @@ export class Login {
 		private loginService: LoginService
 	) {
 		this.form = fb.group({
-			account: [
-				'System',
+			username: [
+				'Admin',
 				Validators.compose([Validators.required, Validators.minLength(4)])
 			],
 			password: [
@@ -33,11 +33,11 @@ export class Login {
 			]
 		});
 
-		this.account = this.form.controls['account'];
+		this.username = this.form.controls['username'];
 		this.password = this.form.controls['password'];
 
-		if (localStorage.getItem('account')) {
-			this.account.setValue(localStorage.getItem('account'));
+		if (localStorage.getItem('username')) {
+			this.username.setValue(localStorage.getItem('username'));
 		}
 	}
 
@@ -45,25 +45,23 @@ export class Login {
 		this.remembered = !this.remembered;
 
 		if (this.remembered) {
-			localStorage.setItem('account', this.account.value);
+			localStorage.setItem('username', this.username.value);
 		} else {
-			localStorage.removeItem('account');
+			localStorage.removeItem('username');
 		}
 	}
 
 	public onSubmit(values: Object): void {
 		this.submitted = true;
 		if (this.form.valid) {
-			// setTimeout(()=>{
 			this.loginService
-				.verifyLogin(this.account.value, this.password.value)
+				.postLogin(this.username.value, this.password.value)
 				.subscribe({
 					next: errorInfo => {
 						this.loginErrorInfo = errorInfo;
 						this.submitted = false;
 					}
 				});
-			// }, 100000)
 
 		}
 	}

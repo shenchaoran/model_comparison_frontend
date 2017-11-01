@@ -12,22 +12,16 @@ import { TokenInterceptor } from './net/token/token.interceptor';
 // import { TokenService } from './net/token/token.service';
 
 import {
-    RootService,
-    ServiceMetaInfoService,
     DataInquireService,
     AuthGuard,
-    BaThemePreloader,
     BaThemeSpinner
     // EchartAdapterService
 } from './services';
 
 const CITYFUN_SERVICES = [
-    RootService,
-    ServiceMetaInfoService,
     DataInquireService,
     AuthGuard,
 
-    BaThemePreloader,
     BaThemeSpinner
     // EchartAdapterService
 ];

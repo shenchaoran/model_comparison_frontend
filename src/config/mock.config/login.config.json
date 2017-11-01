@@ -1,16 +1,16 @@
 {
     "version": "v1.0.0",
     "href": null,
-    "token": "111",
+    "ticket": "111",
     "status": {
         "code": "200",
         "desc": "操作成功"
     },
     "data": {
         "uinfo": {
-            "account": "System",
+            "username": "System",
             "realname": "超级管理员",
-            "nickname": "超级管理员",
+            "username": "超级管理员",
             "gender": 1,
             "telephone": "15966668888",
             "email": "sss@gmail.com"
@@ -23,8 +23,8 @@
     "template": {
         "uinfo": {
             "realname": "真实姓名",
-            "nickname": "昵称",
-            "account": "账号",
+            "username": "昵称",
+            "username": "账号",
             "gender": "性别0女1男",
             "email": "邮箱",
             "telephone": "手机"
@@ -34,5 +34,5 @@
             "loginip": "登录ip地址"
         }
     },
-    "username": "b3ed7217-a489-4973-ac52-9658768ec5ac"
+    "userid": "b3ed7217-a489-4973-ac52-9658768ec5ac"
 }

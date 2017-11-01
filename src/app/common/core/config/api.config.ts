@@ -6,6 +6,24 @@ export class APIClass {
 }
 
 export const APIS = [{
+    "uid": "login",
+    "name": "",
+    "url": "http://127.0.0.1:9999/auth/login"
+},{
+    "uid": "logout",
+    "name": "",
+    "url": "http://127.0.0.1:9999/auth/logout"
+},{
+    "uid": "register",
+    "name": "",
+    "url": "http://127.0.0.1:9999/auth/register"
+},{
+    "uid": "find-psw",
+    "name": "",
+    "url": "http://127.0.0.1:9999/auth/find-psw"
+},
+
+{
     "uid": "getModelTools",
     "name": "",
     "url": "http://127.0.0.1:9999/model-tools"

@@ -1,7 +1,7 @@
 import { Component, ViewContainerRef, OnInit } from '@angular/core';
 
 // import { GlobalState } from './global.state';
-import { BaThemePreloader, BaThemeSpinner } from './common/core/services';
+import { BaThemeSpinner } from './common/core/services';
 // import { BaThemeConfig } from './common/core/theme/theme.config';
 import { layoutPaths } from './common/shared/theme/theme.constants';
 
@@ -31,9 +31,6 @@ export class App implements OnInit {
     }
 
 	public ngAfterViewInit(): void {
-		// hide spinner once all loaders are completed
-		BaThemePreloader.load().then((values) => {
-			this._spinner.hide();
-        });
+        this._spinner.hide();
 	}
 }
