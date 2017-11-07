@@ -9,21 +9,24 @@ import { throwIfAlreadyLoaded } from './module-import-guard';
 import { TranslatorService } from './translator/translator.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './net/token/token.interceptor';
+import { ResParserInterceptor } from './net/res-parser/res-parser.interceptor';
 // import { TokenService } from './net/token/token.service';
 
 import {
     DataInquireService,
     AuthGuard,
-    BaThemeSpinner
-    // EchartAdapterService
+    BaThemeSpinner,
+    EchartAdapterService,
+    TableAdapterService,
 } from './services';
 
 const CITYFUN_SERVICES = [
     DataInquireService,
     AuthGuard,
 
-    BaThemeSpinner
-    // EchartAdapterService
+    BaThemeSpinner,
+    EchartAdapterService,
+    TableAdapterService,
 ];
 
 @NgModule({
@@ -32,6 +35,7 @@ const CITYFUN_SERVICES = [
     providers: [
         TranslatorService,
         ...CITYFUN_SERVICES,
+        { provide: HTTP_INTERCEPTORS, useClass: ResParserInterceptor, multi: true},
         { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
     ]
 })

@@ -1020,7 +1020,7 @@ export class OpenLayersService extends MapServiceImpl {
 	}
 
 	showXCIEQueryResults(layerName, data) {
-		console.log(111);
+		// console.log(111);
 
 		let layerId = layerName + '-layer';
 

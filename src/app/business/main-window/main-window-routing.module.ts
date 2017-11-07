@@ -16,7 +16,8 @@ const routes: Routes = [
         children: [
             {
                 path: '',
-                loadChildren: '../../common/feature/map/map.module#MapModule'
+                // loadChildren: '../../common/feature/map/map.module#MapModule'
+                loadChildren: '../visualization/visualization.module#VisualizationModule'
             }
         ]
     }

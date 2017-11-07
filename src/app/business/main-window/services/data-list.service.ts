@@ -81,60 +81,55 @@ export class DataListService extends ErrorHandle {
         } else if (type === ContextMenuType.DATAITEM) {
             return [
                 {
-                    title: 'download',
+                    title: 'Close',
+                    type: SubMenuType.MenuItem,
+                    icon: undefined,
+                    children: undefined,
+                    callback: 'DATA_CHANNEL#data.close',
+                    params: geoData
+                },
+                {
+                    title: 'Save as',
                     type: SubMenuType.MenuItem,
                     icon: undefined,
                     children: undefined,
                     callback: 'DATA_CHANNEL#data.download',
+                    params: geoData
+                },
+                {
+                    title: 'Property',
+                    type: SubMenuType.MenuItem,
+                    icon: undefined,
+                    children: undefined,
+                    callback: 'DATA_CHANNEL#data.property',
+                    params: geoData
+                },
+                {
+                    title: 'Show',
+                    type: SubMenuType.MenuItem,
+                    icon: undefined,
+                    children: undefined,
+                    callback: 'DATA_CHANNEL#data.show',
                     params: geoData
                 }
             ];
         }
     }
 
-    parseUDX(gdid: string): Observable<any> {
-        const url = this.dataInquireService.getServiceById('parseUDX', {
+    parseUDXProp(gdid: string): Observable<any> {
+        const url = this.dataInquireService.getServiceById('parseUDXProp', {
             id: gdid
         });
-        console.log('get: ' + url);
         const options = undefined;
         return this.http.get(url, options);
     }
 
-    subscribeGetDataProp(): Promise<any> {
-        return new Promise((resolve, reject) => {
-            postal
-                .channel('LAYOUT_CHANNEL')
-                .subscribe('propertity-panel.data.show', (data, envelope) => {
-                    const filename = data.filename;
-                    const gdid = data.gdid;
-                    this.parseUDX(data.gdid)
-                        .toPromise()
-                        .then(response => {
-                            if (
-                                _.startsWith(
-                                    _.get(response, 'status.code'),
-                                    '200'
-                                )
-                            ) {
-
-                                const data = _.get(response, 'data');
-                                _.set(data, 'gdid', gdid);
-                                postal
-                                    .channel('DATA_CHANNEL')
-                                    .publish('propertity-panel.data.bind', data);
-                                return resolve(filename);
-                            } else {
-                                this._notification.create(
-                                    'warning',
-                                    'Warning:',
-                                    'parse data properties failed, please retry later!'
-                                );
-                            }
-                        })
-                        .catch(this.handleError);
-                });
+    showUDX(gdid: string): Observable<any> {
+        const url = this.dataInquireService.getServiceById('showUDX', {
+            id: gdid
         });
+        const options = undefined;
+        return this.http.get(url, options);
     }
 
     _hotTableSettingsAdapter(udxTable: UDXTable) {

@@ -9,8 +9,6 @@ import { SharedModule } from './common/shared/shared.module';
 import { CoreModule } from './common/core/core.module';
 import { routing } from './app.routing';
 import { App } from './app.component';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { TokenInterceptor } from './common/core/net/token/token.interceptor';
 
 @NgModule({
     bootstrap: [App],
@@ -29,7 +27,6 @@ import { TokenInterceptor } from './common/core/net/token/token.interceptor';
         CoreModule
     ],
     providers: [
-        // { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
     ]
 })
 export class AppModule {}

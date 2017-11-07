@@ -5,16 +5,17 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 
 import { MENUS } from '../../../../core/config/menu.config';
+import { ErrorHandle } from '../../../../core/base/error-handle';
 
 @Injectable()
-export class BaMenuService {
+export class BaMenuService extends ErrorHandle {
 	menuItems = new BehaviorSubject<any[]>([]);
     headerMenuItems = new BehaviorSubject<any[]>([]);
 
 	protected _currentMenuItem = {};
 
 	constructor(private http: HttpClient, private _router: Router) { 
-
+        super();
 		postal.channel('MENU_CHANNEL').subscribe('menu.update', (data, envelope) => {
             this.updateMenuByRoutes(<Routes>MENUS);
             this.updateHeaderMenuByRoutes(<Routes>MENUS)
@@ -151,11 +152,4 @@ export class BaMenuService {
 		object.selected = this._router.isActive(this._router.createUrlTree(object.route.paths), object.pathMatch === 'full');
 		return object;
 	}
-
-	private handleError(error: any) {
-        let errMsg = (error.message) ? error.message :
-            error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-        console.error(errMsg); // log to console instead
-        return Observable.throw(errMsg);
-    }
 }

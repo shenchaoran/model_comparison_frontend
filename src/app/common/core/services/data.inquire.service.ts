@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Resolve } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/toPromise';
 import { ErrorHandle } from '../../../common/core/base/error-handle';
 
 import { APIS } from '../../core/config/api.config';
@@ -51,8 +52,17 @@ export class DataInquireService extends ErrorHandle implements Resolve<any> {
 
         // attention: body and query can't exist both
         if (query) {
+            let isFirst = true;
             _.forIn(query, (value, key) => {
-                url += '&' + key + '=' + value;
+                if(isFirst) {
+                    url += '?' + key + '=' + value;
+                }
+                else {
+                    url += '&' + key + '=' + value;
+                }
+                if(isFirst) {
+                    isFirst = false;
+                }
             });
         }
 
@@ -81,13 +91,13 @@ export class DataInquireService extends ErrorHandle implements Resolve<any> {
                 let cbTopic = _.split(cb, '#')[1];
                 if (_.startsWith(_.get(res, 'status.code'), '200')) {
                     postal.channel(cbChannel).publish(cbTopic, {
-                        successed: true,
+                        succeed: true,
                         id: serviceId,
                         result: _.get(res, 'data')
                     });
                 } else {
                     postal.channel(cbChannel).publish(cbTopic, {
-                        successed: false
+                        succeed: false
                     });
                 }
             })
@@ -111,8 +121,17 @@ export class DataInquireService extends ErrorHandle implements Resolve<any> {
             });
         }
         if (query) {
+            let isFirst = true;
             _.forIn(query, (value, key) => {
-                url += '&' + key + '=' + value;
+                if(isFirst) {
+                    url += '?' + key + '=' + value;
+                }
+                else {
+                    url += '&' + key + '=' + value;
+                }
+                if(isFirst) {
+                    isFirst = false;
+                }
             });
         }
         return url;

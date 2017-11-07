@@ -91,8 +91,8 @@
     </ng-container>
 
     <ng-container *ngIf='panelData.type === 2'>
-        <hot-table height='500' [contextMenu]='hotContextMenu' (beforeContextMenuSetItems)='hotSetMenu($event)' (afterSelectionEnd)='hotAfterSelectionEnd($event)' [hotId]='hotInstance' [rowHeaders]='true' [colHeaders]='true' [settings]='hotTableSettings' [columns]='hotTableColumns'
-            [data]='hotTableData'></hot-table>
+        <!-- <hot-table height='500' [contextMenu]='hotContextMenu' (beforeContextMenuSetItems)='hotSetMenu($event)' (afterSelectionEnd)='hotAfterSelectionEnd($event)' [hotId]='hotInstance' [rowHeaders]='true' [colHeaders]='true' [settings]='hotTableSettings' [columns]='hotTableColumns' -->
+        <hot-table height='500' [contextMenu]='hotContextMenu' [hotId]='hotInstance' [rowHeaders]='true' [colHeaders]='true' [settings]='hotTableSettings' [columns]='hotTableColumns' [data]='hotTableData'></hot-table>
     </ng-container>
 
     <ng-container *ngIf='panelData.type === 3'>

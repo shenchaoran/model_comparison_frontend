@@ -6,6 +6,7 @@ import { ModelToolService } from '../../services/model-tool.service';
 import { GeoData } from '../data-list/geo-data';
 import { ModelInput } from './modelInput';
 import { PropertyPanelShowType } from './property-panel-show-type';
+import { UDXType } from './UDX-type.enum';
 
 @Component({
     selector: 'app-property-panel',
@@ -46,20 +47,20 @@ export class PropertyPanelComponent implements OnInit, AfterViewInit {
         private hotRegisterer: HotRegisterer
     ) {
         const self = this;
-        this.hotContextMenu = {
-            items: {
-                'chart': {
-                    name: 'chart',
-                    callback: function(key, options) {
-                        // console.log(key, options);
-                        const hot = self.hotRegisterer.getInstance(self.hotInstance);
-                        const range = hot.getSelected();
-                        console.log(hot.getData(range[0], range[1], range[2], range[3]));
-                    }
-                },
-                'copy': {}
-            }
-        };
+        // this.hotContextMenu = {
+        //     items: {
+        //         'copy': {},
+        //         'chart': {
+        //             name: 'chart',
+        //             callback: function(key, options) {
+        //                 // console.log(key, options);
+        //                 const hot = self.hotRegisterer.getInstance(self.hotInstance);
+        //                 const range = hot.getSelected();
+        //                 console.log(hot.getData(range[0], range[1], range[2], range[3]));
+        //             }
+        //         }
+        //     }
+        // };
     }
 
     ngOnInit() {
@@ -68,13 +69,13 @@ export class PropertyPanelComponent implements OnInit, AfterViewInit {
             .subscribe('data.add', (data, envelope) => {
                 this.dataOptions = _.concat(this.dataOptions, data);
                 // this.dataOptions.push(data);
-                console.log(this.dataOptions);
+                // console.log(this.dataOptions);
             });
 
         postal
             .channel('MODEL_TOOL_CHANNEL')    
             .subscribe('invokeModelTool', (data, envelope) => {
-                if (data.successed) {
+                if (data.succeed) {
                     this.msrid = data.result.msrid;
                     const params = {
                         id: this.msrid
@@ -94,7 +95,7 @@ export class PropertyPanelComponent implements OnInit, AfterViewInit {
         postal
             .channel('MODEL_TOOL_CHANNEL')
             .subscribe('getInvokeRecord', (data, envelope) => {
-                if (data.successed) {
+                if (data.succeed) {
                     const msr = data.result;
                     if (msr.msr_time === 0) {
                         setTimeout(() => {
@@ -114,7 +115,7 @@ export class PropertyPanelComponent implements OnInit, AfterViewInit {
                         this._notification.create(
                             'success',
                             'Info:',
-                            `model ${this.panelData.data.msname} run successed!`
+                            `model ${this.panelData.data.msname} run succeed!`
                         );
                         // add msr output to data options
                         let newdatas = [];
@@ -142,15 +143,18 @@ export class PropertyPanelComponent implements OnInit, AfterViewInit {
                     );
                 }
             });
+
         postal
             .channel('DATA_CHANNEL')
             .subscribe('propertity-panel.data.bind', (data,envelope) => {
-                this.hotTableColumns = data.columns;
-                this.hotTableData = data.data;
+                if(data.type === UDXType.TABLE) {
+                    this.hotTableColumns = data.parsed.columns;
+                    this.hotTableData = data.parsed.data;
 
-                this.hotInstance = data.gdid;
-                const hot = this.hotRegisterer.getInstance(this.hotInstance);
-                this.hotTableIsLoading = false;
+                    this.hotInstance = data.gdid;
+                    this.hotTableIsLoading = false;
+                }
+                
             });
     }
 
@@ -229,14 +233,14 @@ export class PropertyPanelComponent implements OnInit, AfterViewInit {
         this.loadingExecuteBtn = true;
     }
 
-    hotAfterSelectionEnd(e) {
-        const hot = this.hotRegisterer.getInstance(this.hotInstance);
-        const range = hot.getSelected();
-        hot.getData(range[0], range[1], range[2], range[3]);
-    }
+    // hotAfterSelectionEnd(e) {
+    //     const hot = this.hotRegisterer.getInstance(this.hotInstance);
+    //     const range = hot.getSelected();
+    //     hot.getData(range[0], range[1], range[2], range[3]);
+    // }
 
-    hotSetMenu(e) {
-        console.log(e);
+    // hotSetMenu(e) {
+    //     console.log(e);
 
-    }
+    // }
 }

@@ -13,7 +13,7 @@
     /* autoprefixer: off */
     grid-column: 1/2;
     grid-row: 1/2;
-    z-index: 3000;
+    z-index: 999;
     padding: 0 5px;
     display: flex;
     // border-bottom: 1px solid #ebebeb;
@@ -24,7 +24,7 @@
     /* autoprefixer: off */
     grid-column: 1/2;
     grid-row: 2/3;
-    z-index: 1000;
+    z-index: 999;
     overflow: hidden;
 }
 

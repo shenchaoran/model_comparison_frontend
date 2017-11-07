@@ -55,6 +55,7 @@
     "roboto-fontface": "0.7.0",
     "rxjs": "^5.4.2",
     "ts-md5": "^1.2.0",
+    "uuid": "^3.1.0",
     "wicket": "git+https://github.com/dyh333/Wicket.git",
     "zone.js": "^0.8.14"
   },

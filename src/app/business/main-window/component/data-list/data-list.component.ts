@@ -47,7 +47,10 @@ export class DataListComponent implements OnInit, AfterViewInit {
                 tag: '',
                 type: ''
             },
-            fieldName: 'geo_data'
+            fieldName: 'geo_data',
+            customHeaders: {
+                'Authorization': 'bearer ' + JSON.parse(localStorage.getItem('jwt')).token
+            }
         };
         this.dataList.push({
             gdid: 'gd_4d840810-bddd-11e7-8997-5576787ba1b7',
@@ -73,13 +76,29 @@ export class DataListComponent implements OnInit, AfterViewInit {
                 const downloadService = this.dataInquireService.getServiceById('downloadData', {id: data.gdid}, {filename: data.filename});
                 window.open(downloadService);
             });
+
+        postal
+            .channel('DATA_CHANNEL')
+            .subscribe('data.close', (data, envelope) => {
+                _.remove(this.dataList, item => {
+                    return item.gdid === data.gdid;
+                });
+                // TODO others clear operation
+            });
+
+        postal
+            .channel('DATA_CHANNEL')
+            .subscribe('data.property', (data, envelope) => {
+                const selected = _.find(this.dataList, item => item.gdid === data.gdid);
+                this.onDataToolClick(selected);
+            });
     }
 
     registerContextMenuEvent() {
         postal
             .channel('MENU_CHANNEL')
             .subscribe('data.add.raw', (data, envelope) => {
-                console.log('data.add.raw');
+                // console.log('data.add.raw');
                 this.fileUploaderOptions.data.type = GeoDataType.RAW;
                 this.uploadProgress = 0;
                 this.renderer.invokeElementMethod(
@@ -92,7 +111,7 @@ export class DataListComponent implements OnInit, AfterViewInit {
             .channel('MENU_CHANNEL')
             .subscribe('data.add.UDX', (data, envelope) => {
                 this.fileUploaderOptions.data.type = GeoDataType.UDX;
-                console.log('data.add.UDX');
+                // console.log('data.add.UDX');
                 this.uploadProgress = 0;
                 this.renderer.invokeElementMethod(
                     this._fileUpload.nativeElement,
@@ -153,7 +172,7 @@ export class DataListComponent implements OnInit, AfterViewInit {
                 this._notification.create(
                     'success',
                     'Info:',
-                    'loading data successed!'
+                    'loading data succeed!'
                 );
                 postal
                     .channel('DATA_CHANNEL')
@@ -171,6 +190,9 @@ export class DataListComponent implements OnInit, AfterViewInit {
     onDataToolClick(data) {
         // jQuery('#container li').removeClass('selected-li');
         this.selectedLi = data
-        postal.channel('LAYOUT_CHANNEL').publish('propertity-panel.data.show', this.selectedLi);
+        postal
+            .channel('LAYOUT_CHANNEL')
+            .publish('propertity-panel.data.show', this.selectedLi);
     }
 }
+

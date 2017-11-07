@@ -32,9 +32,16 @@
     </div>
     <div class="box-item" nz-col [nzXs]="nzSpans[2].xs" [nzSm]="nzSpans[2].sm" [nzMd]="nzSpans[2].md" [nzLg]="nzSpans[2].lg" [nzXl]="nzSpans[2].xl">
         <div class='box-item-container'>
-            <div style="width: 100%; height: 100%;">
-                <router-outlet></router-outlet>
-            </div>
+            <nz-card id='visual-card'>
+                <ng-template #title>
+                    <ng-container>
+                        Visualization: {{visualTitle}}
+                    </ng-container>
+                </ng-template>
+                <ng-template #body>
+                    <router-outlet></router-outlet>
+                </ng-template>
+            </nz-card>
         </div>
     </div>
 </div>

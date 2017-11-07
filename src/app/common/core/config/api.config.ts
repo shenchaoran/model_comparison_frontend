@@ -83,7 +83,12 @@ export const APIS = [{
     "url": "http://127.0.0.1:9999/data/:id/download"
 },
 {
-    "uid": "parseUDX",
+    "uid": "parseUDXProp",
     "name": "",
-    "url": "http://127.0.0.1:9999/data/:id/parse"
+    "url": "http://127.0.0.1:9999/data/:id/property"
+},
+{
+    "uid": "showUDX",
+    "name": "",
+    "url": "http://127.0.0.1:9999/data/:id/show"
 }];

@@ -19,10 +19,8 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 
 /**
- * TOKEN拦截器，其注册细节见 `webNJGIS.module`
- * 因为app.module引用了core.module,所以app.module不用注册
- * 相反的，webNJGIS.module没有引用，所以要注册
- * 只有注册了的module才会被拦截器拦截
+ * TOKEN拦截器，其注册细节见 `core.module`
+ * 拦截器执行顺序和注册顺序相反
  */
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
@@ -32,9 +30,6 @@ export class TokenInterceptor implements HttpInterceptor {
         // region 跳过不需要登录认证的url
         const url = req.url;
         const skipUrls = [
-            'login',
-            'register',
-            'find-psw',
             'config/',
             'assets/'
         ];
@@ -68,12 +63,8 @@ export class TokenInterceptor implements HttpInterceptor {
                         if (event instanceof HttpResponse) {
                             // my wrapped http standard resource
                             if (_.has(event.body, 'app')) {
-                                if (
-                                    !_.startsWith(
-                                        _.get(event.body, 'status.code'),
-                                        '200'
-                                    )
-                                ) {
+                                if (_.startsWith(_.get(event.body, 'status.code'), '200')) {
+                                    // console.log('interceptor 1');
                                     // success
                                     return Observable.create(observer =>
                                         observer.next(event)

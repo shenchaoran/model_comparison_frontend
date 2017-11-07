@@ -38,7 +38,7 @@ export class LoginService extends ErrorHandle {
                             this.router.navigate(['/login']);
                             observer.next(err);
                         } else {
-                            console.log(APP_CONFIG.defaultroute);
+                            // console.log(APP_CONFIG.defaultroute);
                             localStorage.setItem('jwt',JSON.stringify(res.data.jwt));
                             this.router.navigate(['/' + APP_CONFIG.defaultroute]);
                         }

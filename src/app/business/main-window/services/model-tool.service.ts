@@ -11,7 +11,7 @@ export class ModelToolService implements Resolve<any> {
             postal
                 .channel('MODEL_TOOL_CHANNEL')
                 .subscribe('getModelTools', (data, envelope) => {
-                    if (data.successed) {
+                    if (data.succeed) {
                         observer.next(data.result);
                         observer.complete();
                     } else {

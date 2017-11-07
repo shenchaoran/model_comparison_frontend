@@ -8,6 +8,7 @@ import { NgxSharedModule } from '../../common/ngx-shared/ngx-shared.module';
 import { SharedModule } from '../../common/shared/shared.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from '../../common/core/net/token/token.interceptor';
+import { ResParserInterceptor } from '../../common/core/net/res-parser/res-parser.interceptor';
 
 import {
     MainWindowComponent,
@@ -53,7 +54,9 @@ const SERVICES = [
     declarations: [...COMPONENTS],
     providers: [
         ...SERVICES,
+        { provide: HTTP_INTERCEPTORS, useClass: ResParserInterceptor, multi: true},
         { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
+        
     ]
 })
 export class MainWindowModule {}

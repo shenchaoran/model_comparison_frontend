@@ -12,7 +12,6 @@ export class AuthGuard implements CanActivate {
 
     canActivate(): boolean {
         let jwt = JSON.parse(localStorage.getItem('jwt'));
-        console.log(jwt !== null, jwt.expires > Date.now());
         if (jwt !== null && jwt.expires > Date.now()) {
             return true;
         } else {
