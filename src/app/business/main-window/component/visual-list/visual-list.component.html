@@ -1,0 +1,3 @@
+<jqxTree #jqTree [toggleMode]="'click'" [theme]='"energyblue"' (onInitialized)='bindContextMenu()' [width]="'100%'" [height]="'100%'" [source]="treeSrc"></jqxTree>
+
+<jqxMenu #treeMenu [source]='menuSrc' (onItemclick)="onMenuItemClick($event)" [width]="120" [height]="56" [autoOpenPopup]="false" [mode]="'popup'"></jqxMenu>

@@ -14,7 +14,9 @@ import { EchartAdapterService } from '../../common/core/services/echartAdapter.s
     VisualizationRoutes,
     EchartsNg2Module,
   ],
-  declarations: [VisualizationComponent],
+  declarations: [
+      VisualizationComponent,
+    ],
   providers: [
     EchartAdapterService
   ]

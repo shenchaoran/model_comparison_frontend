@@ -2,6 +2,7 @@ import { NgModule, ApplicationRef } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
+import { ClarityModule } from "clarity-angular";
 
 import { AppTranslationModule } from './app.translation.module';
 import { NgxSharedModule } from './common/ngx-shared/ngx-shared.module';
@@ -12,7 +13,9 @@ import { App } from './app.component';
 
 @NgModule({
     bootstrap: [App],
-    declarations: [App],
+    declarations: [
+        App
+    ],
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
@@ -24,7 +27,7 @@ import { App } from './app.component';
         NgxSharedModule,
         AppTranslationModule,
         SharedModule.forRoot(),
-        CoreModule
+        CoreModule,
     ],
     providers: [
     ]

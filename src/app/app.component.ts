@@ -15,7 +15,6 @@ import { layoutPaths } from './common/shared/theme/theme.constants';
 	styleUrls: ['./app.component.scss']
 })
 export class App implements OnInit {
-
 	isMenuCollapsed: boolean = false;
 
 	constructor(

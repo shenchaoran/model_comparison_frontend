@@ -20,7 +20,8 @@
         "testTsconfig": "tsconfig.spec.json",
         "prefix": "app",
         "styles": [
-            "styles.scss"
+            "styles.scss",
+            "../node_modules/jqwidgets-framework/jqwidgets/styles/jqx.base.css"
         ],
         "scripts": [
             "../node_modules/jquery/dist/jquery.js",
@@ -28,7 +29,25 @@
             "../node_modules/tether/dist/js/tether.js",
             "../node_modules/chroma-js/chroma.js",
             "../node_modules/lodash/",
-            "../node_modules/postal/lib/postal.min.js"
+            "../node_modules/postal/lib/postal.min.js",
+
+            "../node_modules/@webcomponents/custom-elements/custom-elements.min.js",
+            "../node_modules/clarity-icons/clarity-icons.min.js",
+
+            "../node_modules/jqwidgets-framework/jqwidgets/jqxcore.js",
+            "../node_modules/jqwidgets-framework/jqwidgets/jqxdata.js",
+            "../node_modules/jqwidgets-framework/jqwidgets/jqxbuttons.js",
+            "../node_modules/jqwidgets-framework/jqwidgets/jqxscrollbar.js",
+            "../node_modules/jqwidgets-framework/jqwidgets/jqxmenu.js",
+            "../node_modules/jqwidgets-framework/jqwidgets/jqxcheckbox.js",
+            "../node_modules/jqwidgets-framework/jqwidgets/jqxlistbox.js",
+            "../node_modules/jqwidgets-framework/jqwidgets/jqxdropdownlist.js",
+            "../node_modules/jqwidgets-framework/jqwidgets/jqxgrid.js",
+            "../node_modules/jqwidgets-framework/jqwidgets/jqxgrid.sort.js",
+            "../node_modules/jqwidgets-framework/jqwidgets/jqxgrid.pager.js",
+            "../node_modules/jqwidgets-framework/jqwidgets/jqxgrid.selection.js",
+            "../node_modules/jqwidgets-framework/jqwidgets/jqxgrid.edit.js",
+            "../node_modules/jqwidgets-framework/jqwidgets/jqxtree.js"
         ],
         "environmentSource": "environments/environment.ts",
         "environments": {

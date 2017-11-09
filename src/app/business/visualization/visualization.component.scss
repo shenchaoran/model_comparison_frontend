@@ -1,3 +1,8 @@
 .line-H {
     line-height: 33px;
 }
+
+jqxtree>div:first-child {
+    height: 100%;
+    border: none;
+}

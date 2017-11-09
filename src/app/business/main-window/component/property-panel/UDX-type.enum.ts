@@ -6,5 +6,7 @@ export enum UDXType {
     GRID,
     GEOTIFF,
     SPC,
-    TIN
+    TIN,
+
+    TABLE_COMPARE
 }

@@ -1,5 +1,9 @@
 /* You can add global styles to this file; and also import other style files */
 
+// add by SCR
+// @import "../node_modules/clarity-icons/clarity-icons.min.css";
+// @import "../node_modules/clarity-ui/clarity-ui.min.css";
+// end
 @import "../node_modules/roboto-fontface/css/roboto/roboto-fontface.css";
 @import "../node_modules/normalize.css/normalize.css";
 @import '../node_modules/font-awesome/css/font-awesome.css';
@@ -10,3 +14,5 @@
 @import "app/common/shared/theme/theme.scss";
 // add by SCR
 @import '~handsontable/dist/handsontable.full.css';
+// @import '~angular-tree-component/dist/angular-tree-component.css';
+// end

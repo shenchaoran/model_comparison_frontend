@@ -166,6 +166,7 @@ export class MainWindowComponent extends ErrorHandle implements OnInit, AfterVie
             'line-height': '38px',
             padding: '0 5px'
         });
+        jQuery('#manager-card .ant-card-head h3').css('line-height', '38px');
         let cardBodyH = parseInt(jQuery('nz-card').css('height')) - 38 + 'px';
         jQuery('#manager-card .ant-card-head h3').css('font-size', '16px');
         jQuery('#manager-card .ant-card-body').css({
@@ -178,6 +179,7 @@ export class MainWindowComponent extends ErrorHandle implements OnInit, AfterVie
             'line-height': '38px',
             padding: '0 5px'
         });
+        jQuery('#visual-card .ant-card-head h3').css('line-height', '38px');
         cardBodyH = parseInt(jQuery('nz-card').css('height')) - 38 + 'px';
         jQuery('#visual-card .ant-card-head h3').css('font-size', '16px');
         jQuery('#visual-card .ant-card-body').css({
@@ -190,6 +192,7 @@ export class MainWindowComponent extends ErrorHandle implements OnInit, AfterVie
             'line-height': '38px',
             padding: '0 5px'
         });
+        jQuery('#invork-card .ant-card-head h3').css('line-height', '38px');
         jQuery('#invork-card .ant-card-head h3').css('font-size', '16px');
         jQuery('#invork-card .ant-card-extra').css({
             right: '13px',

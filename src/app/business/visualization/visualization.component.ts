@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import * as uuidv1 from 'uuid/v1';
 
 import { VisualType } from './visualType.enum';
@@ -8,6 +8,9 @@ import { ErrorHandle } from '../../common/core/base/error-handle';
 import { NzNotificationService } from 'ng-zorro-antd';
 import { UDXType } from '../main-window/component/property-panel/UDX-type.enum';
 import { EchartAdapterService } from '../../common/core/services/echartAdapter.service';
+import { NJTable } from './table-cfg.class';
+import { NJMap, NJLayer } from './map-cfg.class';
+import { NJDiagram } from './diagram-cfg.class';
 
 @Component({
     selector: 'app-visualization',
@@ -15,36 +18,21 @@ import { EchartAdapterService } from '../../common/core/services/echartAdapter.s
     styleUrls: ['./visualization.component.scss']
 })
 export class VisualizationComponent extends ErrorHandle implements OnInit {
+    @ViewChild('echarts') echarts: any;
     visualType: VisualType = null;
 
-    // hot table setting
-    showDiagramModal: boolean = false;
-    hotTableIsLoading: boolean = true;
-    hotTableInstance = null;
-    hotTableSettings: object = {
-        afterLoadData: firstLoad => {
-            if (!firstLoad) {
-                this.hotTableIsLoading = false;
-            }
-        }
-    };
-    hotTableColumns: Array<{
-        data: string;
-        title: string;
-        type?: string;
-    }> = null;
-    hotTableData: Array<any> = null;
-    hotContextMenu = null;
+    // table setting
+    njTable: NJTable = new NJTable();
 
-    // e-chart setting
+    // diagram setting
     // 在manager->visualization中统计
-    selectedChartId: string = null;
-    eChartOptions: any = {};
+    njDiagramList: Array<NJDiagram> = [];
+    selectedDiagramId: string = null;
+    selectedDiagramOpt: any = null;
 
-
-
-    // e-chart modal cfg
-    selectedChartType = null;
+    // diagram modal cfg
+    showDiagramModal: boolean = false;
+    selectedDiagramType = null;
     chartTypeOptions = [
         {
             value: 'line',
@@ -87,7 +75,7 @@ export class VisualizationComponent extends ErrorHandle implements OnInit {
         super();
         const self = this;
 
-        this.hotContextMenu = {
+        this.njTable.hotTableCfg.contextMenu = {
             items: {
                 copy: {},
                 chart: {
@@ -96,7 +84,7 @@ export class VisualizationComponent extends ErrorHandle implements OnInit {
                     callback: function(key, options) {
                         // console.log(key, options);
                         // const hot = self.hotRegisterer.getInstance(
-                        //     self.hotTableInstance
+                        //     self.njTable.hotTableCfg.instance
                         // );
                         // const range = hot.getSelected();
                         // console.log(hot.getData(range[0], range[1], range[2], range[3]));
@@ -128,26 +116,34 @@ export class VisualizationComponent extends ErrorHandle implements OnInit {
                             if (resData.type === UDXType.TABLE) {
                                 this.visualType = VisualType.Table;
 
-                                this.hotTableColumns = resData.parsed.columns;
-                                this.hotTableData = resData.parsed.data;
+                                this.njTable.geodata = data;
+                                this.njTable.hotTableCfg.cols =
+                                    resData.parsed.columns;
+                                this.njTable.hotTableCfg.data =
+                                    resData.parsed.data;
 
-                                this.hotTableInstance = data.gdid;
-                                this.hotTableIsLoading = false;
+                                this.njTable.hotTableCfg.instance = data.gdid;
+                                this.njTable.hotTableCfg.loading = false;
 
-
-                                this._xAxisOptions = _.map(this.hotTableColumns, col => {
-                                    return {
-                                        value: col.title,
-                                        label: col.title
-                                    };
-                                });
-                                this._yAxisOptions = _.map(this.hotTableColumns, col => {
-                                    return {
-                                        value: col.title,
-                                        label: col.title,
-                                        checked: false
-                                    };
-                                });
+                                this._xAxisOptions = _.map(
+                                    this.njTable.hotTableCfg.cols,
+                                    col => {
+                                        return {
+                                            value: col.title,
+                                            label: col.title
+                                        };
+                                    }
+                                );
+                                this._yAxisOptions = _.map(
+                                    this.njTable.hotTableCfg.cols,
+                                    col => {
+                                        return {
+                                            value: col.title,
+                                            label: col.title,
+                                            checked: false
+                                        };
+                                    }
+                                );
                             } else {
                             }
                         } else {
@@ -159,56 +155,120 @@ export class VisualizationComponent extends ErrorHandle implements OnInit {
                     })
                     .catch(this.handleError);
             });
+
+        postal
+            .channel('LAYOUT_CHANNEL')
+            .subscribe('propertity-panel.hide', (data, envelope) => {
+                this.onResize(null);
+            });
+
+        postal
+            .channel('LAYOUT_CHANNEL')
+            .subscribe('propertity-panel.data.show', (data, envelope) => {
+                this.onResize(null);
+            });
+
+        postal
+            .channel('LAYOUT_CHANNEL')
+            .subscribe('propertity-panel.model.show', (data, envelope) => {
+                this.onResize(null);
+            });
+
+        postal
+            .channel('VISUALIZATION')
+            .subscribe('diagram.show', (data, envelope) => {
+                this.visualType = VisualType.Diagram;
+                this.selectedDiagramId = data;
+            });
+
+        postal
+            .channel('VISUALIZATION')
+            .subscribe('diagram.close', (data, envelope) => {
+                if (data === this.selectedDiagramId) {
+                    this.selectedDiagramId = null;
+                    this.selectedDiagramOpt = null;
+                }
+                _.remove(this.njDiagramList, diagram => {
+                    return diagram.guid === data;
+                });
+            });
+
+        postal
+            .channel('VISUALIZATION')
+            .subscribe('map.show', (data, envelope) => {});
+
+        postal
+            .channel('VISUALIZATION')
+            .subscribe('map.close', (data, envelope) => {});
+
+        postal
+            .channel('VISUALIZATION')
+            .subscribe('layer.close', (data, envelope) => {});
+
+        postal
+            .channel('VISUALIZATION')
+            .subscribe('map.closeAll', (data, envelope) => {});
+
+        postal
+            .channel('VISUALIZATION')
+            .subscribe('diagram.closeAll', (data, envelope) => {
+                this.selectedDiagramId = null;
+                this.njDiagramList = [];
+            });
     }
 
     checkChartCfg() {
-        if(this.selectedChartType == null || this.selectedXAxis == null) {
+        if (this.selectedDiagramType == null || this.selectedXAxis == null) {
             this._canSubmit = false;
-            return ;
+            return;
         }
-        const chartType = this.selectedChartType.value;
+        const chartType = this.selectedDiagramType.value;
         const xAxis = this.selectedXAxis.value;
-        const yAxises = _
-                            .chain(this._yAxisOptions)
-                            .filter('checked')
-                            .map(option => option.value)
-                            .value();
-        if(chartType != null && xAxis!= null && yAxises.length != 0) {
+        const yAxises = _.chain(this._yAxisOptions)
+            .filter('checked')
+            .map(option => option.value)
+            .value();
+        if (chartType != null && xAxis != null && yAxises.length != 0) {
             this._canSubmit = true;
-        }
-        else {
+        } else {
             this._canSubmit = false;
         }
     }
 
     submitDiagramModal(e) {
+        let njDiagram = new NJDiagram();
+        njDiagram.geodata = this.njTable.geodata;
         const hot = this.hotRegisterer.getInstance(
-            this.hotTableInstance
+            this.njTable.hotTableCfg.instance
         );
-        const xColI = _
-                        .chain(this.hotTableColumns)
-                        .findIndex((col) => col.title === this.selectedXAxis.value)
-                        .value();
+        const xColI = _.chain(this.njTable.hotTableCfg.cols)
+            .findIndex(col => col.title === this.selectedXAxis.value)
+            .value();
         const xAxisData = hot.getDataAtCol(xColI);
         let yColHeaders = [];
-        const yColIs = _
-                        .chain(this._yAxisOptions)
-                        .filter('checked')
-                        .map(option => {
-                            const colHeader = option.value;
-                            yColHeaders.push(colHeader);
-                            return _
-                                    .chain(this.hotTableColumns)
-                                    .findIndex((col) => col.title === colHeader)
-                                    .value();
-                        })
-                        .value();
+        const yColIs = _.chain(this._yAxisOptions)
+            .filter('checked')
+            .map(option => {
+                const colHeader = option.value;
+                yColHeaders.push(colHeader);
+                return _.chain(this.njTable.hotTableCfg.cols)
+                    .findIndex(col => col.title === colHeader)
+                    .value();
+            })
+            .value();
         const yAxisDatas = _.map(yColIs, yColI => hot.getDataAtCol(yColI));
-        const coreOption = this.echartAdapterService.multiSeries2DAdapter(xAxisData, yAxisDatas, yColHeaders);
-        const option = this.echartAdapterService.multiSeries2DAssembler(coreOption, this.selectedChartType.value);
-        
+        const coreOption = this.echartAdapterService.multiSeries2DAdapter(
+            xAxisData,
+            yAxisDatas,
+            yColHeaders
+        );
+        const option = this.echartAdapterService.multiSeries2DAssembler(
+            coreOption,
+            this.selectedDiagramType.value
+        );
+
         const length = xAxisData.length;
-        const percent = 10000/length;
+        const percent = 10000 / length;
 
         (<any>option).dataZoom = [
             {
@@ -221,7 +281,7 @@ export class VisualizationComponent extends ErrorHandle implements OnInit {
                 type: 'slider',
                 show: true,
                 yAxisIndex: [0],
-                left: '93%',
+                left: '93%'
             },
             {
                 type: 'inside',
@@ -232,20 +292,31 @@ export class VisualizationComponent extends ErrorHandle implements OnInit {
                 type: 'inside',
                 yAxisIndex: [0]
             }
-        ]
+        ];
 
         const guid = uuidv1();
-        this.eChartOptions[guid] = option;
-        this.selectedChartId = guid;
+        this.selectedDiagramId = guid;
+        this.selectedDiagramOpt = option;
         this.visualType = 2;
-        postal
-            .channel('VISUALIZATION')
-            .publish('diagram.add', option);
+        njDiagram.guid = guid;
+        njDiagram.option = option;
+        this.njDiagramList.push(njDiagram);
+        postal.channel('VISUALIZATION').publish('diagram.add', {
+            guid: guid,
+            label: this.njTable.geodata.filename
+        });
 
         this.showDiagramModal = false;
     }
 
     cancelDiagramModal(e) {
         this.showDiagramModal = false;
+    }
+
+    onResize(e) {
+        // TODO size control
+        if(this.echarts) {
+            this.echarts.resize();
+        }
     }
 }

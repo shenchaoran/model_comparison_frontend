@@ -9,7 +9,7 @@
     grid-template-rows: 50px auto;
 }
 
-.header {
+.nav-header {
     /* autoprefixer: off */
     grid-column: 1/2;
     grid-row: 1/2;
@@ -24,7 +24,7 @@
     /* autoprefixer: off */
     grid-column: 1/2;
     grid-row: 2/3;
-    z-index: 999;
+    // z-index: 999;
     overflow: hidden;
 }
 
