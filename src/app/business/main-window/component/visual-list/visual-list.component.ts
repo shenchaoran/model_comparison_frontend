@@ -60,16 +60,6 @@ export class VisualListComponent implements OnInit, AfterViewInit {
     }
 
     bindContextMenu() {
-        this.addDiagram2Tree({
-            id: '23',
-            label: 'asdflj',
-
-        });
-        this.addMap2Tree({
-            id: '23',
-            label: 'asdflj',
-
-        });
         document.addEventListener('contextmenu', event => {
             if ((<any>event.target).classList.contains('jqx-tree-item')) {
                 event.preventDefault();

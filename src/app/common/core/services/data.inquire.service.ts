@@ -105,7 +105,7 @@ export class DataInquireService extends ErrorHandle implements Resolve<any> {
     }
 
     // 根据serviceId获取url，如果传入了params和query，则根据两个参数解析url
-    public getServiceById (id: string, params?: any, query?: any): string {
+    public getServiceById (id: string, params?: any, query?: any, appendJWT?: boolean): string {
         const service: any = _.find(APIS, function(item) {
             return (<any>item).uid === id;
         });
@@ -133,6 +133,19 @@ export class DataInquireService extends ErrorHandle implements Resolve<any> {
                     isFirst = false;
                 }
             });
+        }
+        if(appendJWT) {
+            if(query) {
+                url += '&';
+            }
+            else {
+                url += '?';
+            }
+            const jwtStr = localStorage.getItem('jwt');
+            if(jwtStr) {
+                const jwt = JSON.parse(jwtStr);
+                url += `Authorization=bearer ${jwt.token}`;
+            }
         }
         return url;
     }

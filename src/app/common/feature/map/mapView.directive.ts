@@ -1,4 +1,4 @@
-import { Directive, ViewContainerRef, ReflectiveInjector, ComponentFactoryResolver, ComponentFactory, ComponentRef } from '@angular/core';
+import { Directive, ViewContainerRef, ComponentFactoryResolver, ComponentFactory, ComponentRef } from '@angular/core';
 
 import { Map } from './basemap/map.component';
 import { SwipeMap } from './basemap/swipeMap.component';

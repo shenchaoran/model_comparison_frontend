@@ -73,7 +73,9 @@ export class DataListComponent implements OnInit, AfterViewInit {
         postal
             .channel('DATA_CHANNEL')
             .subscribe('data.download', (data, envelope) => {
-                const downloadService = this.dataInquireService.getServiceById('downloadData', {id: data.gdid}, {filename: data.filename});
+                // 此处将Authorization放在query中
+                const downloadService = this.dataInquireService.getServiceById('downloadData', {id: data.gdid}, {filename: data.filename}, true);
+                // this.dataListService.downloadUDX(downloadService);
                 window.open(downloadService);
             });
 

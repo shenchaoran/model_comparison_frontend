@@ -135,4 +135,14 @@ export class DataListService extends ErrorHandle {
     _hotTableSettingsAdapter(udxTable: UDXTable) {
 
     }
+
+    // downloadUDX(url: string) {
+    //     this.http
+    //             .get(url, {
+    //                 responseType: 'text'
+    //             })
+    //             .subscribe(event => {
+    //                 console.log(event);
+    //             }, this.handleError);
+    // }
 }
