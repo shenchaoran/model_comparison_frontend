@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/toPromise';
 import { ErrorHandle } from '../../../common/core/base/error-handle';
 
-import { APIS } from '../../core/config/api.config';
+import { APIS, BACKEND } from '../../core/config/api.config';
 
 @Injectable()
 export class DataInquireService extends ErrorHandle implements Resolve<any> {
@@ -44,6 +44,7 @@ export class DataInquireService extends ErrorHandle implements Resolve<any> {
         }
 
         let url = service.url;
+        url = `http://${BACKEND.host}:${BACKEND.port}${url}`;
         if (params) {
             _.forIn(params, (value, key) => {
                 url = _.replace(url, ':' + key, value);
@@ -115,6 +116,7 @@ export class DataInquireService extends ErrorHandle implements Resolve<any> {
         }
 
         let url = service.url;
+        url = `http://${BACKEND.host}:${BACKEND.port}${url}`;
         if (params) {
             _.forIn(params, (value, key) => {
                 url = _.replace(url, ':' + key, value);

@@ -5,90 +5,95 @@ export class APIClass {
     method?: string;
 }
 
+export const BACKEND = {
+    host: '172.21.213.146',
+    port: '9999'
+}
+
 export const APIS = [{
     "uid": "login",
     "name": "",
-    "url": "http://127.0.0.1:9999/auth/login"
+    "url": "/auth/login"
 },{
     "uid": "logout",
     "name": "",
-    "url": "http://127.0.0.1:9999/auth/logout"
+    "url": "/auth/logout"
 },{
     "uid": "register",
     "name": "",
-    "url": "http://127.0.0.1:9999/auth/register"
+    "url": "/auth/register"
 },{
     "uid": "find-psw",
     "name": "",
-    "url": "http://127.0.0.1:9999/auth/find-psw"
+    "url": "/auth/find-psw"
 },
 
 {
     "uid": "getModelTools",
     "name": "",
-    "url": "http://127.0.0.1:9999/model-tools"
+    "url": "/model-tools"
 },
 {
     "uid": "getModelTool",
     "name": "",
-    "url": "http://127.0.0.1:9999/model-tools/:id"
+    "url": "/model-tools/:id"
 },
 {
     "uid": "getModelInput",
     "name": "",
-    "url": "http://127.0.0.1:9999/model-tools/:id/input"
+    "url": "/model-tools/:id/input"
 },
 {
     "uid": "invokeModelTool",
     "name": "",
-    "url": "http://127.0.0.1:9999/model-tools/:id/invoke"
+    "url": "/model-tools/:id/invoke"
 },
 {
     "uid": "getInvokeRecord",
     "name": "",
-    "url": "http://127.0.0.1:9999/model-tools/records/:id"
+    "url": "/model-tools/records/:id"
 },
 
 
 {
     "uid": "getDataTools",
     "name": "",
-    "url": "http://127.0.0.1:9999/data-tools"
+    "url": "/data-tools"
 },
 {
     "uid": "getDataTool",
     "name": "",
-    "url": "http://127.0.0.1:9999/data-tools/:id"
+    "url": "/data-tools/:id"
 },
 {
     "uid": "getDataInput",
     "name": "",
-    "url": "http://127.0.0.1:9999/data-tools/:id/input"
+    "url": "/data-tools/:id/input"
 },
 {
     "uid": "invokeDataTool",
     "name": "",
-    "url": "http://127.0.0.1:9999/data-tools/:id/invoke"
+    "url": "/data-tools/:id/invoke"
 },
 
 
 {
     "uid": "postData",
     "name": "",
-    "url": "http://127.0.0.1:9999/data/upload"
+    "url": "/data/upload"
 },
 {
     "uid": "downloadData",
     "name": "",
-    "url": "http://127.0.0.1:9999/data/:id/download"
+    "url": "/data/:id/download"
 },
 {
     "uid": "parseUDXProp",
     "name": "",
-    "url": "http://127.0.0.1:9999/data/:id/property"
+    "url": "/data/:id/property"
 },
 {
     "uid": "showUDX",
     "name": "",
-    "url": "http://127.0.0.1:9999/data/:id/show"
+    "url": "/data/:id/show"
 }];
