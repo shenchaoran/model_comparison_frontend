@@ -14,6 +14,9 @@
 @import "app/common/shared/theme/theme.scss";
 // add by SCR
 @import '../node_modules/handsontable/dist/handsontable.full.css';
+@import "./app/common/shared/theme/css/perfectscroll.css";
+@import "./app/common/shared/theme/css/nouislider.min.css";
+@import "./app/common/shared/theme/css/ng2-tree-styles.css";
 // TODO relative path problems
 // @import '~jqwidgets-framework/jqwidgets/styles/jqx.base';
 // @import '../node_modules/jqwidgets-framework/jqwidgets/styles/jqx.energyblue';
