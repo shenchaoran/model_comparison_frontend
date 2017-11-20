@@ -174,7 +174,7 @@ export class PropertyPanelComponent implements OnInit, AfterViewInit {
                             newdatas.push({
                                 _id: output.DataId,
                                 // gdid: output.DataId,
-                                filename: output.Tag,
+                                filename: output.filename,
                                 tag: output.Tag,
                                 path: '',
                                 type: null

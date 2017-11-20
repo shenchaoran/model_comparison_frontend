@@ -56,7 +56,8 @@ export class DataListComponent extends ErrorHandle implements OnInit, AfterViewI
         private _notification: NzNotificationService
     ) {
         super();
-        this.acceptedType = 'application/zip, application/xml, text/plain, .csv, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+        // this.acceptedType = 'application/zip, application/xml, text/plain, .csv, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+        this.acceptedType = '*.*';
         const postDataService = this.dataInquireService.getServiceById(
             'postData'
         );
@@ -66,6 +67,7 @@ export class DataListComponent extends ErrorHandle implements OnInit, AfterViewI
                 tag: '',
                 type: ''
             },
+            multiple: true,
             fieldName: 'geo_data',
             customHeaders: {
                 'Authorization': 'bearer ' + JSON.parse(localStorage.getItem('jwt')).token
@@ -114,7 +116,8 @@ export class DataListComponent extends ErrorHandle implements OnInit, AfterViewI
             .subscribe('data.add.raw', (data, envelope) => {
                 // console.log('data.add.raw');
                 // TODO set input accept type
-                this.acceptedType = 'application/zip, .csv, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+                // this.acceptedType = 'application/zip, .csv, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+                this.acceptedType = '*.*';
                 this.fileUploaderOptions.data.type = GeoDataType.RAW;
                 this.uploadProgress = 0;
                 this.renderer.invokeElementMethod(
