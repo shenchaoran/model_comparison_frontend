@@ -1,8 +1,8 @@
 <div (window:resize)="onResize($event)">
     <!-- table -->
     <ng-container *ngIf='visualType === 1'>
-        <hot-table *ngIf='njTable.hotTableCfg.loading === false' height='500' [contextMenu]='njTable.hotTableCfg.contextMenu' [hotId]='njTable.hotTableCfg.instance' [rowHeaders]='true' [colHeaders]='true' [settings]='njTable.hotTableCfg.settings' [columns]='njTable.hotTableCfg.cols'
-            [data]='njTable.hotTableCfg.data'></hot-table>
+        <!-- <hot-table *ngIf='njTable.hotTableCfg.loading === false' height='500' [contextMenu]='njTable.hotTableCfg.contextMenu' [hotId]='njTable.hotTableCfg.instance' [rowHeaders]='true' [colHeaders]='true' [settings]='njTable.hotTableCfg.settings' [columns]='njTable.hotTableCfg.cols' -->
+        <hot-table *ngIf='njTable.hotTableCfg.loading === false' height='500' [hotId]='njTable.hotTableCfg.instance' [rowHeaders]='true' [colHeaders]='true' [settings]='njTable.hotTableCfg.settings' [columns]='njTable.hotTableCfg.cols' [data]='njTable.hotTableCfg.data'></hot-table>
 
         <nz-modal [nzVisible]="showDiagramModal" [nzTitle]='title' [nzContent]='content' [nzFooter]='footer' (nzOnCancel)='cancelDiagramModal($event)' (nzOnOk)='submitDiagramModal($event)'>
             <ng-template #title>

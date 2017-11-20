@@ -11,7 +11,7 @@ import { TreeItem } from '../component/visual-list/tree-item.class';
 export class VisualListService {
     constructor() {}
 
-    getMenuConfig(treeItemType: TreeItemType): any {
+    getVisualListMenuCfg(treeItemType: TreeItemType): any {
         const cfg = {};
         cfg[TreeItemType.Title] = [
             {

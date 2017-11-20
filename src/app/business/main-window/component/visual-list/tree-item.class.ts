@@ -9,9 +9,7 @@ export class TreeItem {
     selected?: boolean;
     iconsize?: number;
     items?: Array<TreeItem>;
-    data?: {
-        guid?: string;
-    };
+    data?: any;
     // store TreeItemType
     value?: TreeItemType;
 

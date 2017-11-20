@@ -6,7 +6,8 @@ export class APIClass {
 }
 
 export const BACKEND = {
-    host: '172.21.213.146',
+    // host: '172.21.213.146',
+    host: 'localhost',
     port: '9999'
 }
 
@@ -96,4 +97,10 @@ export const APIS = [{
     "uid": "showUDX",
     "name": "",
     "url": "/data/:id/show"
-}];
+},
+{
+    "uid": "compareUDX",
+    "name": "",
+    "url": "/data/compare/:left/2/:right"
+}
+];

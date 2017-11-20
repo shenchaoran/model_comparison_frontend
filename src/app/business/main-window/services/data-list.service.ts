@@ -12,10 +12,13 @@ import {
 } from '../../../common/shared/components/context-menu/sub-menu';
 import { GeoData } from '../component/data-list/geo-data';
 import { DataInquireService } from '../../../common/core/services/data.inquire.service';
-import { UDXTable } from '../models/UDX.type.model';
+import { UDXTableXML } from '../models/UDX.type.model';
+import { TreeItem } from '../component/visual-list/tree-item.class';
+import { TreeItemType } from '../component/visual-list/tree-item-type.enum';
+import { MenuItem } from '../component/visual-list/menu-item.class';
 
 export enum ContextMenuType {
-    BLACK = 1,
+    BLANK = 1,
     DATAITEM = 2
 }
 
@@ -33,106 +36,112 @@ export class DataListService extends ErrorHandle {
     getContextMenuCfg(
         type: ContextMenuType,
         geoData?: GeoData
-    ): Array<SubMenu> {
-        if (type === ContextMenuType.BLACK) {
+    ): Array<TreeItem> {
+        if (type === ContextMenuType.BLANK) {
             return [
                 {
-                    title: 'add',
-                    type: SubMenuType.SubMenu,
-                    icon: undefined,
-                    children: [
+                    id: 'add',
+                    label: 'Add',
+                    items: [
                         {
-                            title: 'raw',
-                            type: SubMenuType.MenuItem,
-                            icon: undefined,
-                            children: undefined,
-                            callback: 'MENU_CHANNEL#data.add.raw',
-                            params: undefined
+                            id: 'add-raw',
+                            label: 'Raw',
+                            items: [],
+                            data: {
+                                postalInfo: 'MENU_CHANNEL#data.add.raw',
+                                params: undefined
+                            }
                         },
                         {
-                            title: 'UDX',
-                            type: SubMenuType.MenuItem,
-                            icon: undefined,
-                            children: undefined,
-                            callback: 'MENU_CHANNEL#data.add.UDX',
-                            params: undefined
+                            id: 'add-UDX',
+                            label: 'UDX',
+                            items: [],
+                            data: {
+                                postalInfo: 'MENU_CHANNEL#data.add.UDX',
+                                params: undefined
+                            }
                         }
                     ],
-                    callback: undefined,
-                    params: undefined
+                    data: undefined
                 },
                 {
-                    title: 'refactor',
-                    type: SubMenuType.MenuItem,
-                    icon: undefined,
-                    children: undefined,
-                    callback: 'MENU_CHANNEL#data.refactor',
-                    params: undefined
+                    id: 'refactor',
+                    label: 'Refactor',
+                    items: [],
+                    data: {
+                        postalInfo: 'MENU_CHANNEL#data.refactor',
+                        params: undefined
+                    }
                 },
                 {
-                    title: 'visualization',
-                    type: SubMenuType.MenuItem,
-                    icon: undefined,
-                    children: undefined,
-                    callback: 'MENU_CHANNEL#data.visualization',
-                    params: undefined
+                    id: 'visualization',
+                    label: 'Visualization',
+                    items: [],
+                    data: {
+                        postalInfo: 'MENU_CHANNEL#data.visualization',
+                        params: undefined
+                    }
                 }
             ];
         } else if (type === ContextMenuType.DATAITEM) {
             return [
                 {
-                    title: 'Close',
-                    type: SubMenuType.MenuItem,
-                    icon: undefined,
-                    children: undefined,
-                    callback: 'DATA_CHANNEL#data.close',
-                    params: geoData
+                    id: 'close',
+                    label: 'Close',
+                    items: [],
+                    data: {
+                        postalInfo: 'DATA_CHANNEL#data.close',
+                        params: geoData
+                    }
                 },
                 {
-                    title: 'Save as',
-                    type: SubMenuType.MenuItem,
-                    icon: undefined,
-                    children: undefined,
-                    callback: 'DATA_CHANNEL#data.download',
-                    params: geoData
+                    id: 'download',
+                    label: 'Save as',
+                    items: [],
+                    data: {
+                        postalInfo: 'DATA_CHANNEL#data.download',
+                        params: geoData
+                    }
                 },
                 {
-                    title: 'Property',
-                    type: SubMenuType.MenuItem,
-                    icon: undefined,
-                    children: undefined,
-                    callback: 'DATA_CHANNEL#data.property',
-                    params: geoData
+                    id: 'prop',
+                    label: 'Property',
+                    items: [],
+                    data: {
+                        postalInfo: 'DATA_CHANNEL#data.property',
+                        params: geoData
+                    }
                 },
                 {
-                    title: 'Show',
-                    type: SubMenuType.MenuItem,
-                    icon: undefined,
-                    children: undefined,
-                    callback: 'DATA_CHANNEL#data.show',
-                    params: geoData
+                    id: 'show',
+                    label: 'Show',
+                    items: [],
+                    data: {
+                        postalInfo: 'DATA_CHANNEL#data.show',
+                        params: geoData
+                    }
                 }
             ];
         }
     }
 
-    parseUDXProp(gdid: string): Observable<any> {
+    parseUDXProp(_id: string): Observable<any> {
         const url = this.dataInquireService.getServiceById('parseUDXProp', {
-            id: gdid
+            id: _id
         });
         const options = undefined;
         return this.http.get(url, options);
     }
 
-    showUDX(gdid: string): Observable<any> {
+    showUDX(_id: string): Observable<any> {
         const url = this.dataInquireService.getServiceById('showUDX', {
-            id: gdid
+            id: _id
         });
         const options = undefined;
         return this.http.get(url, options);
     }
 
-    _hotTableSettingsAdapter(udxTable: UDXTable) {
+    _hotTableSettingsAdapter(udxTable: UDXTableXML) {
 
     }
 
@@ -145,4 +154,13 @@ export class DataListService extends ErrorHandle {
     //                 console.log(event);
     //             }, this.handleError);
     // }
+
+    compareUDX(left: GeoData, right: GeoData): Observable<any> {
+        const url = this.dataInquireService.getServiceById('compareUDX', {
+            left: left._id,
+            right: right._id
+        });
+        const options = undefined;
+        return this.http.get(url, options);
+    }
 }

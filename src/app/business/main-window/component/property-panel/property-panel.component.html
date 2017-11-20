@@ -1,4 +1,5 @@
 <div id="container" *ngIf='panelData'>
+    <!-- model prop -->
     <ng-container *ngIf='panelData.type === 1'>
         <div id='states' class='box-item'>
             <p class='sub-header'>
@@ -90,20 +91,82 @@
         </div>
     </ng-container>
 
+    <!-- data prop -->
     <ng-container *ngIf='panelData.type === 2'>
         <!-- <hot-table height='500' [contextMenu]='hotContextMenu' (beforeContextMenuSetItems)='hotSetMenu($event)' (afterSelectionEnd)='hotAfterSelectionEnd($event)' [hotId]='hotInstance' [rowHeaders]='true' [colHeaders]='true' [settings]='hotTableSettings' [columns]='hotTableColumns' -->
-        <hot-table height='500' [contextMenu]='hotContextMenu' [hotId]='hotInstance' [rowHeaders]='true' [colHeaders]='true' [settings]='hotTableSettings' [columns]='hotTableColumns' [data]='hotTableData'></hot-table>
+        <h4 class="panal-h1">Statistics Information</h4>
+        <div id='prop-table'>
+            <hot-table height='250' (afterRender)='adjustTableH()' [contextMenu]='hotContextMenu' [hotId]='hotInstance' [rowHeaders]='true' [colHeaders]='true' [settings]='hotTableSettings' [columns]='hotTableColumns' [data]='hotTableData'></hot-table>
+        </div>
+        <button nz-button [nzType]='"default"' (click)='showTable()' style='width: 100px; min-height: 28px; margin: 5px;'><span>Show Table</span></button>
+        <h4 class="panal-h1">Diagram Configuration</h4>
+        <div>
+            <div nz-row [nzGutter]='16' class='line-H'>
+                <label nz-col [nzSpan]='8'>Display Type: </label>
+                <nz-select nz-col [nzSpan]='15' [(ngModel)]="selectedDiagramType" (ngModelChange)='checkChartCfg("data")' nzAllowClear>
+                    <nz-option *ngFor="let option of chartTypeOptions" [nzLabel]="option.label" [nzValue]="option"></nz-option>
+                </nz-select>
+            </div>
+            <div nz-row [nzGutter]='16' class='line-H'>
+                <label nz-col [nzSpan]='8'>X Axis: </label>
+                <nz-select nz-col [nzSpan]='15' [(ngModel)]="selectedXOption" (ngModelChange)='checkChartCfg("data")' nzAllowClear>
+                    <nz-option *ngFor="let option of _xAxisOptions" [nzLabel]="option.label" [nzValue]="option"></nz-option>
+                </nz-select>
+            </div>
+            <div nz-row [nzGutter]='16' class='line-H'>
+                <label nz-col [nzSpan]='8'>Y Axis: </label>
+                <nz-checkbox-group nz-col [nzSpan]='15' [(ngModel)]="_yAxisOptions" (ngModelChange)="checkChartCfg('data')"></nz-checkbox-group>
+            </div>
+            <button nz-button [nzType]='"default"' (click)='showDiagram("data")' style='width: 100px; margin: 5px;' [disabled]='!_canSubmit'><span>Show Diagram</span></button>
+        </div>
     </ng-container>
 
+    <!-- map prop -->
     <ng-container *ngIf='panelData.type === 3'>
 
     </ng-container>
 
+    <!-- refactor prop -->
     <ng-container *ngIf='panelData.type === 4'>
 
     </ng-container>
 
+    <!-- data preprocess prop -->
     <ng-container *ngIf='panelData.type === 5'>
 
     </ng-container>
+
+    <!-- data compare prop -->
+    <ng-container *ngIf='panelData.type === 6'>
+        <h4 class="panal-h1">Diagram Configuration</h4>
+        <div>
+            <div nz-row [nzGutter]='16' class='line-H'>
+                <label nz-col [nzSpan]='8'>Display Type: </label>
+                <nz-select nz-col [nzSpan]='15' [(ngModel)]="selectedDiagramType" (ngModelChange)='checkChartCfg("compare")' nzAllowClear>
+                    <nz-option *ngFor="let option of chartTypeOptions" [nzLabel]="option.label" [nzValue]="option"></nz-option>
+                </nz-select>
+            </div>
+            <!-- <div nz-row [nzGutter]='16' class='line-H'>
+                <label nz-col [nzSpan]='8'>X Axis: </label>
+                <nz-select nz-col [nzSpan]='15' [(ngModel)]="selectedXOption" (ngModelChange)='checkChartCfg("compare")' nzAllowClear>
+                    <nz-option *ngFor="let option of _xAxisOptions" [nzLabel]="option.label" [nzValue]="option"></nz-option>
+                </nz-select>
+            </div> -->
+            <div nz-row [nzGutter]='16' class='line-H'>
+                <label nz-col [nzSpan]='8'>Left Y Axis: </label>
+                <nz-select nz-col [nzSpan]='15' [(ngModel)]="selectedLeftYOption" (ngModelChange)='checkChartCfg("compare")' nzAllowClear>
+                    <nz-option *ngFor="let option of _leftYOptions" [nzLabel]="option.label" [nzValue]="option"></nz-option>
+                </nz-select>
+            </div>
+            <div nz-row [nzGutter]='16' class='line-H'>
+                <label nz-col [nzSpan]='8'>Right Y Axis: </label>
+                <nz-select nz-col [nzSpan]='15' [(ngModel)]="selectedRightYOption" (ngModelChange)='checkChartCfg("compare")' nzAllowClear>
+                    <nz-option *ngFor="let option of _rightYOptions" [nzLabel]="option.label" [nzValue]="option"></nz-option>
+                </nz-select>
+            </div>
+            <button nz-button [nzType]='"default"' (click)='showDiagram("compare")' style='width: 100px; margin: 5px;' [disabled]='!_canSubmit'><span>Show Diagram</span></button>
+        </div>
+    </ng-container>
+
+
 </div>

@@ -23,14 +23,16 @@ export class VisualListComponent implements OnInit, AfterViewInit {
             // parentId: '-1',
             label: 'Map',
             items: [],
-            value: TreeItemType.Title
+            value: TreeItemType.Title,
+            expanded: true
         },
         {
             id: 'diagram',
             // parentId: '-1',
             label: 'Diagram',
             items: [],
-            value: TreeItemType.Title
+            value: TreeItemType.Title,
+            expanded: true
         }
     ];
     menuSrc = [];
@@ -41,9 +43,16 @@ export class VisualListComponent implements OnInit, AfterViewInit {
         postal
             .channel('VISUALIZATION')
             .subscribe('diagram.add', (data, envelope) => {
+                let label;
+                if(data.geodata) {
+                    label = data.geodata.filename;
+                }
+                else if(data.left && data.right) {
+                    label = `${data.left.filename} vs ${data.right.filename}`;
+                }
                 const diagramItem = new TreeItem(
                     data.guid,
-                    data.label,
+                    label,
                     {},
                     TreeItemType.Diagram
                 );
@@ -67,7 +76,7 @@ export class VisualListComponent implements OnInit, AfterViewInit {
                 this.jqTree.selectItem((<any>event.target).parentElement);
                 const type = this.jqTree.getSelectedItem().value;
                 // const text = (<any>(event.target)).innerHtml;
-                this.menuSrc = this.visualListService.getMenuConfig(
+                this.menuSrc = this.visualListService.getVisualListMenuCfg(
                     parseInt(type)
                 );
 
@@ -114,11 +123,10 @@ export class VisualListComponent implements OnInit, AfterViewInit {
                     break;
                 case 'Close all':
                     if (parseInt(type) === TreeItemType.Title) {
-                        if(guid === 'map') {
+                        if (guid === 'map') {
                             this.clearMapFromTree();
                             channelName = 'map.closeAll';
-                        }
-                        else if(guid === 'diagram') {
+                        } else if (guid === 'diagram') {
                             this.clearDiagramFromTree();
                             channelName = 'diagram.closeAll';
                         }
@@ -145,8 +153,30 @@ export class VisualListComponent implements OnInit, AfterViewInit {
         //     .value();
         // this.jqTree.addTo(treeItem, diagramEle);
 
-        // 不知为何必须要深度拷贝才行
         const treeSrc = _.cloneDeep(this.treeSrc);
+        // 重命名
+        let renamed = false;
+        let i = 0;
+        const orignalName = treeItem.label;
+        let newName = orignalName;
+        if (treeSrc[1].items.length) {
+            while (!renamed) {
+                if (i !== 0) {
+                    newName = `${orignalName} (${i})`;
+                } else {
+                    newName = orignalName;
+                }
+                renamed = true;
+                _.map(treeSrc[1].items, item => {
+                    if (item.label === newName) {
+                        renamed = false;
+                    }
+                });
+                i++;
+            }
+        }
+        treeItem.label = newName;
+        // 不知为何必须要深度拷贝才行
         treeSrc[1].items.push(treeItem);
         this.treeSrc = treeSrc;
         this.jqTree.refresh();

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { NzNotificationService } from 'ng-zorro-antd';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/throw';
@@ -14,7 +15,8 @@ export class LoginService extends ErrorHandle {
     constructor(
         private http: HttpClient,
         private router: Router,
-        private dataInquireService: DataInquireService
+        private dataInquireService: DataInquireService,
+        private _notification: NzNotificationService
     ) {
         super();
     }
@@ -43,7 +45,9 @@ export class LoginService extends ErrorHandle {
                             this.router.navigate(['/' + APP_CONFIG.defaultroute]);
                         }
                     },
-                    error: err => this.handleError(err),
+                    error: err => {
+                        observer.next(err);
+                    },
                     complete: () => {}
                 });
         });

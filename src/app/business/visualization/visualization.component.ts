@@ -6,7 +6,7 @@ import { HotRegisterer } from 'angular-handsontable';
 import { DataListService } from '../main-window/services/data-list.service';
 import { ErrorHandle } from '../../common/core/base/error-handle';
 import { NzNotificationService } from 'ng-zorro-antd';
-import { UDXType } from '../main-window/component/property-panel/UDX-type.enum';
+import { UDXType } from '../main-window/models/UDX.type.model';
 import { EchartAdapterService } from '../../common/core/services/echartAdapter.service';
 import { NJTable } from './table-cfg.class';
 import { NJMap, NJLayer } from './map-cfg.class';
@@ -75,25 +75,26 @@ export class VisualizationComponent extends ErrorHandle implements OnInit {
         super();
         const self = this;
 
-        this.njTable.hotTableCfg.contextMenu = {
-            items: {
-                copy: {},
-                chart: {
-                    name: 'chart',
-                    // TODO 必须点一下才显示modal
-                    callback: function(key, options) {
-                        // console.log(key, options);
-                        // const hot = self.hotRegisterer.getInstance(
-                        //     self.njTable.hotTableCfg.instance
-                        // );
-                        // const range = hot.getSelected();
-                        // console.log(hot.getData(range[0], range[1], range[2], range[3]));
-                        self.showDiagramModal = true;
-                        return true;
-                    }
-                }
-            }
-        };
+        // deprecated
+        // this.njTable.hotTableCfg.contextMenu = {
+        //     items: {
+        //         copy: {},
+        //         chart: {
+        //             name: 'chart',
+        //             // TODO 必须点一下才显示modal
+        //             callback: function(key, options) {
+        //                 // console.log(key, options);
+        //                 // const hot = self.hotRegisterer.getInstance(
+        //                 //     self.njTable.hotTableCfg.instance
+        //                 // );
+        //                 // const range = hot.getSelected();
+        //                 // console.log(hot.getData(range[0], range[1], range[2], range[3]));
+        //                 self.showDiagramModal = true;
+        //                 return true;
+        //             }
+        //         }
+        //     }
+        // };
     }
 
     ngOnInit() {
@@ -101,7 +102,7 @@ export class VisualizationComponent extends ErrorHandle implements OnInit {
             .channel('DATA_CHANNEL')
             .subscribe('data.show', (data, envelope) => {
                 this.dataListService
-                    .showUDX(data.gdid)
+                    .showUDX(data._id)
                     .toPromise()
                     .then(response => {
                         if (
@@ -113,7 +114,7 @@ export class VisualizationComponent extends ErrorHandle implements OnInit {
                             // );
 
                             const resData = response.data;
-                            if (resData.type === UDXType.TABLE) {
+                            if (resData.type === UDXType.TABLE_XML || resData.type === UDXType.TABLE_RAW) {
                                 this.visualType = VisualType.Table;
 
                                 this.njTable.geodata = data;
@@ -122,14 +123,14 @@ export class VisualizationComponent extends ErrorHandle implements OnInit {
                                 this.njTable.hotTableCfg.data =
                                     resData.parsed.data;
 
-                                this.njTable.hotTableCfg.instance = data.gdid;
+                                this.njTable.hotTableCfg.instance = data._id;
                                 this.njTable.hotTableCfg.loading = false;
 
                                 this._xAxisOptions = _.map(
                                     this.njTable.hotTableCfg.cols,
                                     col => {
                                         return {
-                                            value: col.title,
+                                            value: col.data,
                                             label: col.title
                                         };
                                     }
@@ -138,7 +139,7 @@ export class VisualizationComponent extends ErrorHandle implements OnInit {
                                     this.njTable.hotTableCfg.cols,
                                     col => {
                                         return {
-                                            value: col.title,
+                                            value: col.data,
                                             label: col.title,
                                             checked: false
                                         };
@@ -177,8 +178,19 @@ export class VisualizationComponent extends ErrorHandle implements OnInit {
         postal
             .channel('VISUALIZATION')
             .subscribe('diagram.show', (data, envelope) => {
+                if(this.echarts) {
+                    this.echarts.clear();
+                }
                 this.visualType = VisualType.Diagram;
                 this.selectedDiagramId = data;
+                this.selectedDiagramOpt = _
+                    .chain(this.njDiagramList)
+                    .find(diagram => {
+                        return diagram.guid === data;
+                    })
+                    .get('option')
+                    .value();
+                this.visualType = 2;
             });
 
         postal
@@ -187,6 +199,8 @@ export class VisualizationComponent extends ErrorHandle implements OnInit {
                 if (data === this.selectedDiagramId) {
                     this.selectedDiagramId = null;
                     this.selectedDiagramOpt = null;
+                    this.echarts.clear();
+                    this.echarts.dispose();
                 }
                 _.remove(this.njDiagramList, diagram => {
                     return diagram.guid === data;
@@ -213,38 +227,70 @@ export class VisualizationComponent extends ErrorHandle implements OnInit {
             .channel('VISUALIZATION')
             .subscribe('diagram.closeAll', (data, envelope) => {
                 this.selectedDiagramId = null;
+                this.selectedDiagramOpt = null;
+                this.echarts.clear();
+                this.echarts.dispose();
                 this.njDiagramList = [];
+            });
+
+        postal
+            .channel('VISUALIZATION')
+            .subscribe('diagram.add', (data, envelope) => {
+                if(this.echarts) {
+                    this.echarts.clear();
+                }
+                this.njDiagramList.push(data);
+                
+                this.selectedDiagramId = data.guid;
+                this.selectedDiagramOpt = data.option;
+                this.visualType = 2;
             });
     }
 
     checkChartCfg() {
-        if (this.selectedDiagramType == null || this.selectedXAxis == null) {
+        if (this.selectedDiagramType == null) {
+        // if (this.selectedDiagramType == null || this.selectedXAxis == null) {
             this._canSubmit = false;
             return;
         }
         const chartType = this.selectedDiagramType.value;
-        const xAxis = this.selectedXAxis.value;
+        // let xAxis;
+        // if(this.selectedXAxis != undefined) {
+        //     xAxis = this.selectedXAxis.value;
+        // }
+        // else {
+        //     xAxis = undefined;
+        // }
         const yAxises = _.chain(this._yAxisOptions)
             .filter('checked')
             .map(option => option.value)
             .value();
-        if (chartType != null && xAxis != null && yAxises.length != 0) {
+        if (chartType != null && yAxises.length != 0) {
+        // if (chartType != null && xAxis != null && yAxises.length != 0) {
             this._canSubmit = true;
         } else {
             this._canSubmit = false;
         }
     }
 
+    // deprecated
     submitDiagramModal(e) {
         let njDiagram = new NJDiagram();
         njDiagram.geodata = this.njTable.geodata;
         const hot = this.hotRegisterer.getInstance(
             this.njTable.hotTableCfg.instance
         );
-        const xColI = _.chain(this.njTable.hotTableCfg.cols)
-            .findIndex(col => col.title === this.selectedXAxis.value)
-            .value();
-        const xAxisData = hot.getDataAtCol(xColI);
+        let xColI, xAxisData;
+        if(this.selectedXAxis != undefined) {
+            xColI = _.chain(this.njTable.hotTableCfg.cols)
+                .findIndex(col => col.data === this.selectedXAxis.value)
+                .value();
+            xAxisData = hot.getDataAtCol(xColI);
+        }
+        else {
+            xAxisData = undefined;
+        }
+        
         let yColHeaders = [];
         const yColIs = _.chain(this._yAxisOptions)
             .filter('checked')
@@ -252,7 +298,7 @@ export class VisualizationComponent extends ErrorHandle implements OnInit {
                 const colHeader = option.value;
                 yColHeaders.push(colHeader);
                 return _.chain(this.njTable.hotTableCfg.cols)
-                    .findIndex(col => col.title === colHeader)
+                    .findIndex(col => col.data === colHeader)
                     .value();
             })
             .value();
@@ -267,7 +313,7 @@ export class VisualizationComponent extends ErrorHandle implements OnInit {
             this.selectedDiagramType.value
         );
 
-        const length = xAxisData.length;
+        const length = coreOption.xAxisData.length;
         const percent = 10000 / length;
 
         (<any>option).dataZoom = [

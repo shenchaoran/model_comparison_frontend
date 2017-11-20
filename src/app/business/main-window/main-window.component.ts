@@ -98,14 +98,14 @@ export class MainWindowComponent extends ErrorHandle implements OnInit, AfterVie
         postal
             .channel('LAYOUT_CHANNEL')
             .subscribe('propertity-panel.data.show', (data, envelope) => {
+                const geodata = data;
                 const filename = data.filename;
-                const gdid = data.gdid;
-                this.dataListService.parseUDXProp(data.gdid)
+                this.dataListService.parseUDXProp(data._id)
                     .toPromise()
                     .then(response => {
                         if (_.startsWith(_.get(response, 'status.code'),'200')) {
                             const data = _.get(response, 'data');
-                            _.set(data, 'gdid', gdid);
+                            _.set(data, 'geodata', geodata);
                             this.showPanel();
                             this.panelData = {
                                 type: PropertyPanelShowType.DATA,
@@ -115,8 +115,8 @@ export class MainWindowComponent extends ErrorHandle implements OnInit, AfterVie
                             this._InputLoading = false;
 
                             postal
-                                .channel('DATA_CHANNEL')
-                                .publish('propertity-panel.data.bind', data);
+                                .channel('PROP_CHANNEL')
+                                .publish('data-prop.bind', data);
                         } 
                         else {
                             this._notification.create(
@@ -156,6 +156,25 @@ export class MainWindowComponent extends ErrorHandle implements OnInit, AfterVie
                         xl: 19
                     }
                 ];
+            });
+        
+        postal
+            .channel('PROP_CHANNEL')
+            .subscribe('compare-prop.bind', (data, envelope) => {
+                this.panelData = {
+                    type: PropertyPanelShowType.DATA_COMPARE,
+                    data: undefined
+                };
+                this._InputLoading = false;
+                this.propertiesTitle = `${data.left.filename} vs ${data.right.filename}`;
+                
+                this.showPanel();
+            });
+
+        postal
+            .channel('LAYOUT_CHANNEL')
+            .subscribe('visualization.title', (data, envelope) => {
+                this.visualTitle = data;
             });
     }
 

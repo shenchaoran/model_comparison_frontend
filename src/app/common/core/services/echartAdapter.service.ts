@@ -10,10 +10,17 @@ export class EchartAdapterService {
 
   // TODO stack
   public multiSeries2DAdapter(xAxisData, seriesDatas, seriesNames){
+    let xData = [];
+    if(xAxisData === undefined && seriesDatas.length) {
+        _.map(seriesDatas[0], (seriesData, i) => xData.push(i + 1));
+    }
+    else {
+        xData = xAxisData;
+    }
     return {
       seriesDatas: seriesDatas,
       seriesNames: seriesNames,
-      xAxisData: xAxisData
+      xAxisData: xData
     };
   }
 

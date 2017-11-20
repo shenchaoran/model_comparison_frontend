@@ -6,6 +6,7 @@
     flex-direction: column;
     flex-wrap: nowrap;
     font-size: 13px;
+    overflow: scroll;
 }
 
 ng-container {
@@ -83,4 +84,12 @@ ng-container {
 .row-kv {
     height: 30px;
     line-height: 30px;
+}
+
+.panal-h1 {
+    margin: 10px 0;
+}
+
+.line-H {
+    line-height: 33px;
 }

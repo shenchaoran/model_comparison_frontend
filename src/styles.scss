@@ -13,6 +13,9 @@
 @import "../node_modules/openlayers/dist/ol.css";
 @import "app/common/shared/theme/theme.scss";
 // add by SCR
-@import '~handsontable/dist/handsontable.full.css';
+@import '../node_modules/handsontable/dist/handsontable.full.css';
+// TODO relative path problems
+// @import '~jqwidgets-framework/jqwidgets/styles/jqx.base';
+// @import '../node_modules/jqwidgets-framework/jqwidgets/styles/jqx.energyblue';
 // @import '~angular-tree-component/dist/angular-tree-component.css';
 // end
