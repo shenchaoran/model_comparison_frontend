@@ -17,19 +17,18 @@ import { EchartAdapterService } from '../../../../common/core/services/echartAda
     styleUrls: ['./property-panel.component.scss']
 })
 export class PropertyPanelComponent implements OnInit, AfterViewInit {
-    // model prop
-    @Input()
+    ///////////// model prop
     panelData: {
         type: PropertyPanelShowType;
         data: ModelInput;
     };
     selectedEvent = null;
-    dataOptions: Array<GeoData> = [];
+    dataList: Array<GeoData> = [];
     disabledExecuteBtn = true;
     loadingExecuteBtn = false;
     msrid: string = null;
 
-    // data prop
+    ///////////// data prop
     geodata: GeoData = null;
     // data prop table
     hotTableIsLoading: boolean = true;
@@ -81,7 +80,7 @@ export class PropertyPanelComponent implements OnInit, AfterViewInit {
     // table show configuration
     tableShowCfg = null;
 
-    // data compare configuration
+    ///////////// data compare configuration
     compareCfg: {
         left: GeoData;
         right: GeoData;
@@ -119,7 +118,7 @@ export class PropertyPanelComponent implements OnInit, AfterViewInit {
         postal
             .channel('DATA_CHANNEL')
             .subscribe('data.add', (data, envelope) => {
-                this.dataOptions = _.concat(this.dataOptions, data);
+                this.dataList = _.concat(this.dataList, data);
             });
 
         postal
@@ -197,11 +196,26 @@ export class PropertyPanelComponent implements OnInit, AfterViewInit {
 
         postal
             .channel('PROP_CHANNEL')
+            .subscribe('model-prop.bind', (data, envelope) => {
+                this.panelData = data;
+                this.selectedEvent = undefined;
+                
+                this.disabledExecuteBtn = true;
+                this.loadingExecuteBtn = false;
+            });
+
+        postal
+            .channel('PROP_CHANNEL')
             .subscribe('data-prop.bind', (data, envelope) => {
                 if (
                     data.type === UDXType.TABLE_XML ||
                     data.type === UDXType.TABLE_RAW
                 ) {
+                    this.panelData = {
+                        type: PropertyPanelShowType.DATA,
+                        data: undefined
+                    };
+
                     this.selectedDiagramType = undefined;
                     this.selectedXOption = undefined;
                     this.selectedyAxis = undefined;
@@ -244,6 +258,11 @@ export class PropertyPanelComponent implements OnInit, AfterViewInit {
                     udxType === UDXType.TABLE_XML ||
                     udxType === UDXType.TABLE_RAW
                 ) {
+                    this.panelData = {
+                        type: PropertyPanelShowType.DATA_COMPARE,
+                        data: undefined
+                    };
+
                     this.selectedDiagramType = undefined;
                     this.selectedLeftYOption = undefined;
                     this.selectedRightYOption = undefined;

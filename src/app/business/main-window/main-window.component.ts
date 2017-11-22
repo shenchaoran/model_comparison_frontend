@@ -77,6 +77,10 @@ export class MainWindowComponent extends ErrorHandle implements OnInit, AfterVie
                                 type: PropertyPanelShowType.MODEL,
                                 data: data.result
                             };
+
+                            postal
+                                .channel('PROP_CHANNEL')
+                                .publish('model-prop.bind', this.panelData);
                             this.showPanel();
                         } else {
                             this._notification.create(

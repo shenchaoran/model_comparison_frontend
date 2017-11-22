@@ -29,7 +29,7 @@
                                     <label>{{input.name}}</label>
                                     <span>
                                         <nz-select [ngModel]="input.geodata" (ngModelChange)='input.geodata=$event; checkExecBtn()' nzAllowClear>
-                                            <nz-option *ngFor="let option of dataOptions" [nzLabel]="option.filename" [nzValue]="option">
+                                            <nz-option *ngFor="let option of dataList" [nzLabel]="option.filename" [nzValue]="option">
                                             </nz-option>
                                         </nz-select>
                                     </span>

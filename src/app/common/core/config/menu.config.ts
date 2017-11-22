@@ -43,7 +43,7 @@ export const MENUS = [
                 path: ':username',
                 data: {
                     menu: {
-                        title: 'profile',
+                        title: 'Profile',
                         id: ':username',
                         icon: 'appstore',
                         selected: true,
@@ -52,32 +52,6 @@ export const MENUS = [
                     }
                 },
                 children: [
-                    {
-                        path: 'main-window',
-                        data: {
-                            menu: {
-                                title: 'main-window'
-                            }
-                        },
-                        children: [
-                            {
-                                path: 'a',
-                                data: {
-                                    menu: {
-                                        title: 'main-window'
-                                    }
-                                }
-                            },
-                            {
-                                path: 'main-window',
-                                data: {
-                                    menu: {
-                                        title: 'main-window'
-                                    }
-                                }
-                            }
-                        ]
-                    },
                     {
                         path: 'main-window',
                         data: {
