@@ -3,7 +3,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { MapService } from './map.service.interface';
 // import { MAP_DRAW_TYPE } from './map.draw.type';
-import { ErrorHandle } from '../../../core/base/error-handle';
+import { ErrorHandle } from '@core/base/error-handle';
 
 
 export abstract class MapServiceImpl extends ErrorHandle implements MapService {

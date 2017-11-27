@@ -1,6 +1,6 @@
 import { Router } from '@angular/router';
 import { Component, Input } from '@angular/core';
-import { APP_CONFIG } from '../../../core/config/app.config';
+import { APP_CONFIG } from '@config/app.config';
 
 @Component({
 	selector: 'ba-title-top',

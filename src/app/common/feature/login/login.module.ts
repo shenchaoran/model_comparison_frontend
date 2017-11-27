@@ -4,9 +4,9 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Login } from './login.component';
 import { routing } from './login.routing';
 import { LoginService } from './login.service';
-import { NgxSharedModule } from '../../ngx-shared/ngx-shared.module';
-import { TokenInterceptor } from '../../core/net/token/token.interceptor';
-import { ResParserInterceptor } from '../../core/net/res-parser/res-parser.interceptor';
+import { NgxSharedModule } from '@ngx-shared/ngx-shared.module';
+import { TokenInterceptor } from '@core/net/token/token.interceptor';
+import { ResParserInterceptor } from '@core/net/res-parser/res-parser.interceptor';
 
 // const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 // };

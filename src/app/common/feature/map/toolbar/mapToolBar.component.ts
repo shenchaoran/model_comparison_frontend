@@ -1,7 +1,7 @@
 import { Component, Input, ViewChild, ViewEncapsulation, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { MapFunctionsClass, MAP_TOOLBAR_CONFIG } from '../../../core/config/map.config';
+import { MapFunctionsClass, MAP_TOOLBAR_CONFIG } from '@config/map.config';
 
 @Component({
     selector: 'map-tool-bar',

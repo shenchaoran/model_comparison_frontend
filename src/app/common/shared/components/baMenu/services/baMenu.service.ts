@@ -4,8 +4,8 @@ import { Router, Routes } from '@angular/router';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 
-import { MENUS } from '../../../../core/config/menu.config';
-import { ErrorHandle } from '../../../../core/base/error-handle';
+import { MENUS } from '@config/menu.config';
+import { ErrorHandle } from '@core/base/error-handle';
 
 @Injectable()
 export class BaMenuService extends ErrorHandle {

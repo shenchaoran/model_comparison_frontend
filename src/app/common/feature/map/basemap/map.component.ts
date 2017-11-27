@@ -1,6 +1,6 @@
 import { Component, ElementRef, ViewEncapsulation, ViewChild } from '@angular/core';
 
-import { MAP_MODULE_CONFIG } from '../../../core/config/map.config';
+import { MAP_MODULE_CONFIG } from '@config/map.config';
 
 @Component({
     selector: 'map',
