@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/toPromise';
 import { ErrorHandle } from '../../../common/core/base/error-handle';
 
-import { APIS, BACKEND } from '../../core/config/api.config';
+import { APIS, BACKEND } from '@config/api.config';
 
 @Injectable()
 export class DataInquireService extends ErrorHandle implements Resolve<any> {

@@ -2,7 +2,7 @@ import { Component, Inject, ElementRef, ViewEncapsulation, ViewChild } from '@an
 import { ActivatedRoute } from '@angular/router';
 
 import { MapInquireService } from './map.inquire.service';
-import { MAP_CONFIG } from '../../core/config/map.config';
+import { MAP_CONFIG } from '@config/map.config';
 
 @Component({
     selector: 'map-view',

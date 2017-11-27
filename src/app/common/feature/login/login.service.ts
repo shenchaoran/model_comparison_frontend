@@ -6,9 +6,9 @@ import { NzNotificationService } from 'ng-zorro-antd';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/throw';
 
-import { DataInquireService } from '../../core/services/data.inquire.service';
-import { APP_CONFIG } from '../../core/config/app.config';
-import { ErrorHandle } from '../../core/base/error-handle';
+import { DataInquireService } from '@core/services/data.inquire.service';
+import { APP_CONFIG } from '@config/app.config';
+import { ErrorHandle } from '@core/base/error-handle';
 
 @Injectable()
 export class LoginService extends ErrorHandle {

@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { NzNotificationService } from 'ng-zorro-antd';
 
 import { LoginService } from './login.service';
-import { ErrorHandle } from '../../core/base/error-handle';
+import { ErrorHandle } from '@core/base/error-handle';
 
 @Component({
 	selector: 'login',
