@@ -33,7 +33,10 @@ const routes: Routes = [
                 path: 'help',
                 loadChildren: './help/help.module#HelpModule'
             },
-
+            {
+                path: 'v1',
+                loadChildren: './main-window/main-window.module#MainWindowModule'
+            },
             {
                 path: ':username',
                 loadChildren: './profile/profile.module#ProfileModule'

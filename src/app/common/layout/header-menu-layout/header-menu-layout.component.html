@@ -1,11 +1,15 @@
 <div class="wrapper">
     <div class="nav-header">
         <div id="logo" class="flex-item">
-            <img src="assets/img/app/logo_light.png" height="30" />
+            <!-- <img src="assets/img/app/logo_light.png" height="30" /> -->
             <img src="assets/img/app/logo_title_light.png" height="35" />
         </div>
         <div id="menu" class="flex-item">
-            <app-baHeaderMenu></app-baHeaderMenu>
+            <app-baHeaderMenu [type]="'HEADER_MENUS'"></app-baHeaderMenu>
+        </div>
+        <div id="place-holder" class="flex-item"></div>
+        <div id="login-menu" class="flex-item">
+            <app-header-pull-right></app-header-pull-right>
         </div>
     </div>
     <section class="content">

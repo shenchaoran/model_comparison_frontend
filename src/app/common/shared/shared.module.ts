@@ -2,8 +2,40 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { NgxSharedModule } from '../ngx-shared/ngx-shared.module';
 
+import {
+    BaCard,
+    BaCopyright,
+    BaPageTop,
+    BaTitleTop,
+    BaMenuItem,
+    BaMenuHoverItem,
+    BaMenu,
+    BaSidebar,
+    FileUploader,
+    BaHeaderMenuComponent,
+    TestRecurComponent,
+    SubMenuComponent,
+    ContextMenuComponent,
+    HeaderPullRightComponent
+    // BaMessageBox,
+    //
+    // BaFloatWindow,
+    // BaHouseholdTable
+} from './components';
 
 import {
+    BaScrollPosition,
+    BaSlimScroll
+    // BaThemeRun
+} from './directives';
+
+import { HeaderMenuService } from './components/baHeaderMenu/baHeaderMenu.service';
+
+import { BaImgPathPipe, MomentDatePipe, DateStrFormatPipe } from './pipes';
+
+import { EmailValidator, EqualPasswordsValidator } from './validators';
+
+const CITYFUN_COMPONENTS = [
     BaCard,
     BaCopyright,
     BaPageTop,
@@ -18,66 +50,22 @@ import {
     TestRecurComponent,
     SubMenuComponent,
     ContextMenuComponent,
+    HeaderPullRightComponent
     // BaMessageBox,
     //
     // BaFloatWindow,
     // BaHouseholdTable
-} from './components';
-
-import {
-	BaScrollPosition,
-	BaSlimScroll,
-	// BaThemeRun
-} from './directives';
-
-import {
-    BaImgPathPipe,
-    MomentDatePipe,
-    DateStrFormatPipe
-} from './pipes';
-
-import {
-	EmailValidator,
-	EqualPasswordsValidator
-} from './validators';
-
-const CITYFUN_COMPONENTS = [
-  BaCard,
-  BaCopyright,
-	BaPageTop,
-	BaTitleTop,
-	BaMenuItem,
-	BaMenuHoverItem,
-	BaMenu,
-
-  BaSidebar,
-  FileUploader,
-  BaHeaderMenuComponent,
-  TestRecurComponent,
-  SubMenuComponent,
-  ContextMenuComponent,
-	// BaMessageBox,
-	//
-	// BaFloatWindow,
-	// BaHouseholdTable
 ];
 
 const CITYFUN_DIRECTIVES = [
-	BaScrollPosition,
-	BaSlimScroll
-	// BaThemeRun
+    BaScrollPosition,
+    BaSlimScroll,
+    // BaThemeRun
 ];
 
-const CITYFUN_PIPES = [
-    BaImgPathPipe,
-    MomentDatePipe,
-    DateStrFormatPipe
-];
+const CITYFUN_PIPES = [BaImgPathPipe, MomentDatePipe, DateStrFormatPipe];
 
-const CITYFUN_VALIDATORS = [
-	EmailValidator,
-	EqualPasswordsValidator
-];
+const CITYFUN_VALIDATORS = [EmailValidator, EqualPasswordsValidator];
 
 // const CITYFUN_SERVICES = [
 // 	BaMenuService
@@ -88,19 +76,20 @@ const CITYFUN_VALIDATORS = [
         ...CITYFUN_COMPONENTS,
         ...CITYFUN_DIRECTIVES,
         ...CITYFUN_PIPES,
-	],
+        HeaderPullRightComponent
+    ],
     imports: [
-        RouterModule,
+        RouterModule, 
         NgxSharedModule,
-
     ],
     providers: [
         ...CITYFUN_VALIDATORS,
+        HeaderMenuService,
     ],
     exports: [
-        ...CITYFUN_COMPONENTS,
-        ...CITYFUN_DIRECTIVES,
-        ...CITYFUN_PIPES,
+        ...CITYFUN_COMPONENTS, 
+        ...CITYFUN_DIRECTIVES, 
+        ...CITYFUN_PIPES
     ]
 })
 export class SharedModule {

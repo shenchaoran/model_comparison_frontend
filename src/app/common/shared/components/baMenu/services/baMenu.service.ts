@@ -4,7 +4,7 @@ import { Router, Routes } from '@angular/router';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 
-import { MENUS } from '@config/menu.config';
+import { HEADER_MENUS } from '@config/menu.config';
 import { ErrorHandle } from '@core/base/error-handle';
 
 @Injectable()
@@ -17,8 +17,8 @@ export class BaMenuService extends ErrorHandle {
 	constructor(private http: HttpClient, private _router: Router) { 
         super();
 		postal.channel('MENU_CHANNEL').subscribe('menu.update', (data, envelope) => {
-            this.updateMenuByRoutes(<Routes>MENUS);
-            this.updateHeaderMenuByRoutes(<Routes>MENUS)
+            this.updateMenuByRoutes(<Routes>HEADER_MENUS);
+            this.updateHeaderMenuByRoutes(<Routes>HEADER_MENUS)
 		})
 	}
 
