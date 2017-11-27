@@ -2,39 +2,38 @@
     height: 100vh;
     width: 100%;
     padding: 0px;
-    display: grid;
-    justify-items: stretch;
-    align-items: stretch;
-    grid-template-columns: auto;
-    grid-template-rows: 50px auto;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
 }
 
 .nav-header {
-    /* autoprefixer: off */
-    grid-column: 1/2;
-    grid-row: 1/2;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
     z-index: 999;
     padding: 0 5px;
-    display: flex;
     // border-bottom: 1px solid #ebebeb;
     box-shadow: 0 0 5px #6d6d6d;
 }
 
 .content {
-    /* autoprefixer: off */
-    grid-column: 1/2;
-    grid-row: 2/3;
+    flex: 1;
     // z-index: 999;
     overflow: hidden;
 }
 
-:host ::ng-deep .logo {
+#logo {
     margin: auto 16px;
-    float: left;
 }
 
-app-baheaderMenu {
+#menu {
     // float: left;
-    // line-height: 64px;
+    margin: auto 0;
+    line-height: 64px;
     align-self: flex-end;
+}
+
+.flex-item {
+    align-items: center;
 }

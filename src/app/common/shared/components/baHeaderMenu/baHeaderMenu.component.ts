@@ -30,7 +30,7 @@ export class BaHeaderMenuComponent implements OnInit, OnDestroy {
     public selectMenuAndNotify() {}
 
     ngAfterViewInit() {
-        jQuery('#nav-menu').css('line-height', '50px');
+        // jQuery('#nav-menu').css('line-height', '50px');
         
     }
 

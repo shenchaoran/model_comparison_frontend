@@ -9,6 +9,7 @@ export class MenuClass {
             selected?: boolean;
             expanded?: boolean;
             order?: number;
+            show?: boolean;
         };
     };
     children?: Array<MenuClass>;
@@ -33,7 +34,7 @@ export const MENUS: MenuClass[] = [
                 }
             },
             {
-                path: 'model',
+                path: 'geo-model',
                 data: {
                     menu: {
                         title: 'Model',
@@ -43,20 +44,10 @@ export const MENUS: MenuClass[] = [
                         expanded: false,
                         order: 0
                     }
-                },
-                children: [
-                    {
-                        path: 'main-window',
-                        data: {
-                            menu: {
-                                title: 'main-window'
-                            }
-                        }
-                    }
-                ]
+                }
             },
             {
-                path: 'std-data-set',
+                path: 'geo-data',
                 data: {
                     menu: {
                         title: 'Data',
@@ -72,7 +63,7 @@ export const MENUS: MenuClass[] = [
                         path: 'std-data-set',
                         data: {
                             menu: {
-                                title: 'standard data set'
+                                title: 'Standard Data Set'
                             }
                         }
                     },
@@ -80,18 +71,18 @@ export const MENUS: MenuClass[] = [
                         path: 'data-processor',
                         data: {
                             menu: {
-                                title: 'data processor'
+                                title: 'Data Processor'
                             }
                         }
                     }
                 ]
             },
             {
-                path: 'comparation',
+                path: 'comparison',
                 data: {
                     menu: {
-                        title: 'Comparation',
-                        id: 'comparation',
+                        title: 'Comparison',
+                        id: 'comparison',
                         icon: 'appstore-o',
                         selected: true,
                         expanded: false,
@@ -103,7 +94,7 @@ export const MENUS: MenuClass[] = [
                         path: 'cmp-solution',
                         data: {
                             menu: {
-                                title: 'comparation solution'
+                                title: 'Comparison Solution'
                             }
                         }
                     },
@@ -111,7 +102,7 @@ export const MENUS: MenuClass[] = [
                         path: 'cmp-example',
                         data: {
                             menu: {
-                                title: 'comparation example'
+                                title: 'Comparison Example'
                             }
                         }
                     },
@@ -119,11 +110,24 @@ export const MENUS: MenuClass[] = [
                         path: 'start-cmp',
                         data: {
                             menu: {
-                                title: 'start comparation'
+                                title: 'Start Comparison'
                             }
                         }
                     }
                 ]
+            },
+            {
+                path: 'help',
+                data: {
+                    menu: {
+                        title: 'Help',
+                        id: 'help',
+                        icon: 'appstore-o',
+                        selected: true,
+                        expanded: false,
+                        order: 0
+                    }
+                }
             }
         ]
     }
