@@ -3,9 +3,10 @@ import { Observable } from 'rxjs/Observable';
 
 import { MapService } from './map.service.interface';
 // import { MAP_DRAW_TYPE } from './map.draw.type';
+import { ErrorHandle } from '@core/base/error-handle';
 
 
-export abstract class MapServiceImpl implements MapService {
+export abstract class MapServiceImpl extends ErrorHandle implements MapService {
     protected mapConfig: any;
 
     protected mapChannel:any;
@@ -14,6 +15,7 @@ export abstract class MapServiceImpl implements MapService {
     protected focusMap: string;
 
     constructor(protected http: HttpClient){
+        super();
         this.mapChannel = postal.channel('MAP_CHANNEL');
 
         this.maps = {};
@@ -165,13 +167,5 @@ export abstract class MapServiceImpl implements MapService {
                 observer.next(tokenInfo.val);
             }
         });
-    }
-
-    //todo 
-    protected handleError (error: any) {
-        let errMsg = (error.message) ? error.message :
-        error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-        console.error(errMsg); // log to console instead
-        return Observable.throw(errMsg);
     }
 }   

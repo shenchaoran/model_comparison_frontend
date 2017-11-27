@@ -2,10 +2,6 @@ import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 
-
-import { ServiceMetaInfoService } from '../../core/services/serviceMetaInfo.service';
-import { ServiceMetaInfo } from '../../core/metainfo/service.metaInfo';
-
 @Injectable()
 export class MapInquireService { //implements Resolve<any>
 
@@ -18,8 +14,6 @@ export class MapInquireService { //implements Resolve<any>
         this.identifyQueryColl = new Array<any>();
 
         this.channel = postal.channel('MAP_INQUIRE_CHANNEL');
-
-
     }
 
     // resolve() {

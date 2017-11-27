@@ -7,8 +7,6 @@ import { PerfectScrollbarModule, PerfectScrollbarConfigInterface } from 'ngx-per
 import { SharedModule } from '../../shared/shared.module';
 
 import { MapViewRoutingModule } from './mapView.routing.module';
-
-import { ModulesConfigService } from '../../core/services/modules.config.service';
 import { EsriMapResolveService } from './basemap/arcgis/esri-map-resolve.service';
 
 import { MapView } from './mapView.component';
@@ -27,12 +25,7 @@ import { OpenLayersMaps } from './basemap/openlayers/openlayersMap.component';
 import { MapViewDirective } from './mapView.directive';
 import { ArcgisPopUpAnchorDirective } from './basemap/arcgis/arcgisPopUp/arcgis.popUp.directive';
 import { OlPopUpAnchorDirective } from './basemap/openlayers/olPopUp/ol.popUp.directive';
-
-import { MapConfigService } from './basemap/mapConfig.service';
-import { MapToolBarService } from './toolbar/mapToolBar.service';
-import { LayersTreeService } from './layerstree/mapLayersTree.service';
 import { MapInquireService } from './map.inquire.service';
-
 import { ArcgisMapService } from './basemap/arcgis/arcgisMap.service';
 import { EsriSymbolService } from './basemap/arcgis/esri.symbol.service';
 import { OLSymbolService } from './basemap/openlayers/openlayers.symbol.service';
@@ -74,11 +67,6 @@ const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     providers: [
         EsriLoaderService,
         EsriMapResolveService, 
-
-        ModulesConfigService,
-        MapConfigService,
-        MapToolBarService,
-        LayersTreeService,
 
         MapInquireService,
         EsriSymbolService,

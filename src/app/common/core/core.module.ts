@@ -1,65 +1,62 @@
-import { NgModule, ModuleWithProviders, Optional, SkipSelf } from '@angular/core';
+import {
+    NgModule,
+    ModuleWithProviders,
+    Optional,
+    SkipSelf
+} from '@angular/core';
 
 import { throwIfAlreadyLoaded } from './module-import-guard';
-import { TranslatorService } from "./translator/translator.service";
+import { TranslatorService } from './translator/translator.service';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from './net/token/token.interceptor';
+import { ResParserInterceptor } from './net/res-parser/res-parser.interceptor';
+// import { TokenService } from './net/token/token.service';
 
 import {
-	RootService,
-	AppMetaInfoService,
-	ServiceMetaInfoService,
-	ModulesConfigService,
-	DataInquireService,
-	AuthGuard,
-
-	BaImageLoaderService,
-	BaThemePreloader,
-  BaThemeSpinner
-  // EchartAdapterService
+    DataInquireService,
+    AuthGuard,
+    BaThemeSpinner,
+    EchartAdapterService,
+    TableAdapterService,
 } from './services';
 
 const CITYFUN_SERVICES = [
-	RootService,
-	AppMetaInfoService,
-	ServiceMetaInfoService,
-	ModulesConfigService,
-	DataInquireService,
-	AuthGuard,
+    DataInquireService,
+    AuthGuard,
 
-	BaImageLoaderService,
-	BaThemePreloader,
-	BaThemeSpinner
-  // EchartAdapterService
+    BaThemeSpinner,
+    EchartAdapterService,
+    TableAdapterService,
 ];
 
-
 @NgModule({
-	declarations: [
-
-	],
-	imports: [
-
-	],
-	providers: [
-		TranslatorService,
-
-		...CITYFUN_SERVICES,
-	]
+    declarations: [],
+    imports: [],
+    providers: [
+        TranslatorService,
+        ...CITYFUN_SERVICES,
+        { provide: HTTP_INTERCEPTORS, useClass: ResParserInterceptor, multi: true},
+        { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
+    ]
 })
-
 export class CoreModule {
-	constructor( @Optional() @SkipSelf() parentModule: CoreModule) {
-		throwIfAlreadyLoaded(parentModule, 'CoreModule');
-	}
+    constructor(
+        @Optional()
+        @SkipSelf()
+        parentModule: CoreModule
+    ) {
+        throwIfAlreadyLoaded(parentModule, 'CoreModule');
+    }
 
-	// static forRoot(): ModuleWithProviders {
-	// 	return <ModuleWithProviders>{
-	// 		ngModule: CoreModule,
-	// 		providers: [
-	// 			// BaThemeConfigProvider,
-	// 			// BaThemeConfig,
-	// 			...CITYFUN_VALIDATORS,
-	// 			...CITYFUN_SERVICES,
-	// 		],
-	// 	};
-	// }
+    // static forRoot(): ModuleWithProviders {
+    // 	return <ModuleWithProviders>{
+    // 		ngModule: CoreModule,
+    // 		providers: [
+    // 			// BaThemeConfigProvider,
+    // 			// BaThemeConfig,
+    // 			...CITYFUN_VALIDATORS,
+    // 			...CITYFUN_SERVICES,
+    // 		],
+    // 	};
+    // }
 }

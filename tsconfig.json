@@ -18,6 +18,18 @@
         ],
         "plugins": [
             { "name": "tslint-language-service" }
-        ]
+        ],
+        "paths": {
+            "@shared": ["app/common/shared"],
+            "@shared/*": ["app/common/shared/*"],
+            "@core": ["app/common/core/"],
+            "@core/*": ["app/common/core/*"],
+            "@ngx-shared": ["app/common/ngx-shared"],
+            "@ngx-shared/*": ["app/common/ngx-shared/*"],
+            "@feature": ["app/common/feature"],
+            "@feature/*": ["app/common/feature/*"],
+            "@config": ["config"],
+            "@config/*": ["config/*"]
+        }
     }
 }

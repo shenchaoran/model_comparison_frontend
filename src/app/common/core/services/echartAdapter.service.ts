@@ -6,173 +6,48 @@ export class EchartAdapterService {
 
   constructor () {}
 
-  ///////////////////////////////////////////////meta operate
-
-  public getTHs(tts){
-    return _.map(tts, 'did');
-  }
-
-  // get series name/legend data by table column name
-  public getSeriesNameByTh(seriesTh, tdc) {
-    let legendData = [];
-    _.map(tdc, tr => {
-      _.map(tr, td => {
-        if(td.did === seriesTh){
-          legendData.push(td.dv);
-        }
-      });
-    });
-    return _.uniq(legendData);
-  }
-
-  // get xAxis data by table column name
-  public getXAxisByTh(xAxisTh, tdc) {
-    let xAxis = [];
-    _.map(tdc, tr => {
-      _.map(tr, td => {
-        if(td.did === xAxisTh){
-          xAxis.push(td.dv);
-        }
-      });
-    });
-    return _.uniq(xAxis);
-  }
-
-  // 容错：当没有series name时
-  public getMultiSeriesData(tdc, xAxisTh, yAxisTh, seriesTh = null, seriesName = null) {
-    let kvTrs = [];
-    let blockCounter = {};
-    let seriesCount;
-    let currentX;
-    _.map(tdc, tr => {
-      let kvTr = {};
-      _.map(tr, td => {
-        if(td.did === xAxisTh){
-          if(blockCounter[td.dv]){
-            blockCounter[td.dv]++;
-            seriesCount++;
-          }
-          else {
-            blockCounter[td.dv] = 1;
-            seriesCount = 1;
-          }
-          currentX = td.dv;
-        }
-
-        kvTr[td.did] = td.dv;
-        kvTr['seriesNum'] = blockCounter[currentX];
-      });
-      kvTrs.push(kvTr);
-    });
-
-    if(seriesTh === null){
-      let rst = [];
-      for(let i=1; i<= seriesCount; i++){
-        rst.push(_.map(_.filter(kvTrs, {'seriesNum': i}), yAxisTh));
-      }
-      return rst;
-    }
-    else{
-      let where = {};
-      where[seriesTh] = seriesName;
-      let findRst = _.filter(kvTrs, where);
-      let seriesData = _.map(findRst, yAxisTh);
-      return seriesData;
-    }
-  }
-
-  public getSingleSeriesData(yAxisTh, tdc){
-    let seriesData = [];
-    _.map(tdc, tr => {
-      _.map(tr, td => {
-        if(td.did === yAxisTh){
-          seriesData.push(td.dv);
-        }
-      });
-    });
-    return seriesData;
-  }
-
   ///////////////////////////////////////////////Adapter适配器
 
   // TODO stack
-  public multiSeries2DAdapter(table, xAxisTh, yAxisTh, seriesTh = null, stack = null){
-    let xAxisData = this.getXAxisByTh(xAxisTh, table.tdc);
-    let seriesDatas = [];
-    let seriesNames = [];
-
-    if(seriesTh){
-      seriesNames = this.getSeriesNameByTh(seriesTh, table.tdc);
-      _.map(seriesNames, seriesName => {
-        seriesDatas.push(this.getMultiSeriesData(table.tdc, xAxisTh, yAxisTh, seriesTh, seriesName));
-      });
+  public multiSeries2DAdapter(xAxisData, seriesDatas, seriesNames){
+    let xData = [];
+    if(xAxisData === undefined && seriesDatas.length) {
+        _.map(seriesDatas[0], (seriesData, i) => xData.push(i + 1));
     }
-    else{
-      seriesDatas = this.getMultiSeriesData(table.tdc, xAxisTh, yAxisTh);
-      seriesNames = _.map(new Array(seriesDatas.length), v => '');
+    else {
+        xData = xAxisData;
     }
-
     return {
       seriesDatas: seriesDatas,
       seriesNames: seriesNames,
-      xAxisData: xAxisData
+      xAxisData: xData
     };
   }
 
   // TODO
-  public multiSeriesMultiY2DAdapter(table,xAxisTh, yAxisThs, seriesTh = null, stack = null){
-    let serieses = [];
-    let seriesNames = [];
-    let xAxisData = [];
-    let yAxis = _.map(yAxisThs, yAxisTh => {
-      return {
-        type: 'value',
-        name: yAxisTh,
-        splitLine :{
-            show:false
-        },
-      };
-    });
-
-    _.map(yAxisThs, (yAxisTh, index) => {
-      let option = this.multiSeries2DAdapter(table,xAxisTh,yAxisTh,seriesTh);
-      _.map(option.seriesDatas, seriesData => {
-        let series = {};
-        series["yAxisIndex"] = index;
-        if(stack){
-          series["stack"] = stack[index];
-        }
-        series["data"] = seriesData;
-        serieses.push(series);
-      });
-      seriesNames = option.seriesNames;
-      xAxisData = option.xAxisData;
-    });
+  public multiSeriesMultiY2DAdapter(){
     return {
-      serieses: serieses,
-      seriesNames: seriesNames,
-      xAxisData: xAxisData,
-      yAxis: yAxis
+      serieses: null,
+      seriesNames: null,
+      xAxisData: null,
+      yAxis: null
     };
   }
 
-  public singleSeries2DAdapter(table, xAxisTh, yAxisTh){
-    let xAxisData = this.getXAxisByTh(xAxisTh, table.tdc);
-    let seriesData = this.getSingleSeriesData(yAxisTh, table.tdc);
-
+  public singleSeries2DAdapter(){
     return {
-      seriesData: seriesData,
-      xAxisData: xAxisData
+      seriesData: null,
+      xAxisData: null
     };
   }
 
-  public multiSeries3DAdapter(){
-
-  }
+  public multiSeries3DAdapter(){}
 
   ///////////////////////////////////////////////Assembler装配器
   // 必要属性由外部设置
 
+  // x (n) --> (1) y
+  // 相当于table中的多列制图
   public multiSeries2DAssembler(coreOption, chartType){
     return {
       tooltip: {
@@ -197,7 +72,7 @@ export class EchartAdapterService {
           type: 'shadow'
         },
         axisLabel:{
-          interval:0
+          interval: 'auto'
         }
       }],
       yAxis: [{
@@ -215,6 +90,7 @@ export class EchartAdapterService {
     }
   }
 
+  // x (n) --> (n) y
   public multiSeriesMultiY2DAssembler(coreOption, chartType){
     return {
       tooltip: {
@@ -253,6 +129,7 @@ export class EchartAdapterService {
     }
   }
 
+  // x (1) --> (1) y
   public singleSeries2DAssembler(coreOption, chartType){
     return {
       tooltip: {
@@ -283,9 +160,5 @@ export class EchartAdapterService {
         data: coreOption.seriesData
       }
     }
-  }
-
-  public multiSeries3DAssembler(){
-
   }
 }

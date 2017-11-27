@@ -7,7 +7,6 @@ import * as ol from 'openlayers';
 import * as echarts from "echarts";
 
 import { MapServiceImpl } from '../map.service';
-import { MapConfigService } from '../mapConfig.service';
 
 import { OL_MAP_DRAW_TYPE } from '../map.draw.type';
 import { OLSymbolService } from './openlayers.symbol.service';
@@ -1021,7 +1020,7 @@ export class OpenLayersService extends MapServiceImpl {
 	}
 
 	showXCIEQueryResults(layerName, data) {
-		console.log(111);
+		// console.log(111);
 
 		let layerId = layerName + '-layer';
 

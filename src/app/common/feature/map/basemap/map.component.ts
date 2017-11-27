@@ -1,6 +1,6 @@
 import { Component, ElementRef, ViewEncapsulation, ViewChild } from '@angular/core';
 
-import { ModulesConfigService } from '../../../core/services/modules.config.service';
+import { MAP_MODULE_CONFIG } from '@config/map.config';
 
 @Component({
     selector: 'map',
@@ -10,19 +10,14 @@ import { ModulesConfigService } from '../../../core/services/modules.config.serv
 
 export class Map {
     mapId: string = 'map';
-
     moduleEncode: string = 'mapmodule';
     childrenModules: any;
     // show: false;
 
-    constructor(private modulesConfigService: ModulesConfigService) {
-        // postal.channel('MAP_TREE').subscribe('menu.isCollapsed', (data, envelope) => {
-        //     this.isMenuCollapsed = data.isCollapsed;
-        // });
-    }
+    constructor() {}
 
     ngOnInit() {
-        this.childrenModules = this.modulesConfigService.getChildrenModules(this.moduleEncode);
+        this.childrenModules = MAP_MODULE_CONFIG;
     }
 
     includesModule(moduleEncode) {

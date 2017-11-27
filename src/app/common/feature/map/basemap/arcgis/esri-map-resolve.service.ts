@@ -10,7 +10,7 @@ export class EsriMapResolveService implements Resolve<any> {
     private loaded = false;
 
     constructor(@Inject(DOCUMENT) private document, private esriLoader: EsriLoaderService) {
-        this.arcgisPath = JSON.parse(sessionStorage.getItem('arcgisPath'));
+        this.arcgisPath = JSON.parse(localStorage.getItem('arcgisPath'));
     }
 
     resolve() {

@@ -1,58 +1,33 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Resolve } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/toPromise';
 import { ErrorHandle } from '../../../common/core/base/error-handle';
 
-import { ServiceMetaInfoService } from '../services/serviceMetaInfo.service';
-import { ServiceMetaInfo } from '../metainfo/service.metaInfo';
-
-const ROOT_SERVICE_KEY: string = 'scmresource';
+import { APIS, BACKEND } from '@config/api.config';
 
 @Injectable()
 export class DataInquireService extends ErrorHandle implements Resolve<any> {
-    private token: string;
-    public items: any;
-    private channel: any;
 
     resolve() {
-        return this.readConfig().then(config => {
-            this.token = config.token;
-            this.items = config.items;
-            return;
-        });
-    }
-
-    private readConfig(): Promise<any> {
-        let serviceMetaInfo: ServiceMetaInfo = this.serviceMetaInfoService.getServiceMetaInfo(
-            ROOT_SERVICE_KEY
-        );
-
-        let uri = this.serviceMetaInfoService.addTicket(serviceMetaInfo.uri);
-
-        return this.http
-            .get(uri)
-            .toPromise()
-            .then((res: Response) => {
-                return _.get(res, 'data');
-            })
-            .catch(this.handleError);
-    }
-
-    constructor(
-        private http: HttpClient,
-        private serviceMetaInfoService: ServiceMetaInfoService
-    ) {
-        super();
-        this.channel = postal.channel('DATA_INQUIRE_CHANNEL');
-        const TYPES = ['get', 'post', 'delete', 'put'];
-        _.map(TYPES, type => {
-            this.channel.subscribe(`data.inquire.${type}`, (data, envelope) => {
-                this.dataInquire(data, type);
+        return new Promise((resolve, reject) => {
+            // subscribe data inquire event
+            const TYPES = ['get', 'post', 'delete', 'put'];
+            _.map(TYPES, type => {
+                postal.channel('DATA_INQUIRE_CHANNEL').subscribe(`data.inquire.${type}`, (data, envelope) => {
+                    this.dataInquire(data, type);
+                });
             });
+            return resolve();
         });
     }
 
+    constructor(private http: HttpClient) {
+        super(); 
+    }
+
+    // 以发布订阅的方式进行http请求
     private dataInquire(data: any, type: string) {
         const serviceId = data.serviceId;
         const params = data.params;
@@ -61,7 +36,7 @@ export class DataInquireService extends ErrorHandle implements Resolve<any> {
         const options = data.options;
         const cb = data.callback;
 
-        const service: any = _.find(this.items, function(item) {
+        const service: any = _.find(APIS, function(item) {
             return (<any>item).uid === serviceId;
         });
         if (service === undefined || service === null) {
@@ -69,17 +44,26 @@ export class DataInquireService extends ErrorHandle implements Resolve<any> {
         }
 
         let url = service.url;
+        url = `http://${BACKEND.host}:${BACKEND.port}${url}`;
         if (params) {
             _.forIn(params, (value, key) => {
                 url = _.replace(url, ':' + key, value);
             });
         }
 
-        url += '?token=' + encodeURIComponent(this.token);
         // attention: body and query can't exist both
         if (query) {
+            let isFirst = true;
             _.forIn(query, (value, key) => {
-                url += '&' + key + '=' + value;
+                if(isFirst) {
+                    url += '?' + key + '=' + value;
+                }
+                else {
+                    url += '&' + key + '=' + value;
+                }
+                if(isFirst) {
+                    isFirst = false;
+                }
             });
         }
 
@@ -108,21 +92,22 @@ export class DataInquireService extends ErrorHandle implements Resolve<any> {
                 let cbTopic = _.split(cb, '#')[1];
                 if (_.startsWith(_.get(res, 'status.code'), '200')) {
                     postal.channel(cbChannel).publish(cbTopic, {
-                        successed: true,
+                        succeed: true,
                         id: serviceId,
                         result: _.get(res, 'data')
                     });
                 } else {
                     postal.channel(cbChannel).publish(cbTopic, {
-                        successed: false
+                        succeed: false
                     });
                 }
             })
             .catch(this.handleError);
     }
 
-    public getServiceById (id: string, params?: any, query?: any): string {
-        const service: any = _.find(this.items, function(item) {
+    // 根据serviceId获取url，如果传入了params和query，则根据两个参数解析url
+    public getServiceById (id: string, params?: any, query?: any, appendJWT?: boolean): string {
+        const service: any = _.find(APIS, function(item) {
             return (<any>item).uid === id;
         });
         if (service === undefined || service === null) {
@@ -131,16 +116,38 @@ export class DataInquireService extends ErrorHandle implements Resolve<any> {
         }
 
         let url = service.url;
+        url = `http://${BACKEND.host}:${BACKEND.port}${url}`;
         if (params) {
             _.forIn(params, (value, key) => {
                 url = _.replace(url, ':' + key, value);
             });
         }
-        url += '?token=' + encodeURIComponent(this.token);
         if (query) {
+            let isFirst = true;
             _.forIn(query, (value, key) => {
-                url += '&' + key + '=' + value;
+                if(isFirst) {
+                    url += '?' + key + '=' + value;
+                }
+                else {
+                    url += '&' + key + '=' + value;
+                }
+                if(isFirst) {
+                    isFirst = false;
+                }
             });
+        }
+        if(appendJWT) {
+            if(query) {
+                url += '&';
+            }
+            else {
+                url += '?';
+            }
+            const jwtStr = localStorage.getItem('jwt');
+            if(jwtStr) {
+                const jwt = JSON.parse(jwtStr);
+                url += `Authorization=bearer ${jwt.token}`;
+            }
         }
         return url;
     }

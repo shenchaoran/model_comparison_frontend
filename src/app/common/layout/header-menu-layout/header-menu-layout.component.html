@@ -1,10 +1,12 @@
 <div class="wrapper">
-    <div class="header">
-        <div class="logo">
+    <div class="nav-header">
+        <div id="logo" class="flex-item">
             <img src="assets/img/app/logo_light.png" height="30" />
             <img src="assets/img/app/logo_title_light.png" height="35" />
         </div>
-        <app-baHeaderMenu></app-baHeaderMenu>
+        <div id="menu" class="flex-item">
+            <app-baHeaderMenu></app-baHeaderMenu>
+        </div>
     </div>
     <section class="content">
         <router-outlet></router-outlet>

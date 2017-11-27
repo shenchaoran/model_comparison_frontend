@@ -1,6 +1,7 @@
 import { Component, Input, ElementRef, HostListener } from '@angular/core';
 // import { GlobalState } from '../../../../global.state';
 import { layoutSizes } from '../../theme/theme.constants';
+import { APP_CONFIG } from '@config/app.config';
 
 // import { BaMenuService } from '../../services/baMenu/baMenu.service';
 
@@ -34,7 +35,7 @@ export class BaSidebar {
 		}
 
 		if(this.title === undefined){
-			this.title = JSON.parse(sessionStorage.getItem('appMetaInfo')).name;
+			this.title = APP_CONFIG.name;
 		}
 
 		// this._menuService.updateMenu();

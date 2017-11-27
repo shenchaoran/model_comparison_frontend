@@ -1,5 +1,6 @@
 import { Router } from '@angular/router';
 import { Component, Input } from '@angular/core';
+import { APP_CONFIG } from '@config/app.config';
 
 @Component({
 	selector: 'ba-title-top',
@@ -8,7 +9,7 @@ import { Component, Input } from '@angular/core';
 })
 export class BaTitleTop {
 	@Input() title: string;
-	public nickname: string;
+	public username: string;
 	public menuDropDown: boolean = false;
 
 	constructor(
@@ -17,9 +18,9 @@ export class BaTitleTop {
 
 	ngOnInit() {
 		if (this.title === undefined) {
-			this.title = JSON.parse(sessionStorage.getItem('appMetaInfo')).name;
+			this.title = APP_CONFIG.name;
 		}
-		this.nickname = JSON.parse(sessionStorage.getItem('authInfo')).nickname;
+		this.username = JSON.parse(localStorage.getItem('jwt')).username;
 	}
 	showUserOperation($event) {
 		this.menuDropDown = !this.menuDropDown;
@@ -28,8 +29,8 @@ export class BaTitleTop {
 	}
 
 	logout() {
-		sessionStorage.clear();
-		this.router.navigate(["./login"]);
+		localStorage.clear();
+		this.router.navigate(["/login"]);
 	}
 	
 }

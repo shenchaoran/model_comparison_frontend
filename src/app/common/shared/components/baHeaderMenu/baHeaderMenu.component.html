@@ -78,6 +78,6 @@
 
 <!-- <app-testRecur></app-testRecur> -->
 
-<ul nz-menu [nzMode]="'horizontal'">
+<ul id='nav-menu' nz-menu [nzMode]="'horizontal'">
     <app-subMenu *ngFor="let menuItem of menuItems" class="ant-menu-submenu ant-menu-submenu-horizontal" [subMenu]="menuItem"></app-subMenu>
 </ul>

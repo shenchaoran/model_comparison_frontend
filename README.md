@@ -1,27 +1,37 @@
 # WebNJGIS
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.4.4.
+## Architecture
+### business
+### common
+#### core
+一些只加载一遍的核心模块，包括：
+- 预加载器
+- 拦截器
+- ACL：访问控制列表
+- 翻译器
+- 通用服务
+    - startup.service：加载配置文件，是服务的入口
+    - settings.service：读取配置文件
+    - http.client.service：重新封装HttpClient
+    - menu.service：用于配置menu
+    - colors.service：常用的颜色别名
+    - themes.service：用于设置皮肤
+#### feature
+特性模块：一般将通用的模块放在这里，比如登录模块、地图模块
 
-## Development server
+#### layout
+布局模块
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+#### shared
+可重用的一些组件、指令、管道、主题、验证器放在这里
 
-## Code scaffolding
+#### ngx-shared
+angular自带的一些常用模块，一般大多数module中都要用，所以单独放在import中，并重新export
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## 代码风格
+- 文件和文件夹命名：烤串命名法
+- 文件命名：feature.type.ts
 
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+## TODO
+- 页面右下角加后台运行列表
+- docking layout

@@ -1,6 +1,4 @@
-import { Directive, ViewContainerRef, ReflectiveInjector, ComponentFactoryResolver, ComponentFactory, ComponentRef } from '@angular/core';
-
-import { ModulesConfigService } from '../../core/services/modules.config.service';
+import { Directive, ViewContainerRef, ComponentFactoryResolver, ComponentFactory, ComponentRef } from '@angular/core';
 
 import { Map } from './basemap/map.component';
 import { SwipeMap } from './basemap/swipeMap.component';
@@ -14,7 +12,7 @@ export class MapViewDirective {
 
     private mapComponentRef: ComponentRef<any> = null;
 
-    constructor(private viewContainer: ViewContainerRef, private componentFactoryResolver: ComponentFactoryResolver, private modulesConfigService: ModulesConfigService) {
+    constructor(private viewContainer: ViewContainerRef, private componentFactoryResolver: ComponentFactoryResolver) {
         this.subscriptions = new Array<any>();
         
         let channel = postal.channel('MAPVIEW_CHANNEL');
@@ -53,7 +51,7 @@ export class MapViewDirective {
     }
 
     createMap() {
-        let mapComponent = new Map(this.modulesConfigService);
+        let mapComponent = new Map();
 
         this.viewContainer.clear();
 

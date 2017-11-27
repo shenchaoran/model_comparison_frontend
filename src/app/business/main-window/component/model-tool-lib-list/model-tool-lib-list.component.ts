@@ -34,6 +34,8 @@ export class ModelToolLibListComponent implements OnInit, AfterViewInit {
     onModelToolClick(model) {
         // jQuery('#container li').removeClass('selected-li');
         this.selectedModelId = model._id;
-        postal.channel('LAYOUT_CHANNEL').publish('propertity-panel.model.show', model);
+        postal
+            .channel('LAYOUT_CHANNEL')
+            .publish('propertity-panel.model.show', model);
     }
 }

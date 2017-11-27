@@ -37,7 +37,8 @@ export class MainWindowComponent extends ErrorHandle implements OnInit, AfterVie
         }
     ];
     _InputLoading: boolean = true;
-    propertiesTitle;
+    propertiesTitle = null;
+    visualTitle = null;
     panelData: {
         type: PropertyPanelShowType,
         data: ModelInput
@@ -69,14 +70,18 @@ export class MainWindowComponent extends ErrorHandle implements OnInit, AfterVie
                     .channel('MODEL_TOOL_CHANNEL')
                     .subscribe('getModelInput', (data, envelope) => {
                         this._InputLoading = false;
-                        if (data.successed) {
+                        if (data.succeed) {
                             data.result.msid = propertyPanelData._id;
                             data.result.msname = propertyPanelData.ms_model.m_name;
                             this.panelData = {
                                 type: PropertyPanelShowType.MODEL,
                                 data: data.result
                             };
-                            this.toggleLayout();
+
+                            postal
+                                .channel('PROP_CHANNEL')
+                                .publish('model-prop.bind', this.panelData);
+                            this.showPanel();
                         } else {
                             this._notification.create(
                                 'warning',
@@ -97,14 +102,26 @@ export class MainWindowComponent extends ErrorHandle implements OnInit, AfterVie
         postal
             .channel('LAYOUT_CHANNEL')
             .subscribe('propertity-panel.data.show', (data, envelope) => {
-                this.propertiesTitle = data.filename;
-                this.dataListService.parseUDX(data.gdid)
+                const geodata = data;
+                const filename = data.filename;
+                this.dataListService.parseUDXProp(data._id)
                     .toPromise()
-                    .then((response) => {
-                        if (_.startsWith(_.get(response, 'status.code'), '200')) {
+                    .then(response => {
+                        if (_.startsWith(_.get(response, 'status.code'),'200')) {
                             const data = _.get(response, 'data');
-                            
-                        }
+                            _.set(data, 'geodata', geodata);
+                            this.showPanel();
+                            this.panelData = {
+                                type: PropertyPanelShowType.DATA,
+                                data: null
+                            };
+                            this.propertiesTitle = filename;
+                            this._InputLoading = false;
+
+                            postal
+                                .channel('PROP_CHANNEL')
+                                .publish('data-prop.bind', data);
+                        } 
                         else {
                             this._notification.create(
                                 'warning',
@@ -144,6 +161,25 @@ export class MainWindowComponent extends ErrorHandle implements OnInit, AfterVie
                     }
                 ];
             });
+        
+        postal
+            .channel('PROP_CHANNEL')
+            .subscribe('compare-prop.bind', (data, envelope) => {
+                this.panelData = {
+                    type: PropertyPanelShowType.DATA_COMPARE,
+                    data: undefined
+                };
+                this._InputLoading = false;
+                this.propertiesTitle = `${data.left.filename} vs ${data.right.filename}`;
+                
+                this.showPanel();
+            });
+
+        postal
+            .channel('LAYOUT_CHANNEL')
+            .subscribe('visualization.title', (data, envelope) => {
+                this.visualTitle = data;
+            });
     }
 
     ngAfterViewInit() {
@@ -153,9 +189,23 @@ export class MainWindowComponent extends ErrorHandle implements OnInit, AfterVie
             'line-height': '38px',
             padding: '0 5px'
         });
-        const cardBodyH = parseInt(jQuery('nz-card').css('height')) - 38 + 'px';
+        jQuery('#manager-card .ant-card-head h3').css('line-height', '38px');
+        let cardBodyH = parseInt(jQuery('nz-card').css('height')) - 38 + 'px';
         jQuery('#manager-card .ant-card-head h3').css('font-size', '16px');
         jQuery('#manager-card .ant-card-body').css({
+            padding: '5px',
+            height: cardBodyH
+        });
+
+        jQuery('#visual-card .ant-card-head').css({
+            height: '38px',
+            'line-height': '38px',
+            padding: '0 5px'
+        });
+        jQuery('#visual-card .ant-card-head h3').css('line-height', '38px');
+        cardBodyH = parseInt(jQuery('nz-card').css('height')) - 38 + 'px';
+        jQuery('#visual-card .ant-card-head h3').css('font-size', '16px');
+        jQuery('#visual-card .ant-card-body').css({
             padding: '5px',
             height: cardBodyH
         });
@@ -165,6 +215,7 @@ export class MainWindowComponent extends ErrorHandle implements OnInit, AfterVie
             'line-height': '38px',
             padding: '0 5px'
         });
+        jQuery('#invork-card .ant-card-head h3').css('line-height', '38px');
         jQuery('#invork-card .ant-card-head h3').css('font-size', '16px');
         jQuery('#invork-card .ant-card-extra').css({
             right: '13px',
@@ -176,7 +227,7 @@ export class MainWindowComponent extends ErrorHandle implements OnInit, AfterVie
         });
     }
 
-    toggleLayout() {
+    showPanel() {
         jQuery('#propertity-panel').css('display', 'block');
         this.nzSpans = [
             {
@@ -187,23 +238,23 @@ export class MainWindowComponent extends ErrorHandle implements OnInit, AfterVie
                 xl: 5
             },
             {
-                xs: 8,
-                sm: 8,
-                md: 8,
-                lg: 8,
-                xl: 8
+                xs: 7,
+                sm: 7,
+                md: 7,
+                lg: 7,
+                xl: 7
             },
             {
-                xs: 12,
-                sm: 12,
-                md: 11,
-                lg: 11,
-                xl: 11
+                xs: 13,
+                sm: 13,
+                md: 12,
+                lg: 12,
+                xl: 12
             }
         ];
     }
 
-    closePanel() {
+    hidePanel() {
         postal.channel('LAYOUT_CHANNEL').publish('propertity-panel.hide', {});
     }
 }

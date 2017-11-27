@@ -12,8 +12,8 @@
     <div class='flex-item' id='upload-progress'>
         <nz-progress [nzStatus]="'active'" [ngModel]='uploadProgress'></nz-progress>
     </div>
+    <jqxMenu #jqxMenu (onItemclick)='onMenuItemClick($event)' [theme]='"energyblue"' [mode]="'popup'" [autoOpenPopup]='false' [source]='contextMenuCfg' [width]='200'></jqxMenu>
 
-    <app-context-menu id='contextMenu' [id]='"contextMenu"' [menuCfg]='menuCfg'></app-context-menu>
-
-    <input #fileUpload ngFileSelect type='file' name='"myfile"' [options]="fileUploaderOptions" (onUpload)="_onFileUpload($event)" (beforeUpload)="beforeFileUpload($event)" hidden="true">
+    <!-- <app-context-menu id='contextMenu' [id]='"contextMenu"' [menuCfg]='menuCfg'></app-context-menu> -->
+    <input #fileUpload [accept]='acceptedType' multiple ngFileSelect type='file' name='"myfile"' [options]="fileUploaderOptions" (onUpload)="_onFileUpload($event)" (beforeUpload)="beforeFileUpload($event)" hidden="true">
 </div>

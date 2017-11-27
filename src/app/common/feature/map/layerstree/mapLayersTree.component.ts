@@ -1,7 +1,6 @@
 import { Component, OnInit, ElementRef, Input } from '@angular/core';
 import { TreeModel, NodeEvent, MoveLayerLevelEvent, ChangeLayerOpacityEvent, Ng2TreeSettings } from 'ng2-tree';
-
-import { LayersTreeService } from './mapLayersTree.service';
+import { MAP_LAYERSTREE_CONFIG } from '@config/map.config';
 
 @Component({
     selector: 'layers-tree',
@@ -26,22 +25,18 @@ export class LayersTree implements OnInit {
         rootIsVisible: false
     };
 
-    constructor(private layersTreeService: LayersTreeService, private _elementRef: ElementRef) {
-        this.layersTreeService.readConfig().subscribe(
-            layersConfig => {
-                this.baseLayer = _.find(layersConfig, function (o) { return (<any>o).id == 'baseLayer'; });
-                this.imageLayer = _.find(layersConfig, function (o) { return (<any>o).id == 'imageLayer'; });
-                this.layersTree = _.find(layersConfig, function(o) { return (<any>o).id == 'layersTree'; });
+    constructor(private _elementRef: ElementRef) {
+        this.baseLayer = _.find(MAP_LAYERSTREE_CONFIG, function (o) { return (<any>o).id == 'baseLayer'; });
+        this.imageLayer = _.find(MAP_LAYERSTREE_CONFIG, function (o) { return (<any>o).id == 'imageLayer'; });
+        this.layersTree = _.find(MAP_LAYERSTREE_CONFIG, function(o) { return (<any>o).id == 'layersTree'; });
 
-                this.layersTree.settings = {
-                    cssClasses: {
-                        expanded: 'fa fa-caret-down',
-                        collapsed: 'fa fa-caret-right',
-                        leaf: 'fa'
-                    }
-                };
+        this.layersTree.settings = {
+            cssClasses: {
+                expanded: 'fa fa-caret-down',
+                collapsed: 'fa fa-caret-right',
+                leaf: 'fa'
             }
-        );
+        };
     }
 
     ngOnInit() {

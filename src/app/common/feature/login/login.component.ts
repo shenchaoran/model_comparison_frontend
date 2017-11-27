@@ -1,17 +1,19 @@
 import { Component } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { NzNotificationService } from 'ng-zorro-antd';
 
 import { LoginService } from './login.service';
+import { ErrorHandle } from '@core/base/error-handle';
 
 @Component({
 	selector: 'login',
 	templateUrl: './login.component.html',
 	styleUrls: ['./login.component.scss']
 })
-export class Login {
+export class Login extends ErrorHandle {
 	form: FormGroup;
-	account: AbstractControl;
+	username: AbstractControl;
 	password: AbstractControl;
 	remembered: boolean = false;
 	submitted: boolean = false;
@@ -20,11 +22,13 @@ export class Login {
 	constructor(
 		fb: FormBuilder,
 		private route: ActivatedRoute,
-		private loginService: LoginService
+		private loginService: LoginService,
+        private _notification: NzNotificationService
 	) {
+        super();
 		this.form = fb.group({
-			account: [
-				'System',
+			username: [
+				'Admin',
 				Validators.compose([Validators.required, Validators.minLength(4)])
 			],
 			password: [
@@ -33,11 +37,11 @@ export class Login {
 			]
 		});
 
-		this.account = this.form.controls['account'];
+		this.username = this.form.controls['username'];
 		this.password = this.form.controls['password'];
 
-		if (localStorage.getItem('account')) {
-			this.account.setValue(localStorage.getItem('account'));
+		if (localStorage.getItem('username')) {
+			this.username.setValue(localStorage.getItem('username'));
 		}
 	}
 
@@ -45,25 +49,40 @@ export class Login {
 		this.remembered = !this.remembered;
 
 		if (this.remembered) {
-			localStorage.setItem('account', this.account.value);
+			localStorage.setItem('username', this.username.value);
 		} else {
-			localStorage.removeItem('account');
+			localStorage.removeItem('username');
 		}
 	}
 
 	public onSubmit(values: Object): void {
-		this.submitted = true;
+        this.submitted = true;
+        this.loginErrorInfo = undefined;
 		if (this.form.valid) {
-			// setTimeout(()=>{
 			this.loginService
-				.verifyLogin(this.account.value, this.password.value)
+				.postLogin(this.username.value, this.password.value)
 				.subscribe({
-					next: errorInfo => {
-						this.loginErrorInfo = errorInfo;
-						this.submitted = false;
-					}
+					next: err => {
+                        if(err) {
+                            this._notification.create(
+                                'warning',
+                                'Warning:',
+                                'login failed, please retry later!'
+                            );
+                            // this.loginErrorInfo = JSON.stringify(err);
+                            this.loginErrorInfo = 'login failed, please retry later!';
+						    this.submitted = false;
+                        }
+                    },
+                    error: err => {
+                        this._notification.create(
+                            'warning',
+                            'Warning:',
+                            'login failed, please retry later!'
+                        );
+                        this.handleError(err)
+                    }
 				});
-			// }, 100000)
 
 		}
 	}

@@ -5,7 +5,6 @@ import { MapView } from './mapView.component';
 
 import { EsriMapResolveService } from './basemap/arcgis/esri-map-resolve.service';
 // import { MapInquireService } from './map.inquire.service';
-import { MapConfigService } from './basemap/mapConfig.service';
 
 const routes: Routes = [
     {
@@ -13,7 +12,6 @@ const routes: Routes = [
         component: MapView, 
         resolve: {
             // esriModules: EsriMapResolveService,
-            mapConfig: MapConfigService,
             // mapInquireService: MapInquireService
 
         }

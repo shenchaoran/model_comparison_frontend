@@ -4,13 +4,10 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 
 import { MapServiceImpl } from '../map.service';
-import { MapConfigService } from '../mapConfig.service';
-
 import { ESRI_MAP_DRAW_TYPE } from '../map.draw.type';
-
 import { EsriSymbolService } from './esri.symbol.service';
-
 import * as esriLoader from 'esri-loader';
+import { ErrorHandle } from '@core/base/error-handle';
 
 const Wkt = require('wicket/wicket.arcgis.js');
 
