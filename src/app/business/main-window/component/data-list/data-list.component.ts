@@ -23,7 +23,7 @@ import { jqxMenuComponent } from 'jqwidgets-framework/jqwidgets-ts/angular_jqxme
 import { ErrorHandle } from '../../../../common/core/base/error-handle';
 
 @Component({
-    selector: 'app-data-list',
+    selector: 'njgis-data-list',
     templateUrl: './data-list.component.html',
     styleUrls: ['./data-list.component.scss']
 })

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-std-data-set',
+  selector: 'njgis-std-data-set',
   templateUrl: './std-data-set.component.html',
   styleUrls: ['./std-data-set.component.scss']
 })

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-data-tool-lib-list',
+  selector: 'njgis-data-tool-lib-list',
   templateUrl: './data-tool-lib-list.component.html',
   styleUrls: ['./data-tool-lib-list.component.scss']
 })

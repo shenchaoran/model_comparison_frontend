@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-comparison',
+  selector: 'njgis-comparison',
   template: `
     <router-outlet></router-outlet>
   `,

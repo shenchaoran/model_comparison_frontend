@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-profile',
+  selector: 'njgis-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })

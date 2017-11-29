@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 
 @Component({
-  selector: 'app-managerPanel',
+  selector: 'njgis-managerPanel',
   templateUrl: './manager-panel.component.html',
   styleUrls: ['./manager-panel.component.scss']
 })

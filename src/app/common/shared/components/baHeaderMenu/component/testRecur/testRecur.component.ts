@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-testRecur',
+  selector: 'njgis-testRecur',
   templateUrl: './testRecur.component.html',
   styleUrls: ['./testRecur.component.scss']
 })

@@ -8,7 +8,7 @@ import { PropertyPanelShowType } from './component/property-panel/property-panel
 import { DataListService } from './services/data-list.service';
 
 @Component({
-    selector: 'app-main-window',
+    selector: 'njgis-main-window',
     templateUrl: './main-window.component.html',
     styleUrls: ['./main-window.component.scss']
 })

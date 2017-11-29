@@ -10,7 +10,7 @@ import { layoutPaths } from './common/shared/theme/theme.constants';
  * Top Level Component
  */
 @Component({
-	selector: 'app',
+	selector: 'njgis',
 	templateUrl: './app.component.html',
 	styleUrls: ['./app.component.scss']
 })

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-help',
+  selector: 'njgis-help',
   template: `
     <p>
       help Works!

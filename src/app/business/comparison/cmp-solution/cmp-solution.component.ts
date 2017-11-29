@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-cmp-solution',
+  selector: 'njgis-cmp-solution',
   templateUrl: './cmp-solution.component.html',
   styleUrls: ['./cmp-solution.component.scss']
 })

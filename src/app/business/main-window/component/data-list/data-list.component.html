@@ -14,6 +14,6 @@
     </div>
     <jqxMenu #jqxMenu (onItemclick)='onMenuItemClick($event)' [theme]='"energyblue"' [mode]="'popup'" [autoOpenPopup]='false' [source]='contextMenuCfg' [width]='200'></jqxMenu>
 
-    <!-- <app-context-menu id='contextMenu' [id]='"contextMenu"' [menuCfg]='menuCfg'></app-context-menu> -->
+    <!-- <njgis-context-menu id='contextMenu' [id]='"contextMenu"' [menuCfg]='menuCfg'></njgis-context-menu> -->
     <input #fileUpload [accept]='acceptedType' multiple ngFileSelect type='file' name='"myfile"' [options]="fileUploaderOptions" (onUpload)="_onFileUpload($event)" (beforeUpload)="beforeFileUpload($event)" hidden="true">
 </div>
