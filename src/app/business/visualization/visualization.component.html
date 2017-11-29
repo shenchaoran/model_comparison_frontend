@@ -1,4 +1,4 @@
-<div (window:resize)="onResize($event)">
+<div id="container" (window:resize)="onResize($event)">
     <!-- table -->
     <ng-container *ngIf='visualType === 1'>
         <!-- <hot-table *ngIf='njTable.hotTableCfg.loading === false' height='500' [contextMenu]='njTable.hotTableCfg.contextMenu' [hotId]='njTable.hotTableCfg.instance' [rowHeaders]='true' [colHeaders]='true' [settings]='njTable.hotTableCfg.settings' [columns]='njTable.hotTableCfg.cols' -->

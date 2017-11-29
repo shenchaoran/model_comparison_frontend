@@ -34,7 +34,7 @@ const routes: Routes = [
                 loadChildren: './help/help.module#HelpModule'
             },
             {
-                path: 'v1',
+                path: 'v1.0',
                 loadChildren: './main-window/main-window.module#MainWindowModule'
             },
             {

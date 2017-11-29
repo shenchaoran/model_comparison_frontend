@@ -167,7 +167,7 @@ export const USER_MENUS: MenuClass[] = [
                         path: 'profile',
                         data: {
                             menu: {
-                                title: 'Your Profile'
+                                title: 'Profile'
                             }
                         }
                     },
@@ -175,7 +175,7 @@ export const USER_MENUS: MenuClass[] = [
                         path: 'stars',
                         data: {
                             menu: {
-                                title: 'Your Stars'
+                                title: 'Stars'
                             }
                         }
                     },
@@ -183,7 +183,7 @@ export const USER_MENUS: MenuClass[] = [
                         path: 'resources',
                         data: {
                             menu: {
-                                title: 'Your Resources'
+                                title: 'Resources'
                             }
                         }
                     },

@@ -19,7 +19,7 @@ export class VisualListComponent implements OnInit, AfterViewInit {
     @ViewChild('treeMenu') treeMenu: jqxMenuComponent;
     treeSrc: Array<TreeItem> = [
         {
-            id: 'map',
+            id: 'map-tree',
             // parentId: '-1',
             label: 'Map',
             items: [],
@@ -27,7 +27,7 @@ export class VisualListComponent implements OnInit, AfterViewInit {
             expanded: true
         },
         {
-            id: 'diagram',
+            id: 'diagram-tree',
             // parentId: '-1',
             label: 'Diagram',
             items: [],
