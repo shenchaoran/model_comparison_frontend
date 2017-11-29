@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'njgis-model-tool-lib-tree',
+  selector: 'ogms-model-tool-lib-tree',
   templateUrl: './model-tool-lib-tree.component.html',
   styleUrls: ['./model-tool-lib-tree.component.scss']
 })

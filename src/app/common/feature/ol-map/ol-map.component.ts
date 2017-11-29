@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'njgis-ol-map',
+  selector: 'ogms-ol-map',
   template: `
     <p>
       ol-map Works!

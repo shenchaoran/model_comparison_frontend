@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'njgis-data-processor',
+  selector: 'ogms-data-processor',
   templateUrl: './data-processor.component.html',
   styleUrls: ['./data-processor.component.scss']
 })

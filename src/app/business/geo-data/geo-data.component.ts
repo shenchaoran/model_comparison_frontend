@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'njgis-geo-data',
+  selector: 'ogms-geo-data',
   template: `
     <router-outlet></router-outlet>
   `,

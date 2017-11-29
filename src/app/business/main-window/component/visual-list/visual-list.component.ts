@@ -10,7 +10,7 @@ import { MenuItem } from './menu-item.class';
 import { VisualListService } from '../../services/visual-list.service';
 
 @Component({
-    selector: 'njgis-visual-list',
+    selector: 'ogms-visual-list',
     templateUrl: './visual-list.component.html',
     styleUrls: ['./visual-list.component.scss']
 })

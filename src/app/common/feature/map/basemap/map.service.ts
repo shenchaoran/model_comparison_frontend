@@ -75,7 +75,7 @@ export abstract class MapServiceImpl extends ErrorHandle implements MapService {
     protected getLayersInfo(layerAid: string): any{
         let layersInfo = [];
 
-        let aLayer = _.find(this.mapConfig.alayers, function(aLayer) { 
+        let aLayer = _.find(this.mapConfig.alayers, function(aLayer) {
                         return (<any>aLayer).aid === layerAid; 
                     });
           

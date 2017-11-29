@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'njgis-geo-model',
+  selector: 'ogms-geo-model',
   template: `
     <p>
       geo-model Works!

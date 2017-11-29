@@ -13,7 +13,7 @@ import { NJMap, NJLayer } from './map-cfg.class';
 import { NJDiagram } from './diagram-cfg.class';
 
 @Component({
-    selector: 'njgis-visualization',
+    selector: 'ogms-visualization',
     templateUrl: './visualization.component.html',
     styleUrls: ['./visualization.component.scss']
 })

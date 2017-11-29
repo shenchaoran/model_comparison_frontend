@@ -6,7 +6,7 @@ import { BaMenuService } from '../baMenu/services/baMenu.service';
 import { HeaderMenuMetaInfo } from './baHeaderMenu';
 
 @Component({
-    selector: 'njgis-baHeaderMenu',
+    selector: 'ogms-baHeaderMenu',
     templateUrl: './baHeaderMenu.component.html',
     styleUrls: ['./baHeaderMenu.component.scss'],
     providers: [BaMenuService]

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'njgis-legend',
+  selector: 'ogms-legend',
   templateUrl: './legend.component.html',
   styleUrls: ['./legend.component.scss']
 })

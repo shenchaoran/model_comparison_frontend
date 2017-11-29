@@ -8,6 +8,7 @@ import { LayerTreeComponent } from './layer-tree/layer-tree.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { LegendComponent } from './legend/legend.component';
 import { LayoutComponent } from './layout/layout.component';
+import { BasemapComponent } from './basemap/basemap.component';
 
 @NgModule({
     imports: [NgxSharedModule, SharedModule, OlMapRoutingModule],
@@ -16,7 +17,8 @@ import { LayoutComponent } from './layout/layout.component';
         LayerTreeComponent,
         ToolbarComponent,
         LegendComponent,
-        LayoutComponent
+        LayoutComponent,
+        BasemapComponent
     ]
 })
 export class OlMapModule {}

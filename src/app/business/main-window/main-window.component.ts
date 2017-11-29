@@ -8,7 +8,7 @@ import { PropertyPanelShowType } from './component/property-panel/property-panel
 import { DataListService } from './services/data-list.service';
 
 @Component({
-    selector: 'njgis-main-window',
+    selector: 'ogms-main-window',
     templateUrl: './main-window.component.html',
     styleUrls: ['./main-window.component.scss']
 })
@@ -184,32 +184,45 @@ export class MainWindowComponent extends ErrorHandle implements OnInit, AfterVie
 
     ngAfterViewInit() {
         jQuery('.nz-overlay-container').css('z-index', '5000');
+        jQuery('#manager-card').css({
+            display: 'flex',
+            'flex-direction': 'column',
+            'flex-wrap': 'nowrap'
+        });
         jQuery('#manager-card .ant-card-head').css({
             height: '38px',
             'line-height': '38px',
             padding: '0 5px'
         });
         jQuery('#manager-card .ant-card-head h3').css('line-height', '38px');
-        let cardBodyH = parseInt(jQuery('nz-card').css('height')) - 38 + 'px';
         jQuery('#manager-card .ant-card-head h3').css('font-size', '16px');
         jQuery('#manager-card .ant-card-body').css({
             padding: '5px',
-            height: cardBodyH
+            flex: 1
         });
 
+        jQuery('#visual-card').css({
+            display: 'flex',
+            'flex-direction': 'column',
+            'flex-wrap': 'nowrap'
+        });
         jQuery('#visual-card .ant-card-head').css({
             height: '38px',
             'line-height': '38px',
             padding: '0 5px'
         });
         jQuery('#visual-card .ant-card-head h3').css('line-height', '38px');
-        cardBodyH = parseInt(jQuery('nz-card').css('height')) - 38 + 'px';
         jQuery('#visual-card .ant-card-head h3').css('font-size', '16px');
         jQuery('#visual-card .ant-card-body').css({
             padding: '5px',
-            height: cardBodyH
+            flex: 1
         });
 
+        jQuery('#invork-card').css({
+            display: 'flex',
+            'flex-direction': 'column',
+            'flex-wrap': 'nowrap'
+        });
         jQuery('#invork-card .ant-card-head').css({
             height: '38px',
             'line-height': '38px',
@@ -223,7 +236,7 @@ export class MainWindowComponent extends ErrorHandle implements OnInit, AfterVie
         });
         jQuery('#invork-card .ant-card-body').css({
             padding: '5px',
-            height: cardBodyH
+            flex: 1
         });
     }
 

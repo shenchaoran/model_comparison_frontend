@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'njgis-home',
+  selector: 'ogms-home',
   template: `
         <p>
             home works!

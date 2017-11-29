@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-    selector: 'njgis-header-pull-right',
+    selector: 'ogms-header-pull-right',
     templateUrl: './header-pull-right.component.html',
     styleUrls: ['./header-pull-right.component.scss']
 })

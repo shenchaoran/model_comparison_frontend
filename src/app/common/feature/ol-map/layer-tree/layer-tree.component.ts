@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'njgis-layer-tree',
+  selector: 'ogms-layer-tree',
   templateUrl: './layer-tree.component.html',
   styleUrls: ['./layer-tree.component.scss']
 })

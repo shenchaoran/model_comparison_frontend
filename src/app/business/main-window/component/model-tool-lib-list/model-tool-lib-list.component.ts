@@ -5,7 +5,7 @@ import { NzNotificationService } from 'ng-zorro-antd';
 import { ModelToolService } from '../../services/model-tool.service';
 
 @Component({
-    selector: 'njgis-model-tool-lib-list',
+    selector: 'ogms-model-tool-lib-list',
     templateUrl: './model-tool-lib-list.component.html',
     styleUrls: ['./model-tool-lib-list.component.scss']
 })

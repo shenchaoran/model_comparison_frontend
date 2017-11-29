@@ -259,10 +259,6 @@ export class OpenLayersService extends MapServiceImpl {
 		});
 	}
 
-
-
-
-
 	setAnimationPolygon(geometry, duration, fillColor?, borderColor?) {
 		let start = new Date().getTime();
 		// let duration = 3000;

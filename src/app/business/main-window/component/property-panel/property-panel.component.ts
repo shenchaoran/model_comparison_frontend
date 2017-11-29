@@ -12,7 +12,7 @@ import { NJDiagram } from '../../../visualization/diagram-cfg.class';
 import { EchartAdapterService } from '../../../../common/core/services/echartAdapter.service';
 
 @Component({
-    selector: 'njgis-property-panel',
+    selector: 'ogms-property-panel',
     templateUrl: './property-panel.component.html',
     styleUrls: ['./property-panel.component.scss']
 })

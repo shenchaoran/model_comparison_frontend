@@ -4,7 +4,7 @@ import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
 import { HeaderMenuMetaInfo } from '../../baHeaderMenu';
 
 @Component({
-  selector: 'njgis-subMenu',
+  selector: 'ogms-subMenu',
   templateUrl: './subMenu.component.html',
   styleUrls: ['./subMenu.component.scss']
 })

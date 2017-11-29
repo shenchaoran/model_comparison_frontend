@@ -2,7 +2,7 @@
     <ng-container *ngFor='let subMenu of menuCfg'>
         <li nz-submenu *ngIf='subMenu.type === 1'>
             <span title><i *ngIf='subMenu.icon' class='anticon anticon-{{subMenu.icon}}'></i>{{subMenu.title}}</span>
-            <njgis-context-menu [id]='subMenu.title + "-children"' [menuCfg]='subMenu.children'></njgis-context-menu>
+            <ogms-context-menu [id]='subMenu.title + "-children"' [menuCfg]='subMenu.children'></ogms-context-menu>
         </li>
         <li nz-menu-item *ngIf='subMenu.type === 2' (click)='$event.preventDefault();$event.stopPropagation();publishClick($event,subMenu.callback,subMenu.params)'>
             {{subMenu.title}}

@@ -6,6 +6,6 @@ export class AppPage {
   }
 
   getParagraphText() {
-    return element(by.css('njgis-root h1')).getText();
+    return element(by.css('ogms-root h1')).getText();
   }
 }
