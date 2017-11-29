@@ -5,8 +5,8 @@ import { RouterModule } from '@angular/router';
 import { ClarityModule } from "clarity-angular";
 
 import { AppTranslationModule } from './app.translation.module';
-import { NgxSharedModule } from './common/ngx-shared/ngx-shared.module';
-import { SharedModule } from './common/shared/shared.module';
+import { NgxSharedModule } from './common/ngx-shared';
+import { SharedModule } from './common/shared';
 import { CoreModule } from './common/core/core.module';
 import { routing } from './app.routing';
 import { App } from './app.component';

@@ -3,8 +3,8 @@ import { NzNotificationService, NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';
 
 import { WebNJGISRoutingModule } from './webNJGIS-routing.module';
 
-import { NgxSharedModule } from '../common/ngx-shared/ngx-shared.module';
-import { SharedModule } from '../common/shared/shared.module';
+import { NgxSharedModule } from '../common/ngx-shared';
+import { SharedModule } from '../common/shared';
 import { LayoutModule } from '../common/layout/layout.module';
 
 @NgModule({

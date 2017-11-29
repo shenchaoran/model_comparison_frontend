@@ -1,6 +1,6 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { NgxSharedModule } from '../ngx-shared/ngx-shared.module';
+import { NgxSharedModule } from '../ngx-shared';
 
 import {
     BaCard,

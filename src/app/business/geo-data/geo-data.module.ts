@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgxSharedModule } from '@ngx-shared/ngx-shared.module';
-import { SharedModule } from '@shared/shared.module';
+import { NgxSharedModule } from '@ngx-shared';
+import { SharedModule } from '@shared';
 
 import { GeoDataRoutingModule } from './geo-data-routing.module';
 import { GeoDataComponent } from './geo-data.component';

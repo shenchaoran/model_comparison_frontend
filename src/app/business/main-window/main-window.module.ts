@@ -4,8 +4,8 @@ import { HotTableModule } from 'angular-handsontable';
 
 import { DataInquireService } from "../../common/core/services/data.inquire.service";
 import { MainWindowRoutingRoutes } from './main-window-routing.module';
-import { NgxSharedModule } from '../../common/ngx-shared/ngx-shared.module';
-import { SharedModule } from '../../common/shared/shared.module';
+import { NgxSharedModule } from '../../common/ngx-shared';
+import { SharedModule } from '../../common/shared';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from '../../common/core/net/token/token.interceptor';
 import { ResParserInterceptor } from '../../common/core/net/res-parser/res-parser.interceptor';

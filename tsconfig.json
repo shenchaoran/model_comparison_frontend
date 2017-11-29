@@ -31,7 +31,9 @@
             "@feature": ["app/common/feature"],
             "@feature/*": ["app/common/feature/*"],
             "@config": ["config"],
-            "@config/*": ["config/*"]
+            "@config/*": ["config/*"],
+            "@mock": ["mock"],
+            "@mock/*": ["mock/*"]
         }
     }
 }

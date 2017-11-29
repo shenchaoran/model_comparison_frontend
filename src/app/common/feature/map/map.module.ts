@@ -4,7 +4,7 @@ import { TreeModule } from 'ng2-tree';
 import { EsriLoaderService } from 'angular2-esri-loader';
 import { PerfectScrollbarModule, PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 
-import { SharedModule } from '../../shared/shared.module';
+import { SharedModule } from '../../shared';
 
 import { MapViewRoutingModule } from './mapView.routing.module';
 import { EsriMapResolveService } from './basemap/arcgis/esri-map-resolve.service';
