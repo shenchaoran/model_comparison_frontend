@@ -20,6 +20,8 @@
             { "name": "tslint-language-service" }
         ],
         "paths": {
+            "@common": ["app/common"],
+            "@common/*": ["app/common/*"],
             "@shared": ["app/common/shared"],
             "@shared/*": ["app/common/shared/*"],
             "@core": ["app/common/core/"],

@@ -6,11 +6,23 @@ import { DataInquireService } from '../common/core/services/data.inquire.service
 
 import { SiderMenuLayoutComponent } from '../common/layout/sider-menu-layout/sider-menu-layout.component';
 import { HeaderMenuLayoutComponent } from '../common/layout/header-menu-layout/header-menu-layout.component';
+import { APP_CONFIG } from '@config/app.config';
+import { MENU_LAYOUT } from '@common/layout/layout.enum';
+
+let menuLayout;
+switch(APP_CONFIG.layout) {
+    case MENU_LAYOUT.HEADER_MENU_LAYOUT:
+        menuLayout = HeaderMenuLayoutComponent;
+        break;
+    case MENU_LAYOUT.SIDER_MENU_LAYOUT:
+        menuLayout = SiderMenuLayoutComponent;
+        break;
+}
 
 const routes: Routes = [
     {
         path: '',
-        component: HeaderMenuLayoutComponent,
+        component: menuLayout,
         canActivate: [AuthGuard],
         children: [
             {
