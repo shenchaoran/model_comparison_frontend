@@ -33,7 +33,9 @@
             "@config": ["config"],
             "@config/*": ["config/*"],
             "@mock": ["mock"],
-            "@mock/*": ["mock/*"]
+            "@mock/*": ["mock/*"],
+            "@utils": ["app/common/utils"],
+            "@utils/*": ["app/common/utils/*"]
         }
     }
 }

@@ -2,7 +2,7 @@ import { Component, Inject, HostListener, Input, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { OpenLayersService } from './openlayersMap.service';
-import { MAP_CONFIG } from '@config/map.config';
+import { MAP_CONFIG } from '@config/map.config.old';
 
 
 @Component({

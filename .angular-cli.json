@@ -46,7 +46,10 @@
             "../node_modules/jqwidgets-framework/jqwidgets/jqxgrid.pager.js",
             "../node_modules/jqwidgets-framework/jqwidgets/jqxgrid.selection.js",
             "../node_modules/jqwidgets-framework/jqwidgets/jqxgrid.edit.js",
-            "../node_modules/jqwidgets-framework/jqwidgets/jqxtree.js"
+            "../node_modules/jqwidgets-framework/jqwidgets/jqxtree.js",
+
+            "../node_modules/openlayers/dist/ol.js",
+            "../node_modules/ol3-ext/control/buttoncontrol.js"
         ],
         "environmentSource": "environments/environment.ts",
         "environments": {

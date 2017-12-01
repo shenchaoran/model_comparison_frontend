@@ -1,6 +1,6 @@
 import { Component, OnInit, ElementRef, Input } from '@angular/core';
 import { TreeModel, NodeEvent, MoveLayerLevelEvent, ChangeLayerOpacityEvent, Ng2TreeSettings } from 'ng2-tree';
-import { MAP_LAYERSTREE_CONFIG } from '@config/map.config';
+import { MAP_LAYERSTREE_CONFIG } from '@config/map.config.old';
 
 @Component({
     selector: 'layers-tree',

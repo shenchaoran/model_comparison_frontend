@@ -390,8 +390,9 @@ export class OpenLayersService extends MapServiceImpl {
 
 	mapResize(mapId: string) {
 		let theMap = this.getMap(mapId);
-
-		theMap.updateSize();
+        if(theMap) {
+            theMap.updateSize();
+        }
 	}
 
 	setInitExtent(mapId: string) {

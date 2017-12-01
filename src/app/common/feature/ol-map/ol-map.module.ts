@@ -10,6 +10,17 @@ import { LegendComponent } from './legend/legend.component';
 import { LayoutComponent } from './layout/layout.component';
 import { BasemapComponent } from './basemap/basemap.component';
 
+import {
+    OlMapService,
+    OLSymbolService
+} from './services';
+import { CompareLayoutComponent } from './compare-layout/compare-layout.component';
+
+const services = [
+    OlMapService,
+    OLSymbolService
+]
+
 @NgModule({
     imports: [NgxSharedModule, SharedModule, OlMapRoutingModule],
     declarations: [
@@ -18,7 +29,11 @@ import { BasemapComponent } from './basemap/basemap.component';
         ToolbarComponent,
         LegendComponent,
         LayoutComponent,
-        BasemapComponent
+        BasemapComponent,
+        CompareLayoutComponent
+    ],
+    providers: [
+        ...services
     ]
 })
 export class OlMapModule {}

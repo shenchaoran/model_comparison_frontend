@@ -32,6 +32,21 @@ angular自带的一些常用模块，一般大多数module中都要用，所以�
 - 文件和文件夹命名：烤串命名法
 - 文件命名：feature.type.ts
 
+## 如何引用第三方库
+
+在`typings.d.ts`中添加声明。
+```
+declare var GoogleMapsLoader: any;
+declare var L: any;
+declare var AmCharts: any;
+declare var Chart: any;
+declare var Chartist: any;
+declare const chroma: any;
+declare var jQuery: any;
+declare var _: any;
+declare var postal: any;
+```
+
 ## TODO
 - 页面右下角加后台运行列表
 - docking layout
