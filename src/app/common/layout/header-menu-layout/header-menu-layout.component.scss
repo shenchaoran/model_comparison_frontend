@@ -2,25 +2,38 @@
     height: 100vh;
     width: 100%;
     padding: 0px;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
+    // display: flex;
+    // flex-direction: column;
+    // flex-wrap: nowrap;
+    // grid-template-rows: auto auto;
 }
 
 .nav-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    // grid-row: 1/2;
+    // flex: 0 0 auto;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     z-index: 999;
     padding: 0 5px;
-    // border-bottom: 1px solid #ebebeb;
     box-shadow: 0 0 5px #6d6d6d;
+    background: #ffffff;
+}
+
+.body {
+    padding-top: 64px;
+    // flex: 1 1 auto;
+    // overflow: scroll;
+    height: 100%;
 }
 
 .content {
-    flex: 1;
-    // z-index: 999;
-    overflow: hidden;
+    height: 100%;
+    overflow: scroll;
 }
 
 #logo {

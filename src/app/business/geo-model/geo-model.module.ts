@@ -5,6 +5,8 @@ import { SharedModule } from '@shared';
 
 import { GeoModelRoutingModule } from './geo-model-routing.module'
 import { GeoModelComponent } from './geo-model.component';
+import { ModelTreeComponent } from './model-tree/model-tree.component';
+import { ModelIntroComponent } from './model-intro/model-intro.component';
 
 @NgModule({
   imports: [
@@ -13,6 +15,6 @@ import { GeoModelComponent } from './geo-model.component';
 
     GeoModelRoutingModule,
   ],
-  declarations: [GeoModelComponent]
+  declarations: [GeoModelComponent, ModelTreeComponent, ModelIntroComponent]
 })
 export class GeoModelModule { }
