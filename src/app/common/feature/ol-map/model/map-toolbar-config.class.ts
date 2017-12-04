@@ -1,12 +1,26 @@
 export class MapToolbarItemCfg {
     id: string;
     name: string;
-    callback: string;                                           // channel#topic
     load: boolean;                  
+    topic: string;                                           // channel#topic
     params?: any;
-    icon?: string;                                               // postal附加的参数
+    type: MapToolBarItemType;
+    activated?: boolean;
+    icon?: {
+        type: MapToolBarIconType,
+        value: string
+    };                                                 // postal附加的参数
     desc?: string;
     children?: MapToolbarItemCfg[];                             // 复合工具栏
+}
+
+export enum MapToolBarIconType {
+    FONTAWESOME = 0
+}
+
+export enum MapToolBarItemType {
+    BUTTON = 0,
+    TOGGLE
 }
 
 export type MapToolbarCfg = MapToolbarItemCfg[];

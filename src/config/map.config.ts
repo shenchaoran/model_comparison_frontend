@@ -1,5 +1,5 @@
 import { MapModuleCfg } from '@feature/ol-map/model/map-module-config.class';
-import { MapToolbarItemCfg, MapToolbarCfg } from '@feature/ol-map/model/map-toolbar-config.class';
+import { MapToolbarItemCfg, MapToolbarCfg, MapToolBarIconType, MapToolBarItemType } from '@feature/ol-map/model/map-toolbar-config.class';
 
 
 
@@ -37,50 +37,146 @@ export const MAP_TOOLBAR_CONFIG: MapToolbarItemCfg[] = [
     {
         id: "fullExtent",
         name: "全图",
-        callback: "MAP_TOOLBAR_CHANNEL#map.fullExtent",
-        load: true
+        topic: "map.fullExtent",
+        load: true,
+        type: MapToolBarItemType.BUTTON,
+        icon: {
+            type: MapToolBarIconType.FONTAWESOME,
+            value: ''
+        }
     },
     {
         id: "zoomIn", 
         name: "放大",
-        callback: "MAP_TOOLBAR_CHANNEL#map.zoomIn",
-        load: true
+        topic: "map.zoomIn",
+        load: true,
+        type: MapToolBarItemType.BUTTON,
+        icon: {
+            type: MapToolBarIconType.FONTAWESOME,
+            value: 'plus'
+        }
     },
     {
         id: "zoomOut", 
         name: "缩小",
-        callback: "MAP_TOOLBAR_CHANNEL#map.zoomOut",
-        load: true
+        topic: "map.zoomOut",
+        load: true,
+        type: MapToolBarItemType.BUTTON,
+        icon: {
+            type: MapToolBarIconType.FONTAWESOME,
+            value: 'minus'
+        }
     },
     {
         id: "pan",
         name: "平移",
-        callback: "MAP_TOOLBAR_CHANNEL#map.pan",
-        load: true
+        topic: "map.pan",
+        load: false,
+        type: MapToolBarItemType.TOGGLE,
+        activated: false,
+        icon: {
+            type: MapToolBarIconType.FONTAWESOME,
+            value: ''
+        }
     },
     {
         id: "measureLength",
         name: "测量距离",
-        callback: "MAP_TOOLBAR_CHANNEL#map.measureLength",
-        load: true
+        topic: "map.measureLength",
+        load: true,
+        type: MapToolBarItemType.BUTTON,
+        icon: {
+            type: MapToolBarIconType.FONTAWESOME,
+            value: ''
+        }
     },
     {
         id: "measureArea",
         name: "测量面积",
-        callback: "MAP_TOOLBAR_CHANNEL#map.measureArea",
-        load: true
+        topic: "map.measureArea",
+        load: true,
+        type: MapToolBarItemType.BUTTON,
+        icon: {
+            type: MapToolBarIconType.FONTAWESOME,
+            value: ''
+        }
     },
     {
-        id: "identifyQuery",
-        name: "查询",
-        callback: "MAP_TOOLBAR_CHANNEL#map.mapClick",
-        load: true
+        id: "drawPoint",
+        name: "画点",
+        topic: "map.draw.point",
+        load: true,
+        type: MapToolBarItemType.BUTTON,
+        icon: {
+            type: MapToolBarIconType.FONTAWESOME,
+            value: ''
+        }
+    },
+    {
+        id: "drawLine",
+        name: "画线",
+        topic: "map.draw.line",
+        load: true,
+        type: MapToolBarItemType.BUTTON,
+        icon: {
+            type: MapToolBarIconType.FONTAWESOME,
+            value: ''
+        }
+    },
+    {
+        id: "drawPolygon",
+        name: "画面",
+        topic: "map.draw.polygon",
+        load: true,
+        type: MapToolBarItemType.BUTTON,
+        icon: {
+            type: MapToolBarIconType.FONTAWESOME,
+            value: ''
+        }
+    },
+    {
+        id: "selectByCircle",
+        name: "以圆形选择",
+        topic: "map.select.circle",
+        load: true,
+        type: MapToolBarItemType.BUTTON,
+        icon: {
+            type: MapToolBarIconType.FONTAWESOME,
+            value: ''
+        }
+    },
+    {
+        id: "selectByRectangle",
+        name: "以矩形选择",
+        topic: "map.select.rectangle",
+        load: true,
+        type: MapToolBarItemType.BUTTON,
+        icon: {
+            type: MapToolBarIconType.FONTAWESOME,
+            value: ''
+        }
+    },
+    {
+        id: "selectByPolygon",
+        name: "以矩形选择",
+        topic: "map.select.polygon",
+        load: true,
+        type: MapToolBarItemType.BUTTON,
+        icon: {
+            type: MapToolBarIconType.FONTAWESOME,
+            value: ''
+        }
     },
     {
         id: "clearGraphics",
         name: "清除",
-        callback: "MAP_TOOLBAR_CHANNEL#map.clearGraphics",
-        load: true
+        topic: "map.clearGraphics",
+        load: true,
+        type: MapToolBarItemType.BUTTON,
+        icon: {
+            type: MapToolBarIconType.FONTAWESOME,
+            value: ''
+        }
     }
 ];
 

@@ -19,27 +19,5 @@ export class OlMapService extends MapService {
         super(http);
     }
 
-    // region Toolbar function
-    public zoomIn() {}
 
-    public zoomOut() {}
-
-    public fullExtent() {}
-
-    public measureLength() {}
-
-    public measureArea() {}
-
-    public drawPoint() {}
-
-    public drawLine() {}
-
-    public drawPolygon() {}
-
-    public clearDraw() {}
-
-    public selectByCircle() {}
-
-    public selectByRectangle() {}
-    // endregion
 }

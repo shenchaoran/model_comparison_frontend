@@ -2,6 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { MAP_TYPE } from '../model/map-component-type.enum';
+import { MapConfigService } from '../services/map-config.service';
 
 @Component({
     selector: 'ogms-layout',
@@ -10,8 +11,17 @@ import { MAP_TYPE } from '../model/map-component-type.enum';
 })
 export class LayoutComponent implements OnInit {
     mapType: MAP_TYPE = MAP_TYPE.SIMPLE;
+    loadToolbar: boolean;
+    loadLegend: boolean;
+    loadSource: boolean;
+    loadLayerstree: boolean;
     
-    constructor() {}
+    constructor(private mapCfgService: MapConfigService) {}
 
-    ngOnInit() {}
+    ngOnInit() {
+        this.loadToolbar = this.mapCfgService.loadToolbar();
+        this.loadLegend = this.mapCfgService.loadLegend();
+        this.loadLayerstree = this.mapCfgService.loadSource();
+        this.loadSource = this.mapCfgService.loadSource();
+    }
 }

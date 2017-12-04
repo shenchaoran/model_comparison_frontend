@@ -1,5 +1,36 @@
-#container {
-    width: 200px;
-    height: 30px;
-    background: #f1e0e0
+.flex-box {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: rgba(255, 255, 255, .4);
+    border-radius: 4px;
+}
+
+.row-layout {
+    flex-direction: row;
+}
+
+.column-layout {
+    flex-direction: column;
+}
+
+.flex-item {
+    background-color: rgba(0, 60, 136, .5);
+    border-radius: 2px;
+    border: none;
+    text-decoration: none;
+    text-align: center;
+    line-height: 1.8em;
+    color: #ffffff;
+    width: 1.8em;
+    height: 1.8em;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.activited-item {
+    background-color: rgba(0, 60, 136, .85);
+}
+
+.flex-item:hover {
+    background-color: rgba(0, 60, 136, .7);
 }
