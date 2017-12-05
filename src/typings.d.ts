@@ -38,9 +38,9 @@ interface NodeModule {
  *
  */
 
-interface JQuery {
-  easyPieChart;
-}
+// interface JQuery {
+//   easyPieChart;
+// }
 
 declare var GoogleMapsLoader: any;
 declare var L: any;

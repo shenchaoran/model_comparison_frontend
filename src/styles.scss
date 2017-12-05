@@ -18,7 +18,7 @@
 @import "./app/common/shared/theme/css/nouislider.min.css";
 @import "./app/common/shared/theme/css/ng2-tree-styles.css";
 // TODO relative path problems
-// @import '~jqwidgets-framework/jqwidgets/styles/jqx.base';
-// @import '../node_modules/jqwidgets-framework/jqwidgets/styles/jqx.energyblue';
+@import 'assets/css/jqwidgets/jqx.base';
+@import 'assets/css/jqwidgets/jqx.energyblue-my';
 // @import '~angular-tree-component/dist/angular-tree-component.css';
 // end

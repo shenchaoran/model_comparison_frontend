@@ -54,7 +54,7 @@
             "../node_modules/jqwidgets-framework/jqwidgets/jqxtree.js",
 
             "../node_modules/openlayers/dist/ol.js",
-            "../node_modules/ol3-ext/control/buttoncontrol.js"
+            "../node_modules/ol3-ext/dist/ol3-ext.min.js"
         ],
         "environmentSource": "environments/environment.ts",
         "environments": {

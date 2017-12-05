@@ -60,25 +60,25 @@ export const HEADER_MENUS: MenuClass[] = [
                         expanded: false,
                         order: 0
                     }
-                },
-                children: [
-                    {
-                        path: 'std-data-set',
-                        data: {
-                            menu: {
-                                title: 'Standard Data Set'
-                            }
-                        }
-                    },
-                    {
-                        path: 'data-processor',
-                        data: {
-                            menu: {
-                                title: 'Data Processor'
-                            }
-                        }
-                    }
-                ]
+                }
+                // children: [
+                //     {
+                //         path: 'std-data-set',
+                //         data: {
+                //             menu: {
+                //                 title: 'Standard Data Set'
+                //             }
+                //         }
+                //     },
+                //     {
+                //         path: 'data-processor',
+                //         data: {
+                //             menu: {
+                //                 title: 'Data Processor'
+                //             }
+                //         }
+                //     }
+                // ]
             },
             {
                 path: 'comparison',

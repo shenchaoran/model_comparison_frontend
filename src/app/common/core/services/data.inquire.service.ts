@@ -10,6 +10,7 @@ import { APIS, BACKEND } from '@config/api.config';
 @Injectable()
 export class DataInquireService extends ErrorHandle implements Resolve<any> {
 
+    // deprecated
     resolve() {
         return new Promise((resolve, reject) => {
             // subscribe data inquire event
@@ -27,7 +28,7 @@ export class DataInquireService extends ErrorHandle implements Resolve<any> {
         super(); 
     }
 
-    // 以发布订阅的方式进行http请求
+    // deprecated 以发布订阅的方式进行http请求
     private dataInquire(data: any, type: string) {
         const serviceId = data.serviceId;
         const params = data.params;
@@ -150,5 +151,27 @@ export class DataInquireService extends ErrorHandle implements Resolve<any> {
             }
         }
         return url;
+    }
+
+    
+    public get(serviceId: string, params?: any, query?: any, appendJWT?: boolean): Observable<any> {
+        const url = this.getServiceById(serviceId, params, query, appendJWT);
+        return Observable.create(observer => {
+            (<Observable<any>>this.http.get(url))
+                .subscribe(response => {
+                    if (_.startsWith(_.get(response, 'status.code'), '200')) {
+                        observer.next({
+                            data: response.data
+                        });
+                        observer.complete();
+                    }
+                    else {
+                        observer.next({
+                            error: response.status
+                        });
+                        observer.complete();
+                    }
+                });
+        });
     }
 }

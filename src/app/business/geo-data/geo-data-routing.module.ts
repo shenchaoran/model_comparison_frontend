@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { GeoDataComponent } from './geo-data.component';
-import { DataProcessorComponent } from './data-processor/data-processor.component';
 import { StdDataSetComponent } from './std-data-set/std-data-set.component';
 
 const routes: Routes = [
@@ -16,10 +15,6 @@ const routes: Routes = [
                 data: {
                     showMenu: false
                 }
-            },
-            { 
-                path: 'data-processor',
-                component: DataProcessorComponent
             }
         ]
     }

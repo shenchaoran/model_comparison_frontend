@@ -2,11 +2,20 @@ import { Observable } from 'rxjs/Observable';
 import { Resolve } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { NzNotificationService } from 'ng-zorro-antd';
-import { HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { DataInquireService } from '@core/services/data.inquire.service';
 
 @Injectable()
 export class ModelService {
-    constructor(private _notification: NzNotificationService) {}
+    constructor(
+        private _notification: NzNotificationService,
+        private http: HttpClient,
+        private dataInquire: DataInquireService
+    ) {}
+
+    getModelTree(): Observable<any> {
+        return this.dataInquire.get('getModelTree');
+    }
 
     getModelTools(params, query, body) {
         postal.channel('DATA_INQUIRE_CHANNEL').publish('data.inquire.get', {

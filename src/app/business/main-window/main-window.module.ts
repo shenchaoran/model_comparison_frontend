@@ -9,9 +9,6 @@ import { SharedModule } from '../../common/shared';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from '../../common/core/net/token/token.interceptor';
 import { ResParserInterceptor } from '../../common/core/net/res-parser/res-parser.interceptor';
-import { jqxTreeComponent } from 'jqwidgets-framework/jqwidgets-ts/angular_jqxtree';
-import { jqxExpanderComponent } from 'jqwidgets-framework/jqwidgets-ts/angular_jqxexpander';
-import { jqxMenuComponent } from 'jqwidgets-framework/jqwidgets-ts/angular_jqxmenu';
 
 import {
     MainWindowComponent,
@@ -60,9 +57,6 @@ const SERVICES = [
     ],
     declarations: [
         ...COMPONENTS,
-        jqxTreeComponent,
-        jqxExpanderComponent,
-        jqxMenuComponent,
     ],
     providers: [
         ...SERVICES,

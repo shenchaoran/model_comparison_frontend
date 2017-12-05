@@ -2,6 +2,10 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { NgxSharedModule } from '../ngx-shared';
 
+import { jqxTreeComponent } from 'jqwidgets-framework/jqwidgets-ts/angular_jqxtree';
+import { jqxExpanderComponent } from 'jqwidgets-framework/jqwidgets-ts/angular_jqxexpander';
+import { jqxMenuComponent } from 'jqwidgets-framework/jqwidgets-ts/angular_jqxmenu';
+
 import {
     BaCard,
     BaCopyright,
@@ -76,7 +80,10 @@ const CITYFUN_VALIDATORS = [EmailValidator, EqualPasswordsValidator];
         ...CITYFUN_COMPONENTS,
         ...CITYFUN_DIRECTIVES,
         ...CITYFUN_PIPES,
-        HeaderPullRightComponent
+        HeaderPullRightComponent,
+        jqxTreeComponent,
+        jqxExpanderComponent,
+        jqxMenuComponent,
     ],
     imports: [
         RouterModule, 
@@ -89,7 +96,10 @@ const CITYFUN_VALIDATORS = [EmailValidator, EqualPasswordsValidator];
     exports: [
         ...CITYFUN_COMPONENTS, 
         ...CITYFUN_DIRECTIVES, 
-        ...CITYFUN_PIPES
+        ...CITYFUN_PIPES,
+        jqxTreeComponent,
+        jqxExpanderComponent,
+        jqxMenuComponent,
     ]
 })
 export class SharedModule {

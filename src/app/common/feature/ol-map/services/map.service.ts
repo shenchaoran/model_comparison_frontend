@@ -6,12 +6,15 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import * as uuidv1 from 'uuid/v1';
 
-import * as ol from 'openlayers';
-// import { Button, TextButton } from 'ol3-ext';
 import * as echarts from 'echarts';
 import { OL_MAP_DRAW_TYPE } from '../model/map.draw.type';
 import { ErrorHandle } from '@core/base/error-handle';
 import { OLSymbolService } from './ol-symbol.service';
+
+// import * as ol from 'openlayers';
+// import { Button, TextButton } from 'ol3-ext';
+// 在angular.cli.json中添加过的script相当于添加到全局变量中了，这里声明一下通过编译器就行了
+declare var ol: any;
 
 export abstract class MapService extends ErrorHandle {
     // maps map
@@ -165,15 +168,18 @@ export abstract class MapService extends ErrorHandle {
         this.loadDefaultTileLayer();
         this.setDefaultView();
 
-        // let save = new ol.control.Button (
-        //     {	html: '<i class="fa fa-download"></i>',
-        //         className: "save",
-        //         title: "Save",
-        //         handleClick: function() {
-        //             // info("Center: "+map.getView().getCenter()+" - zoom: "+map.getView().getZoom());
-        //         }
-        //     });
-        // this.selectedMap.addControl(save);
+        function info(i) {	
+            jQuery("#info").html(i||"");
+		}
+        let save = new ol.control.Button (
+            {	html: '<i class="fa fa-download"></i>',
+                className: "save",
+                title: "Save",
+                handleClick: function() {
+                    info("Center: "+map.getView().getCenter()+" - zoom: "+map.getView().getZoom());
+                }
+            });
+        this.selectedMap.addControl(save);
         return guid;
     }
 

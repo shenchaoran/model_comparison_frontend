@@ -6,8 +6,8 @@ export class APIClass {
 }
 
 export const BACKEND = {
-    host: '172.21.213.146',
-    // host: 'localhost',
+    // host: '172.21.213.146',
+    host: 'localhost',
     port: '9999'
 }
 
@@ -33,6 +33,11 @@ export const APIS = [{
     "uid": "getModelTools",
     "name": "",
     "url": "/model-tools"
+},
+{
+    "uid": "getModelTree",
+    "name": "",
+    "url": "/model-tools/tree-mode"
 },
 {
     "uid": "getModelTool",

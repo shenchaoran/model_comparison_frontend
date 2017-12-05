@@ -6,7 +6,6 @@ import { SharedModule } from '@shared';
 import { GeoDataRoutingModule } from './geo-data-routing.module';
 import { GeoDataComponent } from './geo-data.component';
 import { StdDataSetComponent } from './std-data-set/std-data-set.component';
-import { DataProcessorComponent } from './data-processor/data-processor.component';
 
 @NgModule({
   imports: [
@@ -15,6 +14,6 @@ import { DataProcessorComponent } from './data-processor/data-processor.componen
 
     GeoDataRoutingModule,
   ],
-  declarations: [GeoDataComponent, StdDataSetComponent, DataProcessorComponent]
+  declarations: [GeoDataComponent, StdDataSetComponent]
 })
 export class GeoDataModule { }

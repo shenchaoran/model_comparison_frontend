@@ -1,15 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { jqxTreeComponent } from 'jqwidgets-framework/jqwidgets-ts/angular_jqxtree';
+
+import { ModelService } from '../services/model.service';
 
 @Component({
-  selector: 'ogms-model-tree',
-  templateUrl: './model-tree.component.html',
-  styleUrls: ['./model-tree.component.scss']
+    selector: 'ogms-model-tree',
+    templateUrl: './model-tree.component.html',
+    styleUrls: ['./model-tree.component.scss']
 })
-export class ModelTreeComponent implements OnInit {
+export class ModelTreeComponent implements OnInit, AfterViewInit {
+    source: Array<any> = undefined;
+    @ViewChild('jqxTree') jqxTree: jqxTreeComponent;
+    constructor(private service: ModelService) {}
 
-  constructor() { }
+    ngOnInit() {
+        this.service.getModelTree()
+            .subscribe(response => {
+                if(response.error !== undefined) {
 
-  ngOnInit() {
-  }
+                }
+                else {
+                    this.source = response.data;
+                }
+            });
+    }
 
+    ngAfterViewInit() {
+        // jQuery('.jqx-tree').css('border', 'none');
+        // jQuery('jqx-widget jqx-widget-content jqx-tree').css('border', 'none');
+    }
 }

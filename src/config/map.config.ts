@@ -187,7 +187,7 @@ export class MapConfigClass {
     children: Array<MapConfigClass>;
 }
 
-// depricated
+// deprecated
 export const MAP_LAYERSTREE_CONFIG = [
     {
         "id": "baseLayer",
