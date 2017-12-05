@@ -5,15 +5,16 @@ import { SharedModule } from '@shared';
 
 import { GeoDataRoutingModule } from './geo-data-routing.module';
 import { GeoDataComponent } from './geo-data.component';
-import { StdDataSetComponent } from './std-data-set/std-data-set.component';
+import { DataTabsComponent } from './data-tabs/data-tabs.component';
+import { DataIntroComponent } from './data-intro/data-intro.component';
+
+import { DataService } from './services';
+
+const SERVICES = [DataService];
 
 @NgModule({
-  imports: [
-    NgxSharedModule,
-    SharedModule,
-
-    GeoDataRoutingModule,
-  ],
-  declarations: [GeoDataComponent, StdDataSetComponent]
+    imports: [NgxSharedModule, SharedModule, GeoDataRoutingModule],
+    declarations: [GeoDataComponent, DataTabsComponent, DataIntroComponent],
+    providers: [...SERVICES]
 })
-export class GeoDataModule { }
+export class GeoDataModule {}

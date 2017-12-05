@@ -114,7 +114,7 @@ export class VisualizationComponent extends ErrorHandle implements OnInit {
                             // );
 
                             const resData = response.data;
-                            if (resData.type === UDXType.TABLE_XML || resData.type === UDXType.TABLE_RAW) {
+                            if (resData.type === UDXType.TABLE_RAW) {
                                 this.visualType = VisualType.Table;
 
                                 this.njTable.geodata = data;

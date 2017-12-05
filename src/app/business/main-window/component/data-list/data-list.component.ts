@@ -15,7 +15,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { DataInquireService } from '../../../../common/core/services/data.inquire.service';
 import { DataListService, ContextMenuType } from '../../services/data-list.service';
 import { SubMenu } from '../../../../common/shared/components/context-menu/sub-menu';
-import { GeoDataType, GeoData } from './geo-data';
+import { GeoData } from './geo-data';
 import { TreeItem } from '../visual-list/tree-item.class';
 import { TreeItemType } from '../visual-list/tree-item-type.enum';
 import { MenuItem } from '../visual-list/menu-item.class';
@@ -118,7 +118,7 @@ export class DataListComponent extends ErrorHandle implements OnInit, AfterViewI
                 // TODO set input accept type
                 // this.acceptedType = 'application/zip, .csv, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
                 this.acceptedType = '*.*';
-                this.fileUploaderOptions.data.type = GeoDataType.RAW;
+                // this.fileUploaderOptions.data.type = GeoDataType.RAW;
                 this.uploadProgress = 0;
                 this.renderer.invokeElementMethod(
                     this._fileUpload.nativeElement,
@@ -130,7 +130,7 @@ export class DataListComponent extends ErrorHandle implements OnInit, AfterViewI
             .channel('MENU_CHANNEL')
             .subscribe('data.add.UDX', (data, envelope) => {
                 this.acceptedType = 'application/xml';
-                this.fileUploaderOptions.data.type = GeoDataType.UDX;
+                // this.fileUploaderOptions.data.type = GeoDataType.UDX;
                 // console.log('data.add.UDX');
                 // TODO set input accept type
                 this.uploadProgress = 0;

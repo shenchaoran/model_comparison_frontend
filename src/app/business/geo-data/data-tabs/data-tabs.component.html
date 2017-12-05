@@ -1,0 +1,10 @@
+<nz-tabset [nzTabPosition]="'top'" [nzType]="'card'">
+    <nz-tab *ngFor="let tab of tabs">
+        <ng-template #nzTabHeading>
+            {{tab.name}}
+        </ng-template>
+        <div class="tab-content">
+
+        </div>
+    </nz-tab>
+</nz-tabset>

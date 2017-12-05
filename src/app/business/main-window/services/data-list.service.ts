@@ -42,27 +42,32 @@ export class DataListService extends ErrorHandle {
                 {
                     id: 'add',
                     label: 'Add',
-                    items: [
-                        {
-                            id: 'add-raw',
-                            label: 'Raw',
-                            items: [],
-                            data: {
-                                postalInfo: 'MENU_CHANNEL#data.add.raw',
-                                params: undefined
-                            }
-                        },
-                        {
-                            id: 'add-UDX',
-                            label: 'UDX',
-                            items: [],
-                            data: {
-                                postalInfo: 'MENU_CHANNEL#data.add.UDX',
-                                params: undefined
-                            }
-                        }
-                    ],
-                    data: undefined
+                    items: [],
+                    data: {
+                        postalInfo: 'MENU_CHANNEL#data.add.raw',
+                        params: undefined
+                    }
+                    // items: [
+                    //     {
+                    //         id: 'add-raw',
+                    //         label: 'Raw',
+                    //         items: [],
+                    //         data: {
+                    //             postalInfo: 'MENU_CHANNEL#data.add.raw',
+                    //             params: undefined
+                    //         }
+                    //     },
+                    //     {
+                    //         id: 'add-UDX',
+                    //         label: 'UDX',
+                    //         items: [],
+                    //         data: {
+                    //             postalInfo: 'MENU_CHANNEL#data.add.UDX',
+                    //             params: undefined
+                    //         }
+                    //     }
+                    // ],
+                    // data: undefined
                 },
                 {
                     id: 'refactor',

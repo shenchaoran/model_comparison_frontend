@@ -184,11 +184,6 @@ export class MainWindowComponent extends ErrorHandle implements OnInit, AfterVie
 
     ngAfterViewInit() {
         jQuery('.nz-overlay-container').css('z-index', '5000');
-        jQuery('#manager-card').css({
-            display: 'flex',
-            'flex-direction': 'column',
-            'flex-wrap': 'nowrap'
-        });
         jQuery('#manager-card .ant-card-head').css({
             height: '38px',
             'line-height': '38px',
@@ -197,15 +192,9 @@ export class MainWindowComponent extends ErrorHandle implements OnInit, AfterVie
         jQuery('#manager-card .ant-card-head h3').css('line-height', '38px');
         jQuery('#manager-card .ant-card-head h3').css('font-size', '16px');
         jQuery('#manager-card .ant-card-body').css({
-            padding: '5px',
-            flex: 1
+            padding: '5px'
         });
 
-        jQuery('#visual-card').css({
-            display: 'flex',
-            'flex-direction': 'column',
-            'flex-wrap': 'nowrap'
-        });
         jQuery('#visual-card .ant-card-head').css({
             height: '38px',
             'line-height': '38px',
@@ -214,15 +203,9 @@ export class MainWindowComponent extends ErrorHandle implements OnInit, AfterVie
         jQuery('#visual-card .ant-card-head h3').css('line-height', '38px');
         jQuery('#visual-card .ant-card-head h3').css('font-size', '16px');
         jQuery('#visual-card .ant-card-body').css({
-            padding: '5px',
-            flex: 1
+            padding: '5px'
         });
 
-        jQuery('#invork-card').css({
-            display: 'flex',
-            'flex-direction': 'column',
-            'flex-wrap': 'nowrap'
-        });
         jQuery('#invork-card .ant-card-head').css({
             height: '38px',
             'line-height': '38px',
@@ -235,8 +218,7 @@ export class MainWindowComponent extends ErrorHandle implements OnInit, AfterVie
             top: '13px'
         });
         jQuery('#invork-card .ant-card-body').css({
-            padding: '5px',
-            flex: 1
+            padding: '5px'
         });
     }
 

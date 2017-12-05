@@ -2,10 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'ogms-geo-data',
-  template: `
-    <router-outlet></router-outlet>
-  `,
-  styles: []
+  templateUrl: './geo-data.component.html',
+  styleUrls: ['./geo-data.component.scss']
 })
 export class GeoDataComponent implements OnInit {
 
