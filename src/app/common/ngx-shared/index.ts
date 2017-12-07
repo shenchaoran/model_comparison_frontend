@@ -7,6 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { TranslateModule } from "@ngx-translate/core";
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
+import { QuillModule } from 'ngx-quill'
 
 @NgModule({
     declarations: [
@@ -21,6 +22,7 @@ import { NgZorroAntdModule } from 'ng-zorro-antd';
 
         NgZorroAntdModule.forRoot(),
         PerfectScrollbarModule,
+        QuillModule,
         // ClarityModule.forChild(),
     ],
     exports: [
@@ -31,6 +33,7 @@ import { NgZorroAntdModule } from 'ng-zorro-antd';
         TranslateModule,
         PerfectScrollbarModule,
         NgZorroAntdModule,
+        QuillModule,
         // ClarityModule,
     ]
 })

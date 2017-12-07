@@ -2,11 +2,15 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { GeoDataComponent } from './geo-data.component';
+import { DataService } from './services/data.service';
 
 const routes: Routes = [
     { 
         path: '', 
         component: GeoDataComponent,
+        resolve: {
+            geoData: DataService
+        },
         children: []
     }
 ];

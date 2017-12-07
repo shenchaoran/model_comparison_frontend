@@ -84,6 +84,11 @@ export const APIS = [{
 
 
 {
+    "uid": "getDataTree",
+    "name": "",
+    "url": "/data"
+},
+{
     "uid": "postData",
     "name": "",
     "url": "/data/upload"

@@ -26,7 +26,6 @@ export class ModelTreeComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit() {
-        // jQuery('.jqx-tree').css('border', 'none');
-        // jQuery('jqx-widget jqx-widget-content jqx-tree').css('border', 'none');
+        
     }
 }

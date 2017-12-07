@@ -52,4 +52,20 @@ export class LoginService extends ErrorHandle {
                 });
         });
     }
+
+    public hasLogin(): boolean {
+        const jwtStr = localStorage.getItem('jwt');
+        if(jwtStr) {
+            const jwt = JSON.parse(jwtStr);
+            if (jwt !== null && jwt.expires > Date.now()) {
+                if(jwt.user.username === 'Tourist') {
+                    return false;
+                }
+                else {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }

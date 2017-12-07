@@ -9,8 +9,12 @@ import { DataTabsComponent } from './data-tabs/data-tabs.component';
 import { DataIntroComponent } from './data-intro/data-intro.component';
 
 import { DataService } from './services';
+import { LoginService } from '../../common/feature/login/login.service';
 
-const SERVICES = [DataService];
+const SERVICES = [
+    DataService, 
+    LoginService
+];
 
 @NgModule({
     imports: [NgxSharedModule, SharedModule, GeoDataRoutingModule],

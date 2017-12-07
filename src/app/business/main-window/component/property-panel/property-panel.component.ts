@@ -208,7 +208,6 @@ export class PropertyPanelComponent implements OnInit, AfterViewInit {
             .channel('PROP_CHANNEL')
             .subscribe('data-prop.bind', (data, envelope) => {
                 if (
-                    data.type === UDXType.TABLE_XML ||
                     data.type === UDXType.TABLE_RAW
                 ) {
                     this.panelData = {
@@ -255,7 +254,6 @@ export class PropertyPanelComponent implements OnInit, AfterViewInit {
             .subscribe('compare-prop.bind', (data, envelope) => {
                 const udxType: UDXType = data.parsed[0].type;
                 if (
-                    udxType === UDXType.TABLE_XML ||
                     udxType === UDXType.TABLE_RAW
                 ) {
                     this.panelData = {

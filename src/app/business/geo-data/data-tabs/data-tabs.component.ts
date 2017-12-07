@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from "@angular/router";
 
 import { DataService } from '../services/data.service';
+import { LoginService } from '@feature/login/login.service';
 
 @Component({
     selector: 'ogms-data-tabs',
@@ -8,16 +10,58 @@ import { DataService } from '../services/data.service';
     styleUrls: ['./data-tabs.component.scss']
 })
 export class DataTabsComponent implements OnInit {
-    tabs: Array<any> = [
-        {
-            name: 'Std Testify Set'
-        },
-        {
-            name: 'Yours Data Set'
+    tabs: Array<any>;
+
+    constructor(
+        private service: DataService,
+        private loginService: LoginService,
+        private route: ActivatedRoute
+    ) {}
+
+    ngOnInit() {
+        if(this.loginService.hasLogin) {
+            this.tabs = [
+                {
+                    name: 'Std Testify Set',
+                    id: 'std',
+                    data: undefined
+                },
+                {
+                    name: 'Yours Data Set',
+                    id: 'personal',
+                    data: undefined
+                },
+                {
+                    name: 'Public Data Set',
+                    id: 'public',
+                    data: undefined
+                }
+            ];
         }
-    ]
+        else {
+            this.tabs = [
+                {
+                    name: 'Std Testify Set',
+                    id: 'std',
+                    data: undefined
+                },
+                {
+                    name: 'Public Data Set',
+                    id: 'public',
+                    data: undefined
+                }
+            ]
+        }
 
-    constructor(private service: DataService) {}
-
-    ngOnInit() {}
+        this.route.data.subscribe(resolveData => {
+            const geoData = resolveData.geoData;
+            _.forIn(geoData, (value, key) => {
+                _.map(this.tabs, tab => {
+                    if(tab.id === key) {
+                        tab.data = value;
+                    }
+                });
+            });
+        })
+    }
 }
