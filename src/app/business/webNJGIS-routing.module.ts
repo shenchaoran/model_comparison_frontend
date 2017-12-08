@@ -17,7 +17,7 @@ const routes: Routes = [
                 loadChildren: './home/home.module#HomeModule'
             },
             {
-                path: 'geo-model',
+                path: 'geo-models',
                 loadChildren: './geo-model/geo-model.module#GeoModelModule'
             },
             {

@@ -19,5 +19,10 @@
     #right-item {
         height: 100%;
         flex: 4;
+        overflow: scroll;
     }
+}
+
+quill-editor {
+    height: 100%;
 }

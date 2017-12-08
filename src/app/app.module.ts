@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { ClarityModule } from "clarity-angular";
+import { _HttpClient } from '@core/services/http.client';
 
 import { AppTranslationModule } from './app.translation.module';
 import { NgxSharedModule } from './common/ngx-shared';
@@ -30,6 +31,7 @@ import { App } from './app.component';
         CoreModule,
     ],
     providers: [
+        _HttpClient
     ]
 })
 export class AppModule {}

@@ -37,7 +37,7 @@ export const HEADER_MENUS: MenuClass[] = [
                 }
             },
             {
-                path: 'geo-model',
+                path: 'geo-models',
                 data: {
                     menu: {
                         title: 'Model',
@@ -94,7 +94,7 @@ export const HEADER_MENUS: MenuClass[] = [
                 },
                 children: [
                     {
-                        path: 'cmp-solution',
+                        path: 'solutions',
                         data: {
                             menu: {
                                 title: 'Comparison Solution'
@@ -102,7 +102,7 @@ export const HEADER_MENUS: MenuClass[] = [
                         }
                     },
                     {
-                        path: 'cmp-example',
+                        path: 'tasks',
                         data: {
                             menu: {
                                 title: 'Comparison Example'
@@ -110,10 +110,10 @@ export const HEADER_MENUS: MenuClass[] = [
                         }
                     },
                     {
-                        path: 'start-cmp',
+                        path: 'scenes',
                         data: {
                             menu: {
-                                title: 'Start Comparison'
+                                title: 'Comparison Scene'
                             }
                         }
                     }

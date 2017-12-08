@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { CmpSlnService } from '../services/cmp-sln.service';
+
 @Component({
   selector: 'ogms-cmp-solution',
   templateUrl: './cmp-solution.component.html',
@@ -7,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CmpSolutionComponent implements OnInit {
 
-  constructor() { }
+  constructor(private service: CmpSlnService) { }
 
   ngOnInit() {
   }

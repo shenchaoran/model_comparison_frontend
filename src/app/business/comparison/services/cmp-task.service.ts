@@ -3,11 +3,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { DataInquireService } from '@core/services/data.inquire.service';
 import { Resolve } from '@angular/router';
+import { _HttpClient } from '@core/services/http.client';
 
 @Injectable()
-export class DataService implements Resolve<any> {
+export class CmpTaskService implements Resolve<any> {
     constructor(
-        private http: HttpClient,
+        private http: _HttpClient,
         private dataInquire: DataInquireService
     ) {}
 
@@ -25,6 +26,6 @@ export class DataService implements Resolve<any> {
     }
 
     getDataTabTree(): Observable<any> {
-        return this.dataInquire.get('getDataTabTree');
+        return this.dataInquire.get('/comparison/tasks');
     }
 }

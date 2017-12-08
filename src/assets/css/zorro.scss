@@ -1,16 +1,18 @@
 nz-tabset {
     height: 100%;
-    width: 100%;
-}
-
-.ant-tabs.ant-tabs-card {
-    display: flex;
-    flex-flow: column nowrap;
-}
-
-.ant-tabs-content {
-    flex: 1;
-    overflow: scroll;
+    // width: 100%;
+    .ant-tabs.ant-tabs-card {
+        display: flex;
+        flex-flow: column nowrap;
+        .ant-tabs-content {
+            flex: 1;
+            overflow: scroll;
+            nz-tab-body {
+                height: 100%;
+                width: 100%;
+            }
+        }
+    }
 }
 
 .ant-card {
@@ -18,9 +20,8 @@ nz-tabset {
     height: 100%;
     display: flex;
     flex-flow: column nowrap;
-}
-
-.ant-card-body {
-    flex: 1;
-    overflow: scroll;
+    .ant-card-body {
+        flex: 1;
+        overflow: scroll;
+    }
 }

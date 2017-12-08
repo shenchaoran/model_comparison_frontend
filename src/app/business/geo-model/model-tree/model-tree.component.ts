@@ -14,7 +14,7 @@ export class ModelTreeComponent implements OnInit, AfterViewInit {
     constructor(private service: ModelService) {}
 
     ngOnInit() {
-        this.service.getModelTree()
+        this.service.getModelTabTree()
             .subscribe(response => {
                 if(response.error !== undefined) {
 

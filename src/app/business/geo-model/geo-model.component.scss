@@ -7,20 +7,17 @@
     box-sizing: border-box;
     height: 100%;
     // overflow: scroll;
-}
-
-.flex-item {
-    border: 1px solid #8d8d8d;
-    // border-radius: 4px;
-    padding: 10px;
-}
-
-#left-item {
-    height: 100%;
-    flex: 1;
-}
-
-#right-item {
-    height: 100%;
-    flex: 4;
+    .flex-item {
+        border: 1px solid #8d8d8d;
+        // border-radius: 4px;
+        padding: 10px;
+    }
+    #left-item {
+        height: 100%;
+        flex: 1;
+    }
+    #right-item {
+        height: 100%;
+        flex: 4;
+    }
 }

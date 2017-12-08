@@ -5,60 +5,77 @@ import { Observable } from 'rxjs/Observable';
 
 /**
  * 封装HttpClient，主要解决：
- * + 可以判断loading状态
- * + 统一处理response
+ *      append JWT force
+ *      response interceptor
  */
 
 @Injectable()
 export class _HttpClient {
     constructor(private http: HttpClient) { }
 
-    private _loading = false;
+    private appendJWT(url: string, appendJWT: boolean): string {
+        if(appendJWT) {
+            const jwtStr = localStorage.getItem('jwt');
+            let jwt = undefined;
+            if(jwtStr) {
+                jwt = JSON.parse(jwtStr);
+            }
 
-    /** 是否正在加载中 */
-    get loading(): boolean {
-        return this._loading;
-    }
-
-    parseParams(params: any): HttpParams {
-        let ret = new HttpParams();
-        if (params) {
-            // tslint:disable-next-line:forin
-            for (const key in params) {
-                let _data = params[key];
-                ret = ret.set(key, _data);
+            if(url.indexOf('?') === -1) {
+                url += `&Authorization=bearer ${jwt.token}`;
+            }
+            else {
+                url += `?Authorization=bearer ${jwt.token}`;
             }
         }
-        return ret;
+        return url;
     }
 
-    get(url: string, params?: any): Observable<any> {
-        return this.http
-            .get(url, {
-                params: params
-            })
-            .catch((res) => {
-                return res;
-            });
+    private resInterceptor(observable: Observable<any>): Observable<any> {
+        return Observable.create(observer => {
+            observable
+                .subscribe(response => {
+                    if (_.startsWith(_.get(response, 'status.code'), '200')) {
+                        observer.next({
+                            data: response.data
+                        });
+                        observer.complete();
+                    }
+                    else {
+                        observer.next({
+                            error: response.status
+                        });
+                        observer.complete();
+                    }
+                });
+        });
     }
 
-    post(url: string, body?: any, params?: any): Observable<any> {
-        return this.http
-            .post(url, body || null, {
-                params: params
-            })
-            .catch((res) => {
-                return res;
-            });
+    get(
+        url: string, 
+        options: any = {},
+        appendJWT?: boolean
+    ): Observable<any> {
+        url = this.appendJWT(url, appendJWT);
+        return this.resInterceptor(this.http.get(url, options));
     }
 
-    delete(url: string, params?: any): Observable<any> {
-        return this.http
-            .delete(url, {
-                params: params
-            })
-            .catch((res) => {
-                return res;
-            });
+    post(
+        url: string, 
+        body: any|null, 
+        options: any = {},
+        appendJWT?: boolean
+    ): Observable<any> {
+        url = this.appendJWT(url, appendJWT);
+        return this.resInterceptor(this.http.post(url, body, options));
+    }
+
+    delete(
+        url: string, 
+        options: any = {},
+        appendJWT?: boolean
+    ): Observable<any> {
+        url = this.appendJWT(url, appendJWT);
+        return this.resInterceptor(this.http.delete(url, options));
     }
 }

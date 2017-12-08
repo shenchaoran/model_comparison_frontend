@@ -13,8 +13,8 @@ export class ModelService {
         private dataInquire: DataInquireService
     ) {}
 
-    getModelTree(): Observable<any> {
-        return this.dataInquire.get('getModelTree');
+    getModelTabTree(): Observable<any> {
+        return this.dataInquire.get('getModelTabTree');
     }
 
     getModelTools(params, query, body) {

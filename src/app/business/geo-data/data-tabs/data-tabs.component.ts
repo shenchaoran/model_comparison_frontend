@@ -27,7 +27,7 @@ export class DataTabsComponent implements OnInit {
                     data: undefined
                 },
                 {
-                    name: 'Yours Data Set',
+                    name: 'Your Data Set',
                     id: 'personal',
                     data: undefined
                 },
