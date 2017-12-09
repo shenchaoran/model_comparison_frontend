@@ -35,7 +35,9 @@
             "@mock": ["mock"],
             "@mock/*": ["mock/*"],
             "@utils": ["app/common/utils"],
-            "@utils/*": ["app/common/utils/*"]
+            "@utils/*": ["app/common/utils/*"],
+            "@models": ["app/models"],
+            "@models/*": ["app/models/*"]
         }
     }
 }

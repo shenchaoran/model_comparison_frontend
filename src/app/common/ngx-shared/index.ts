@@ -7,7 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { TranslateModule } from "@ngx-translate/core";
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
-import { QuillModule } from 'ngx-quill'
+import { QuillModule } from 'ngx-quill';
 
 @NgModule({
     declarations: [
@@ -35,7 +35,8 @@ import { QuillModule } from 'ngx-quill'
         NgZorroAntdModule,
         QuillModule,
         // ClarityModule,
-    ]
+    ],
+    providers: []
 })
 export class NgxSharedModule {
     static forRoot(): ModuleWithProviders {

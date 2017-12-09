@@ -20,7 +20,22 @@ export class CmpSlnService implements Resolve<any> {
                     return Promise.reject(response.error);
                 }
                 else {
-                    return Promise.resolve(response.data)
+                    const tabs = [];
+                    if(response.data.personal) {
+                        tabs.push({
+                            name: 'Your Comparison Solutions',
+                            id: 'personal',
+                            data: response.data.personal
+                        });
+                    }
+                    if(response.data.public) {
+                        tabs.push({
+                            name: 'Public Comparison Solutions',
+                            id: 'public',
+                            data: response.data.public
+                        });
+                    }
+                    return Promise.resolve(tabs);
                 }
             });
     }

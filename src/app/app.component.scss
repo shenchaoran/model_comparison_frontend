@@ -110,4 +110,32 @@
             padding-left: 0;
         }
     }
+    .flex-box-col-nowrap {
+        display: flex;
+        flex-flow: column nowrap;
+    }
+    .flex-box-row-nowrap {
+        display: flex;
+        flex-flow: row nowrap;
+    }
+    .flex-item-auto-fill,
+    .flex-item-1-1-auto {
+        flex: 1 1 auto;
+    }
+    .max-height {
+        height: 100%;
+    }
+    .max-width {
+        width: 100%;
+    }
+    .max-size {
+        width: 100%;
+        height: 100%;
+    }
+    .debug-border {
+        border: 1px solid #8d8d8d;
+    }
+    .debug-background {
+        background-color: #fafafa;
+    }
 }

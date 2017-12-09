@@ -9,7 +9,7 @@ const routes: Routes = [
         path: '', 
         component: GeoDataComponent,
         resolve: {
-            geoData: DataService
+            geoDataTabTree: DataService
         },
         children: []
     }

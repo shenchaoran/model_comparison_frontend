@@ -21,15 +21,14 @@ const routes: Routes = [
             {
                 path: 'solutions',
                 component: CmpSolutionComponent,
-                children: [
-                    {
-                        path: 'new',
-                        component: NewSolutionComponent
-                    }
-                ],
+                children: [],
                 resolve: {
                     solutionTabTree: CmpSlnService
                 }
+            },
+            {
+                path: 'solutions/new',
+                component: NewSolutionComponent
             },
             {
                 path: 'tasks',

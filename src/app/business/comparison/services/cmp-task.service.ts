@@ -20,12 +20,27 @@ export class CmpTaskService implements Resolve<any> {
                     return Promise.reject(response.error);
                 }
                 else {
-                    return Promise.resolve(response.data)
+                    const tabs = [];
+                    if(response.data.personal) {
+                        tabs.push({
+                            name: 'Your Comparison Tasks',
+                            id: 'personal',
+                            data: response.data.personal
+                        });
+                    }
+                    if(response.data.public) {
+                        tabs.push({
+                            name: 'Public Comparison Tasks',
+                            id: 'public',
+                            data: response.data.public
+                        });
+                    }
+                    return Promise.resolve(tabs)
                 }
             });
     }
 
     getDataTabTree(): Observable<any> {
-        return this.dataInquire.get('/comparison/tasks');
+        return this.http.get('/comparison/tasks');
     }
 }

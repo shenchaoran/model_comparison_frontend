@@ -20,12 +20,27 @@ export class CmpSceneService implements Resolve<any> {
                     return Promise.reject(response.error);
                 }
                 else {
-                    return Promise.resolve(response.data)
+                    const tabs = [];
+                    if(response.data.personal) {
+                        tabs.push({
+                            name: 'Your Comparison Scenes',
+                            id: 'personal',
+                            data: response.data.personal
+                        });
+                    }
+                    if(response.data.public) {
+                        tabs.push({
+                            name: 'Public Comparison Scenes',
+                            id: 'public',
+                            data: response.data.public
+                        });
+                    }
+                    return Promise.resolve(tabs);
                 }
             });
     }
 
     getSceneTabTree(): Observable<any> {
-        return this.dataInquire.get('/comparison/scenes');
+        return this.http.get('/comparison/scenes');
     }
 }
