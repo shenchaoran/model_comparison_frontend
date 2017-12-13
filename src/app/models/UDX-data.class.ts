@@ -1,12 +1,12 @@
-import { Mongoose } from './mongoose.base';
-import { UDXSchema } from './UDX-schema.class';
+import { ObjectID } from 'mongodb';
 import { ResourceSrc } from './resource.enum';
+import { UDXCfg } from './UDX-cfg.class';
 
 export class GeoDataClass {
-    _id: ObjectId;
+    _id?: ObjectID;
     filename: string;
     path: string;
-    schema$: UDXSchema;
+    udxcfg: UDXCfg;
     permission: string;
     userId: string;
     desc: string;

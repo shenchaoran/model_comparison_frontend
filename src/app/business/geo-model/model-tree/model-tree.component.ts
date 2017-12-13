@@ -1,7 +1,8 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { jqxTreeComponent } from 'jqwidgets-framework/jqwidgets-ts/angular_jqxtree';
+import { ActivatedRoute } from '@angular/router';
 
-import { ModelService } from '../services/model.service';
+import { MSService } from '../services/model.service';
 
 @Component({
     selector: 'ogms-model-tree',
@@ -11,18 +12,15 @@ import { ModelService } from '../services/model.service';
 export class ModelTreeComponent implements OnInit, AfterViewInit {
     source: Array<any> = undefined;
     @ViewChild('jqxTree') jqxTree: jqxTreeComponent;
-    constructor(private service: ModelService) {}
+    constructor(
+        private service: MSService,
+        private route: ActivatedRoute
+    ) {}
 
     ngOnInit() {
-        this.service.getModelTabTree()
-            .subscribe(response => {
-                if(response.error !== undefined) {
-
-                }
-                else {
-                    this.source = response.data;
-                }
-            });
+        this.route.data.subscribe(resolveData => {
+            this.source = resolveData.geoModelTree;
+        });
     }
 
     ngAfterViewInit() {

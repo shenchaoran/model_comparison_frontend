@@ -74,6 +74,10 @@
 
 /* scr */
 
-.jqx-widget.jqx-widget-energyblue-my.jqx-tree.jqx-tree-energyblue-my {
+.jqx-widget-energyblue-my.jqx-tree {
+    border: none !important;
+}
+
+.jqx-listbox.jqx-widget-energyblue-my {
     border: none !important;
 }

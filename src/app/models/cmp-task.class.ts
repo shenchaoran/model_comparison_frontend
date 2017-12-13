@@ -3,10 +3,11 @@
  * cmp task 和参与比较的model task相关联
  */
 
-import { GeoDataClass } from './UDX-data.model';
+import { ObjectID } from 'mongodb';
+import { GeoDataClass } from './UDX-data.class';
 
 export class CmpTask {
-    _id: ObjectId;
+    _id?: ObjectID;
     meta: {
         name: string,
         desc: string,

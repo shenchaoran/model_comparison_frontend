@@ -1,22 +1,78 @@
 import { Observable } from 'rxjs/Observable';
-import { Resolve } from '@angular/router';
 import { Injectable } from '@angular/core';
-import { NzNotificationService } from 'ng-zorro-antd';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { DataInquireService } from '@core/services/data.inquire.service';
+import { Resolve } from '@angular/router';
+import { _HttpClient } from '@core/services/http.client';
+import { MS, Event } from '@models/model-service.class';
 
 @Injectable()
-export class ModelService {
+export class MSService {
     constructor(
-        private _notification: NzNotificationService,
-        private http: HttpClient,
+        private http: _HttpClient,
         private dataInquire: DataInquireService
     ) {}
+
+    resolve() {
+        return this.getModelTabTree()
+            .toPromise()
+            .then(response => {
+                if (response.error !== undefined) {
+                    return Promise.reject(response.error);
+                } else {
+                    return Promise.resolve(response.data);
+                }
+            });
+    }
 
     getModelTabTree(): Observable<any> {
         return this.dataInquire.get('getModelTabTree');
     }
 
+    convert2List(tree: any) {
+        return tree[0].items;
+    }
+
+    // 返回的data还是list形式，过滤了点还是区域这个控制参数类型
+    UDXDataFilter(MS, filter: 'point' | 'polygon'): Event[] {
+        const filtered: Event[] = [];
+        const data = MS.MDL.IO.data;
+        const fathers = _.filter(data, item => item.parentId === 'root');
+        const recurFunc = (father) => {
+            let childrenId = [];
+            if(father.options && father.options.length) {
+                if(father.optionType === 'value') {
+                    if(_.indexOf(father.options, filter) !== -1) {
+                        const newFathers = _.filter(data, item => item.parentId === father.id + '#' + filter);
+                        _.map(newFathers, recurFunc);
+                    }
+                }
+                else if(father.optionType === 'file') {
+                    childrenId = father.options;
+                }
+            }
+            else {
+                filtered.push(father);
+                if(father.childrenId && father.childrenId.length) {
+                    childrenId = father.childrenId;
+                }
+            }
+
+            _.map(childrenId, id => {
+                const newFather = _.find(data, item => item.id === id);
+                recurFunc(newFather);
+            });
+            
+        };
+        _.map(fathers, recurFunc);
+        return filtered;
+    }
+
+    UDXData2Tree(MS) {
+        return MS;
+    }
+
+    // region deprecated
     getModelTools(params, query, body) {
         postal.channel('DATA_INQUIRE_CHANNEL').publish('data.inquire.get', {
             serviceId: 'getModelTools',
@@ -76,4 +132,5 @@ export class ModelService {
             params: params
         });
     }
+    // endregion
 }

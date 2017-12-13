@@ -4,49 +4,22 @@
 
 import { ResourceSrc } from './resource.enum';
 
-export enum ExternalName {
+export enum SchemaName {
     TABLE_RAW,
     SHAPEFILE_RAW,
     ASCII_GRID_RAW
 };
 
 export class UDXSchema {
+    id: string;
     src: ResourceSrc;
-    externalName?: string;
-    externalId?: string;
+    type: string;
     description?: string;
-    structure: any;
-    private static UDX_SCHEMAS = [
-        {
-            src: ResourceSrc.EXTERNAL,
-            externalName: ExternalName[ExternalName.TABLE_RAW],
-            externalId: 'TABLE_RAW',
-            description: '',
-            structure: {}
-        },
-        {
-            src: ResourceSrc.EXTERNAL,
-            externalName: ExternalName[ExternalName.SHAPEFILE_RAW],
-            externalId: 'SHAPEFILE_RAW',
-            description: '',
-            structure: {}
-        },
-        {
-            src: ResourceSrc.EXTERNAL,
-            externalName: ExternalName[ExternalName.ASCII_GRID_RAW],
-            externalId: 'ASCII_GRID_RAW',
-            description: '',
-            structure: {}
-        }
-    ];
-
-    static get schemas() {
-        return UDXSchema.UDX_SCHEMAS;
-    }
-
-    static find(id: string) {
-        return _.find(UDXSchema.UDX_SCHEMAS, schema => {
-            return schema.externalId === id;
-        });
-    }
+    structure?: any[];
+    semantic?: {
+        concepts: any[],
+        spatialRefs: any[],
+        units: any[],
+        dataTemplates: any[]
+    };
 }

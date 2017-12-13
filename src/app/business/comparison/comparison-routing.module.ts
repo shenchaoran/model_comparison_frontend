@@ -7,6 +7,7 @@ import { CmpSolutionComponent } from './cmp-solution/cmp-solution.component';
 import { CmpSceneComponent } from './cmp-scene/cmp-scene.component';
 import { NewSolutionComponent } from './new-solution/new-solution.component';
 import { CmpSlnService, CmpTaskService, CmpSceneService } from './services';
+import { MSService } from '../geo-model/services';
 
 const routes: Routes = [
     { 
@@ -28,7 +29,10 @@ const routes: Routes = [
             },
             {
                 path: 'solutions/new',
-                component: NewSolutionComponent
+                component: NewSolutionComponent,
+                resolve: {
+                    geoModelTree: MSService
+                }
             },
             {
                 path: 'tasks',

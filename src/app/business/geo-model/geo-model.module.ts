@@ -8,9 +8,9 @@ import { GeoModelComponent } from './geo-model.component';
 import { ModelTreeComponent } from './model-tree/model-tree.component';
 import { ModelIntroComponent } from './model-intro/model-intro.component';
 
-import { ModelService } from './services';
+import { MSService } from './services';
 
-const SERVICES = [ModelService];
+const SERVICES = [MSService];
 
 @NgModule({
     imports: [NgxSharedModule, SharedModule, GeoModelRoutingModule],

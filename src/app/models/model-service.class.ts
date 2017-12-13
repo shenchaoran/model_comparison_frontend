@@ -1,7 +1,9 @@
+import { ObjectID } from 'mongodb';
 import { ResourceSrc } from './resource.enum';
+import { UDXSchema } from './UDX-schema.class';
 
-export class ModelService {
-    _id: ObjectId;
+export class MS {
+    _id?: ObjectID;
     service: {
         host: string,
         port: string,
@@ -17,22 +19,32 @@ export class ModelService {
     MDL: {
         meta: {
             name: string,
-            keywords: [string],
+            keywords: string[],
             abstract: string
         },
-        IO: [
-            {
-                name: string,
-                type: string,
-                description: string,
-                optional: boolean,
-                schema$: {
-                    src: number,
-                    externalId: string,
-                    structure: any
-                }
-            }
-        ],
-        runtime: any
-    }
+        IO: {
+            schemas: UDXSchema[],
+            data: Event[]
+        },
+        runtime: any;
+    };
+    attached?: {[key: string]: any};
+}
+
+// 可以还原出一棵树，可以表现父子关系、多选一关系
+// 表示可选关系时，
+export class Event {
+    // 当前event name
+    id: string;
+    // 级联关系
+    parentId?: string;
+    childrenId?: Array<string>;
+    // 多选一关系
+    options?: Array<string>;
+    optionType?: 'value' | 'file';
+    // 输入还是输出
+    type?: 'input' | 'output';
+    description?: string;
+    optional?: boolean;
+    schemaId?: string;
 }

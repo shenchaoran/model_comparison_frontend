@@ -1,0 +1,32 @@
+.container {
+    padding: 10px;
+    box-sizing: border-box;
+    // overflow: scroll;
+    .left-item {
+        // border-radius: 4px;
+        padding: 10px;
+        height: 100%;
+        flex: 1;
+    }
+    .right-item {
+        // border-radius: 4px;
+        padding: 10px;
+        height: 100%;
+        flex: 4;
+        overflow: scroll;
+    }
+    .warning-td {
+        color: #f04134;
+        background: #fcdbd9;
+        border-radius: 4px;
+        padding: 2px 8px;
+        border: 1px solid #fcdbd9;
+    }
+    .success-td {
+        color: #00a854;
+        background: #cfefdf;
+        border-radius: 4px;
+        padding: 2px 8px;
+        border: 1px solid #cfefdf;
+    }
+}

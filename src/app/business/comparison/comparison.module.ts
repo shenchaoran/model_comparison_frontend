@@ -14,8 +14,15 @@ import { SlnIntroComponent } from './sln-intro/sln-intro.component';
 import { TaskIntroComponent } from './task-intro/task-intro.component';
 
 import { CmpSlnService, CmpTaskService, CmpSceneService } from './services';
+import { MSService } from '../geo-model/services';
+import { FormKeynoteComponent } from './form-keynote/form-keynote.component';
+import { FormCmpObjsComponent } from './form-cmp-objs/form-cmp-objs.component';
+import { FormCmpTaskComponent } from './form-cmp-task/form-cmp-task.component';
+import { FormSlnOutlineComponent } from './form-sln-outline/form-sln-outline.component';
+import { StringPipe } from '@shared/pipes';
+import { FormCmpObjsModalComponent } from './form-cmp-objs-modal/form-cmp-objs-modal.component';
 
-const SERVICES = [CmpSlnService, CmpTaskService, CmpSceneService];
+const SERVICES = [CmpSlnService, CmpTaskService, CmpSceneService, MSService];
 
 @NgModule({
     imports: [
@@ -31,7 +38,13 @@ const SERVICES = [CmpSlnService, CmpTaskService, CmpSceneService];
         CmpSceneComponent,
         ResourceTabsComponent,
         SlnIntroComponent,
-        TaskIntroComponent
+        TaskIntroComponent,
+        FormKeynoteComponent,
+        FormCmpObjsComponent,
+        FormCmpTaskComponent,
+        FormSlnOutlineComponent,
+        StringPipe,
+        FormCmpObjsModalComponent,
     ],
     providers: [...SERVICES]
 })

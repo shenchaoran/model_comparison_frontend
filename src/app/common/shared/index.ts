@@ -5,6 +5,7 @@ import { NgxSharedModule } from '../ngx-shared';
 import { jqxTreeComponent } from 'jqwidgets-framework/jqwidgets-ts/angular_jqxtree';
 import { jqxExpanderComponent } from 'jqwidgets-framework/jqwidgets-ts/angular_jqxexpander';
 import { jqxMenuComponent } from 'jqwidgets-framework/jqwidgets-ts/angular_jqxmenu';
+import { jqxListBoxComponent } from 'jqwidgets-framework/jqwidgets-ts/angular_jqxlistbox';
 
 import {
     BaCard,
@@ -35,7 +36,7 @@ import {
 
 import { HeaderMenuService } from './components/baHeaderMenu/baHeaderMenu.service';
 
-import { BaImgPathPipe, MomentDatePipe, DateStrFormatPipe } from './pipes';
+import { BaImgPathPipe, MomentDatePipe, DateStrFormatPipe, StringPipe } from './pipes';
 
 import { EmailValidator, EqualPasswordsValidator } from './validators';
 
@@ -54,7 +55,12 @@ const CITYFUN_COMPONENTS = [
     TestRecurComponent,
     SubMenuComponent,
     ContextMenuComponent,
-    HeaderPullRightComponent
+    HeaderPullRightComponent,
+
+    jqxTreeComponent,
+    jqxExpanderComponent,
+    jqxMenuComponent,
+    jqxListBoxComponent,
     // BaMessageBox,
     //
     // BaFloatWindow,
@@ -70,6 +76,9 @@ const CITYFUN_DIRECTIVES = [
 const CITYFUN_PIPES = [BaImgPathPipe, MomentDatePipe, DateStrFormatPipe];
 
 const CITYFUN_VALIDATORS = [EmailValidator, EqualPasswordsValidator];
+const SERVICES = [
+    HeaderMenuService
+];
 
 // const CITYFUN_SERVICES = [
 // 	BaMenuService
@@ -80,10 +89,6 @@ const CITYFUN_VALIDATORS = [EmailValidator, EqualPasswordsValidator];
         ...CITYFUN_COMPONENTS,
         ...CITYFUN_DIRECTIVES,
         ...CITYFUN_PIPES,
-        HeaderPullRightComponent,
-        jqxTreeComponent,
-        jqxExpanderComponent,
-        jqxMenuComponent,
     ],
     imports: [
         RouterModule, 
@@ -91,15 +96,12 @@ const CITYFUN_VALIDATORS = [EmailValidator, EqualPasswordsValidator];
     ],
     providers: [
         ...CITYFUN_VALIDATORS,
-        HeaderMenuService,
+        ...SERVICES
     ],
     exports: [
         ...CITYFUN_COMPONENTS, 
         ...CITYFUN_DIRECTIVES, 
         ...CITYFUN_PIPES,
-        jqxTreeComponent,
-        jqxExpanderComponent,
-        jqxMenuComponent,
     ]
 })
 export class SharedModule {

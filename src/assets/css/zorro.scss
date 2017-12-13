@@ -25,3 +25,10 @@ nz-tabset {
         overflow: scroll;
     }
 }
+
+.ant-table-small {
+    border: none !important;
+    .ant-table-placeholder {
+        padding: 6px 0 !important;
+    }
+}

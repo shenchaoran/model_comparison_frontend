@@ -17,32 +17,39 @@
  *      
  */
 
-import { GeoDataClass } from './UDX-data.model';
+import { GeoDataClass } from './UDX-data.class';
 import { UDXSchema } from '../models/UDX-schema.class';
 
+import * as uuidv1 from 'uuid/v1';
+// import { ObjectID } from 'mongodb';
+
 export class CmpObj {
-    id: string;
+    id?: string;
     meta: {
         name: string,
         desc: string
     };
     dataRefer: Array<{
         msId: string,
+        msName?: string,
         eventName: string,
         // data 存放具体比较的配置，如chart的列名，图像处理
-        data: any
+        data: any,
+        schema$?: UDXSchema
     }>;
-    schema$: UDXSchema;
-    method: string;
-
-    static TYPES = {
-        TABLE_CHART: 'TABLE_CHART',
-        TABLE_STATISTIC: 'TABLE_STATISTIC',
-        ASCII_GRID_VISUALIZATION: 'ASCII_GRID_VISUALIZATION',
-        ASCII_GRID_MIXING: 'ASCII_GRID_MIXING',
-        GIF: 'GIF',
-        SHAPEFILE_VISUALIZATION: 'SHAPEFILE_VISUALIZATION',
-        SHAPEFILE_INTERPOLATION: 'SHAPEFILE_INTERPOLATION',
-    };
+    schemaTypes: string[];
+    methods: any[];
+    attached?: any;
     
+    constructor() {
+        this.id = uuidv1();
+        this.meta = {
+            name: '',
+            desc: ''
+        };
+        this.dataRefer = [];
+        this.schemaTypes = [];
+        this.methods = [];
+        this.attached = {};
+    }
 }
