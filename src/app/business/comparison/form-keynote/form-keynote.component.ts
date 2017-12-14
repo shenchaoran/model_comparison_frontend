@@ -46,9 +46,25 @@ import {
 export class FormKeynoteComponent implements ControlValueAccessor, OnInit {
     keynote: {
         direction: 'x' | 'y',
-        dimension: 'point' | 'polygon',
-        participants: Array<any>
-    } = {direction: undefined, dimension: undefined, participants: []};
+        dimension: 'point' | 'polygon' | 'multi-point',
+        participants: Array<any>,
+        attached: {
+            solutionMeta: {
+                name: string,
+                desc: string
+            }
+        }
+    } = {
+        direction: undefined, 
+        dimension: undefined, 
+        participants: [],
+        attached: {
+            solutionMeta: {
+                name: '',
+                desc: ''
+            }
+        }
+    };
 
     mss: Array<{}> = [];
     selectMode: string;
@@ -70,7 +86,7 @@ export class FormKeynoteComponent implements ControlValueAccessor, OnInit {
         })
     }
 
-    changeDir() {
+    changeDirection() {
         if(this.keynote.direction === 'y') {
             this.selectMode = undefined;
         }
@@ -78,10 +94,10 @@ export class FormKeynoteComponent implements ControlValueAccessor, OnInit {
             this.selectMode = 'multiple';
         }
         this.keynote.participants = [];
-        this.emitChange();
+        this.onNgModelChange();
     }
 
-    emitChange() {
+    onNgModelChange() {
         if(this.keynote.direction === 'y') {
             this.keynote.participants = [this.keynote.participants];
         }

@@ -1,12 +1,15 @@
+:host {
+    display: flex;
+}
+
 #container {
-    width: 100%;
-    height: 100%;
+    flex: 1;
     position: relative;
 }
 
 #map-div {
-    width: 100%;
-    height: 100%;
+    // width: 100%;
+    // height: 100%;
 }
 
 #toolbar-div {

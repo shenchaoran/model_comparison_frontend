@@ -1,5 +1,5 @@
 // 组合了工具条、图例、数据源的布局
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 
 import { MAP_TYPE } from '../model/map-component-type.enum';
 import { MapConfigService } from '../services/map-config.service';
@@ -16,7 +16,13 @@ export class LayoutComponent implements OnInit {
     loadSource: boolean;
     loadLayerstree: boolean;
     
-    constructor(private mapCfgService: MapConfigService) {}
+    constructor(
+        private mapCfgService: MapConfigService,
+        @Inject('MAP_MODULES_CONFIG') private moduleCfg,
+        @Inject('MAP_TOOLBAR_CONFIG') private toolbarCfg
+    ) {
+        this.mapCfgService.init(moduleCfg, toolbarCfg);
+    }
 
     ngOnInit() {
         this.loadToolbar = this.mapCfgService.loadToolbar();

@@ -3,10 +3,15 @@ import { MAP_MODULES_CONFIG, MAP_TOOLBAR_CONFIG } from '@config/map.config';
 
 @Injectable()
 export class MapConfigService {
-    constructor(
-        @Inject('MAP_MODULES_CONFIG') private moduleCfg,
-        @Inject('MAP_TOOLBAR_CONFIG') private toolbarCfg
-    ) {}
+    private moduleCfg;
+    private toolbarCfg;
+    
+    constructor() {}
+
+    init(moduleCfg, toolbarCfg) {
+        this.moduleCfg = moduleCfg;
+        this.toolbarCfg = toolbarCfg;
+    }
 
     // region module cfg 
     private loadSubModule(moduleId: String): boolean {

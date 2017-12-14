@@ -26,19 +26,26 @@ const services = [
     ToolbarService,
 ]
 
+///////////////////////////////
+export { OlMapComponent } from './ol-map.component';
+export { LayoutComponent } from './layout/layout.component';
+///////////////////////////////
+
 @NgModule({
     imports: [NgxSharedModule, SharedModule, OlMapRoutingModule],
     declarations: [
+        LayoutComponent,
         OlMapComponent,
         LayerTreeComponent,
         ToolbarComponent,
         LegendComponent,
-        LayoutComponent,
         BasemapComponent,
         CompareLayoutComponent
     ],
+    exports: [OlMapComponent],
     providers: [
         ...services,
+        // 这两个依赖在该模块的父模块中提供，能够实现不同的注入动态加载不同的地图配置
         {
             provide: 'MAP_MODULES_CONFIG',
             useValue: MAP_MODULES_CONFIG

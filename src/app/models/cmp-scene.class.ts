@@ -4,14 +4,18 @@
  */
 import { ObjectID } from 'mongodb';
 import { CmpTask } from './cmp-task.class';
+import { ResourceSrc } from './resource.enum';
 
 export class CmpScene {
     _id?: ObjectID;
     meta: {
-        name: string;
-        desc: string;
-        time: string;
-        author: string;
+        name: string,
+        desc: string,
+        time: string
+    };
+    auth: {
+        userId: string,
+        src: ResourceSrc
     };
     cfg: {
         cmpTaskIds: Array<string>;

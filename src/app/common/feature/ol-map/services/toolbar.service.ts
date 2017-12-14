@@ -6,11 +6,14 @@ import { OlMapService } from '../services/ol-map.service';
 
 @Injectable()
 export class ToolbarService {
+    private toolbarCfg;
     constructor(
-        @Inject('MAP_MODULES_CONFIG') private moduleCfg,
-        @Inject('MAP_TOOLBAR_CONFIG') private toolbarCfg,
         private olMapService: OlMapService
     ) {}
+
+    init(toolbarCfg) {
+        this.toolbarCfg = toolbarCfg;
+    }
 
     private set item(v) {
         _.map(this.toolbarCfg, item => {

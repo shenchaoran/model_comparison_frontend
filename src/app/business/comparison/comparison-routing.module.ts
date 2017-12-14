@@ -6,8 +6,10 @@ import { CmpTaskComponent } from './cmp-task/cmp-task.component';
 import { CmpSolutionComponent } from './cmp-solution/cmp-solution.component';
 import { CmpSceneComponent } from './cmp-scene/cmp-scene.component';
 import { NewSolutionComponent } from './new-solution/new-solution.component';
+import { NewTaskComponent } from './new-task/new-task.component';
 import { CmpSlnService, CmpTaskService, CmpSceneService } from './services';
 import { MSService } from '../geo-model/services';
+import { DataService } from '../geo-data/services';
 
 const routes: Routes = [
     { 
@@ -40,6 +42,19 @@ const routes: Routes = [
                 resolve: {
                     taskTabTree: CmpTaskService
                 }
+            },
+            {
+                path: 'tasks/new',
+                component: NewTaskComponent,
+                resolve: {
+                    geoDataResource: DataService
+                },
+                children: [
+                    {
+                        path: '',
+                        loadChildren: '../../common/feature/ol-map/ol-map.module#OlMapModule'
+                    }
+                ]
             },
             {
                 path: 'scenes',

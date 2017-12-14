@@ -14,6 +14,8 @@ export class CmpSolutionComponent implements OnInit {
         name: string;
         data: any;
     }>;
+    selectedSln: string;
+
     constructor(
         private service: CmpSlnService,
         private route: ActivatedRoute
@@ -23,5 +25,12 @@ export class CmpSolutionComponent implements OnInit {
         this.route.data.subscribe(resolveData => {
             this.tabs = resolveData.solutionTabTree;
         });
+    }
+
+    onTabItemSelected(item) {
+        if(item.value) {
+            this.selectedSln = item.value;
+            localStorage.setItem('cmpSolution', JSON.stringify(item.value));
+        }
     }
 }

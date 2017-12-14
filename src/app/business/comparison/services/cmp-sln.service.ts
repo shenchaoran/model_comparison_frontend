@@ -43,4 +43,12 @@ export class CmpSlnService implements Resolve<any> {
     getSlnTabTree(): Observable<any> {
         return this.http.get('/comparison/solutions');
     }
+
+    insertSln(sln: any): Observable<any> {
+        return this.http.post('/comparison/solutions', {doc: sln});
+    }
+
+    getSln(id: string): Observable<any> {
+        return this.http.get(`/comparison/solutions/${id}`);
+    }
 }

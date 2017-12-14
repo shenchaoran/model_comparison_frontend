@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 
 import { MapToolbarItemCfg } from '../model/map-toolbar-config.class';
 import { ToolbarService } from '../services/toolbar.service';
+import { OlMapService } from '../services/ol-map.service';
 
 @Component({
     selector: 'ogms-toolbar',
@@ -12,7 +13,13 @@ export class ToolbarComponent implements OnInit {
     // 两种布局：row 和 column
     _LAYOUT: string = 'row';
     toolbarItems: Array<MapToolbarItemCfg>;
-    constructor(private service: ToolbarService) {}
+    constructor(
+        private service: ToolbarService,
+        @Inject('MAP_TOOLBAR_CONFIG') private toolbarCfg,
+        private olMapService: OlMapService
+    ) {
+        this.service.init(toolbarCfg);
+    }
 
     ngOnInit() {
         this.toolbarItems = this.service.getToolbarItem();

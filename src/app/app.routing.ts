@@ -18,11 +18,11 @@ export const routes: Routes = [
             {
                 path: 'webNJGIS',
                 loadChildren: './business/webNJGIS.module#WebNJGISModule'
-            },
-            {
-                path: '**',
-                redirectTo: 'login'
             }
+            // {
+            //     path: '**',
+            //     redirectTo: 'login'
+            // }
         ]
     }
 ];

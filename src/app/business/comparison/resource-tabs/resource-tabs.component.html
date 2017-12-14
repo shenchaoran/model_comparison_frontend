@@ -1,11 +1,11 @@
 <ng-container *ngIf="tabs">
-    <nz-tabset [nzTabPosition]="'top'" [nzType]="'card'">
-        <nz-tab *ngFor="let tab of tabs">
+    <nz-tabset [nzTabPosition]="'top'" [nzType]="'card'" [(nzSelectedIndex)]='selectedTabIndex'>
+        <nz-tab *ngFor="let tab of tabs; let i=index">
             <ng-template #nzTabHeading>
                 {{tab.name}}
             </ng-template>
             <div class="tab-content max-height">
-                <jqxTree *ngIf='tab.data' #jqTree [toggleMode]="'click'" [theme]='"energyblue-my"' [width]="'100%'" [height]="'100%'" [source]="tab.data"></jqxTree>
+                <jqxTree *ngIf='tab.data' #jqTree id='jqxTree-{{i}}' (onSelect)='onTreeItemSelected($event)' [toggleMode]="'click'" [theme]='"energyblue-my"' [width]="'100%'" [height]="'100%'" [source]="tab.data"></jqxTree>
             </div>
         </nz-tab>
     </nz-tabset>

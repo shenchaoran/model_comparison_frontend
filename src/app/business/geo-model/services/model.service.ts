@@ -34,7 +34,7 @@ export class MSService {
     }
 
     // 返回的data还是list形式，过滤了点还是区域这个控制参数类型
-    UDXDataFilter(MS, filter: 'point' | 'polygon'): Event[] {
+    UDXDataFilter(MS, filter: 'point' | 'polygon' | 'multi-point'): Event[] {
         const filtered: Event[] = [];
         const data = MS.MDL.IO.data;
         const fathers = _.filter(data, item => item.parentId === 'root');

@@ -21,31 +21,42 @@ import { FormCmpTaskComponent } from './form-cmp-task/form-cmp-task.component';
 import { FormSlnOutlineComponent } from './form-sln-outline/form-sln-outline.component';
 import { StringPipe } from '@shared/pipes';
 import { FormCmpObjsModalComponent } from './form-cmp-objs-modal/form-cmp-objs-modal.component';
+import { LoginService } from '@feature/login/login.service';
+import { NewTaskComponent } from './new-task/new-task.component';
+import { DataService } from '../geo-data/services';
+import { OlMapModule, OlMapComponent, LayoutComponent } from '@feature/ol-map/ol-map.module';
+import { NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';
 
-const SERVICES = [CmpSlnService, CmpTaskService, CmpSceneService, MSService];
+const SERVICES = [
+  CmpSlnService,
+  CmpTaskService,
+  CmpSceneService,
+  MSService,
+  LoginService,
+  DataService
+];
 
 @NgModule({
-    imports: [
-        NgxSharedModule, 
-        SharedModule, 
-        CmpRoutingModule
-    ],
-    declarations: [
-        ComparisonComponent,
-        CmpSolutionComponent,
-        NewSolutionComponent,
-        CmpTaskComponent,
-        CmpSceneComponent,
-        ResourceTabsComponent,
-        SlnIntroComponent,
-        TaskIntroComponent,
-        FormKeynoteComponent,
-        FormCmpObjsComponent,
-        FormCmpTaskComponent,
-        FormSlnOutlineComponent,
-        StringPipe,
-        FormCmpObjsModalComponent,
-    ],
-    providers: [...SERVICES]
+  imports: [NgxSharedModule, SharedModule, CmpRoutingModule ],
+  declarations: [
+    ComparisonComponent,
+    CmpSolutionComponent,
+    NewSolutionComponent,
+    CmpTaskComponent,
+    CmpSceneComponent,
+    ResourceTabsComponent,
+    SlnIntroComponent,
+    TaskIntroComponent,
+    FormKeynoteComponent,
+    FormCmpObjsComponent,
+    FormCmpTaskComponent,
+    FormSlnOutlineComponent,
+    StringPipe,
+    FormCmpObjsModalComponent,
+    NewTaskComponent,
+    // OlMapComponent,
+    // LayoutComponent,
+  ],
+  providers: [...SERVICES]
 })
 export class ComparisonModule {}

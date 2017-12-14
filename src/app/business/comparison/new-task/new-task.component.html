@@ -1,0 +1,100 @@
+<div class="container flex-box-col-nowrap max-size">
+    <nz-steps [(nzCurrent)]="currentStep">
+        <nz-step [nzTitle]="'Basic Information'" [nzDescription]=''></nz-step>
+        <nz-step [nzTitle]="'Configure Input'" [nzDescription]=''></nz-step>
+    </nz-steps>
+
+    <div class="steps-content flex-item-1-1-auto debug-border debug-background overflow-y">
+        <div class='' [hidden]='currentStep !== 0'>
+            <form nz-form [nzType]="'horizontal'">
+                <h5 style='margin: 10px 0;'>Task Basic Information:</h5>
+                <div nz-form-item nz-row>
+                    <div nz-form-label nz-col [nzSpan]="5">
+                        <label>Name</label>
+                    </div>
+                    <div nz-form-control nz-col [nzSpan]="12">
+                        <nz-input [(ngModel)]='cmpTask.meta.name' (ngModelChange)='updateStepyValid()' name='cmpTask-name'></nz-input>
+                    </div>
+                </div>
+                <div nz-form-item nz-row>
+                    <div nz-form-label nz-col [nzSpan]="5">
+                        <label>Description</label>
+                    </div>
+                    <div nz-form-control nz-col [nzSpan]="12">
+                        <nz-input [(ngModel)]='cmpTask.meta.desc' (ngModelChange)='updateStepyValid()' name='cmpTask-desc'></nz-input>
+                    </div>
+                </div>
+                <div nz-form-item nz-row>
+                    <div nz-form-label nz-col [nzSpan]="5">
+                        <label>Permission</label>
+                    </div>
+                    <div nz-form-control nz-col [nzSpan]="12">
+                        <nz-radio-group [(ngModel)]="cmpTask.auth.src" (ngModelChange)='updateStepyValid()' name='cmpTask-auth' [nzSize]='"large"'>
+                            <label nz-radio-button [nzValue]="3"><span>Private</span></label>
+                            <label nz-radio-button [nzValue]="2"><span>Public</span></label>
+                        </nz-radio-group>
+                    </div>
+                </div>
+                <div nz-form-item nz-row>
+                    <div nz-form-label nz-col [nzSpan]="5">
+                        <label>Data Source</label>
+                    </div>
+                    <div nz-form-control nz-col [nzSpan]="12">
+                        <nz-radio-group [(ngModel)]="cmpTask.calcuCfg.dataSrc" (ngModelChange)='updateStepyValid()' name='cmpTask-auth' [nzSize]='"large"'>
+                            <label nz-radio-button [nzValue]="'std'"><span>Standard Example</span></label>
+                            <label nz-radio-button [nzValue]="'upload'"><span>Personal Upload</span></label>
+                        </nz-radio-group>
+                    </div>
+                </div>
+                <div nz-form-item nz-row *ngIf='cmpTask.calcuCfg.dataSrc === "std" && !__loading'>
+                    <div nz-form-label nz-col [nzSpan]="5">
+                        <label>Date Range</label>
+                    </div>
+                    <div nz-form-control nz-col [nzSpan]="12">
+                        <nz-datepicker style="width: 40%;" [(ngModel)]="startDate" (ngModelChange)="startDateChange()" [nzDisabledDate]='disableStartDate' [nzFormat]="'YYYY-MM-DD'" [nzPlaceHolder]="'Start date'" name='start-date'></nz-datepicker>
+                        <nz-datepicker style="width: 40%;" [(ngModel)]="endDate" (ngModelChange)="endDateChange()" [nzDisabledDate]='disableEndDate' [nzFormat]="'YYYY-MM-DD'" [nzPlaceHolder]="'End date'" name='end-date'></nz-datepicker>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class='' [hidden]='currentStep !== 1'>
+            <ng-container *ngIf='(cmpTask.calcuCfg.dataSrc === "std") else uploadStep'>
+                <router-outlet></router-outlet>
+                <!-- <ogms-ol-map></ogms-ol-map> -->
+            </ng-container>
+            <ng-template #uploadStep>
+
+            </ng-template>
+        </div>
+    </div>
+
+    <div class="steps-action">
+        <button nz-button [nzType]="'default'" (click)="changeStep(currentStep-1)" [disabled]="currentStep === 0">
+                    <span>Previous</span>
+                </button>
+        <button nz-button [nzType]="'default'" (click)="changeStep(currentStep+1)" *ngIf="currentStep < 1" [disabled]='nextDisabled'>
+                    <span>Next</span>
+                </button>
+        <button nz-button [nzType]="'primary'" (click)="done()" *ngIf="currentStep === 1" [disabled]='doneDisabled'>
+                    <span>Save</span>
+                </button>
+    </div>
+
+    <nz-modal [nzVisible]="__isConfirmVisible" [nzContent]="modalContent" [nzFooter]='modalFooter' (nzOnCancel)="handleCancel($event)">
+        <ng-template #modalContent>
+            <p style='margin: 15px; font-size: 18px'>Start this comparison task right now?</p>
+            <div class='flex-box-row-nowrap'>
+                <div class='flex-item-1-1-auto'></div>
+                <div>
+                    <button nz-button [nzType]="'default'" [nzSize]="'large'" (click)="handleCancel($event)">
+                    Later
+                </button>
+                    <button nz-button [nzType]="'primary'" [nzSize]="'large'" (click)="handleOk($event)">
+                    Start Task
+                </button>
+                </div>
+            </div>
+        </ng-template>
+    </nz-modal>
+</div>

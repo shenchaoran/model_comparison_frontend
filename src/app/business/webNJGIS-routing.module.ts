@@ -37,13 +37,13 @@ const routes: Routes = [
                 loadChildren: './main-window/main-window.module#MainWindowModule'
             },
             {
-                path: ':username',
+                path: 'users/:username',
                 loadChildren: './profile/profile.module#ProfileModule'
-            },
-            {
-                path: '**',
-                redirectTo: 'home'
             }
+            // {
+            //     path: '**',
+            //     redirectTo: 'home'
+            // }
         ]
     }
 ];

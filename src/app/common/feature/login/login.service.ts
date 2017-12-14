@@ -68,4 +68,20 @@ export class LoginService extends ErrorHandle {
         }
         return false;
     }
+
+    static getUser() {
+        const jwtStr = localStorage.getItem('jwt');
+        if(jwtStr) {
+            const jwt = JSON.parse(jwtStr);
+            if (jwt !== null && jwt.expires > Date.now()) {
+                return jwt.user;
+            }
+            else {
+                return undefined;
+            }
+        }
+        else {
+            return undefined;
+        }
+    }
 }

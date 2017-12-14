@@ -54,14 +54,16 @@ export class DataTabsComponent implements OnInit {
         }
 
         this.route.data.subscribe(resolveData => {
-            const geoDataTabTree = resolveData.geoDataTabTree;
-            _.forIn(geoDataTabTree, (value, key) => {
+            const geoDataResource = resolveData.geoDataResource;
+            _.forIn(geoDataResource.noStd, (value, key) => {
                 _.map(this.tabs, tab => {
                     if(tab.id === key) {
                         tab.data = value;
                     }
                 });
             });
+
+            
         })
     }
 }

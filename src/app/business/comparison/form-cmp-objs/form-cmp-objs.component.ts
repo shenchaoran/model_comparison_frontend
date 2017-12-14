@@ -49,7 +49,7 @@ export class FormCmpObjsComponent
   @Input()
   keynote: {
     direction: 'x' | 'y';
-    dimension: 'point' | 'polygon';
+    dimension: 'point' | 'polygon' | 'multi-point';
     participants: Array<any>;
   };
 
@@ -114,7 +114,7 @@ export class FormCmpObjsComponent
       this.cmpObjs = _.concat(newObj, this.cmpObjs);
       this.selectedCmpObj = newObj;
 
-    //   console.log(this.cmpObjs);
+      //   console.log(this.cmpObjs);
     } else {
       this._notification.warning(
         'Warning',
@@ -165,7 +165,14 @@ export class FormCmpObjsComponent
       }
     });
     if (currentValid) {
-      this.propagateChange(this.cmpObjs);
+      this.propagateChange({
+        valid: true,
+        data: this.cmpObjs
+      });
+    } else {
+      this.propagateChange({
+        valid: false
+      });
     }
   }
 
@@ -180,7 +187,7 @@ export class FormCmpObjsComponent
     );
     this.selectedMS = selectedMS;
     this.selectedMS.attached = {
-        dimension: this.keynote.dimension
+      dimension: this.keynote.dimension
     };
     this.isModalVisible = true;
   }
