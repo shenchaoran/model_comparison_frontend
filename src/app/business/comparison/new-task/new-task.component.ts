@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { CmpSlnService, CmpTaskService } from '../services';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CmpSolution, CmpTask, ResourceSrc } from '@models';
@@ -6,18 +6,24 @@ import { NzNotificationService, NzModalService } from 'ng-zorro-antd';
 import { DataService } from '../../geo-data/services';
 import { MAP_TOOLBAR_CONFIG } from './map.config';
 
+declare var ol: any;
+
 @Component({
   selector: 'ogms-new-task',
   templateUrl: './new-task.component.html',
   styleUrls: ['./new-task.component.scss'],
-    providers: [
-        {
-            provide: 'MAP_TOOLBAR_CONFIG',
-            useValue: MAP_TOOLBAR_CONFIG
-        }
-    ]
+  providers: [
+    {
+      provide: 'MAP_TOOLBAR_CONFIG',
+      useValue: MAP_TOOLBAR_CONFIG
+    }
+    // {
+    //     provide: 'MAP_MODULES_CONFIG',
+    //     useValue: MAP_MODULES_CONFIG
+    // }
+  ]
 })
-export class NewTaskComponent implements OnInit {
+export class NewTaskComponent implements OnInit, AfterViewInit {
   cmpSolution: CmpSolution;
   cmpTask: CmpTask = new CmpTask();
 
@@ -53,8 +59,53 @@ export class NewTaskComponent implements OnInit {
     }
   }
 
+  ngAfterViewInit() {
+    // // The map
+    // var map = new ol.Map({
+    //   target: 'map',
+    //   view: new ol.View({
+    //     zoom: 14,
+    //     center: [270701, 6247637]
+    //   }),
+    //   layers: [new ol.layer.Tile({ source: new ol.source.OSM() })]
+    // });
+
+    // console.log('ok');
+    // // Add a custom push button with onToggle function
+    // var hello = new ol.control.Button({
+    //   html: '<i class="fa fa-smile-o"></i>',
+    //   className: 'hello',
+    //   title: 'Hello world!',
+    //   handleClick: function() {
+    //     info('hello World!');
+    //   }
+    // });
+    // map.addControl(hello);
+
+    // // Add a save button with on active event
+    // var save = new ol.control.Button({
+    //   html: '<i class="fa fa-download"></i>',
+    //   className: 'save',
+    //   title: 'Save',
+    //   handleClick: function() {
+    //     info(
+    //       'Center: ' +
+    //         map.getView().getCenter() +
+    //         ' - zoom: ' +
+    //         map.getView().getZoom()
+    //     );
+    //   }
+    // });
+    // map.addControl(save);
+
+    // // Show info
+    // function info(i) {
+    //   jQuery('#info').html(i || '');
+    // }
+  }
+
   ngOnInit() {
-      this.cmpTask.calcuCfg.dataSrc = 'std';
+    this.cmpTask.calcuCfg.dataSrc = 'std';
     this.route.data.subscribe(resolveData => {
       this.__loading = false;
       const STD_DATA_STR = localStorage.getItem('STD_DATA');
@@ -103,7 +154,9 @@ export class NewTaskComponent implements OnInit {
       this.endDate = undefined;
       this.cmpTask.calcuCfg.stdSrc.temporal.end = undefined;
     } else {
-      this.cmpTask.calcuCfg.stdSrc.temporal.start = this.startDate? this.startDate.getTime(): undefined;
+      this.cmpTask.calcuCfg.stdSrc.temporal.start = this.startDate
+        ? this.startDate.getTime()
+        : undefined;
     }
   }
 
@@ -112,7 +165,9 @@ export class NewTaskComponent implements OnInit {
       this.startDate = undefined;
       this.cmpTask.calcuCfg.stdSrc.temporal.start = undefined;
     } else {
-      this.cmpTask.calcuCfg.stdSrc.temporal.end = this.endDate? this.endDate.getTime(): undefined;
+      this.cmpTask.calcuCfg.stdSrc.temporal.end = this.endDate
+        ? this.endDate.getTime()
+        : undefined;
     }
   }
 

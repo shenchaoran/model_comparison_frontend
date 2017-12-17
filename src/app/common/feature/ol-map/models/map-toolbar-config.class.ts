@@ -23,4 +23,18 @@ export enum MapToolBarItemType {
     TOGGLE
 }
 
-export type MapToolbarCfg = MapToolbarItemCfg[];
+export class MapToolbarCfg {
+    [key: string]: any;
+    itemCfg: Array<MapToolbarItemCfg>
+}
+
+export const TOOLBAR_POSITION = {
+    "top": "top",
+    "topLeft": "top-left",
+    "left": "left",
+    "bottomLeft": "bottom-left",
+    "bottom": "bottom",
+    "bottomRight": "bottom-right",
+    "right": "right",
+    "topRight": "top-right",
+}

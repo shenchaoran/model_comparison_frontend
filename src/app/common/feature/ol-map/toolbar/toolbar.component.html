@@ -1,5 +1,0 @@
-<div class="flex-box" [class.row-layout]="_LAYOUT === 'row'" [class.column-layout]="_LAYOUT === 'column'">
-    <div class='map-toolbar-item flex-item' *ngFor="let item of toolbarItems" (click)='onItemClick(item)' [class.activited-item]='item.type === 1 && item.activated === true' [title]='item.name'>
-        <i *ngIf="item.icon.type === 0" class="fa fa-{{item.icon.value}}" aria-hidden="true"></i>
-    </div>
-</div>

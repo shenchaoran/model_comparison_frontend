@@ -1,8 +1,8 @@
 <div id="container">
     <div id='map-div'>
-        <ogms-basemap [containerId]="'ol-map-container'" [mapType]='mapType'></ogms-basemap>
+        <ogms-basemap [targetId]="targetId" [mapType]='mapType'></ogms-basemap>
     </div>
-    <div *ngIf="loadToolbar" id='toolbar-div'>
+    <!-- <div *ngIf="loadToolbar" id='toolbar-div'>
         <ogms-toolbar></ogms-toolbar>
     </div>
     <div *ngIf="loadLegend" id='legend-div'>
@@ -13,5 +13,5 @@
     </div>
     <div *ngIf="loadLayerstree" id='layerstree-div'>
 
-    </div>
+    </div> -->
 </div>

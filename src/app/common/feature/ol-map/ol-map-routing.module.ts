@@ -7,8 +7,8 @@ import { OlMapComponent } from './ol-map.component';
 const routes: Routes = [
     { 
         path: '',
-        component: LayoutComponent
-        // component: OlMapComponent
+        // component: LayoutComponent
+        component: OlMapComponent
     }
 ];
 

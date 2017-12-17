@@ -4,28 +4,26 @@
 
 #container {
     flex: 1;
+    display: flex;
     position: relative;
 }
 
 #map-div {
-    // width: 100%;
-    // height: 100%;
+    flex: 1;
 }
 
-#toolbar-div {
-    position: absolute;
-    left: 10px;
-    top: 10px;
-}
-
-#legend-div {
-    position: absolute;
-    left: 10px;
-    bottom: 10px;
-}
-
-#src-div {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-}
+// #toolbar-div {
+//     position: absolute;
+//     left: 10px;
+//     top: 10px;
+// }
+// #legend-div {
+//     position: absolute;
+//     left: 10px;
+//     bottom: 10px;
+// }
+// #src-div {
+//     position: absolute;
+//     right: 10px;
+//     top: 10px;
+// }

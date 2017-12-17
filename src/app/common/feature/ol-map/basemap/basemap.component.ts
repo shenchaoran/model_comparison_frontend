@@ -4,12 +4,13 @@ import {
     OnInit,
     Input,
     AfterViewInit,
-    AfterViewChecked
+    AfterViewChecked,
+    HostListener,
 } from '@angular/core';
 import * as ol from 'openlayers';
 import { Observable } from 'rxjs/Observable';
 
-import { Layer, LAYER_TYPE, Map, MAP_TYPE } from '../model';
+import { Layer, LAYER_TYPE, Map, MAP_TYPE } from '../models';
 import { OlMapService } from '../services/ol-map.service';
 import { ErrorHandle } from '@common/core/base/error-handle';
 
@@ -18,9 +19,8 @@ import { ErrorHandle } from '@common/core/base/error-handle';
     templateUrl: './basemap.component.html',
     styleUrls: ['./basemap.component.scss']
 })
-export class BasemapComponent extends ErrorHandle
-    implements OnInit, AfterViewInit, AfterViewChecked {
-    @Input() containerId: string;
+export class BasemapComponent extends ErrorHandle implements OnInit, AfterViewInit {
+    @Input() targetId: string;
     @Input() mapType: MAP_TYPE;
 
     mapId: string;
@@ -35,10 +35,15 @@ export class BasemapComponent extends ErrorHandle
 
     ngAfterViewInit() {
         if (this.mapType === MAP_TYPE.SIMPLE) {
-            if (this.containerId === '') {
+            if (this.targetId === '') {
                 return this.handleError(new Error('Error map container id!'));
             }
-            this.mapId = this.olMapService.createDefaultMap(this.containerId);
+            this.mapId = this.olMapService.createDefaultMap(this.targetId);
+            
+            this.resize();
+            postal
+                .channel('MAP_CHANNEL')
+                .publish('map.create-default', undefined);
         } else if (
             this.mapType === MAP_TYPE.COMPARE ||
             this.mapType === MAP_TYPE.SWIPE
@@ -47,12 +52,8 @@ export class BasemapComponent extends ErrorHandle
     }
 
     // re draw
-    ngAfterViewChecked() {
-        let width = jQuery('#' + this.mapId).width();
-        if (this.containerWidth !== width) {
-            this.containerWidth = width;
-
-            this.olMapService.mapResize();
-        }
+    @HostListener('window:resize') 
+    resize() {
+        this.olMapService.mapResize();
     }
 }

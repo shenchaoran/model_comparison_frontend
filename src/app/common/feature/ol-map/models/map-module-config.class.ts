@@ -4,4 +4,5 @@ export class MapModuleCfg{
     load: boolean;
     desc?: string;
     children?: MapModuleCfg[];
+    position?: string;
 }

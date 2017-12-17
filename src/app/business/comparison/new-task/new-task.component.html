@@ -1,10 +1,10 @@
-<div class="container flex-box-col-nowrap max-size">
+<div class="container flex-box-col-nowrap">
     <nz-steps [(nzCurrent)]="currentStep">
         <nz-step [nzTitle]="'Basic Information'" [nzDescription]=''></nz-step>
         <nz-step [nzTitle]="'Configure Input'" [nzDescription]=''></nz-step>
     </nz-steps>
 
-    <div class="steps-content flex-item-1-1-auto debug-border debug-background overflow-y">
+    <div class="steps-content debug-border debug-background">
         <div class='' [hidden]='currentStep !== 0'>
             <form nz-form [nzType]="'horizontal'">
                 <h5 style='margin: 10px 0;'>Task Basic Information:</h5>
@@ -62,6 +62,7 @@
             <ng-container *ngIf='(cmpTask.calcuCfg.dataSrc === "std") else uploadStep'>
                 <router-outlet></router-outlet>
                 <!-- <ogms-ol-map></ogms-ol-map> -->
+                <!-- <div id="map" style="width:600px; height:400px;"></div> -->
             </ng-container>
             <ng-template #uploadStep>
 
