@@ -3,6 +3,9 @@ import { Injectable, Inject } from '@angular/core';
 import { MAP_MODULES_CONFIG, MAP_TOOLBAR_CONFIG } from '@config/map.config';
 import { MapToolBarItemType, MapToolbarItemCfg } from '../models';
 import { OlMapService } from '../services/ol-map.service';
+import { Observable } from 'rxjs';
+import * as proj4x from 'proj4';
+const proj4 = (proj4x as any).default;
 declare var ol: any;
 
 @Injectable()
@@ -35,8 +38,8 @@ export class ToolbarService {
   private addEditorCtrl() {
     if (this.toolbarCfg) {
       const pointLayer = this.olMapService.getLayer('draw-point');
-      const polylineLayer = this.olMapService.getLayer('draw-polyline');
-      const polygonLayer = this.olMapService.getLayer('draw-polygon');
+      //   const polylineLayer = this.olMapService.getLayer('draw-polyline');
+      //   const polygonLayer = this.olMapService.getLayer('draw-polygon');
 
       const editSubCtrl = new ol.control.Bar({
         toggleOne: true,
@@ -60,8 +63,8 @@ export class ToolbarService {
                 }
                 for (let i = 0, f; (f = features.item(i)); i++) {
                   pointLayer.getSource().removeFeature(f);
-                  polylineLayer.getSource().removeFeature(f);
-                  polygonLayer.getSource().removeFeature(f);
+                  //   polylineLayer.getSource().removeFeature(f);
+                  //   polygonLayer.getSource().removeFeature(f);
                 }
                 selectCtrl
                   .getInteraction()
@@ -100,7 +103,7 @@ export class ToolbarService {
             })
           ]
         }),
-        active: true
+        active: false
       });
       editSubCtrl.addControl(selectCtrl);
       const editCtrlBar = new ol.control.Bar({
@@ -130,7 +133,7 @@ export class ToolbarService {
         title: 'LineString',
         interaction: new ol.interaction.Draw({
           type: 'LineString',
-          source: polylineLayer.getSource(),
+          source: pointLayer.getSource(),
           // Count inserted points
           geometryFunction: function(coordinates, geometry) {
             if (geometry) geometry.setCoordinates(coordinates);
@@ -169,7 +172,7 @@ export class ToolbarService {
         title: 'Polygon',
         interaction: new ol.interaction.Draw({
           type: 'Polygon',
-          source: polygonLayer.getSource(),
+          source: pointLayer.getSource(),
           // Count inserted points
           geometryFunction: function(coordinates, geometry) {
             this.nbpts = coordinates[0].length;
@@ -205,7 +208,57 @@ export class ToolbarService {
         })
       });
       editSubCtrl.addControl(polygonEdit);
+
+      const drawRectInter = new ol.interaction.DrawRegular({
+        source: pointLayer.getSource(),
+        sides: 4,
+        canRotate: false
+      });
+      drawRectInter.on('drawstart', function(e) {
+        e.feature.on('change', function() {
+        //   console.log('change');
+        });
+      });
+      drawRectInter.on('drawing', function(e) {
+        if (e.feature.getGeometry().getArea)
+          jQuery('#info').html(
+            (e.feature.getGeometry().getArea() / 1000000).toFixed(2) +
+              ' km<sup>2</sup>'
+          );
+      });
+      drawRectInter.on('drawend', function(e) {
+        // jQuery('#info').text('');
+        postal
+            .channel('MAP_CHANNEL')
+            .publish('draw.rect.end', undefined);
+      });
+      const drawRect = new ol.control.Toggle({
+        html: '<i class="fa fa-square-o" aria-hidden="true"></i>',
+        title: 'Draw Rectangle',
+        interaction: drawRectInter
+      });
+      editSubCtrl.addControl(drawRect);
     }
+  }
+
+  public onDrawRecEnd(): Observable<any> {
+    return Observable.create(observer => {
+        postal
+            .channel('MAP_CHANNEL')
+            .subscribe('draw.rect.end', (data, envelope) => {
+                observer.next();
+            });
+    });
+  }
+
+  public saveFeatures(spatial?: string) {
+    const pointLayer = this.olMapService.getLayer('draw-point');
+    // 默认geojson为4326坐标系（wgs84球面坐标系）
+    let dr = 'EPSG:4326';
+    if(spatial) {
+        dr = spatial;
+    }
+    return new ol.format.GeoJSON().writeFeatures(pointLayer.getSource().getFeatures(),  {featureProjection: dr});
   }
 
   private set item(v) {
@@ -262,7 +315,7 @@ export class ToolbarService {
         this.olMapService.clearDraw();
         break;
     }
-    console.log(`toolbar: ${item.id}, activated: ${item.activated}`);
+    console.log(`toolbar: jQuery{item.id}, activated: jQuery{item.activated}`);
     return item;
   }
 }

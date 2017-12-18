@@ -51,4 +51,5 @@ declare const chroma: any;
 declare var jQuery: any;
 declare var _: any;
 declare var postal: any;
+// declare var proj4: any;
 // declare var ol: any;

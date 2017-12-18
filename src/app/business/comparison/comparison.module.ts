@@ -24,7 +24,13 @@ import { FormCmpObjsModalComponent } from './form-cmp-objs-modal/form-cmp-objs-m
 import { LoginService } from '@feature/login/login.service';
 import { NewTaskComponent } from './new-task/new-task.component';
 import { DataService } from '../geo-data/services';
-import { OlMapModule, OlMapComponent, LayoutComponent } from '@feature/ol-map/ol-map.module';
+import {
+  OlMapModule,
+  OlMapComponent,
+  LayoutComponent,
+  OlMapService,
+  ToolbarService,
+} from '@feature/ol-map/ol-map.module';
 import { NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';
 
 const SERVICES = [
@@ -33,11 +39,14 @@ const SERVICES = [
   CmpSceneService,
   MSService,
   LoginService,
-  DataService
+  DataService,
+  // 下面这两个服务和OlMapComponent依赖的是同一个实例
+  OlMapService,
+  ToolbarService,
 ];
 
 @NgModule({
-  imports: [NgxSharedModule, SharedModule, CmpRoutingModule ],
+  imports: [NgxSharedModule, SharedModule, CmpRoutingModule, OlMapModule],
   declarations: [
     ComparisonComponent,
     CmpSolutionComponent,
@@ -53,7 +62,7 @@ const SERVICES = [
     FormSlnOutlineComponent,
     StringPipe,
     FormCmpObjsModalComponent,
-    NewTaskComponent,
+    NewTaskComponent
     // OlMapComponent,
     // LayoutComponent,
   ],

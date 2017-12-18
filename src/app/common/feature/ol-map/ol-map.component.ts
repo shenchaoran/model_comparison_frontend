@@ -1,4 +1,12 @@
-import { Component, OnInit, Inject, Optional } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Inject,
+  Optional,
+  Output,
+  Input,
+  EventEmitter
+} from '@angular/core';
 import { OlMapService, ToolbarService } from './services';
 import * as uuidv1 from 'uuid/v1';
 
@@ -12,7 +20,9 @@ import * as uuidv1 from 'uuid/v1';
   providers: []
 })
 export class OlMapComponent implements OnInit {
+  @Output() onDrawRecEnd = new EventEmitter<any>();
   targetId: string;
+
   constructor(
     private service: OlMapService,
     private toolBarService: ToolbarService,
@@ -28,6 +38,10 @@ export class OlMapComponent implements OnInit {
       .channel('MAP_CHANNEL')
       .subscribe('map.create-default', (data, envelope) => {
         this.toolBarService.init(this.service, this.MAP_TOOLBAR_CONFIG);
+        this.toolBarService.onDrawRecEnd()
+            .subscribe(data => {
+                this.onDrawRecEnd.emit();
+            });
       });
   }
 }

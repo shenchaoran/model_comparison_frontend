@@ -50,7 +50,14 @@ export { ToolbarService } from './services'
         BasemapComponent,
         CompareLayoutComponent
     ],
-    exports: [OlMapComponent],
+    exports: [
+        LayoutComponent,
+        OlMapComponent,
+        LayerTreeComponent,
+        LegendComponent,
+        BasemapComponent,
+        CompareLayoutComponent
+    ],
     providers: [
         ...SERVICES,
         // 这两个依赖在该模块的父模块中提供，能够实现不同的注入动态加载不同的地图配置

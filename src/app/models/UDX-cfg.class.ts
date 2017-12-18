@@ -18,17 +18,18 @@ export class UDXCfg {
         isOutput: boolean,
         spatial?: {
             // point
-            position?: {
+            point?: {
                 lat: string,
                 long: string
             },
             // polygon
-            ncols?: number,
-            nrows?: number,
-            yllcorner?: number,
-            xllcorner?: number,
-            cellsize?: number,
-            NODATA_value?: number
+            // ncols?: number,
+            // nrows?: number,
+            // yllcorner?: number,
+            // xllcorner?: number,
+            // cellsize?: number,
+            // NODATA_value?: number
+            polygon?: any
         },
 
         // point

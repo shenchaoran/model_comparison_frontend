@@ -45,7 +45,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
       layers: [new ol.layer.Tile({ source: new ol.source.OSM() })]
     });
 
-    console.log('ok');
     // Add a custom push button with onToggle function
     var hello = new ol.control.Button({
       html: '<i class="fa fa-smile-o"></i>',

@@ -5,6 +5,10 @@ import { CmpSolution, CmpTask, ResourceSrc } from '@models';
 import { NzNotificationService, NzModalService } from 'ng-zorro-antd';
 import { DataService } from '../../geo-data/services';
 import { MAP_TOOLBAR_CONFIG } from './map.config';
+import {
+  OlMapService,
+  ToolbarService
+} from '@common/feature/ol-map/ol-map.module';
 
 declare var ol: any;
 
@@ -31,7 +35,7 @@ export class NewTaskComponent implements OnInit, AfterViewInit {
   startDate: Date;
   endDate: Date;
 
-  currentStep = 1;
+  currentStep = 0;
   nextDisabled: boolean = true;
   doneDisabled: boolean = true;
   __isConfirmVisible: boolean = false;
@@ -45,12 +49,15 @@ export class NewTaskComponent implements OnInit, AfterViewInit {
     private router: Router,
     private _notice: NzNotificationService,
     private modalService: NzModalService,
-    private dataService: DataService
+    private dataService: DataService,
+    private mapService: OlMapService,
+    private toolbarService: ToolbarService
   ) {
     const slnStr = localStorage.getItem('cmpSolution');
     if (slnStr) {
       this.cmpSolution = JSON.parse(slnStr);
       this.cmpTask.cmpCfg.solutionId = this.cmpSolution._id;
+      this.cmpTask.calcuCfg.stdSrc.spatial.dimension = this.cmpSolution.cfg.keynote.dimension;
     } else {
       this._notice.warning(
         'Warning',
@@ -69,7 +76,6 @@ export class NewTaskComponent implements OnInit, AfterViewInit {
     //   }),
     //   layers: [new ol.layer.Tile({ source: new ol.source.OSM() })]
     // });
-
     // console.log('ok');
     // // Add a custom push button with onToggle function
     // var hello = new ol.control.Button({
@@ -81,7 +87,6 @@ export class NewTaskComponent implements OnInit, AfterViewInit {
     //   }
     // });
     // map.addControl(hello);
-
     // // Add a save button with on active event
     // var save = new ol.control.Button({
     //   html: '<i class="fa fa-download"></i>',
@@ -97,7 +102,6 @@ export class NewTaskComponent implements OnInit, AfterViewInit {
     //   }
     // });
     // map.addControl(save);
-
     // // Show info
     // function info(i) {
     //   jQuery('#info').html(i || '');
@@ -129,7 +133,32 @@ export class NewTaskComponent implements OnInit, AfterViewInit {
     this.currentStep = newStep;
   }
 
-  done() {}
+  done() {
+    if (this.cmpSolution.cfg.keynote.dimension === 'point') {
+      this.cmpTask.calcuCfg.stdSrc.spatial.point = JSON.parse(
+        this.toolbarService.saveFeatures('EPSG:3857')
+      );
+    } else if (this.cmpSolution.cfg.keynote.dimension === 'polygon') {
+      this.cmpTask.calcuCfg.stdSrc.spatial.polygon = JSON.parse(
+        this.toolbarService.saveFeatures('EPSG:3857')
+      );
+    }
+
+    console.log(this.cmpTask);
+    this.service.insert(this.cmpTask).subscribe(response => {
+      if (response.error) {
+        this._notice.warning('Warning', 'Create comparison task failed!');
+      } else {
+        this._notice.success('Success', 'Create comparison task succeed!');
+        this.cmpTask._id = response.data.doc._id;
+        this.__isConfirmVisible = true;
+      }
+    });
+  }
+
+  onDrawRecEnd() {
+    this.doneDisabled = false;
+  }
 
   updateStepyValid() {
     if (this.currentStep === 0) {
@@ -149,6 +178,7 @@ export class NewTaskComponent implements OnInit, AfterViewInit {
     }
   }
 
+  // region Date validate
   startDateChange() {
     if (this.startDate > this.endDate) {
       this.endDate = undefined;
@@ -158,6 +188,7 @@ export class NewTaskComponent implements OnInit, AfterViewInit {
         ? this.startDate.getTime()
         : undefined;
     }
+    this.updateStepyValid();
   }
 
   endDateChange() {
@@ -169,6 +200,7 @@ export class NewTaskComponent implements OnInit, AfterViewInit {
         ? this.endDate.getTime()
         : undefined;
     }
+    this.updateStepyValid();
   }
 
   disableStartDate(startV) {
@@ -220,15 +252,28 @@ export class NewTaskComponent implements OnInit, AfterViewInit {
       return true;
     }
   }
+  // endregion
 
+  // region modal
   handleCancel(e) {
     this.__isConfirmVisible = false;
   }
 
   handleOk(e) {
-    this.__isConfirmVisible = true;
-    // this.router.navigate(['../..', 'tasks', 'new'], {
-    //   relativeTo: this.route
-    // });
+    this.service.start(this.cmpTask._id)
+        .subscribe(response => {
+            this.__isConfirmVisible = false;
+            if(response.error) {
+                this._notice.warning('Warning', 'Start comparison task failed!');
+            }
+            else {
+                this._notice.success('Success', 'Start comparison task succeed!');
+                // TODO
+                this.router.navigate(['..'], {
+                    relativeTo: this.route
+                });
+            }
+        });
   }
+  // endregion
 }

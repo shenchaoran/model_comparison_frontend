@@ -34,18 +34,20 @@ export class CmpTask {
         // std  时空
         stdSrc?: {
             spatial?: {
+                dimension?: 'point' | 'polygon' | 'multi-point',
                 // point
-                position?: {
+                point?: {
                     lat: string,
                     long: string
                 },
                 // polygon
-                ncols?: number,
-                nrows?: number,
-                yllcorner?: number,
-                xllcorner?: number,
-                cellsize?: number,
-                NODATA_value?: number
+                // ncols?: number,
+                // nrows?: number,
+                // yllcorner?: number,
+                // xllcorner?: number,
+                // cellsize?: number,
+                // NODATA_value?: number
+                polygon?: any
             },
             temporal?: {
                 start: number,
@@ -82,7 +84,7 @@ export class CmpTask {
                 temporal: {
                     start: undefined,
                     end: undefined,
-                    scale: undefined
+                    scale: 'DAY'
                 }
             }
         };
