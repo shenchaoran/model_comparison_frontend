@@ -14,22 +14,12 @@ export class UDXCfg {
     meta: {
         desc?: string,
         isExample: boolean,
-        type: 'point' | 'polygon' | 'multi-point',
         isOutput: boolean,
         spatial?: {
-            // point
-            point?: {
-                lat: string,
-                long: string
-            },
-            // polygon
-            // ncols?: number,
-            // nrows?: number,
-            // yllcorner?: number,
-            // xllcorner?: number,
-            // cellsize?: number,
-            // NODATA_value?: number
-            polygon?: any
+            dimension: 'point' | 'polygon' | 'multi-point',
+            point?: any,
+            polygon?: any,
+            multiPoint?: any
         },
 
         // point
@@ -40,8 +30,7 @@ export class UDXCfg {
         },
 
         // polygon
-        feature?: string,
-        date?: string
+        feature?: string
     };
     schema$?: UDXSchema;
 }

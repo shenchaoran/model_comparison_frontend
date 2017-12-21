@@ -71,3 +71,12 @@ declare var postal: any;
 ## TODO
 - 页面右下角加后台运行列表
 - docking layout
+
+## Install
+
+启动之前要先启动后台服务
+```
+npm install
+npm start
+```
+如有端口冲突更改`package.json`中的`"start": "ng serve --port 8888 --proxy-config proxy.conf.json"`。

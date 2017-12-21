@@ -29,14 +29,16 @@ export class CmpObj {
         name: string,
         desc: string
     };
-    dataRefer: Array<{
+    dataRefers: Array<{
         msId: string,
         msName?: string,
         eventName: string,
+        dataId?: string,
         // data 存放具体比较的配置，如chart的列名，图像处理
         data: any,
         schema$?: UDXSchema
     }>;
+    cmpResult?: Array<CmpReault>;
     schemaTypes: string[];
     methods: any[];
     attached?: any;
@@ -47,9 +49,25 @@ export class CmpObj {
             name: '',
             desc: ''
         };
-        this.dataRefer = [];
+        this.dataRefers = [];
         this.schemaTypes = [];
+        this.cmpResult = [];
         this.methods = [];
         this.attached = {};
     }
+}
+
+export class CmpReault {
+    image?: {
+
+    };
+    chart?: {
+
+    };
+    GIF?: {
+
+    };
+    statistic?: {
+
+    };
 }

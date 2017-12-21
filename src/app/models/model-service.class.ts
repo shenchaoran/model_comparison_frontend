@@ -4,16 +4,8 @@ import { UDXSchema } from './UDX-schema.class';
 
 export class MS {
     _id?: ObjectID;
-    service: {
-        host: string,
-        port: string,
-        APIs: {
-            intro: string,
-            start: string,
-            stop: string,
-            progress: string,
-            data: string
-        },
+    auth: {
+        nodeName: string,
         src: ResourceSrc
     };
     MDL: {

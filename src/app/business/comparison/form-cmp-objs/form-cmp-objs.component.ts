@@ -96,12 +96,12 @@ export class FormCmpObjsComponent
       const newObj = new CmpObj();
       newObj.attached.valid = {
         meta: false,
-        dataRefer: false
+        dataRefers: false
       };
       newObj.attached.active = true;
       this.keynote.participants;
       _.map(this.keynote.participants, ms => {
-        newObj.dataRefer.push({
+        newObj.dataRefers.push({
           msId: ms._id,
           msName: ms.MDL.meta.name,
           eventName: undefined,
@@ -145,7 +145,7 @@ export class FormCmpObjsComponent
     }
 
     let validDataRefer = true;
-    _.map(cmpObj.dataRefer, dataRefer => {
+    _.map(cmpObj.dataRefers, dataRefer => {
       if (
         dataRefer.msId &&
         dataRefer.eventName &&
@@ -156,7 +156,7 @@ export class FormCmpObjsComponent
         validDataRefer = false;
       }
     });
-    cmpObj.attached.valid.dataRefer = validDataRefer;
+    cmpObj.attached.valid.dataRefers = validDataRefer;
 
     let currentValid = true;
     _.forIn(this.selectedCmpObj.attached.valid, validItem => {
@@ -194,7 +194,7 @@ export class FormCmpObjsComponent
 
   modalSubmit(cfg) {
     this.isModalVisible = false;
-    _.map(this.selectedCmpObj.dataRefer, dataRefer => {
+    _.map(this.selectedCmpObj.dataRefers, dataRefer => {
       if (dataRefer.msId === this.selectedMS._id) {
         dataRefer.eventName = cfg.eventName;
         dataRefer.data.field = cfg.fieldName;

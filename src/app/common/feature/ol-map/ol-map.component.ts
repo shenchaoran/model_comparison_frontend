@@ -16,7 +16,16 @@ import * as uuidv1 from 'uuid/v1';
       <ogms-layout [targetId]='targetId'></ogms-layout>
       <!-- <ogms-basemap [targetId]="'asdfasd'" [mapType]='0'></ogms-basemap> -->
   `,
-  styles: [],
+  styles: [`
+      :host {
+          width: 100%;
+          height: 100%;
+      }
+      ogms-layout {
+        width: 100%;
+        height: 100%;
+      }
+  `],
   providers: []
 })
 export class OlMapComponent implements OnInit {

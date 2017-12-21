@@ -4,8 +4,8 @@
         <nz-step [nzTitle]="'Configure Input'" [nzDescription]=''></nz-step>
     </nz-steps>
 
-    <div class="steps-content flex-item-1-1-auto debug-border debug-background overflow-y">
-        <div class='' [hidden]='currentStep !== 0'>
+    <div class="steps-content flex-box-col-nowrap flex-item-1-1-auto debug-border debug-background overflow-y">
+        <div class='flex-item-1-1-auto' [hidden]='currentStep !== 0'>
             <form nz-form [nzType]="'horizontal'">
                 <h5 style='margin: 10px 0;'>Task Basic Information:</h5>
                 <div nz-form-item nz-row>
@@ -58,7 +58,7 @@
             </form>
         </div>
 
-        <div class='' [hidden]='currentStep !== 1'>
+        <div class='flex-item-1-1-auto' [hidden]='currentStep !== 1'>
             <ng-container *ngIf='(cmpTask.calcuCfg.dataSrc === "std") else uploadStep'>
                 <!-- <router-outlet></router-outlet> -->
                 <ogms-ol-map (onDrawRecEnd)='onDrawRecEnd()'></ogms-ol-map>

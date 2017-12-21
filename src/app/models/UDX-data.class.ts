@@ -4,11 +4,17 @@ import { UDXCfg } from './UDX-cfg.class';
 
 export class GeoDataClass {
     _id?: ObjectID;
-    filename: string;
-    path: string;
+    meta?: {
+        name: string,
+        path: string,
+        desc: string
+    };
+
+    auth: {
+        permission?: string,
+        userId: string,
+        src: ResourceSrc
+    };
+    
     udxcfg: UDXCfg;
-    permission: string;
-    userId: string;
-    desc: string;
-    src: ResourceSrc;
 }

@@ -12,7 +12,11 @@ export class CmpSolution {
         desc: string,
         time: number
     };
-    cfg: {
+    cmpCfg: {
+        ms: Array<{
+            msId: string,
+            nodeName: string
+        }>,
         cmpObjs: Array<CmpObj>,
         keynote: {
             direction: 'x'|'y',
@@ -34,7 +38,8 @@ export class CmpSolution {
             desc: '',
             time: undefined
         };
-        this.cfg = {
+        this.cmpCfg = {
+            ms: [],
             cmpObjs: [],
             keynote: {
                 direction: undefined,

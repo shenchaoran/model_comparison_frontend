@@ -9,11 +9,11 @@
     <div class="steps-content flex-box-col-nowrap flex-item-1-1-auto debug-border debug-background">
 
         <div class='flex-item-1-1-auto' [hidden]='currentStep !== 0'>
-            <ogms-form-keynote [ngModel]='cmpSolution.cfg.keynote' (ngModelChange)='onKeynoteChange($event)'></ogms-form-keynote>
+            <ogms-form-keynote [ngModel]='cmpSolution.cmpCfg.keynote' (ngModelChange)='onKeynoteChange($event)'></ogms-form-keynote>
         </div>
 
         <div class='flex-item-1-1-auto' [hidden]='currentStep !== 1'>
-            <ogms-form-cmp-objs [keynote]='__tempKeynote' [ngModel]='cmpSolution.cfg.cmpObjs' (ngModelChange)='onCmpObjsChange($event)'></ogms-form-cmp-objs>
+            <ogms-form-cmp-objs [keynote]='__tempKeynote' [ngModel]='cmpSolution.cmpCfg.cmpObjs' (ngModelChange)='onCmpObjsChange($event)'></ogms-form-cmp-objs>
         </div>
 
         <!-- <div [hidden]='currentStep !== 2'>

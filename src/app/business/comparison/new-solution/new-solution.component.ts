@@ -47,7 +47,13 @@ export class NewSolutionComponent implements OnInit {
 
     onKeynoteChange(e) {
         const user = LoginService.getUser();
-        this.cmpSolution.cfg.keynote = e;
+        this.cmpSolution.cmpCfg.keynote = e;
+        this.cmpSolution.cmpCfg.ms = _.map(e.participants, ms => {
+            return {
+                msId: ms._id, 
+                nodeName: ms.auth.nodeName
+            };
+        });
         this.cmpSolution.meta = {
             name: e.attached.solutionMeta.name,
             desc: e.attached.solutionMeta.desc,
@@ -60,9 +66,9 @@ export class NewSolutionComponent implements OnInit {
         // this.cdRef.markForCheck();
         // this.cdRef.detectChanges();
 
-        if(this.cmpSolution.cfg.keynote.dimension
-            && this.cmpSolution.cfg.keynote.direction
-            && this.cmpSolution.cfg.keynote.participants.length
+        if(this.cmpSolution.cmpCfg.keynote.dimension
+            && this.cmpSolution.cmpCfg.keynote.direction
+            && this.cmpSolution.cmpCfg.ms.length
             && this.cmpSolution.meta.name
             && this.cmpSolution.meta.desc) {
             this.nextDisabled = false;
@@ -75,7 +81,7 @@ export class NewSolutionComponent implements OnInit {
 
     onCmpObjsChange(e) {
         if(e.valid) {
-            this.cmpSolution.cfg.cmpObjs = e.data;
+            this.cmpSolution.cmpCfg.cmpObjs = e.data;
             this.doneDisabled = false;
         }
         else {
@@ -93,7 +99,7 @@ export class NewSolutionComponent implements OnInit {
         }
         this.currentStep = newStep;
 
-        this.__tempKeynote = _.cloneDeep(this.cmpSolution.cfg.keynote);
+        this.__tempKeynote = _.cloneDeep(this.cmpSolution.cmpCfg.keynote);
     }
 
     done() {

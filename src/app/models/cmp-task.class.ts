@@ -7,6 +7,8 @@ import { ObjectID } from 'mongodb';
 import { GeoDataClass } from './UDX-data.class';
 import { ResourceSrc } from './resource.enum';
 import { LoginService } from '@feature/login/login.service';
+import { CmpObj } from './cmp-obj.class';
+import { CalcuTaskState } from './calcu-task.class';
 
 export class CmpTask {
     _id?: ObjectID;
@@ -20,43 +22,14 @@ export class CmpTask {
         userId: string
     };
     cmpCfg: {
-        solutionId: string
+        solutionId: string,
+        cmpObjs?: Array<CmpObj>
     };
-    calcuCfg: {
-        dataSrc: 'std' | 'upload',
-        // upload
-        dataRefer?: Array<{
-            msId: string,
-            eventName: string,
-            dataId: string
-        }>,
-        dataList?: Array<GeoDataClass>
-        // std  时空
-        stdSrc?: {
-            spatial?: {
-                dimension?: 'point' | 'polygon' | 'multi-point',
-                // point
-                point?: {
-                    lat: string,
-                    long: string
-                },
-                // polygon
-                // ncols?: number,
-                // nrows?: number,
-                // yllcorner?: number,
-                // xllcorner?: number,
-                // cellsize?: number,
-                // NODATA_value?: number
-                polygon?: any
-            },
-            temporal?: {
-                start: number,
-                end: number,
-                scale: 'YEAR' | 'DAY'
-            }
-        }
-    };
-    calcuTasks: Array<string>;
+    calcuCfg: CalcuCfg;
+    calcuTasks: Array<{
+        calcuTaskId: string,
+        state: CalcuTaskState
+    }>;
 
     constructor() {
         const user = LoginService.getUser();
@@ -75,8 +48,7 @@ export class CmpTask {
         };
         this.calcuCfg = {
             dataSrc: undefined,
-            dataRefer: [],
-            dataList: [],
+            dataRefers: [],
             stdSrc: {
                 spatial: {
                     
@@ -89,5 +61,30 @@ export class CmpTask {
             }
         };
         this.calcuTasks = [];
+    }
+}
+
+// TODO 纵向比较时，要多份数据，
+export class CalcuCfg {
+    dataSrc: 'std' | 'upload';
+    // upload
+    dataRefers?: Array<{
+        msId: string,
+        eventName: string,
+        dataId: string
+    }>;
+    // std  时空
+    stdSrc?: {
+        spatial?: {
+            dimension?: 'point' | 'polygon' | 'multi-point',
+            point?: any,
+            polygon?: any,
+            multiPoint?: any
+        },
+        temporal?: {
+            start: number,
+            end: number,
+            scale: 'YEAR' | 'DAY'
+        }
     }
 }

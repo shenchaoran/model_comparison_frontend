@@ -57,7 +57,8 @@ export class NewTaskComponent implements OnInit, AfterViewInit {
     if (slnStr) {
       this.cmpSolution = JSON.parse(slnStr);
       this.cmpTask.cmpCfg.solutionId = this.cmpSolution._id;
-      this.cmpTask.calcuCfg.stdSrc.spatial.dimension = this.cmpSolution.cfg.keynote.dimension;
+      this.cmpTask.cmpCfg.cmpObjs = this.cmpSolution.cmpCfg.cmpObjs;
+      this.cmpTask.calcuCfg.stdSrc.spatial.dimension = this.cmpSolution.cmpCfg.keynote.dimension;
     } else {
       this._notice.warning(
         'Warning',
@@ -134,11 +135,11 @@ export class NewTaskComponent implements OnInit, AfterViewInit {
   }
 
   done() {
-    if (this.cmpSolution.cfg.keynote.dimension === 'point') {
+    if (this.cmpSolution.cmpCfg.keynote.dimension === 'point') {
       this.cmpTask.calcuCfg.stdSrc.spatial.point = JSON.parse(
         this.toolbarService.saveFeatures('EPSG:3857')
       );
-    } else if (this.cmpSolution.cfg.keynote.dimension === 'polygon') {
+    } else if (this.cmpSolution.cmpCfg.keynote.dimension === 'polygon') {
       this.cmpTask.calcuCfg.stdSrc.spatial.polygon = JSON.parse(
         this.toolbarService.saveFeatures('EPSG:3857')
       );
