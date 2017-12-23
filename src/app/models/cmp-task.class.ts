@@ -25,6 +25,7 @@ export class CmpTask {
         solutionId: string,
         cmpObjs?: Array<CmpObj>
     };
+    cmpState: CmpState;
     calcuCfg: CalcuCfg;
     calcuTasks: Array<{
         calcuTaskId: string,
@@ -46,6 +47,7 @@ export class CmpTask {
         this.cmpCfg = {
             solutionId: undefined
         };
+        this.cmpState = CmpState.INIT;
         this.calcuCfg = {
             dataSrc: undefined,
             dataRefers: [],
@@ -62,6 +64,12 @@ export class CmpTask {
         };
         this.calcuTasks = [];
     }
+}
+
+export enum CmpState {
+    INIT,
+    SUCCEED,
+    FAILED
 }
 
 // TODO 纵向比较时，要多份数据，

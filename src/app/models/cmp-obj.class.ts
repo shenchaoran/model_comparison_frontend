@@ -38,7 +38,7 @@ export class CmpObj {
         data: any,
         schema$?: UDXSchema
     }>;
-    cmpResult?: Array<CmpReault>;
+    cmpResult?: Array<CmpResult>;
     schemaTypes: string[];
     methods: any[];
     attached?: any;
@@ -57,7 +57,7 @@ export class CmpObj {
     }
 }
 
-export class CmpReault {
+export class CmpResult {
     image?: {
 
     };

@@ -32,6 +32,7 @@ import {
   ToolbarService,
 } from '@feature/ol-map/ol-map.module';
 import { NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';
+import { TaskDetailComponent } from './task-detail/task-detail.component';
 
 const SERVICES = [
   CmpSlnService,
@@ -62,7 +63,8 @@ const SERVICES = [
     FormSlnOutlineComponent,
     StringPipe,
     FormCmpObjsModalComponent,
-    NewTaskComponent
+    NewTaskComponent,
+    TaskDetailComponent
     // OlMapComponent,
     // LayoutComponent,
   ],

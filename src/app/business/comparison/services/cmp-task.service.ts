@@ -78,4 +78,27 @@ export class CmpTaskService implements Resolve<any> {
             return undefined;
         }
     }
+
+    find(id: string): Observable<any> {
+        if(id) {
+            return this.http.get(`/comparison/tasks/${id}`);
+        }
+        else {
+            return undefined;
+        }
+    }
+
+    publishFind(id: string) {
+        if(id) {
+            this.http.get(`/comparison/tasks/${id}`)
+                .subscribe(response => {
+                    postal
+                        .channel('TASK_CHANNEL')
+                        .publish('find', response);
+                });
+        }
+        else {
+            return undefined;
+        }
+    }
 }

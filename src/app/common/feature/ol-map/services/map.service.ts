@@ -16,7 +16,7 @@ import { OLSymbolService } from './ol-symbol.service';
 // 在angular.cli.json中添加过的script相当于添加到全局变量中了，这里声明一下通过编译器就行了
 declare var ol: any;
 
-export abstract class MapService extends ErrorHandle {
+export abstract class MapService extends ErrorHandle {npmnpm     
   // maps map
   protected _maps: { [id: string]: any } = {};
   protected _selectedMapId;

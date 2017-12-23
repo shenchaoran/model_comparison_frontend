@@ -10,3 +10,4 @@ export * from './UDX-data.class';
 export * from './UDX-schema.class';
 export * from './UDX-type.class';
 export * from './user.class';
+export * from './calcu-task.class';

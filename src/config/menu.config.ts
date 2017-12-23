@@ -105,7 +105,7 @@ export const HEADER_MENUS: MenuClass[] = [
                         path: 'tasks',
                         data: {
                             menu: {
-                                title: 'Comparison Example'
+                                title: 'Comparison Task'
                             }
                         }
                     },

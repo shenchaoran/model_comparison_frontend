@@ -14,7 +14,7 @@
                 <!-- <form nz-form [nzType]="'horizontal'"> -->
                 <h5 style='margin: 10px 0;'>Meta Information:</h5>
                 <div nz-row [nzGutter]='"20"'>
-                    <div nz-col [nzSpan]="10" nz-form-item nz-row>
+                    <div nz-col [nzSpan]="10" nz-row>
                         <div nz-form-label nz-col [nzSpan]="5">
                             <label>Name</label>
                         </div>
@@ -22,7 +22,7 @@
                             <nz-input [(ngModel)]='cmpObj.meta.name' (ngModelChange)='checkAccordionValid(cmpObj)' name='cmpObj-name'></nz-input>
                         </div>
                     </div>
-                    <div nz-col [nzSpan]="10" nz-form-item nz-row>
+                    <div nz-col [nzSpan]="10" nz-row>
                         <div nz-form-label nz-col [nzSpan]="5">
                             <label>Description</label>
                         </div>

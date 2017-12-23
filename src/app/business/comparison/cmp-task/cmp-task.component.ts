@@ -14,6 +14,8 @@ export class CmpTaskComponent implements OnInit {
         name: string,
         data: any
     }>;
+    selectedTaskId: string;
+    
     constructor(
         private service: CmpTaskService,
         private route: ActivatedRoute
