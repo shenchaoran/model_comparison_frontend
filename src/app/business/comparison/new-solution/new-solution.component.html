@@ -1,6 +1,7 @@
 <div class="container flex-box-col-nowrap max-size">
     <nz-steps [(nzCurrent)]="currentStep">
         <nz-step [nzTitle]="'Define Comparison Keynote'" [nzDescription]=''></nz-step>
+        <nz-step [nzTitle]="'Select Participants'" [nzDescription]=''></nz-step>
         <nz-step [nzTitle]="'Add Comparison Object'" [nzDescription]=''></nz-step>
         <!-- <nz-step [nzTitle]="'Configure data'" [nzDescription]=''></nz-step> -->
         <!-- <nz-step [nzTitle]="'Preview outline'" [nzDescription]=''></nz-step> -->
@@ -13,7 +14,11 @@
         </div>
 
         <div class='flex-item-1-1-auto' [hidden]='currentStep !== 1'>
-            <ogms-form-cmp-objs [keynote]='__tempKeynote' [ngModel]='cmpSolution.cmpCfg.cmpObjs' (ngModelChange)='onCmpObjsChange($event)'></ogms-form-cmp-objs>
+            <ogms-form-participants [selectMode]='__selectMode' [ngModel]='cmpSolution.cmpCfg.ms' (ngModelChange)='onParticipantsChange($event)'></ogms-form-participants>
+        </div>
+
+        <div class='flex-item-1-1-auto' [hidden]='currentStep !== 2'>
+            <ogms-form-cmp-objs [participants]='__participants' [keynote]='__tempKeynote' [ngModel]='cmpSolution.cmpCfg.cmpObjs' (ngModelChange)='onCmpObjsChange($event)'></ogms-form-cmp-objs>
         </div>
 
         <!-- <div [hidden]='currentStep !== 2'>
@@ -29,10 +34,10 @@
         <button nz-button [nzType]="'default'" (click)="changeStep(currentStep-1)" [disabled]="currentStep === 0">
                     <span>Previous</span>
                 </button>
-        <button nz-button [nzType]="'default'" (click)="changeStep(currentStep+1)" *ngIf="currentStep < 1" [disabled]='nextDisabled'>
+        <button nz-button [nzType]="'default'" (click)="changeStep(currentStep+1)" *ngIf="currentStep < 2" [disabled]='nextDisabled'>
                     <span>Next</span>
                 </button>
-        <button nz-button [nzType]="'primary'" (click)="done()" *ngIf="currentStep === 1" [disabled]='doneDisabled'>
+        <button nz-button [nzType]="'primary'" (click)="done()" *ngIf="currentStep === 2" [disabled]='doneDisabled'>
                     <span>Save</span>
                 </button>
     </div>

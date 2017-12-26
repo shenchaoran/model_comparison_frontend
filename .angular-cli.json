@@ -20,12 +20,7 @@
         "testTsconfig": "tsconfig.spec.json",
         "prefix": "ogms",
         "styles": [
-            "styles.scss",
-            "app/common/shared/theme/css/custom-esri.css",
-            "app/common/shared/theme/css/custom-openlayers.css",
-            "app/common/shared/theme/css/perfectscroll.css",
-            "app/common/shared/theme/css/nouislider.min.css",
-            "app/common/shared/theme/css/ng2-tree-styles.css"
+            "styles.scss"
         ],
         "scripts": [
             "../node_modules/jquery/dist/jquery.js",

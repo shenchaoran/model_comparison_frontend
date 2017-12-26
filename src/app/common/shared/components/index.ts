@@ -8,6 +8,7 @@ export * from './fileUploader';
 export * from './baHeaderMenu';
 export * from './context-menu';
 export * from './header-pull-right';
+export * from './baFileUploader';
 // export * from './baMessageBox';
 //
 // export * from './baFloatWindow';

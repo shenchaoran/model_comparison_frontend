@@ -1,4 +1,4 @@
-@import './common/shared/theme/sass/conf/conf';
+@import './common/shared/sass/conf/conf';
 @import './common/shared/components/baSidebar/baSidebar.component';
 :host /deep/ {
     @mixin layout-collapsed() {

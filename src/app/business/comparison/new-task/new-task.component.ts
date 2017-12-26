@@ -1,14 +1,16 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, EventEmitter, Output, ViewChildren, ElementRef, QueryList } from '@angular/core';
 import { CmpSlnService, CmpTaskService } from '../services';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CmpSolution, CmpTask, ResourceSrc } from '@models';
 import { NzNotificationService, NzModalService } from 'ng-zorro-antd';
 import { DataService } from '../../geo-data/services';
 import { MAP_TOOLBAR_CONFIG } from './map.config';
+import { NgUploaderOptions } from 'ngx-uploader';
 import {
   OlMapService,
   ToolbarService
 } from '@common/feature/ol-map/ol-map.module';
+import { BaFileUploader } from '@shared';
 
 declare var ol: any;
 
@@ -31,13 +33,18 @@ export class NewTaskComponent implements OnInit, AfterViewInit {
   cmpSolution: CmpSolution;
   cmpTask: CmpTask = new CmpTask();
 
+  fileUploaderOptions: NgUploaderOptions;
+  @ViewChildren(BaFileUploader) fileUploaders: QueryList<BaFileUploader>;
+  @Output() onFileUpload = new EventEmitter<any>();
+  @Output() onFileUploadCompleted = new EventEmitter<any>();
+
   __loading: boolean = true;
   startDate: Date;
   endDate: Date;
 
   currentStep = 0;
-  nextDisabled: boolean = true;
-  doneDisabled: boolean = true;
+  nextDisabled: boolean = false;
+  doneDisabled: boolean = false;
   __isConfirmVisible: boolean = false;
 
   testStr: string;
@@ -53,6 +60,19 @@ export class NewTaskComponent implements OnInit, AfterViewInit {
     private mapService: OlMapService,
     private toolbarService: ToolbarService
   ) {
+    this.fileUploaderOptions = {
+      url: 'data',
+      data: {
+        desc: '',
+        src: ResourceSrc.EXTERNAL,
+        userId: JSON.parse(localStorage.getItem('jwt')).user._id
+      },
+      multiple: true,
+      fieldName: 'geo-data',
+      customHeaders: {
+        Authorization: 'bearer ' + JSON.parse(localStorage.getItem('jwt')).token
+      }
+    };
     const slnStr = localStorage.getItem('cmpSolution');
     if (slnStr) {
       this.cmpSolution = JSON.parse(slnStr);
@@ -127,7 +147,8 @@ export class NewTaskComponent implements OnInit, AfterViewInit {
 
   changeStep(newStep) {
     if (this.currentStep < newStep) {
-      this.nextDisabled = true;
+      //   this.nextDisabled = true;
+      this.nextDisabled = false;
     } else if (this.currentStep > newStep) {
       this.nextDisabled = false;
     }
@@ -173,11 +194,43 @@ export class NewTaskComponent implements OnInit, AfterViewInit {
       ) {
         this.nextDisabled = false;
       } else {
-        this.nextDisabled = true;
+        // this.nextDisabled = true;
+        this.nextDisabled = false;
       }
     } else if (this.currentStep === 1) {
     }
   }
+
+  // region upload
+  _onFileUpload(data) {
+    // if (data['done'] || data['abort'] || data['error']) {
+    //   jQuery('#upload-progress').css('display', 'none');
+    //   this._onFileUploadCompleted(data);
+    // } else {
+    //   jQuery('#upload-progress').css('display', 'block');
+    //   this.onFileUpload.emit(data);
+    // //   this.uploadProgress = data.progress.percent;
+    // }
+  }
+
+  _onFileUploadCompleted(data) {
+    // this.onFileUploadCompleted.emit(data);
+
+    // if (!data.abort && data.done && !data.error) {
+    //   const response = JSON.parse(data.response);
+    //   if (_.startsWith(_.get(response, 'status.code'), '200')) {
+    //     this._notice.create('success', 'Info:', 'loading data succeed!');
+    //     postal.channel('DATA_CHANNEL').publish('data.add', response.data);
+    //   } else {
+    //     this._notice.create(
+    //       'warning',
+    //       'Warning:',
+    //       'loading data failed, please retry later!'
+    //     );
+    //   }
+    // }
+  }
+  // endregion
 
   // region Date validate
   startDateChange() {
@@ -261,20 +314,18 @@ export class NewTaskComponent implements OnInit, AfterViewInit {
   }
 
   handleOk(e) {
-    this.service.start(this.cmpTask._id)
-        .subscribe(response => {
-            this.__isConfirmVisible = false;
-            if(response.error) {
-                this._notice.warning('Warning', 'Start comparison task failed!');
-            }
-            else {
-                this._notice.success('Success', 'Start comparison task succeed!');
-                // TODO
-                this.router.navigate(['..'], {
-                    relativeTo: this.route
-                });
-            }
+    this.service.start(this.cmpTask._id).subscribe(response => {
+      this.__isConfirmVisible = false;
+      if (response.error) {
+        this._notice.warning('Warning', 'Start comparison task failed!');
+      } else {
+        this._notice.success('Success', 'Start comparison task succeed!');
+        // TODO
+        this.router.navigate(['..'], {
+          relativeTo: this.route
         });
+      }
+    });
   }
   // endregion
 }

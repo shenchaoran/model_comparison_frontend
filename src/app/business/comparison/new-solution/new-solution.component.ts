@@ -14,16 +14,16 @@ import { Router, ActivatedRoute } from '@angular/router';
     // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewSolutionComponent implements OnInit {
-    form: FormGroup;
 
     currentStep = 0;
     cmpSolution: CmpSolution = new CmpSolution();
-    cmpTask: CmpTask;
-
+    
+    __participants: any[] = [];
     __tempKeynote: any;
+    __selectMode: string;
 
-    nextDisabled: boolean = true;
-    doneDisabled: boolean = true;
+    nextDisabled: boolean = false;
+    doneDisabled: boolean = false;
 
     __isConfirmVisible: boolean = false;
 
@@ -40,20 +40,20 @@ export class NewSolutionComponent implements OnInit {
 
 
     ngOnInit() {
-        this.form = this.fb.group({
-            
-        });
     }
 
     onKeynoteChange(e) {
         const user = LoginService.getUser();
-        this.cmpSolution.cmpCfg.keynote = e;
-        this.cmpSolution.cmpCfg.ms = _.map(e.participants, ms => {
-            return {
-                msId: ms._id, 
-                nodeName: ms.auth.nodeName
-            };
-        });
+        this.cmpSolution.cmpCfg.keynote = {
+            direction: e.direction,
+            dimension: e.dimension
+        };
+        // this.cmpSolution.cmpCfg.ms = _.map(e.participants, ms => {
+        //     return {
+        //         msId: ms._id, 
+        //         nodeName: ms.auth.nodeName
+        //     };
+        // });
         this.cmpSolution.meta = {
             name: e.attached.solutionMeta.name,
             desc: e.attached.solutionMeta.desc,
@@ -63,19 +63,50 @@ export class NewSolutionComponent implements OnInit {
             userId: user._id,
             src: ResourceSrc.PRIVATE
         }
-        // this.cdRef.markForCheck();
-        // this.cdRef.detectChanges();
+
+        this.__selectMode = (this.cmpSolution.cmpCfg.keynote.direction === 'x')? 'multiple': 'single';
 
         if(this.cmpSolution.cmpCfg.keynote.dimension
             && this.cmpSolution.cmpCfg.keynote.direction
-            && this.cmpSolution.cmpCfg.ms.length
+            // && this.cmpSolution.cmpCfg.ms.length
             && this.cmpSolution.meta.name
             && this.cmpSolution.meta.desc) {
             this.nextDisabled = false;
         }
         else {
+            // this.nextDisabled = true;
+            this.nextDisabled = false;
+        }
+    }
+
+    onParticipantsChange(e) {
+        this.__participants = [];
+        this.cmpSolution.cmpCfg.ms = [];
+        _.map(e.participants, ms => {
+            if(ms.value === 'External') {
+                this.cmpSolution.cmpCfg.ms.push({
+                    msId: ms.msId,
+                    msName: ms.data.MDL.meta.name,
+                    nodeName: ms.nodeName,
+                    participate: false
+                });
+            }
+            else if(ms.value === 'Internal') {
+                this.cmpSolution.cmpCfg.ms.push({
+                    msId: ms.msId,
+                    msName: ms.data.MDL.meta.name,
+                    nodeName: ms.nodeName,
+                    participate: true
+                });
+            }
+            this.__participants.push(ms.data);
+        });
+        
+        if(e.valid) {
+            this.nextDisabled = false;
+        }
+        else {
             this.nextDisabled = true;
-            // this.nextDisabled = false;
         }
     }
 

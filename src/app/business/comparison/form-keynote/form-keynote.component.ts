@@ -47,7 +47,6 @@ export class FormKeynoteComponent implements ControlValueAccessor, OnInit {
     keynote: {
         direction: 'x' | 'y',
         dimension: 'point' | 'polygon' | 'multi-point',
-        participants: Array<any>,
         attached: {
             solutionMeta: {
                 name: string,
@@ -56,8 +55,7 @@ export class FormKeynoteComponent implements ControlValueAccessor, OnInit {
         }
     } = {
         direction: undefined, 
-        dimension: undefined, 
-        participants: [],
+        dimension: undefined,
         attached: {
             solutionMeta: {
                 name: '',
@@ -66,7 +64,6 @@ export class FormKeynoteComponent implements ControlValueAccessor, OnInit {
         }
     };
 
-    mss: Array<{}> = [];
     selectMode: string;
     // selectedMss: Array<{}>;
 
@@ -81,34 +78,18 @@ export class FormKeynoteComponent implements ControlValueAccessor, OnInit {
     ) {}
 
     ngOnInit() {
-        this.route.data.subscribe(resolveData => {
-            this.mss = this.modelService.convert2List(resolveData.geoModelTree);
-        })
+        
     }
 
-    changeDirection() {
-        if(this.keynote.direction === 'y') {
-            this.selectMode = undefined;
-        }
-        else {
-            this.selectMode = 'multiple';
-        }
-        this.keynote.participants = [];
-        this.onNgModelChange();
-    }
-
-    onNgModelChange() {
-        if(this.keynote.direction === 'y') {
-            this.keynote.participants = [this.keynote.participants];
-        }
+    emitNgModelChange() {
         this.propagateChange(this.keynote);
     }
 
     // 设置初始值
     public writeValue(obj: any) {
-        if(obj) {
-            this.keynote = obj;
-        }
+        // if(obj) {
+        //     this.keynote = obj;
+        // }
     }
 
     // 当表单控件值改变时，函数 fn 会被调用

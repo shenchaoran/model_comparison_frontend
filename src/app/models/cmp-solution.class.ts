@@ -6,7 +6,7 @@ import { CmpObj } from './cmp-obj.class';
 import { ResourceSrc } from './resource.enum';
 
 export class CmpSolution {
-    _id?: ObjectID
+    _id?: string;
     meta: {
         name: string,
         desc: string,
@@ -15,16 +15,14 @@ export class CmpSolution {
     cmpCfg: {
         ms: Array<{
             msId: string,
-            nodeName: string
+            msName: string,
+            nodeName: string,
+            participate: boolean,
         }>,
         cmpObjs: Array<CmpObj>,
         keynote: {
             direction: 'x'|'y',
-            dimension: 'point' | 'polygon' | 'multi-point',
-            participants: Array<any>,
-            attached?: {
-                [key: string]: any
-            }
+            dimension: 'point' | 'polygon' | 'multi-point'
         }
     };
     auth: {
@@ -43,14 +41,7 @@ export class CmpSolution {
             cmpObjs: [],
             keynote: {
                 direction: undefined,
-                dimension: undefined,
-                participants: [],
-                attached: {
-                    solutionMeta: {
-                        name: '',
-                        desc: ''
-                    }
-                }
+                dimension: undefined
             }
         };
         this.auth = {

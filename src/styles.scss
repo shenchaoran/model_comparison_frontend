@@ -11,12 +11,15 @@
 @import "../node_modules/ng2-slim-loading-bar/style.css";
 @import "../node_modules/perfect-scrollbar/dist/css/perfect-scrollbar.min.css";
 @import "../node_modules/openlayers/dist/ol.css";
-@import "app/common/shared/theme/theme.scss";
+// theme
+@import "app/common/shared/theme.scss";
 // add by SCR
 @import '../node_modules/handsontable/dist/handsontable.full.css';
-@import "./app/common/shared/theme/css/perfectscroll.css";
-@import "./app/common/shared/theme/css/nouislider.min.css";
-@import "./app/common/shared/theme/css/ng2-tree-styles.css";
+@import "assets/css/my/custom-esri.css";
+@import "assets/css/my/custom-openlayers.css";
+@import "assets/css/my/perfectscroll.css";
+@import "assets/css/my/nouislider.min.css";
+@import "assets/css/my/ng2-tree-styles.css";
 // TODO relative path problems
 @import 'assets/css/jqwidgets/jqx.base';
 @import 'assets/css/jqwidgets/jqx.energyblue-my';

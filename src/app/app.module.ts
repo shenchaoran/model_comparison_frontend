@@ -4,6 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { ClarityModule } from "clarity-angular";
 import { _HttpClient } from '@core/services/http.client';
+import { GlobalState } from './global.state';
 
 import { AppTranslationModule } from './app.translation.module';
 import { NgxSharedModule } from './common/ngx-shared';
@@ -31,7 +32,8 @@ import { App } from './app.component';
         CoreModule,
     ],
     providers: [
-        _HttpClient
+        _HttpClient,
+        GlobalState,
     ]
 })
 export class AppModule {}

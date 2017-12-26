@@ -1,15 +1,16 @@
 <div class="container flex-box-col-nowrap max-height">
     <nz-steps [(nzCurrent)]="currentStep">
         <nz-step [nzTitle]="'Basic Information'" [nzDescription]=''></nz-step>
-        <nz-step [nzTitle]="'Configure Input'" [nzDescription]=''></nz-step>
+        <nz-step [nzTitle]="'Configure Data Source'" [nzDescription]=''></nz-step>
+        <nz-step [nzTitle]="'Configure Comparison Data'" [nzDescription]=''></nz-step>
     </nz-steps>
 
     <div class="steps-content flex-box-col-nowrap flex-item-1-1-auto debug-border debug-background overflow-y">
         <div class='flex-item-1-1-auto' [hidden]='currentStep !== 0'>
             <form nz-form [nzType]="'horizontal'">
-                <h5 style='margin: 10px 0;'>Task Basic Information:</h5>
+                <h4 style='margin: 10px 0;'>Task Basic Information:</h4>
                 <div nz-form-item nz-row>
-                    <div nz-form-label nz-col [nzSpan]="5">
+                    <div nz-form-label nz-col [nzSpan]="3">
                         <label>Name</label>
                     </div>
                     <div nz-form-control nz-col [nzSpan]="12">
@@ -17,7 +18,7 @@
                     </div>
                 </div>
                 <div nz-form-item nz-row>
-                    <div nz-form-label nz-col [nzSpan]="5">
+                    <div nz-form-label nz-col [nzSpan]="3">
                         <label>Description</label>
                     </div>
                     <div nz-form-control nz-col [nzSpan]="12">
@@ -25,7 +26,7 @@
                     </div>
                 </div>
                 <div nz-form-item nz-row>
-                    <div nz-form-label nz-col [nzSpan]="5">
+                    <div nz-form-label nz-col [nzSpan]="3">
                         <label>Permission</label>
                     </div>
                     <div nz-form-control nz-col [nzSpan]="12">
@@ -35,8 +36,14 @@
                         </nz-radio-group>
                     </div>
                 </div>
+            </form>
+        </div>
+
+        <div class='flex-item-1-1-auto' [hidden]='currentStep !== 1'>
+            <div class='flex-box-col-nowrap max-size'>
+                <h4>Configure Data Source</h4>
                 <div nz-form-item nz-row>
-                    <div nz-form-label nz-col [nzSpan]="5">
+                    <div nz-form-label nz-col [nzSpan]="3">
                         <label>Data Source</label>
                     </div>
                     <div nz-form-control nz-col [nzSpan]="12">
@@ -47,7 +54,7 @@
                     </div>
                 </div>
                 <div nz-form-item nz-row *ngIf='cmpTask.calcuCfg.dataSrc === "std" && !__loading'>
-                    <div nz-form-label nz-col [nzSpan]="5">
+                    <div nz-form-label nz-col [nzSpan]="3">
                         <label>Date Range</label>
                     </div>
                     <div nz-form-control nz-col [nzSpan]="12">
@@ -55,18 +62,37 @@
                         <nz-datepicker style="width: 40%;" [(ngModel)]="endDate" (ngModelChange)="endDateChange()" [nzDisabledDate]='disableEndDate' [nzFormat]="'YYYY-MM-DD'" [nzPlaceHolder]="'End date'" name='end-date'></nz-datepicker>
                     </div>
                 </div>
-            </form>
+                <ng-container class='flex-item-1-1-auto' *ngIf='(cmpTask.calcuCfg.dataSrc === "std") else uploadStep'>
+                    <!-- <router-outlet></router-outlet> -->
+                    <ogms-ol-map (onDrawRecEnd)='onDrawRecEnd()' class='flex-item-1-1-auto'></ogms-ol-map>
+                    <!-- <div id="map" style="width:600px; height:400px;"></div> -->
+                </ng-container>
+                <ng-template #uploadStep>
+
+                </ng-template>
+            </div>
         </div>
 
-        <div class='flex-item-1-1-auto' [hidden]='currentStep !== 1'>
-            <ng-container *ngIf='(cmpTask.calcuCfg.dataSrc === "std") else uploadStep'>
-                <!-- <router-outlet></router-outlet> -->
-                <ogms-ol-map (onDrawRecEnd)='onDrawRecEnd()'></ogms-ol-map>
-                <!-- <div id="map" style="width:600px; height:400px;"></div> -->
-            </ng-container>
-            <ng-template #uploadStep>
-
-            </ng-template>
+        <div class='flex-item-1-1-auto' [hidden]='currentStep !== 2'>
+            <h4>Configure Comparison Data</h4>
+            <!-- ms->eventName -->
+            <div *ngIf='cmpSolution'>
+                <div *ngFor='let ms of cmpSolution.cmpCfg.ms'>
+                    <div *ngIf='!ms.participate'>
+                        <h5>{{ms.msName}}</h5>
+                        <div *ngFor='let cmpObj of cmpSolution.cmpCfg.cmpObjs'>
+                            <div *ngFor='let dataRefer of cmpObj.dataRefers'>
+                                <div *ngIf='dataRefer.msId === ms.msId' nz-row>
+                                    <div nz-row [nzType]="'flex'" [nzAlign]="'middle'" [nzGutter]='18'>
+                                        <label nz-col [nzSpan]='5'>{{dataRefer.eventName}}: </label>
+                                        <ba-file-uploader id='uploader-{{dataRefer.eventName}}' nz-col [nzSpan]='12' [fileUploaderOptions]="fileUploaderOptions" (onFileUpload)="_onFileUpload($event)" (onFileUploadCompleted)='_onFileUploadCompleted($event)'></ba-file-uploader>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -74,10 +100,10 @@
         <button nz-button [nzType]="'default'" (click)="changeStep(currentStep-1)" [disabled]="currentStep === 0">
                     <span>Previous</span>
                 </button>
-        <button nz-button [nzType]="'default'" (click)="changeStep(currentStep+1)" *ngIf="currentStep < 1" [disabled]='nextDisabled'>
+        <button nz-button [nzType]="'default'" (click)="changeStep(currentStep+1)" *ngIf="currentStep < 2" [disabled]='nextDisabled'>
                     <span>Next</span>
                 </button>
-        <button nz-button [nzType]="'primary'" (click)="done()" *ngIf="currentStep === 1" [disabled]='doneDisabled'>
+        <button nz-button [nzType]="'primary'" (click)="done()" *ngIf="currentStep === 2" [disabled]='doneDisabled'>
                     <span>Save</span>
                 </button>
     </div>

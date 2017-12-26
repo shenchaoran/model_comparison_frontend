@@ -33,6 +33,7 @@ import {
 } from '@feature/ol-map/ol-map.module';
 import { NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';
 import { TaskDetailComponent } from './task-detail/task-detail.component';
+import { FormParticipantsComponent } from './form-participants/form-participants.component';
 
 const SERVICES = [
   CmpSlnService,
@@ -64,7 +65,8 @@ const SERVICES = [
     StringPipe,
     FormCmpObjsModalComponent,
     NewTaskComponent,
-    TaskDetailComponent
+    TaskDetailComponent,
+    FormParticipantsComponent
     // OlMapComponent,
     // LayoutComponent,
   ],

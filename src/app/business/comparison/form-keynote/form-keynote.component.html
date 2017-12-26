@@ -1,65 +1,47 @@
 <ng-container *ngIf='keynote !== undefined'>
     <form nz-form [nzType]="'horizontal'">
-        <h5 style='margin: 10px 0;'>Solution Meta Information:</h5>
+        <h4 style='margin: 10px 0;'>Solution Meta Information:</h4>
         <!-- <div nz-row [nzGutter]='"20"'> -->
         <div nz-form-item nz-row>
-            <div nz-form-label nz-col [nzSpan]="5">
+            <div nz-form-label nz-col [nzSpan]="3">
                 <label>Name</label>
             </div>
+
             <div nz-form-control nz-col [nzSpan]="12">
-                <nz-input [(ngModel)]='keynote.attached.solutionMeta.name' (ngModelChange)='onNgModelChange()' name='cmpObj-name'></nz-input>
+                <nz-input [(ngModel)]='keynote.attached.solutionMeta.name' (ngModelChange)='emitNgModelChange()' name='cmpObj-name'></nz-input>
             </div>
         </div>
         <div nz-form-item nz-row>
-            <div nz-form-label nz-col [nzSpan]="5">
+            <div nz-form-label nz-col [nzSpan]="3">
                 <label>Description</label>
             </div>
             <div nz-form-control nz-col [nzSpan]="12">
-                <nz-input [(ngModel)]='keynote.attached.solutionMeta.desc' (ngModelChange)='onNgModelChange()' name='cmpObj-desc'></nz-input>
+                <nz-input [(ngModel)]='keynote.attached.solutionMeta.desc' (ngModelChange)='emitNgModelChange()' name='cmpObj-desc'></nz-input>
             </div>
         </div>
         <!-- </div> -->
 
-        <h5 style='margin: 10px 0;'>Comparison Keynote:</h5>
+        <h4 style='margin: 10px 0;'>Comparison Keynote:</h4>
         <div nz-form-item nz-row>
-            <div nz-form-label nz-col [nzSpan]="5">
+            <div nz-form-label nz-col [nzSpan]="3">
                 <label>Comparison Direction</label>
             </div>
             <div nz-form-control [nzValidateStatus]="'success'" nz-col [nzSpan]="12">
-                <nz-radio-group [(ngModel)]="keynote.direction" (ngModelChange)='changeDirection()' name='keynote-direction' [nzSize]='"large"'>
+                <nz-radio-group [(ngModel)]="keynote.direction" (ngModelChange)='emitNgModelChange()' name='keynote-direction' [nzSize]='"large"'>
                     <label nz-radio-button [nzValue]="'x'"><span>Horizontal</span></label>
                     <label nz-radio-button [nzValue]="'y'"><span>Vertical</span></label>
                 </nz-radio-group>
             </div>
         </div>
         <div nz-form-item nz-row>
-            <div nz-form-label nz-col [nzSpan]="5">
+            <div nz-form-label nz-col [nzSpan]="3">
                 <label>Comparison Region</label>
             </div>
             <div nz-form-control [nzValidateStatus]="'success'" nz-col [nzSpan]="12">
-                <nz-radio-group [(ngModel)]="keynote.dimension" (ngModelChange)='onNgModelChange()' name='keynote-dimension' [nzSize]='"large"'>
+                <nz-radio-group [(ngModel)]="keynote.dimension" (ngModelChange)='emitNgModelChange()' name='keynote-dimension' [nzSize]='"large"'>
                     <label nz-radio-button [nzValue]="'point'"><span>Single Point</span></label>
                     <label nz-radio-button [nzValue]="'polygon'"><span>Area</span></label>
                 </nz-radio-group>
-            </div>
-        </div>
-        <div nz-form-item nz-row>
-            <div nz-form-label nz-col [nzSpan]="5">
-                <label>Participants</label>
-            </div>
-            <div nz-form-control [nzValidateStatus]="'success'" nz-col [nzSpan]="12">
-                <ng-container *ngIf='selectMode === "multiple" else singleSelect'>
-                    <nz-select style="width: 400px;" [nzMode]="selectMode" [nzPlaceHolder]="'please select models'" [(ngModel)]="keynote.participants" (ngModelChange)='onNgModelChange()' [nzNotFoundContent]="'not found'" name='keynote-participants' nzAllowClear>
-                        <nz-option *ngFor="let option of mss" [nzLabel]="option.label" [nzValue]="option.value">
-                        </nz-option>
-                    </nz-select>
-                </ng-container>
-                <ng-template #singleSelect>
-                    <nz-select style="width: 400px;" [nzPlaceHolder]="'please select models'" [(ngModel)]="keynote.participants" (ngModelChange)='onNgModelChange()' [nzNotFoundContent]="'not found'" name='keynote-participants' nzAllowClear>
-                        <nz-option *ngFor="let option of mss" [nzLabel]="option.label" [nzValue]="option.value">
-                        </nz-option>
-                    </nz-select>
-                </ng-template>
             </div>
         </div>
     </form>

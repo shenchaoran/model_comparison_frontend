@@ -10,7 +10,19 @@
 
     <div style='margin: 10px 0;'>
         <nz-collapseset [nzBordered]="false" [nzAccordion]='true'>
-            <nz-collapse *ngFor="let cmpObj of cmpObjs" [nzTitle]="cmpObj.meta.name? cmpObj.meta.name: 'New Comparison Object'" [nzActive]="cmpObj.attached.active">
+            <nz-collapse *ngFor="let cmpObj of cmpObjs" [nzActive]="cmpObj.attached.active">
+                <div collapse-title>
+                    <div class='flex-box-row-nowrap'>
+                        <span>
+                            {{cmpObj.meta.name? cmpObj.meta.name: 'New Comparison Object'}}
+                        </span>
+                        <span class='flex-item-1-1-auto'></span>
+
+                        <nz-popconfirm [nzTitle]="'Are you sure delete this item?'" (nzOnConfirm)="removeCmpObj(cmpObj.id)" style='width: 22px; text-align: center;'>
+                            <span nz-popconfirm style='width: 22px; text-align: center;'><i class="fa fa-trash" aria-hidden="true"></i></span>
+                        </nz-popconfirm>
+                    </div>
+                </div>
                 <!-- <form nz-form [nzType]="'horizontal'"> -->
                 <h5 style='margin: 10px 0;'>Meta Information:</h5>
                 <div nz-row [nzGutter]='"20"'>

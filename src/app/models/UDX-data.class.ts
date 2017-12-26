@@ -3,7 +3,7 @@ import { ResourceSrc } from './resource.enum';
 import { UDXCfg } from './UDX-cfg.class';
 
 export class GeoDataClass {
-    _id?: ObjectID;
+    _id: string;
     meta?: {
         name: string,
         path: string,

@@ -43,7 +43,7 @@ export class BasemapComponent extends ErrorHandle implements OnInit, AfterViewIn
             this.resize();
             postal
                 .channel('MAP_CHANNEL')
-                .publish('map.create-default', undefined);
+                .publish('map.after-create-default', undefined);
         } else if (
             this.mapType === MAP_TYPE.COMPARE ||
             this.mapType === MAP_TYPE.SWIPE

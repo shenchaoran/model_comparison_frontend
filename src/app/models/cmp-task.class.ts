@@ -11,7 +11,7 @@ import { CmpObj } from './cmp-obj.class';
 import { CalcuTaskState } from './calcu-task.class';
 
 export class CmpTask {
-    _id?: ObjectID;
+    _id: string;
     meta: {
         name: string,
         desc: string,

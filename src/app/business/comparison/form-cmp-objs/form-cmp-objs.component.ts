@@ -44,13 +44,13 @@ import { MSService } from '../../geo-model/services';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FormCmpObjsComponent
-  implements ControlValueAccessor, OnInit, OnChanges {
+export class FormCmpObjsComponent implements ControlValueAccessor, OnInit, OnChanges {
   @Input()
+  participants: any[];
+    @Input()
   keynote: {
     direction: 'x' | 'y';
     dimension: 'point' | 'polygon' | 'multi-point';
-    participants: Array<any>;
   };
 
   cmpObjs: Array<CmpObj> = [];
@@ -67,14 +67,23 @@ export class FormCmpObjsComponent
   ) {}
 
   ngOnChanges(changes: { [propName: string]: SimpleChange }) {
-    // this.cdRef.markForCheck();
-    // this.cdRef.detectChanges();
     const knChange = changes['keynote'];
-    if (!_.isEqual(knChange.currentValue, knChange.previousValue)) {
-      this.cmpObjs = [];
-      this.selectedCmpObj = undefined;
-      this.selectedMS = undefined;
-      this.isModalVisible = false;
+    const ptsChange = changes['participants'];
+    if(knChange) {
+        if (!_.isEqual(knChange.currentValue, knChange.previousValue)) {
+            this.cmpObjs = [];
+            this.selectedCmpObj = undefined;
+            this.selectedMS = undefined;
+            this.isModalVisible = false;
+          }
+    }
+    if(ptsChange) {
+        if(!_.isEqual(ptsChange.currentValue, ptsChange.previousValue)) {
+            this.cmpObjs = [];
+            this.selectedCmpObj = undefined;
+            this.selectedMS = undefined;
+            this.isModalVisible = false;
+        }
     }
   }
 
@@ -99,8 +108,7 @@ export class FormCmpObjsComponent
         dataRefers: false
       };
       newObj.attached.active = true;
-      this.keynote.participants;
-      _.map(this.keynote.participants, ms => {
+      _.map(this.participants, ms => {
         newObj.dataRefers.push({
           msId: ms._id,
           msName: ms.MDL.meta.name,
@@ -121,6 +129,18 @@ export class FormCmpObjsComponent
         'Please accomplish the current comparison object first!'
       );
     }
+  }
+
+  removeCmpObj(id) {
+      if(this.selectedCmpObj.id === id) {
+          this.selectedCmpObj = undefined;
+      }
+       _.remove(this.cmpObjs, cmpObj => cmpObj.id === id);   
+       if(this.cmpObjs.length === 0) {
+        this.propagateChange({
+            valid: false
+          });
+       }
   }
 
   checkAccordionValid(cmpObj) {
@@ -179,7 +199,7 @@ export class FormCmpObjsComponent
   showModal(cmpObj, msId) {
     this.selectedCmpObj = cmpObj;
     const selectedMS = _.cloneDeep(
-      _.find(this.keynote.participants, ms => ms._id === msId)
+      _.find(this.participants, ms => ms._id === msId)
     );
     selectedMS.MDL.IO.data = this.msService.UDXDataFilter(
       selectedMS,

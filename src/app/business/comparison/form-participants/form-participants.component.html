@@ -1,0 +1,34 @@
+<h4 style='margin: 10px 0;'>Select Participants:</h4>
+<div nz-form-item nz-row *ngIf='originalMS'>
+    <div nz-form-control [nzValidateStatus]="'success'" nz-col [nzSpan]="12">
+        <div>
+            <div nz-row *ngFor='let ms of originalMS; let i = index;'>
+                <div *ngIf='i >= _pageSize*(_currentPage-1) && i < _pageSize*_currentPage'>
+                    <div [nzSpan]='12' nz-col>{{ms.value.MDL.meta.name}}</div>
+                    <div [nzSpan]='12' nz-col>
+                        <label #checkbox1 nz-checkbox [ngModel]='selectedMS[i].value === "Internal"' (ngModelChange)='onCheckChange("Internal", i, $event)'>
+                            <span>Internal</span>
+                        </label>
+                        <label #checkbox2 nz-checkbox [ngModel]='selectedMS[i].value === "External"' (ngModelChange)='onCheckChange("External", i, $event)'>
+                            <span>External</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <nz-pagination [(nzPageIndex)]="_currentPage" [nzPageSize]='_pageSize' [nzTotal]="originalMS.length" [nzSize]="'small'" nzShowSizeChanger nzShowTotal></nz-pagination>
+        </div>
+
+        <!-- <ng-container *ngIf='selectMode === "multiple" else singleSelect'>
+            <nz-select style="width: 400px;" [nzMode]="selectMode" [nzPlaceHolder]="'please select models'" [(ngModel)]="selectedMS" (ngModelChange)='emitNgModelChange()' [nzNotFoundContent]="'not found'" name='keynote-participants' nzAllowClear>
+                <nz-option *ngFor="let option of originalMS" [nzLabel]="option.label" [nzValue]="option.value">
+                </nz-option>
+            </nz-select>
+        </ng-container>
+        <ng-template #singleSelect>
+            <nz-select style="width: 400px;" [nzPlaceHolder]="'please select models'" [(ngModel)]="selectedMS" (ngModelChange)='emitNgModelChange()' [nzNotFoundContent]="'not found'" name='keynote-participants' nzAllowClear>
+                <nz-option *ngFor="let option of originalMS" [nzLabel]="option.label" [nzValue]="option.value">
+                </nz-option>
+            </nz-select>
+        </ng-template> -->
+    </div>
+</div>

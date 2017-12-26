@@ -3,7 +3,7 @@ import { ResourceSrc } from './resource.enum';
 import { UDXSchema } from './UDX-schema.class';
 
 export class MS {
-    _id?: ObjectID;
+    _id: string;
     auth: {
         nodeName: string,
         src: ResourceSrc

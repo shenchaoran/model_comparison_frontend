@@ -21,6 +21,7 @@ import { TreeItemType } from '../visual-list/tree-item-type.enum';
 import { MenuItem } from '../visual-list/menu-item.class';
 import { jqxMenuComponent } from 'jqwidgets-framework/jqwidgets-ts/angular_jqxmenu';
 import { ErrorHandle } from '../../../../common/core/base/error-handle';
+import { ResourceSrc } from '@models';
 
 @Component({
     selector: 'ogms-data-list',
@@ -64,11 +65,12 @@ export class DataListComponent extends ErrorHandle implements OnInit, AfterViewI
         this.fileUploaderOptions = {
             url: postDataService,
             data: {
-                tag: '',
-                type: ''
+                userId: JSON.parse(localStorage.getItem('jwt')).user._id,
+                src: ResourceSrc.EXTERNAL,
+                desc: ''
             },
             multiple: true,
-            fieldName: 'geo_data',
+            fieldName: 'geo-data',
             customHeaders: {
                 'Authorization': 'bearer ' + JSON.parse(localStorage.getItem('jwt')).token
             }

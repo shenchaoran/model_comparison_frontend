@@ -9,12 +9,13 @@ import { ModelTreeComponent } from './model-tree/model-tree.component';
 import { ModelIntroComponent } from './model-intro/model-intro.component';
 
 import { MSService } from './services';
+import { NewModelComponent } from './new-model/new-model.component';
 
 const SERVICES = [MSService];
 
 @NgModule({
     imports: [NgxSharedModule, SharedModule, GeoModelRoutingModule],
-    declarations: [GeoModelComponent, ModelTreeComponent, ModelIntroComponent],
+    declarations: [GeoModelComponent, ModelTreeComponent, ModelIntroComponent, NewModelComponent],
     providers: [...SERVICES]
 })
 export class GeoModelModule {}

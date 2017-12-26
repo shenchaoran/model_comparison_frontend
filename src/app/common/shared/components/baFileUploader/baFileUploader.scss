@@ -1,0 +1,73 @@
+.input-group {
+    width: 100%;
+    // margin-bottom: 15px;
+    margin: 5px 0;
+}
+
+.input-group {
+    position: relative;
+    display: flex;
+    width: 100%;
+}
+
+.form-control[readonly],
+fieldset[disabled] .form-control {
+    background-color: hsla(0, 0%, 100%, .1);
+    // color: #ffffff;
+    border-color: #49a9ee;
+    border-right: 0;
+    color: rgba(0, 0, 0, .75);
+}
+
+.input-group .form-control {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+    flex: 1 1 auto;
+    width: 1%;
+    margin-bottom: 0;
+}
+
+.input-group-btn {
+    position: relative;
+    font-size: 0;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+.input-group-addon:not(:last-child),
+.input-group-btn:not(:first-child)>.btn-group:not(:last-child)>.btn,
+.input-group-btn:not(:first-child)>.btn:not(:last-child):not(.dropdown-toggle),
+.input-group-btn:not(:last-child)>.btn,
+.input-group-btn:not(:last-child)>.btn-group>.btn,
+.input-group-btn:not(:last-child)>.dropdown-toggle,
+.input-group .form-control:not(:last-child) {
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.input-group>span {
+    border-radius: 0;
+}
+
+.input-group-btn:not(:first-child)>.btn {
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+}
+
+button.btn.btn-success {
+    background: #49a9ee;
+    border-color: #49a9ee;
+}
+
+.btn {
+    color: #ffffff;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    // transition: all .1s ease;
+    padding: .344rem 1rem;
+    font-size: .9rem;
+}

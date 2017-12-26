@@ -13,17 +13,20 @@ import * as uuidv1 from 'uuid/v1';
 @Component({
   selector: 'ogms-ol-map',
   template: `
-      <ogms-layout [targetId]='targetId'></ogms-layout>
-      <!-- <ogms-basemap [targetId]="'asdfasd'" [mapType]='0'></ogms-basemap> -->
+      <!-- <ogms-layout [targetId]='targetId'></ogms-layout> -->
+      <ogms-basemap [targetId]="'asdfasd'" [mapType]='0'></ogms-basemap>
   `,
   styles: [`
       :host {
+          display: flex;
           width: 100%;
           height: 100%;
       }
       ogms-layout {
-        width: 100%;
-        height: 100%;
+        flex: 1;
+      }
+      ogms-basemap{
+          flex: 1;
       }
   `],
   providers: []
@@ -45,7 +48,7 @@ export class OlMapComponent implements OnInit {
   ngOnInit() {
     postal
       .channel('MAP_CHANNEL')
-      .subscribe('map.create-default', (data, envelope) => {
+      .subscribe('map.after-create-default', (data, envelope) => {
         this.toolBarService.init(this.service, this.MAP_TOOLBAR_CONFIG);
         this.toolBarService.onDrawRecEnd()
             .subscribe(data => {

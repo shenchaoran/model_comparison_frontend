@@ -1,6 +1,5 @@
-@import '../../theme/sass/conf/conf';
-
-.copyright{
+@import '../../sass/conf/conf';
+.copyright {
     display: flex;
     align-items: center;
     height: 20px;
@@ -13,7 +12,7 @@
     // z-index: 100;
 }
 
-.copyright-text{
+.copyright-text {
     margin-right: 2px;
     font-size: 12px;
     color: #3d3d3d;

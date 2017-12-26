@@ -7,7 +7,7 @@ import { CmpTask } from './cmp-task.class';
 import { ResourceSrc } from './resource.enum';
 
 export class CmpScene {
-    _id?: ObjectID;
+    _id: string;
     meta: {
         name: string,
         desc: string,
