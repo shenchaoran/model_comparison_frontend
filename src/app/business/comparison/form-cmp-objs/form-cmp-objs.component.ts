@@ -22,8 +22,8 @@ import {
   NG_VALUE_ACCESSOR
 } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
-
-import { CmpObj, MS, CmpMethod } from '@models';
+import * as uuidv1 from 'uuid/v1';
+import { MS, CmpMethod, SchemaName } from '@models';
 import { MSService } from '../../geo-model/services';
 
 @Component({
@@ -36,93 +36,107 @@ import { MSService } from '../../geo-model/services';
       useExisting: forwardRef(() => FormCmpObjsComponent),
       multi: true
     }
-    // {
-    //     provide: NG_VALIDATORS,
-    //     useExisting: forwardRef(() => FormCmpObjsComponent),
-    //     multi: true
-    // }
-  ],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  ]
+  //   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FormCmpObjsComponent implements ControlValueAccessor, OnInit, OnChanges {
+export class FormCmpObjsComponent implements OnInit, OnChanges {
+  @Output() onCmpObjsChange = new EventEmitter<any>();
   @Input()
-  participants: any[];
-    @Input()
   keynote: {
     direction: 'x' | 'y';
     dimension: 'point' | 'polygon' | 'multi-point';
   };
+  schemaNames: Array<string> = [];
+  methods: Array<any> = [];
 
-  cmpObjs: Array<CmpObj> = [];
+  cmpObjs: Array<{
+    id: string;
+    meta: {
+      name: string;
+      desc: string;
+    };
+    schemaName: string;
+    methods: string[];
+  }> = [];
 
-  selectedCmpObj: CmpObj;
-  selectedMS: MS;
+  selectedCmpObj;
+  //   selectedMS: MS;
 
-  isModalVisible: boolean = false;
+  //   isModalVisible: boolean = false;
 
   constructor(
     private _notification: NzNotificationService,
     private msService: MSService,
     private cdRef: ChangeDetectorRef
-  ) {}
+  ) {
+    _.forIn(SchemaName, (v, k) => {
+      if (!/\d/.test(k)) {
+        this.schemaNames.push(k);
+      }
+    });
+  }
 
   ngOnChanges(changes: { [propName: string]: SimpleChange }) {
     const knChange = changes['keynote'];
-    const ptsChange = changes['participants'];
-    if(knChange) {
-        if (!_.isEqual(knChange.currentValue, knChange.previousValue)) {
-            this.cmpObjs = [];
-            this.selectedCmpObj = undefined;
-            this.selectedMS = undefined;
-            this.isModalVisible = false;
-          }
-    }
-    if(ptsChange) {
-        if(!_.isEqual(ptsChange.currentValue, ptsChange.previousValue)) {
-            this.cmpObjs = [];
-            this.selectedCmpObj = undefined;
-            this.selectedMS = undefined;
-            this.isModalVisible = false;
-        }
+    if (knChange) {
+      if (!_.isEqual(knChange.currentValue, knChange.previousValue)) {
+        this.cmpObjs = [];
+        this.selectedCmpObj = undefined;
+        // this.selectedMS = undefined;
+        // this.isModalVisible = false;
+      }
     }
   }
 
   ngOnInit() {}
 
-  addCmpObj() {
-    let currentValid = true;
-    if (this.selectedCmpObj) {
-      _.forIn(this.selectedCmpObj.attached.valid, validItem => {
-        if (validItem !== true) {
-          currentValid = false;
-        }
-      });
-    }
+  onSchemaChange(e, cmpObjId) {
+    this.methods = CmpMethod.find(e);
+    _.map(this.cmpObjs, cmpObj => {
+      if (cmpObjId === cmpObj.id) {
+        cmpObj.schemaName = e;
+        cmpObj.methods = [];
+        this.checkAccordionValid(cmpObj);
+      }
+    });
+  }
 
-    if (currentValid === true) {
+  onMethodChange(e, cmpObjId) {
+    _.map(this.cmpObjs, cmpObj => {
+      if (cmpObj.id === cmpObjId) {
+        _.map(e, method => {
+          if (method.checked === true) {
+            if (cmpObj.methods === undefined) {
+              cmpObj.methods = [];
+            }
+            cmpObj.methods.push(method.value);
+            this.checkAccordionValid(cmpObj);
+          }
+        });
+      }
+    });
+  }
+
+  addCmpObj() {
+    if (this.selectedCmpObj && this.selectedCmpObj.attached.valid || this.selectedCmpObj === undefined) {
       _.map(this.cmpObjs, cmpObj => (cmpObj.attached.active = false));
 
-      const newObj = new CmpObj();
-      newObj.attached.valid = {
-        meta: false,
-        dataRefers: false
+      const newObj = {
+        id: uuidv1(),
+        meta: {
+          name: undefined,
+          desc: undefined
+        },
+        schemaName: undefined,
+        methods: [],
+        attached: {
+          valid: false,
+          active: true
+        }
       };
-      newObj.attached.active = true;
-      _.map(this.participants, ms => {
-        newObj.dataRefers.push({
-          msId: ms._id,
-          msName: ms.MDL.meta.name,
-          eventName: undefined,
-          data: {
-            field: undefined
-          },
-          schema$: undefined
-        });
-      });
       this.cmpObjs = _.concat(newObj, this.cmpObjs);
       this.selectedCmpObj = newObj;
-
-      //   console.log(this.cmpObjs);
+      this.methods = [];
     } else {
       this._notification.warning(
         'Warning',
@@ -132,126 +146,93 @@ export class FormCmpObjsComponent implements ControlValueAccessor, OnInit, OnCha
   }
 
   removeCmpObj(id) {
-      if(this.selectedCmpObj.id === id) {
-          this.selectedCmpObj = undefined;
-      }
-       _.remove(this.cmpObjs, cmpObj => cmpObj.id === id);   
-       if(this.cmpObjs.length === 0) {
-        this.propagateChange({
-            valid: false
-          });
-       }
-  }
-
-  checkAccordionValid(cmpObj) {
-    if (cmpObj.meta.name && cmpObj.meta.desc) {
-      cmpObj.attached.valid.meta = true;
-    } else {
-      cmpObj.attached.valid.meta = false;
+    if (this.selectedCmpObj.id === id) {
+      this.selectedCmpObj = undefined;
     }
-
-    if (cmpObj.schemaTypes.length !== 1) {
-      cmpObj.attached.valid.schemaTypes = false;
-    } else {
-      cmpObj.attached.valid.schemaTypes = true;
-    }
-
-    if (
-      _.filter(cmpObj.methods, method => method.checked === true).length > 0
-    ) {
-      cmpObj.attached.valid.methods = true;
-    } else {
-      cmpObj.attached.valid.methods = false;
-    }
-
-    let validDataRefer = true;
-    _.map(cmpObj.dataRefers, dataRefer => {
-      if (
-        dataRefer.msId &&
-        dataRefer.eventName &&
-        dataRefer.msName &&
-        dataRefer.data.field
-      ) {
-      } else {
-        validDataRefer = false;
-      }
-    });
-    cmpObj.attached.valid.dataRefers = validDataRefer;
-
-    let currentValid = true;
-    _.forIn(this.selectedCmpObj.attached.valid, validItem => {
-      if (validItem !== true) {
-        currentValid = false;
-      }
-    });
-    if (currentValid) {
-      this.propagateChange({
-        valid: true,
-        data: this.cmpObjs
-      });
-    } else {
-      this.propagateChange({
+    _.remove(this.cmpObjs, cmpObj => cmpObj.id === id);
+    if (this.cmpObjs.length === 0) {
+      this.onCmpObjsChange.emit({
         valid: false
       });
     }
   }
 
-  showModal(cmpObj, msId) {
-    this.selectedCmpObj = cmpObj;
-    const selectedMS = _.cloneDeep(
-      _.find(this.participants, ms => ms._id === msId)
-    );
-    selectedMS.MDL.IO.data = this.msService.UDXDataFilter(
-      selectedMS,
-      this.keynote.dimension
-    );
-    this.selectedMS = selectedMS;
-    this.selectedMS.attached = {
-      dimension: this.keynote.dimension
-    };
-    this.isModalVisible = true;
-  }
-
-  modalSubmit(cfg) {
-    this.isModalVisible = false;
-    _.map(this.selectedCmpObj.dataRefers, dataRefer => {
-      if (dataRefer.msId === this.selectedMS._id) {
-        dataRefer.eventName = cfg.eventName;
-        dataRefer.data.field = cfg.fieldName;
-        dataRefer.schema$ = cfg.schema$;
-      }
-    });
-
-    if (_.indexOf(this.selectedCmpObj.schemaTypes, cfg.schema$.type) === -1) {
-      this.selectedCmpObj.schemaTypes.push(cfg.schema$.type);
-    }
-
-    this.selectedCmpObj.methods = [];
-    _.map(this.selectedCmpObj.schemaTypes, schemaType => {
-      this.selectedCmpObj.methods = _.concat(
-        this.selectedCmpObj.methods,
-        CmpMethod.find(schemaType)
-      );
-    });
-
-    this.checkAccordionValid(this.selectedCmpObj);
-  }
-
-  modalCancel() {
-    this.isModalVisible = false;
-  }
-
-  private propagateChange = (e: any) => {};
-
-  public writeValue(obj: any) {
-    if (obj) {
-      this.cmpObjs = obj;
+  checkAccordionValid(cmpObj) {
+    if (
+      !cmpObj.meta.name ||
+      !cmpObj.meta.desc ||
+      !cmpObj.schemaName ||
+      cmpObj.methods.length === 0
+    ) {
+      cmpObj.attached.valid = false;
+      this.onCmpObjsChange.emit({
+        valid: false
+      });
+    } else {
+      cmpObj.attached.valid = true;
+      this.onCmpObjsChange.emit({
+        valid: true,
+        data: this.cmpObjs
+      });
     }
   }
 
-  public registerOnChange(fn: any) {
-    this.propagateChange = fn;
-  }
+  //   showModal(cmpObj, msId) {
+  //     this.selectedCmpObj = cmpObj;
+  //     const selectedMS = _.cloneDeep(
+  //       _.find(this.participants, ms => ms._id === msId)
+  //     );
+  //     selectedMS.MDL.IO.data = this.msService.UDXDataFilter(
+  //       selectedMS,
+  //       this.keynote.dimension
+  //     );
+  //     this.selectedMS = selectedMS;
+  //     this.selectedMS.attached = {
+  //       dimension: this.keynote.dimension
+  //     };
+  //     this.isModalVisible = true;
+  //   }
 
-  public registerOnTouched() {}
+  //   modalSubmit(cfg) {
+  //     this.isModalVisible = false;
+  //     _.map(this.selectedCmpObj.dataRefers, dataRefer => {
+  //       if (dataRefer.msId === this.selectedMS._id) {
+  //         dataRefer.eventName = cfg.eventName;
+  //         dataRefer.data.field = cfg.fieldName;
+  //         dataRefer.schema$ = cfg.schema$;
+  //       }
+  //     });
+
+  //     if (_.indexOf(this.selectedCmpObj.schemaTypes, cfg.schema$.type) === -1) {
+  //       this.selectedCmpObj.schemaTypes.push(cfg.schema$.type);
+  //     }
+
+  //     this.selectedCmpObj.methods = [];
+  //     _.map(this.selectedCmpObj.schemaTypes, schemaType => {
+  //       this.selectedCmpObj.methods = _.concat(
+  //         this.selectedCmpObj.methods,
+  //         CmpMethod.find(schemaType)
+  //       );
+  //     });
+
+  //     this.checkAccordionValid(this.selectedCmpObj);
+  //   }
+
+  //   modalCancel() {
+  //     this.isModalVisible = false;
+  //   }
+
+  //   private propagateChange = (e: any) => {};
+
+  //   public writeValue(obj: any) {
+  //     if (obj) {
+  //       this.cmpObjs = obj;
+  //     }
+  //   }
+
+  //   public registerOnChange(fn: any) {
+  //     this.propagateChange = fn;
+  //   }
+
+  //   public registerOnTouched() {}
 }

@@ -7,7 +7,7 @@ export enum UDXType {
     // GEOTIFF_XML,
     // SPC_XML,
     // TIN_XML,
-    UNKNOWN,
+    UNKNOWN = 0,
     TABLE_RAW,
     SHAPEFILE_RAW,
     ASCII_GRID_RAW,

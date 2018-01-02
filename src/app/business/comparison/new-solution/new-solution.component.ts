@@ -11,7 +11,6 @@ import { Router, ActivatedRoute } from '@angular/router';
     selector: 'ogms-new-solution',
     templateUrl: './new-solution.component.html',
     styleUrls: ['./new-solution.component.scss']
-    // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewSolutionComponent implements OnInit {
 
@@ -20,10 +19,9 @@ export class NewSolutionComponent implements OnInit {
     
     __participants: any[] = [];
     __tempKeynote: any;
-    __selectMode: string;
 
-    nextDisabled: boolean = false;
-    doneDisabled: boolean = false;
+    nextDisabled: boolean = true;
+    doneDisabled: boolean = true;
 
     __isConfirmVisible: boolean = false;
 
@@ -48,12 +46,6 @@ export class NewSolutionComponent implements OnInit {
             direction: e.direction,
             dimension: e.dimension
         };
-        // this.cmpSolution.cmpCfg.ms = _.map(e.participants, ms => {
-        //     return {
-        //         msId: ms._id, 
-        //         nodeName: ms.auth.nodeName
-        //     };
-        // });
         this.cmpSolution.meta = {
             name: e.attached.solutionMeta.name,
             desc: e.attached.solutionMeta.desc,
@@ -64,45 +56,11 @@ export class NewSolutionComponent implements OnInit {
             src: ResourceSrc.PRIVATE
         }
 
-        this.__selectMode = (this.cmpSolution.cmpCfg.keynote.direction === 'x')? 'multiple': 'single';
-
         if(this.cmpSolution.cmpCfg.keynote.dimension
             && this.cmpSolution.cmpCfg.keynote.direction
-            // && this.cmpSolution.cmpCfg.ms.length
             && this.cmpSolution.meta.name
-            && this.cmpSolution.meta.desc) {
-            this.nextDisabled = false;
-        }
-        else {
-            // this.nextDisabled = true;
-            this.nextDisabled = false;
-        }
-    }
-
-    onParticipantsChange(e) {
-        this.__participants = [];
-        this.cmpSolution.cmpCfg.ms = [];
-        _.map(e.participants, ms => {
-            if(ms.value === 'External') {
-                this.cmpSolution.cmpCfg.ms.push({
-                    msId: ms.msId,
-                    msName: ms.data.MDL.meta.name,
-                    nodeName: ms.nodeName,
-                    participate: false
-                });
-            }
-            else if(ms.value === 'Internal') {
-                this.cmpSolution.cmpCfg.ms.push({
-                    msId: ms.msId,
-                    msName: ms.data.MDL.meta.name,
-                    nodeName: ms.nodeName,
-                    participate: true
-                });
-            }
-            this.__participants.push(ms.data);
-        });
-        
-        if(e.valid) {
+            && this.cmpSolution.meta.desc) 
+        {
             this.nextDisabled = false;
         }
         else {
@@ -112,7 +70,9 @@ export class NewSolutionComponent implements OnInit {
 
     onCmpObjsChange(e) {
         if(e.valid) {
-            this.cmpSolution.cmpCfg.cmpObjs = e.data;
+            this.cmpSolution.cmpCfg.cmpObjs = _.map(e.data, cmpObj => {
+                _.unset(cmpObj, 'attached');
+            });
             this.doneDisabled = false;
         }
         else {
@@ -130,7 +90,9 @@ export class NewSolutionComponent implements OnInit {
         }
         this.currentStep = newStep;
 
-        this.__tempKeynote = _.cloneDeep(this.cmpSolution.cmpCfg.keynote);
+        if(newStep === 1) {
+            this.__tempKeynote = _.cloneDeep(this.cmpSolution.cmpCfg.keynote);
+        }
     }
 
     done() {
@@ -144,18 +106,8 @@ export class NewSolutionComponent implements OnInit {
                     this._notice.success('Success', 'create comparison solution succeed!');
                     this.cmpSolution._id = response.data.doc._id;
                     this.__isConfirmVisible = true;
-                    // this.modalService.confirm({
-                    //     title: 'Configure this solution right now?',
-                    //     onOk() {
-
-                    //     },
-                    //     onCancel() {
-
-                    //     }
-                    // });
                 }
             });
-        
     }
 
     handleCancel(e) {

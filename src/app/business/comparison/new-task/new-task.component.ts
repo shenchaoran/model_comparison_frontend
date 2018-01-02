@@ -86,7 +86,7 @@ export class NewTaskComponent implements OnInit, AfterViewInit {
     if (slnStr) {
       this.cmpSolution = JSON.parse(slnStr);
       this.cmpTask.cmpCfg.solutionId = this.cmpSolution._id;
-      this.cmpTask.cmpCfg.cmpObjs = this.cmpSolution.cmpCfg.cmpObjs;
+    //   this.cmpTask.cmpCfg.cmpObjs = this.cmpSolution.cmpCfg.cmpObjs;
       this.cmpTask.calcuCfg.stdSrc.spatial.dimension = this.cmpSolution.cmpCfg.keynote.dimension;
     } else {
       this._notice.warning(
@@ -221,20 +221,20 @@ export class NewTaskComponent implements OnInit, AfterViewInit {
         this.nextDisabled = false;
     } 
     else if (this.currentStep === 2) {
-        _.map(this.cmpSolution.cmpCfg.ms, ms => {
-            if(ms.participate === false) {
-                _.map(this.cmpTask.cmpCfg.cmpObjs, cmpObj => {
-                    _.map(cmpObj.dataRefers, dataRefer => {
-                        if(dataRefer.msId === ms.msId) {
-                            if(dataRefer.dataId === undefined) {
-                                this.doneDisabled = true;
-                                return ;
-                            }
-                        }
-                    });
-                });
-            }
-        });
+        // _.map(this.cmpSolution.cmpCfg.ms, ms => {
+        //     if(ms.participate === false) {
+        //         _.map(this.cmpTask.cmpCfg.cmpObjs, cmpObj => {
+        //             _.map(cmpObj.dataRefers, dataRefer => {
+        //                 if(dataRefer.msId === ms.msId) {
+        //                     if(dataRefer.dataId === undefined) {
+        //                         this.doneDisabled = true;
+        //                         return ;
+        //                     }
+        //                 }
+        //             });
+        //         });
+        //     }
+        // });
         this.doneDisabled = false;
     }
   }

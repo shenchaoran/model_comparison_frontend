@@ -43,7 +43,8 @@ import {
         // }
     ]
 })
-export class FormKeynoteComponent implements ControlValueAccessor, OnInit {
+export class FormKeynoteComponent implements OnInit {
+    @Output() onKeynoteChange = new EventEmitter<any>();
     keynote: {
         direction: 'x' | 'y',
         dimension: 'point' | 'polygon' | 'multi-point',
@@ -64,39 +65,30 @@ export class FormKeynoteComponent implements ControlValueAccessor, OnInit {
         }
     };
 
-    selectMode: string;
-    // selectedMss: Array<{}>;
-
-    // 这里是做一个空函数体，真正使用的方法在 registerOnChange 中，即 (ngModelChange) 中绑定的函数
-    // 由框架注册，然后我们使用它把变化发回表单
-    // 注意，和 EventEmitter 尽管很像，但发送回的对象不同
-    private propagateChange = (e: any) => {};
-
     constructor(
         private route: ActivatedRoute,
         private modelService: MSService
     ) {}
 
-    ngOnInit() {
-        
-    }
+    ngOnInit() {}
 
     emitNgModelChange() {
-        this.propagateChange(this.keynote);
+        // this.propagateChange(this.keynote);
+        this.onKeynoteChange.emit(this.keynote);
     }
 
     // 设置初始值
-    public writeValue(obj: any) {
-        // if(obj) {
-        //     this.keynote = obj;
-        // }
-    }
+    // public writeValue(obj: any) {
+    //     // if(obj) {
+    //     //     this.keynote = obj;
+    //     // }
+    // }
 
     // 当表单控件值改变时，函数 fn 会被调用
     // 这也是我们把变化 emit 回表单的机制
-    public registerOnChange(fn: any) {
-        this.propagateChange = fn;
-    }
+    // public registerOnChange(fn: any) {
+    //     this.propagateChange = fn;
+    // }
 
-    public registerOnTouched() {}
+    // public registerOnTouched() {}
 }

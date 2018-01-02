@@ -66,6 +66,7 @@
     "roboto-fontface": "0.7.0",
     "rxjs": "^5.4.2",
     "ts-md5": "^1.2.0",
+    "typescript": "^2.6.2",
     "uuid": "^3.1.0",
     "wicket": "git+https://github.com/dyh333/Wicket.git",
     "zone.js": "^0.8.14"
@@ -105,7 +106,6 @@
     "tslint": "4.5.0",
     "tslint-eslint-rules": "3.5.1",
     "tslint-language-service": "0.9.2",
-    "typescript": "~2.3.3",
     "typogr": "0.6.6",
     "underscore": "1.8.3",
     "wintersmith": "2.2.5",

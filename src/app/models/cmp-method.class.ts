@@ -50,10 +50,17 @@ export class CmpMethod {
                 value: 'GIF',
                 checked: false
             }
+        ],
+        ASCII_GRID_RAW_BATCH: [
+            {
+                label: 'Visualization',
+                value: '',
+                checked: false
+            }
         ]
     };
 
-    static find(schemaName: string) {
-        return _.cloneDeep(_.get(CmpMethod.METHODS, schemaName));
+    static find(schemaName: string): Array<any> {
+        return (_.cloneDeep(_.get(CmpMethod.METHODS, schemaName))) as Array<any>;
     }
 }

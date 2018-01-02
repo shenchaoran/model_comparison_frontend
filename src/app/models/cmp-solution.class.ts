@@ -6,20 +6,22 @@ import { CmpObj } from './cmp-obj.class';
 import { ResourceSrc } from './resource.enum';
 
 export class CmpSolution {
-    _id?: string;
+    _id?: any;
     meta: {
         name: string,
         desc: string,
         time: number
     };
     cmpCfg: {
-        ms: Array<{
-            msId: string,
-            msName: string,
-            nodeName: string,
-            participate: boolean,
+        cmpObjs: Array<{
+            id: string,
+            meta: {
+                name: string,
+                desc: string
+            },
+            schemaName: string,
+            methods: string[]
         }>,
-        cmpObjs: Array<CmpObj>,
         keynote: {
             direction: 'x'|'y',
             dimension: 'point' | 'polygon' | 'multi-point'
@@ -37,7 +39,6 @@ export class CmpSolution {
             time: undefined
         };
         this.cmpCfg = {
-            ms: [],
             cmpObjs: [],
             keynote: {
                 direction: undefined,

@@ -44,7 +44,7 @@
                     </div>
                 </div>
 
-                <h5 style='margin: 10px 0;'>Data Reference:</h5>
+                <!-- <h5 style='margin: 10px 0;'>Data Reference:</h5>
                 <nz-table #nzTable [nzDataSource]='cmpObj.dataRefers' [nzIsPagination]="false" [nzSize]='"small"'>
                     <thead nz-thead>
                         <tr>
@@ -83,29 +83,37 @@
                             </td>
                         </tr>
                     </tbody>
-                </nz-table>
+                </nz-table> -->
 
                 <h5 style='margin: 10px 0;'>Comparison Schema</h5>
                 <div>
-                    <ng-container *ngIf='cmpObj.schemaTypes.length === 0 else tagsTemplate'>
+                    <nz-radio-group [ngModel]="cmpObj.schemaName" (ngModelChange)='onSchemaChange($event, cmpObj.id)'>
+                        <ng-container *ngFor='let schemaName of schemaNames'>
+                            <label nz-radio-button [nzValue]="schemaName">
+                                <span>{{schemaName}}</span>
+                            </label>
+                        </ng-container>
+                    </nz-radio-group>
+
+                    <!-- <ng-container *ngIf='cmpObj.schemaTypes.length === 0 else tagsTemplate'>
                         <nz-tag [nzColor]='"red"'>undefined</nz-tag>
                     </ng-container>
                     <ng-template #tagsTemplate>
                         <nz-tag *ngFor='let schemaType of cmpObj.schemaTypes' [nzColor]='(cmpObj.schemaTypes.length > 1) ? "red" : "green"'>
                             {{schemaType}}
                         </nz-tag>
-                    </ng-template>
+                    </ng-template> -->
                 </div>
 
 
                 <h5 style='margin: 10px 0;'>Comparison Method</h5>
                 <div>
-                    <nz-checkbox-group [(ngModel)]="cmpObj.methods" (ngModelChange)='checkAccordionValid(cmpObj)'></nz-checkbox-group>
+                    <nz-checkbox-group [ngModel]="methods" (ngModelChange)='onMethodChange($event, cmpObj.id)'></nz-checkbox-group>
                 </div>
                 <!-- </form> -->
             </nz-collapse>
         </nz-collapseset>
     </div>
 
-    <ogms-form-cmp-objs-modal [ms]='selectedMS' [showModal]='isModalVisible' (onCancel)='modalCancel()' (onSubmit)='modalSubmit($event)'></ogms-form-cmp-objs-modal>
+    <!-- <ogms-form-cmp-objs-modal [ms]='selectedMS' [showModal]='isModalVisible' (onCancel)='modalCancel()' (onSubmit)='modalSubmit($event)'></ogms-form-cmp-objs-modal> -->
 </div>

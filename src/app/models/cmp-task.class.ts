@@ -11,7 +11,7 @@ import { CmpObj } from './cmp-obj.class';
 import { CalcuTaskState } from './calcu-task.class';
 
 export class CmpTask {
-    _id: string;
+    _id?: any;
     meta: {
         name: string,
         desc: string,
@@ -23,13 +23,61 @@ export class CmpTask {
     };
     cmpCfg: {
         solutionId: string,
-        cmpObjs?: Array<CmpObj>
+        ms: Array<{
+            msId: string,
+            msName: string,
+            nodeName: string,
+            participate: boolean
+        }>,
+        // 这里暂时先把sln的所有字段复制过来了，避免了多表查询
+        keynote: {
+            direction: 'x'|'y',
+            dimension: 'point' | 'polygon' | 'multi-point'
+        },
+        cmpObjs: Array<{
+            id: string,
+            meta: {
+                name: string,
+                desc: string
+            },
+            schemaName: string,
+            methods: string[],
+            dataRefers: Array<{
+                // 独立上传的，不是模型算出来的数据
+                independent?: boolean,
+                msId?: string,
+                msName?: string,
+                eventName?: string,
+                dataId: string,
+                // data 存放具体比较的配置，如chart的列名，图像处理
+                data: any,
+                cmpResult: {
+                    state: CmpResultState,
+                    image?: [{
+                      extent: any,
+                      path: string,
+                      title: string,
+                      state: CmpResultState
+                    }],
+                    chart?: {
+                        state: CmpResultState
+                    },
+                    GIF?: {
+                        state: CmpResultState
+                    },
+                    statistic?: {
+                        state: CmpResultState
+                    },
+                }
+            }>
+        }>
     };
-    cmpState: CmpState;
+    // 计算配置，即输入数据
     calcuCfg: CalcuCfg;
+    cmpState: CmpState;
     calcuTasks: Array<{
-        calcuTaskId: string,
-        state: CalcuTaskState
+      calcuTaskId: string,
+      state: CalcuTaskState
     }>;
 
     constructor() {
@@ -45,7 +93,13 @@ export class CmpTask {
             userId: user? user._id: undefined
         };
         this.cmpCfg = {
-            solutionId: undefined
+            solutionId: undefined,
+            ms: [],
+            keynote: {
+                direction: undefined,
+                dimension: undefined
+            },
+            cmpObjs: []
         };
         this.cmpState = CmpState.INIT;
         this.calcuCfg = {
@@ -69,6 +123,12 @@ export class CmpTask {
 export enum CmpState {
     INIT = 0,
     RUNNING,
+    SUCCEED,
+    FAILED
+}
+
+export enum CmpResultState {
+    RUNNING = 0,
     SUCCEED,
     FAILED
 }
