@@ -10,15 +10,6 @@
     width: 100%;
 }
 
-.form-control[readonly],
-fieldset[disabled] .form-control {
-    background-color: hsla(0, 0%, 100%, .1);
-    // color: #ffffff;
-    border-color: #49a9ee;
-    border-right: 0;
-    color: rgba(0, 0, 0, .75);
-}
-
 .input-group .form-control {
     display: flex;
     flex-direction: column;
@@ -27,7 +18,18 @@ fieldset[disabled] .form-control {
     z-index: 2;
     flex: 1 1 auto;
     width: 1%;
+}
+
+.input-group .form-control input {
+    flex: 1;
+    background-color: hsla(0, 0%, 100%, .1);
+    border: 1px solid #49a9ee !important;
+    border-right: 0;
+    color: rgba(0, 0, 0, .75);
     margin-bottom: 0;
+    border-radius: 5px;
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
 }
 
 .input-group-btn {
@@ -35,17 +37,6 @@ fieldset[disabled] .form-control {
     font-size: 0;
     white-space: nowrap;
     vertical-align: middle;
-}
-
-.input-group-addon:not(:last-child),
-.input-group-btn:not(:first-child)>.btn-group:not(:last-child)>.btn,
-.input-group-btn:not(:first-child)>.btn:not(:last-child):not(.dropdown-toggle),
-.input-group-btn:not(:last-child)>.btn,
-.input-group-btn:not(:last-child)>.btn-group>.btn,
-.input-group-btn:not(:last-child)>.dropdown-toggle,
-.input-group .form-control:not(:last-child) {
-    border-bottom-right-radius: 0;
-    border-top-right-radius: 0;
 }
 
 .input-group>span {
@@ -70,4 +61,38 @@ button.btn.btn-success {
     // transition: all .1s ease;
     padding: .344rem 1rem;
     font-size: .9rem;
+}
+
+.form-progress {
+    position: absolute;
+    border-radius: 5px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    width: 0;
+    opacity: 0.2;
+}
+
+.form-progress-uploading {
+    background: #67b2ff;
+}
+
+.form-progress-failed {
+    background: #ff4e4e;
+}
+
+.input-group-my {
+    position: relative;
+    i {
+        position: absolute;
+        right: 5px;
+        top: 0;
+        height: 100%;
+        color: #9199ac;
+        line-height: inherit;
+        cursor: pointer;
+        z-index: 5;
+    }
+    i:hover {
+        color: #656a77;
+    }
 }

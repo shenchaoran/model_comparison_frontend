@@ -85,7 +85,7 @@
                                 <div *ngIf='dataRefer.msId === ms.msId' nz-row>
                                     <div nz-row [nzType]="'flex'" [nzAlign]="'middle'" [nzGutter]='18'>
                                         <label nz-col [nzSpan]='5'>{{dataRefer.eventName}}: </label>
-                                        <ba-file-uploader id='uploader-{{dataRefer.eventName}}' nz-col [nzSpan]='12' [fileUploaderOptions]="fileUploaderOptions" (onFileUpload)="_onFileUpload($event)" (onFileUploadCompleted)='_onFileUploadCompleted($event)'></ba-file-uploader>
+                                        <ba-file-uploader id='uploader-{{dataRefer.eventName}}' nz-col [nzSpan]='12' [fileUploaderOptions]="fileUploaderOptions" (onFileUpload)="_onFileUpload($event, cmpObj.id, dataRefer.msId, dataRefer.eventName)" (onFileUploadCompleted)='_onFileUploadCompleted($event, cmpObj.id, dataRefer.msId, dataRefer.eventName)' (onClear)='_onClearUploaded(cmpObj.id, dataRefer.msId, dataRefer.eventName)'></ba-file-uploader>
                                     </div>
                                 </div>
                             </div>

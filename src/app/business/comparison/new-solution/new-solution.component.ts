@@ -164,6 +164,7 @@ export class NewSolutionComponent implements OnInit {
 
     handleOk(e) {
         this.__isConfirmVisible = true;
+        localStorage.setItem('cmpSolution', JSON.stringify(this.cmpSolution));
         this.router.navigate(['../..', 'tasks', 'new'], {
             relativeTo: this.route
         });

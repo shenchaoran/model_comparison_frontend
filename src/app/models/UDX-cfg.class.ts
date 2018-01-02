@@ -13,8 +13,7 @@ export class UDXCfg {
     };
     meta: {
         desc?: string,
-        isExample: boolean,
-        isOutput: boolean,
+        isExample?: boolean,
         spatial?: {
             dimension: 'point' | 'polygon' | 'multi-point',
             point?: any,

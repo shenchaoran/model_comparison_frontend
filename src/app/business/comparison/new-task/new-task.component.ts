@@ -1,7 +1,16 @@
-import { Component, OnInit, AfterViewInit, EventEmitter, Output, ViewChildren, ElementRef, QueryList } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  AfterViewInit,
+  EventEmitter,
+  Output,
+  ViewChildren,
+  ElementRef,
+  QueryList
+} from '@angular/core';
 import { CmpSlnService, CmpTaskService } from '../services';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CmpSolution, CmpTask, ResourceSrc } from '@models';
+import { CmpSolution, CmpTask, ResourceSrc, CmpObj } from '@models';
 import { NzNotificationService, NzModalService } from 'ng-zorro-antd';
 import { DataService } from '../../geo-data/services';
 import { MAP_TOOLBAR_CONFIG } from './map.config';
@@ -147,8 +156,8 @@ export class NewTaskComponent implements OnInit, AfterViewInit {
 
   changeStep(newStep) {
     if (this.currentStep < newStep) {
-      //   this.nextDisabled = true;
-      this.nextDisabled = false;
+        this.nextDisabled = true;
+    //   this.nextDisabled = false;
     } else if (this.currentStep > newStep) {
       this.nextDisabled = false;
     }
@@ -156,30 +165,40 @@ export class NewTaskComponent implements OnInit, AfterViewInit {
   }
 
   done() {
-    if (this.cmpSolution.cmpCfg.keynote.dimension === 'point') {
-      this.cmpTask.calcuCfg.stdSrc.spatial.point = JSON.parse(
-        this.toolbarService.saveFeatures('EPSG:3857')
-      );
-    } else if (this.cmpSolution.cmpCfg.keynote.dimension === 'polygon') {
-      this.cmpTask.calcuCfg.stdSrc.spatial.polygon = JSON.parse(
-        this.toolbarService.saveFeatures('EPSG:3857')
-      );
-    }
-
-    console.log(this.cmpTask);
-    this.service.insert(this.cmpTask).subscribe(response => {
-      if (response.error) {
-        this._notice.warning('Warning', 'Create comparison task failed!');
-      } else {
-        this._notice.success('Success', 'Create comparison task succeed!');
-        this.cmpTask._id = response.data.doc._id;
-        this.__isConfirmVisible = true;
+      this.updateStepyValid();
+      if(this.doneDisabled) {
+        this._notice.create(
+            'warning',
+            'Warning:',
+            'Please configure this task completely!'
+          );
       }
-    });
+      else {
+        if (this.cmpSolution.cmpCfg.keynote.dimension === 'point') {
+            this.cmpTask.calcuCfg.stdSrc.spatial.point = JSON.parse(
+              this.toolbarService.saveFeatures('EPSG:3857')
+            );
+          } else if (this.cmpSolution.cmpCfg.keynote.dimension === 'polygon') {
+            this.cmpTask.calcuCfg.stdSrc.spatial.polygon = JSON.parse(
+              this.toolbarService.saveFeatures('EPSG:3857')
+            );
+          }
+      
+          console.log(this.cmpTask);
+          this.service.insert(this.cmpTask).subscribe(response => {
+            if (response.error) {
+              this._notice.warning('Warning', 'Create comparison task failed!');
+            } else {
+              this._notice.success('Success', 'Create comparison task succeed!');
+              this.cmpTask._id = response.data.doc._id;
+              this.__isConfirmVisible = true;
+            }
+          });
+      }
   }
 
   onDrawRecEnd() {
-    this.doneDisabled = false;
+    this.nextDisabled = false;
   }
 
   updateStepyValid() {
@@ -197,38 +216,82 @@ export class NewTaskComponent implements OnInit, AfterViewInit {
         // this.nextDisabled = true;
         this.nextDisabled = false;
       }
-    } else if (this.currentStep === 1) {
+    }
+    else if (this.currentStep === 1) {
+        this.nextDisabled = false;
+    } 
+    else if (this.currentStep === 2) {
+        _.map(this.cmpSolution.cmpCfg.ms, ms => {
+            if(ms.participate === false) {
+                _.map(this.cmpTask.cmpCfg.cmpObjs, cmpObj => {
+                    _.map(cmpObj.dataRefers, dataRefer => {
+                        if(dataRefer.msId === ms.msId) {
+                            if(dataRefer.dataId === undefined) {
+                                this.doneDisabled = true;
+                                return ;
+                            }
+                        }
+                    });
+                });
+            }
+        });
+        this.doneDisabled = false;
     }
   }
 
   // region upload
-  _onFileUpload(data) {
-    // if (data['done'] || data['abort'] || data['error']) {
-    //   jQuery('#upload-progress').css('display', 'none');
-    //   this._onFileUploadCompleted(data);
-    // } else {
-    //   jQuery('#upload-progress').css('display', 'block');
-    //   this.onFileUpload.emit(data);
-    // //   this.uploadProgress = data.progress.percent;
-    // }
+  _onFileUpload(data, cmpObjId, msId, eventName) {
+        
   }
 
-  _onFileUploadCompleted(data) {
-    // this.onFileUploadCompleted.emit(data);
+  _onFileUploadCompleted(data, cmpObjId, msId, eventName) {
+    if (!data.abort && data.done && !data.error) {
+      const response = JSON.parse(data.response);
+      if (_.startsWith(_.get(response, 'status.code'), '200')) {
+        // postal.channel('DATA_CHANNEL').publish('data.add', response.data);
+        _.map(this.cmpTask.cmpCfg.cmpObjs, cmpObj => {
+            if(cmpObj.id === cmpObjId) {
+                _.map(cmpObj.dataRefers, dataRefer => {
+                    if(dataRefer.msId === msId && dataRefer.eventName === eventName) {
+                        dataRefer.dataId = response.data.doc._id;
+                        this.updateStepyValid();
+                    }
+                });
+            }
+        });
+        this._notice.create('success', 'Info:', 'loading data succeed!');
+      } else {
+        this._notice.create(
+          'warning',
+          'Warning:',
+          'loading data failed, please retry later!'
+        );
+      }
+    } else {
+      this._notice.create(
+        'warning',
+        'Warning:',
+        'loading data failed, please retry later!'
+      );
+    }
+  }
 
-    // if (!data.abort && data.done && !data.error) {
-    //   const response = JSON.parse(data.response);
-    //   if (_.startsWith(_.get(response, 'status.code'), '200')) {
-    //     this._notice.create('success', 'Info:', 'loading data succeed!');
-    //     postal.channel('DATA_CHANNEL').publish('data.add', response.data);
-    //   } else {
-    //     this._notice.create(
-    //       'warning',
-    //       'Warning:',
-    //       'loading data failed, please retry later!'
-    //     );
-    //   }
-    // }
+  _onClearUploaded(cmpObjId, msId, eventName) {
+    _.map(this.cmpTask.cmpCfg.cmpObjs, cmpObj => {
+        if(cmpObj.id === cmpObjId) {
+            _.map(cmpObj.dataRefers, dataRefer => {
+                if(dataRefer.msId === msId && dataRefer.eventName === eventName) {
+                    dataRefer.dataId = undefined;
+                    this.doneDisabled = true;
+                    this._notice.create(
+                        'success',
+                        'Success:',
+                        'Remove file succeed!'
+                      );
+                }
+            });
+        }
+    });
   }
   // endregion
 

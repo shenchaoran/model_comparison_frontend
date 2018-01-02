@@ -67,7 +67,8 @@ export class CmpTask {
 }
 
 export enum CmpState {
-    INIT,
+    INIT = 0,
+    RUNNING,
     SUCCEED,
     FAILED
 }

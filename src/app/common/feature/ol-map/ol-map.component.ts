@@ -33,6 +33,7 @@ import * as uuidv1 from 'uuid/v1';
 })
 export class OlMapComponent implements OnInit {
   @Output() onDrawRecEnd = new EventEmitter<any>();
+  @Input() imageStaticLayers: Array<any>;
   targetId: string;
 
   constructor(

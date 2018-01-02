@@ -38,7 +38,7 @@ export class CmpObj {
         data: any,
         schema$?: UDXSchema
     }>;
-    cmpResult?: Array<CmpResult>;
+    cmpResults?: Array<CmpResult>;
     schemaTypes: string[];
     methods: any[];
     attached?: any;
@@ -51,7 +51,7 @@ export class CmpObj {
         };
         this.dataRefers = [];
         this.schemaTypes = [];
-        this.cmpResult = [];
+        this.cmpResults = [];
         this.methods = [];
         this.attached = {};
     }
