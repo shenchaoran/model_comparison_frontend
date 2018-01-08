@@ -13,7 +13,7 @@ import { ResourceTabsComponent } from './resource-tabs/resource-tabs.component';
 import { SlnIntroComponent } from './sln-intro/sln-intro.component';
 import { TaskIntroComponent } from './task-intro/task-intro.component';
 
-import { CmpSlnService, CmpTaskService, CmpSceneService } from './services';
+import { CmpSlnService, CmpTaskService, CmpSceneService, ToolbarService } from './services';
 import { MSService } from '../geo-model/services';
 import { FormKeynoteComponent } from './form-keynote/form-keynote.component';
 import { FormCmpObjsComponent } from './form-cmp-objs/form-cmp-objs.component';
@@ -28,11 +28,11 @@ import {
   OlMapComponent,
   LayoutComponent,
   OlMapService,
-  ToolbarService,
+//   ToolbarService,
 } from '@feature/ol-map/ol-map.module';
-import { NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';
 import { TaskDetailComponent } from './task-detail/task-detail.component';
 import { FormParticipantsComponent } from './form-participants/form-participants.component';
+import { RegionMapComponent } from './region-map/region-map.component';
 
 const SERVICES = [
   CmpSlnService,
@@ -64,7 +64,8 @@ const SERVICES = [
     FormCmpObjsModalComponent,
     NewTaskComponent,
     TaskDetailComponent,
-    FormParticipantsComponent
+    FormParticipantsComponent,
+    RegionMapComponent
     // OlMapComponent,
     // LayoutComponent,
   ],

@@ -31,10 +31,7 @@ const routes: Routes = [
             },
             {
                 path: 'solutions/new',
-                component: NewSolutionComponent,
-                resolve: {
-                    geoModelTree: MSService
-                }
+                component: NewSolutionComponent
             },
             {
                 path: 'tasks',
@@ -47,7 +44,8 @@ const routes: Routes = [
                 path: 'tasks/new',
                 component: NewTaskComponent,
                 resolve: {
-                    geoDataResource: DataService
+                    geoDataResource: DataService,
+                    geoModelTree: MSService
                 },
                 children: [
                     {

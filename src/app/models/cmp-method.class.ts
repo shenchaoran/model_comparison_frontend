@@ -54,7 +54,7 @@ export class CmpMethod {
         ASCII_GRID_RAW_BATCH: [
             {
                 label: 'Visualization',
-                value: '',
+                value: 'ASCII_GRID_BATCH_VISUALIZATION',
                 checked: false
             }
         ]

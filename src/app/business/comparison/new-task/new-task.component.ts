@@ -10,16 +10,18 @@ import {
 } from '@angular/core';
 import { CmpSlnService, CmpTaskService } from '../services';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CmpSolution, CmpTask, ResourceSrc, CmpObj } from '@models';
+import { CmpSolution, CmpTask, ResourceSrc, CmpObj, CmpMethod } from '@models';
 import { NzNotificationService, NzModalService } from 'ng-zorro-antd';
 import { DataService } from '../../geo-data/services';
+import { MSService } from '../../geo-model/services';
 import { MAP_TOOLBAR_CONFIG } from './map.config';
 import { NgUploaderOptions } from 'ngx-uploader';
 import {
-  OlMapService,
-  ToolbarService
+  OlMapService
+  //   ToolbarService
 } from '@common/feature/ol-map/ol-map.module';
 import { BaFileUploader } from '@shared';
+import { ToolbarService } from '../services';
 
 declare var ol: any;
 
@@ -32,10 +34,6 @@ declare var ol: any;
       provide: 'MAP_TOOLBAR_CONFIG',
       useValue: MAP_TOOLBAR_CONFIG
     }
-    // {
-    //     provide: 'MAP_MODULES_CONFIG',
-    //     useValue: MAP_MODULES_CONFIG
-    // }
   ]
 })
 export class NewTaskComponent implements OnInit, AfterViewInit {
@@ -47,19 +45,31 @@ export class NewTaskComponent implements OnInit, AfterViewInit {
   @Output() onFileUpload = new EventEmitter<any>();
   @Output() onFileUploadCompleted = new EventEmitter<any>();
 
+  __ms: Array<{
+    msId: string;
+    msName: string;
+    nodeName: string;
+    participate: boolean;
+    data: any;
+  }> = [];
+  __participantsValid: boolean = false;
+  __selectMode: 'single' | 'multiple';
   __loading: boolean = true;
   startDate: Date;
   endDate: Date;
 
   currentStep = 0;
-  nextDisabled: boolean = false;
-  doneDisabled: boolean = false;
+  nextDisabled: boolean = true;
+  doneDisabled: boolean = true;
   __isConfirmVisible: boolean = false;
+  __isCmpModalVisible: boolean = false;
 
-  testStr: string;
+  selectedCmpObj;
+  selectedMS;
 
   constructor(
     private service: CmpTaskService,
+    private msService: MSService,
     private slnService: CmpSlnService,
     private route: ActivatedRoute,
     private router: Router,
@@ -85,8 +95,24 @@ export class NewTaskComponent implements OnInit, AfterViewInit {
     const slnStr = localStorage.getItem('cmpSolution');
     if (slnStr) {
       this.cmpSolution = JSON.parse(slnStr);
+      this.__selectMode =
+        this.cmpSolution.cmpCfg.keynote.direction === 'x'
+          ? 'multiple'
+          : 'single';
+      this.cmpTask.cmpCfg.keynote = this.cmpSolution.cmpCfg.keynote;
       this.cmpTask.cmpCfg.solutionId = this.cmpSolution._id;
-    //   this.cmpTask.cmpCfg.cmpObjs = this.cmpSolution.cmpCfg.cmpObjs;
+      this.cmpTask.cmpCfg.cmpObjs = _.map(
+        this.cmpSolution.cmpCfg.cmpObjs,
+        (cmpObj, i) => {
+          return {
+            ...cmpObj,
+            dataRefers: [],
+            attached: {
+              active: i === 0 ? true : false
+            }
+          };
+        }
+      );
       this.cmpTask.calcuCfg.stdSrc.spatial.dimension = this.cmpSolution.cmpCfg.keynote.dimension;
     } else {
       this._notice.warning(
@@ -94,6 +120,28 @@ export class NewTaskComponent implements OnInit, AfterViewInit {
         'The corresponding comparison solution not found!'
       );
     }
+  }
+
+  onSelectEvent(e, dataRefer) {
+      dataRefer.attached.schema = undefined;
+    if (e) {
+      dataRefer.eventName = e.id;
+      _.map(this.__ms, ms => {
+        if (ms.msId === dataRefer.msId) {
+          _.map(ms.data.MDL.IO.data, event => {
+            if (dataRefer.eventName === event.id) {
+              _.map(ms.data.MDL.IO.schemas, schema => {
+                if (schema.id === event.schemaId) {
+                  dataRefer.attached.schema = schema;
+                }
+              });
+            }
+          });
+        }
+      });
+	}
+	
+    this.updateStepyValid();
   }
 
   ngAfterViewInit() {
@@ -156,45 +204,87 @@ export class NewTaskComponent implements OnInit, AfterViewInit {
 
   changeStep(newStep) {
     if (this.currentStep < newStep) {
-        this.nextDisabled = true;
-    //   this.nextDisabled = false;
+      this.nextDisabled = true;
+      //   this.nextDisabled = false;
     } else if (this.currentStep > newStep) {
       this.nextDisabled = false;
     }
     this.currentStep = newStep;
+
+    this.updateStepyValid();
+  }
+
+  onParticipantsChange(e) {
+    if (e.valid) {
+      this.__participantsValid = true;
+      this.__ms = _.map(e.participants, ms => {
+        const _ms = _.cloneDeep(ms);
+        _ms.data.MDL.IO.data = this.msService.UDXDataFilter(
+          _ms.data,
+          this.cmpTask.cmpCfg.keynote.dimension
+        );
+        return _ms;
+      });
+      this.cmpTask.cmpCfg.ms = _.map(e.participants, (ms, i) => {
+        const _ms = _.cloneDeep(ms);
+        _.unset(_ms, 'data');
+        return _ms;
+      });
+
+      _.map(this.cmpTask.cmpCfg.cmpObjs, cmpObj => {
+        cmpObj.dataRefers = [];
+        _.map(this.__ms, (ms, i) => {
+          cmpObj.dataRefers.push({
+            msId: ms.msId,
+            msName: ms.msName,
+            eventName: undefined,
+            dataId: undefined,
+            data: {
+              field: undefined
+            },
+            attached: {
+              active: i === 0 ? true : false,
+              src: ''
+            }
+          });
+        });
+      });
+    } else {
+      this.__participantsValid = false;
+    }
+    this.updateStepyValid();
   }
 
   done() {
-      this.updateStepyValid();
-      if(this.doneDisabled) {
-        this._notice.create(
-            'warning',
-            'Warning:',
-            'Please configure this task completely!'
-          );
+    this.updateStepyValid();
+    if (this.doneDisabled) {
+      this._notice.create(
+        'warning',
+        'Warning:',
+        'Please configure this task completely!'
+      );
+    } else {
+      if (this.cmpSolution.cmpCfg.keynote.dimension === 'point') {
+        this.cmpTask.calcuCfg.stdSrc.spatial.point = JSON.parse(
+          this.toolbarService.saveFeatures('EPSG:3857')
+        );
+      } else if (this.cmpSolution.cmpCfg.keynote.dimension === 'polygon') {
+        this.cmpTask.calcuCfg.stdSrc.spatial.polygon = JSON.parse(
+          this.toolbarService.saveFeatures('EPSG:3857')
+        );
       }
-      else {
-        if (this.cmpSolution.cmpCfg.keynote.dimension === 'point') {
-            this.cmpTask.calcuCfg.stdSrc.spatial.point = JSON.parse(
-              this.toolbarService.saveFeatures('EPSG:3857')
-            );
-          } else if (this.cmpSolution.cmpCfg.keynote.dimension === 'polygon') {
-            this.cmpTask.calcuCfg.stdSrc.spatial.polygon = JSON.parse(
-              this.toolbarService.saveFeatures('EPSG:3857')
-            );
-          }
-      
-          console.log(this.cmpTask);
-          this.service.insert(this.cmpTask).subscribe(response => {
-            if (response.error) {
-              this._notice.warning('Warning', 'Create comparison task failed!');
-            } else {
-              this._notice.success('Success', 'Create comparison task succeed!');
-              this.cmpTask._id = response.data.doc._id;
-              this.__isConfirmVisible = true;
-            }
-          });
-      }
+	this.service.changeParticipation(this.cmpTask);
+      console.log(this.cmpTask);
+      this.service.insert(this.cmpTask).subscribe(response => {
+        if (response.error) {
+          this._notice.warning('Warning', 'Create comparison task failed!');
+        } else {
+          this._notice.success('Success', 'Create comparison task succeed!');
+          this.cmpTask._id = response.data.doc._id;
+          this.__isConfirmVisible = true;
+        }
+      });
+    }
   }
 
   onDrawRecEnd() {
@@ -206,43 +296,81 @@ export class NewTaskComponent implements OnInit, AfterViewInit {
       if (
         this.cmpTask.meta.name &&
         this.cmpTask.meta.desc &&
-        this.cmpTask.auth.src !== undefined &&
-        this.cmpTask.calcuCfg.dataSrc !== undefined &&
-        this.cmpTask.calcuCfg.stdSrc.temporal.start !== undefined &&
-        this.cmpTask.calcuCfg.stdSrc.temporal.end !== undefined
+        this.cmpTask.auth.src !== undefined
       ) {
         this.nextDisabled = false;
       } else {
-        // this.nextDisabled = true;
-        this.nextDisabled = false;
+        this.nextDisabled = true;
       }
-    }
-    else if (this.currentStep === 1) {
-        this.nextDisabled = false;
-    } 
-    else if (this.currentStep === 2) {
-        // _.map(this.cmpSolution.cmpCfg.ms, ms => {
-        //     if(ms.participate === false) {
-        //         _.map(this.cmpTask.cmpCfg.cmpObjs, cmpObj => {
-        //             _.map(cmpObj.dataRefers, dataRefer => {
-        //                 if(dataRefer.msId === ms.msId) {
-        //                     if(dataRefer.dataId === undefined) {
-        //                         this.doneDisabled = true;
-        //                         return ;
-        //                     }
-        //                 }
-        //             });
-        //         });
-        //     }
-        // });
-        this.doneDisabled = false;
+    } else if (this.currentStep === 1) {
+      this.nextDisabled = !this.__participantsValid;
+    } else if (this.currentStep === 2) {
+      let nextDisabled = false;
+      _.map(this.cmpTask.cmpCfg.cmpObjs, cmpObj => {
+        _.map(cmpObj.dataRefers, dataRefer => {
+          if (nextDisabled === false) {
+            if (dataRefer.attached.src === 'Computing') {
+              if (
+				dataRefer.eventName === '' 
+				|| dataRefer.eventName === undefined
+				|| dataRefer.data === undefined
+				|| dataRefer.data.field === undefined
+              ) {
+                nextDisabled = true;
+                return;
+              }
+            } else if (dataRefer.attached.src === 'Uploading') {
+              if (dataRefer.dataId === undefined || dataRefer.dataId === '') {
+                nextDisabled = true;
+                return;
+              }
+            }
+          }
+        });
+      });
+      this.nextDisabled = nextDisabled;
+    } else if (this.currentStep === 3) {
+      this.doneDisabled = false;
     }
   }
 
-  // region upload
-  _onFileUpload(data, cmpObjId, msId, eventName) {
-        
+  showModal(cmpObj, msId) {
+    this.selectedCmpObj = cmpObj;
+    let selectedMS;
+    _.map(this.__ms, ms => {
+      if (ms.data._id === msId) {
+        selectedMS = _.cloneDeep(ms.data);
+      }
+    });
+    selectedMS.MDL.IO.data = this.msService.UDXDataFilter(
+      selectedMS,
+      this.cmpTask.cmpCfg.keynote.dimension
+    );
+    this.selectedMS = selectedMS;
+    this.selectedMS.attached = {
+      dimension: this.cmpTask.cmpCfg.keynote.dimension,
+      schemaName: this.selectedCmpObj.schemaName
+    };
+    this.__isCmpModalVisible = true;
   }
+
+  modalSubmit(cfg) {
+    this.__isCmpModalVisible = false;
+    _.map(this.selectedCmpObj.dataRefers, dataRefer => {
+      if (dataRefer.msId === this.selectedMS._id) {
+        dataRefer.eventName = cfg.eventName;
+        dataRefer.data.field = cfg.fieldName;
+        dataRefer.schema$ = cfg.schema$;
+      }
+    });
+  }
+
+  modalCancel() {
+    this.__isCmpModalVisible = false;
+  }
+
+  // region upload
+  _onFileUpload(data, cmpObjId, msId, eventName) {}
 
   _onFileUploadCompleted(data, cmpObjId, msId, eventName) {
     if (!data.abort && data.done && !data.error) {
@@ -250,14 +378,14 @@ export class NewTaskComponent implements OnInit, AfterViewInit {
       if (_.startsWith(_.get(response, 'status.code'), '200')) {
         // postal.channel('DATA_CHANNEL').publish('data.add', response.data);
         _.map(this.cmpTask.cmpCfg.cmpObjs, cmpObj => {
-            if(cmpObj.id === cmpObjId) {
-                _.map(cmpObj.dataRefers, dataRefer => {
-                    if(dataRefer.msId === msId && dataRefer.eventName === eventName) {
-                        dataRefer.dataId = response.data.doc._id;
-                        this.updateStepyValid();
-                    }
-                });
-            }
+          if (cmpObj.id === cmpObjId) {
+            _.map(cmpObj.dataRefers, dataRefer => {
+              if (dataRefer.msId === msId) {
+                dataRefer.dataId = response.data.doc._id;
+                this.updateStepyValid();
+              }
+            });
+          }
         });
         this._notice.create('success', 'Info:', 'loading data succeed!');
       } else {
@@ -278,19 +406,15 @@ export class NewTaskComponent implements OnInit, AfterViewInit {
 
   _onClearUploaded(cmpObjId, msId, eventName) {
     _.map(this.cmpTask.cmpCfg.cmpObjs, cmpObj => {
-        if(cmpObj.id === cmpObjId) {
-            _.map(cmpObj.dataRefers, dataRefer => {
-                if(dataRefer.msId === msId && dataRefer.eventName === eventName) {
-                    dataRefer.dataId = undefined;
-                    this.doneDisabled = true;
-                    this._notice.create(
-                        'success',
-                        'Success:',
-                        'Remove file succeed!'
-                      );
-                }
-            });
-        }
+      if (cmpObj.id === cmpObjId) {
+        _.map(cmpObj.dataRefers, dataRefer => {
+          if (dataRefer.msId === msId) {
+            dataRefer.dataId = undefined;
+            // this.doneDisabled = true;
+            this._notice.create('success', 'Success:', 'Remove file succeed!');
+          }
+        });
+      }
     });
   }
   // endregion

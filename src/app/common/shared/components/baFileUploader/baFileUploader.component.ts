@@ -1,14 +1,23 @@
-import { Component, ViewChild, Input, Output, EventEmitter, ElementRef, Renderer } from '@angular/core';
+import {
+  Component,
+  ViewChild,
+  Input,
+  Output,
+  EventEmitter,
+  ElementRef,
+  Renderer
+} from '@angular/core';
 import { NgUploaderOptions } from 'ngx-uploader';
 import * as uuidv1 from 'uuid/v1';
 @Component({
   selector: 'ba-file-uploader',
   styleUrls: ['./baFileUploader.scss'],
-  templateUrl: './baFileUploader.html',
+  templateUrl: './baFileUploader.html'
 })
 export class BaFileUploader {
-    _id: string;
-    _showClose: boolean;
+  _id: string;
+  _showClose: boolean;
+  @Input() size: string = 'default';
   @Input() fileUploaderOptions: NgUploaderOptions = { url: '' };
   @Output() onFileUpload = new EventEmitter<any>();
   @Output() onFileUploadCompleted = new EventEmitter<any>();
@@ -19,8 +28,8 @@ export class BaFileUploader {
   @ViewChild('inputText') public _inputText: ElementRef;
 
   public uploadFileInProgress: boolean;
-  constructor(private renderer: Renderer) { 
-      this._id = uuidv1();
+  constructor(private renderer: Renderer) {
+    this._id = uuidv1();
   }
 
   bringFileSelector(): boolean {
@@ -31,11 +40,11 @@ export class BaFileUploader {
   beforeFileUpload(uploadingFile): void {
     let files = this._fileUpload.nativeElement.files;
     if (files.length) {
-        jQuery('#progress-' + this._id).css('width', 0);
-        jQuery('#progress-' + this._id).removeClass('form-progress-failed');
-        jQuery('#progress-' + this._id).addClass('form-progress-uploading');
+      jQuery('#progress-' + this._id).css('width', 0);
+      jQuery('#progress-' + this._id).removeClass('form-progress-failed');
+      jQuery('#progress-' + this._id).addClass('form-progress-uploading');
       const file = files[0];
-      this._onChangeFileSelect(files[0])
+      this._onChangeFileSelect(files[0]);
       if (!this._canFleUploadOnServer()) {
         uploadingFile.setAbort();
       } else {
@@ -45,7 +54,7 @@ export class BaFileUploader {
   }
 
   _onChangeFileSelect(file) {
-    this._inputText.nativeElement.value = file.name
+    this._inputText.nativeElement.value = file.name;
   }
 
   _onFileUpload(data): void {
@@ -58,16 +67,14 @@ export class BaFileUploader {
   }
 
   _onFileUploadCompleted(data): void {
-      this._showClose = true;
+    this._showClose = true;
     this.uploadFileInProgress = false;
     this.onFileUploadCompleted.emit(data);
 
     if (!data.abort && data.done && !data.error) {
-        
-    }
-    else {
-        jQuery('#progress-' + this._id).removeClass('form-progress-uploading');
-        jQuery('#progress-' + this._id).addClass('form-progress-failed');
+    } else {
+      jQuery('#progress-' + this._id).removeClass('form-progress-uploading');
+      jQuery('#progress-' + this._id).addClass('form-progress-failed');
     }
   }
 
@@ -78,9 +85,9 @@ export class BaFileUploader {
   clearUploaded() {
     this._inputText.nativeElement.value = '';
     this._showClose = false;
-      jQuery('#progress-' + this._id).removeClass('form-progress-uploading');
-      jQuery('#progress-' + this._id).removeClass('form-progress-failed');
-      jQuery('#progress-' + this._id).css('width', 0);
+    jQuery('#progress-' + this._id).removeClass('form-progress-uploading');
+    jQuery('#progress-' + this._id).removeClass('form-progress-failed');
+    jQuery('#progress-' + this._id).css('width', 0);
     this.onClear.emit();
   }
 }

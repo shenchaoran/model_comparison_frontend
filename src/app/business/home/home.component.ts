@@ -9,28 +9,28 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
         <div id="map" style="width:600px; height:400px;"></div>
         <router-outlet></router-outlet>
     `,
-  styles: [
-    `
-  .ol-button i
-  {	color: inherit;
-  }
-  .hello
-  {	right: 50%;
-      top: 0.5em;
-  }
-  .save
-  {	left: 50%;
-      top: 0.5em;
-  }
-  .text
-  {	left: 50%;
-      top: 2.5em;
-  }
-  `
+  styles: [`
+      .ol-button i
+      {	color: inherit;
+      }
+      .hello
+      {	right: 50%;
+          top: 0.5em;
+      }
+      .save
+      {	left: 50%;
+          top: 0.5em;
+      }
+      .text
+      {	left: 50%;
+          top: 2.5em;
+      }
+      `
   ]
 })
 export class HomeComponent implements OnInit, AfterViewInit {
-  constructor() {}
+    b = true;
+    constructor() {}
 
   ngOnInit() {}
 

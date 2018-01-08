@@ -12,6 +12,7 @@ import { SharedModule } from './common/shared';
 import { CoreModule } from './common/core/core.module';
 import { routing } from './app.routing';
 import { App } from './app.component';
+import { NgZorroAntdModule } from 'ng-zorro-antd';
 
 @NgModule({
     bootstrap: [App],
@@ -22,7 +23,7 @@ import { App } from './app.component';
         BrowserModule,
         BrowserAnimationsModule,
         BrowserAnimationsModule,
-
+        // NgZorroAntdModule.forRoot(),
         RouterModule,
         routing,
 

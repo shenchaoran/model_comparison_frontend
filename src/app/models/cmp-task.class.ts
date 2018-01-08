@@ -69,7 +69,8 @@ export class CmpTask {
                         state: CmpResultState
                     },
                 }
-            }>
+            }>,
+            attached: any
         }>
     };
     // 计算配置，即输入数据

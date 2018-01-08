@@ -9,6 +9,7 @@ import { NzNotificationService } from 'ng-zorro-antd';
 })
 export class FormCmpObjsModalComponent implements OnInit {
   _ms: MS;
+  _schemaName: string;
   @Input()
   set ms(v: MS) {
     this.selectedEventName = undefined;
@@ -24,6 +25,7 @@ export class FormCmpObjsModalComponent implements OnInit {
           value: item
         };
       });
+      this._schemaName = v.attached.schemaName;
       this._ms = v;
     }
   }
@@ -73,6 +75,12 @@ export class FormCmpObjsModalComponent implements OnInit {
       this.isValid = true;
     } else {
       this.isValid = false;
+    }
+    if(this.selectedSchema.type === this._schemaName) {
+        this.isValid = true;
+    }
+    else {
+        this.isValid = false;
     }
   }
 

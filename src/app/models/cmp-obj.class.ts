@@ -29,7 +29,9 @@ export class CmpObj {
         name: string,
         desc: string
     };
-    dataRefers: Array<{
+    schemaName: string;
+    methods: any[];
+    dataRefers?: Array<{
         msId: string,
         msName?: string,
         eventName: string,
@@ -39,9 +41,10 @@ export class CmpObj {
         schema$?: UDXSchema
     }>;
     cmpResults?: Array<CmpResult>;
-    schemaTypes: string[];
-    methods: any[];
-    attached?: any;
+    attached?: {
+        valid?: boolean,
+        active?: boolean
+    };
     
     constructor() {
         this.id = uuidv1();
@@ -49,11 +52,14 @@ export class CmpObj {
             name: '',
             desc: ''
         };
-        this.dataRefers = [];
-        this.schemaTypes = [];
-        this.cmpResults = [];
+        this.schemaName = '';
         this.methods = [];
-        this.attached = {};
+        this.dataRefers = [];
+        this.cmpResults = [];
+        this.attached = {
+            valid: false,
+            active: true
+        };
     }
 }
 

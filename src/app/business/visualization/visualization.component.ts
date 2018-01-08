@@ -11,6 +11,8 @@ import { EchartAdapterService } from '../../common/core/services/echartAdapter.s
 import { NJTable } from './table-cfg.class';
 import { NJMap, NJLayer } from './map-cfg.class';
 import { NJDiagram } from './diagram-cfg.class';
+// import { NgUploaderOptions } from 'ngx-uploader';
+// import { BaFileUploader } from '@shared';
 
 @Component({
     selector: 'ogms-visualization',
@@ -18,6 +20,18 @@ import { NJDiagram } from './diagram-cfg.class';
     styleUrls: ['./visualization.component.scss']
 })
 export class VisualizationComponent extends ErrorHandle implements OnInit {
+    // fileUploaderOptions: NgUploaderOptions = {
+    //     url: 'data',
+    //     data: {
+    //       desc: '',
+    //       userId: JSON.parse(localStorage.getItem('jwt')).user._id
+    //     },
+    //     multiple: true,
+    //     fieldName: 'geo-data',
+    //     customHeaders: {
+    //       Authorization: 'bearer ' + JSON.parse(localStorage.getItem('jwt')).token
+    //     }
+    //   };;
     @ViewChild('echarts') echarts: any;
     visualType: VisualType = null;
 

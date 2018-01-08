@@ -4,14 +4,17 @@
         <div>
             <div nz-row *ngFor='let ms of originalMS; let i = index;'>
                 <div *ngIf='i >= _pageSize*(_currentPage-1) && i < _pageSize*_currentPage'>
-                    <div [nzSpan]='12' nz-col>{{ms.value.MDL.meta.name}}</div>
+                    <div [nzSpan]='12' nz-col>{{ms.MDL.meta.name}}</div>
                     <div [nzSpan]='12' nz-col>
-                        <label #checkbox1 nz-checkbox [ngModel]='selectedMS[i].value === "Internal"' (ngModelChange)='onCheckChange("Internal", i, $event)'>
+                        <label nz-checkbox [(ngModel)]="ms.value" (ngModelChange)='onChecked()'>
+                            <span></span>
+                        </label>
+                        <!-- <label #checkbox1 nz-checkbox [ngModel]='ms.value === "Internal"' (ngModelChange)='onCheckChange("Internal", i, $event)'>
                             <span>Internal</span>
                         </label>
-                        <label #checkbox2 nz-checkbox [ngModel]='selectedMS[i].value === "External"' (ngModelChange)='onCheckChange("External", i, $event)'>
+                        <label #checkbox2 nz-checkbox [ngModel]='ms.value === "External"' (ngModelChange)='onCheckChange("External", i, $event)'>
                             <span>External</span>
-                        </label>
+                        </label> -->
                     </div>
                 </div>
             </div>

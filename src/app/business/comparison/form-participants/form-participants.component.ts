@@ -32,101 +32,120 @@ import { MSService } from '../../geo-model/services';
       useExisting: forwardRef(() => FormParticipantsComponent),
       multi: true
     }
-    // {
-    //     provide: NG_VALIDATORS,
-    //     useExisting: forwardRef(() => FormParticipantsComponent),
-    //     multi: true
-    // }
   ]
 })
-export class FormParticipantsComponent implements OnInit, OnChanges {
-  selectedMS: Array<{
+export class FormParticipantsComponent implements OnInit {
+  @Output() onParticipantsChange = new EventEmitter<any>();
+    selectedMS: Array<{
     msId: string,
+    msName: string,
     nodeName: string,
-	value: string,
+	participate: boolean,
 	data: any
   }> = [];
-  originalMS;
+  originalMS = [];
   @Input() selectMode;
 
-  __valid: boolean;
+  __valid: boolean = false;
 
   _currentPage: number = 1;
   _total: number;
   _pageSize: number = 10;
 
-  private propagateChange = (e: any) => {};
-
   constructor(private route: ActivatedRoute, private modelService: MSService) {}
 
   ngOnInit() {
     this.route.data.subscribe(resolveData => {
-	  this.originalMS = this.modelService.convert2List(resolveData.geoModelTree);
-	  _.map(this.originalMS, ms => {
-		this.selectedMS.push({
-			msId: ms.value._id,
-			nodeName: ms.value.auth.nodeName,
-			value: '',
-			data: ms.value
-		})
+	  _.map(this.modelService.convert2List(resolveData.geoModelTree), ms => {
+		this.originalMS.push({
+            ...(ms.value),
+            value: ''
+		});
 	  });
 	});
   }
 
-  ngOnChanges(changes: { [propName: string]: SimpleChange }) {
-    const knChange = changes['selectMode'];
-    if (!_.isEqual(knChange.currentValue, knChange.previousValue)) {
-		this.__valid = false;
-		this.selectedMS = [];
-		_.map(this.originalMS, ms => {
-			this.selectedMS.push({
-				msId: ms.value._id,
-				nodeName: ms.value.auth.nodeName,
-				value: '',
-				data: ms.value
-			})
-		  });
-    }
-  }
+//   ngOnChanges(changes: { [propName: string]: SimpleChange }) {
+//     const knChange = changes['selectMode'];
+//     if (!_.isEqual(knChange.currentValue, knChange.previousValue)) {
+// 		this.__valid = false;
+// 		this.selectedMS = [];
+// 		_.map(this.originalMS, ms => {
+// 			this.selectedMS.push({
+// 				msId: ms.value._id,
+//                 msName: ms.value.MDL.meta.name,
+// 				nodeName: ms.value.auth.nodeName,
+// 				value: '',
+// 				data: ms.value
+// 			})
+// 		  });
+//     }
+//   }
 
+
+onChecked() {
+    this.selectedMS = _.chain(this.originalMS)
+        .filter(ms => ms.value === true)
+        .map(ms => {
+            return {
+                msId: ms._id,
+                msName: ms.MDL.meta.name,
+                nodeName: ms.auth.nodeName,
+                participate: true,
+			    data: ms
+            };
+        })
+        .value();
+        
+    if(this.selectedMS.length) {
+        this.__valid = true;
+    }
+    else {
+        this.__valid = false;
+    }
+    this.onParticipantsChange.emit({
+        participants: this.selectedMS,
+        valid: this.__valid
+    });
+}
+
+/**
+ * deprecated
+ */
   onCheckChange(value: string, index: number, e) {
 	if(e === true) {
 		if(this.selectMode === 'single') {
-			_.map(this.selectedMS, ms => ms.value = '');
+			_.map(this.originalMS, ms => ms.value = '');
 		}
-		this.selectedMS[index].value = value;
+		this.originalMS[index].value = value;
 		this.__valid = true;
 	}
 	else {
-		this.selectedMS[index].value = '';
-		if(_.find(this.selectedMS, ms => ms.value !== '') !== undefined) {
+		this.originalMS[index].value = '';
+		if(_.find(this.originalMS, ms => ms.value !== '') !== undefined) {
 			this.__valid = true;
 		}
 		else {
 			this.__valid = false;
 		}
-	}
-	this.emitNgModelChange();
-  }
-
-  emitNgModelChange() {
-	const msList = _.filter(this.selectedMS, ms => ms.value !== '');
-	this.propagateChange({
-		participants: msList,
-		valid: this.__valid
-	});
-  }
-
-  public writeValue(obj: any) {
-    if (obj) {
     }
-  }
 
-  // 当表单控件值改变时，函数 fn 会被调用
-  // 这也是我们把变化 emit 回表单的机制
-  public registerOnChange(fn: any) {
-    this.propagateChange = fn;
+    this.selectedMS = _.chain(this.originalMS)
+        .filter(ms => ms.value !== '')
+        .map(ms => {
+            return {
+                msId: ms._id,
+                msName: ms.MDL.meta.name,
+                nodeName: ms.auth.nodeName,
+                participate: ms.value === 'Internal',
+			    data: ms
+            };
+        })
+        .value();
+        
+    this.onParticipantsChange.emit({
+        participants: this.selectedMS,
+        valid: this.__valid
+    });
   }
-
-  public registerOnTouched() {}
 }

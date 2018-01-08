@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { HotTableModule } from 'angular-handsontable';
 import { EchartsNg2Module } from 'echarts-ng2';
+import { SharedModule } from '@shared';
 
 import { VisualizationComponent } from './visualization.component';
 import { NgxSharedModule } from '../../common/ngx-shared';

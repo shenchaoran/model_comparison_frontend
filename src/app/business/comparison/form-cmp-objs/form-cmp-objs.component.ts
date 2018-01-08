@@ -23,7 +23,7 @@ import {
 } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import * as uuidv1 from 'uuid/v1';
-import { MS, CmpMethod, SchemaName } from '@models';
+import { MS, CmpMethod, CmpObj, SchemaName } from '@models';
 import { MSService } from '../../geo-model/services';
 
 @Component({
@@ -37,10 +37,10 @@ import { MSService } from '../../geo-model/services';
       multi: true
     }
   ]
-  //   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FormCmpObjsComponent implements OnInit, OnChanges {
   @Output() onCmpObjsChange = new EventEmitter<any>();
+  // TODO 根据 dimension 限制 schemaName 的范围
   @Input()
   keynote: {
     direction: 'x' | 'y';
@@ -49,20 +49,9 @@ export class FormCmpObjsComponent implements OnInit, OnChanges {
   schemaNames: Array<string> = [];
   methods: Array<any> = [];
 
-  cmpObjs: Array<{
-    id: string;
-    meta: {
-      name: string;
-      desc: string;
-    };
-    schemaName: string;
-    methods: string[];
-  }> = [];
+  cmpObjs: Array<CmpObj> = [];
 
-  selectedCmpObj;
-  //   selectedMS: MS;
-
-  //   isModalVisible: boolean = false;
+  selectedCmpObj: CmpObj;
 
   constructor(
     private _notification: NzNotificationService,
@@ -121,19 +110,7 @@ export class FormCmpObjsComponent implements OnInit, OnChanges {
     if (this.selectedCmpObj && this.selectedCmpObj.attached.valid || this.selectedCmpObj === undefined) {
       _.map(this.cmpObjs, cmpObj => (cmpObj.attached.active = false));
 
-      const newObj = {
-        id: uuidv1(),
-        meta: {
-          name: undefined,
-          desc: undefined
-        },
-        schemaName: undefined,
-        methods: [],
-        attached: {
-          valid: false,
-          active: true
-        }
-      };
+      const newObj = new CmpObj();
       this.cmpObjs = _.concat(newObj, this.cmpObjs);
       this.selectedCmpObj = newObj;
       this.methods = [];

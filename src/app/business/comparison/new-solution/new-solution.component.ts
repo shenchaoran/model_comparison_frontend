@@ -2,10 +2,12 @@ import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@
 import { NzMessageService } from 'ng-zorro-antd';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoginService } from '@feature/login/login.service';
-import { CmpSolution, CmpTask, ResourceSrc } from '@models';
+import { CmpSolution, CmpTask, CmpObj, ResourceSrc } from '@models';
 import { CmpSlnService } from '../services/cmp-sln.service';
 import { NzNotificationService, NzModalService  } from 'ng-zorro-antd';
 import { Router, ActivatedRoute } from '@angular/router';
+import { BaFileUploader } from '@shared';
+import { NgUploaderOptions } from 'ngx-uploader';
 
 @Component({
     selector: 'ogms-new-solution',
@@ -14,6 +16,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class NewSolutionComponent implements OnInit {
 
+    fileUploaderOptions: NgUploaderOptions;
     currentStep = 0;
     cmpSolution: CmpSolution = new CmpSolution();
     
@@ -34,7 +37,21 @@ export class NewSolutionComponent implements OnInit {
         private modalService: NzModalService,
         private router: Router,
         private route: ActivatedRoute
-    ) {}
+    ) {
+        this.fileUploaderOptions = {
+            url: 'data',
+            data: {
+              desc: '',
+              src: ResourceSrc.EXTERNAL,
+              userId: JSON.parse(localStorage.getItem('jwt')).user._id
+            },
+            multiple: true,
+            fieldName: 'geo-data',
+            customHeaders: {
+              Authorization: 'bearer ' + JSON.parse(localStorage.getItem('jwt')).token
+            }
+          };
+    }
 
 
     ngOnInit() {
@@ -71,7 +88,11 @@ export class NewSolutionComponent implements OnInit {
     onCmpObjsChange(e) {
         if(e.valid) {
             this.cmpSolution.cmpCfg.cmpObjs = _.map(e.data, cmpObj => {
-                _.unset(cmpObj, 'attached');
+                const temp = _.cloneDeep(cmpObj);
+                _.unset(temp, 'attached');
+                _.unset(temp, 'cmpResults');
+                _.unset(temp, 'dataRefers');
+                return temp;
             });
             this.doneDisabled = false;
         }

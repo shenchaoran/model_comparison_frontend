@@ -27,18 +27,20 @@ export class TaskDetailComponent implements OnInit {
                 this.cmpTask = data.data.doc;
                 console.log(this.cmpTask);
                 
-                // if(this.cmpTask.cmpState === CmpState.FAILED || this.cmpTask.cmpState === CmpState.SUCCEED) {
+                if(
+                    this.cmpTask.cmpState === CmpState.FAILED || 
+                    this.cmpTask.cmpState === CmpState.SUCCEED
+                ) {
                     
-                // }
-                // else if(this.cmpTask.cmpState === CmpState.INIT) {
+                }
+                else if(this.cmpTask.cmpState === CmpState.INIT) {
 
-                // }
-                // else if(this.cmpTask.cmpState === CmpState.RUNNING){
-                //     setTimeout(this.service.publishFind(this.taskId), 5000);
-                // }
+                }
+                else if(this.cmpTask.cmpState === CmpState.RUNNING){
+                    setTimeout(this.service.publishFind(this.taskId), 5000);
+                }
                 
-                // const imageStaticLayers = [];
-                    this.imageStaticLayers = [];
+                this.imageStaticLayers = [];
                 _.map(this.cmpTask.cmpCfg.cmpObjs, cmpObj => {
                     if(cmpObj.cmpResults) {
                         _.map(cmpObj.cmpResults, cmpResult => {

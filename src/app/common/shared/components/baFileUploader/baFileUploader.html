@@ -1,5 +1,5 @@
 <input #fileUpload style='display: none' ngFileSelect type="file" [options]="fileUploaderOptions" (onUpload)="_onFileUpload($event)" (beforeUpload)="beforeFileUpload($event)">
-<div class="input-group" [ngClass]="{uploading: uploadFileInProgress}">
+<div class="input-group {{size}}" [ngClass]="{uploading: uploadFileInProgress}">
     <div class="form-control">
         <div class='input-group-my max-size'>
             <input class='max-size' #inputText type="text" [ngModel]="defaultValue" readonly>
@@ -7,7 +7,7 @@
         </div>
         <span id='progress-{{_id}}' class='form-progress max-height'></span>
     </div>
-    <span class="input-group-btn">
-      <button class="btn btn-success" type="button" (click)="bringFileSelector();">Browse</button>
+    <span class="input-group-btn {{size}}">
+      <button class="btn btn-success {{size}}" type="button" (click)="bringFileSelector();">Browse</button>
   </span>
 </div>

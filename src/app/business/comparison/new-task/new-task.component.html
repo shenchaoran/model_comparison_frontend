@@ -1,8 +1,10 @@
 <div class="container flex-box-col-nowrap max-height">
     <nz-steps [(nzCurrent)]="currentStep">
         <nz-step [nzTitle]="'Basic Information'" [nzDescription]=''></nz-step>
+        <nz-step [nzTitle]="'Select Participants'" [nzDescription]=''></nz-step>
+        <nz-step [nzTitle]="'Configure Comparison Object'" [nzDescription]=''></nz-step>
         <nz-step [nzTitle]="'Configure Data Source'" [nzDescription]=''></nz-step>
-        <nz-step [nzTitle]="'Configure Comparison Data'" [nzDescription]=''></nz-step>
+        <!-- <nz-step [nzTitle]="'Configure Comparison Data'" [nzDescription]=''></nz-step> -->
     </nz-steps>
 
     <div class="steps-content flex-box-col-nowrap flex-item-1-1-auto debug-border debug-background overflow-y">
@@ -40,9 +42,122 @@
         </div>
 
         <div class='flex-item-1-1-auto' [hidden]='currentStep !== 1'>
+            <ogms-form-participants [selectMode]='__selectMode' (onParticipantsChange)='onParticipantsChange($event)'></ogms-form-participants>
+        </div>
+
+        <div class='flex-item-1-1-auto' [hidden]='currentStep !== 2'>
+            <h4 style='margin: 10px 0;'>Configure Comparison Object:</h4>
+            <nz-collapseset [nzAccordion]='true'>
+                <nz-collapse *ngFor="let cmpObj of cmpTask.cmpCfg.cmpObjs" [nzActive]="cmpObj.attached.active">
+                    <div collapse-title>
+                        <div class='flex-box-row-nowrap'>
+                            <span>
+                                {{cmpObj.meta.name}}
+                            </span>
+                            <span class='flex-item-1-1-auto'></span>
+                        </div>
+                    </div>
+
+                    <div nz-row nz-form-item [nzGutter]='18'>
+                        <div nz-col [nzSpan]='8'>
+                            <label>Name: </label>
+                            <nz-tag>{{cmpObj.meta.name}}</nz-tag>
+                        </div>
+                        <div nz-col [nzSpan]='8'>
+                            <label>Description: </label>
+                            <nz-tag>{{cmpObj.meta.desc}}</nz-tag>
+                        </div>
+                        <div nz-col [nzSpan]='8'>
+                            <label>Schama Name: </label>
+                            <nz-tag>{{cmpObj.schemaName}}</nz-tag>
+                        </div>
+                    </div>
+                    <div nz-form-item>
+                        <label>Comparison Method</label>
+                        <nz-tag *ngFor='let method of cmpObj.methods'>{{method}}</nz-tag>
+                    </div>
+
+                    <h5 style='margin: 10px 0;'>Mapping Comparison Object:</h5>
+                    <nz-collapseset [nzBordered]="false" [nzAccordion]='true'>
+                        <nz-collapse *ngFor="let dataRefer of cmpObj.dataRefers" [nzActive]="dataRefer.attached.active">
+                            <div collapse-title>
+                                <div class='flex-box-row-nowrap'>
+                                    <span>
+                                        {{dataRefer.msName}}
+                                    </span>
+                                    <span class='flex-item-1-1-auto'></span>
+                                </div>
+                            </div>
+                            <div>
+                                <nz-radio-group #dataSrc [(ngModel)]='dataRefer.attached.src' (ngModelChange)='updateStepyValid()' [nzSize]='"small"' style='margin-bottom: 15px;'>
+                                    <label nz-radio-button [nzValue]="''"><span>Not Participate</span></label>
+                                    <label nz-radio-button [nzValue]="'Computing'"><span>Computing</span></label>
+                                    <label nz-radio-button [nzValue]="'Uploading'"><span>Uploading</span></label>
+                                </nz-radio-group>
+                                <div>
+                                    <ng-container *ngIf='dataSrc._value === ""'>
+                                        Don't participant this comparison object!
+                                    </ng-container>
+
+                                    <ng-container *ngIf='dataSrc._value === "Computing"'>
+                                        <ng-container *ngFor='let ms of __ms'>
+                                            <div *ngIf='ms.msId === dataRefer.msId'>
+                                                <div style='margin-bottom: 15px;'>
+                                                    Select event:
+                                                    <nz-select [ngModel]='dataRefer.eventName' style='width: 150px' (ngModelChange)='onSelectEvent($event, dataRefer)' nzAllowClear>
+                                                        <nz-option *ngFor='let option of ms.data.MDL.IO.data' [nzLabel]='option.id' [nzValue]='option'></nz-option>
+                                                    </nz-select>
+                                                </div>
+                                                <div style='margin-botton: 15px;'>
+                                                    Select field:
+                                                    <ng-container *ngIf='dataRefer.attached.schema'>
+                                                        <ng-container *ngIf='dataRefer.attached.schema.src === 0 && dataRefer.attached.schema.type === "TABLE_RAW"'>
+                                                            <nz-select [(ngModel)]="dataRefer.data.field" (ngModelChange)='updateStepyValid()' style='width: 150px'>
+                                                                <nz-option *ngFor='let col of dataRefer.attached.schema.structure' [nzLabel]='col.id' [nzValue]="col.id">
+                                                                </nz-option>
+                                                            </nz-select>
+                                                        </ng-container>
+
+                                                        <ng-container *ngIf='dataRefer.attached.schema.src === 0 && dataRefer.attached.schema.type === "ASCII_GRID_RAW"'>
+                                                            <nz-select [(ngModel)]="dataRefer.data.field" (ngModelChange)='updateStepyValid()' style='width: 150px'>
+                                                                <nz-option [nzLabel]='"Default"' [nzValue]="'DEFAULT'">
+                                                                </nz-option>
+                                                            </nz-select>
+                                                        </ng-container>
+
+                                                        <ng-container *ngIf='dataRefer.attached.schema.src === 0 && dataRefer.attached.schema.type === "SHAPEFILE_RAW"'>
+
+                                                        </ng-container>
+
+                                                        <ng-container *ngIf='dataRefer.attached.schema.src === 0 && dataRefer.attached.schema.type === "ASCII_GRID_RAW_BATCH"'>
+                                                            <nz-select [(ngModel)]="dataRefer.data.field" (ngModelChange)='updateStepyValid()' style='width: 150px'>
+                                                                <nz-option [nzLabel]='"Default"' [nzValue]="'DEFAULT'">
+                                                                </nz-option>
+                                                            </nz-select>
+                                                        </ng-container>
+                                                    </ng-container>
+                                                </div>
+                                            </div>
+
+                                        </ng-container>
+                                    </ng-container>
+
+                                    <ng-container *ngIf='dataSrc._value === "Uploading"'>
+                                        <ba-file-uploader id='uploader-{{dataRefer.eventName}}' nz-col [nzSpan]='12' [fileUploaderOptions]="fileUploaderOptions" (onFileUpload)="_onFileUpload($event, cmpObj.id, dataRefer.msId, dataRefer.eventName)" (onFileUploadCompleted)='_onFileUploadCompleted($event, cmpObj.id, dataRefer.msId, dataRefer.eventName)'
+                                            (onClear)='_onClearUploaded(cmpObj.id, dataRefer.msId, dataRefer.eventName)'></ba-file-uploader>
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </nz-collapse>
+                    </nz-collapseset>
+                </nz-collapse>
+            </nz-collapseset>
+        </div>
+
+        <div class='flex-item-1-1-auto' [hidden]='currentStep !== 3'>
             <div class='flex-box-col-nowrap max-size'>
                 <h4>Configure Data Source</h4>
-                <div nz-form-item nz-row>
+                <!-- <div nz-form-item nz-row>
                     <div nz-form-label nz-col [nzSpan]="3">
                         <label>Data Source</label>
                     </div>
@@ -52,7 +167,7 @@
                             <label nz-radio-button [nzValue]="'upload'"><span>Personal Upload</span></label>
                         </nz-radio-group>
                     </div>
-                </div>
+                </div> -->
                 <div nz-form-item nz-row *ngIf='cmpTask.calcuCfg.dataSrc === "std" && !__loading'>
                     <div nz-form-label nz-col [nzSpan]="3">
                         <label>Date Range</label>
@@ -64,7 +179,7 @@
                 </div>
                 <ng-container class='flex-item-1-1-auto' *ngIf='(cmpTask.calcuCfg.dataSrc === "std") else uploadStep'>
                     <!-- <router-outlet></router-outlet> -->
-                    <ogms-ol-map (onDrawRecEnd)='onDrawRecEnd()' class='flex-item-1-1-auto'></ogms-ol-map>
+                    <ogms-region-map (onDrawRecEnd)='onDrawRecEnd()' class='flex-item-1-1-auto'></ogms-region-map>
                     <!-- <div id="map" style="width:600px; height:400px;"></div> -->
                 </ng-container>
                 <ng-template #uploadStep>
@@ -73,9 +188,8 @@
             </div>
         </div>
 
-        <div class='flex-item-1-1-auto' [hidden]='currentStep !== 2'>
+        <!-- <div class='flex-item-1-1-auto' [hidden]='currentStep !== 4'>
             <h4>Configure Comparison Data</h4>
-            <!-- ms->eventName -->
             <div *ngIf='cmpSolution'>
                 <div *ngFor='let ms of cmpSolution.cmpCfg.ms'>
                     <div *ngIf='!ms.participate'>
@@ -85,7 +199,8 @@
                                 <div *ngIf='dataRefer.msId === ms.msId' nz-row>
                                     <div nz-row [nzType]="'flex'" [nzAlign]="'middle'" [nzGutter]='18'>
                                         <label nz-col [nzSpan]='5'>{{dataRefer.eventName}}: </label>
-                                        <ba-file-uploader id='uploader-{{dataRefer.eventName}}' nz-col [nzSpan]='12' [fileUploaderOptions]="fileUploaderOptions" (onFileUpload)="_onFileUpload($event, cmpObj.id, dataRefer.msId, dataRefer.eventName)" (onFileUploadCompleted)='_onFileUploadCompleted($event, cmpObj.id, dataRefer.msId, dataRefer.eventName)' (onClear)='_onClearUploaded(cmpObj.id, dataRefer.msId, dataRefer.eventName)'></ba-file-uploader>
+                                        <ba-file-uploader id='uploader-{{dataRefer.eventName}}' nz-col [nzSpan]='12' [fileUploaderOptions]="fileUploaderOptions" (onFileUpload)="_onFileUpload($event, cmpObj.id, dataRefer.msId, dataRefer.eventName)" (onFileUploadCompleted)='_onFileUploadCompleted($event, cmpObj.id, dataRefer.msId, dataRefer.eventName)'
+                                            (onClear)='_onClearUploaded(cmpObj.id, dataRefer.msId, dataRefer.eventName)'></ba-file-uploader>
                                     </div>
                                 </div>
                             </div>
@@ -93,20 +208,22 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 
     <div class="steps-action">
         <button nz-button [nzType]="'default'" (click)="changeStep(currentStep-1)" [disabled]="currentStep === 0">
                     <span>Previous</span>
                 </button>
-        <button nz-button [nzType]="'default'" (click)="changeStep(currentStep+1)" *ngIf="currentStep < 2" [disabled]='nextDisabled'>
+        <button nz-button [nzType]="'default'" (click)="changeStep(currentStep+1)" *ngIf="currentStep < 3" [disabled]='nextDisabled'>
                     <span>Next</span>
                 </button>
-        <button nz-button [nzType]="'primary'" (click)="done()" *ngIf="currentStep === 2" [disabled]='doneDisabled'>
+        <button nz-button [nzType]="'primary'" (click)="done()" *ngIf="currentStep === 3" [disabled]='doneDisabled'>
                     <span>Save</span>
                 </button>
     </div>
+
+    <ogms-form-cmp-objs-modal [ms]='selectedMS' [showModal]='__isCmpModalVisible' (onCancel)='modalCancel()' (onSubmit)='modalSubmit($event)'></ogms-form-cmp-objs-modal>
 
     <nz-modal [nzVisible]="__isConfirmVisible" [nzContent]="modalContent" [nzFooter]='modalFooter' (nzOnCancel)="handleCancel($event)">
         <ng-template #modalContent>
