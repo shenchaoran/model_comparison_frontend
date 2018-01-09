@@ -1,11 +1,17 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpHeaders, HttpParams } from '@angular/common/http';
+import { _HttpClient } from './http.client';
 import { Resolve } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/toPromise';
 import { ErrorHandle } from '../../../common/core/base/error-handle';
 
 import { APIS, BACKEND } from '@config/api.config';
+
+
+/**
+ * deprecated
+ */
 
 @Injectable()
 export class DataInquireService extends ErrorHandle implements Resolve<any> {
@@ -24,7 +30,7 @@ export class DataInquireService extends ErrorHandle implements Resolve<any> {
         });
     }
 
-    constructor(private http: HttpClient) {
+    constructor(private http: _HttpClient) {
         super(); 
     }
 
@@ -45,7 +51,7 @@ export class DataInquireService extends ErrorHandle implements Resolve<any> {
         }
 
         let url = service.url;
-        url = `http://${BACKEND.host}:${BACKEND.port}${url}`;
+        // url = `http://${BACKEND.host}:${BACKEND.port}${url}`;
         if (params) {
             _.forIn(params, (value, key) => {
                 url = _.replace(url, ':' + key, value);
@@ -121,7 +127,7 @@ export class DataInquireService extends ErrorHandle implements Resolve<any> {
         }
 
         let url = service.url;
-        url = `http://${BACKEND.host}:${BACKEND.port}${url}`;
+        // url = `http://${BACKEND.host}:${BACKEND.port}${url}`;
         if (params) {
             _.forIn(params, (value, key) => {
                 url = _.replace(url, ':' + key, value);

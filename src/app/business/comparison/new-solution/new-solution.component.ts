@@ -1,5 +1,4 @@
 import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
-import { NzMessageService } from 'ng-zorro-antd';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoginService } from '@feature/login/login.service';
 import { CmpSolution, CmpTask, CmpObj, ResourceSrc } from '@models';
@@ -30,7 +29,6 @@ export class NewSolutionComponent implements OnInit {
 
     constructor(
         private fb: FormBuilder,
-        private _message: NzMessageService,
         private cdRef: ChangeDetectorRef,
         private service: CmpSlnService,
         private _notice: NzNotificationService,

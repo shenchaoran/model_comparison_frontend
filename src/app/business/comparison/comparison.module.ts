@@ -47,7 +47,12 @@ const SERVICES = [
 ];
 
 @NgModule({
-  imports: [NgxSharedModule, SharedModule, CmpRoutingModule, OlMapModule],
+  imports: [
+      NgxSharedModule, 
+      SharedModule, 
+      CmpRoutingModule, 
+      OlMapModule
+    ],
   declarations: [
     ComparisonComponent,
     CmpSolutionComponent,

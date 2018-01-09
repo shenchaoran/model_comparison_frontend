@@ -1,15 +1,13 @@
 import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { DataInquireService } from '@core/services/data.inquire.service';
+import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Resolve } from '@angular/router';
 import { _HttpClient } from '@core/services/http.client';
 
 @Injectable()
 export class DataService implements Resolve<any> {
     constructor(
-        private http: _HttpClient,
-        private dataInquire: DataInquireService
+        private http: _HttpClient
     ) {}
 
     resolve() {
@@ -37,7 +35,7 @@ export class DataService implements Resolve<any> {
     }
 
     getDataTabTree(): Observable<any> {
-        return this.dataInquire.get('getDataTabTree');
+        return this.http.get('/data');
     }
 
     getStdData(): Observable<any> {

@@ -19,7 +19,7 @@ export const BACKEND = {
 export const APIS2 = {
     auth: {
         login: {
-            
+
         }
     },
     data: {

@@ -12,7 +12,6 @@ import { TokenInterceptor } from './net/token/token.interceptor';
 import { ResParserInterceptor } from './net/res-parser/res-parser.interceptor';
 // import { TokenService } from './net/token/token.service';
 
-
 import 'rxjs/add/observable/from';
 import 'rxjs/add/observable/concat';
 import 'rxjs/add/observable/zip';
@@ -37,22 +36,21 @@ import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/count';
 import 'rxjs/add/operator/do';
+import { BACKEND } from '@config';
 
 import {
-    DataInquireService,
     AuthGuard,
     BaThemeSpinner,
     EchartAdapterService,
-    TableAdapterService,
+    TableAdapterService
 } from './services';
 
 const CITYFUN_SERVICES = [
-    DataInquireService,
     AuthGuard,
 
     BaThemeSpinner,
     EchartAdapterService,
-    TableAdapterService,
+    TableAdapterService
 ];
 
 @NgModule({
@@ -61,8 +59,19 @@ const CITYFUN_SERVICES = [
     providers: [
         TranslatorService,
         ...CITYFUN_SERVICES,
-        { provide: HTTP_INTERCEPTORS, useClass: ResParserInterceptor, multi: true},
-        { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
+        {
+            provide: 'BACKEND',
+            useValue: {
+                host: BACKEND.host,
+                port: BACKEND.port
+            }
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: ResParserInterceptor,
+            multi: true
+        },
+        { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
     ]
 })
 export class CoreModule {

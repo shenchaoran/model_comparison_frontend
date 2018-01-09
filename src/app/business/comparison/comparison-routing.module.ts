@@ -48,10 +48,10 @@ const routes: Routes = [
                     geoModelTree: MSService
                 },
                 children: [
-                    {
-                        path: '',
-                        loadChildren: '../../common/feature/ol-map/ol-map.module#OlMapModule'
-                    }
+                    // {
+                    //     path: '',
+                    //     loadChildren: '../../common/feature/ol-map/ol-map.module#OlMapModule'
+                    // }
                 ]
             },
             {

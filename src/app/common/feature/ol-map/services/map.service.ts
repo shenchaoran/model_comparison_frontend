@@ -1,11 +1,11 @@
 // 异步函数全部返回Observable
 
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import * as uuidv1 from 'uuid/v1';
-
+import { _HttpClient } from '@core/services/http.client';
 import * as echarts from 'echarts';
 import { OL_MAP_DRAW_TYPE } from '../models';
 import { ErrorHandle } from '@core/base/error-handle';
@@ -24,7 +24,7 @@ export abstract class MapService extends ErrorHandle {npmnpm
   // 画的 point, polyline, polygon
   draw: any;
 
-  constructor(protected http: HttpClient) {
+  constructor(protected http: _HttpClient) {
     super();
   }
 

@@ -2,15 +2,13 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { NgxSharedModule } from '../ngx-shared';
 import { NgUploaderModule } from 'ngx-uploader';
-
-import { jqxTreeComponent } from 'jqwidgets-framework/jqwidgets-ts/angular_jqxtree';
-import { jqxExpanderComponent } from 'jqwidgets-framework/jqwidgets-ts/angular_jqxexpander';
-import { jqxMenuComponent } from 'jqwidgets-framework/jqwidgets-ts/angular_jqxmenu';
-import { jqxListBoxComponent } from 'jqwidgets-framework/jqwidgets-ts/angular_jqxlistbox';
-
+import { jqxTreeComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxtree';
+import { jqxExpanderComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxexpander';
+import { jqxMenuComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxmenu';
+import { jqxListBoxComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxlistbox';
 import { BaThemeConfig } from './theme.config';
-
 import { BaThemeConfigProvider } from './theme.configProvider';
+import { BACKEND } from '@config';
 
 import {
   BaCard,
@@ -121,7 +119,17 @@ export * from './components';
     ...CITYFUN_PIPES
   ],
   imports: [RouterModule, NgxSharedModule, NgUploaderModule],
-  providers: [...CITYFUN_VALIDATORS, ...SERVICES],
+  providers: [
+      ...CITYFUN_VALIDATORS, 
+      ...SERVICES,
+      {
+        provide: 'BACKEND',
+        useValue: {
+            host: BACKEND.host,
+            port: BACKEND.port
+        }
+    },
+    ],
   exports: [...CITYFUN_COMPONENTS, ...CITYFUN_DIRECTIVES, ...CITYFUN_PIPES]
 })
 export class SharedModule {

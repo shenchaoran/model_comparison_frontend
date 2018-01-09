@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { _HttpClient } from '@core/services/http.client';
 import { Router, Routes } from '@angular/router';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
@@ -14,7 +14,7 @@ export class BaMenuService extends ErrorHandle {
 
 	protected _currentMenuItem = {};
 
-	constructor(private http: HttpClient, private _router: Router) { 
+	constructor(private http: _HttpClient, private _router: Router) { 
         super();
 		postal.channel('MENU_CHANNEL').subscribe('menu.update', (data, envelope) => {
             this.updateMenuByRoutes(<Routes>HEADER_MENUS);

@@ -1,7 +1,6 @@
 import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { DataInquireService } from '@core/services/data.inquire.service';
+import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Resolve } from '@angular/router';
 import { _HttpClient } from '@core/services/http.client';
 import * as proj4x from 'proj4';
@@ -10,8 +9,7 @@ const proj4 = (proj4x as any).default;
 @Injectable()
 export class CmpTaskService implements Resolve<any> {
   constructor(
-    private http: _HttpClient,
-    private dataInquire: DataInquireService
+    private http: _HttpClient
   ) {}
 
   resolve() {

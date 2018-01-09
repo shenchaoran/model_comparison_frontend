@@ -1,1 +1,0 @@
-export * from './manager-panel.component';

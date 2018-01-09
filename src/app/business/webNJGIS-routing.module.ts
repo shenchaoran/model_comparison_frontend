@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { AuthGuard } from '../common/core/services/auth.guard';
-import { DataInquireService } from '../common/core/services/data.inquire.service';
 
 import {
   SiderMenuLayoutComponent,
@@ -34,10 +33,6 @@ const routes: Routes = [
       {
         path: 'help',
         loadChildren: './help/help.module#HelpModule'
-      },
-      {
-        path: 'v1.0',
-        loadChildren: './main-window/main-window.module#MainWindowModule'
       },
       {
         path: 'users/:username',

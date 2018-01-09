@@ -2,16 +2,26 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { NzNotificationService, NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';
 // import { ClarityModule } from "clarity-angular";
-
+// import { map, filter, scan, take, toArray } from 'rxjs/operators';
 import { TranslateModule } from '@ngx-translate/core';
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { QuillModule } from 'ngx-quill';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 
+
+import {
+    PerfectScrollbarModule,
+    PerfectScrollbarComponent,
+    PERFECT_SCROLLBAR_CONFIG,
+    PerfectScrollbarConfigInterface
+} from 'ngx-perfect-scrollbar';
+const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
+    suppressScrollX: true
+};
+
 @NgModule({
-  declarations: [],
+  declarations: [
+  ],
   imports: [
     CommonModule,
     FormsModule,
@@ -20,8 +30,8 @@ import { NgZorroAntdModule } from 'ng-zorro-antd';
     HttpClientModule,
 
     NgZorroAntdModule,
+    QuillModule,
     PerfectScrollbarModule,
-    QuillModule
     // ClarityModule.forChild(),
   ],
   exports: [
@@ -30,14 +40,16 @@ import { NgZorroAntdModule } from 'ng-zorro-antd';
     ReactiveFormsModule,
 
     TranslateModule,
-    PerfectScrollbarModule,
     NgZorroAntdModule,
     QuillModule,
-    // ClarityModule,
+    PerfectScrollbarModule,
   ],
   providers: [
-    { provide: NZ_NOTIFICATION_CONFIG, useValue: { nzDuration: 3000, nzTop: '60px' } },
-    NzNotificationService,]
+    {
+        provide: PERFECT_SCROLLBAR_CONFIG,
+        useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
+    }
+]
 })
 export class NgxSharedModule {
   static forRoot(): ModuleWithProviders {

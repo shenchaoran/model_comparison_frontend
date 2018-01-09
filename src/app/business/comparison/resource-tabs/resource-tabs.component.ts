@@ -2,7 +2,7 @@
  * 笨组件：事件和属性都由外部控制
  */
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ViewChildren, QueryList } from '@angular/core';
-import { jqxTreeComponent } from 'jqwidgets-framework/jqwidgets-ts/angular_jqxtree';
+import { jqxTreeComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxtree';
 
 @Component({
     selector: 'ogms-resource-tabs',

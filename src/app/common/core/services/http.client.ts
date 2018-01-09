@@ -1,6 +1,6 @@
 // tslint:disable:no-console class-name
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 /**
@@ -11,9 +11,17 @@ import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class _HttpClient {
-    constructor(private http: HttpClient) { }
+    constructor(
+        private http: HttpClient,
+        @Inject('BACKEND') private backend
+    ) { }
+
+    private appendDomain(url: string): string {
+        return `http://${this.backend.host}:${this.backend.port}${url}`;
+    }
 
     private appendJWT(url: string, appendJWT: boolean): string {
+        url = this.appendDomain(url);
         if(appendJWT) {
             const jwtStr = localStorage.getItem('jwt');
             let jwt = undefined;
@@ -52,7 +60,7 @@ export class _HttpClient {
     }
 
     get(
-        url: string, 
+        url: string,
         options: any = {},
         appendJWT?: boolean
     ): Observable<any> {
@@ -61,8 +69,8 @@ export class _HttpClient {
     }
 
     post(
-        url: string, 
-        body: any|null, 
+        url: string,
+        body: any|null,
         options: any = {},
         appendJWT?: boolean
     ): Observable<any> {
@@ -71,11 +79,21 @@ export class _HttpClient {
     }
 
     delete(
-        url: string, 
+        url: string,
         options: any = {},
         appendJWT?: boolean
     ): Observable<any> {
         url = this.appendJWT(url, appendJWT);
         return this.resInterceptor(this.http.delete(url, options));
     }
+
+    put(
+      url: string,
+      body: any|null,
+      options: any = {},
+      appendJWT?: boolean
+  ): Observable<any> {
+      url = this.appendJWT(url, appendJWT);
+      return this.resInterceptor(this.http.put(url, body, options));
+  }
 }

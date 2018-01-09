@@ -1,9 +1,0 @@
-<div id="container" (window:resize)="onResize()">
-    <ul>
-        <li *ngFor="let model of models" (click)="onModelToolClick(model);" [class.selected-li]='selectedModelId === model._id'>
-            <div>
-                <span title>{{model.ms_model.m_name}}</span>
-            </div>
-        </li>
-    </ul>
-</div>

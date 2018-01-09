@@ -2,7 +2,6 @@ import { NgModule, ApplicationRef } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
-import { ClarityModule } from "clarity-angular";
 import { _HttpClient } from '@core/services/http.client';
 import { GlobalState } from './global.state';
 
@@ -13,12 +12,12 @@ import { CoreModule } from './common/core/core.module';
 import { routing } from './app.routing';
 import { App } from './app.component';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
+import { NzNotificationService, NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';
+
 
 @NgModule({
     bootstrap: [App],
-    declarations: [
-        App
-    ],
+    declarations: [App],
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
@@ -35,6 +34,12 @@ import { NgZorroAntdModule } from 'ng-zorro-antd';
     providers: [
         _HttpClient,
         GlobalState,
+
+        {
+            provide: NZ_NOTIFICATION_CONFIG,
+            useValue: { nzDuration: 3000, nzTop: '60px' }
+        },
+        NzNotificationService,
     ]
 })
 export class AppModule {}

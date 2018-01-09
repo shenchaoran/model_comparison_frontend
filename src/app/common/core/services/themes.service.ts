@@ -1,6 +1,6 @@
 // import { Injectable, Inject } from '@angular/core';
 // import { SettingsService } from './settings.service';
-// import { DOCUMENT } from '@angular/platform-browser';
+// import { DOCUMENT } from '@angular/common';
 
 // const themeA = require('../../../styles/alain/themes/theme-a.less');
 // const themeB = require('../../../styles/alain/themes/theme-b.less');
