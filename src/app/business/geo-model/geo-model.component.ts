@@ -1,14 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-geo-model',
-  template: `
-    <p>
-      geo-model Works!
-    </p>
-    <router-outlet></router-outlet>
-  `,
-  styles: []
+  selector: 'ogms-geo-model',
+  templateUrl: './geo-model.component.html',
+  styleUrls: ['./geo-model.component.scss']
 })
 export class GeoModelComponent implements OnInit {
 

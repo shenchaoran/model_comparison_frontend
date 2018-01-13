@@ -16,20 +16,69 @@
             "es2016",
             "dom"
         ],
-        "plugins": [
-            { "name": "tslint-language-service" }
-        ],
         "paths": {
-            "@shared": ["app/common/shared"],
-            "@shared/*": ["app/common/shared/*"],
-            "@core": ["app/common/core/"],
-            "@core/*": ["app/common/core/*"],
-            "@ngx-shared": ["app/common/ngx-shared"],
-            "@ngx-shared/*": ["app/common/ngx-shared/*"],
-            "@feature": ["app/common/feature"],
-            "@feature/*": ["app/common/feature/*"],
-            "@config": ["config"],
-            "@config/*": ["config/*"]
+            "@common": [
+                "app/common"
+            ],
+            "@common/*": [
+                "app/common/*"
+            ],
+            "@shared": [
+                "app/common/shared"
+            ],
+            "@shared/*": [
+                "app/common/shared/*"
+            ],
+            "@core": [
+                "app/common/core/"
+            ],
+            "@core/*": [
+                "app/common/core/*"
+            ],
+            "@ngx-shared": [
+                "app/common/ngx-shared"
+            ],
+            "@ngx-shared/*": [
+                "app/common/ngx-shared/*"
+            ],
+            "@feature": [
+                "app/common/feature"
+            ],
+            "@feature/*": [
+                "app/common/feature/*"
+            ],
+            "@config": [
+                "config"
+            ],
+            "@config/*": [
+                "config/*"
+            ],
+            "@mock": [
+                "mock"
+            ],
+            "@mock/*": [
+                "mock/*"
+            ],
+            "@utils": [
+                "app/common/utils"
+            ],
+            "@utils/*": [
+                "app/common/utils/*"
+            ],
+            "@models": [
+                "app/models"
+            ],
+            "@models/*": [
+                "app/models/*"
+            ]
         }
-    }
+    },
+    "angularCompilerOptions": {
+        "preserveWhitespaces": false
+    },
+    "include": [
+        "src/**/*",
+        "node_modules/jqwidgets-scripts/**/*",
+        "node_modules/ngx-uploader/src/**/*"
+    ]
 }

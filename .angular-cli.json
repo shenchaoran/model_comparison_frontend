@@ -18,7 +18,7 @@
         "test": "test.ts",
         "tsconfig": "tsconfig.app.json",
         "testTsconfig": "tsconfig.spec.json",
-        "prefix": "app",
+        "prefix": "ogms",
         "styles": [
             "styles.scss"
         ],
@@ -27,26 +27,12 @@
             "../node_modules/jquery-slimscroll/jquery.slimscroll.js",
             "../node_modules/tether/dist/js/tether.js",
             "../node_modules/chroma-js/chroma.js",
-            "../node_modules/lodash/",
+            "../node_modules/lodash/lodash.min.js",
             "../node_modules/postal/lib/postal.min.js",
-
             "../node_modules/@webcomponents/custom-elements/custom-elements.min.js",
-            "../node_modules/clarity-icons/clarity-icons.min.js",
-
-            "../node_modules/jqwidgets-framework/jqwidgets/jqxcore.js",
-            "../node_modules/jqwidgets-framework/jqwidgets/jqxdata.js",
-            "../node_modules/jqwidgets-framework/jqwidgets/jqxbuttons.js",
-            "../node_modules/jqwidgets-framework/jqwidgets/jqxscrollbar.js",
-            "../node_modules/jqwidgets-framework/jqwidgets/jqxmenu.js",
-            "../node_modules/jqwidgets-framework/jqwidgets/jqxcheckbox.js",
-            "../node_modules/jqwidgets-framework/jqwidgets/jqxlistbox.js",
-            "../node_modules/jqwidgets-framework/jqwidgets/jqxdropdownlist.js",
-            "../node_modules/jqwidgets-framework/jqwidgets/jqxgrid.js",
-            "../node_modules/jqwidgets-framework/jqwidgets/jqxgrid.sort.js",
-            "../node_modules/jqwidgets-framework/jqwidgets/jqxgrid.pager.js",
-            "../node_modules/jqwidgets-framework/jqwidgets/jqxgrid.selection.js",
-            "../node_modules/jqwidgets-framework/jqwidgets/jqxgrid.edit.js",
-            "../node_modules/jqwidgets-framework/jqwidgets/jqxtree.js"
+            "../node_modules/openlayers/dist/ol.js",
+            "../node_modules/ol3-ext/dist/ol3-ext.min.js",
+            "../node_modules/quill/dist/quill.js"
         ],
         "environmentSource": "environments/environment.ts",
         "environments": {

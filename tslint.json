@@ -7,7 +7,6 @@
         "max-line-length": [true, 120],
         "class-name": true,
         "comment-format": [true, "check-space"],
-        // "indent": [true, "spaces"],
         "eofline": true,
         "no-duplicate-variable": true,
         "no-eval": true,

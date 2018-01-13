@@ -1,8 +1,7 @@
-
 export class AppConfigClass {
     id: string;
-    name: string;
-    des: string;
+    name?: string;
+    des?: string;
     defaultroute: string;
 }
 

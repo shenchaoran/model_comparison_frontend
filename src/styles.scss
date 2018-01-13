@@ -4,21 +4,27 @@
 // @import "../node_modules/clarity-icons/clarity-icons.min.css";
 // @import "../node_modules/clarity-ui/clarity-ui.min.css";
 // end
-@import "../node_modules/roboto-fontface/css/roboto/roboto-fontface.css";
-@import "../node_modules/normalize.css/normalize.css";
-@import '../node_modules/font-awesome/css/font-awesome.css';
-@import "../node_modules/ionicons/css/ionicons.min.css";
-@import "../node_modules/ng2-slim-loading-bar/style.css";
-@import "../node_modules/perfect-scrollbar/dist/css/perfect-scrollbar.min.css";
-@import "../node_modules/openlayers/dist/ol.css";
-@import "app/common/shared/theme/theme.scss";
+@import "~roboto-fontface/css/roboto/roboto-fontface.css";
+@import "~normalize.css/normalize.css";
+@import '~font-awesome/css/font-awesome.css';
+@import "~ionicons/css/ionicons.min.css";
+@import "~ng2-slim-loading-bar/style.css";
+@import "~perfect-scrollbar/css/perfect-scrollbar.css";
+@import "~openlayers/dist/ol.css";
+@import '~quill/dist/quill.bubble';
+@import '~quill/dist/quill.snow';
+@import '~angular-tree-component/dist/angular-tree-component.css';
+// theme
+@import "app/common/shared/theme.scss";
 // add by SCR
-@import '../node_modules/handsontable/dist/handsontable.full.css';
-@import "./app/common/shared/theme/css/perfectscroll.css";
-@import "./app/common/shared/theme/css/nouislider.min.css";
-@import "./app/common/shared/theme/css/ng2-tree-styles.css";
+// @import '~handsontable/dist/handsontable.full.css';
+@import "assets/css/my/custom-esri.css";
+@import "assets/css/my/custom-openlayers.css";
+@import "assets/css/my/perfectscroll.css";
+@import "assets/css/my/ng2-tree-styles.css";
 // TODO relative path problems
-// @import '~jqwidgets-framework/jqwidgets/styles/jqx.base';
-// @import '../node_modules/jqwidgets-framework/jqwidgets/styles/jqx.energyblue';
-// @import '~angular-tree-component/dist/angular-tree-component.css';
+@import 'assets/css/jqwidgets/jqx.base';
+@import 'assets/css/jqwidgets/jqx.energyblue-my';
+@import 'assets/css/zorro.scss';
+@import 'assets/css/ol3-ext/ol3-ext.css';
 // end

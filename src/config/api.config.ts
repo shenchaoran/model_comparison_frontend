@@ -1,3 +1,8 @@
+/**
+ * TODO 添加http请求的method
+ * 这里写成一个json表比较合适，参考nodejs的层级路由
+ */
+
 export class APIClass {
     id: string;
     name: string;
@@ -9,6 +14,37 @@ export const BACKEND = {
     // host: '172.21.213.146',
     host: 'localhost',
     port: '9999'
+}
+
+export const APIS2 = {
+    auth: {
+        login: {
+
+        }
+    },
+    data: {
+
+    },
+    'model-tools': {
+
+    },
+    'data-tools': {
+
+    },
+    visualization: {
+
+    },
+    comparison: {
+        solutions: {
+
+        },
+        tasks: {
+
+        },
+        scenes: {
+
+        }
+    }
 }
 
 export const APIS = [{
@@ -29,8 +65,14 @@ export const APIS = [{
     "url": "/auth/find-psw"
 },
 
+
 {
-    "uid": "getModelTools",
+    "uid": "getModelTabTree",
+    "name": "",
+    "url": "/model-tools"
+},
+{
+    "uid": "insertModelTool",
     "name": "",
     "url": "/model-tools"
 },
@@ -39,45 +81,14 @@ export const APIS = [{
     "name": "",
     "url": "/model-tools/:id"
 },
-{
-    "uid": "getModelInput",
-    "name": "",
-    "url": "/model-tools/:id/input"
-},
-{
-    "uid": "invokeModelTool",
-    "name": "",
-    "url": "/model-tools/:id/invoke"
-},
-{
-    "uid": "getInvokeRecord",
-    "name": "",
-    "url": "/model-tools/records/:id"
-},
+
 
 
 {
-    "uid": "getDataTools",
+    "uid": "getDataTabTree",
     "name": "",
-    "url": "/data-tools"
+    "url": "/data"
 },
-{
-    "uid": "getDataTool",
-    "name": "",
-    "url": "/data-tools/:id"
-},
-{
-    "uid": "getDataInput",
-    "name": "",
-    "url": "/data-tools/:id/input"
-},
-{
-    "uid": "invokeDataTool",
-    "name": "",
-    "url": "/data-tools/:id/invoke"
-},
-
-
 {
     "uid": "postData",
     "name": "",

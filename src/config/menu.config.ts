@@ -1,6 +1,8 @@
-// 图标库使用的是zorro的
+// header menu 的图标库使用的是 zorro 的
+// sider menu 的图标库使用的是 ngx-admin 的
 export class MenuClass {
-    path: string;
+    isDivider?: boolean;
+    path?: string;
     data?: {
         menu: {
             title: string;
@@ -13,10 +15,11 @@ export class MenuClass {
         };
     };
     children?: Array<MenuClass>;
+    disabled?: boolean;
 }
 
 
-export const MENUS: MenuClass[] = [
+export const HEADER_MENUS: MenuClass[] = [
     {
         path: 'webNJGIS',
         children: [
@@ -34,7 +37,7 @@ export const MENUS: MenuClass[] = [
                 }
             },
             {
-                path: 'geo-model',
+                path: 'geo-models',
                 data: {
                     menu: {
                         title: 'Model',
@@ -52,30 +55,30 @@ export const MENUS: MenuClass[] = [
                     menu: {
                         title: 'Data',
                         id: 'data',
-                        icon: 'appstore-o',
+                        icon: 'database',
                         selected: true,
                         expanded: false,
                         order: 0
                     }
-                },
-                children: [
-                    {
-                        path: 'std-data-set',
-                        data: {
-                            menu: {
-                                title: 'Standard Data Set'
-                            }
-                        }
-                    },
-                    {
-                        path: 'data-processor',
-                        data: {
-                            menu: {
-                                title: 'Data Processor'
-                            }
-                        }
-                    }
-                ]
+                }
+                // children: [
+                //     {
+                //         path: 'std-data-set',
+                //         data: {
+                //             menu: {
+                //                 title: 'Standard Data Set'
+                //             }
+                //         }
+                //     },
+                //     {
+                //         path: 'data-processor',
+                //         data: {
+                //             menu: {
+                //                 title: 'Data Processor'
+                //             }
+                //         }
+                //     }
+                // ]
             },
             {
                 path: 'comparison',
@@ -83,7 +86,7 @@ export const MENUS: MenuClass[] = [
                     menu: {
                         title: 'Comparison',
                         id: 'comparison',
-                        icon: 'appstore-o',
+                        icon: 'smile-o',
                         selected: true,
                         expanded: false,
                         order: 0
@@ -91,7 +94,7 @@ export const MENUS: MenuClass[] = [
                 },
                 children: [
                     {
-                        path: 'cmp-solution',
+                        path: 'solutions',
                         data: {
                             menu: {
                                 title: 'Comparison Solution'
@@ -99,18 +102,18 @@ export const MENUS: MenuClass[] = [
                         }
                     },
                     {
-                        path: 'cmp-example',
+                        path: 'tasks',
                         data: {
                             menu: {
-                                title: 'Comparison Example'
+                                title: 'Comparison Task'
                             }
                         }
                     },
                     {
-                        path: 'start-cmp',
+                        path: 'scenes',
                         data: {
                             menu: {
-                                title: 'Start Comparison'
+                                title: 'Comparison Scene'
                             }
                         }
                     }
@@ -122,7 +125,7 @@ export const MENUS: MenuClass[] = [
                     menu: {
                         title: 'Help',
                         id: 'help',
-                        icon: 'appstore-o',
+                        icon: 'question',
                         selected: true,
                         expanded: false,
                         order: 0
@@ -132,3 +135,79 @@ export const MENUS: MenuClass[] = [
         ]
     }
 ];
+
+// 登录成功后的用户菜单
+export const USER_MENUS: MenuClass[] = [
+    {
+        path: 'webNJGIS',
+        children: [
+            {
+                path: 'user',
+                data: {
+                    menu: {
+                        title: 'User',
+                        id: 'user',
+                        icon: 'user',
+                        selected: true,
+                        expanded: false,
+                        order: 0
+                    }
+                },
+                children: [
+                    {
+                        path: 'x',
+                        data: {
+                            menu: {
+                                title: 'xxx'
+                            }
+                        },
+                        disabled: true
+                    },
+                    {
+                        path: 'profile',
+                        data: {
+                            menu: {
+                                title: 'Profile'
+                            }
+                        }
+                    },
+                    {
+                        path: 'stars',
+                        data: {
+                            menu: {
+                                title: 'Stars'
+                            }
+                        }
+                    },
+                    {
+                        path: 'resources',
+                        data: {
+                            menu: {
+                                title: 'Resources'
+                            }
+                        }
+                    },
+                    {
+                        isDivider: true
+                    },
+                    {
+                        path: 'set-up',
+                        data: {
+                            menu: {
+                                title: 'Setting'
+                            }
+                        }
+                    },
+                    {
+                        path: 'sign-out',
+                        data: {
+                            menu: {
+                                title: 'Sign Out'
+                            }
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+]

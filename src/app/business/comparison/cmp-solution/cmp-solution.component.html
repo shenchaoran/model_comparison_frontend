@@ -1,3 +1,19 @@
-<p>
-  cmp-solution works!
-</p>
+<div class="container flex-box-row-nowrap max-height">
+    <div id='left-item' class='debug-border'>
+        <ogms-resource-tabs [tabs]='tabs' (onSelect)='onTabItemSelected($event)'></ogms-resource-tabs>
+    </div>
+    <div id='right-item' class='debug-border flex-box-col-nowrap max-height'>
+        <div class="flex-box-row-nowrap" style='margin: 10px 0'>
+            <span class="flex-item-1-1-auto"></span>
+            <div>
+                <ng-container *ngIf='selectedSln'>
+                    <button nz-button [nzType]='"default"'><span>Edit</span></button>
+                    <a routerLink='../tasks/new'><button nz-button [nzType]='"primary"'><span>Configure Task</span></button></a>
+                </ng-container>
+                <a routerLink='new'><button nz-button [nzType]='"primary"'><span>New Solution</span></button></a>
+            </div>
+        </div>
+
+        <ogms-sln-detail [mode]='"read"' [cmpSln]='selectedSln' class='flex-item-1-1-auto'></ogms-sln-detail>
+    </div>
+</div>

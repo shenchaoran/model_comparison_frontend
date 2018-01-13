@@ -1,15 +1,36 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+
+import { CmpSlnService } from '../services/cmp-sln.service';
 
 @Component({
-  selector: 'app-cmp-solution',
-  templateUrl: './cmp-solution.component.html',
-  styleUrls: ['./cmp-solution.component.scss']
+    selector: 'ogms-cmp-solution',
+    templateUrl: './cmp-solution.component.html',
+    styleUrls: ['./cmp-solution.component.scss']
 })
 export class CmpSolutionComponent implements OnInit {
+    tabs: Array<{
+        id: string;
+        name: string;
+        data: any;
+    }>;
+    selectedSln;
 
-  constructor() { }
+    constructor(
+        private service: CmpSlnService,
+        private route: ActivatedRoute
+    ) {}
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+        this.route.data.subscribe(resolveData => {
+            this.tabs = resolveData.solutionTabTree;
+        });
+    }
 
+    onTabItemSelected(item) {
+        if(item.value) {
+            this.selectedSln = item.value;
+            localStorage.setItem('cmpSolution', JSON.stringify(item.value));
+        }
+    }
 }
