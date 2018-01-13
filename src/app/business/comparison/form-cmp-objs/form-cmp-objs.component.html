@@ -1,0 +1,77 @@
+<div class="container flex-box-col-nowrap max-height">
+    <h4>Comparison Object List:</h4>
+    <div>
+        <button nz-button [nzType]='"primary"' (click)='addCmpObj()'>
+                <i class="anticon anticon-plus"></i>
+                <span>Add</span>
+            </button>
+        <div class="flex-item-1-1-auto"></div>
+    </div>
+
+    <div style='margin: 10px 0;'>
+        <nz-collapseset [nzBordered]="false" [nzAccordion]='true'>
+            <nz-collapse *ngFor="let cmpObj of cmpObjs" [nzActive]="cmpObj.attached.active">
+                <div collapse-title>
+                    <div class='flex-box-row-nowrap'>
+                        <span>
+                            {{cmpObj.meta.name? cmpObj.meta.name: 'New Comparison Object'}}
+                        </span>
+                        <span class='flex-item-1-1-auto'></span>
+
+                        <nz-popconfirm [nzTitle]="'Are you sure delete this item?'" (nzOnConfirm)="removeCmpObj(cmpObj.id)" style='width: 22px; text-align: center;'>
+                            <span nz-popconfirm style='width: 22px; text-align: center;'><i class="fa fa-trash" aria-hidden="true"></i></span>
+                        </nz-popconfirm>
+                    </div>
+                </div>
+                <h5 style='margin: 10px 0;'>Meta Information:</h5>
+                <div nz-row [nzGutter]='"20"'>
+                    <div nz-col [nzSpan]="10" nz-row>
+                        <div nz-form-label nz-col [nzSpan]="5">
+                            <label>Name</label>
+                        </div>
+                        <div nz-form-control nz-col [nzSpan]="12">
+                            <nz-input [(ngModel)]='cmpObj.meta.name' (ngModelChange)='checkAccordionValid(cmpObj)' name='cmpObj-name' [nzDisabled]='mode==="read"'></nz-input>
+                        </div>
+                    </div>
+                    <div nz-col [nzSpan]="10" nz-row>
+                        <div nz-form-label nz-col [nzSpan]="5">
+                            <label>Description</label>
+                        </div>
+                        <div nz-form-control nz-col [nzSpan]="12">
+                            <nz-input [(ngModel)]='cmpObj.meta.desc' (ngModelChange)='checkAccordionValid(cmpObj)' name='cmpObj-desc' [nzDisabled]='mode==="read"'></nz-input>
+                        </div>
+                    </div>
+                </div>
+
+                <h5 style='margin: 10px 0;'>Comparison Schema</h5>
+                <div>
+                    <nz-radio-group [(ngModel)]="cmpObj.schemaName" (ngModelChange)='onSchemaChange($event, cmpObj.id)'>
+                        <ng-container *ngFor='let schemaName of schemaNames'>
+                            <label nz-radio-button [nzValue]="schemaName" [nzDisabled]='mode==="read" && cmpObj.schemaName!==schemaName'>
+                                <span>{{schemaName}}</span>
+                            </label>
+                        </ng-container>
+                    </nz-radio-group>
+
+                    <!-- <ng-container *ngIf='cmpObj.schemaTypes.length === 0 else tagsTemplate'>
+                        <nz-tag [nzColor]='"red"'>undefined</nz-tag>
+                    </ng-container>
+                    <ng-template #tagsTemplate>
+                        <nz-tag *ngFor='let schemaType of cmpObj.schemaTypes' [nzColor]='(cmpObj.schemaTypes.length > 1) ? "red" : "green"'>
+                            {{schemaType}}
+                        </nz-tag>
+                    </ng-template> -->
+                </div>
+
+
+                <h5 style='margin: 10px 0;'>Comparison Method</h5>
+                <div>
+                    <nz-checkbox-group [ngModel]="methods" (ngModelChange)='onMethodChange($event, cmpObj.id)' [nzDisabled]='mode==="read"'></nz-checkbox-group>
+                </div>
+                <!-- </form> -->
+            </nz-collapse>
+        </nz-collapseset>
+    </div>
+
+    <!-- <ogms-form-cmp-objs-modal [ms]='selectedMS' [showModal]='isModalVisible' (onCancel)='modalCancel()' (onSubmit)='modalSubmit($event)'></ogms-form-cmp-objs-modal> -->
+</div>
