@@ -26,4 +26,10 @@ export class CmpTaskComponent implements OnInit {
             this.tabs = resolveData.taskTabTree;
         });
     }
+    
+    onTabItemSelected(e) {
+        if(e.value) {
+            this.selectedTaskId = e.value._id;
+        }
+    }
 }

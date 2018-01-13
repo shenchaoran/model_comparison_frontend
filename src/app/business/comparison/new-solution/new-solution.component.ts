@@ -14,12 +14,10 @@ import { NgUploaderOptions } from 'ngx-uploader';
     styleUrls: ['./new-solution.component.scss']
 })
 export class NewSolutionComponent implements OnInit {
-
-    fileUploaderOptions: NgUploaderOptions;
+    mode = 'write';
     currentStep = 0;
     cmpSolution: CmpSolution = new CmpSolution();
     
-    __participants: any[] = [];
     __tempKeynote: any;
 
     nextDisabled: boolean = true;
@@ -35,21 +33,7 @@ export class NewSolutionComponent implements OnInit {
         private modalService: NzModalService,
         private router: Router,
         private route: ActivatedRoute
-    ) {
-        this.fileUploaderOptions = {
-            url: 'data',
-            data: {
-              desc: '',
-              src: ResourceSrc.EXTERNAL,
-              userId: JSON.parse(localStorage.getItem('jwt')).user._id
-            },
-            multiple: true,
-            fieldName: 'geo-data',
-            customHeaders: {
-              Authorization: 'bearer ' + JSON.parse(localStorage.getItem('jwt')).token
-            }
-          };
-    }
+    ) {}
 
 
     ngOnInit() {
@@ -68,6 +52,7 @@ export class NewSolutionComponent implements OnInit {
         };
         this.cmpSolution.auth = {
             userId: user._id,
+            userName: user.username,
             src: ResourceSrc.PRIVATE
         }
 

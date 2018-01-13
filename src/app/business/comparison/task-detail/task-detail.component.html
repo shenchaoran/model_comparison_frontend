@@ -1,1 +1,82 @@
-<ogms-ol-map [imageStaticLayers]='imageStaticLayers' class='flex-item-1-1-auto'></ogms-ol-map>
+<!-- <ogms-region-map [mode]='"write"'></ogms-region-map> -->
+<ng-container>
+    <div class='flex-box-col-nowrap max-size'>
+        <div class='flex-box-row-nowrap'>
+            <button nz-button (click)="refresh()" [nzType]="'primary'" class='form-row'>
+                <i class="fa fa-refresh" aria-hidden="true"></i>
+            </button>
+            <span class='flex-item-1-1-auto'></span>
+        </div>
+
+        <nz-tabset [nzType]="'card'">
+            <nz-tab>
+                <ng-template #nzTabHeading>
+                    Basic
+                </ng-template>
+                <ng-container *ngIf='cmpTask'>
+                    <!-- <ogms-region-map [mode]='"read"' [geojson]='cmpTask.calcuCfg.stdSrc.spatial.polygon'></ogms-region-map> -->
+                    <div nz-row [nzGutter]='18' class='form-row'>
+                        <span nz-col [nzSpan]='5'>Name:</span>
+                        <span nz-col [nzSpan]='19'>{{cmpTask.meta.name}}</span>
+                    </div>
+                    <div nz-row [nzGutter]='18' class='form-row'>
+                        <span nz-col [nzSpan]='5'>Description:</span>
+                        <span nz-col [nzSpan]='19'>{{cmpTask.meta.desc}}</span>
+                    </div>
+                    <div nz-row [nzGutter]='18' class='form-row'>
+                        <span nz-col [nzSpan]='5'>Create Time:</span>
+                        <span nz-col [nzSpan]='19'>{{cmpTask.meta.time | date:'yyyy-mm-dd'}}</span>
+                    </div>
+                    <div nz-row [nzGutter]='18' class='form-row'>
+                        <span nz-col [nzSpan]='5'>Author:</span>
+                        <span nz-col [nzSpan]='19'>{{cmpTask.auth.userName}}</span>
+                    </div>
+                    <div nz-row [nzGutter]='18' class='form-row'>
+                        <span nz-col [nzSpan]='5'>Authorition:</span>
+                        <span nz-col [nzSpan]='19'>{{(cmpTask.auth.src===2)? 'Public': (cmpTask.auth.src===3)? 'Private': 'Unknown'}}</span>
+                    </div>
+                </ng-container>
+            </nz-tab>
+
+            <nz-tab>
+                <ng-template #nzTabHeading>
+                    Calculation
+                </ng-template>
+                <ng-container *ngIf='cmpTask'>
+                    <!-- <ogms-region-map [mode]='"read"' [geojson]='cmpTask.calcuCfg.stdSrc.spatial.polygon'></ogms-region-map> -->
+                    <ng-container *ngIf='cmpTask.calcuCfg.dataSrc === "std" else uploadSection'>
+                        <div class='flex-box-col-nowrap max-size'>
+                            <div>
+                                <div nz-row [nzGutter]='18' class='form-row'>
+                                    <span nz-col [nzSpan]='5'>Start Date:</span>
+                                    <span nz-col [nzSpan]='19'>{{cmpTask.calcuCfg.stdSrc.temporal.start | date: 'yyyy-mm-dd'}}</span>
+                                </div>
+                                <div nz-row [nzGutter]='18' class='form-row'>
+                                    <span nz-col [nzSpan]='5'>End Date:</span>
+                                    <span nz-col [nzSpan]='19'>{{cmpTask.calcuCfg.stdSrc.temporal.end | date: 'yyyy-mm-dd'}}</span>
+                                </div>
+                            </div>
+                            <div id='_containerId' style='height: 400px; width: 600px;'>
+                                <ogms-region-map [mode]='"read"' [mapId]='_containerId' [geojson]='cmpTask.calcuCfg.stdSrc.spatial.polygon'></ogms-region-map>
+                                <!-- <div id='{{_taskId}}'></div> -->
+                            </div>
+                        </div>
+                    </ng-container>
+
+                    <ng-template #uploadSection>
+
+                    </ng-template>
+                </ng-container>
+            </nz-tab>
+
+            <nz-tab>
+                <ng-template #nzTabHeading>
+                    Comparison
+                </ng-template>
+                <ng-container>
+
+                </ng-container>
+            </nz-tab>
+        </nz-tabset>
+    </div>
+</ng-container>

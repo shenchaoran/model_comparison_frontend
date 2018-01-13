@@ -19,6 +19,7 @@ export class CmpTask {
     };
     auth: {
         src: ResourceSrc,
+        userName: string,
         userId: string
     };
     cmpCfg: {
@@ -91,6 +92,7 @@ export class CmpTask {
         };
         this.auth = {
             src: ResourceSrc.PRIVATE,
+            userName: user? user.username: undefined,
             userId: user? user._id: undefined
         };
         this.cmpCfg = {

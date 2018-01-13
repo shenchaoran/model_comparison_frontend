@@ -20,18 +20,19 @@ export class CmpTaskService implements Resolve<any> {
           return Promise.reject(response.error);
         } else {
           const tabs = [];
-          if (response.data.personal) {
+          const tasks = response.data;
+          if (tasks.personal) {
             tabs.push({
               name: 'Your Comparison Tasks',
               id: 'personal',
-              data: response.data.personal
+              data: tasks.personal
             });
           }
-          if (response.data.public) {
+          if (tasks.public) {
             tabs.push({
               name: 'Public Comparison Tasks',
               id: 'public',
-              data: response.data.public
+              data: tasks.public
             });
           }
           return Promise.resolve(tabs);

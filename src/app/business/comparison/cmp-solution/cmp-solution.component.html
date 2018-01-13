@@ -2,7 +2,7 @@
     <div id='left-item' class='debug-border'>
         <ogms-resource-tabs [tabs]='tabs' (onSelect)='onTabItemSelected($event)'></ogms-resource-tabs>
     </div>
-    <div id='right-item' class='debug-border'>
+    <div id='right-item' class='debug-border flex-box-col-nowrap max-height'>
         <div class="flex-box-row-nowrap" style='margin: 10px 0'>
             <span class="flex-item-1-1-auto"></span>
             <div>
@@ -14,7 +14,6 @@
             </div>
         </div>
 
-        <!-- <quill-editor></quill-editor> -->
-
+        <ogms-sln-detail [mode]='"read"' [cmpSln]='selectedSln' class='flex-item-1-1-auto'></ogms-sln-detail>
     </div>
 </div>

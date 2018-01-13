@@ -10,7 +10,7 @@
     <div class="steps-content flex-box-col-nowrap flex-item-1-1-auto debug-border debug-background">
 
         <div class='flex-item-1-1-auto' [hidden]='currentStep !== 0'>
-            <ogms-form-keynote (onKeynoteChange)='onKeynoteChange($event)'></ogms-form-keynote>
+            <ogms-form-keynote [mode]='mode' (onKeynoteChange)='onKeynoteChange($event)'></ogms-form-keynote>
         </div>
 
         <!-- <div class='flex-item-1-1-auto' [hidden]='currentStep !== 1'>
@@ -18,7 +18,7 @@
         </div> -->
 
         <div class='flex-item-1-1-auto' [hidden]='currentStep !== 1'>
-            <ogms-form-cmp-objs [keynote]='__tempKeynote' (onCmpObjsChange)='onCmpObjsChange($event)'></ogms-form-cmp-objs>
+            <ogms-form-cmp-objs [mode]='mode' [keynote]='__tempKeynote' (onCmpObjsChange)='onCmpObjsChange($event)'></ogms-form-cmp-objs>
         </div>
 
         <!-- <div [hidden]='currentStep !== 2'>
@@ -59,5 +59,3 @@
         </ng-template>
     </nz-modal>
 </div>
-
-<!-- <ba-file-uploader nz-col [nzSpan]='12' [fileUploaderOptions]="fileUploaderOptions"></ba-file-uploader> -->

@@ -23,7 +23,6 @@
                         </nz-popconfirm>
                     </div>
                 </div>
-                <!-- <form nz-form [nzType]="'horizontal'"> -->
                 <h5 style='margin: 10px 0;'>Meta Information:</h5>
                 <div nz-row [nzGutter]='"20"'>
                     <div nz-col [nzSpan]="10" nz-row>
@@ -31,7 +30,7 @@
                             <label>Name</label>
                         </div>
                         <div nz-form-control nz-col [nzSpan]="12">
-                            <nz-input [(ngModel)]='cmpObj.meta.name' (ngModelChange)='checkAccordionValid(cmpObj)' name='cmpObj-name'></nz-input>
+                            <nz-input [(ngModel)]='cmpObj.meta.name' (ngModelChange)='checkAccordionValid(cmpObj)' name='cmpObj-name' [nzDisabled]='mode==="read"'></nz-input>
                         </div>
                     </div>
                     <div nz-col [nzSpan]="10" nz-row>
@@ -39,57 +38,16 @@
                             <label>Description</label>
                         </div>
                         <div nz-form-control nz-col [nzSpan]="12">
-                            <nz-input [(ngModel)]='cmpObj.meta.desc' (ngModelChange)='checkAccordionValid(cmpObj)' name='cmpObj-desc'></nz-input>
+                            <nz-input [(ngModel)]='cmpObj.meta.desc' (ngModelChange)='checkAccordionValid(cmpObj)' name='cmpObj-desc' [nzDisabled]='mode==="read"'></nz-input>
                         </div>
                     </div>
                 </div>
 
-                <!-- <h5 style='margin: 10px 0;'>Data Reference:</h5>
-                <nz-table #nzTable [nzDataSource]='cmpObj.dataRefers' [nzIsPagination]="false" [nzSize]='"small"'>
-                    <thead nz-thead>
-                        <tr>
-                            <th nz-th>
-                                <span>Model</span>
-                            </th>
-                            <th nz-th>
-                                <span>Data</span>
-                            </th>
-                            <th nz-th>
-                                <span>Field</span>
-                            </th>
-                            <th nz-th>
-                                <span>Schema</span>
-                            </th>
-                            <th nz-th>
-                                <span>Edit</span>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody nz-tbody>
-                        <tr nz-tbody-tr *ngFor='let refer of nzTable.data'>
-                            <td nz-td>{{refer.msName | string:'undefined'}}</td>
-                            <td nz-td>{{refer.eventName | string:'undefined'}}</td>
-                            <td nz-td>{{refer.data.field | string:'undefined'}}</td>
-                            <td nz-td *ngIf='refer.schema$ else nullSchema'>
-                                <span [class.warning-td]='cmpObj.schemaTypes.length > 1' [class.success-td]='cmpObj.schemaTypes.length <= 1'>
-                                    {{refer.schema$.type | string:'undefined'}}
-                                </span>
-                            </td>
-                            <ng-template #nullSchema>
-                                <td nz-td>-</td>
-                            </ng-template>
-                            <td nz-td>
-                                <a (click)='showModal(cmpObj, refer.msId)'>edit</a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </nz-table> -->
-
                 <h5 style='margin: 10px 0;'>Comparison Schema</h5>
                 <div>
-                    <nz-radio-group [ngModel]="cmpObj.schemaName" (ngModelChange)='onSchemaChange($event, cmpObj.id)'>
+                    <nz-radio-group [(ngModel)]="cmpObj.schemaName" (ngModelChange)='onSchemaChange($event, cmpObj.id)'>
                         <ng-container *ngFor='let schemaName of schemaNames'>
-                            <label nz-radio-button [nzValue]="schemaName">
+                            <label nz-radio-button [nzValue]="schemaName" [nzDisabled]='mode==="read" && cmpObj.schemaName!==schemaName'>
                                 <span>{{schemaName}}</span>
                             </label>
                         </ng-container>
@@ -108,7 +66,7 @@
 
                 <h5 style='margin: 10px 0;'>Comparison Method</h5>
                 <div>
-                    <nz-checkbox-group [ngModel]="methods" (ngModelChange)='onMethodChange($event, cmpObj.id)'></nz-checkbox-group>
+                    <nz-checkbox-group [ngModel]="methods" (ngModelChange)='onMethodChange($event, cmpObj.id)' [nzDisabled]='mode==="read"'></nz-checkbox-group>
                 </div>
                 <!-- </form> -->
             </nz-collapse>

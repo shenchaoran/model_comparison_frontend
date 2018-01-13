@@ -7,8 +7,8 @@
         <!-- <nz-step [nzTitle]="'Configure Comparison Data'" [nzDescription]=''></nz-step> -->
     </nz-steps>
 
-    <div class="steps-content flex-box-col-nowrap flex-item-1-1-auto debug-border debug-background overflow-y">
-        <div class='flex-item-1-1-auto' [hidden]='currentStep !== 0'>
+    <div class="steps-content flex-box-col-nowrap flex-item-1-1-auto debug-border debug-background scroll-y">
+        <div class='' [hidden]='currentStep !== 0'>
             <form nz-form [nzType]="'horizontal'">
                 <h4 style='margin: 10px 0;'>Task Basic Information:</h4>
                 <div nz-form-item nz-row>
@@ -41,11 +41,11 @@
             </form>
         </div>
 
-        <div class='flex-item-1-1-auto' [hidden]='currentStep !== 1'>
+        <div class='' [hidden]='currentStep !== 1'>
             <ogms-form-participants [selectMode]='__selectMode' (onParticipantsChange)='onParticipantsChange($event)'></ogms-form-participants>
         </div>
 
-        <div class='flex-item-1-1-auto' [hidden]='currentStep !== 2'>
+        <div class='' [hidden]='currentStep !== 2'>
             <h4 style='margin: 10px 0;'>Configure Comparison Object:</h4>
             <nz-collapseset [nzAccordion]='true'>
                 <nz-collapse *ngFor="let cmpObj of cmpTask.cmpCfg.cmpObjs" [nzActive]="cmpObj.attached.active">
@@ -154,8 +154,8 @@
             </nz-collapseset>
         </div>
 
-        <div class='flex-item-1-1-auto' [hidden]='currentStep !== 3'>
-            <div class='flex-box-col-nowrap max-size'>
+        <div class='' [hidden]='currentStep !== 3'>
+            <div class='flex-box-col-nowrap'>
                 <h4>Configure Data Source</h4>
                 <!-- <div nz-form-item nz-row>
                     <div nz-form-label nz-col [nzSpan]="3">
@@ -177,38 +177,15 @@
                         <nz-datepicker style="width: 40%;" [(ngModel)]="endDate" (ngModelChange)="endDateChange()" [nzDisabledDate]='disableEndDate' [nzFormat]="'YYYY-MM-DD'" [nzPlaceHolder]="'End date'" name='end-date'></nz-datepicker>
                     </div>
                 </div>
-                <ng-container class='flex-item-1-1-auto' *ngIf='(cmpTask.calcuCfg.dataSrc === "std") else uploadStep'>
-                    <!-- <router-outlet></router-outlet> -->
-                    <ogms-region-map (onDrawRecEnd)='onDrawRecEnd()' class='flex-item-1-1-auto'></ogms-region-map>
-                    <!-- <div id="map" style="width:600px; height:400px;"></div> -->
-                </ng-container>
+                <div *ngIf='(cmpTask.calcuCfg.dataSrc === "std") else uploadStep' style='height: 400px; width: 600px;'>
+                    <!-- <div id='{{cmpTask._id}}'></div> -->
+                    <ogms-region-map [mode]='"write"' (afterDrawRect)='afterDrawRect()'></ogms-region-map>
+                </div>
                 <ng-template #uploadStep>
 
                 </ng-template>
             </div>
         </div>
-
-        <!-- <div class='flex-item-1-1-auto' [hidden]='currentStep !== 4'>
-            <h4>Configure Comparison Data</h4>
-            <div *ngIf='cmpSolution'>
-                <div *ngFor='let ms of cmpSolution.cmpCfg.ms'>
-                    <div *ngIf='!ms.participate'>
-                        <h5>{{ms.msName}}</h5>
-                        <div *ngFor='let cmpObj of cmpSolution.cmpCfg.cmpObjs'>
-                            <div *ngFor='let dataRefer of cmpObj.dataRefers'>
-                                <div *ngIf='dataRefer.msId === ms.msId' nz-row>
-                                    <div nz-row [nzType]="'flex'" [nzAlign]="'middle'" [nzGutter]='18'>
-                                        <label nz-col [nzSpan]='5'>{{dataRefer.eventName}}: </label>
-                                        <ba-file-uploader id='uploader-{{dataRefer.eventName}}' nz-col [nzSpan]='12' [fileUploaderOptions]="fileUploaderOptions" (onFileUpload)="_onFileUpload($event, cmpObj.id, dataRefer.msId, dataRefer.eventName)" (onFileUploadCompleted)='_onFileUploadCompleted($event, cmpObj.id, dataRefer.msId, dataRefer.eventName)'
-                                            (onClear)='_onClearUploaded(cmpObj.id, dataRefer.msId, dataRefer.eventName)'></ba-file-uploader>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> -->
     </div>
 
     <div class="steps-action">

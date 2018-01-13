@@ -14,7 +14,7 @@ export class CmpSolutionComponent implements OnInit {
         name: string;
         data: any;
     }>;
-    selectedSln: string;
+    selectedSln;
 
     constructor(
         private service: CmpSlnService,

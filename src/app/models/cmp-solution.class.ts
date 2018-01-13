@@ -29,6 +29,7 @@ export class CmpSolution {
     };
     auth: {
         userId: string,
+        userName: string,
         src: ResourceSrc
     };
 
@@ -47,6 +48,7 @@ export class CmpSolution {
         };
         this.auth = {
             userId: undefined,
+            userName: undefined,
             src: undefined
         };
     }

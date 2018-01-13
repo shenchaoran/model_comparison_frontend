@@ -1,57 +1,100 @@
 import {
-  Component,
-  OnInit,
-  Input,
-  Output,
-  EventEmitter,
-  AfterViewInit,
-  AfterViewChecked,
-  HostListener,
-  Inject,
-  Optional
+    Component,
+    OnInit,
+    Input,
+    Output,
+    EventEmitter,
+    AfterViewInit,
+    AfterViewChecked,
+    HostListener,
+    Inject,
+    Optional
 } from '@angular/core';
 import * as uuidv1 from 'uuid/v1';
-import { OlMapService } from '@feature/ol-map/services/ol-map.service';
-import { ToolbarService } from '../services';
+import { OlMapService, ToolbarService } from '@feature/ol-map/ol-map.module';
+import { Observable } from 'rxjs';
+// declare var ol: any;
+import * as ol from 'openlayers';
 
 @Component({
-  selector: 'ogms-region-map',
-  templateUrl: './region-map.component.html',
-  styleUrls: ['./region-map.component.scss']
+    selector: 'ogms-region-map',
+    templateUrl: './region-map.component.html',
+    styleUrls: ['./region-map.component.scss'],
+    providers: [OlMapService]
 })
 export class RegionMapComponent implements OnInit, AfterViewInit {
-  targetId: string;
-  mapId;
-  @Output() onDrawRecEnd = new EventEmitter<any>();
-  @Input() imageStaticLayers: Array<any>;
-  constructor(
-    private olMapService: OlMapService,
-    private toolBarService: ToolbarService,
-    @Inject('MAP_TOOLBAR_CONFIG')
-    @Optional()
-    private MAP_TOOLBAR_CONFIG
-  ) {
-    this.targetId = uuidv1();
-  }
+    @Input() imageStaticLayers: Array<any>;
+    @Input() mode: 'read' | 'write' = 'read';
+    @Input() geojson: any = undefined;
+    @Input() mapId: string;
+    @Output() afterDrawRec = new EventEmitter<any>();
 
-  ngOnInit() {}
+    _targetId: string;
+    _mapId;
 
-  ngAfterViewInit() {
-    this.mapId = this.olMapService.createDefaultMap(this.targetId);
-    this.toolBarService.init(this.olMapService, this.MAP_TOOLBAR_CONFIG);
-    this.toolBarService.onDrawRecEnd().subscribe(data => {
-      this.onDrawRecEnd.emit();
-    });
+    constructor(
+        private olMapService: OlMapService,
+        private toolBarService: ToolbarService,
+        @Inject('MAP_TOOLBAR_CONFIG')
+        @Optional()
+        private MAP_TOOLBAR_CONFIG
+    ) {
+        this._targetId = uuidv1();
+    }
 
-    this.resize();
-    postal
-      .channel('MAP_CHANNEL')
-      .publish('map.after-create-default', undefined);
-  }
+    ngOnInit() {
+        postal
+            .channel('MAP_CHANNEL')
+            .subscribe(`map.create.${this._mapId}`, (data, envelope) => {
+                this.createMap();
+            });
+    }
 
-  // re draw
-  @HostListener('window:resize')
-  resize() {
-    this.olMapService.mapResize();
-  }
+    ngAfterViewInit() {
+        this.createMap();
+    }
+
+    createMap() {
+        if(this._mapId) {
+            return;
+        }
+
+        if (jQuery('#' + this._targetId).length) {
+            this._mapId = this.olMapService.createDefaultMap(
+                this._targetId,
+                this.mapId
+            );
+
+            if (this.mode === 'read') {
+                if (this.geojson) {
+                    this.olMapService.addFeaturesByJSON(this.geojson);
+                }
+            } else if (this.mode === 'write') {
+                this.toolBarService.init(
+                    this.olMapService,
+                    this.MAP_TOOLBAR_CONFIG
+                );
+                this.toolBarService.afterDrawRect().subscribe(() => {
+                    this.afterDrawRec.emit();
+                });
+            }
+
+            this.resize();
+            // postal
+            //     .channel('MAP_CHANNEL')
+            //     .publish('map.after-create-default', undefined);
+        } else {
+            console.log('dom not prepared');
+        }
+    }
+
+    // afterDrawRec(): Observable<any> {
+    //     return this.toolBarService.afterDrawRect();
+    // }
+
+    // re draw
+    @HostListener('window:resize')
+    resize() {
+        this.olMapService.mapResize();
+    }
 }

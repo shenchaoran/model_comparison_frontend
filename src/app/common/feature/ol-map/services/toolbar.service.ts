@@ -241,7 +241,7 @@ export class ToolbarService {
     }
   }
 
-  public onDrawRecEnd(): Observable<any> {
+  public afterDrawRect(): Observable<any> {
     return Observable.create(observer => {
         postal
             .channel('MAP_CHANNEL')

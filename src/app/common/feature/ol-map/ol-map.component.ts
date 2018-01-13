@@ -32,7 +32,7 @@ import * as uuidv1 from 'uuid/v1';
   providers: []
 })
 export class OlMapComponent implements OnInit {
-  @Output() onDrawRecEnd = new EventEmitter<any>();
+  @Output() afterDrawRect = new EventEmitter<any>();
   @Input() imageStaticLayers: Array<any>;
   targetId: string;
 
@@ -51,9 +51,9 @@ export class OlMapComponent implements OnInit {
       .channel('MAP_CHANNEL')
       .subscribe('map.after-create-default', (data, envelope) => {
         this.toolBarService.init(this.service, this.MAP_TOOLBAR_CONFIG);
-        this.toolBarService.onDrawRecEnd()
+        this.toolBarService.afterDrawRect()
             .subscribe(data => {
-                this.onDrawRecEnd.emit();
+                this.afterDrawRect.emit();
             });
       });
   }

@@ -39,6 +39,7 @@ import { MSService } from '../../geo-model/services';
   ]
 })
 export class FormCmpObjsComponent implements OnInit, OnChanges {
+    @Input() mode: 'write' | 'read' = 'read';
   @Output() onCmpObjsChange = new EventEmitter<any>();
   // TODO 根据 dimension 限制 schemaName 的范围
   @Input()
@@ -49,7 +50,7 @@ export class FormCmpObjsComponent implements OnInit, OnChanges {
   schemaNames: Array<string> = [];
   methods: Array<any> = [];
 
-  cmpObjs: Array<CmpObj> = [];
+  @Input() cmpObjs: Array<CmpObj> = [];
 
   selectedCmpObj: CmpObj;
 

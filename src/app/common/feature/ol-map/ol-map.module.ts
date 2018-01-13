@@ -14,7 +14,7 @@ import {
     OlMapService,
     OLSymbolService,
     MapModuleService,
-    ToolbarService,
+    ToolbarService
 } from './services';
 import { CompareLayoutComponent } from './compare-layout/compare-layout.component';
 
@@ -22,22 +22,27 @@ const SERVICES = [
     OlMapService,
     OLSymbolService,
     MapModuleService,
-    ToolbarService,
-]
+    ToolbarService
+];
 
 ///////////////////////////////
 export { OlMapComponent } from './ol-map.component';
 export { BasemapComponent } from './basemap/basemap.component';
-export { CompareLayoutComponent } from './compare-layout/compare-layout.component';
+export {
+    CompareLayoutComponent
+} from './compare-layout/compare-layout.component';
 export { LayerTreeComponent } from './layer-tree/layer-tree.component';
 export { LayoutComponent } from './layout/layout.component';
 export { LegendComponent } from './legend/legend.component';
 
-export { MapModuleService } from './services'
-export { MapService } from './services'
-export { OlMapService } from './services'
-export { OLSymbolService } from './services'
-export { ToolbarService } from './services'
+export { MapModuleService } from './services';
+export {
+    MapService,
+    OlMapService,
+    OLSymbolService,
+    ToolbarService,
+    RegionMapService
+} from './services';
 ///////////////////////////////
 
 @NgModule({

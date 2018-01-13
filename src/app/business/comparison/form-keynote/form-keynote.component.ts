@@ -10,7 +10,8 @@ import {
     Input,
     Output,
     ViewChild,
-    EventEmitter
+    EventEmitter,
+    Optional,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
@@ -36,16 +37,12 @@ import {
             useExisting: forwardRef(() => FormKeynoteComponent),
             multi: true
         }
-        // {
-        //     provide: NG_VALIDATORS,
-        //     useExisting: forwardRef(() => FormKeynoteComponent),
-        //     multi: true
-        // }
     ]
 })
 export class FormKeynoteComponent implements OnInit {
+    @Input() mode: 'write' | 'read' = 'read';
     @Output() onKeynoteChange = new EventEmitter<any>();
-    keynote: {
+    @Input() keynote: {
         direction: 'x' | 'y',
         dimension: 'point' | 'polygon' | 'multi-point',
         attached: {

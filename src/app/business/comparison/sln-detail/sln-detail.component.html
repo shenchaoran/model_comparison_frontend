@@ -1,0 +1,115 @@
+<div *ngIf='cmpSolution' class="container flex-box-col-nowrap max-size">
+    <nz-steps [(nzCurrent)]="__currentStep">
+        <nz-step [nzTitle]="'Define Comparison Keynote'" [nzDescription]=''></nz-step>
+        <!-- <nz-step [nzTitle]="'Select Participants'" [nzDescription]=''></nz-step> -->
+        <nz-step [nzTitle]="'Add Comparison Object'" [nzDescription]=''></nz-step>
+        <!-- <nz-step [nzTitle]="'Configure data'" [nzDescription]=''></nz-step> -->
+        <!-- <nz-step [nzTitle]="'Preview outline'" [nzDescription]=''></nz-step> -->
+    </nz-steps>
+
+    <div class="steps-content flex-box-col-nowrap flex-item-1-1-auto debug-border debug-background">
+
+        <div class='flex-item-1-1-auto' [hidden]='__currentStep !== 0'>
+            <ogms-form-keynote [keynote]='cmpSolution.cmpCfg.keynote' [mode]='mode'></ogms-form-keynote>
+        </div>
+
+        <!-- <div class='flex-item-1-1-auto' [hidden]='__currentStep !== 1'>
+            <ogms-form-participants [selectMode]='__selectMode' [ngModel]='cmpSolution.cmpCfg.ms' (ngModelChange)='onParticipantsChange($event)'></ogms-form-participants>
+        </div> -->
+
+        <div class='flex-item-1-1-auto' [hidden]='__currentStep !== 1'>
+            <div style='margin: 10px 0;'>
+                <nz-collapseset [nzBordered]="false" [nzAccordion]='true'>
+                    <nz-collapse *ngFor="let cmpObj of cmpSolution.cmpCfg.cmpObjs" [nzActive]="cmpObj.attached.active">
+                        <div collapse-title>
+                            <div class='flex-box-row-nowrap'>
+                                <span>
+                                    {{cmpObj.meta.name? cmpObj.meta.name: 'New Comparison Object'}}
+                                </span>
+                                <span class='flex-item-1-1-auto'></span>
+
+                                <nz-popconfirm [nzTitle]="'Are you sure delete this item?'" style='width: 22px; text-align: center;'>
+                                    <span nz-popconfirm style='width: 22px; text-align: center;'><i class="fa fa-trash" aria-hidden="true"></i></span>
+                                </nz-popconfirm>
+                            </div>
+                        </div>
+                        <h5 style='margin: 10px 0;'>Meta Information:</h5>
+                        <div nz-row [nzGutter]='"20"'>
+                            <div nz-col [nzSpan]="10" nz-row>
+                                <div nz-form-label nz-col [nzSpan]="5">
+                                    <label>Name</label>
+                                </div>
+                                <div nz-form-control nz-col [nzSpan]="12">
+                                    <nz-input [ngModel]='cmpObj.meta.name' name='cmpObj-name' [nzDisabled]='mode==="read"'></nz-input>
+                                </div>
+                            </div>
+                            <div nz-col [nzSpan]="10" nz-row>
+                                <div nz-form-label nz-col [nzSpan]="5">
+                                    <label>Description</label>
+                                </div>
+                                <div nz-form-control nz-col [nzSpan]="12">
+                                    <nz-input [ngModel]='cmpObj.meta.desc' name='cmpObj-desc' [nzDisabled]='mode==="read"'></nz-input>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h5 style='margin: 10px 0;'>Comparison Schema</h5>
+                        <div>
+                            <nz-radio-group [ngModel]="cmpObj.schemaName">
+                                <ng-container *ngFor='let schemaName of schemaNames'>
+                                    <label nz-radio-button [nzValue]="schemaName" [nzDisabled]='mode==="read" && cmpObj.schemaName!==schemaName'>
+                                        <span>{{schemaName}}</span>
+                                    </label>
+                                </ng-container>
+                            </nz-radio-group>
+                        </div>
+
+
+                        <h5 style='margin: 10px 0;'>Comparison Method</h5>
+                        <div>
+                            <nz-checkbox-group [ngModel]="cmpObj.attached.methods" [nzDisabled]='mode==="read"'></nz-checkbox-group>
+                        </div>
+                        <!-- </form> -->
+                    </nz-collapse>
+                </nz-collapseset>
+            </div>
+        </div>
+
+        <!-- <div [hidden]='__currentStep !== 2'>
+            <ogms-form-cmp-task></ogms-form-cmp-task>
+        </div> -->
+
+        <!-- <div [hidden]='__currentStep !== 2'>
+            <ogms-form-sln-outline></ogms-form-sln-outline>
+        </div> -->
+    </div>
+
+    <div class="steps-action">
+        <button nz-button [nzType]="'default'" (click)="changeStep(__currentStep-1)" [disabled]="__currentStep === 0">
+                    <span>Previous</span>
+                </button>
+        <button nz-button [nzType]="'default'" (click)="changeStep(__currentStep+1)" *ngIf="__currentStep < 1" [disabled]='__nextDisabled'>
+                    <span>Next</span>
+                </button>
+        <button nz-button [nzType]="'primary'" (click)="done()" *ngIf="__currentStep === 1" [disabled]='__doneDisabled'>
+                    <span>Save</span>
+                </button>
+    </div>
+
+    <nz-modal [nzVisible]="__isConfirmVisible" [nzContent]="modalContent" [nzFooter]='modalFooter' (nzOnCancel)="handleCancel($event)">
+        <ng-template #modalContent>
+            <p style='margin: 15px; font-size: 18px'>Configure this solution right now?</p>
+            <div class='flex-box-row-nowrap'>
+                <div class='flex-item-1-1-auto'></div>
+                <div>
+                    <button nz-button [nzType]="'default'" [nzSize]="'large'" (click)="handleCancel($event)">
+                    Later
+                </button>
+                    <button nz-button [nzType]="'primary'" [nzSize]="'large'" (click)="handleOk($event)">
+                    Configure
+                </button>
+                </div>
+            </div>
+        </ng-template>
+    </nz-modal>
+</div>

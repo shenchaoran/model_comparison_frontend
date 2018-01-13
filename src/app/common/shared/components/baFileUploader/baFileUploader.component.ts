@@ -22,7 +22,7 @@ export class BaFileUploader {
     @Input() size: string = 'default';
     @Input()
     set fileUploaderOptions(v) {
-        this._fileUploaderOptions = v;
+        this._fileUploaderOptions = _.cloneDeep(v);
         this._fileUploaderOptions.url = `http://${this.backend.host}:${this.backend.port}${v.url}`;
     };
     get fileUploaderOptions() {
