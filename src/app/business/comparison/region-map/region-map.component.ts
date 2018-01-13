@@ -12,6 +12,7 @@ import {
 } from '@angular/core';
 import * as uuidv1 from 'uuid/v1';
 import { OlMapService, ToolbarService } from '@feature/ol-map/ol-map.module';
+import { GeoJSONService } from '@feature/ol-map/services/geojson.service'; 
 import { Observable } from 'rxjs';
 // declare var ol: any;
 import * as ol from 'openlayers';
@@ -68,6 +69,9 @@ export class RegionMapComponent implements OnInit, AfterViewInit {
             if (this.mode === 'read') {
                 if (this.geojson) {
                     this.olMapService.addFeaturesByJSON(this.geojson);
+                    const geojsonService = new GeoJSONService(this.geojson);
+                    const imageExtent = geojsonService.getExtent();
+                    this.olMapService.selectedMap.getView().fit(imageExtent, this.olMapService.selectedMap.getSize());
                 }
             } else if (this.mode === 'write') {
                 this.toolBarService.init(

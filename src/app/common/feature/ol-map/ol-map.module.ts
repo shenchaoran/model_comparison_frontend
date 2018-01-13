@@ -41,7 +41,8 @@ export {
     OlMapService,
     OLSymbolService,
     ToolbarService,
-    RegionMapService
+    RegionMapService,
+    GeoJSONService,
 } from './services';
 ///////////////////////////////
 

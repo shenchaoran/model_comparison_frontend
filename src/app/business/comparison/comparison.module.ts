@@ -28,6 +28,7 @@ import {
   OlMapService,
   RegionMapService,
   ToolbarService,
+  GeoJSONService,
 } from '@feature/ol-map/ol-map.module';
 import { TaskDetailComponent } from './task-detail/task-detail.component';
 import { FormParticipantsComponent } from './form-participants/form-participants.component';
@@ -44,6 +45,7 @@ const SERVICES = [
   // 下面这两个服务和OlMapComponent依赖的是同一个实例
   OlMapService,
   ToolbarService,
+//   GeoJSONService,
 //   RegionMapService,
 ];
 
