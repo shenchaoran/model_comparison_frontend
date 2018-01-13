@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'ogms-help',
+  selector: 'app-help',
   template: `
     <p>
       help Works!

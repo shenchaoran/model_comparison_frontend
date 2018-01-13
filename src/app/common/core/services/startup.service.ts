@@ -1,10 +1,9 @@
 import { Router } from '@angular/router';
 import { Injectable, Injector } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { MenuService } from './menu.service';
 // import { TranslatorService } from '../translator/translator.service';
 import { SettingsService } from './settings.service';
-import { _HttpClient } from './http.client';
 // import { ACLService } from '../acl/acl.service';
 // import { TitleService } from '@core/services/title.service';
 
@@ -23,7 +22,7 @@ export class StartupService {
         private settingService: SettingsService,
         // private aclService: ACLService,
         // private titleService: TitleService,
-        private httpClient: _HttpClient,
+        private httpClient: HttpClient,
         private injector: Injector) { }
 
     load(): Promise<any> {

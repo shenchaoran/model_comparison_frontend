@@ -1,99 +1,115 @@
 // tslint:disable:no-console class-name
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/do';
+import * as moment from 'moment';
+// import { environment } from '../../../environments/environment';
 
 /**
  * 封装HttpClient，主要解决：
- *      append JWT force
- *      response interceptor
+ * + 优化HttpClient在参数上便利性
+ * + 统一实现 loading
+ * + 统一处理时间格式问题
  */
-
 @Injectable()
 export class _HttpClient {
-    constructor(
-        private http: HttpClient,
-        @Inject('BACKEND') private backend
-    ) { }
+    constructor(private http: HttpClient) { }
 
-    private appendDomain(url: string): string {
-        return `http://${this.backend.host}:${this.backend.port}${url}`;
+    private _loading = false;
+
+    /** 是否正在加载中 */
+    get loading(): boolean {
+        return this._loading;
     }
 
-    private appendJWT(url: string, appendJWT: boolean): string {
-        url = this.appendDomain(url);
-        if(appendJWT) {
-            const jwtStr = localStorage.getItem('jwt');
-            let jwt = undefined;
-            if(jwtStr) {
-                jwt = JSON.parse(jwtStr);
-            }
-
-            if(url.indexOf('?') === -1) {
-                url += `&Authorization=bearer ${jwt.token}`;
-            }
-            else {
-                url += `?Authorization=bearer ${jwt.token}`;
+    parseParams(params: any): HttpParams {
+        let ret = new HttpParams();
+        if (params) {
+            // tslint:disable-next-line:forin
+            for (const key in params) {
+                let _data = params[key];
+                // 将时间转化为：时间戳 (秒)
+                if (moment.isDate(_data)) {
+                    _data = moment(_data).unix();
+                }
+                ret = ret.set(key, _data);
             }
         }
-        return url;
+        return ret;
     }
 
-    private resInterceptor(observable: Observable<any>): Observable<any> {
-        return Observable.create(observer => {
-            observable
-                .subscribe(response => {
-                    if (_.startsWith(_.get(response, 'status.code'), '200')) {
-                        observer.next({
-                            data: response.data
-                        });
-                        observer.complete();
-                    }
-                    else {
-                        observer.next({
-                            error: response.status
-                        });
-                        observer.complete();
-                    }
-                });
-        });
+    private begin() {
+        console.time('http');
+        this._loading = true;
     }
 
-    get(
-        url: string,
-        options: any = {},
-        appendJWT?: boolean
-    ): Observable<any> {
-        url = this.appendJWT(url, appendJWT);
-        return this.resInterceptor(this.http.get(url, options));
+    private end() {
+        console.timeEnd();
+        this._loading = false;
     }
 
-    post(
-        url: string,
-        body: any|null,
-        options: any = {},
-        appendJWT?: boolean
-    ): Observable<any> {
-        url = this.appendJWT(url, appendJWT);
-        return this.resInterceptor(this.http.post(url, body, options));
+    /** 服务端URL地址 */
+    get SERVER_URL(): string {
+        // return environment.SERVER_URL;
+        return '';
     }
 
-    delete(
-        url: string,
-        options: any = {},
-        appendJWT?: boolean
-    ): Observable<any> {
-        url = this.appendJWT(url, appendJWT);
-        return this.resInterceptor(this.http.delete(url, options));
+    /**
+     * GET请求
+     *
+     * @param {string} url URL地址
+     * @param {*} [params] 请求参数
+     */
+    get(url: string, params?: any): Observable<any> {
+        this.begin();
+        return this.http
+            .get(url, {
+                params: this.parseParams(params)
+            })
+            .do(() => this.end())
+            .catch((res) => {
+                this.end();
+                return res;
+            });
     }
 
-    put(
-      url: string,
-      body: any|null,
-      options: any = {},
-      appendJWT?: boolean
-  ): Observable<any> {
-      url = this.appendJWT(url, appendJWT);
-      return this.resInterceptor(this.http.put(url, body, options));
-  }
+    /**
+     * POST请求
+     *
+     * @param {string} url URL地址
+     * @param {*} [body] body内容
+     * @param {*} [params] 请求参数
+     */
+    post(url: string, body?: any, params?: any): Observable<any> {
+        this.begin();
+        return this.http
+            .post(url, body || null, {
+                params: this.parseParams(params)
+            })
+            .do(() => this.end())
+            .catch((res) => {
+                this.end();
+                return res;
+            });
+    }
+
+    /**
+     * DELETE请求
+     *
+     * @param {string} url URL地址
+     * @param {*} [params] 请求参数
+     */
+    delete(url: string, params?: any): Observable<any> {
+        this.begin();
+        return this.http
+            .delete(url, {
+                params: this.parseParams(params)
+            })
+            .do(() => this.end())
+            .catch((res) => {
+                this.end();
+                return res;
+            });
+    }
 }

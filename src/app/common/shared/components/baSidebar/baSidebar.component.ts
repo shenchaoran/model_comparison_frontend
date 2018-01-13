@@ -1,6 +1,6 @@
 import { Component, Input, ElementRef, HostListener } from '@angular/core';
 // import { GlobalState } from '../../../../global.state';
-import { layoutSizes } from '../../theme.constants';
+import { layoutSizes } from '../../theme/theme.constants';
 import { APP_CONFIG } from '@config/app.config';
 
 // import { BaMenuService } from '../../services/baMenu/baMenu.service';

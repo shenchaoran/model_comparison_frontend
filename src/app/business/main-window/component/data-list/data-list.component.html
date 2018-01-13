@@ -1,0 +1,19 @@
+<div id='data-tab-content' class='flex-col-div' (contextmenu)='showMenu($event, 1)'>
+    <div class='flex-item' id='data-list-div'>
+        <ul>
+            <li *ngFor='let data of dataList' (contextmenu)='showMenu($event, 2, data)' (click)='onDataToolClick(data);' [class.selected-li]='selectedLi===data'>
+                <div>
+                    <span>{{data.filename}}</span>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class='flex-item' id='upload-progress'>
+        <nz-progress [nzStatus]="'active'" [ngModel]='uploadProgress'></nz-progress>
+    </div>
+    <jqxMenu #jqxMenu (onItemclick)='onMenuItemClick($event)' [theme]='"energyblue"' [mode]="'popup'" [autoOpenPopup]='false' [source]='contextMenuCfg' [width]='200'></jqxMenu>
+
+    <!-- <app-context-menu id='contextMenu' [id]='"contextMenu"' [menuCfg]='menuCfg'></app-context-menu> -->
+    <input #fileUpload [accept]='acceptedType' multiple ngFileSelect type='file' name='"myfile"' [options]="fileUploaderOptions" (onUpload)="_onFileUpload($event)" (beforeUpload)="beforeFileUpload($event)" hidden="true">
+</div>

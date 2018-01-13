@@ -1,20 +1,14 @@
 <div class="wrapper">
     <div class="nav-header">
         <div id="logo" class="flex-item">
-            <!-- <img src="assets/img/app/logo_light.png" height="30" /> -->
+            <img src="assets/img/app/logo_light.png" height="30" />
             <img src="assets/img/app/logo_title_light.png" height="35" />
         </div>
         <div id="menu" class="flex-item">
-            <ogms-baHeaderMenu [type]="'HEADER_MENUS'"></ogms-baHeaderMenu>
-        </div>
-        <div id="place-holder" class="flex-item"></div>
-        <div id="login-menu" class="flex-item">
-            <ogms-header-pull-right></ogms-header-pull-right>
+            <app-baHeaderMenu></app-baHeaderMenu>
         </div>
     </div>
-    <div class='body'>
-        <section class='content'>
-            <router-outlet></router-outlet>
-        </section>
-    </div>
+    <section class="content">
+        <router-outlet></router-outlet>
+    </section>
 </div>

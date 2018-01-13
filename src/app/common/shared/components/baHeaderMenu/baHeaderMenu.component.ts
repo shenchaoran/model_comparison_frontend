@@ -1,34 +1,43 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-import { Router, Routes } from '@angular/router';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
-import { HeaderMenuService } from './baHeaderMenu.service';
+import { BaHeaderMenuService } from './baHeaderMenu.service';
 import { BaMenuService } from '../baMenu/services/baMenu.service';
 import { HeaderMenuMetaInfo } from './baHeaderMenu';
 
 @Component({
-    selector: 'ogms-baHeaderMenu',
+    selector: 'app-baHeaderMenu',
     templateUrl: './baHeaderMenu.component.html',
     styleUrls: ['./baHeaderMenu.component.scss'],
     providers: [BaMenuService]
 })
 export class BaHeaderMenuComponent implements OnInit, OnDestroy {
-    @Input() 
-    set type(v) {
-        this.menuItems = <Routes>(this.service.getMenus(v));
-    };
     subscriptions: Array<any> = new Array();
-    menuItems: Array<any>;
-    constructor(private service: HeaderMenuService) {}
+    menuItems: Array<HeaderMenuMetaInfo>;
+    constructor(private baMenuService: BaMenuService) {}
 
     ngOnInit() {
-        
+        let subscription = this.baMenuService.headerMenuItems.subscribe(
+            this.getMenuItems.bind(this)
+        );
+        this.subscriptions.push(subscription);
     }
+
+    public getMenuItems(menuItems) {
+        this.menuItems = menuItems;
+        this.selectMenuAndNotify();
+    }
+
+    public selectMenuAndNotify() {}
 
     ngAfterViewInit() {
         // jQuery('#nav-menu').css('line-height', '50px');
+        
     }
 
     ngOnDestroy() {
-     
+        _.forEach(this.subscriptions, topic => {
+            //   postal.unsubscribe(topic);
+            topic.unsubscribe();
+        });
     }
 }

@@ -16,7 +16,7 @@ export class BaPageTop {
 	) { }
 
 	ngOnInit() {
-		this.username = JSON.parse(localStorage.getItem('jwt')).user.username;
+		this.username = JSON.parse(localStorage.getItem('jwt')).username;
 	}
 
 	showUserOperation($event) {

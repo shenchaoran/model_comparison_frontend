@@ -20,7 +20,7 @@ export class BaTitleTop {
 		if (this.title === undefined) {
 			this.title = APP_CONFIG.name;
 		}
-		this.username = JSON.parse(localStorage.getItem('jwt')).user.username;
+		this.username = JSON.parse(localStorage.getItem('jwt')).username;
 	}
 	showUserOperation($event) {
 		this.menuDropDown = !this.menuDropDown;

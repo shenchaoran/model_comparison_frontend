@@ -1,5 +1,9 @@
 /* You can add global styles to this file; and also import other style files */
 
+// add by SCR
+// @import "../node_modules/clarity-icons/clarity-icons.min.css";
+// @import "../node_modules/clarity-ui/clarity-ui.min.css";
+// end
 @import "../node_modules/roboto-fontface/css/roboto/roboto-fontface.css";
 @import "../node_modules/normalize.css/normalize.css";
 @import '../node_modules/font-awesome/css/font-awesome.css';
@@ -9,4 +13,12 @@
 @import "../node_modules/openlayers/dist/ol.css";
 @import "app/common/shared/theme/theme.scss";
 // add by SCR
-@import '~handsontable/dist/handsontable.full.css';
+@import '../node_modules/handsontable/dist/handsontable.full.css';
+@import "./app/common/shared/theme/css/perfectscroll.css";
+@import "./app/common/shared/theme/css/nouislider.min.css";
+@import "./app/common/shared/theme/css/ng2-tree-styles.css";
+// TODO relative path problems
+// @import '~jqwidgets-framework/jqwidgets/styles/jqx.base';
+// @import '../node_modules/jqwidgets-framework/jqwidgets/styles/jqx.energyblue';
+// @import '~angular-tree-component/dist/angular-tree-component.css';
+// end

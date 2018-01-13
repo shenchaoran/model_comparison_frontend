@@ -4,24 +4,21 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Login } from './login.component';
 import { routing } from './login.routing';
 import { LoginService } from './login.service';
-import { NgxSharedModule } from '@ngx-shared';
+import { NgxSharedModule } from '@ngx-shared/ngx-shared.module';
 import { TokenInterceptor } from '@core/net/token/token.interceptor';
 import { ResParserInterceptor } from '@core/net/res-parser/res-parser.interceptor';
-import {
-    PerfectScrollbarModule,
-    PerfectScrollbarComponent,
-    PERFECT_SCROLLBAR_CONFIG,
-    PerfectScrollbarConfigInterface
-} from 'ngx-perfect-scrollbar';
-const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
-    suppressScrollX: true
-};
+
+// const PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
+// };
 
 @NgModule({
     imports: [
         routing,
+        // NgZorroAntdModule,
+
         NgxSharedModule,
-        PerfectScrollbarModule,
+
+        // PerfectScrollbarModule.forRoot(PERFECT_SCROLLBAR_CONFIG)
     ],
     declarations: [
         Login
@@ -30,10 +27,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         LoginService,
         { provide: HTTP_INTERCEPTORS, useClass: ResParserInterceptor, multi: true},
         { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
-        {
-            provide: PERFECT_SCROLLBAR_CONFIG,
-            useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
-        }
     ]
 })
 export class LoginModule { }
