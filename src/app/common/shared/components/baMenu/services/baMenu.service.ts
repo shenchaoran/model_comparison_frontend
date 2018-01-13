@@ -1,45 +1,25 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { _HttpClient } from '@core/services/http.client';
 import { Router, Routes } from '@angular/router';
-
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 
-import { ServiceMetaInfo } from '../../../../core/metainfo/service.metaInfo';
-import { ServiceMetaInfoService } from '../../../../core/services/serviceMetaInfo.service';
-
-const ROOT_SERVICE_KEY: string = 'menu';
+import { HEADER_MENUS } from '@config/menu.config';
+import { ErrorHandle } from '@core/base/error-handle';
 
 @Injectable()
-export class BaMenuService {
+export class BaMenuService extends ErrorHandle {
 	menuItems = new BehaviorSubject<any[]>([]);
     headerMenuItems = new BehaviorSubject<any[]>([]);
 
 	protected _currentMenuItem = {};
 
-	constructor(
-        private http: HttpClient, private _router: Router, 
-		private serviceMetaInfoService: ServiceMetaInfoService) { 
-
+	constructor(private http: _HttpClient, private _router: Router) { 
+        super();
 		postal.channel('MENU_CHANNEL').subscribe('menu.update', (data, envelope) => {
-			this.updateMenu();
+            this.updateMenuByRoutes(<Routes>HEADER_MENUS);
+            this.updateHeaderMenuByRoutes(<Routes>HEADER_MENUS)
 		})
-	}
-
-	public updateMenu() {
-		const serviceMetaInfo: ServiceMetaInfo = this.serviceMetaInfoService.getServiceMetaInfo(ROOT_SERVICE_KEY);
-
-		const uri = this.serviceMetaInfoService.addTicket(serviceMetaInfo.uri);
-
-		this.http.get(uri)
-			// .map(res => res.json())
-			.toPromise()
-			.then(res => {
-				let data = _.get(res, 'data');
-				this.updateMenuByRoutes(<Routes>data);
-                this.updateHeaderMenuByRoutes(<Routes>data)
-			})
-			.catch(this.handleError);
 	}
 
     public updateHeaderMenuByRoutes(routes: Routes){
@@ -65,11 +45,6 @@ export class BaMenuService {
         }
     }
 
-	/**
-	 * Updates the routes in the menu
-	 *
-	 * @param {Routes} routes Type compatible with app.menu.ts
-	 */
 	public updateMenuByRoutes(routes: Routes) {
 		let convertedRoutes = this.convertRoutesToMenus(_.cloneDeep(routes));
 		this.menuItems.next(convertedRoutes);
@@ -177,11 +152,4 @@ export class BaMenuService {
 		object.selected = this._router.isActive(this._router.createUrlTree(object.route.paths), object.pathMatch === 'full');
 		return object;
 	}
-
-	private handleError(error: any) {
-        let errMsg = (error.message) ? error.message :
-            error.status ? `${error.status} - ${error.statusText}` : 'Server error';
-        console.error(errMsg); // log to console instead
-        return Observable.throw(errMsg);
-    }
 }

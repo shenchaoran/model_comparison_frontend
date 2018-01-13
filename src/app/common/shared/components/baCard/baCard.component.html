@@ -1,8 +1,7 @@
 <div class="card {{cardType}} {{baCardClass || ''}}">
     <div *ngIf="title" class="card-header clearfix">
         <h3 class="card-title">{{title}}</h3>
-        <div [ngClass]="{'btn-full-screen': !isFullScreen, 'btn-close-full-screen': isFullScreen}" 
-            (click)="toggleFullScreen()" title="{{isFullScreen? '正常': '全屏'}}">
+        <div [ngClass]="{'btn-full-screen': !isFullScreen, 'btn-close-full-screen': isFullScreen}" (click)="toggleFullScreen()" title="{{isFullScreen? '正常': '全屏'}}">
         </div>
     </div>
 

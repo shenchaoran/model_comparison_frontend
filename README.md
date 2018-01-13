@@ -1,27 +1,82 @@
 # WebNJGIS
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.4.4.
+## 业务设计
 
-## Development server
+### 模型
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+### 数据
 
-## Code scaffolding
+### 比较
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Architecture
+### business
+### common
+#### core
+一些只加载一遍的核心模块，包括：
+- 预加载器
+- 拦截器
+- ACL：访问控制列表
+- 翻译器
+- 通用服务
+    - startup.service：加载配置文件，是服务的入口
+    - settings.service：读取配置文件
+    - http.client.service：重新封装HttpClient
+    - menu.service：用于配置menu
+    - colors.service：常用的颜色别名
+    - themes.service：用于设置皮肤
+#### feature
+特性模块：一般将通用的模块放在这里，比如登录模块、地图模块
 
-## Build
+##### 地图模块
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+- 标准图层库
+- 图层树
+    - 底图支持选择数据源
+    - 添加图层，从图层库中选择
+- 工具栏
+- 编辑模式
+    - 
+- 样式调整
+- 动画
+- 
 
-## Running unit tests
+#### layout
+布局模块
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+#### shared
+可重用的一些组件、指令、管道、主题、验证器放在这里
 
-## Running end-to-end tests
+#### ngx-shared
+angular自带的一些常用模块，一般大多数module中都要用，所以单独放在import中，并重新export
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+## 代码风格
+- 文件和文件夹命名：烤串命名法
+- 文件命名：feature.type.ts
 
-## Further help
+## 如何引用第三方库
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+在`typings.d.ts`中添加声明。
+```
+declare var GoogleMapsLoader: any;
+declare var L: any;
+declare var AmCharts: any;
+declare var Chart: any;
+declare var Chartist: any;
+declare const chroma: any;
+declare var jQuery: any;
+declare var _: any;
+declare var postal: any;
+```
+
+## TODO
+- 页面右下角加后台运行列表
+- docking layout
+
+## Install
+
+启动之前要先启动后台服务
+```
+npm install
+npm start
+```
+如有端口冲突更改`package.json`中的`"start": "ng serve --port 8888 --proxy-config proxy.conf.json"`。

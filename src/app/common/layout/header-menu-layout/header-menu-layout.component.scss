@@ -2,39 +2,60 @@
     height: 100vh;
     width: 100%;
     padding: 0px;
-    display: grid;
-    justify-items: stretch;
-    align-items: stretch;
-    grid-template-columns: auto;
-    grid-template-rows: 50px auto;
+    // display: flex;
+    // flex-direction: column;
+    // flex-wrap: nowrap;
+    // grid-template-rows: auto auto;
 }
 
-.header {
-    /* autoprefixer: off */
-    grid-column: 1/2;
-    grid-row: 1/2;
-    z-index: 3000;
-    padding: 0 5px;
+.nav-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    // grid-row: 1/2;
+    // flex: 0 0 auto;
     display: flex;
-    // border-bottom: 1px solid #ebebeb;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    z-index: 999;
+    padding: 0 5px;
     box-shadow: 0 0 5px #6d6d6d;
+    background: #ffffff;
+}
+
+.body {
+    padding-top: 64px;
+    // flex: 1 1 auto;
+    // overflow: scroll;
+    height: 100%;
 }
 
 .content {
-    /* autoprefixer: off */
-    grid-column: 1/2;
-    grid-row: 2/3;
-    z-index: 1000;
-    overflow: hidden;
+    height: 100%;
+    overflow: scroll;
 }
 
-:host ::ng-deep .logo {
-    margin: auto 16px;
-    float: left;
+#logo {
+    margin: auto 8px;
 }
 
-app-baheaderMenu {
+#menu {
     // float: left;
-    // line-height: 64px;
+    margin: auto 0;
+    line-height: 64px;
     align-self: flex-end;
+    padding-left: 10px;
+}
+
+.flex-item {
+    align-items: center;
+}
+
+#place-holder {
+    flex: 1;
+}
+
+#login-menu {
+    justify-content: end;
 }

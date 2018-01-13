@@ -1,0 +1,10 @@
+<div *ngIf="hasLogin else gotoLogin">
+    <ogms-baHeaderMenu [type]="'USER_MENUS'"></ogms-baHeaderMenu>
+</div>
+
+<ng-template #gotoLogin>
+    <div class="flex-box">
+        <div class="flex-item">Login</div>
+        <div class="flex-item">Sign up</div>
+    </div>
+</ng-template>

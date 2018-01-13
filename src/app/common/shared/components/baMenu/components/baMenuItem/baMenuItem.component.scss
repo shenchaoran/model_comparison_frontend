@@ -1,11 +1,10 @@
-@import '../../../../theme/sass/conf/conf';
-
+@import '../../../../sass/conf/conf';
 .active {
-    background:#333;
-    > a {
-        color:#fff;
+    background: #333;
+    >a {
+        color: #fff;
         i {
-            color:$menu-icon-hover
+            color: $menu-icon-hover
         }
     }
 }

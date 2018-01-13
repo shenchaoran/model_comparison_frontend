@@ -3,7 +3,7 @@ import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
 import { SubMenu } from './sub-menu';
 
 @Component({
-    selector: 'app-context-menu',
+    selector: 'ogms-context-menu',
     templateUrl: './context-menu.component.html',
     styleUrls: ['./context-menu.component.scss']
 })

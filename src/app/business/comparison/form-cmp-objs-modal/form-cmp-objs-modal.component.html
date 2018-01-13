@@ -1,0 +1,91 @@
+<ng-container *ngIf='ms'>
+    <nz-modal [nzVisible]="isModalVisible" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]='modalFooter' (nzOnCancel)="handleCancel($event)">
+        <ng-template #modalTitle>Select Data Reference</ng-template>
+        <ng-template #modalContent>
+            <nz-table [nzSize]='"small"' [nzIsPagination]='false' [nzCustomNoResult]='true'>
+                <div noResult></div>
+                <thead nz-thead>
+                    <tr>
+                        <th nz-th>
+                            <span>Model Name</span>
+                        </th>
+                        <th nz-th>
+                            <span>Data Name</span>
+                        </th>
+                        <th nz-th>
+                            <span>Field Name</span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody nz-tbody>
+                    <tr>
+                        <th nz-th>
+                            <span>{{ms.MDL.meta.name | string:'undefined'}}</span>
+                        </th>
+                        <th nz-th>
+                            <span>{{selectedEventName | string:'undefined'}}</span>
+                        </th>
+                        <th nz-th>
+                            <span>{{selectedFieldName | string:'undefined'}}</span>
+                        </th>
+                    </tr>
+                </tbody>
+            </nz-table>
+
+            <div nz-row [nzGutter]='"20"'>
+                <div nz-col [nzSpan]='6' class=''>
+                    <jqxListBox *ngIf='_eventList' [source]='_eventList' (onSelect)='selectEvent($event)' [width]='"100%"' [height]='"100%"'></jqxListBox>
+                </div>
+                <div nz-col [nzSpan]='18' class=''>
+                    <ng-container *ngIf='selectedSchema'>
+                        <ng-container *ngIf='selectedSchema.src === 0 && selectedSchema.type === "TABLE_RAW"'>
+                            <div class="max-height">
+                                <div>
+                                    <p><b>Data Schema:</b></p>
+                                    <pre>TABLE_RAW</pre>
+                                </div>
+                                <div>
+                                    <p><b>Data Fields</b></p>
+                                    <nz-radio-group #field [(ngModel)]="selectedFieldName" (ngModelChange)='checkModalValid()'>
+                                        <label *ngFor='let col of selectedSchema.structure' nz-radio [nzValue]="col.id" style='margin: 5px 10px'>
+                                                                <span>{{col.id}}</span>
+                                                            </label>
+                                    </nz-radio-group>
+                                </div>
+                            </div>
+                        </ng-container>
+
+                        <ng-container *ngIf='selectedSchema.src === 0 && selectedSchema.type === "ASCII_GRID_RAW"'>
+                            <div class="max-height">
+                                <div>
+                                    <p><b>Data Schema:</b></p>
+                                    <pre>ASCII_GRID_RAW</pre>
+                                </div>
+                                <div>
+                                    <p><b>Data Fields</b></p>
+                                    <!-- <nz-radio-group [(ngModel)]="selectedFieldName" (ngModelChange)='checkModalValid()'> -->
+                                    <!-- <label nz-radio [nzValue]="'DEFAULT'"> -->
+                                    <span>DEFAULT</span>
+                                    <!-- </label> -->
+                                    <!-- </nz-radio-group> -->
+                                </div>
+                            </div>
+                        </ng-container>
+
+                        <ng-container *ngIf='selectedSchema.src === 0 && selectedSchema.type === "SHAPEFILE_RAW"'>
+
+                        </ng-container>
+                    </ng-container>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template #modalFooter>
+            <button nz-button [nzType]="'default'" [nzSize]="'large'" (click)="handleCancel($event)">
+                                Cancel
+                            </button>
+            <button nz-button [nzType]="'primary'" [nzSize]="'large'" (click)="handleOk($event)" [disabled]='!isValid'>
+                                Submit
+                            </button>
+        </ng-template>
+    </nz-modal>
+</ng-container>
