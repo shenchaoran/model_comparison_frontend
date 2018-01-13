@@ -1,0 +1,83 @@
+﻿.jqx-widget-content-energyblue-my {
+    border-color: #a4bed4;
+}
+
+.jqx-fill-state-normal-energyblue-my,
+.jqx-widget-header-energyblue-my {
+    border-color: #a4bed4;
+    background-color: #e0e9f5
+}
+
+.jqx-fill-state-hover-energyblue-my {
+    border-color: #a4bed4;
+    background-color: #cfdde9
+}
+
+.jqx-fill-state-pressed-energyblue-my {
+    border-color: #5e8cb3;
+    background-color: #cfdde9
+}
+
+.jqx-fill-state-focus-energyblue-my {
+    border-color: #477396;
+}
+
+.jqx-scrollbar-state-normal-energyblue-my,
+.jqx-grid-bottomright-energyblue-my,
+.jqx-panel-bottomright-energyblue-my,
+.jqx-listbox-bottomright-energyblue-my {
+    background-color: #e0e9f5
+}
+
+.jqx-widget-energyblue-my .jqx-grid-column-header-energyblue-my,
+.jqx-grid-cell-energyblue-my,
+.jqx-widget-energyblue-my .jqx-grid-cell-energyblue-my,
+.jqx-widget-energyblue-my .jqx-grid-group-cell-energyblue-my,
+.jqx-grid-group-cell-energyblue-my {
+    border-color: #a4bed4
+}
+
+.jqx-tabs-title-selected-bottom-energyblue-my,
+.jqx-tabs-selection-tracker-bottom-energyblue-my,
+.jqx-tabs-title-selected-top-energyblue-my,
+.jqx-tabs-selection-tracker-top-energyblue-my {
+    border-color: #a4bed4;
+    border-bottom: 1px solid #fff;
+    background: #fff
+}
+
+.jqx-grid-cell-sort-alt-energyblue-my,
+.jqx-grid-cell-filter-alt-energyblue-my,
+.jqx-grid-cell-pinned-energyblue-my,
+.jqx-grid-cell-alt-energyblue-my,
+.jqx-grid-cell-sort-energyblue-my {
+    background-color: #e7eef8
+}
+
+.jqx-grid-cell-selected-energyblue-my {
+    background-color: #cfdde9 !important;
+    color: #2b465e !important;
+}
+
+.jqx-grid-cell-hover-energyblue-my {
+    background-color: #cfdde9 !important;
+}
+
+.jqx-menu-vertical-energyblue-my {
+    background: #e0e9f5;
+}
+
+.jqx-layout-energyblue-my {
+    background-color: #a4bed4;
+}
+
+
+/* scr */
+
+.jqx-widget-energyblue-my.jqx-tree {
+    border: none !important;
+}
+
+.jqx-listbox.jqx-widget-energyblue-my {
+    border: none !important;
+}

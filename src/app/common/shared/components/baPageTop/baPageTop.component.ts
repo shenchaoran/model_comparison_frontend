@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
 	styleUrls: ['./baPageTop.component.scss']
 })
 export class BaPageTop {
-	public nickname: string;
+	public username: string;
 	//todo: 判断下拉是否打开的
 	public menuDropDown: boolean = false;
 
@@ -16,7 +16,7 @@ export class BaPageTop {
 	) { }
 
 	ngOnInit() {
-		this.nickname = JSON.parse(sessionStorage.getItem('authInfo')).nickname;
+		this.username = JSON.parse(localStorage.getItem('jwt')).user.username;
 	}
 
 	showUserOperation($event) {
@@ -26,7 +26,7 @@ export class BaPageTop {
 	}
 
 	logout() {
-		sessionStorage.clear();
-		this.router.navigate(["./login"]);
+		localStorage.clear();
+		this.router.navigate(["/login"]);
 	}
 }

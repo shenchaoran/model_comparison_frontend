@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-testRecur',
+  selector: 'ogms-testRecur',
   templateUrl: './testRecur.component.html',
   styleUrls: ['./testRecur.component.scss']
 })

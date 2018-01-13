@@ -54,10 +54,14 @@ import 'core-js/es7/reflect';
 
 import 'core-js/client/shim.min';
 
+// add by SCR
+// import 'angular-handsontable';
+
 /***************************************************************************************************
  * Zone JS is required by Angular itself.
  */
-import 'zone.js/dist/zone';  // Included with Angular CLI.
+// Change by SCR: because of the conflict of handsontable
+// import 'zone.js/dist/zone';  // Included with Angular CLI.
 
 
 
