@@ -1,0 +1,49 @@
+<div class="border">
+  <div nz-row class="modelname row">
+    <div nz-col>{{task.solutionName}}</div>
+  </div>
+  <div nz-row class="row"> 
+    <div nz-col>
+      <nz-tag>{{task.modelName}}</nz-tag>
+      <nz-tag>{{task.dataName}}</nz-tag>
+    </div>
+  </div>
+  <div nz-row class="row">
+    <div nz-col><p>{{task.desc}}</p></div>
+  </div>
+  <div nz-row class="row">
+    <div nz-col [nzSpan]=6 class="center">
+      <i class="anticon anticon-github normal"></i>
+      <span class="normal">{{task.username}}</span> 
+    </div>
+    <div nz-col [nzSpan]=18><span class="normal">{{task.dateFinish}}</span></div>
+  </div>
+  <div nz-row class="row">
+    <button nz-button [nzType]="'primary'" [nzSize]="size">
+        <i class="anticon anticon-download"></i><span>ViewResult</span>
+    </button>
+    <button nz-button [nzType]="'default'" [nzSize]="size">
+        <i class="anticon anticon-download"></i><span>Detail</span>
+    </button>
+    <button nz-button [nzType]="'default'" [nzSize]="size">
+        <i class="anticon anticon-download"></i><span>Config</span>
+    </button>
+    <!-- <div nz-col [nzSpan]=>
+        <button nz-button [nzType]="'primary'" [nzSize]="size">
+            <i class="anticon anticon-download"></i><span>ViewResult</span>
+        </button>
+    </div>
+    <div nz-col [nzSpan]=4>
+      <button nz-button [nzType]="'default'" [nzSize]="size">
+          <i class="anticon anticon-download"></i><span>Detail</span>
+      </button>
+    </div>
+    <div nz-col [nzSpan]=4>
+      <button nz-button [nzType]="'default'" [nzSize]="size">
+          <i class="anticon anticon-download"></i><span>RunByThis</span>
+      </button>
+    </div> -->
+  </div>  
+</div>
+
+

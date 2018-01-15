@@ -13,9 +13,7 @@ import { LayoutModule } from '../common/layout/layout.module';
 		LayoutModule,
         WebNJGISRoutingModule,
 	],
-	declarations: [
-
-	],
+	declarations: [],
 	providers: [
 	]
 })
