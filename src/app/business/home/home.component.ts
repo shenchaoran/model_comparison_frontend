@@ -2,12 +2,7 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 
 @Component({
   selector: 'ogms-home',
-  template: `
-        <p>
-            home works!
-        </p>
-        <router-outlet></router-outlet>
-    `,
+  templateUrl: './home.component.html',
   styles: [`
       .ol-button i
       {	color: inherit;
