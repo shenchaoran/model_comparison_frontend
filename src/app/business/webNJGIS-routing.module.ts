@@ -37,6 +37,10 @@ const routes: Routes = [
       {
         path: 'users/:username',
         loadChildren: './profile/profile.module#ProfileModule'
+      }, 
+      {
+          path: 'test',
+          loadChildren: './test/test.module#TestModule'
       }
       // {
       //     path: '**',

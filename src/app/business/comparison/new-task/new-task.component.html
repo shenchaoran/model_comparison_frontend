@@ -48,7 +48,7 @@
         <div class='' [hidden]='currentStep !== 2'>
             <h4 style='margin: 10px 0;'>Configure Comparison Object:</h4>
             <nz-collapseset [nzAccordion]='true'>
-                <nz-collapse *ngFor="let cmpObj of cmpTask.cmpCfg.cmpObjs" [nzActive]="cmpObj.attached.active">
+                <nz-collapse *ngFor="let cmpObj of cmpTask.cmpCfg.cmpObjs; let i=index" [nzActive]="i===0">
                     <div collapse-title>
                         <div class='flex-box-row-nowrap'>
                             <span>
@@ -79,7 +79,7 @@
 
                     <h5 style='margin: 10px 0;'>Mapping Comparison Object:</h5>
                     <nz-collapseset [nzBordered]="false" [nzAccordion]='true'>
-                        <nz-collapse *ngFor="let dataRefer of cmpObj.dataRefers" [nzActive]="dataRefer.attached.active">
+                        <nz-collapse *ngFor="let dataRefer of cmpObj.dataRefers; let i=index" [nzActive]="i===0">
                             <div collapse-title>
                                 <div class='flex-box-row-nowrap'>
                                     <span>

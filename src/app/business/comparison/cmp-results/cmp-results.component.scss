@@ -1,0 +1,38 @@
+.list-item {
+    border-bottom: 1px solid #cfcfcf;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.list-item:first-child {
+    border-top: 1px solid #cfcfcf;
+}
+
+.selected-list-item,
+.list-item:hover {
+    background: #eeeeee
+}
+
+.container {
+    padding: 10px;
+    box-sizing: border-box;
+    // overflow: scroll;
+    #left-item {
+        flex: 1;
+        padding: 10px;
+        margin-right: 10px;
+    }
+    #right-item {
+        flex: 4;
+        padding: 10px;
+        overflow-y: scroll;
+    }
+}
+
+h4 {
+    margin: 15px 0;
+}
+
+.form-row {
+    margin-bottom: 16px;
+}

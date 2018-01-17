@@ -10,6 +10,7 @@ import { NewTaskComponent } from './new-task/new-task.component';
 import { CmpSlnService, CmpTaskService, CmpSceneService } from './services';
 import { MSService } from '../geo-model/services';
 import { DataService } from '../geo-data/services';
+import { CmpResultsComponent } from './cmp-results/cmp-results.component';
 
 const routes: Routes = [
     { 
@@ -47,12 +48,11 @@ const routes: Routes = [
                     geoDataResource: DataService,
                     geoModelTree: MSService
                 },
-                children: [
-                    // {
-                    //     path: '',
-                    //     loadChildren: '../../common/feature/ol-map/ol-map.module#OlMapModule'
-                    // }
-                ]
+                children: []
+            },
+            {
+                path: 'tasks/:id',
+                component: CmpResultsComponent
             },
             {
                 path: 'scenes',

@@ -2,6 +2,7 @@ import { Component, OnInit, Input, AfterViewInit, AfterViewChecked } from '@angu
 import { CmpTaskService } from '../services';
 import { NzNotificationService, NzModalService } from 'ng-zorro-antd';
 import * as uuidv1 from 'uuid/v1';
+import { Router, ActivatedRoute } from '@angular/router';
 import {
     CalcuTaskState,
     CmpState,
@@ -31,7 +32,7 @@ export class TaskDetailComponent implements OnInit, AfterViewInit, AfterViewChec
     _taskId: string;
     _taskSubscription;
 
-    _hasCreatedMap: boolean;
+    // _hasCreatedMap: boolean;
     _containerId: string;
 
     @Input()
@@ -50,7 +51,9 @@ export class TaskDetailComponent implements OnInit, AfterViewInit, AfterViewChec
     imageStaticLayers: Array<any>;
     constructor(
         private service: CmpTaskService,
-        private _notice: NzNotificationService
+        private _notice: NzNotificationService,
+        private router: Router,
+        private route: ActivatedRoute
     ) {
         this._containerId = uuidv1();
     }
@@ -64,15 +67,15 @@ export class TaskDetailComponent implements OnInit, AfterViewInit, AfterViewChec
     }
 
     ngAfterViewChecked() {
-        if(!this._hasCreatedMap) {
-            if(jQuery(`#${this._containerId}`).length) {
-                postal
-                    .channel('MAN_CHANNEL')
-                    .publish(`map.create.${this._containerId}`, undefined);
+        // if(!this._hasCreatedMap) {
+        //     if(jQuery(`#${this._containerId}`).length) {
+        //         postal
+        //             .channel('MAN_CHANNEL')
+        //             .publish(`map.create.${this._containerId}`, undefined);
                 
-                this._hasCreatedMap = true;
-            }
-        }
+        //         this._hasCreatedMap = true;
+        //     }
+        // }
     }
 
     private fetchInterval() {
@@ -90,46 +93,22 @@ export class TaskDetailComponent implements OnInit, AfterViewInit, AfterViewChec
         );
 
         this._taskSubscription = cmpTask$.subscribe(
-            this.updateComponent,
+            this.updateTask.bind(this),
             e => {
                 this._notice.warning('Warning:', 'Get comparison task failed!');
             }
         );
     }
 
-    private updateComponent(cmpTask) {
+    private updateTask(cmpTask) {
         // console.log(cmpTask);
         this.cmpTask = cmpTask;
 
-        if (
-            this.cmpTask.cmpState === CmpState.FAILED ||
-            this.cmpTask.cmpState === CmpState.SUCCEED
-        ) {
+        if (this.cmpTask.cmpState === CmpState.FINISHED) {
             this._taskSubscription.unsubscribe();
         } else if (this.cmpTask.cmpState === CmpState.INIT) {
         } else if (this.cmpTask.cmpState === CmpState.RUNNING) {
         }
-
-        this.imageStaticLayers = [];
-        _.map(this.cmpTask.cmpCfg.cmpObjs, cmpObj => {
-            if (cmpObj.cmpResults) {
-                _.map(cmpObj.cmpResults, cmpResult => {
-                    if (cmpResult.image.length) {
-                        _.map(cmpResult.image, img => {
-                            this.imageStaticLayers.push({
-                                ratio: 1,
-                                params: {
-                                    LAYERS: 'show:0'
-                                },
-                                url: img.path,
-                                imageExtent: img.extent,
-                                projection: 'EPSG:3857'
-                            });
-                        });
-                    }
-                });
-            }
-        });
     }
 
     refresh() {
@@ -138,7 +117,18 @@ export class TaskDetailComponent implements OnInit, AfterViewInit, AfterViewChec
                 this._notice.warning('Warning:', 'Get comparison task failed!');
             }
             else {
-                this.updateComponent(response.data.doc);
+                this.updateTask(response.data.doc);
+            }
+        });
+    }
+
+    edit() {}
+
+    checkResult() {
+        this.router.navigate([`${this._taskId}`], {
+            relativeTo: this.route,
+            queryParams: {
+                cmpTask: JSON.stringify(this.cmpTask)
             }
         });
     }

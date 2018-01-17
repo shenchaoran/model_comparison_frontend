@@ -54,6 +54,7 @@
         "node-sass": "^4.7.2",
         "normalize.css": "6.0.0",
         "ol3-ext": "^1.0.1",
+        "ol3-layerswitcher": "^1.1.2",
         "openlayers": "^4.2.0",
         "postal": "^2.0.5",
         "proj4": "^2.4.4",

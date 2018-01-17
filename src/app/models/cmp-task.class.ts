@@ -53,21 +53,21 @@ export class CmpTask {
                 // data 存放具体比较的配置，如chart的列名，图像处理
                 data: any,
                 cmpResult: {
-                    state: CmpResultState,
+                    state: CmpState,
                     image?: [{
                       extent: any,
                       path: string,
                       title: string,
-                      state: CmpResultState
+                      state: CmpState
                     }],
                     chart?: {
-                        state: CmpResultState
+                        state: CmpState
                     },
                     GIF?: {
-                        state: CmpResultState
+                        state: CmpState
                     },
                     statistic?: {
-                        state: CmpResultState
+                        state: CmpState
                     },
                 }
             }>,
@@ -126,14 +126,9 @@ export class CmpTask {
 export enum CmpState {
     INIT = 0,
     RUNNING,
-    SUCCEED,
-    FAILED
-}
-
-export enum CmpResultState {
-    RUNNING = 0,
-    SUCCEED,
-    FAILED
+    FINISHED_SUCCEED,
+    FINISHED_FAILED,
+    FINISHED
 }
 
 // TODO 纵向比较时，要多份数据，

@@ -32,7 +32,8 @@
             "../node_modules/@webcomponents/custom-elements/custom-elements.min.js",
             "../node_modules/openlayers/dist/ol.js",
             "../node_modules/ol3-ext/dist/ol3-ext.min.js",
-            "../node_modules/quill/dist/quill.js"
+            "../node_modules/quill/dist/quill.js",
+            "../node_modules/ol3-layerswitcher/src/ol3-layerswitcher.js"
         ],
         "environmentSource": "environments/environment.ts",
         "environments": {

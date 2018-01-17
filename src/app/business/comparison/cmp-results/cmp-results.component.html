@@ -1,0 +1,66 @@
+<div *ngIf='cmpTask' class="container flex-box-row-nowrap max-height">
+    <div id='left-item' class="debug-border max-height">
+        <div>
+            <h4>Comparison Objects: </h4>
+        </div>
+        <div *ngFor='let cmpObj of cmpTask.cmpCfg.cmpObjs; let i=index;'>
+            <div class='list-item' (click)='onSelectObj(cmpObj.id)' [ngClass]="{'selected-list-item': selectedCmpObjId? cmpObj.id===selectedCmpObjId: false}">
+                {{cmpObj.meta.name}}
+            </div>
+        </div>
+    </div>
+    <div id='right-item' class="debug-border max-height">
+        <div *ngIf='selectedCmpObj'>
+            <div>
+                <h4>{{selectedCmpObj.meta.name}}</h4>
+            </div>
+            <div>
+                <div class='form-row'>
+                    Description: <span>{{selectedCmpObj.desc}}</span>
+                </div>
+                <div class='form-row'>
+                    Schema: <span>{{selectedCmpObj.schemaName}}</span>
+                </div>
+
+                <h5 class='form-row'>Comparison results:</h5>
+                <nz-tabset [nzType]="'card'" [nzTabPosition]="top">
+                    <nz-tab *ngFor="let method of selectedCmpObj.methods; let j=index;">
+                        <ng-template #nzTabHeading>
+                            {{method}}
+                        </ng-template>
+                        <div>
+                            <div *ngIf='method === "TABLE_CHART"'>
+
+                            </div>
+                            <div *ngIf='method === "TABLE_STATISTIC"'>
+
+                            </div>
+                            <div *ngIf='method === "SHAPEFILE_VISUALIZATION"'>
+
+                            </div>
+                            <div *ngIf='method === "SHAPEFILE_STATISTIC"'>
+
+                            </div>
+                            <div *ngIf='method === "SHAPEFILE_INTERPOLATION"'>
+
+                            </div>
+                            <div *ngIf='method === "ASCII_GRID_VISUALIZATION"'>
+
+                            </div>
+                            <div *ngIf='method === "ASCII_GRID_STATISTIC"'>
+
+                            </div>
+                            <div *ngIf='method === "GIF"'>
+
+                            </div>
+                            <div *ngIf='method === "ASCII_GRID_BATCH_VISUALIZATION"'>
+                                <ogms-ascii-grid [imageLayers]='imageStaticLayers'></ogms-ascii-grid>
+                                <!-- <ogms-life-loop></ogms-life-loop> -->
+                            </div>
+                        </div>
+                    </nz-tab>
+                </nz-tabset>
+            </div>
+        </div>
+    </div>
+</div>

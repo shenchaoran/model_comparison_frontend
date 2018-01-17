@@ -24,7 +24,6 @@ import * as ol from 'openlayers';
     providers: [OlMapService]
 })
 export class RegionMapComponent implements OnInit, AfterViewInit {
-    @Input() imageStaticLayers: Array<any>;
     @Input() mode: 'read' | 'write' = 'read';
     @Input() geojson: any = undefined;
     @Input() mapId: string;
@@ -44,15 +43,17 @@ export class RegionMapComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit() {
-        postal
-            .channel('MAP_CHANNEL')
-            .subscribe(`map.create.${this._mapId}`, (data, envelope) => {
-                this.createMap();
-            });
+        // postal
+        //     .channel('MAP_CHANNEL')
+        //     .subscribe(`map.create.${this._mapId}`, (data, envelope) => {
+        //         this.createMap();
+        //     });
     }
 
     ngAfterViewInit() {
-        this.createMap();
+        setTimeout(() => {
+            this.createMap();
+        }, 0);
     }
 
     createMap() {
@@ -61,6 +62,15 @@ export class RegionMapComponent implements OnInit, AfterViewInit {
         }
 
         if (jQuery('#' + this._targetId).length) {
+            // const map = new ol.Map({
+            //     target: this._targetId,
+            //     layers: [new ol.layer.Tile({ source: new ol.source.OSM() })],
+            //     view: new ol.View({
+            //         center: [0, 0],
+            //         zoom: 2
+            //     })
+            // });
+
             this._mapId = this.olMapService.createDefaultMap(
                 this._targetId,
                 this.mapId
@@ -84,6 +94,7 @@ export class RegionMapComponent implements OnInit, AfterViewInit {
             }
 
             this.resize();
+            
             // postal
             //     .channel('MAP_CHANNEL')
             //     .publish('map.after-create-default', undefined);

@@ -517,4 +517,23 @@ export class OlMapService extends MapService {
         }
     }
     //endregion
+
+    public getMapExtent(extents) {
+        let minx, miny, maxx, maxy;
+        _.map(extents, extent => {
+            if(minx === undefined || minx> extent[0]) {
+                minx = extent[0];
+            }
+            if(miny === undefined || miny> extent[1]) {
+                miny = extent[1];
+            }
+            if(maxx === undefined || maxx< extent[2]) {
+                maxx = extent[2];
+            }
+            if(maxy === undefined || maxy< extent[3]) {
+                maxy = extent[3];
+            }
+        });
+        return [minx, miny, maxx, maxy];
+    }
 }
