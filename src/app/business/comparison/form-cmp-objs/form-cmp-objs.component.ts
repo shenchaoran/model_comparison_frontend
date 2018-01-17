@@ -99,7 +99,9 @@ export class FormCmpObjsComponent implements OnInit, OnChanges {
             if (cmpObj.methods === undefined) {
               cmpObj.methods = [];
             }
-            cmpObj.methods.push(method.value);
+            if(!_.find(cmpObj.methods, method.value)) {
+                cmpObj.methods.push(method.value);
+            }
             this.checkAccordionValid(cmpObj);
           }
         });
