@@ -1,5 +1,5 @@
 import { Component, OnInit,Input } from '@angular/core';
-import { Task } from "../../mock/task-model";
+import { Task } from "../../mock/task.model";
 
 @Component({
   selector: 'ogms-home-task-card',

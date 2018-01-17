@@ -1,7 +1,5 @@
 <div class="border">
-  <div nz-row class="modelname row">
-    <div nz-col>{{task.solutionName}}</div>
-  </div>
+  <div class="modelname row">{{task.solutionName}}</div>
   <div nz-row class="row"> 
     <div nz-col>
       <nz-tag>{{task.modelName}}</nz-tag>
@@ -28,21 +26,6 @@
     <button nz-button [nzType]="'default'" [nzSize]="size">
         <i class="anticon anticon-download"></i><span>Config</span>
     </button>
-    <!-- <div nz-col [nzSpan]=>
-        <button nz-button [nzType]="'primary'" [nzSize]="size">
-            <i class="anticon anticon-download"></i><span>ViewResult</span>
-        </button>
-    </div>
-    <div nz-col [nzSpan]=4>
-      <button nz-button [nzType]="'default'" [nzSize]="size">
-          <i class="anticon anticon-download"></i><span>Detail</span>
-      </button>
-    </div>
-    <div nz-col [nzSpan]=4>
-      <button nz-button [nzType]="'default'" [nzSize]="size">
-          <i class="anticon anticon-download"></i><span>RunByThis</span>
-      </button>
-    </div> -->
   </div>  
 </div>
 

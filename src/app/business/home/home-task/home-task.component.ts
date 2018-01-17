@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+
 import { MockService } from "../../mock/mock.service";
-import { Task } from "../../mock/task-model";
+import { Task } from "../../mock/task.model";
 
 @Component({
   selector: 'ogms-home-task',
