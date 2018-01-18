@@ -1,0 +1,18 @@
+<div class="home-solution-main">
+    <nz-card nzNoHovering [nzBordered]="false">
+      <ng-template #title>
+        <h3>Solution</h3>
+      </ng-template>
+      <ng-template #extra>
+        <a>More</a>
+      </ng-template>
+      <ng-template #body>
+          <ogms-home-solution-card [solution]="solutions[0]"></ogms-home-solution-card>
+          <ogms-home-solution-card [solution]="solutions[1]"></ogms-home-solution-card>
+          <ogms-home-solution-card [solution]="solutions[2]"></ogms-home-solution-card>
+          <ogms-home-solution-card [solution]="solutions[3]"></ogms-home-solution-card>
+          <ogms-home-solution-card [solution]="solutions[4]"></ogms-home-solution-card>
+          <ogms-home-solution-card [solution]="solutions[5]"></ogms-home-solution-card>
+      </ng-template>
+    </nz-card>
+  </div>

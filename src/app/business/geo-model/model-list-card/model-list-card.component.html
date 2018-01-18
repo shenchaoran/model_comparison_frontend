@@ -1,0 +1,47 @@
+<div class="border">
+  <div nz-row [nzType]="'flex'" [nzJustify]="'start'">
+    <div nz-col>
+      <div class="custom-img">
+          <!-- <img alt="example" height="180px" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"/> -->
+          <img class="img-center" alt="example" height="180px" src="https://gss0.bdstatic.com/94o3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike272%2C5%2C5%2C272%2C90/sign=c849697147086e067ea5371963611091/6c224f4a20a44623792750229322720e0df3d785.jpg"/>
+      </div>
+    </div>
+    <div nz-col class="right-content">
+        <div class="modelname row">{{model.modelName}}</div>
+        <div nz-row class="row"> 
+          <div nz-col>
+            <nz-tag>{{model.modelTags[0]}}</nz-tag>
+            <nz-tag>{{model.modelTags[1]}}</nz-tag>
+          </div>
+        </div>
+        <div nz-row class="row">
+          <div nz-col><p>{{model.modelDesc}}</p></div>
+        </div>
+        <div nz-row class="row">
+          <div nz-col [nzSpan]=4 class="center">
+            <i class="anticon anticon-github normal"></i>
+            <span class="normal">{{model.author}}</span> 
+          </div>
+          <div nz-col [nzSpan]=20>
+              <i class="anticon anticon-star"></i>
+              <span class="favor-number">34</span>
+          </div>
+        </div>
+        <div nz-row [nzType]="'flex'" [nzJustify]="'start'" [nzGutter]="16" class="row">
+          <div nz-col>
+              <button nz-button [nzType]="'primary'" >
+                  <i class="anticon anticon-download"></i><span>Detail</span>
+              </button>
+          </div>
+          <div nz-col>
+              <button nz-button [nzType]="'default'" >
+                  <i class="anticon anticon-download"></i> <span>Config</span>
+              </button>
+          </div>
+        </div>  
+    </div>
+  </div>
+</div>
+  
+  
+  

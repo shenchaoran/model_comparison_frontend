@@ -1,0 +1,18 @@
+<div class="home-data-main">
+    <nz-card nzNoHovering [nzBordered]="false">
+      <ng-template #title>
+        <h3>Data</h3>
+      </ng-template>
+      <ng-template #extra>
+        <a>More</a>
+      </ng-template>
+      <ng-template #body>
+          <ogms-home-data-card [data]="datas[0]"></ogms-home-data-card>
+          <ogms-home-data-card [data]="datas[1]"></ogms-home-data-card>
+          <ogms-home-data-card [data]="datas[2]"></ogms-home-data-card>
+          <ogms-home-data-card [data]="datas[3]"></ogms-home-data-card>
+          <ogms-home-data-card [data]="datas[4]"></ogms-home-data-card>
+          <ogms-home-data-card [data]="datas[5]"></ogms-home-data-card>
+      </ng-template>
+    </nz-card>
+  </div>
