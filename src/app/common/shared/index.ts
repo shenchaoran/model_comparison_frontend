@@ -25,7 +25,11 @@ import {
   TestRecurComponent,
   SubMenuComponent,
   ContextMenuComponent,
-  HeaderPullRightComponent
+  HeaderPullRightComponent,
+  DataCardComponent,
+  ModelCardComponent,
+  SolutionCardComponent,
+  TaskCardComponent
   // BaMessageBox,
   //
   // BaFloatWindow,
@@ -86,7 +90,11 @@ const CITYFUN_COMPONENTS = [
   jqxTreeComponent,
   jqxExpanderComponent,
   jqxMenuComponent,
-  jqxListBoxComponent
+  jqxListBoxComponent,
+  DataCardComponent,
+  ModelCardComponent,
+  SolutionCardComponent,
+  TaskCardComponent
   // BaMessageBox,
   //
   // BaFloatWindow,

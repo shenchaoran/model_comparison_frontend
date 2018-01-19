@@ -7,7 +7,7 @@
       <a>More</a>
     </ng-template>
     <ng-template #body>
-      <ogms-home-task-card *ngFor="let task of tasks" [task]="task"></ogms-home-task-card>
+      <task-card *ngFor="let task of tasks" [task]="task"></task-card>
     </ng-template>
   </nz-card>
 </div>
