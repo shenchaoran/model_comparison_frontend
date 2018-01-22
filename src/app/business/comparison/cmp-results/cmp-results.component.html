@@ -1,10 +1,11 @@
+<ogms-table></ogms-table>
 <div *ngIf='cmpTask' class="container flex-box-row-nowrap max-height">
     <div id='left-item' class="debug-border max-height">
         <div>
             <h4>Comparison Objects: </h4>
         </div>
         <div *ngFor='let cmpObj of cmpTask.cmpCfg.cmpObjs; let i=index;'>
-            <div class='list-item' (click)='onSelectObj(cmpObj.id)' [ngClass]="{'selected-list-item': selectedCmpObjId? cmpObj.id===selectedCmpObjId: false}">
+            <div class='list-item' (click)='onSelectCmpObj(cmpObj.id)' [ngClass]="{'selected-list-item': selectedCmpObjId? cmpObj.id===selectedCmpObjId: false}">
                 {{cmpObj.meta.name}}
             </div>
         </div>
@@ -15,6 +16,7 @@
                 <h4>{{selectedCmpObj.meta.name}}</h4>
             </div>
             <div>
+                <h5 class='form-row'>Basic information: </h5>
                 <div class='form-row'>
                     Description: <span>{{selectedCmpObj.desc}}</span>
                 </div>
@@ -22,15 +24,20 @@
                     Schema: <span>{{selectedCmpObj.schemaName}}</span>
                 </div>
 
-                <h5 class='form-row'>Comparison results:</h5>
-                <nz-tabset [nzType]="'card'" [nzTabPosition]="top">
+                <h5 class='form-row'>Comparison results: </h5>
+                <nz-tabset [nzType]="'card'" [nzTabPosition]="'top'">
                     <nz-tab *ngFor="let method of selectedCmpObj.methods; let j=index;">
                         <ng-template #nzTabHeading>
                             {{method}}
                         </ng-template>
                         <div>
                             <div *ngIf='method === "TABLE_CHART"'>
-
+                                <!-- <ng-container *ngFor='let dataRefer of selectedCmpObj.dataRefers'>
+                                    <ng-container *ngIf='dataRefer.cmpResult !== undefined && dataRefer.cmpResult.chart !== undefined && dataRefer.cmpResult.chart.tableSrc !== undefined'>
+                                        <ogms-table [tableSrc]='dataRefer.cmpResult.chart.tableSrc' style='height: 350px; width: 500px'></ogms-table>
+                                    </ng-container>
+                                </ng-container> -->
+                                <ogms-table></ogms-table>
                             </div>
                             <div *ngIf='method === "TABLE_STATISTIC"'>
 
@@ -54,8 +61,36 @@
 
                             </div>
                             <div *ngIf='method === "ASCII_GRID_BATCH_VISUALIZATION"'>
-                                <ogms-ascii-grid [imageLayers]='imageStaticLayers'></ogms-ascii-grid>
-                                <!-- <ogms-life-loop></ogms-life-loop> -->
+                                <div>
+                                    <div class='form-row'>
+                                        Year:
+                                        <nz-select [(ngModel)]="selectedYear" (ngModelChange)='onYearChange($event)' [nzPlaceHolder]='""' [nzAllowClear]="true" style="width: 120px;">
+                                            <nz-option *ngFor="let year of selectedYearOption" [nzLabel]="year" [nzValue]="year">
+                                            </nz-option>
+                                        </nz-select>
+                                    </div>
+
+                                    <div class='form-row'>
+                                        Style:
+                                        <nz-radio-group [(ngModel)]='selectedStyle' (ngModelChange)='onMapStyleChange($event)'>
+                                            <label nz-radio-button [nzValue]="'SWIPE'">
+                                                <span>Swipe</span>
+                                            </label>
+                                            <label nz-radio-button [nzValue]="'MIXING'">
+                                                <span>Mixing</span>
+                                            </label>
+                                        </nz-radio-group>
+                                    </div>
+
+                                </div>
+                                <div>
+                                    <ng-container *ngIf='selectedStyle==="MIXING"'>
+                                        <ogms-ascii-grid [imageLayers]='selectedLayers'></ogms-ascii-grid>
+                                    </ng-container>
+                                    <ng-container *ngIf='selectedStyle==="SWIPE"'>
+                                        <ogms-swipe-map [imageLayers]='selectedLayers'></ogms-swipe-map>
+                                    </ng-container>
+                                </div>
                             </div>
                         </div>
                     </nz-tab>

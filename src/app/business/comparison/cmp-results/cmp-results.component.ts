@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, switchMap, filter, tap } from 'rxjs/operators';
@@ -29,14 +29,21 @@ declare var ol: any;
     templateUrl: './cmp-results.component.html',
     styleUrls: ['./cmp-results.component.scss']
 })
-export class CmpResultsComponent implements OnInit {
+export class CmpResultsComponent implements OnInit, OnDestroy {
     cmpTaskId;
     cmpTask;
     _taskSubscription;
+
     imageStaticLayers;
+    selectedLayers = [];
 
     selectedCmpObj;
     selectedCmpObjId;
+
+    selectedYearOption = [];
+    selectedYear;
+    selectedStyle = 'SWIPE';
+    
 
     constructor(
         private service: CmpTaskService,
@@ -45,16 +52,27 @@ export class CmpResultsComponent implements OnInit {
     ) {}
 
     ngOnInit() {
+        const cmpTaskStr = localStorage.getItem('currentCmpTask');
+        if(cmpTaskStr) {
+            this.cmpTask = JSON.parse(cmpTaskStr);
+            this.updateTask(this.cmpTask);
+        }
+        else {
+            this.refresh();
+        }
+        
         this.route.params
             .subscribe((params: Params) => {
                 this.cmpTaskId = params['id'];
                 this.fetchInterval();
             });
+    }
 
-        this.route.queryParams
-            .subscribe((params: Params) => {
-                this.updateTask(JSON.parse(params['cmpTask']));
-            });
+    ngOnDestroy() {
+        if(this._taskSubscription) {
+            localStorage.removeItem('currentCmpTask');
+            this._taskSubscription.unsubscribe();
+        }
     }
 
     private fetchInterval() {
@@ -84,14 +102,16 @@ export class CmpResultsComponent implements OnInit {
     private updateTask(cmpTask) {
         this.cmpTask = cmpTask;
         if(this.selectedCmpObjId) {
-            this.onSelectObj(this.selectedCmpObjId);
+            this.onSelectCmpObj(this.selectedCmpObjId);
         }
         else {
             this.selectFirst();
         }
 
         if (this.cmpTask.cmpState === CmpState.FINISHED) {
-            this._taskSubscription.unsubscribe();
+            if(this._taskSubscription) {
+                this._taskSubscription.unsubscribe();
+            }
         } else if (this.cmpTask.cmpState === CmpState.INIT) {
         } else if (this.cmpTask.cmpState === CmpState.RUNNING) {
         }
@@ -163,15 +183,66 @@ export class CmpResultsComponent implements OnInit {
         });
     }
 
-    onSelectObj(cmpObjId) {
+    onSelectCmpObj(cmpObjId) {
         this.selectedCmpObjId = cmpObjId;
         this.selectedCmpObj = _.find(this.cmpTask.cmpCfg.cmpObjs, cmpObj => cmpObj.id === cmpObjId);
+        this.setSelectedTimeOption();
+
+        this.selectedLayers = [];
+        this.selectedYear = undefined;
     }
 
     private selectFirst() {
         if(this.cmpTask.cmpCfg.cmpObjs.length && this.selectedCmpObjId === undefined) {
             this.selectedCmpObjId = this.cmpTask.cmpCfg.cmpObjs[0].id;
             this.selectedCmpObj = this.cmpTask.cmpCfg.cmpObjs[0];
+
+            this.setSelectedTimeOption();
+
+            this.selectedLayers = [];
+            this.selectedYear = undefined;
         }
+    }
+
+    onYearChange(year) {
+        this.selectedLayers = [];
+        const regex = new RegExp(year);
+        _.map(this.imageStaticLayers, layerOpt => {
+            if(layerOpt.state === CmpState.FINISHED_SUCCEED) {
+                if(regex.test(layerOpt.title)) {
+                    if(this.selectedLayers.length < 2) {
+                        this.selectedLayers.push(layerOpt);
+                    }
+                }
+            }
+        });
+    }
+
+    onMapStyleChange(style) {
+
+    }
+
+    private setSelectedTimeOption() {
+        this.selectedYearOption = [];
+        
+        let gotYears = false;
+        _.map(this.selectedCmpObj.dataRefers, dataRefer => {
+            if(!gotYears) {
+                if(
+                    dataRefer.cmpResult &&
+                    dataRefer.cmpResult.image &&
+                    dataRefer.cmpResult.image.length
+                ) {
+                    _.map(dataRefer.cmpResult.image, img => {
+                        let date = img.title;
+                        const year = date.substr(0, 4);
+                        if(!_.find(this.selectedYearOption, v => v === year)) {
+                            this.selectedYearOption.push(year);
+                        }
+                    });
+                    gotYears = true;
+                }
+            }
+        });
     }
 }

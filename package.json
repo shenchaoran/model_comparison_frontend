@@ -26,6 +26,7 @@
         "@ngx-translate/core": "^9.0.2",
         "@ngx-translate/http-loader": "^2.0.1",
         "@webcomponents/custom-elements": "^1.0.0",
+        "angular-handsontable": "^1.0.0-beta3",
         "angular-tree-component": "^5.1.2",
         "angular-web-storage": "^1.0.0",
         "animate.css": "3.5.2",

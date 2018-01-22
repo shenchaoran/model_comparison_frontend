@@ -118,4 +118,20 @@ export class CmpTaskService implements Resolve<any> {
         });
     });
   }
+
+  getCmpResult(taskId: string, type: 'chart' | '') {
+    if(taskId) {
+        return this.http.get(
+            `/comparison/${taskId}/cmpResult`, 
+            {
+                params: {
+                    type: type
+                }
+            }
+        );
+    }
+    else {
+        return undefined;
+    }
+  }
 }

@@ -1,0 +1,3 @@
+<ng-container *ngIf='tableSrc'>
+    <hot-table height='height' width='width' [hotId]='hotId' (afterRender)='adjustTableH()' [rowHeaders]='true' [colHeaders]='true' [columns]='tableSrc.columns' [data]='tableSrc.data' [renderAllRows]='false'></hot-table>
+</ng-container>

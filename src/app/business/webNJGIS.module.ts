@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { HotTableModule } from 'angular-handsontable';
 
 import { WebNJGISRoutingModule } from './webNJGIS-routing.module';
 
@@ -12,6 +13,7 @@ import { LayoutModule } from '../common/layout/layout.module';
 		SharedModule,
 		LayoutModule,
         WebNJGISRoutingModule,
+        HotTableModule,
 	],
 	declarations: [
 

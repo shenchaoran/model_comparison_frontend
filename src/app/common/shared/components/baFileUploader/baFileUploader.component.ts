@@ -28,7 +28,7 @@ export class BaFileUploader {
     get fileUploaderOptions() {
         return this._fileUploaderOptions;
     }
-    @Output() onFileUpload = new EventEmitter<any>();
+    @Output() onFileUploading = new EventEmitter<any>();
     @Output() onFileUploadCompleted = new EventEmitter<any>();
     @Output() onClear = new EventEmitter<any>();
     defaultValue: string = '';
@@ -74,7 +74,7 @@ export class BaFileUploader {
         if (data['done'] || data['abort'] || data['error']) {
             this._onFileUploadCompleted(data);
         } else {
-            this.onFileUpload.emit(data);
+            this.onFileUploading.emit(data);
             jQuery('#progress-' + this._id).css(
                 'width',
                 data.progress.percent + '%'

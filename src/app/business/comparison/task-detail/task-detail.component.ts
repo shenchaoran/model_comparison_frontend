@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, AfterViewInit, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, AfterViewInit, AfterViewChecked } from '@angular/core';
 import { CmpTaskService } from '../services';
 import { NzNotificationService, NzModalService } from 'ng-zorro-antd';
 import * as uuidv1 from 'uuid/v1';
@@ -28,7 +28,7 @@ import { _throw } from 'rxjs/observable/throw';
     templateUrl: './task-detail.component.html',
     styleUrls: ['./task-detail.component.scss']
 })
-export class TaskDetailComponent implements OnInit, AfterViewInit, AfterViewChecked {
+export class TaskDetailComponent implements OnInit, OnDestroy, AfterViewInit, AfterViewChecked {
     _taskId: string;
     _taskSubscription;
 
@@ -60,6 +60,10 @@ export class TaskDetailComponent implements OnInit, AfterViewInit, AfterViewChec
 
     ngOnInit() {
         this.fetchInterval();
+    }
+    
+    ngOnDestroy() {
+        this._taskSubscription.unsubscribe();
     }
 
     ngAfterViewInit() {
@@ -125,11 +129,9 @@ export class TaskDetailComponent implements OnInit, AfterViewInit, AfterViewChec
     edit() {}
 
     checkResult() {
+        localStorage.setItem('currentCmpTask', JSON.stringify(this.cmpTask));
         this.router.navigate([`${this._taskId}`], {
-            relativeTo: this.route,
-            queryParams: {
-                cmpTask: JSON.stringify(this.cmpTask)
-            }
+            relativeTo: this.route
         });
     }
 

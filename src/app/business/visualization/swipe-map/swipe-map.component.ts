@@ -13,14 +13,16 @@ declare var ol: any;
 import { CmpState } from '@models';
 
 @Component({
-    selector: 'ogms-ascii-grid',
-    templateUrl: './ascii-grid.component.html',
-    styleUrls: ['./ascii-grid.component.scss']
+  selector: 'ogms-swipe-map',
+  templateUrl: './swipe-map.component.html',
+  styleUrls: ['./swipe-map.component.scss']
 })
-export class AsciiGridComponent implements OnInit, AfterViewInit, OnChanges {
+export class SwipeMapComponent implements OnInit, AfterViewInit {
     targetId;
     map;
-    layerGroup;
+    baseLayerGroup;
+    cmpLayerGroup;
+    swipeCtrl;
 
     @Input() imageLayers;
     constructor(private olMapService: OlMapService) {
@@ -34,16 +36,12 @@ export class AsciiGridComponent implements OnInit, AfterViewInit, OnChanges {
         if (layerChange) {
             if (!_.isEqual(layerChange.currentValue, layerChange.previousValue)) {
                 if(this.map !== undefined) {
-                    const layerGroup = this.map.getLayerGroup();
-                    console.log(layerGroup);
-                    this.layerGroup = layerGroup.getLayers().getArray()[0];
-                    this.layerGroup.getLayers().clear();
-
-                    this.layerGroup.getLayers().push(new ol.layer.Tile({
-                        title: 'OSM',
-                        visible: true,
-                        source: new ol.source.OSM()
-                    }));
+                    const layers = this.map.getLayers().getArray();
+                    _.map(layers, layer => {
+                        if(layer.get('title') === 'Comparison') {
+                            layer.getLayers().clear();
+                        }
+                    });
                     this.addLayers();
                 }
             }
@@ -51,12 +49,12 @@ export class AsciiGridComponent implements OnInit, AfterViewInit, OnChanges {
     }
 
     ngAfterViewInit() {
-        // setTimeout(() => {
+        setTimeout(() => {
             // console.log(this.imageLayers);
             console.log(jQuery(`#${this.targetId}`).length);
 
-            this.layerGroup = new ol.layer.Group({
-                title: 'Layers',
+            this.baseLayerGroup = new ol.layer.Group({
+                title: 'Base',
                 layers: [
                     new ol.layer.Tile({
                         title: 'OSM',
@@ -65,9 +63,16 @@ export class AsciiGridComponent implements OnInit, AfterViewInit, OnChanges {
                     })
                 ]
             });
+            this.cmpLayerGroup = new ol.layer.Group({
+                title: 'Comparison',
+                layers: []
+            });
             this.map = new ol.Map({
                 target: this.targetId,
-                layers: [this.layerGroup],
+                layers: [
+                    this.baseLayerGroup,
+                    this.cmpLayerGroup
+                ],
                 view: new ol.View({
                     center: [0, 0],
                     zoom: 2
@@ -91,31 +96,41 @@ export class AsciiGridComponent implements OnInit, AfterViewInit, OnChanges {
                 tipLabel: 'LayerSwitcher'
             });
             this.map.addControl(layerSwitcher);
-        // }, 10);
+        }, 10);
     }
 
     private addLayers() {
         const extents = [];
         let extent;
-        _.map(this.imageLayers, imgLayer => {
+        
+        if(!this.swipeCtrl) {
+            this.swipeCtrl = new ol.control.Swipe();
+            this.map.addControl(this.swipeCtrl);
+        }
+        let num = 0;
+        _.map(this.imageLayers, (imgLayer, i) => {
             if (imgLayer.state === CmpState.FINISHED_SUCCEED) {
-                this.layerGroup.getLayers().push(
-                    new ol.layer.Image({
-                        title: imgLayer.title,
-                        source: new ol.source.ImageStatic({
-                            ratio: 1,
-                            params: {},
-                            url: imgLayer.path,
-                            imageExtent: imgLayer.extent,
-                            projection: 'EPSG:3857'
-                        })
+                const layer = new ol.layer.Image({
+                    title: imgLayer.title,
+                    source: new ol.source.ImageStatic({
+                        ratio: 1,
+                        params: {},
+                        url: imgLayer.path,
+                        imageExtent: imgLayer.extent,
+                        projection: 'EPSG:3857'
                     })
-                );
+                });
+                this.cmpLayerGroup.getLayers().push(layer);
+                this.swipeCtrl.addLayer(layer, num===1? true: false);
                 extents.push(imgLayer.extent);
+                num++;
             }
         });
-        extent = this.olMapService.getMapExtent(extents);
 
+        
+
+        extent = this.olMapService.getMapExtent(extents);
         this.map.getView().fit(extent, this.map.getSize());
     }
+
 }

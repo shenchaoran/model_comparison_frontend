@@ -46,8 +46,6 @@ export class NewTaskComponent implements OnInit, AfterViewInit, AfterViewChecked
 
     fileUploaderOptions: NgUploaderOptions;
     @ViewChildren(BaFileUploader) fileUploaders: QueryList<BaFileUploader>;
-    @Output() onFileUpload = new EventEmitter<any>();
-    @Output() onFileUploadCompleted = new EventEmitter<any>();
 
     __ms: Array<{
         msId: string;
