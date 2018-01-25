@@ -16,7 +16,6 @@ import { MSService } from '../geo-model/services';
 import { FormKeynoteComponent } from './form-keynote/form-keynote.component';
 import { FormCmpObjsComponent } from './form-cmp-objs/form-cmp-objs.component';
 import { FormCmpTaskComponent } from './form-cmp-task/form-cmp-task.component';
-import { StringPipe } from '@shared/pipes';
 import { FormCmpObjsModalComponent } from './form-cmp-objs-modal/form-cmp-objs-modal.component';
 import { LoginService } from '@feature/login/login.service';
 import { NewTaskComponent } from './new-task/new-task.component';
@@ -71,7 +70,6 @@ const SERVICES = [
     FormKeynoteComponent,
     FormCmpObjsComponent,
     FormCmpTaskComponent,
-    StringPipe,
     FormCmpObjsModalComponent,
     NewTaskComponent,
     TaskDetailComponent,

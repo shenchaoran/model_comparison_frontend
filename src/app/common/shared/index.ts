@@ -50,8 +50,8 @@ import { HeaderMenuService } from './components/baHeaderMenu/baHeaderMenu.servic
 import {
   BaImgPathPipe,
   MomentDatePipe,
-  DateStrFormatPipe,
-  StringPipe
+  UndefinedPipe,
+  ResourceSrcPipe
 } from './pipes';
 
 import { EmailValidator, EqualPasswordsValidator } from './validators';
@@ -99,7 +99,7 @@ const CITYFUN_DIRECTIVES = [
   // BaThemeRun
 ];
 
-const CITYFUN_PIPES = [BaImgPathPipe, MomentDatePipe, DateStrFormatPipe];
+const CITYFUN_PIPES = [BaImgPathPipe, MomentDatePipe, ResourceSrcPipe, UndefinedPipe];
 
 const CITYFUN_VALIDATORS = [EmailValidator, EqualPasswordsValidator];
 const SERVICES = [HeaderMenuService];

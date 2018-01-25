@@ -4,7 +4,9 @@ import {
     Input,
     AfterViewInit,
     OnChanges,
-    SimpleChange
+    SimpleChange,
+    ViewChild,
+    ElementRef
 } from '@angular/core';
 import * as uuidv1 from 'uuid/v1';
 import { setTimeout } from 'core-js/library/web/timers';
@@ -23,6 +25,7 @@ export class SwipeMapComponent implements OnInit, AfterViewInit {
     baseLayerGroup;
     cmpLayerGroup;
     swipeCtrl;
+    @ViewChild('container') container: ElementRef;
 
     @Input() imageLayers;
     constructor(private olMapService: OlMapService) {
@@ -51,7 +54,8 @@ export class SwipeMapComponent implements OnInit, AfterViewInit {
     ngAfterViewInit() {
         setTimeout(() => {
             // console.log(this.imageLayers);
-            console.log(jQuery(`#${this.targetId}`).length);
+            console.log(this.container.nativeElement);
+            // console.log(jQuery(`#${this.targetId}`).length);
 
             this.baseLayerGroup = new ol.layer.Group({
                 title: 'Base',

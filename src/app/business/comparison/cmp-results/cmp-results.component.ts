@@ -102,7 +102,7 @@ export class CmpResultsComponent implements OnInit, OnDestroy {
     private updateTask(cmpTask) {
         this.cmpTask = cmpTask;
         if(this.selectedCmpObjId) {
-            this.onSelectCmpObj(this.selectedCmpObjId);
+            // this.onSelectCmpObj(this.selectedCmpObjId);
         }
         else {
             this.selectFirst();
@@ -183,14 +183,14 @@ export class CmpResultsComponent implements OnInit, OnDestroy {
         });
     }
 
-    onSelectCmpObj(cmpObjId) {
-        this.selectedCmpObjId = cmpObjId;
-        this.selectedCmpObj = _.find(this.cmpTask.cmpCfg.cmpObjs, cmpObj => cmpObj.id === cmpObjId);
-        this.setSelectedTimeOption();
+    // onSelectCmpObj(cmpObjId) {
+    //     this.selectedCmpObjId = cmpObjId;
+    //     this.selectedCmpObj = _.find(this.cmpTask.cmpCfg.cmpObjs, cmpObj => cmpObj.id === cmpObjId);
+    //     this.setSelectedTimeOption();
 
-        this.selectedLayers = [];
-        this.selectedYear = undefined;
-    }
+    //     this.selectedLayers = [];
+    //     this.selectedYear = undefined;
+    // }
 
     private selectFirst() {
         if(this.cmpTask.cmpCfg.cmpObjs.length && this.selectedCmpObjId === undefined) {

@@ -8,6 +8,7 @@ import { AsciiGridComponent } from './ascii-grid/ascii-grid.component';
 import { OlMapService } from '@feature/ol-map/ol-map.module.ts';
 import { TableComponent } from './table/table.component';
 import { SwipeMapComponent } from './swipe-map/swipe-map.component';
+import { GeojsonMapComponent } from './geojson-map/geojson-map.component';
 
 @NgModule({
     imports: [
@@ -18,7 +19,7 @@ import { SwipeMapComponent } from './swipe-map/swipe-map.component';
     declarations: [
         AsciiGridComponent, 
         TableComponent, 
-        SwipeMapComponent
+        SwipeMapComponent, GeojsonMapComponent
     ],
     exports: [
         AsciiGridComponent,

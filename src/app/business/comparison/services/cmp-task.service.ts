@@ -92,6 +92,9 @@ export class CmpTaskService implements Resolve<any> {
     }
   }
 
+  /**
+   * deprecated
+   */
   publishFind(id: string) {
     if (id) {
       this.http.get(`/comparison/tasks/${id}`).subscribe(response => {

@@ -244,13 +244,13 @@ export class NewTaskComponent implements OnInit, AfterViewInit, AfterViewChecked
             );
         } else {
             if (this.cmpSolution.cmpCfg.keynote.dimension === 'point') {
-                // this.cmpTask.calcuCfg.stdSrc.spatial.point = JSON.parse(
+                // this.cmpTask.calcuCfg.stdSrc.spatial.geojson = JSON.parse(
                 //     this.toolbarService.saveFeatures('EPSG:3857')
                 // );
             } else if (
                 this.cmpSolution.cmpCfg.keynote.dimension === 'polygon'
             ) {
-                // this.cmpTask.calcuCfg.stdSrc.spatial.polygon = JSON.parse(
+                // this.cmpTask.calcuCfg.stdSrc.spatial.geojson = JSON.parse(
                 //     this.toolbarService.saveFeatures('EPSG:3857')
                 // );
             }

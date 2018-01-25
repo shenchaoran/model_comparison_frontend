@@ -33,7 +33,7 @@
                     </div>
                     <div nz-row [nzGutter]='18' class='form-row'>
                         <span nz-col [nzSpan]='5'>Create Time:</span>
-                        <span nz-col [nzSpan]='19'>{{cmpTask.meta.time | date:'yyyy-mm-dd'}}</span>
+                        <span nz-col [nzSpan]='19'>{{cmpTask.meta.time | date:'yyyy-MM-dd'}}</span>
                     </div>
                     <div nz-row [nzGutter]='18' class='form-row'>
                         <span nz-col [nzSpan]='5'>Author:</span>
@@ -56,15 +56,15 @@
                             <div>
                                 <div nz-row [nzGutter]='18' class='form-row'>
                                     <span nz-col [nzSpan]='5'>Start Date:</span>
-                                    <span nz-col [nzSpan]='19'>{{cmpTask.calcuCfg.stdSrc.temporal.start | date: 'yyyy-mm-dd'}}</span>
+                                    <span nz-col [nzSpan]='19'>{{cmpTask.calcuCfg.stdSrc.temporal.start | date: 'yyyy-MM-dd'}}</span>
                                 </div>
                                 <div nz-row [nzGutter]='18' class='form-row'>
                                     <span nz-col [nzSpan]='5'>End Date:</span>
-                                    <span nz-col [nzSpan]='19'>{{cmpTask.calcuCfg.stdSrc.temporal.end | date: 'yyyy-mm-dd'}}</span>
+                                    <span nz-col [nzSpan]='19'>{{cmpTask.calcuCfg.stdSrc.temporal.end | date: 'yyyy-MM-dd'}}</span>
                                 </div>
                             </div>
                             <div id='_containerId' style='height: 400px; width: 600px;'>
-                                <ogms-region-map [mode]='"read"' [mapId]='_containerId' [geojson]='cmpTask.calcuCfg.stdSrc.spatial.polygon'></ogms-region-map>
+                                <ogms-region-map [mode]='"read"' [mapId]='_containerId' [geojson]='cmpTask.calcuCfg.stdSrc.spatial.geojson'></ogms-region-map>
                             </div>
                         </div>
                     </ng-container>
