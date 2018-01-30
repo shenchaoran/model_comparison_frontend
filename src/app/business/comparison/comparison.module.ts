@@ -36,6 +36,13 @@ import { SlnDetailComponent } from './sln-detail/sln-detail.component';
 import { CmpResultsComponent } from './cmp-results/cmp-results.component';
 import { VisualizationModule } from '../visualization/visualization.module';
 import { TestModule } from '../test/test.module';
+import { ShowCmpSolutionComponent } from './show-cmp-solution/show-cmp-solution.component';
+import { ShowCmpSolutioninfoComponent } from './show-cmp-solutioninfo/show-cmp-solutioninfo.component';
+import { CardSolutionComponent } from './card-solution/card-solution.component';
+import { ShowCmpSolutionBannerComponent } from './show-cmp-solution-banner/show-cmp-solution-banner.component';
+import { ShowCmpSolutionSearchComponent } from './show-cmp-solution-search/show-cmp-solution-search.component';
+import { ShowCmpSolutionListComponent } from './show-cmp-solution-list/show-cmp-solution-list.component';
+import { MockService } from "../mock/mock.service";
 
 const SERVICES = [
   CmpSlnService,
@@ -48,6 +55,7 @@ const SERVICES = [
   OlMapService,
   ToolbarService,
 //   GeoJSONService,
+  MockService
 //   RegionMapService,
 ];
 
@@ -76,6 +84,12 @@ const SERVICES = [
     FormParticipantsComponent,
     SlnDetailComponent,
     CmpResultsComponent,
+    ShowCmpSolutionComponent,
+    ShowCmpSolutioninfoComponent,
+    CardSolutionComponent,
+    ShowCmpSolutionBannerComponent,
+    ShowCmpSolutionSearchComponent,
+    ShowCmpSolutionListComponent,
     RegionMapComponent,
   ],
   providers: [...SERVICES]

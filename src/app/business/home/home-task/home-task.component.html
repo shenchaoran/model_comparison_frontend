@@ -1,0 +1,13 @@
+<div class="home-task-main">
+  <nz-card class="home-task-card" [nzBordered]="false">
+    <ng-template #title>
+      <h3>Completed</h3>
+    </ng-template>
+    <ng-template #extra>
+      <a>More</a>
+    </ng-template>
+    <ng-template #body>
+      <task-card *ngFor="let task of tasks" [task]="task"></task-card>
+    </ng-template>
+  </nz-card>
+</div>

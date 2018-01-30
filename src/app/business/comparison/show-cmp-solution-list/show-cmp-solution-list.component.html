@@ -1,0 +1,7 @@
+<div class="main">
+    <nz-card nzNoHovering [nzBordered]="false">
+      <ng-template #body>
+          <ogms-card-solution *ngFor="let solution of solutions" [solution]="solution"></ogms-card-solution>
+      </ng-template>
+    </nz-card>
+</div>

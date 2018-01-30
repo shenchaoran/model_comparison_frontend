@@ -1,0 +1,28 @@
+<div nz-row [nzType]="'flex'" [nzJustify]="'space-around'" [nzAlign]="'middle'" class="main">
+    <div nz-col [nzSpan]="12">
+        <div class="inline">
+            <nz-avatar [nzShape]="'square'" [nzSize]="'large'" [nzIcon]="'chrome'" class="avatar"></nz-avatar>
+        </div>
+        <div class="inline title">
+            <div class="text-first">Solution</div>
+            <div class="text-second">resolve different kinds of problems</div>
+        </div>
+    </div>
+    <div nz-col [nzSpan]="12">
+        <div nz-row [nzGutter]="8">
+          <div nz-col [nzSpan]="16">
+              <nz-input [nzPlaceHolder]="'input solution name'" [(ngModel)]="_value" [nzSize]="'large'" class="search"></nz-input>
+          </div>
+          <div nz-col [nzSpan]="4">
+              <button nz-button [nzSize]="large" [nzType]="'primary'">
+                  <i class="anticon anticon-search"></i><span>Search</span>
+              </button>
+          </div>
+          <div nz-col [nzSpan]="4">
+              <button nz-button [nzSize]="large" [nzType]="'primary'" >
+                  <span >NewSolution</span>
+              </button>
+          </div>
+        </div>
+    </div>
+</div>

@@ -15,9 +15,7 @@ import { LayoutModule } from '../common/layout/layout.module';
         WebNJGISRoutingModule,
         HotTableModule,
 	],
-	declarations: [
-
-	],
+	declarations: [],
 	providers: [
 	]
 })

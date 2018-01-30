@@ -1,0 +1,18 @@
+<div class="home-model-main">
+  <nz-card nzNoHovering [nzBordered]="false">
+    <ng-template #title>
+      <h3>Model</h3>
+    </ng-template>
+    <ng-template #extra>
+      <a>More</a>
+    </ng-template>
+    <ng-template #body>
+        <model-card [model]="models[0]"></model-card>
+        <model-card [model]="models[1]"></model-card>
+        <model-card [model]="models[2]"></model-card>
+        <model-card [model]="models[3]"></model-card>
+        <model-card [model]="models[4]"></model-card>
+        <model-card [model]="models[5]"></model-card>
+    </ng-template>
+  </nz-card>
+</div>

@@ -1,0 +1,93 @@
+<div class='main'>
+  <div nz-row [nzType]="'flex'" [nzJustify]="'space-between'" class="row">
+    <div nz-col>
+      <nz-avatar nzText="Z" nzSize="large" class="avatar"></nz-avatar>
+      <span class="name">{{data.dataName}}</span>
+    </div>
+    <div nz-col class="btn">
+      <nz-button-group [nzSize]="'large'">
+        <button nz-button [nzType]="'default'" class="order">
+          <span>Edit</span>
+        </button>
+        <button nz-button [nzType]="'default'" class="order">
+          <span>Delete</span>
+        </button>
+      </nz-button-group>
+      <button nz-button [nzType]="'primary'" [nzSize]="'large'">
+        <span>Run</span>
+      </button>
+    </div>
+  </div>
+  <div nz-row [nzType]="'flex'" [nzJustify]="'space-between'" class="second-row">
+    <div nz-col [nzSpan]="16">
+      <div class="font-primary row">
+        Author: {{data.dataAuthor}}
+        <span class="author">Organization: ZhongShan</span>
+      </div>
+      <div class="row">
+        <span class="font-second">{{data.dataDesc}}</span>
+      </div>
+    </div>
+    <div nz-col class="second-right">
+      <div class="inline">
+        <div class="font-second">Status</div>
+        <div class="font-bold">Available</div>
+      </div>
+      <div class="inline">
+        <div class="font-second">CompleteNum</div>
+        <div class="font-bold">43</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div>
+  <nz-tabset>
+    <nz-tab>
+      <ng-template #nzTabHeading class="tab">Detail</ng-template>
+      <div class="tab">
+        <div class="editor">
+          <quill-editor></quill-editor>
+        </div>
+      </div>
+    </nz-tab>
+    <nz-tab>
+      <ng-template #nzTabHeading>About</ng-template>
+      <div class="tab">
+        <nz-card class="home-task-card" [nzBordered]="false">
+          <ng-template #title>
+            <h3>CompleteTask</h3>
+          </ng-template>
+          <ng-template #body>
+            <task-card *ngFor="let task of tasks" [task]="task"></task-card>
+          </ng-template>
+        </nz-card>
+        <nz-card nzNoHovering [nzBordered]="false">
+          <ng-template #title>
+            <h3>BelongSolution</h3>
+          </ng-template>
+          <ng-template #body>
+            <solution-card [solution]="solutions[0]"></solution-card>
+            <solution-card [solution]="solutions[1]"></solution-card>
+            <solution-card [solution]="solutions[2]"></solution-card>
+            <solution-card [solution]="solutions[3]"></solution-card>
+            <solution-card [solution]="solutions[4]"></solution-card>
+            <solution-card [solution]="solutions[5]"></solution-card>
+          </ng-template>
+        </nz-card>
+        <nz-card nzNoHovering [nzBordered]="false">
+          <ng-template #title>
+            <h3>SupportModel</h3>
+          </ng-template>
+          <ng-template #body>
+            <model-card [model]="models[0]"></model-card>
+            <model-card [model]="models[1]"></model-card>
+            <model-card [model]="models[2]"></model-card>
+            <model-card [model]="models[3]"></model-card>
+            <model-card [model]="models[4]"></model-card>
+            <model-card [model]="models[5]"></model-card>
+          </ng-template>
+        </nz-card>
+      </div>
+    </nz-tab>
+  </nz-tabset>
+</div>

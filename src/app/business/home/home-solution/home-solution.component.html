@@ -1,0 +1,18 @@
+<div class="home-solution-main">
+    <nz-card nzNoHovering [nzBordered]="false">
+      <ng-template #title>
+        <h3>Solution</h3>
+      </ng-template>
+      <ng-template #extra>
+        <a>More</a>
+      </ng-template>
+      <ng-template #body>
+          <solution-card [solution]="solutions[0]"></solution-card>
+          <solution-card [solution]="solutions[1]"></solution-card>
+          <solution-card [solution]="solutions[2]"></solution-card>
+          <solution-card [solution]="solutions[3]"></solution-card>
+          <solution-card [solution]="solutions[4]"></solution-card>
+          <solution-card [solution]="solutions[5]"></solution-card>
+      </ng-template>
+    </nz-card>
+  </div>

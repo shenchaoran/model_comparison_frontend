@@ -2,15 +2,8 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 
 @Component({
   selector: 'ogms-home',
-  template: `
-        <p>
-            home works!
-        </p>
-        <router-outlet></router-outlet>
-    `,
-  styles: [`
-      `
-  ]
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit, AfterViewInit {
     b = true;
