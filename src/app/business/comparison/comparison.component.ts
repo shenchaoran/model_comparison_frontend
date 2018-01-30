@@ -3,13 +3,11 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'ogms-comparison',
   template: `
-    <router-outlet></router-outlet>
+    <div class='section-container'>
+        <router-outlet></router-outlet>
+    </div>
   `,
   styles: [`
-    :host {
-        height: 100%;
-        overflow: scroll;
-    }
   `]
 })
 export class ComparisonComponent implements OnInit {
