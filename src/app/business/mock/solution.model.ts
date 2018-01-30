@@ -1,7 +1,7 @@
 export class Solution {
     id: string;
     name: string;
-    tages: Array<string>;
+    tags: Array<string>;
     author: string;
     region: string;
     desc: string;
@@ -15,7 +15,7 @@ export class Solution {
     constructor(
         id: string,
         name: string,
-        tages: Array<string>,
+        tags: Array<string>,
         author: string,
         region: string,
         desc: string,
@@ -28,7 +28,7 @@ export class Solution {
     ) {
         this.id = id,
         this.name = name,
-        this.tages = tages,
+        this.tags = tags,
         this.author = author,
         this.region = region,
         this.desc = desc,
@@ -39,5 +39,4 @@ export class Solution {
         this.supportDatas = supportDatas,
         this.belongTasks = belongTasks
     }
-    
 }

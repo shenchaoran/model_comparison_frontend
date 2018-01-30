@@ -16,3 +16,19 @@
     vertical-align: bottom;
     width: 400px;
 }
+
+:host ::ng-deep .ant-avatar-lg {
+    width: 56px;
+    height: 56px;
+    line-height: 56px;
+}
+
+.inline {
+    display: inline-block;
+}
+
+.avatar {
+    margin-right: 20px;
+    color: white; 
+    background-color: #ff7a45;
+}

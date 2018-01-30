@@ -2,6 +2,7 @@ export class Data {
     dataId: string;
     dataName: string;
     dataTags: Array<string>;
+    dataAuthor: string;
     dataDesc: string;
     supportModels: Array<string>;
     belongSolutions: Array<string>;
@@ -11,6 +12,7 @@ export class Data {
         dataId: string,
         dataName: string,
         dataTags: Array<string>,
+        dataAuthor: string,
         dataDesc: string,
         supportModels: Array<string>,
         belongSolutions: Array<string>,
@@ -19,6 +21,7 @@ export class Data {
         this.dataId = dataId;
         this.dataName = dataName;
         this.dataTags = dataTags;
+        this.dataAuthor = dataAuthor;
         this.dataDesc = dataDesc;
         this.supportModels = supportModels;
         this.belongSolutions = belongSolutions;

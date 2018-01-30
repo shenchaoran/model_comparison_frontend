@@ -3,6 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { GeoDataComponent } from './geo-data.component';
 import { DataService } from './services/data.service';
+import { DatasComponent } from "./datas/datas.component";
+import { DataInfoComponent } from "./data-info/data-info.component";
 
 const routes: Routes = [
     { 
@@ -11,7 +13,21 @@ const routes: Routes = [
         resolve: {
             geoDataResource: DataService
         },
-        children: []
+        children: [
+            {
+                path: '',
+                redirectTo: 'datas',
+                pathMatch: 'full'
+            },
+            {
+                path: 'datas',
+                component: DatasComponent
+            },
+            {
+                path: 'datainfo',
+                component: DataInfoComponent
+            }
+        ]
     }
 ];
 

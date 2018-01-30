@@ -11,6 +11,9 @@ import { CmpSlnService, CmpTaskService, CmpSceneService } from './services';
 import { MSService } from '../geo-model/services';
 import { DataService } from '../geo-data/services';
 
+import { ShowCmpSolutionComponent } from "./show-cmp-solution/show-cmp-solution.component";
+import { ShowCmpSolutioninfoComponent } from "./show-cmp-solutioninfo/show-cmp-solutioninfo.component";
+
 const routes: Routes = [
     { 
         path: '',
@@ -23,11 +26,15 @@ const routes: Routes = [
             },
             {
                 path: 'solutions',
-                component: CmpSolutionComponent,
+                component: ShowCmpSolutionComponent,
                 children: [],
                 resolve: {
                     solutionTabTree: CmpSlnService
                 }
+            },
+            {
+                path: 'solutioninfo',
+                component: ShowCmpSolutioninfoComponent
             },
             {
                 path: 'solutions/new',
