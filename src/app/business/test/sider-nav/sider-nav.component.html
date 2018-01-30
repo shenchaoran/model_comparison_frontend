@@ -1,0 +1,186 @@
+<div #container id='container' (scroll)='onScroll2($event)'>
+    <div id='left'>
+        <div id='asdf'>
+            aaa aaa
+            <br>
+            <p>sdd</p>
+            <p>sdd</p>
+            <p>sdd</p>
+            <p>sdd</p>
+            <p>sdd</p>
+            <p>sdd</p>
+            <p>sdd</p>
+            <p>sdd</p>
+            <p>sdd</p>
+            <p>sdd</p>
+            <p>sdd</p>
+            <p>sdd</p>
+            <p>sdd</p>
+            <p>sdd</p>
+            <p>sdd</p>
+            <p>sdd</p>
+            <p>sdd</p>
+            <p>sdd</p>
+            <p>sdd</p>
+            <p>sdd</p>
+            <p>sdd</p>
+            <p>sdd</p>
+            <p>sdd</p>
+            <p>sdd</p>
+            <p>sdd</p>
+            <p>sdd</p>
+            <p>sdd</p>
+            <p>sdd</p>
+            <p>sdd</p>
+            <p>sdd</p>
+            <p>sdd</p>
+            <p>sdd</p>
+            <p>sdd</p>
+            <p>sdd</p>
+            <p>sdd</p>
+            <p>sdd</p>
+            <p>sdd</p>
+            <p>sdd</p>
+            <p>sdd</p>
+            <p>sdd</p>
+            <p>sdd</p>
+            <p>sdd</p>
+            <p>sdd</p>
+            <p>sdd</p>
+            <p>sdd</p>
+        </div>
+        <div id='asdfasdfd'>
+            <p id='xxxxxxxxxxxx'>cc</p>
+            <p>cc</p>
+            <p>cc</p>
+            <p>cc</p>
+            <p>cc</p>
+            <p>cc</p>
+            <p>cc</p>
+            <p>cc</p>
+            <p>cc</p>
+            <p>cc</p>
+            <p>cc</p>
+            <p>cc</p>
+            <p>cc</p>
+            <p>cc</p>
+            <p>cc</p>
+            <p>cc</p>
+            <p>cc</p>
+            <p>cc</p>
+            <p>cc</p>
+            <p>cc</p>
+            <p>cc</p>
+            <p>cc</p>
+            <p>cc</p>
+            <p>cc</p>
+            <p>cc</p>
+            <p>cc</p>
+            <p>cc</p>
+            <p>cc</p>
+            <p>cc</p>
+            <p>cc</p>
+            <p>cc</p>
+            <p>cc</p>
+            <p>cc</p>
+            <p>cc</p>
+            <p id='aaaaaaaaaaaa'>dd</p>
+            <p>dd</p>
+            <p>dd</p>
+            <p>dd</p>
+            <p>dd</p>
+            <p>dd</p>
+            <p>dd</p>
+            <p>dd</p>
+            <p>dd</p>
+            <p>dd</p>
+            <p>dd</p>
+            <p>dd</p>
+            <p>dd</p>
+            <p>dd</p>
+            <p>dd</p>
+            <p>dd</p>
+            <p>dd</p>
+            <p>dd</p>
+            <p>dd</p>
+            <p>dd</p>
+            <p>dd</p>
+            <p>dd</p>
+            <p>dd</p>
+            <p>dd</p>
+            <p>dd</p>
+            <p>dd</p>
+            <p>dd</p>
+            <p>dd</p>
+            <p>dd</p>
+            <p>dd</p>
+            <p>dd</p>
+            <p>dd</p>
+            <p>dd</p>
+            <p>dd</p>
+            <p>dd</p>
+            <p>dd</p>
+            <p>dd</p>
+            <p>dd</p>
+            <p>dd</p>
+            <p>dd</p>
+            <p>dd</p>
+            <p>dd</p>
+        </div>
+        <div id='qqqqqqqqqqq'>
+            <p id='dddddddddddd'>adasdf</p>
+            <p>ddd</p>
+            <p>ddd</p>
+            <p>ddd</p>
+            <p>ddd</p>
+            <p>ddd</p>
+            <p>ddd</p>
+            <p>ddd</p>
+            <p>ddd</p>
+            <p>ddd</p>
+            <p>ddd</p>
+            <p>ddd</p>
+            <p>ddd</p>
+            <p>ddd</p>
+            <p>ddd</p>
+        </div>
+    </div>
+    <div id='right' #sider>
+        <div id='right-container'>
+            <div style='height: 200px;background: #eee; margin: 10px 0;'>
+                something...
+            </div>
+            <div style='height: 200px;background: #eee; margin: 10px 0;'>
+                something...
+            </div>
+            <div id='test'></div>
+        </div>
+        <div id='sider-nav'>
+            <nz-anchor>
+                <nz-link nzHref="#asdf" nzTitle="1"></nz-link>
+                <nz-link nzHref="#asdfasdfd" nzTitle="2">
+                    <nz-link nzHref='#xxxxxxxxxxxx' nzTitle='2.1'></nz-link>
+                    <nz-link nzHref='#aaaaaaaaaaaa' nzTitle='2.2'></nz-link>
+                </nz-link>
+                <nz-link nzHref="#qqqqqqqqqqq" nzTitle="3">
+                    <nz-link nzHref="#dddddddddddd" nzTitle="3.1"></nz-link>
+                </nz-link>
+            </nz-anchor>
+        </div>
+    </div>
+</div>
+
+
+<!-- 最外层容器 -->
+<!-- <div class="scrollable-container" #target> -->
+<!-- 内层容器是初始位置 -->
+<!-- <div class="background">
+        <nz-affix [nzTarget]="target" id="affix-container-target">
+            <button nz-button [nzType]="'primary'">
+            <span>Fixed at the top of container</span>
+        </button>
+        </nz-affix>
+    </div>
+</div> -->
+
+<nz-back-top [nzTarget]='container'></nz-back-top>

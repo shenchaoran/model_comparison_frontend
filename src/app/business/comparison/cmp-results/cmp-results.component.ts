@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, HostListener } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, switchMap, filter, tap } from 'rxjs/operators';
@@ -29,21 +29,13 @@ declare var ol: any;
     templateUrl: './cmp-results.component.html',
     styleUrls: ['./cmp-results.component.scss']
 })
-export class CmpResultsComponent implements OnInit, OnDestroy {
+export class CmpResultsComponent implements OnInit, OnDestroy, AfterViewInit {
     cmpTaskId;
     cmpTask;
     _taskSubscription;
+    fetchCount = 0;
 
-    imageStaticLayers;
-    selectedLayers = [];
-
-    selectedCmpObj;
-    selectedCmpObjId;
-
-    selectedYearOption = [];
-    selectedYear;
-    selectedStyle = 'SWIPE';
-    
+    // tabsAttached: any = {};
 
     constructor(
         private service: CmpTaskService,
@@ -55,6 +47,7 @@ export class CmpResultsComponent implements OnInit, OnDestroy {
         const cmpTaskStr = localStorage.getItem('currentCmpTask');
         if(cmpTaskStr) {
             this.cmpTask = JSON.parse(cmpTaskStr);
+            this.cmpTaskId = this.cmpTask._id;
             this.updateTask(this.cmpTask);
         }
         else {
@@ -66,6 +59,9 @@ export class CmpResultsComponent implements OnInit, OnDestroy {
                 this.cmpTaskId = params['id'];
                 this.fetchInterval();
             });
+    }
+
+    ngAfterViewInit() {
     }
 
     ngOnDestroy() {
@@ -100,13 +96,18 @@ export class CmpResultsComponent implements OnInit, OnDestroy {
     }
 
     private updateTask(cmpTask) {
+        this.fetchCount++;
+        if(this.fetchCount === 1) {
+            // 触发选中tab事件
+            _.map(this.cmpTask.cmpCfg.cmpObjs as any[], cmpObj => {
+                if(cmpObj.dataRefers.length) {
+                    console.log('init tab request')
+                    this.onTabSelected(cmpObj.id, cmpObj.dataRefers[0]);
+                }
+            });
+        }
         this.cmpTask = cmpTask;
-        if(this.selectedCmpObjId) {
-            // this.onSelectCmpObj(this.selectedCmpObjId);
-        }
-        else {
-            this.selectFirst();
-        }
+        this.setAttached();
 
         if (this.cmpTask.cmpState === CmpState.FINISHED) {
             if(this._taskSubscription) {
@@ -116,9 +117,12 @@ export class CmpResultsComponent implements OnInit, OnDestroy {
         } else if (this.cmpTask.cmpState === CmpState.RUNNING) {
         }
 
-        this.imageStaticLayers = [];
         _.map(this.cmpTask.cmpCfg.cmpObjs, cmpObj => {
             _.map(cmpObj.dataRefers as any[], dataRefer => {
+                if(dataRefer.attached === undefined) {
+                    dataRefer.attached = {}
+                }
+                dataRefer.attached.imageStaticLayers = [];
                 if(dataRefer.cmpResult) {
                     _.map(cmpObj.methods, method => {
                         if(method === 'TABLE_CHART') {
@@ -146,30 +150,12 @@ export class CmpResultsComponent implements OnInit, OnDestroy {
 
                         }
                         else if(method === 'ASCII_GRID_BATCH_VISUALIZATION') {
-                            this.imageStaticLayers = _.concat(this.imageStaticLayers, dataRefer.cmpResult.image);
-                            
-                            // _.map(dataRefer.cmpResult.image, image => {
-                                // if(image.state === CmpState.FINISHED_SUCCEED) {
-                                //     this.imageStaticLayers.push(new ol.layer.Image({
-                                //         title: image.title,
-                                //         source: new ol.source.ImageStatic({
-                                //             ratio: 1,
-                                //             params: {
-                                //                 LAYERS: 'show:0'
-                                //             },
-                                //             url: image.path,
-                                //             imageExtent: image.extent,
-                                //             projection: 'EPSG:3857'
-                                //         })
-                                //     }));
-                                // }
-                            // });
+                            dataRefer.attached.imageStaticLayers = _.concat(dataRefer.attached.imageStaticLayers, dataRefer.cmpResult.image);
                         }
-                    })
+                    });
                 }
             });
         });
-        // console.log(this.imageStaticLayers);
     }
 
     refresh() {
@@ -183,35 +169,120 @@ export class CmpResultsComponent implements OnInit, OnDestroy {
         });
     }
 
-    // onSelectCmpObj(cmpObjId) {
-    //     this.selectedCmpObjId = cmpObjId;
-    //     this.selectedCmpObj = _.find(this.cmpTask.cmpCfg.cmpObjs, cmpObj => cmpObj.id === cmpObjId);
-    //     this.setSelectedTimeOption();
-
-    //     this.selectedLayers = [];
-    //     this.selectedYear = undefined;
-    // }
-
-    private selectFirst() {
-        if(this.cmpTask.cmpCfg.cmpObjs.length && this.selectedCmpObjId === undefined) {
-            this.selectedCmpObjId = this.cmpTask.cmpCfg.cmpObjs[0].id;
-            this.selectedCmpObj = this.cmpTask.cmpCfg.cmpObjs[0];
-
-            this.setSelectedTimeOption();
-
-            this.selectedLayers = [];
-            this.selectedYear = undefined;
+    onTabSelected(cmpObjId, dataRefer) {
+        // if(this.tabsAttached.cmpObjId === undefined) {
+        //     this.tabsAttached.cmpObjId = {
+        //         msId: dataRefer.msId
+        //     };
+        // }
+        // else {
+        //     this.tabsAttached.cmpObjId.msId = dataRefer.msId;
+        // }
+        
+        let needFetch = false;
+        _.map(this.cmpTask.cmpCfg.cmpObjs as any[], cmpObj => {
+            if(cmpObj.id === cmpObjId) {
+                if(_.indexOf(cmpObj.methods, 'TABLE_CHART') !== -1) {
+                    if(!dataRefer.attached.fetchedResult) {
+                        needFetch = true;
+                    }
+                }
+            }
+        });
+        console.log(needFetch);
+        if(needFetch) {
+            this.getCmpResult(cmpObjId, dataRefer.msId);
         }
     }
 
-    onYearChange(year) {
-        this.selectedLayers = [];
+    refreshResult(cmpObjId, dataRefer) {
+        if(dataRefer.attached === undefined) {
+            dataRefer.attached = {};
+        }
+
+        dataRefer.attached.isLoading = true;
+        // this.tabsAttached.cmpObjId.isLoading = dataRefer.attached.isLoading;
+    }
+
+    private getCmpResult(cmpObjId, msId) {
+        let needGet = false;
+        _.map(this.cmpTask.cmpCfg.cmpObjs, cmpObj => {
+            if(cmpObj.id === cmpObjId) {
+                if(_.indexOf(cmpObj.methods, 'TABLE_CHART') !== -1) {
+                    needGet = true;
+                }
+            }
+        });
+
+        if(needGet) {
+            this.service.getCmpResult(this.cmpTaskId, cmpObjId, msId)
+                .subscribe(response => {
+                    if(response.error) {
+                        this._notice.warning('Warning', 'Fetch comparison result failed!');
+                    }
+                    else {
+                        if(response.data.done) {
+                            _.map(this.cmpTask.cmpCfg.cmpObjs as any[], cmpObj => {
+                                if(cmpObj.id === cmpObjId) {
+                                    _.map(cmpObj.dataRefers as any[], dataRefer => {
+                                        if(dataRefer.msId === msId) {
+                                            dataRefer.cmpResult = response.data.cmpResult;
+                                        }
+                                    });   
+                                }
+                            });
+                        }
+                        else {
+
+                        }
+                    }
+                });
+        }
+    }
+
+    /**
+     * 前台需要的数据存在了dataRefer.attached里
+     * {
+     *      selectedYear
+     *      selectedStyle
+     *      selectedYearOption
+     *      selectedLayers
+     * }
+     */
+    private setAttached() {
+        _.map(this.cmpTask.cmpCfg.cmpObjs, cmpObj => {
+            _.map(cmpObj.dataRefers, dataRefer => {
+                if(dataRefer.attached === undefined) {
+                    dataRefer.attached = {};
+                }
+                dataRefer.attached.selectedYear = undefined;
+                dataRefer.attached.selectedStyle = 'SWIPE';
+                this.setSelectedTimeOption(dataRefer);
+                dataRefer.attached.selectedLayers = [];
+                if(_.indexOf(cmpObj.methods, 'TABLE_CHART') !== -1) {
+                    if(dataRefer.cmpResult && dataRefer.cmpResult.chart) {
+                        // 初始把 table的可视化数据源丢掉了
+                        dataRefer.attached.isLoading = true;
+                    }
+                }
+                else {
+                    dataRefer.attached.isLoading = false;
+                }
+            });
+        });
+    }
+
+    onYearChange(year, dataRefer) {
+        if(dataRefer.attached === undefined) {
+            dataRefer.attached = {};
+        }
+        dataRefer.attached.selectedLayers = [];
         const regex = new RegExp(year);
-        _.map(this.imageStaticLayers, layerOpt => {
+        _.map(dataRefer.attached.imageStaticLayers, layerOpt => {
             if(layerOpt.state === CmpState.FINISHED_SUCCEED) {
                 if(regex.test(layerOpt.title)) {
-                    if(this.selectedLayers.length < 2) {
-                        this.selectedLayers.push(layerOpt);
+                    if(dataRefer.attached.selectedLayers.length < 2) {
+                        dataRefer.attached.selectedLayers.push(layerOpt);
                     }
                 }
             }
@@ -222,27 +293,44 @@ export class CmpResultsComponent implements OnInit, OnDestroy {
 
     }
 
-    private setSelectedTimeOption() {
-        this.selectedYearOption = [];
+    private setSelectedTimeOption(dataRefer) {
+        dataRefer.attached.selectedYearOption = [];
         
         let gotYears = false;
-        _.map(this.selectedCmpObj.dataRefers, dataRefer => {
-            if(!gotYears) {
-                if(
-                    dataRefer.cmpResult &&
-                    dataRefer.cmpResult.image &&
-                    dataRefer.cmpResult.image.length
-                ) {
-                    _.map(dataRefer.cmpResult.image, img => {
-                        let date = img.title;
-                        const year = date.substr(0, 4);
-                        if(!_.find(this.selectedYearOption, v => v === year)) {
-                            this.selectedYearOption.push(year);
-                        }
-                    });
-                    gotYears = true;
-                }
+        if(!gotYears) {
+            if(
+                dataRefer.cmpResult &&
+                dataRefer.cmpResult.image &&
+                dataRefer.cmpResult.image.length
+            ) {
+                _.map(dataRefer.cmpResult.image, img => {
+                    let date = img.title;
+                    const year = date.substr(0, 4);
+                    if(!_.find(dataRefer.attached.selectedYearOption, v => v === year)) {
+                        dataRefer.attached.selectedYearOption.push(year);
+                    }
+                });
+                gotYears = true;
             }
-        });
+        }
+    }
+
+    // @HostListener('scroll')
+    onScroll(event: any) {
+        // console.log('onScroll');
+        // const scrollH = Math.max(
+        //     window.pageYOffset,
+        //     window.scrollY,
+        //     document.documentElement.scrollTop,
+        //     document.body.scrollTop
+        // );
+        const scrollH = jQuery('#root-container')[0].scrollTop;
+        const h = jQuery('#separator')[0].offsetTop - scrollH;
+        // console.log(h);
+        if (h < -50) {
+            jQuery('.side-catalog').css('visibility', 'visible');
+        } else {
+            jQuery('.side-catalog').css('visibility', 'hidden');
+        }
     }
 }

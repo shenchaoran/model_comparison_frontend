@@ -5,7 +5,12 @@ import { Component, OnInit } from '@angular/core';
   template: `
     <router-outlet></router-outlet>
   `,
-  styles: [``]
+  styles: [`
+    :host {
+        height: 100%;
+        overflow: scroll;
+    }
+  `]
 })
 export class ComparisonComponent implements OnInit {
 

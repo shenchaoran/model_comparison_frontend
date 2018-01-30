@@ -1,4 +1,4 @@
-<div *ngIf='cmpTask' style='background: #f5f5f5' #cmpRst>
+<div id='root-container' *ngIf='cmpTask' class='container' #cmpRst (scroll)='onScroll($event)'>
     <div class='bg'>
         <div></div>
     </div>
@@ -67,29 +67,31 @@
                                 <h4>
                                     Comparison result
                                 </h4>
-                                <nz-tabset [nzType]='"card"'>
-                                    <nz-tab *ngFor="let ms of cmpTask.cmpCfg.ms">
+                                <nz-tabset [nzType]='"card"' [nzTabBarExtraTemplate]="tabBarExtraContent">
+                                    <nz-tab *ngFor="let dataRefer of cmpObj.dataRefers" (nzSelect)='onTabSelected(cmpObj.id, dataRefer)'>
                                         <ng-template #nzTabHeading>
-                                            {{ms.msName}}
+                                            {{dataRefer.msName}}
                                         </ng-template>
                                         <div>
                                             <div style='margin: 25px 0;'>
                                                 Here is ms's introduction: <br>... <br> ... <br> ... <br>
                                             </div>
-                                            <div *ngFor='let method of cmpObj.methods'>
-                                                <dl style='margin: 10px 0;'>
+                                            <div *ngFor='let method of cmpObj.methods; let j=index'>
+                                                <!-- <dl style='margin: 10px 0;'>
                                                     <div nz-row>
                                                         <dt nz-col [nzSpan]='4'>Comparison method</dt>
                                                         <dd nz-col [nzSpan]='8'>{{method}}</dd>
                                                     </div>
-                                                </dl>
+                                                </dl> -->
+                                                <ng-container *ngIf='j!==0'>
+                                                    <hr>
+                                                </ng-container>
+                                                <h5 style='margin: 10px 0;'>Comparison method: {{method}}</h5>
                                                 <div *ngIf='method === "TABLE_CHART"'>
-                                                    <!-- <ng-container *ngFor='let dataRefer of selectedCmpObj.dataRefers'>
-                                                                                <ng-container *ngIf='dataRefer.cmpResult !== undefined && dataRefer.cmpResult.chart !== undefined && dataRefer.cmpResult.chart.tableSrc !== undefined'>
-                                                                                    <ogms-table [tableSrc]='dataRefer.cmpResult.chart.tableSrc' style='height: 350px; width: 500px'></ogms-table>
-                                                                                </ng-container>
-                                                                            </ng-container> -->
-                                                    <ogms-table></ogms-table>
+                                                    <ng-container *ngIf='dataRefer.cmpResult !== undefined && dataRefer.cmpResult.chart !== undefined && dataRefer.cmpResult.chart.tableSrc !== undefined'>
+                                                        <ogms-table [tableSrc]='dataRefer.cmpResult.chart.tableSrc' style='height: 350px; width: 500px'></ogms-table>
+                                                    </ng-container>
+                                                    <!-- <ogms-table></ogms-table> -->
                                                 </div>
                                                 <div *ngIf='method === "TABLE_STATISTIC"'>
 
@@ -116,15 +118,15 @@
                                                     <div>
                                                         <div class='form-row'>
                                                             Year:
-                                                            <nz-select [(ngModel)]="selectedYear" (ngModelChange)='onYearChange($event)' [nzPlaceHolder]='""' [nzAllowClear]="true" style="width: 120px;">
-                                                                <nz-option *ngFor="let year of selectedYearOption" [nzLabel]="year" [nzValue]="year">
+                                                            <nz-select [(ngModel)]="dataRefer.attached.selectedYear" (ngModelChange)='onYearChange($event, dataRefer)' [nzPlaceHolder]='""' [nzAllowClear]="true" style="width: 120px;">
+                                                                <nz-option *ngFor="let year of dataRefer.attached.selectedYearOption" [nzLabel]="year" [nzValue]="year">
                                                                 </nz-option>
                                                             </nz-select>
                                                         </div>
 
                                                         <div class='form-row'>
                                                             Style:
-                                                            <nz-radio-group [(ngModel)]='selectedStyle' (ngModelChange)='onMapStyleChange($event)'>
+                                                            <nz-radio-group [(ngModel)]='dataRefer.attached.selectedStyle' (ngModelChange)='onMapStyleChange($event)'>
                                                                 <label nz-radio-button [nzValue]="'SWIPE'">
                                                                                             <span>Swipe</span>
                                                                                         </label>
@@ -136,17 +138,22 @@
 
                                                     </div>
                                                     <div style='width: 500px; height: 350px;'>
-                                                        <ng-container *ngIf='selectedStyle==="MIXING"'>
-                                                            <ogms-ascii-grid [imageLayers]='selectedLayers'></ogms-ascii-grid>
+                                                        <ng-container *ngIf='dataRefer.attached.selectedStyle==="MIXING"'>
+                                                            <ogms-ascii-grid [imageLayers]='dataRefer.attached.selectedLayers'></ogms-ascii-grid>
                                                         </ng-container>
-                                                        <ng-container *ngIf='selectedStyle==="SWIPE"'>
-                                                            <ogms-swipe-map [imageLayers]='selectedLayers'></ogms-swipe-map>
+                                                        <ng-container *ngIf='dataRefer.attached.selectedStyle==="SWIPE"'>
+                                                            <ogms-swipe-map [imageLayers]='dataRefer.attached.selectedLayers'></ogms-swipe-map>
                                                         </ng-container>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </nz-tab>
+                                    <!-- <ng-template #tabBarExtraContent>
+                                        <button nz-button [nzLoading]='tabsAttached[cmpObj.id].isLoading' [nzType]="'dashed'" [nzShape]="'circle'" (click)='refreshResult(cmpObj.id)'>
+                                            <i class="anticon anticon-sync"></i>
+                                        </button>
+                                    </ng-template> -->
                                 </nz-tabset>
                             </div>
                         </div>
@@ -157,6 +164,38 @@
                         <h2><span>Evaluation</span></h2>
                     </div>
                     <div class='section-body'></div>
+                </div>
+
+                <div>
+                    <p>ss</p>
+                    <p>ss</p>
+                    <p>ss</p>
+                    <p>ss</p>
+                    <p>ss</p>
+                    <p>ss</p>
+                    <p>ss</p>
+                    <p>ss</p>
+                    <p>ss</p>
+                    <p>ss</p>
+                    <p>ss</p>
+                    <p>ss</p>
+                    <p>ss</p>
+                    <p>ss</p>
+                    <p>ss</p>
+                    <p>ss</p>
+                    <p>ss</p>
+                    <p>ss</p>
+                    <p>ss</p>
+                    <p>ss</p>
+                    <p>ss</p>
+                    <p>ss</p>
+                    <p>ss</p>
+                    <p>ss</p>
+                    <p>ss</p>
+                    <p>ss</p>
+                    <p>ss</p>
+                    <p>ss</p>
+                    <p>ss</p>
                 </div>
             </div>
             <div nz-col [nzSpan]='4' class='side-content'>
@@ -191,29 +230,24 @@
                         <a [routerLink]='["../../solutions", cmpTask.cmpCfg.solutionId]'><span>{{cmpTask.cmpCfg.solutionId}}</span></a>
                     </div>
                 </div>
+
+                <div id='separator'></div>
+
                 <div class='side-catalog'>
-                    <nz-affix>
-                        <nz-anchor>
-                            <nz-link nzHref="#cmp-rst-basic" nzTitle="Basic Information"></nz-link>
-                            <nz-link nzHref="#cmp-rst-detail" nzTitle="Comparison Result">
-                                <ng-container *ngFor='let cmpObj of cmpTask.cmpCfg.cmpObjs; let i=index;'>
-                                    <nz-link nzHref='#cmpObj-{{i}}' nzTitle='{{cmpObj.meta.name}}'></nz-link>
-                                </ng-container>
-                            </nz-link>
-                            <nz-link nzHref="#cmp-rst-report" nzTitle="Result Report">
-                                <nz-link nzHref="#API-Anchor" nzTitle="Download"></nz-link>
-                            </nz-link>
-                        </nz-anchor>
-                    </nz-affix>
+                    <nz-anchor>
+                        <nz-link nzHref="#cmp-rst-basic" nzTitle="Basic Information"></nz-link>
+                        <nz-link nzHref="#cmp-rst-detail" nzTitle="Comparison Result">
+                            <ng-container *ngFor='let cmpObj of cmpTask.cmpCfg.cmpObjs; let i=index;'>
+                                <nz-link nzHref='#cmpObj-{{i}}' nzTitle='{{cmpObj.meta.name}}'></nz-link>
+                            </ng-container>
+                        </nz-link>
+                        <nz-link nzHref="#cmp-rst-report" nzTitle="Result Report">
+                            <nz-link nzHref="#API-Anchor" nzTitle="Download"></nz-link>
+                        </nz-link>
+                    </nz-anchor>
                 </div>
             </div>
         </div>
     </div>
-
 </div>
 <nz-back-top [nzTarget]='cmpRst'></nz-back-top>
-<nz-back-top [nzVisibilityHeight]="100">
-    <ng-template #nzTemplate>
-        <div class="ant-back-top-inner">UP</div>
-    </ng-template>
-</nz-back-top>

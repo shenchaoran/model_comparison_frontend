@@ -122,13 +122,17 @@ export class CmpTaskService implements Resolve<any> {
     });
   }
 
-  getCmpResult(taskId: string, type: 'chart' | '') {
+  /**
+   * 一次只请求一个计算结果
+   */
+  getCmpResult(taskId: string, cmpObjId: string, msId: string) {
     if(taskId) {
         return this.http.get(
-            `/comparison/${taskId}/cmpResult`, 
+            `/comparison/tasks/${taskId}/cmpResult`, 
             {
                 params: {
-                    type: type
+                    msId: msId,
+                    cmpObjId: cmpObjId
                 }
             }
         );

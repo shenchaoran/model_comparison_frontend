@@ -1,4 +1,11 @@
+:host {
+    height: 100%;
+    overflow: scroll;
+}
+
 .container {
+    height: 100%;
+    overflow: scroll;
     padding: 10px;
     box-sizing: border-box;
     // overflow: scroll;

@@ -9,21 +9,6 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
         <router-outlet></router-outlet>
     `,
   styles: [`
-      .ol-button i
-      {	color: inherit;
-      }
-      .hello
-      {	right: 50%;
-          top: 0.5em;
-      }
-      .save
-      {	left: 50%;
-          top: 0.5em;
-      }
-      .text
-      {	left: 50%;
-          top: 2.5em;
-      }
       `
   ]
 })
