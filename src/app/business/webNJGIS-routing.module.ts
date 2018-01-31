@@ -14,6 +14,11 @@ const routes: Routes = [
     component: HeaderMenuLayoutComponent,
     canActivate: [AuthGuard],
     children: [
+    {
+        path: '',
+        redirectTo: 'home',
+        pathMatch: 'full'
+    },
       {
         path: 'home',
         loadChildren: './home/home.module#HomeModule'
@@ -41,11 +46,11 @@ const routes: Routes = [
       {
           path: 'test',
           loadChildren: './test/test.module#TestModule'
+      },
+      {
+          path: '**',
+          redirectTo: 'home'
       }
-      // {
-      //     path: '**',
-      //     redirectTo: 'home'
-      // }
     ]
   }
 ];

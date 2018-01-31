@@ -12,35 +12,48 @@ export class CmpTaskService implements Resolve<any> {
     private http: _HttpClient
   ) {}
 
-  resolve() {
-    return this.getDataTabTree()
-      .toPromise()
-      .then(response => {
-        if (response.error) {
-          return Promise.reject(response.error);
-        } else {
-          const tabs = [];
-          const tasks = response.data;
-          if (tasks.personal) {
-            tabs.push({
-              name: 'Your Comparison Tasks',
-              id: 'personal',
-              data: tasks.personal
-            });
-          }
-          if (tasks.public) {
-            tabs.push({
-              name: 'Public Comparison Tasks',
-              id: 'public',
-              data: tasks.public
-            });
-          }
-          return Promise.resolve(tabs);
-        }
-      });
-  }
+//   resolve() {
+//     return this.findAll()
+//       .toPromise()
+//       .then(response => {
+//         if (response.error) {
+//           return Promise.reject(response.error);
+//         } else {
+//           const tabs = [];
+//           const tasks = response.data;
+//           if (tasks.personal) {
+//             tabs.push({
+//               name: 'Your Comparison Tasks',
+//               id: 'personal',
+//               data: tasks.personal
+//             });
+//           }
+//           if (tasks.public) {
+//             tabs.push({
+//               name: 'Public Comparison Tasks',
+//               id: 'public',
+//               data: tasks.public
+//             });
+//           }
+//           return Promise.resolve(tabs);
+//         }
+//       });
+//   }
 
-  getDataTabTree(): Observable<any> {
+resolve() {
+    return this.findAll()
+        .toPromise()
+        .then(response => {
+            if(response.error) {
+                return Promise.reject(response.error);
+            }
+            else {
+                return Promise.resolve(response.data.docs);
+            }
+        });
+}
+
+  findAll(): Observable<any> {
     return this.http.get('/comparison/tasks');
   }
 

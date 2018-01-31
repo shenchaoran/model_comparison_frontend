@@ -1,6 +1,19 @@
-:host {
+.div-loading {
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+    align-items: center;
     height: 100%;
-    overflow: scroll;
+    width: 100%;
+}
+
+#root-container {
+    height: 100%;
+    overflow-y: hidden;
+    #scroll-container {
+        height: 100%;
+        overflow-y: scroll;
+    }
 }
 
 .list-item {
@@ -158,5 +171,18 @@ dl {
     }
     .section-body {
         padding-left: 29px;
+    }
+}
+
+.ms-progress {
+    width: 400px;
+    margin: 10px 0;
+    display: flex;
+    flex-flow: row nowrap;
+    span {
+        width: 90px;
+    }
+    nz-progress {
+        width: 310px;
     }
 }

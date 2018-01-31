@@ -43,6 +43,8 @@ import { ShowCmpSolutionBannerComponent } from './show-cmp-solution-banner/show-
 import { ShowCmpSolutionSearchComponent } from './show-cmp-solution-search/show-cmp-solution-search.component';
 import { ShowCmpSolutionListComponent } from './show-cmp-solution-list/show-cmp-solution-list.component';
 import { MockService } from "../mock/mock.service";
+import { CmpTaskListComponent } from './cmp-task-list/cmp-task-list.component';
+import { CmpTaskSearchComponent } from './cmp-task-search/cmp-task-search.component';
 
 const SERVICES = [
   CmpSlnService,
@@ -90,6 +92,8 @@ const SERVICES = [
     ShowCmpSolutionBannerComponent,
     ShowCmpSolutionSearchComponent,
     ShowCmpSolutionListComponent,
+    CmpTaskListComponent,
+    CmpTaskSearchComponent,
     RegionMapComponent,
   ],
   providers: [...SERVICES]

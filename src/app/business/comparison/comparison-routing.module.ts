@@ -11,9 +11,9 @@ import { CmpSlnService, CmpTaskService, CmpSceneService } from './services';
 import { MSService } from '../geo-model/services';
 import { DataService } from '../geo-data/services';
 import { CmpResultsComponent } from './cmp-results/cmp-results.component';
-
 import { ShowCmpSolutionComponent } from "./show-cmp-solution/show-cmp-solution.component";
 import { ShowCmpSolutioninfoComponent } from "./show-cmp-solutioninfo/show-cmp-solutioninfo.component";
+import { CmpTaskListComponent } from './cmp-task-list/cmp-task-list.component';
 
 const routes: Routes = [
     { 
@@ -43,9 +43,10 @@ const routes: Routes = [
             },
             {
                 path: 'tasks',
-                component: CmpTaskComponent,
+                component: CmpTaskListComponent,
                 resolve: {
-                    taskTabTree: CmpTaskService
+                    // taskTabTree: CmpTaskService
+                    tasks: CmpTaskService
                 }
             },
             {

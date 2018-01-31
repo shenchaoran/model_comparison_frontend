@@ -1,3 +1,7 @@
+:host>div {
+    background: #fff;
+}
+
 .main {
     padding: 18px 140px 18px 140px;
 }
@@ -12,7 +16,7 @@
     color: rgb(151, 151, 151);
 }
 
- .search {
+.search {
     vertical-align: bottom;
     width: 400px;
 }
@@ -29,6 +33,6 @@
 
 .avatar {
     margin-right: 20px;
-    color: white; 
+    color: white;
     background-color: #ff7a45;
 }

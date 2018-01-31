@@ -30,6 +30,7 @@ declare var ol: any;
     styleUrls: ['./cmp-results.component.scss']
 })
 export class CmpResultsComponent implements OnInit, OnDestroy, AfterViewInit {
+    _isLoading = true;
     cmpTaskId;
     cmpTask;
     _taskSubscription;
@@ -46,17 +47,18 @@ export class CmpResultsComponent implements OnInit, OnDestroy, AfterViewInit {
     ngOnInit() {
         const cmpTaskStr = localStorage.getItem('currentCmpTask');
         if(cmpTaskStr) {
+            this._isLoading = false;
             this.cmpTask = JSON.parse(cmpTaskStr);
             this.cmpTaskId = this.cmpTask._id;
             this.updateTask(this.cmpTask);
-        }
-        else {
-            this.refresh();
         }
         
         this.route.params
             .subscribe((params: Params) => {
                 this.cmpTaskId = params['id'];
+                if(!cmpTaskStr) {
+                    this.refresh();
+                }
                 this.fetchInterval();
             });
     }
@@ -156,6 +158,7 @@ export class CmpResultsComponent implements OnInit, OnDestroy, AfterViewInit {
                 }
             });
         });
+        this._isLoading = false;
     }
 
     refresh() {
@@ -315,7 +318,8 @@ export class CmpResultsComponent implements OnInit, OnDestroy, AfterViewInit {
         }
     }
 
-    // @HostListener('scroll')
+    // TODO 监听不到scroll 事件
+    @HostListener('scroll')
     onScroll(event: any) {
         // console.log('onScroll');
         // const scrollH = Math.max(
@@ -326,7 +330,7 @@ export class CmpResultsComponent implements OnInit, OnDestroy, AfterViewInit {
         // );
         const scrollH = jQuery('#root-container')[0].scrollTop;
         const h = jQuery('#separator')[0].offsetTop - scrollH;
-        // console.log(h);
+        console.log(h);
         if (h < -50) {
             jQuery('.side-catalog').css('visibility', 'visible');
         } else {
