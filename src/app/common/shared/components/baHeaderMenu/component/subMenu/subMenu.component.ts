@@ -13,7 +13,7 @@ export class SubMenuComponent implements OnInit, AfterViewInit {
     @Input() 
     set subMenu(v){
         this._subMenu = v;
-        // console.log(v.path);
+        console.log(v.path);
     }
     get subMenu(){
         return this._subMenu;

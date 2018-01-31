@@ -16,7 +16,6 @@ import { HomeSolutionComponent } from './home-solution/home-solution.component';
   imports: [
     NgxSharedModule,
     SharedModule,
-
     FeatureRoutingModule,
   ],
   declarations: [HomeComponent, HomeBannerComponent, HomeTaskComponent, HomeStatisticsComponent, HomeModelComponent, HomeSolutionComponent],

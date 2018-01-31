@@ -21,7 +21,13 @@
     z-index: 999;
     padding: 0 5px;
     box-shadow: 0 0 5px #6d6d6d;
-    background: #ffffff;
+    background: #24292e;
+}
+
+@media (min-width: 980px) {
+    .nav-header {
+        padding: 0 140px;
+    }
 }
 
 .body {
@@ -59,4 +65,8 @@
 
 #login-menu {
     justify-content: end;
+}
+
+img {
+    outline: none;
 }

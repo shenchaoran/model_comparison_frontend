@@ -4,7 +4,6 @@ export * from './baPageTop';
 export * from './baTitleTop';
 export * from './baSidebar';
 export * from './baMenu';
-export * from './fileUploader';
 export * from './baHeaderMenu';
 export * from './context-menu';
 export * from './header-pull-right';
@@ -13,6 +12,8 @@ export * from './dataCard';
 export * from './modelCard';
 export * from './solutionCard';
 export * from './taskCard';
+export * from './header-menu-layout/header-menu-layout.component';
+export * from './sider-menu-layout/sider-menu-layout.component';
 // export * from './baMessageBox';
 //
 // export * from './baFloatWindow';
