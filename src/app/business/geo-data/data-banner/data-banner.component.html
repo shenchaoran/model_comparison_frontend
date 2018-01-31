@@ -10,13 +10,23 @@
     </div>
     <div nz-col [nzSpan]="8">
         <div nz-row [nzGutter]="8">
-          <div nz-col [nzSpan]="18">
-              <nz-input [nzPlaceHolder]="'input data name'" [(ngModel)]="_value" [nzSize]="'large'" class="search"></nz-input>
+          <div nz-col [nzSpan]="16">
           </div>
-          <div nz-col [nzSpan]="6">
-              <button nz-button [nzSize]="large" [nzType]="'primary'">
-                  <i class="anticon anticon-search"></i><span>Search</span>
-              </button>
+          <div nz-col [nzSpan]="8">
+                <nz-dropdown [nzPlacement]="'bottomRight'">
+                        <button nz-button [nzType]="'primary'" [nzSize]="'large'" nz-dropdown>Change Data Set</button>
+                        <ul nz-menu>
+                          <li nz-menu-item>
+                            <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">Data Set Globle</a>
+                          </li>
+                          <li nz-menu-item>
+                            <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">Data Set For Asia</a>
+                          </li>
+                          <li nz-menu-item>
+                            <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">Data Set For America</a>
+                          </li>
+                        </ul>
+                </nz-dropdown>
           </div>
         </div>
     </div>

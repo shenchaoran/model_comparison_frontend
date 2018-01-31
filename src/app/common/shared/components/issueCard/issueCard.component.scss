@@ -3,19 +3,23 @@
 }
 
 .avatar {
-    color:white; 
-    background-color:#87d068;
+    color: white; 
+    background-color: #ff7a45;
 }
 
-.name {
+:host ::ng-deep .name {
     font-size: 14px;
     font-weight: 500;
     height: 24px;
     line-height: 24px;
     vertical-align: top;
     margin-left: 8px;
-    transition: all .3s;
-    display: inline-block;
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    -o-text-overflow: ellipsis;
+    white-space:nowrap;
+    width:200px;
+    display:inline-block;
 }
 
 .desc {

@@ -26,7 +26,7 @@ import {
   SubMenuComponent,
   ContextMenuComponent,
   HeaderPullRightComponent,
-  DataCardComponent,
+  IssueCardComponent,
   ModelCardComponent,
   SolutionCardComponent,
   TaskCardComponent
@@ -91,7 +91,7 @@ const CITYFUN_COMPONENTS = [
   jqxExpanderComponent,
   jqxMenuComponent,
   jqxListBoxComponent,
-  DataCardComponent,
+  IssueCardComponent,
   ModelCardComponent,
   SolutionCardComponent,
   TaskCardComponent

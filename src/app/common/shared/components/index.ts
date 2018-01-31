@@ -9,7 +9,7 @@ export * from './baHeaderMenu';
 export * from './context-menu';
 export * from './header-pull-right';
 export * from './baFileUploader';
-export * from './dataCard';
+export * from './issueCard';
 export * from './modelCard';
 export * from './solutionCard';
 export * from './taskCard';

@@ -1,5 +1,5 @@
 .main {
-    padding: 20px 40px 0px 40px;
+    padding: 20px 54px 0px 54px;
     
 }
 
@@ -34,8 +34,8 @@
 }
 
 .avatar {
-    color:#fc8021; 
-    background-color:#fde3cf;
+    color: white; 
+    background-color: #ff7a45;
 }
 
 .author {
@@ -75,6 +75,13 @@
 
 .editor {
     background: white;
-    height: 700px;
+    height: 400px;
+    margin-bottom: 40px;
+    padding-bottom: 40px;
+}
+
+.config {
+    font-size: 16px;
+    padding-right: 20px;
 }
 

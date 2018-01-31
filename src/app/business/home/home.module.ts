@@ -11,6 +11,7 @@ import { HomeTaskComponent } from './home-task/home-task.component';
 import { HomeStatisticsComponent } from './home-statistics/home-statistics.component';
 import { HomeModelComponent } from './home-model/home-model.component';
 import { HomeSolutionComponent } from './home-solution/home-solution.component';
+import { HomeIssueComponent } from './home-issue/home-issue.component';
 
 @NgModule({
   imports: [
@@ -19,7 +20,7 @@ import { HomeSolutionComponent } from './home-solution/home-solution.component';
 
     FeatureRoutingModule,
   ],
-  declarations: [HomeComponent, HomeBannerComponent, HomeTaskComponent, HomeStatisticsComponent, HomeModelComponent, HomeSolutionComponent],
+  declarations: [HomeComponent, HomeBannerComponent, HomeTaskComponent, HomeStatisticsComponent, HomeModelComponent, HomeSolutionComponent, HomeIssueComponent],
   providers: [
     MockService
   ]
