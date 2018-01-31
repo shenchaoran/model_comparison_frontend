@@ -4,6 +4,7 @@ import { Tasks } from "./task.mock";
 import { Models } from "./model.mock";
 import { Datas } from "./data.mock";
 import { Solutions } from "./solution.mock";
+import { Issues } from "./issue.mock";
 
 @Injectable()
 export class MockService {
@@ -21,5 +22,9 @@ export class MockService {
 
     getSolutions() {
         return Solutions;
+    }
+
+    getIssue() {
+        return Issues;
     }
 }

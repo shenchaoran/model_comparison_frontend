@@ -27,3 +27,11 @@
     height: 22px;
     line-height: 22px;
 }
+
+.right-margin {
+    margin-right: 10px;
+}
+
+:host ::ng-deep .ant-btn {
+    margin-right: 12px;
+}

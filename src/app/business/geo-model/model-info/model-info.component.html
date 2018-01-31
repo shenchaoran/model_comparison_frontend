@@ -4,12 +4,12 @@
       <nz-avatar nzText="Z" nzSize="large" class="avatar"></nz-avatar>
       <span class="name">{{model.modelName}}</span>
     </div>
-    <div nz-col class="btn">
+    <div nz-col>
       <nz-button-group [nzSize]="'large'">
-        <button nz-button [nzType]="'default'" class="order">
+        <button nz-button [nzType]="'default'" >
           <span>Edit</span>
         </button>
-        <button nz-button [nzType]="'default'" class="order">
+        <button nz-button [nzType]="'default'" >
           <span>Delete</span>
         </button>
       </nz-button-group>
@@ -48,46 +48,46 @@
           <div class="editor">
               <quill-editor></quill-editor>
           </div>
+          <nz-card>
+              <ng-template #title>
+                <h3>Config Parameter</h3>
+              </ng-template>
+              <ng-template #body>
+                <div><span class="config">irestart</span><span class="config">0: not a restart run  1: restart run</span></div>
+                <div><span class="config">soilcspin</span><span class="config">no soil spinup, 1: acceleration procedure used</span></div>
+                <div><span class="config">isimveg</span><span class="config">0: static veg, 1: dynamic veg, 2: dynamic veg-cold start</span></div>
+                <div><span class="config">isimfire</span><span class="config">0: fixed fire, 1: dynam fire</span>      </div>
+                <div><span class="config">isimco2</span><span class="config">0: fixed co2,  1: ramped co2</span> </div>
+                <div><span class="config">co2init</span><span class="config">initial co2 concentration in mol/mol (real)</span>		 </div> 
+                <div><span class="config">o2init</span><span class="config">initial o2 concentration in mol/mol (real)</span>          </div> 
+              </ng-template>
+          </nz-card>
       </div>
     </nz-tab>
     <nz-tab>
-      <ng-template #nzTabHeading>About</ng-template>
+      <ng-template #nzTabHeading>Related Resource</ng-template>
       <div class="tab">
-
-              <nz-card class="home-task-card" [nzBordered]="false">
-                  <ng-template #title>
-                    <h3>CompleteTask</h3>
-                  </ng-template>
-                  <ng-template #body>
-                    <task-card *ngFor="let task of tasks" [task]="task"></task-card>
-                  </ng-template>
-                </nz-card>
-              <nz-card nzNoHovering [nzBordered]="false">
-                  <ng-template #title>
-                    <h3>BelongSolution</h3>
-                  </ng-template>
-                  <ng-template #body>
-                    <solution-card [solution]="solutions[0]"></solution-card>
-                    <solution-card [solution]="solutions[1]"></solution-card>
-                    <solution-card [solution]="solutions[2]"></solution-card>
-                    <solution-card [solution]="solutions[3]"></solution-card>
-                    <solution-card [solution]="solutions[4]"></solution-card>
-                    <solution-card [solution]="solutions[5]"></solution-card>
-                  </ng-template>
-                </nz-card>
-                <nz-card nzNoHovering [nzBordered]="false">
-                    <ng-template #title>
-                      <h3>SupportData</h3>
-                    </ng-template>
-                    <ng-template #body>
-                      <data-card [data]="datas[0]"></data-card>
-                      <data-card [data]="datas[1]"></data-card>
-                      <data-card [data]="datas[2]"></data-card>
-                      <data-card [data]="datas[3]"></data-card>
-                      <data-card [data]="datas[4]"></data-card>
-                      <data-card [data]="datas[5]"></data-card>
-                    </ng-template>
-                  </nz-card>
+        <nz-card class="home-task-card" [nzBordered]="false">
+            <ng-template #title>
+              <h3>CompleteTask</h3>
+            </ng-template>
+            <ng-template #body>
+              <task-card *ngFor="let task of tasks" [task]="task"></task-card>
+            </ng-template>
+        </nz-card>
+        <nz-card nzNoHovering [nzBordered]="false">
+            <ng-template #title>
+              <h3>BelongSolution</h3>
+            </ng-template>
+            <ng-template #body>
+              <solution-card [solution]="solutions[0]"></solution-card>
+              <solution-card [solution]="solutions[1]"></solution-card>
+              <solution-card [solution]="solutions[2]"></solution-card>
+              <solution-card [solution]="solutions[3]"></solution-card>
+              <solution-card [solution]="solutions[4]"></solution-card>
+              <solution-card [solution]="solutions[5]"></solution-card>
+            </ng-template>
+          </nz-card>
       </div>
     </nz-tab>
   </nz-tabset>
