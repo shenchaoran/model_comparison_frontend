@@ -99,15 +99,6 @@ export class CmpResultsComponent implements OnInit, OnDestroy, AfterViewInit {
 
     private updateTask(cmpTask) {
         this.fetchCount++;
-        if(this.fetchCount === 1) {
-            // 触发选中tab事件
-            _.map(this.cmpTask.cmpCfg.cmpObjs as any[], cmpObj => {
-                if(cmpObj.dataRefers.length) {
-                    console.log('init tab request')
-                    this.onTabSelected(cmpObj.id, cmpObj.dataRefers[0]);
-                }
-            });
-        }
         this.cmpTask = cmpTask;
         this.setAttached();
 
@@ -158,6 +149,16 @@ export class CmpResultsComponent implements OnInit, OnDestroy, AfterViewInit {
                 }
             });
         });
+        
+        if(this.fetchCount === 1) {
+            // 触发选中tab事件
+            _.map(this.cmpTask.cmpCfg.cmpObjs as any[], cmpObj => {
+                if(cmpObj.dataRefers.length) {
+                    console.log('init tab request')
+                    this.onTabSelected(cmpObj.id, cmpObj.dataRefers[0]);
+                }
+            });
+        }
         this._isLoading = false;
     }
 
