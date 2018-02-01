@@ -25,7 +25,7 @@ const routes: Routes = [
                         component: ModelsComponent
                     },
                     {
-                        path: 'modelinfo',
+                        path: ':id',
                         component: ModelInfoComponent
                     }
                 ]

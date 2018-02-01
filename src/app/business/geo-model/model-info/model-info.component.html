@@ -1,94 +1,92 @@
-<div class='main'>
-  <div nz-row [nzType]="'flex'" [nzJustify]="'space-between'" class="row">
-    <div nz-col>
-      <nz-avatar nzText="Z" nzSize="large" class="avatar"></nz-avatar>
-      <span class="name">{{model.modelName}}</span>
-    </div>
-    <div nz-col>
-      <nz-button-group [nzSize]="'large'">
-        <button nz-button [nzType]="'default'" >
-          <span>Edit</span>
-        </button>
-        <button nz-button [nzType]="'default'" >
-          <span>Delete</span>
-        </button>
-      </nz-button-group>
-      <button nz-button [nzType]="'primary'" [nzSize]="'large'">
-        <span>Run</span>
-      </button>
-    </div>
-  </div>
-  <div nz-row [nzType]="'flex'" [nzJustify]="'space-between'" class="second-row">
-    <div nz-col [nzSpan]="16">
-      <div class="font-primary row">
-        Author: {{model.modelName}}
-        <span class="author">Organization: ZhongShan</span>
-      </div>
-      <div class="row">
-        <span class="font-second">{{model.modelDesc}}</span>
-      </div>
-    </div>
-    <div nz-col class="second-right">
-      <div class="inline">
-        <div class="font-second">Status</div>
-        <div class="font-bold">Available</div>
-      </div>
-      <div class="inline">
-        <div class="font-second">CompleteNum</div>
-        <div class="font-bold">43</div>
-      </div>
-    </div>
-  </div>
+<div class='div-loading' *ngIf='_isLoading'>
+  <nz-spin [nzSpinning]='_isLoading' [nzSize]="'large'"></nz-spin>
 </div>
-<div>
-  <nz-tabset>
-    <nz-tab>
-      <ng-template #nzTabHeading class="tab">Detail</ng-template>
-      <div class="tab">
-          <div class="editor">
-              <quill-editor></quill-editor>
+<div id='root-container' *ngIf='!_isLoading'>
+  <div id='scroll-container' #cmpRst (scroll)='onScroll($event)'>
+    <div class='bg'>
+      <div></div>
+    </div>
+    <div class='content flex-box-col-nowrap'>
+      <div>
+        <div id='article-title'>
+          <h1>{{model.modelName}}</h1>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col [nzSpan]='20' class="main-content">
+          <div id='cmp-rst-basic'>
+            <div class='section-header'>
+              <h2>
+                <span>Basic Information</span>
+              </h2>
+            </div>
+            <div class='section-body'>
+              <dl>
+                <div nz-row>
+                  <dt nz-col [nzSpan]='4'>Full Name</dt>
+                  <dd nz-col [nzSpan]='8'>Biome-BGC</dd>
+                  <dt nz-col [nzSpan]='4'>Organization</dt>
+                  <dd nz-col [nzSpan]='8'>OpenGMS</dd>
+                  <dt nz-col [nzSpan]='4'>Type</dt>
+                  <dd nz-col [nzSpan]='8'>Carbon Globle</dd>
+                  <dt nz-col [nzSpan]='4'>Create Time</dt>
+                  <dd nz-col [nzSpan]='8'>2018-01-01</dd>
+                  <dt nz-col [nzSpan]='4'>Description</dt>
+                  <dd nz-col [nzSpan]='20'>{{model.modelDesc}}</dd>
+                </div>
+              </dl>
+            </div>
           </div>
-          <nz-card>
-              <ng-template #title>
-                <h3>Config Parameter</h3>
-              </ng-template>
-              <ng-template #body>
-                <div><span class="config">irestart</span><span class="config">0: not a restart run  1: restart run</span></div>
-                <div><span class="config">soilcspin</span><span class="config">no soil spinup, 1: acceleration procedure used</span></div>
-                <div><span class="config">isimveg</span><span class="config">0: static veg, 1: dynamic veg, 2: dynamic veg-cold start</span></div>
-                <div><span class="config">isimfire</span><span class="config">0: fixed fire, 1: dynam fire</span>      </div>
-                <div><span class="config">isimco2</span><span class="config">0: fixed co2,  1: ramped co2</span> </div>
-                <div><span class="config">co2init</span><span class="config">initial co2 concentration in mol/mol (real)</span>		 </div> 
-                <div><span class="config">o2init</span><span class="config">initial o2 concentration in mol/mol (real)</span>          </div> 
-              </ng-template>
-          </nz-card>
+          <div id='model-feature'>
+            <div class='section-header'>
+              <h2>
+                <span>IO Feature Info</span>
+              </h2>
+            </div>
+            <div class="section-body">
+              <div style="margin-bottom: 16px;">
+                <button nz-button [disabled]="_disabledButton" [nzType]="'primary'" [nzLoading]="_operating" (click)="_operateData()">Operating</button>
+                <span style="margin-left: 8px;" *ngIf="_checkedNumber">Selected {{_checkedNumber}} items</span>
+              </div>
+              <nz-table #nzTable [nzDataSource]="_dataSet" [nzPageSize]="10" (nzDataChange)="_displayDataChange($event)" (nzPageIndexChange)="_refreshStatus()" (nzPageSizeChange)="_refreshStatus()">
+                <thead nz-thead>
+                  <tr>
+                    <th nz-th nzCheckbox>
+                      <label nz-checkbox [(ngModel)]="_allChecked" [nzIndeterminate]="_indeterminate" (ngModelChange)="_checkAll($event)">
+                      </label>
+                    </th>
+                    <th nz-th>
+                      <span>Name</span>
+                    </th>
+                    <th nz-th>
+                      <span>Unit</span>
+                    </th>
+                    <th nz-th>
+                      <span>Description</span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody nz-tbody>
+                  <tr nz-tbody-tr *ngFor="let data of nzTable.data">
+                    <td nz-td nzCheckbox>
+                      <label nz-checkbox [(ngModel)]="data.checked" (ngModelChange)="_refreshStatus($event)">
+                      </label>
+                    </td>
+                    <td nz-td>{{data.name}}</td>
+                    <td nz-td>{{data.unit}}</td>
+                    <td nz-td>{{data.desc}}</td>
+                  </tr>
+                </tbody>
+              </nz-table>
+            </div>
+          </div>
+        </div>
+        <div nz-col [nzSpan]='4' class="side-content">
+
+        </div>
       </div>
-    </nz-tab>
-    <nz-tab>
-      <ng-template #nzTabHeading>Related Resource</ng-template>
-      <div class="tab">
-        <nz-card class="home-task-card" [nzBordered]="false">
-            <ng-template #title>
-              <h3>CompleteTask</h3>
-            </ng-template>
-            <ng-template #body>
-              <task-card *ngFor="let task of tasks" [task]="task"></task-card>
-            </ng-template>
-        </nz-card>
-        <nz-card nzNoHovering [nzBordered]="false">
-            <ng-template #title>
-              <h3>BelongSolution</h3>
-            </ng-template>
-            <ng-template #body>
-              <solution-card [solution]="solutions[0]"></solution-card>
-              <solution-card [solution]="solutions[1]"></solution-card>
-              <solution-card [solution]="solutions[2]"></solution-card>
-              <solution-card [solution]="solutions[3]"></solution-card>
-              <solution-card [solution]="solutions[4]"></solution-card>
-              <solution-card [solution]="solutions[5]"></solution-card>
-            </ng-template>
-          </nz-card>
-      </div>
-    </nz-tab>
-  </nz-tabset>
+
+    </div>
+  </div>
+
 </div>
