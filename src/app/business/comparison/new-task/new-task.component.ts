@@ -99,7 +99,7 @@ export class NewTaskComponent implements OnInit, AfterViewInit, AfterViewChecked
         if (slnStr) {
             this.cmpSolution = JSON.parse(slnStr);
             this.__selectMode =
-                this.cmpSolution.cmpCfg.keynote.direction === 'x'
+                this.cmpSolution.cmpCfg.keynote.direction === 'multi'
                     ? 'multiple'
                     : 'single';
             this.cmpTask.cmpCfg.keynote = this.cmpSolution.cmpCfg.keynote;

@@ -25,7 +25,7 @@ export class CmpSolution {
             participate: boolean
         }[],
         keynote: {
-            direction: 'x'|'y',
+            direction: 'multi'|'single',
             dimension: 'point' | 'polygon' | 'multi-point'
         },
         cmpObjs: {

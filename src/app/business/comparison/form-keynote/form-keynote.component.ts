@@ -43,7 +43,7 @@ export class FormKeynoteComponent implements OnInit {
     @Input() mode: 'write' | 'read' = 'read';
     @Output() onKeynoteChange = new EventEmitter<any>();
     @Input() keynote: {
-        direction: 'x' | 'y',
+        direction: 'multi' | 'single',
         dimension: 'point' | 'polygon' | 'multi-point',
         attached: {
             solutionMeta: {

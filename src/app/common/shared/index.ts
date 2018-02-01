@@ -153,7 +153,7 @@ export * from './components';
             useValue: USER_MENUS
         }
     ],
-    exports: [...CITYFUN_COMPONENTS, ...CITYFUN_DIRECTIVES, ...CITYFUN_PIPES]
+    exports: [...CITYFUN_COMPONENTS, ...CITYFUN_DIRECTIVES, ...CITYFUN_PIPES, NgxSharedModule]
 })
 export class SharedModule {
     static forRoot(): ModuleWithProviders {

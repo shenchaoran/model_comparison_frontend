@@ -59,7 +59,7 @@ export const HEADER_MENUS: MenuClass[] = [
         }
     },
     {
-        path: 'comparison/issues',
+        path: 'issues',
         data: {
             menu: {
                 title: 'Issue'
@@ -67,7 +67,7 @@ export const HEADER_MENUS: MenuClass[] = [
         }
     },
     {
-        path: 'comparison/solutions',
+        path: 'solutions',
         data: {
             menu: {
                 title: 'Solution'
@@ -75,7 +75,7 @@ export const HEADER_MENUS: MenuClass[] = [
         }
     },
     {
-        path: 'comparison/tasks',
+        path: 'tasks',
         data: {
             menu: {
                 title: 'Task'

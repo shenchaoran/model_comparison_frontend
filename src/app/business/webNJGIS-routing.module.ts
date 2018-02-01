@@ -22,6 +22,19 @@ const routes: Routes = [
         loadChildren: './geo-data/geo-data.module#GeoDataModule'
     },
     {
+        path: 'issues',
+        loadChildren: './cmp-issue/cmp-issue.module#CmpIssueModule'
+    },
+    {
+        path: 'solutions',
+        loadChildren: './cmp-solution/cmp-solution.module#CmpSolutionModule'
+    },
+    
+    {
+        path: 'tasks',
+        loadChildren: './cmp-task/cmp-task.module#CmpTaskModule'
+    },
+    {
         path: 'comparison',
         loadChildren: './comparison/comparison.module#ComparisonModule'
     },

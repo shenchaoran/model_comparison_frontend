@@ -38,7 +38,7 @@ export class CmpTask {
         }>,
         // 这里暂时先把sln的所有字段复制过来了，避免了多表查询
         keynote: {
-            direction: 'x'|'y',
+            direction: 'multi'|'single',
             dimension: 'point' | 'polygon' | 'multi-point'
         },
         cmpObjs: Array<{

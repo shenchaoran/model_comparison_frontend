@@ -32,7 +32,7 @@
                                     <dt nz-col [nzSpan]='4'>Authorization</dt>
                                     <dd nz-col [nzSpan]='8'>{{cmpTask.auth.src | resourceSrc}}</dd>
                                     <dt nz-col [nzSpan]='4'>Comparison type</dt>
-                                    <dd nz-col [nzSpan]='8'>{{cmpTask.cmpCfg.keynote.direction==='x'?'Contrast with each other':'Self contrast'}}</dd>
+                                    <dd nz-col [nzSpan]='8'>{{cmpTask.cmpCfg.keynote.direction==='multi'?'Contrast with each other':'Self contrast'}}</dd>
                                     <dt nz-col [nzSpan]='4'>Temporal ranges</dt>
                                     <dd nz-col [nzSpan]='8'>{{cmpTask.calcuCfg.stdSrc.temporal.start | date: 'yyyy-MM-dd'}} - {{cmpTask.calcuCfg.stdSrc.temporal.start | date: 'yyyy-MM-dd'}}</dd>
                                 </div>

@@ -44,7 +44,7 @@ export class FormCmpObjsComponent implements OnInit, OnChanges {
   // TODO 根据 dimension 限制 schemaName 的范围
   @Input()
   keynote: {
-    direction: 'x' | 'y';
+    direction: 'multi' | 'single';
     dimension: 'point' | 'polygon' | 'multi-point';
   };
   schemaNames: Array<string> = [];
