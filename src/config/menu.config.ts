@@ -59,57 +59,81 @@ export const HEADER_MENUS: MenuClass[] = [
         }
     },
     {
-        path: 'comparison',
+        path: 'comparison/issues',
         data: {
             menu: {
-                title: 'Comparison',
-                id: 'comparison',
-                icon: 'smile-o',
-                selected: true,
-                expanded: false,
-                order: 0
-            }
-        },
-        children: [
-            {
-                path: 'solutions',
-                data: {
-                    menu: {
-                        title: 'Comparison Solution'
-                    }
-                }
-            },
-            {
-                path: 'tasks',
-                data: {
-                    menu: {
-                        title: 'Comparison Task'
-                    }
-                }
-            },
-            {
-                path: 'scenes',
-                data: {
-                    menu: {
-                        title: 'Comparison Scene'
-                    }
-                }
-            }
-        ]
-    },
-    {
-        path: 'help',
-        data: {
-            menu: {
-                title: 'Help',
-                id: 'help',
-                icon: 'question',
-                selected: true,
-                expanded: false,
-                order: 0
+                title: 'Issue'
             }
         }
-    }
+    },
+    {
+        path: 'comparison/solutions',
+        data: {
+            menu: {
+                title: 'Solution'
+            }
+        }
+    },
+    {
+        path: 'comparison/tasks',
+        data: {
+            menu: {
+                title: 'Task'
+            }
+        }
+    },
+    // {
+    //     path: 'comparison',
+    //     data: {
+    //         menu: {
+    //             title: 'Comparison',
+    //             id: 'comparison',
+    //             icon: 'smile-o',
+    //             selected: true,
+    //             expanded: false,
+    //             order: 0
+    //         }
+    //     },
+    //     children: [
+    //         {
+    //             path: 'solutions',
+    //             data: {
+    //                 menu: {
+    //                     title: 'Comparison Solution'
+    //                 }
+    //             }
+    //         },
+    //         {
+    //             path: 'tasks',
+    //             data: {
+    //                 menu: {
+    //                     title: 'Comparison Task'
+    //                 }
+    //             }
+    //         },
+    //         {
+    //             path: 'scenes',
+    //             data: {
+    //                 menu: {
+    //                     title: 'Comparison Scene'
+    //                 }
+    //             }
+    //         }
+    //     ]
+    // },
+    // {
+    //     path: 'help',
+    //     data: {
+    //         menu: {
+    //             title: 'Help',
+    //             id: 'help',
+    //             icon: 'question',
+    //             selected: true,
+    //             expanded: false,
+    //             order: 0
+    //         }
+    //     }
+    // }
 ];
 
 // 登录成功后的用户菜单

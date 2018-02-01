@@ -15,6 +15,7 @@ import { ShowCmpSolutionComponent } from './show-cmp-solution/show-cmp-solution.
 import { ShowCmpSolutioninfoComponent } from './show-cmp-solutioninfo/show-cmp-solutioninfo.component';
 import { CmpTaskListComponent } from './cmp-task-list/cmp-task-list.component';
 import { SiderMenuLayoutComponent, HeaderMenuLayoutComponent } from '@shared';
+import { CmpIssueListComponent } from './cmp-issue-list/cmp-issue-list.component';
 
 const routes: Routes = [
     {
@@ -27,8 +28,12 @@ const routes: Routes = [
                 children: [
                     {
                         path: '',
-                        redirectTo: 'solutions',
+                        redirectTo: 'issues',
                         pathMatch: 'full'
+                    },
+                    {
+                        path: 'issues',
+                        component: CmpIssueListComponent
                     },
                     {
                         path: 'solutions',
