@@ -14,7 +14,7 @@ import {
 } from '@angular/core';
 import { CmpSlnService, CmpTaskService } from '../services';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CmpSolution, CmpTask, ResourceSrc, CmpObj, CmpMethod } from '@models';
+import { CmpSolution, CmpTask, ResourceSrc, CmpMethod } from '@models';
 import { NzNotificationService, NzModalService } from 'ng-zorro-antd';
 import { DataService } from '../../geo-data/services';
 import { MSService } from '../../geo-model/services';

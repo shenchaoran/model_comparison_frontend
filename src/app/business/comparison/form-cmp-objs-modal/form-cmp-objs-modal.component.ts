@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { CmpObj, MS } from '@models';
+import { MS } from '@models';
 import { NzNotificationService } from 'ng-zorro-antd';
 
 @Component({

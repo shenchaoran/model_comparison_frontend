@@ -6,11 +6,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import {
     CalcuTaskState,
     CmpState,
-    CmpResult,
     CmpSolution,
     CmpTask,
     ResourceSrc,
-    CmpObj,
     CmpMethod
 } from '@models';
 import {

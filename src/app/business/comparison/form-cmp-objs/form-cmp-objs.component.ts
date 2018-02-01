@@ -50,9 +50,9 @@ export class FormCmpObjsComponent implements OnInit, OnChanges {
   schemaNames: Array<string> = [];
   methods: Array<any> = [];
 
-  @Input() cmpObjs: Array<CmpObj> = [];
+  @Input() cmpObjs: Array<any> = [];
 
-  selectedCmpObj: CmpObj;
+  selectedCmpObj: any;
 
   constructor(
     private _notification: NzNotificationService,

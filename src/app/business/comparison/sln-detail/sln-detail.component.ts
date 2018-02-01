@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoginService } from '@feature/login/login.service';
-import { CmpSolution, CmpTask, CmpObj, ResourceSrc, MS, CmpMethod, SchemaName } from '@models';
+import { CmpSolution, CmpTask, ResourceSrc, MS, CmpMethod, SchemaName } from '@models';
 import { CmpSlnService } from '../services/cmp-sln.service';
 import { NzNotificationService, NzModalService } from 'ng-zorro-antd';
 import { Router, ActivatedRoute } from '@angular/router';

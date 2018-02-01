@@ -19,7 +19,7 @@
 
 import { GeoDataClass } from './UDX-data.class';
 import { UDXSchema } from '../models/UDX-schema.class';
-
+import { DataRefer } from './dataRefer.class';
 import * as uuidv1 from 'uuid/v1';
 // import { ObjectID } from 'mongodb';
 
@@ -31,16 +31,7 @@ export class CmpObj {
     };
     schemaName: string;
     methods: any[];
-    dataRefers?: Array<{
-        msId: string,
-        msName?: string,
-        eventName: string,
-        dataId?: string,
-        // data 存放具体比较的配置，如chart的列名，图像处理
-        data: any,
-        schema$?: UDXSchema
-    }>;
-    cmpResults?: Array<CmpResult>;
+    dataRefers?: Array<DataRefer>;
     attached?: {
         valid?: boolean,
         active?: boolean
@@ -55,25 +46,9 @@ export class CmpObj {
         this.schemaName = '';
         this.methods = [];
         this.dataRefers = [];
-        this.cmpResults = [];
         this.attached = {
             valid: false,
             active: true
         };
     }
-}
-
-export class CmpResult {
-    image?: {
-
-    };
-    chart?: {
-
-    };
-    GIF?: {
-
-    };
-    statistic?: {
-
-    };
 }

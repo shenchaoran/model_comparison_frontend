@@ -4,7 +4,7 @@
  */
 
 import { ResourceSrc } from './resource.enum';
-import { CalcuCfg } from './cmp-task.class';
+import { CalcuCfg } from './calcu-cfg.class';
 
 export class CalcuTask {
     _id?: any;

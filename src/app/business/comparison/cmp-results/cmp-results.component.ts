@@ -9,11 +9,9 @@ import * as uuidv1 from 'uuid/v1';
 import {
     CalcuTaskState,
     CmpState,
-    CmpResult,
     CmpSolution,
     CmpTask,
     ResourceSrc,
-    CmpObj,
     CmpMethod
 } from '@models';
 import {
