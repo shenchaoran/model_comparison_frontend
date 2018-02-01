@@ -24,4 +24,5 @@ export class CmpIssue {
         end: number;
         scale: 'YEAR' | 'DAY';
     };
+    [key: string]: any;
 }

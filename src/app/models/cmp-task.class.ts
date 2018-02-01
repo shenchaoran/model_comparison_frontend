@@ -85,6 +85,7 @@ export class CmpTask {
       calcuTaskId: string,
       state: CalcuTaskState
     }>;
+    [key: string]: any;
 
     constructor() {
         const user = LoginService.getUser();

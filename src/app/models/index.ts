@@ -11,3 +11,7 @@ export * from './UDX-schema.class';
 export * from './UDX-type.class';
 export * from './user.class';
 export * from './calcu-task.class';
+export * from './cmp-state.enum';
+export * from './calcu-cfg.class';
+export * from './cmp-issue.class';
+export * from './dataRefer.class';

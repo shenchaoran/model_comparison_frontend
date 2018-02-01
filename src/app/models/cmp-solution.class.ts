@@ -42,6 +42,7 @@ export class CmpSolution {
             attached: any
         }[]
     };
+    [key: string]: any;
 
     constructor() {
         this.meta = {
