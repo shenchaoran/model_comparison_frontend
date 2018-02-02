@@ -4,12 +4,18 @@ import { CmpSolutionListComponent } from './cmp-solution-list/cmp-solution-list.
 import { SolutionDetailComponent } from './solution-detail/solution-detail.component';
 import { CmpSolutionListRoutingModule } from './routing.module';
 import { SharedModule } from '@shared';
+import { CmpSlnService } from './services';
+import { NewSlnComponent } from './new-sln/new-sln.component';
+import { CmpSolutionComponent } from './cmp-solution.component';
 
 @NgModule({
-  imports: [
-    SharedModule,
-    CmpSolutionListRoutingModule
-  ],
-  declarations: [CmpSolutionListComponent, SolutionDetailComponent]
+    imports: [SharedModule, CmpSolutionListRoutingModule],
+    declarations: [
+        CmpSolutionComponent,
+        CmpSolutionListComponent,
+        SolutionDetailComponent,
+        NewSlnComponent
+    ],
+    providers: [CmpSlnService]
 })
-export class CmpSolutionModule { }
+export class CmpSolutionModule {}

@@ -1,0 +1,104 @@
+// TODO 响应式
+@media (max-width: 980px) {}
+
+@media (min-width: 980px) {
+    .container {}
+    .div-banner {
+        background: #fff;
+        .main {
+            padding: 18px 140px 18px 140px;
+        }
+        .text-first {
+            font-size: 30px;
+            font-weight: 500;
+        }
+        .text-second {
+            font-size: 16px;
+            color: rgb(151, 151, 151);
+        }
+        .search {
+            vertical-align: bottom;
+            width: 400px;
+        }
+         :host ::ng-deep .ant-avatar-lg {
+            width: 56px;
+            height: 56px;
+            line-height: 56px;
+        }
+        .inline {
+            display: inline-block;
+        }
+        .avatar {
+            margin-right: 20px;
+            color: white;
+            background-color: #ff85c0;
+        }
+        .newbtn {
+            padding-left: 6px;
+        }
+    }
+    .div-margin {
+        margin: 0 140px;
+        .div-search {}
+        .div-list-detail {
+            padding: 24px;
+        }
+        .div-list-item {
+            padding: 5px 0;
+            >* {
+                margin: 10px 0;
+            }
+            >h3 {
+                font-size: 20px;
+                font-weight: 600;
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+                line-height: 1.5;
+            }
+            >.cmp-progress {
+                display: flex;
+                flex-flow: row;
+                span {
+                    // width: 200px;
+                    margin-right: 20px;
+                }
+                nz-progress {
+                    width: 410px;
+                }
+            }
+        }
+        .div-list-item:not(:last-child) {
+            border-bottom: 1px solid #a8a8a8;
+        }
+    }
+}
+
+.div-card {
+    margin-top: 20px;
+    background: #fff;
+}
+
+.div-search {
+    .font {
+        font-size: 16px;
+    }
+    .tag-head {
+        font-weight: 450;
+        padding-right: 30px;
+    }
+    .row {
+        padding-bottom: 14px;
+        margin-bottom: 14px;
+    }
+    .border {
+        border-bottom: 1px dashed #e8e8e8;
+    }
+    // .host ::ng-deep .ant-card-body {
+    //     padding-bottom: 2px;
+    // }
+     :host ::ng-deep .ant-card-body {
+        padding-bottom: 0px;
+    }
+    .order {
+        width: 100px;
+    }
+}

@@ -9,7 +9,7 @@ const MockTags = ['All', 'Carbon', 'Nature', 'Math', 'Etc'];
   styleUrls: ['./cmp-task-search.component.scss']
 })
 export class CmpTaskSearchComponent implements OnInit {
-    public solutions: Solution[];
+    // public solutions: Solution[];
     public tags = MockTags;
     public selectedTags = []; 
     searchOptions = [
@@ -20,7 +20,7 @@ export class CmpTaskSearchComponent implements OnInit {
     selectedMultipleOption = [this.searchOptions[ 0 ] ];
   
     constructor(private mockService: MockService) { 
-      this.solutions = mockService.getSolutions();
+    //   this.solutions = mockService.getSolutions();
     }
   
     ngOnInit() {

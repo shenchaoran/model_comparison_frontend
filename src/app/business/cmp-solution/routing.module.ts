@@ -4,19 +4,40 @@ import { RouterModule, Routes } from '@angular/router';
 import { CmpSolutionListComponent } from './cmp-solution-list/cmp-solution-list.component';
 import { SolutionDetailComponent } from './solution-detail/solution-detail.component';
 import { SiderMenuLayoutComponent, HeaderMenuLayoutComponent } from '@shared';
+import { NewSlnComponent } from './new-sln/new-sln.component';
+import { CmpSlnService } from './services';
+import { CmpSolutionComponent } from './cmp-solution.component';
 
 const routes: Routes = [
     {
         path: '',
         component: HeaderMenuLayoutComponent,
         children: [
-            { 
-                path: '', 
-                component: CmpSolutionListComponent 
-            },
             {
-                path: ':id',
-                component: SolutionDetailComponent
+                path: '',
+                component: CmpSolutionComponent,
+                children: [
+                    { 
+                        path: '', 
+                        component: CmpSolutionListComponent,
+                        resolve: {
+                            solutions: CmpSlnService
+                        }
+                    },
+                    {
+                        path: 'new',
+                        component: NewSlnComponent
+                    },
+                    {
+                        path: ':id',
+                        component: SolutionDetailComponent
+                    },
+                    {
+                        path: '**',
+                        redirectTo: '',
+                        pathMatch: 'full'
+                    }
+                ]
             }
         ]
     }

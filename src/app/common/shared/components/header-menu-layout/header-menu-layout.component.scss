@@ -6,68 +6,75 @@
     // flex-direction: column;
     // flex-wrap: nowrap;
     // grid-template-rows: auto auto;
-}
-
-.nav-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    // grid-row: 1/2;
-    // flex: 0 0 auto;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    z-index: 999;
-    padding: 0 5px;
-    box-shadow: 0 0 5px #24292e;
-    background: #24292e;
-}
-
-@media (min-width: 980px) {
     .nav-header {
-        padding: 0 140px;
+        height: 64px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        // grid-row: 1/2;
+        // flex: 0 0 auto;
+        display: flex;
+        align-items: center;
+        flex-flow: row nowrap;
+        z-index: 999;
+        padding: 0 5px;
+        box-shadow: 0 0 5px #24292e;
+        background: #24292e;
+        >div {
+            margin: auto 8px;
+            display: inline-block;
+        }
+        #logo {
+            img {
+                outline: none;
+                cursor: pointer;
+            }
+        }
+        #search {
+            input {
+                border-radius: 3px;
+                height: 100%;
+                outline: none;
+                background: #3f4448;
+                padding: 0 8px;
+                border: 0;
+                min-height: 26px;
+                height: 30px;
+                width: 300px;
+                line-height: 20px;
+                vertical-align: middle;
+                color: #fff;
+                font-size: 13px;
+            }
+        }
+        #menu {
+            line-height: 64px;
+            // align-self: flex-end;
+            padding-left: 10px;
+            flex: 0 0 auto;
+        }
+        #place-holder {
+            flex: 1 1 auto;
+        }
+        #login-menu {
+            // float: right;
+        }
     }
-}
-
-.body {
-    padding-top: 64px;
-    // flex: 1 1 auto;
-    // overflow: scroll;
-    height: 100%;
-}
-
-.content {
-    height: 100%;
-    overflow: hidden;
-    background: #eee;
-}
-
-#logo {
-    margin: auto 8px;
-}
-
-#menu {
-    // float: left;
-    margin: auto 0;
-    line-height: 64px;
-    align-self: flex-end;
-    padding-left: 10px;
-}
-
-.flex-item {
-    align-items: center;
-}
-
-#place-holder {
-    flex: 1;
-}
-
-#login-menu {
-    justify-content: end;
-}
-
-img {
-    outline: none;
-    cursor: pointer;
+    @media (min-width: 980px) {
+        .nav-header {
+            padding: 0 140px;
+        }
+    }
+    .body {
+        padding-top: 64px;
+        // flex: 1 1 auto;
+        // overflow: scroll;
+        height: 100%;
+        .content {
+            height: 100%;
+            overflow-y: hidden;
+            background: #eee;
+        }
+    }
 }

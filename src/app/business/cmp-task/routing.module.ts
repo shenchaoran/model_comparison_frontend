@@ -4,6 +4,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { CmpTaskListComponent } from './cmp-task-list/cmp-task-list.component';
 import { TaskDetailComponent } from './task-detail/task-detail.component';
 import { SiderMenuLayoutComponent, HeaderMenuLayoutComponent } from '@shared';
+import { NewTaskComponent } from './new-task/new-task.component';
+import { CmpTaskService } from './services';
 
 const routes: Routes = [
     {
@@ -12,8 +14,15 @@ const routes: Routes = [
         children: [
             { 
                 path: '', 
-                component: CmpTaskListComponent 
+                component: CmpTaskListComponent,
+                resolve: {
+                    tasks: CmpTaskService
+                }
             }, 
+            {
+                path: 'new',
+                component: NewTaskComponent
+            },
             {
                 path: ':id',
                 component: TaskDetailComponent

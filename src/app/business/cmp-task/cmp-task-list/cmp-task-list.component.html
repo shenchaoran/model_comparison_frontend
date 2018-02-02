@@ -1,3 +1,11 @@
-<p>
-  cmp-task-list works!
-</p>
+<ogms-list-template>
+    <div class='div-list-item' *ngFor='let task of tasks; let i=index;'>
+        <h3><a class='task-name' [routerLink]='task._id'>{{task.auth.userName}}/{{task.meta.name}}</a></h3>
+        <p>{{task.meta.desc}}</p>
+        <div class='cmp-progress'>
+            <span>Comparison progress</span>
+            <nz-progress [ngModel]='100'></nz-progress>
+        </div>
+        <div>{{task.meta.time | date: 'yyyy-MM-dd'}}</div>
+    </div>
+</ogms-list-template>

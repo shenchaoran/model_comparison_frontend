@@ -14,6 +14,7 @@ export * from './solutionCard';
 export * from './taskCard';
 export * from './header-menu-layout/header-menu-layout.component';
 export * from './sider-menu-layout/sider-menu-layout.component';
+export * from './list-template/list-template.component';
 // export * from './baMessageBox';
 //
 // export * from './baFloatWindow';

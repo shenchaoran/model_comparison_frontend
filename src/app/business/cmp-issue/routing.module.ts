@@ -4,6 +4,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { CmpIssueListComponent } from './cmp-issue-list/cmp-issue-list.component';
 import { IssueDetailComponent } from './issue-detail/issue-detail.component';
 import { SiderMenuLayoutComponent, HeaderMenuLayoutComponent } from '@shared';
+import { NewIssueComponent } from './new-issue/new-issue.component';
+import { CmpIssueService } from './services';
 
 const routes: Routes = [
     {
@@ -12,8 +14,15 @@ const routes: Routes = [
         children: [
             { 
                 path: '', 
-                component: CmpIssueListComponent 
+                component: CmpIssueListComponent,
+                resolve: {
+                    issues: CmpIssueService
+                }
             }, 
+            {
+                path: 'new',
+                component: NewIssueComponent
+            },
             {
                 path: ':id',
                 component: IssueDetailComponent
