@@ -18,6 +18,7 @@ import { DataService } from './services';
 import { LoginService } from '../../common/feature/login/login.service';
 import { MockService } from "../mock/mock.service";
 // import { OlMapService } from '@feature/ol-map/ol-map.module.ts';
+import { VisualizationModule } from "../visualization/visualization.module";
 
 const SERVICES = [
     DataService, 
@@ -27,7 +28,7 @@ const SERVICES = [
 ];
 
 @NgModule({
-    imports: [NgxSharedModule, SharedModule, GeoDataRoutingModule],
+    imports: [NgxSharedModule, SharedModule, GeoDataRoutingModule, VisualizationModule],
     declarations: [GeoDataComponent, DataTabsComponent, DataIntroComponent, DataBannerComponent, DatasComponent, DataInfoComponent],
     providers: [...SERVICES]
 })

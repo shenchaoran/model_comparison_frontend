@@ -1,0 +1,173 @@
+#root-container {
+    height: 100%;
+    overflow-y: hidden;
+    #scroll-container {
+        height: 100%;
+        overflow-y: scroll;
+    }
+}
+
+.bg {
+    position: relative;
+    margin-bottom: -380px;
+    height: 420px;
+    background: url('/assets/img/article/bg-gradient.png') repeat-x;
+    div {
+        background: url('/assets/img/article/bg-main.png') no-repeat top center;
+        height: 100%;
+    }
+}
+
+.container {
+    padding: 10px;
+    box-sizing: border-box;
+    // overflow: scroll;
+    #left-item {
+        flex: 1;
+        padding: 10px;
+    }
+    #right-item {
+        flex: 4;
+        padding: 10px;
+    }
+}
+
+.model-body {
+    background: #ECECEC;
+    padding-left: 140px;
+    padding-right: 140px;
+    padding-top: 20px;
+    padding-bottom: 30px;
+}
+
+#title {
+    padding:  12px 22px;
+    background: #fff;
+
+    .border {
+        padding-bottom: 16px;
+        border-bottom: 1px solid #e8e8e8;
+    }
+    
+    .text-first {
+        font-size: 30px;
+        font-weight: 500;
+    }
+    
+    .text-second {
+        font-size: 16px;
+        color: rgb(151, 151, 151);
+    }
+    
+    .search {
+        vertical-align: bottom;
+        width: 400px;
+    }
+    
+    :host ::ng-deep .ant-avatar-lg {
+        width: 56px;
+        height: 56px;
+        line-height: 56px;
+    }
+    
+    .inline {
+        display: inline-block;
+    }
+    
+    .avatar {
+        margin-right: 20px;
+        color: white;
+        background-color: #ff7a45;
+    }
+}
+
+#search {
+    padding:  0px 22px 0px 22px;
+    background: #fff;
+    margin-bottom: 20px;
+
+    .font {
+        font-size: 16px;
+    }
+    
+    .tag-head {
+        font-weight: 450;
+        padding-right: 30px;
+    }
+    
+    .row {
+        padding-bottom: 14px;
+        margin-bottom: 14px;
+    }
+    
+    .border {
+        border-bottom: 1px dashed #e8e8e8;
+    }
+    
+    // .host ::ng-deep .ant-card-body {
+    //     padding-bottom: 2px;
+    // }
+    
+    :host ::ng-deep .ant-card-body {
+        padding-top: 0px;
+        padding-bottom: 0px;
+    }
+    
+    .order {
+        width: 100px;
+    }
+}
+
+.search-card {
+
+    .row {
+        padding-bottom: 12px; 
+    }
+    
+    .normal {
+        font-size: 14px;
+    }
+    
+    .modelname {
+        font-size: 16px;
+        font-weight: 500;
+    }
+    
+    .border {
+        border-bottom: 1px solid #e8e8e8;
+        margin-bottom: 12px;
+        padding-bottom: 14px;
+    }
+    
+    .avatar {
+        font-size: 14px;
+        color:#f56a00;
+        background-color:#fde3cf;
+    }
+    
+    .center {
+        height: 22px;
+        line-height: 22px;
+    }
+    
+    .favor-number {
+        margin-left: 6px;
+    }
+    
+    .custom-image img {
+        height: 200px;
+        display: block;
+    }
+    
+    .right-content {
+        padding-left: 24px;
+    }
+    
+    .btn-margin-left {
+        padding-left: 8px;
+    }
+    
+    .in-block {
+        display: inline-block;
+    }
+}

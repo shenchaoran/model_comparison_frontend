@@ -1,3 +1,121 @@
-<p>
-  issue-detail works!
-</p>
+<div id='root-container'>
+  <div id='scroll-container'>
+    <div class='bg'>
+      <div></div>
+    </div>
+    <div class='content flex-box-col-nowrap'>
+      <div nz-row>
+        <div nz-col [nzSpan]="24">
+
+        </div>
+      </div>
+      <div class="data-body">
+        <div nz-row>
+          <div nz-col>
+            <div id="title">
+              <div nz-row [nzType]="'flex'" [nzJustify]="'space-around'" [nzAlign]="'middle'" class="border">
+                <div nz-col [nzSpan]="16">
+                  <div class="inline">
+                    <nz-avatar [nzShape]="'square'" [nzSize]="'large'" [nzIcon]="'aliwangwang'" class="avatar"></nz-avatar>
+                  </div>
+                  <div class="inline title">
+                    <div class="text-first">IssueA</div>
+                    <div class="text-second">this is long description</div>
+                  </div>
+                </div>
+                <div nz-col [nzSpan]="8">
+                </div>
+              </div>
+            </div>
+            <div id="info">
+              <div nz-row>
+                <div nz-col class="main-content">
+                  <div id='data-basic'>
+                    <div class='section-header'>
+                      <h2>
+                        <span>Basic Information</span>
+                      </h2>
+                    </div>
+                    <div class='section-body'>
+                      <dl>
+                        <div nz-row>
+                          <dt nz-col [nzSpan]='4'>Type</dt>
+                          <dd nz-col [nzSpan]='8'>Npp Compare</dd>
+                          <dt nz-col [nzSpan]='4'>Author</dt>
+                          <dd nz-col [nzSpan]='8'>OpenGMS</dd>
+                          <dt nz-col [nzSpan]='4'>Time Step</dt>
+                          <dd nz-col [nzSpan]='8'>daily</dd>
+                          <dt nz-col [nzSpan]='4'>Spatial Scale</dt>
+                          <dd nz-col [nzSpan]='8'>0.5-4 deg</dd>
+                          <dt nz-col [nzSpan]='4'>Description</dt>
+                          <dd nz-col [nzSpan]='20'>I am the very very detail description I am the very very detail description I am the very very detail description I am the very very detail description I am the very very detail description</dd>
+                        </div>
+                      </dl>
+                    </div>
+                  </div>
+                  <div id='data-spatial'>
+                    <div class='section-header'>
+                      <h2>
+                        <span>Spatial</span>
+                      </h2>
+                    </div>
+                    <div class='section-body'>
+                      <dl>
+                        <div nz-row>
+                          <dt nz-col [nzSpan]='4'>Area Name</dt>
+                          <dd nz-col [nzSpan]='8'>Globle</dd>
+                          <dt nz-col [nzSpan]='4'>Data Source</dt>
+                          <dd nz-col [nzSpan]='8'>SUN YAT-SEN UNIVERSITY</dd>
+                          <dt nz-col [nzSpan]='4'>Latitude Range</dt>
+                          <dd nz-col [nzSpan]='8'>-180,180</dd>
+                          <dt nz-col [nzSpan]='4'>Longitude Range</dt>
+                          <dd nz-col [nzSpan]='8'>-90,90</dd>
+                        </div>
+                      </dl>
+                      <div style="margin-top: 20px">
+                        <ogms-ascii-grid></ogms-ascii-grid>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="data-temporal">
+                    <div class='section-header'>
+                      <h2>
+                        <span>Temporal</span>
+                      </h2>
+                    </div>
+                    <div class="section-body">
+                      <dl>
+                        <div nz-row>
+                          <span nz-col [nzSpan]='4' class="time-span-left">Start Date</span>
+                          <span nz-col [nzSpan]='8' class="time-span-right">1980-01-01</span>
+                          <span nz-col [nzSpan]='4' class="time-span-left">End Date</span>
+                          <span nz-col [nzSpan]='8' class="time-span-right">2010-01-01</span>
+                          <div nz-col [nzSpan]='12' style="padding-top: 8px">
+                            <nz-calendar [nzValue]='1980-05-01' [nzLocale]="'zh-cn'" [nzFullScreen]="false" style="width: 80%; border: 1px solid rgb(217, 217, 217); border-radius: 4px;"></nz-calendar>
+                          </div>
+                          <div nz-col [nzSpan]='12' style="padding-top: 8px">
+                            <nz-calendar [nzValue]='2010-05-01' [nzLocale]="'zh-cn'" [nzFullScreen]="false" style="width: 80%; border: 1px solid rgb(217, 217, 217); border-radius: 4px;"></nz-calendar>
+                          </div>
+                        </div>
+                      </dl>
+                    </div>
+                  </div>
+                  <div id="data-related">
+                      <div class='section-header'>
+                        <h2>
+                          <span>Related Solution</span>
+                        </h2>
+                      </div>
+                      <div class="section-body">
+                        I am related solution
+                      </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,3 +1,137 @@
-<p>
-  cmp-issue-list works!
-</p>
+<div id='root-container'>
+  <div id='scroll-container'>
+    <div class='bg'>
+      <div></div>
+    </div>
+    <div class='content flex-box-col-nowrap'>
+      <div nz-row>
+        <div nz-col [nzSpan]="24">
+
+        </div>
+      </div>
+      <div class="model-body">
+        <div nz-row>
+          <div nz-col>
+            <div id="title">
+              <div nz-row [nzType]="'flex'" [nzJustify]="'space-around'" [nzAlign]="'middle'" class="border">
+                <div nz-col [nzSpan]="16">
+                  <div class="inline">
+                    <nz-avatar [nzShape]="'square'" [nzSize]="'large'" [nzIcon]="'dingding'" class="avatar"></nz-avatar>
+                  </div>
+                  <div class="inline title">
+                    <div class="text-first">Issue</div>
+                    <div class="text-second">carboon compare issue</div>
+                  </div>
+                </div>
+                <div nz-col [nzSpan]="8">
+                  <div nz-row [nzGutter]="8">
+                    <div nz-col [nzSpan]="18">
+                      <nz-input [nzPlaceHolder]="'input issue name'" [(ngModel)]="_value" [nzSize]="'large'" class="search"></nz-input>
+                    </div>
+                    <div nz-col [nzSpan]="6">
+                      <button nz-button [nzSize]="large" [nzType]="'primary'">
+                        <i class="anticon anticon-search"></i>
+                        <span>Search</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="search">
+              <nz-card nzNoHovering [nzBordered]="false">
+                <ng-template #body>
+                  <div class="font row border">
+                    <span class="tag-head">Categories: </span>
+                    <nz-checkable-tag *ngFor="let tag of tags" [nzChecked]="selectedTags.indexOf(tag) > -1" (nzChange)="handleChange($event, tag)">
+                      <span class="font">{{tag}}</span>
+                    </nz-checkable-tag>
+                  </div>
+                  <div class="font row border">
+                    <span class="tag-head">Author: </span>
+                    <nz-select style="width: 400px;" nzTags [nzPlaceHolder]="'select author'" [(ngModel)]="selectedMultipleOption" [nzNotFoundContent]="'can not find'" nzShowSearch>
+                      <nz-option *ngFor="let option of searchOptions" [nzLabel]="option.label" [nzValue]="option">
+                      </nz-option>
+                    </nz-select>
+                  </div>
+                  <div class="font row">
+                    <span class="tag-head">Order: </span>
+                    <nz-button-group>
+                      <button nz-button [nzType]="'default'" class="order">
+                        <span>Default</span>
+                      </button>
+                      <button nz-button [nzType]="'default'" class="order">
+                        <span>Hot</span>
+                      </button>
+                      <button nz-button [nzType]="'default'" class="order">
+                        <span>Recommand</span>
+                      </button>
+                    </nz-button-group>
+                  </div>
+                </ng-template>
+              </nz-card>
+            </div>
+          </div>
+          <div nz-col>
+            <div id="list">
+              <nz-card nzNoHovering [nzBordered]="false">
+                <ng-template #body>
+                  <div *ngFor="let model of models">
+                    <div class="search-card">
+                      <div class="border">
+                        <div nz-row [nzType]="'flex'" [nzJustify]="'start'">
+                          <div nz-col>
+                            <div class="custom-img">
+                              <!-- <img alt="example" height="180px" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"/> -->
+                              <img class="img-center" alt="example" height="180px" src="https://gss0.bdstatic.com/94o3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike272%2C5%2C5%2C272%2C90/sign=c849697147086e067ea5371963611091/6c224f4a20a44623792750229322720e0df3d785.jpg" />
+                            </div>
+                          </div>
+                          <div nz-col [nzSpan]="18" class="right-content">
+                            <div class="modelname row">{{model.modelName}}</div>
+                            <div nz-row class="row">
+                              <div nz-col>
+                                <nz-tag>{{model.modelTags[0]}}</nz-tag>
+                                <nz-tag>{{model.modelTags[1]}}</nz-tag>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <p>{{model.modelDesc}}</p>
+                            </div>
+                            <div nz-row class="row">
+                              <div nz-col [nzSpan]=4 class="center">
+                                <i class="anticon anticon-github normal"></i>
+                                <span class="normal">{{model.author}}</span>
+                              </div>
+                              <div nz-col [nzSpan]=20>
+                                <i class="anticon anticon-star"></i>
+                                <span class="favor-number">34</span>
+                              </div>
+                            </div>
+                            <div nz-row [nzType]="'flex'" [nzJustify]="'start'" [nzGutter]="16" class="row">
+                              <div nz-col>
+                                <button nz-button [nzType]="'primary'" (click)="goToDetail()">
+                                  <i class="anticon anticon-info-circle-o"></i>
+                                  <span>Detail</span>
+                                </button>
+                              </div>
+                              <div nz-col>
+                                <button nz-button [nzType]="'default'">
+                                  <i class="anticon anticon-edit"></i>
+                                  <span>Config</span>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </ng-template>
+              </nz-card>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

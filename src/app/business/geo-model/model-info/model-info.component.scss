@@ -37,7 +37,7 @@
 
 .bg {
     position: relative;
-    margin-bottom: -320px;
+    margin-bottom: -360px;
     height: 420px;
     background: url('/assets/img/article/bg-gradient.png') repeat-x;
     div {
@@ -187,4 +187,8 @@ dl {
     nz-progress {
         width: 310px;
     }
+}
+
+:host ::ng-deep .ant-card-body {
+    padding: 0px;
 }

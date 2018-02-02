@@ -1,0 +1,238 @@
+#root-container {
+    height: 100%;
+    overflow-y: hidden;
+    #scroll-container {
+        height: 100%;
+        overflow-y: scroll;
+    }
+}
+
+.bg {
+    position: relative;
+    margin-bottom: -380px;
+    height: 420px;
+    background: url('/assets/img/article/bg-gradient.png') repeat-x;
+    div {
+        background: url('/assets/img/article/bg-main.png') no-repeat top center;
+        height: 100%;
+    }
+}
+
+.container {
+    padding: 10px;
+    box-sizing: border-box;
+    // overflow: scroll;
+    #left-item {
+        flex: 1;
+        padding: 10px;
+    }
+    #right-item {
+        flex: 4;
+        padding: 10px;
+    }
+}
+
+.data-body {
+    background: #ECECEC;
+    padding-left: 140px;
+    padding-right: 140px;
+    padding-top: 20px;
+    padding-bottom: 30px;
+}
+
+#title {
+    padding: 18px 22px 0px 22px;
+    background: #fff;
+    
+    
+    .main {
+        padding: 18px 22px 0px 22px;
+    }
+    
+    .border {
+        padding-bottom: 16px;
+        // border-bottom: 1px solid #e8e8e8;
+    }
+    
+    .text-first {
+        font-size: 30px;
+        font-weight: 500;
+    }
+    
+    .text-second {
+        font-size: 16px;
+        color: rgb(151, 151, 151);
+    }
+    
+    .search {
+        vertical-align: bottom;
+        width: 400px;
+    }
+    
+    :host ::ng-deep .ant-avatar-lg {
+        width: 56px;
+        height: 56px;
+        line-height: 56px;
+    }
+    
+    .inline {
+        display: inline-block;
+    }
+    
+    .avatar {
+        margin-right: 20px;
+        color: white;
+        background-color: #87d068;
+    }
+}
+
+#info {
+    background: #fff;
+    // border: 1px solid #e5e5e5;
+
+    padding: 20px 20px;
+    position: relative;
+    // display: flex;
+    // flex-flow: row nowrap;
+    .main-content {
+        // flex: 1;
+        padding: 0 29px 29px 0;
+        background: #fff;
+    }
+    .side-content {
+        // flex: 0 0 250px;
+        padding: 0 15px;
+        // padding-top: 29px;
+        background: #fff;
+        color: #ccc;
+        hr {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            border: 0;
+            border-top: 1px solid #eee;
+        }
+        .avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 45px;
+        }
+        .side-catalog {
+            position: fixed;
+            bottom: 10px;
+            visibility: hidden;
+            background: #fff;
+        }
+    }
+
+    h1 {
+        // font-size: 38px;
+        font-size: 2.5em;
+        line-height: 1.15;
+        font-weight: 400;
+        vertical-align: sub;
+        color: #333;
+        font-family: arial, tahoma, 'Microsoft Yahei', '\5b8b\4f53', sans-serif;
+    }
+    
+    h1,
+    h2,
+    h3,
+    h4,
+    h5 {
+        margin: 15px 0;
+    }
+    
+    h5 {
+        font-size: 14px;
+        font-weight: 700;
+        font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", STHeiti, "Microsoft YaHei", "Microsoft JhengHei", "Source Han Sans SC", "Noto Sans CJK SC", "Source Han Sans CN", "Noto Sans SC", "Source Han Sans TC", "Noto Sans CJK TC", "WenQuanYi Micro Hei", SimSun, sans-serif;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+    
+    dl {
+        dt,
+        dd {
+            border-bottom: 1px dashed rgb(224, 224, 224);
+            line-height: 30px;
+        }
+        dt {
+            font-size: 14px;
+            padding: 0 5px 0 12px;
+            font-weight: 700;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            word-wrap: normal;
+            color: #999;
+            float: left;
+        }
+        dd {
+            font-size: 14px;
+            zoom: 1;
+            color: #333;
+            float: left;
+            position: relative;
+            display: block;
+            padding: 0;
+            margin: 0;
+        }
+    }
+    
+    * {
+        .section-header {
+            h2 {
+                background: url('/assets/img/article/title-line.png') repeat-x;
+                border-left: solid 12px #4F9CEE;
+                span {
+                    padding: 0 8px 0 18px;
+                    background: #fff;
+                }
+            }
+        }
+        .section-body {
+            padding-left: 29px;
+            padding-bottom: 20px;
+        }
+    }
+    
+    .time-span-left {
+        font-size: 16px;
+        padding: 0 5px 0 12px;
+        font-weight: 700;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        word-wrap: normal;
+        color: #999;
+        float: left;
+    }
+    
+    .time-span-right {
+        font-size: 16px;
+        zoom: 1;
+        color: #333;
+        float: left;
+        position: relative;
+        display: block;
+        padding: 0;
+        margin: 0;
+    }
+    
+    :host ::ng-deep .font-second {
+        font-size: 16px;
+        font-weight: 400px;
+    }
+    
+    :host ::ng-deep .font-third {
+        font-size: 14px;
+    }
+    
+    :host ::ng-deep .margin-b6 {
+        margin-bottom: 6px;
+    }
+    
+    :host ::ng-deep .margin-b10 {
+        margin-bottom: 10px;
+    }
+}
