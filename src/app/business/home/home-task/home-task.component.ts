@@ -13,7 +13,7 @@ export class HomeTaskComponent implements OnInit {
 
   constructor(private mockService: MockService) { 
     this.tasks = mockService.getTask();
-    console.log(this.tasks[0].modelName);
+    // console.log(this.tasks[0].modelName);
    }
 
   ngOnInit() {

@@ -17,7 +17,7 @@ export class HomeModelComponent implements OnInit {
     const allModels = mockService.getModels();
     const showModels = _.take(allModels, 8);
     this.models = showModels;
-    console.log(this.models);
+    // console.log(this.models);
   }
 
   ngOnInit() {

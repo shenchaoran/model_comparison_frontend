@@ -33,7 +33,7 @@ export const HEADER_MENUS: MenuClass[] = [
         }
     },
     {
-        path: '',
+        path: 'resources',
         data: {
             menu: {
                 title: 'Resources',

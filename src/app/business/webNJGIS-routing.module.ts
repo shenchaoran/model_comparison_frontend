@@ -14,12 +14,22 @@ const routes: Routes = [
         loadChildren: './home/home.module#HomeModule'
     },
     {
-        path: 'geo-models',
-        loadChildren: './geo-model/geo-model.module#GeoModelModule'
-    },
-    {
-        path: 'geo-data',
-        loadChildren: './geo-data/geo-data.module#GeoDataModule'
+        path: 'resources',
+        children: [
+            {
+                path: '',
+                redirectTo: 'geo-models',
+                pathMatch: 'full'
+            },
+            {
+                path: 'geo-models',
+                loadChildren: './geo-model/geo-model.module#GeoModelModule'
+            },
+            {
+                path: 'geo-data',
+                loadChildren: './geo-data/geo-data.module#GeoDataModule'
+            },
+        ]
     },
     {
         path: 'issues',

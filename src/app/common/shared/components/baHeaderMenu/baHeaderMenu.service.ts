@@ -24,12 +24,13 @@ export class HeaderMenuService {
                 if(children && children.length){
                     let childPath = '';
                     _.map(children, (child, i) => {
-                        if(suffixPath === '') {
-                            child.path = child.path;
-                        }
-                        else {
-                            child.path = suffixPath + '/' + child.path;
-                        }
+                        // if(suffixPath === '') {
+                        //     child.path = child.path;
+                        // }
+                        // else {
+                        //     child.path = suffixPath + '/' + child.path;
+                        // }
+                        child.path = suffixPath + '/' + child.path;
 
                         let tempPath = strcatRoute(child.path, child.children);
                         if(i === 0) {
@@ -44,7 +45,8 @@ export class HeaderMenuService {
             };
             _.chain(menuItems)
                 .map((menuItem) => {
-                    menuItem.path = strcatRoute(menuItem.path, menuItem.children);
+                    // menuItem.path = strcatRoute(menuItem.path, menuItem.children);
+                    strcatRoute(menuItem.path, menuItem.children);
                 })
                 .value();
             return menuItems;

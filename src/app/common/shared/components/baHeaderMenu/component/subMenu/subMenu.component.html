@@ -5,12 +5,14 @@
             {{subMenu.data.menu.title}}
         </span>
     <ng-template #linker>
-        <a class='ogms-menu-link' routerLink="/{{subMenu.path}}" routerLinkActive="active">
+        <a class='ogms-menu-link' routerLink="/{{subMenu.path}}" [routerLinkActive]="isRoot? 'actived-menu': ''">
             <!-- <i *ngIf="subMenu.data && subMenu.data.menu && subMenu.data.menu.icon" class="anticon anticon-{{subMenu.data.menu.icon}}"></i>  -->
             {{subMenu.data.menu.title}}
         </a>
     </ng-template>
     </span>
+
+    <!-- 子菜单 -->
     <ul class='ogms-sub-menu' *ngIf="subMenu.children">
         <ogms-subMenu *ngFor="let subMenu of subMenu.children" class="ant-menu-submenu ant-menu-submenu-horizontal" [subMenu]="subMenu"></ogms-subMenu>
     </ul>
