@@ -33,36 +33,48 @@ export const HEADER_MENUS: MenuClass[] = [
         }
     },
     {
-        path: 'geo-models',
+        path: '',
         data: {
             menu: {
-                title: 'Model',
-                id: 'model',
-                icon: 'appstore-o',
-                selected: true,
-                expanded: false,
-                order: 0
+                title: 'Resources',
+                id: 'resources',
+                icon: ''
             }
-        }
-    },
-    {
-        path: 'geo-data',
-        data: {
-            menu: {
-                title: 'Data',
-                id: 'data',
-                icon: 'database',
-                selected: true,
-                expanded: false,
-                order: 0
-            }
-        }
+        },
+        children: [
+            {
+                path: 'geo-models',
+                data: {
+                    menu: {
+                        title: 'Model',
+                        id: 'model',
+                        icon: 'appstore-o',
+                        selected: true,
+                        expanded: false,
+                        order: 0
+                    }
+                }
+            },
+            {
+                path: 'geo-data',
+                data: {
+                    menu: {
+                        title: 'Data',
+                        id: 'data',
+                        icon: 'database',
+                        selected: true,
+                        expanded: false,
+                        order: 0
+                    }
+                }
+            },
+        ]
     },
     {
         path: 'issues',
         data: {
             menu: {
-                title: 'Issue'
+                title: 'Issues'
             }
         }
     },
@@ -70,7 +82,7 @@ export const HEADER_MENUS: MenuClass[] = [
         path: 'solutions',
         data: {
             menu: {
-                title: 'Solution'
+                title: 'Solutions'
             }
         }
     },
@@ -78,7 +90,7 @@ export const HEADER_MENUS: MenuClass[] = [
         path: 'tasks',
         data: {
             menu: {
-                title: 'Task'
+                title: 'Tasks'
             }
         }
     },

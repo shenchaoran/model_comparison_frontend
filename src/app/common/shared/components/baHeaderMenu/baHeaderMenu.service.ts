@@ -22,15 +22,29 @@ export class HeaderMenuService {
             let menuItems = routes;
             let strcatRoute = (suffixPath, children) => {
                 if(children && children.length){
-                    _.map(children, child => {
-                        child.path = suffixPath + '/' + child.path;
-                        strcatRoute(child.path, child.children);
+                    let childPath = '';
+                    _.map(children, (child, i) => {
+                        if(suffixPath === '') {
+                            child.path = child.path;
+                        }
+                        else {
+                            child.path = suffixPath + '/' + child.path;
+                        }
+
+                        let tempPath = strcatRoute(child.path, child.children);
+                        if(i === 0) {
+                            childPath = tempPath;
+                        }
                     });
+                    return childPath;
+                }
+                else {
+                    return suffixPath;
                 }
             };
             _.chain(menuItems)
                 .map((menuItem) => {
-                    strcatRoute(menuItem.path, menuItem.children);
+                    menuItem.path = strcatRoute(menuItem.path, menuItem.children);
                 })
                 .value();
             return menuItems;

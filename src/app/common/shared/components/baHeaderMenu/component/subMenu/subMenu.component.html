@@ -1,4 +1,4 @@
-<li *ngIf="(subMenu && subMenu.path && subMenu.data) else divider" nz-submenu>
+<li *ngIf="(subMenu && subMenu.data) else divider" nz-submenu>
     <span title>
         <span *ngIf="(subMenu.disabled === true) else linker" class="disabled-menu-item">
             <!-- <i *ngIf="subMenu.data && subMenu.data.menu && subMenu.data.menu.icon" class="anticon anticon-{{subMenu.data.menu.icon}}"></i>  -->
