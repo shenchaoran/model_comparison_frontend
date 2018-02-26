@@ -1,0 +1,43 @@
+.columns {
+    display: flex;
+    flex-flow: row nowrap;
+    margin: 0 -10px;
+    .column {
+        padding: 0 10px;
+    }
+}
+
+.flex-box-col-nowrap {
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+.flex-box-row-nowrap {
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.flex-item-auto-fill,
+.flex-item-1-1-auto {
+    flex: 1 1 auto;
+}
+
+.flex-item-1 {
+    flex: 1;
+}
+
+.flex-item-2 {
+    flex: 2;
+}
+
+.flex-item-3 {
+    flex: 3;
+}
+
+.flex-item-4 {
+    flex: 4;
+}
+
+.flex-item-5 {
+    flex: 5;
+}

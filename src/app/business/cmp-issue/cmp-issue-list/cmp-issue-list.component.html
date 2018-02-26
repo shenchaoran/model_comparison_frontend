@@ -1,11 +1,22 @@
-<ogms-list-template>
-    <div class='div-list-item' *ngFor='let issue of issues; let i=index;'>
-        <h3><a class='issue-name' [routerLink]='issue._id'>{{issue.auth.userName}}/{{issue.meta.name}}</a></h3>
-        <p>{{issue.meta.desc}}</p>
-        <div class='cmp-progress'>
-            <span>Comparison progress</span>
-            <nz-progress [ngModel]='100'></nz-progress>
+<ng-template #issueTemplate let-issue='item'>
+    <div class='list-item'>
+        <div class='item-header'>
+            <a [routerLink]='issue._id'>
+                            {{issue.auth.userName}}/{{issue.meta.name}}
+                        </a>
         </div>
-        <div>{{issue.meta.time | date: 'yyyy-MM-dd'}}</div>
+        <div class='item-body'>
+            <div class='desc'>{{issue.meta.desc}}</div>
+            <div>
+                <span class='topic'>Topic1</span>
+                <span class='topic'>Topic2</span>
+            </div>
+        </div>
+        <div class='item-footer'>{{issue.meta.time | date: 'yyyy-MM-dd'}}</div>
     </div>
+</ng-template>
+
+<ogms-list-template [template]='issueTemplate' [list]='issues' [radioFilters]='{}' (onFiltersChange)='search($event)'>
 </ogms-list-template>
+
+<ogms-footer></ogms-footer>

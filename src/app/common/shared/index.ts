@@ -32,7 +32,9 @@ import {
     TaskCardComponent,
     HeaderMenuLayoutComponent,
     SiderMenuLayoutComponent,
-    ListTemplateComponent
+    ListTemplateComponent,
+    FooterComponent,
+    DocDetailTemplateComponent,
     // BaMessageBox,
     //
     // BaFloatWindow,
@@ -99,7 +101,9 @@ const CITYFUN_COMPONENTS = [
     IssueCardComponent,
     HeaderMenuLayoutComponent,
     SiderMenuLayoutComponent,
-    ListTemplateComponent
+    ListTemplateComponent,
+    FooterComponent,
+    DocDetailTemplateComponent,
     // BaMessageBox,
     //
     // BaFloatWindow,

@@ -19,10 +19,12 @@
 @import "app/common/shared/theme.scss";
 // add by SCR
 @import '~handsontable/dist/handsontable.full.css';
+@import "assets/css/my/layout.scss";
 @import "assets/css/my/custom-esri.css";
 @import "assets/css/my/custom-openlayers.css";
 @import "assets/css/my/perfectscroll.css";
 @import "assets/css/my/ng2-tree-styles.css";
+@import "assets/css/my/global.scss";
 // TODO relative path problems
 @import 'assets/css/jqwidgets/jqx.base';
 @import 'assets/css/jqwidgets/jqx.energyblue-my';

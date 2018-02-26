@@ -7,9 +7,10 @@ import { SharedModule } from '@shared';
 import { CmpSlnService } from './services';
 import { NewSlnComponent } from './new-sln/new-sln.component';
 import { CmpSolutionComponent } from './cmp-solution.component';
+import { OlMapModule } from '@feature/ol-map/ol-map.module';
 
 @NgModule({
-    imports: [SharedModule, CmpSolutionListRoutingModule],
+    imports: [SharedModule, OlMapModule, CmpSolutionListRoutingModule],
     declarations: [
         CmpSolutionComponent,
         CmpSolutionListComponent,

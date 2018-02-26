@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-const MockTags = ['All', 'Carbon', 'Nature', 'Math', 'Etc'];
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
     selector: 'ogms-list-template',
@@ -7,28 +6,50 @@ const MockTags = ['All', 'Carbon', 'Nature', 'Math', 'Etc'];
     styleUrls: ['./list-template.component.scss']
 })
 export class ListTemplateComponent implements OnInit {
-    public tags = MockTags;
-    public selectedTags = [];
-    searchOptions = [
-        { value: 'OpenGMS', label: 'OpenGMS' },
-        { value: 'ZhongShan', label: 'ZhongShan' },
-        { value: 'Other', label: 'Other' }
-    ];
-    selectedMultipleOption = [this.searchOptions[0]];
+    filters: {
+        q: string,
+        pageSize: number,
+        pageNum: number,
+        [key: string]: any
+    } = {
+        q: '',
+        pageNum: 1,
+        pageSize: 25
+    };
+    @Output() onFiltersChange = new EventEmitter<any>();
 
-    constructor() {}
+    @Input() radioFilters:{
+        key: string,
+        options: {
+            label: string,
+            value: string
+        }[]
+    };
+    @Input() list: any[];
+    // list item template
+    @Input() template: any;
+
+    constructor() { }
 
     ngOnInit() {
-        setTimeout(_ => {
-            this.selectedMultipleOption = [];
-        }, 2000);
     }
 
-    handleChange(checked: boolean, tag: string): void {
-        if (checked) {
-            this.selectedTags.push(tag);
-        } else {
-            this.selectedTags = this.selectedTags.filter(t => t !== tag);
-        }
+    onRadioFiltersChange() {
+
     }
+
+    onSearch() {
+        this.onFiltersChange.emit(this.filters);
+    }
+
+    setPageNum(pageNum) {
+        this.filters.pageNum = pageNum;
+        this.onFiltersChange.emit(this.filters);
+    }
+
+    setPageSize(pageSize) {
+        this.filters.pageSize = pageSize;
+        this.onFiltersChange.emit(this.filters);
+    }
+
 }

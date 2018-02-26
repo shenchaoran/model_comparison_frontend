@@ -1,3 +1,65 @@
-<p>
-  solution-detail works!
-</p>
+<ogms-doc-detail-template>
+    <div class='doc' *ngIf='solution'>
+        <div class='doc-title'>{{solution.meta.name}}</div>
+        <div class='doc-body flex-box-row-nowrap'>
+            <div class='main-content flex-item-3'>
+                <div>
+                    <div class='section-header flex-box-row-nowrap'>
+                        <span class='title'>Basic Information</span>
+                        <span class='placeholder flex-item-1-1-auto'></span>
+                    </div>
+                    <div class='section-body'>
+                        <dl>
+                            <div nz-row>
+                                <dt nz-col [nzSpan]='4'>Description</dt>
+                                <dd nz-col [nzSpan]='8'>{{solution.meta.desc | undefined}}</dd>
+                                <dt nz-col [nzSpan]='4'>Create time</dt>
+                                <dd nz-col [nzSpan]='8'>{{solution.meta.time | date:'yyyy-MM-dd'}}</dd>
+                                <dt nz-col [nzSpan]='4'>Data type</dt>
+                                <dd nz-col [nzSpan]='8'>{{solution.cmpCfg.keynote.dimension | undefined}}</dd>
+                                <dt nz-col [nzSpan]='4'>Author</dt>
+                                <dd nz-col [nzSpan]='8'>{{solution.auth.userName | undefined}}</dd>
+                                <dt nz-col [nzSpan]='4'>Authorization</dt>
+                                <dd nz-col [nzSpan]='8'>{{solution.auth.src | resourceSrc}}</dd>
+                                <dt nz-col [nzSpan]='4'>Comparison type</dt>
+                                <dd nz-col [nzSpan]='8'>{{solution.cmpCfg.keynote.direction==='multi'?'Contrast with each other':'Self contrast'}}</dd>
+                            </div>
+                        </dl>
+                    </div>
+                </div>
+                <div>
+                    <div class='section-header flex-box-row-nowrap'>
+                        <span class='title'>Temporal ranges</span>
+                        <span class='placeholder flex-item-1-1-auto'></span>
+                    </div>
+                    <div class='section-body'>
+                        <dl>
+                            <div nz-row>
+                                <dt nz-col [nzSpan]='8'>Start time</dt>
+                                <dd nz-col [nzSpan]='16'>{{solution.calcuCfg.stdSrc.temporal.start | date:'yyyy-MM-dd'}}</dd>
+                                <dt nz-col [nzSpan]='8'>End time</dt>
+                                <dd nz-col [nzSpan]='16'>{{solution.calcuCfg.stdSrc.temporal.end | date:'yyyy-MM-dd'}}</dd>
+                            </div>
+                        </dl>
+                    </div>
+                </div>
+                <div *ngIf='geojson'>
+                    <div class='section-header flex-box-row-nowrap'>
+                        <span class='title'>Spatial region</span>
+                        <span class='placeholder flex-item-1-1-auto'></span>
+                    </div>
+                    <div class='section-body'>
+                        <div class='embed-map-box'>
+                            <ogms-region-map [geojson]='geojson'></ogms-region-map>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class='side-content flex-item-1'>
+
+            </div>
+        </div>
+    </div>
+</ogms-doc-detail-template>
+
+<ogms-footer></ogms-footer>

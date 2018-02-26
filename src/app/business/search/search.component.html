@@ -1,0 +1,10 @@
+<div class='container'>
+    <div class='columns'>
+        <div class='column flex-item-1'>
+            <ogms-filters *ngIf='categories' [categories]='categories' (onFiltersChange)='onFiltersChange($event)'></ogms-filters>
+        </div>
+        <div class='column flex-item-3'>
+            <ogms-results *ngIf='list' [list]='list'></ogms-results>
+        </div>
+    </div>
+</div>

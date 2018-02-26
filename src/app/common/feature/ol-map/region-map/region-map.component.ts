@@ -11,8 +11,7 @@ import {
     Optional
 } from '@angular/core';
 import * as uuidv1 from 'uuid/v1';
-import { OlMapService, ToolbarService } from '@feature/ol-map/ol-map.module';
-import { GeoJSONService } from '@feature/ol-map/services/geojson.service'; 
+import { OlMapService, ToolbarService, GeoJSONService } from '../services';
 import { Observable } from 'rxjs';
 // declare var ol: any;
 import * as ol from 'openlayers';

@@ -11,20 +11,22 @@ export class CmpSlnService implements Resolve<any> {
     ) {}
 
     resolve() {
-        return this.findAll()
+        return this.findAll({})
             .toPromise()
             .then(response => {
                 if(response.error) {
                     return Promise.reject(response.error);
                 }
                 else {
-                    return Promise.resolve(response.data.docs);
+                    return Promise.resolve(response.data);
                 }
             });
     }
 
-    findAll(): Observable<any> {
-        return this.http.get('/comparison/solutions');
+    findAll(query): Observable<any> {
+        return this.http.get('/comparison/solutions', {
+            params: query
+        });
     }
 
     insertSln(sln: any): Observable<any> {

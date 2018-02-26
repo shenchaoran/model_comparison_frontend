@@ -7,7 +7,7 @@
         <!-- <nz-step [nzTitle]="'Configure Comparison Data'" [nzDescription]=''></nz-step> -->
     </nz-steps>
 
-    <div class="steps-content flex-box-col-nowrap flex-item-1-1-auto debug-border debug-background scroll-y">
+    <div class="steps-content flex-box-col-nowrap flex-item-1-1-auto debug-border debug-background">
         <div class='' [hidden]='currentStep !== 0'>
             <form nz-form [nzType]="'horizontal'">
                 <h4 style='margin: 10px 0;'>Task Basic Information:</h4>
@@ -143,10 +143,7 @@
                                     </ng-container>
 
                                     <ng-container *ngIf='dataSrc._value === "Uploading"'>
-                                        <ba-file-uploader id='uploader-{{dataRefer.eventName}}' nz-col [nzSpan]='12' 
-                                            [fileUploaderOptions]="fileUploaderOptions" 
-                                            (onFileUploading)="_onFileUpload($event, cmpObj.id, dataRefer.msId, dataRefer.eventName)" 
-                                            (onFileUploadCompleted)='_onFileUploadCompleted($event, cmpObj.id, dataRefer.msId, dataRefer.eventName)'
+                                        <ba-file-uploader id='uploader-{{dataRefer.eventName}}' nz-col [nzSpan]='12' [fileUploaderOptions]="fileUploaderOptions" (onFileUploading)="_onFileUpload($event, cmpObj.id, dataRefer.msId, dataRefer.eventName)" (onFileUploadCompleted)='_onFileUploadCompleted($event, cmpObj.id, dataRefer.msId, dataRefer.eventName)'
                                             (onClear)='_onClearUploaded(cmpObj.id, dataRefer.msId, dataRefer.eventName)'></ba-file-uploader>
                                     </ng-container>
                                 </div>

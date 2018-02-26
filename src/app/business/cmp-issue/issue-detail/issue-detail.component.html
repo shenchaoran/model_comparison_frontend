@@ -1,3 +1,61 @@
-<p>
-  issue-detail works!
-</p>
+<ogms-doc-detail-template>
+    <div class='doc' *ngIf='issue'>
+        <div class='doc-title'>{{issue.meta.name}}</div>
+        <div class='doc-body flex-box-row-nowrap'>
+            <div class='main-content flex-item-3'>
+                <div>
+                    <div class='section-header flex-box-row-nowrap'>
+                        <span class='title'>Basic Information</span>
+                        <span class='placeholder flex-item-1-1-auto'></span>
+                    </div>
+                    <div class='section-body'>
+                        <dl>
+                            <div nz-row>
+                                <dt nz-col [nzSpan]='8'>Create time</dt>
+                                <dd nz-col [nzSpan]='16'>{{issue.meta.time | date:'yyyy-MM-dd'}}</dd>
+                                <dt nz-col [nzSpan]='8'>Author</dt>
+                                <dd nz-col [nzSpan]='16'>{{issue.auth.userName | undefined}}</dd>
+                                <dt nz-col [nzSpan]='8'>Authorization</dt>
+                                <dd nz-col [nzSpan]='16'>{{issue.auth.src | resourceSrc}}</dd>
+                                <dt nz-col [nzSpan]='8'>Description</dt>
+                                <dd nz-col [nzSpan]='16'>{{issue.meta.desc | undefined}}</dd>
+                            </div>
+                        </dl>
+                    </div>
+                </div>
+                <div>
+                    <div class='section-header flex-box-row-nowrap'>
+                        <span class='title'>Temporal ranges</span>
+                        <span class='placeholder flex-item-1-1-auto'></span>
+                    </div>
+                    <div class='section-body'>
+                        <dl>
+                            <div nz-row>
+                                <dt nz-col [nzSpan]='8'>Start time</dt>
+                                <dd nz-col [nzSpan]='16'>{{issue.temporal.start | date:'yyyy-MM-dd'}}</dd>
+                                <dt nz-col [nzSpan]='8'>End time</dt>
+                                <dd nz-col [nzSpan]='16'>{{issue.temporal.end | date:'yyyy-MM-dd'}}</dd>
+                            </div>
+                        </dl>
+                    </div>
+                </div>
+                <div>
+                    <div class='section-header flex-box-row-nowrap'>
+                        <span class='title'>Spatial region</span>
+                        <span class='placeholder flex-item-1-1-auto'></span>
+                    </div>
+                    <div class='section-body'>
+                        <div class='embed-map-box'>
+                            <ogms-region-map [geojson]='issue.spatial.geojson'></ogms-region-map>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class='side-content flex-item-1'>
+                <!-- TODO -->
+            </div>
+        </div>
+    </div>
+</ogms-doc-detail-template>
+
+<ogms-footer></ogms-footer>

@@ -10,21 +10,23 @@ export class CmpIssueService implements Resolve<any> {
     constructor(private http: _HttpClient) {}
 
     resolve(): Promise<any> {
-        return this.findAll()
+        return this.findAll({})
             .toPromise()
             .then(response => {
                 if(response.error) {
                     return Promise.reject(response.error);
                 }
                 else {
-                    return Promise.resolve(response.data.docs);
+                    return Promise.resolve(response.data);
                 }
             })
             .catch(Promise.reject)
     }
 
-    findAll(): Observable<any> {
-        return this.http.get('/comparison/issues');
+    findAll(query): Observable<any> {
+        return this.http.get('/comparison/issues', {
+            params: query
+        });
     }
 
     findOne(id): Observable<any> {

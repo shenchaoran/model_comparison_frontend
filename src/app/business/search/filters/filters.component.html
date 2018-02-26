@@ -1,0 +1,36 @@
+<!-- 大类别 -->
+<div class='filter'>
+    <ul>
+        <li *ngFor='let category of categories'>
+            <a class='flex-box-row-nowrap' (click)='changeFilter("type", category)'>
+                <span *ngIf='options["type"] === category.name' class='selected-tip'></span>
+                <span [class.selected]='options["type"] === category.name'>{{category.name}}</span>
+                <span class='flex-item-1-1-auto'></span>
+                <span *ngIf='category.num !== ""' class='count-tag'>
+                    {{category.num}}
+                </span>
+            </a>
+        </li>
+    </ul>
+</div>
+
+<!-- 子类别 -->
+<div *ngIf='selected'>
+    <div *ngFor='let child of selected.children' class='sub-filter'>
+        <div class='sub-title'>{{child.label}}</div>
+        <ul>
+            <li *ngFor='let item of child.values' (click)='changeFilter(child.key, item)'>
+                <a class='flex-box-row-nowrap' [class.selected]='options[child.key] === item.name'>
+                    <span>{{item.name}}</span>
+                    <span class='flex-item-auto-fill'></span>
+                    <span *ngIf='options[child.key] === item.name'>
+                        <i class="fa fa-times"></i>
+                    </span>
+                    <span *ngIf='options[child.key] !== item.name && item.num !== ""' class='count-tag'>
+                        {{item.num}}
+                    </span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

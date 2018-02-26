@@ -23,6 +23,12 @@
             "@common/*": [
                 "app/common/*"
             ],
+            "@ol-map": [
+                "app/common/feature/ol-map"
+            ],
+            "@ol-map/*": [
+                "app/common/feature/ol-map/*"
+            ],
             "@shared": [
                 "app/common/shared"
             ],

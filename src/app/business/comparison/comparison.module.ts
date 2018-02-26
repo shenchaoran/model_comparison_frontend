@@ -31,7 +31,6 @@ import {
 } from '@feature/ol-map/ol-map.module';
 import { TaskDetailComponent } from './task-detail/task-detail.component';
 import { FormParticipantsComponent } from './form-participants/form-participants.component';
-import { RegionMapComponent } from './region-map/region-map.component';
 import { SlnDetailComponent } from './sln-detail/sln-detail.component';
 import { CmpResultsComponent } from './cmp-results/cmp-results.component';
 import { VisualizationModule } from '../visualization/visualization.module';
@@ -98,7 +97,6 @@ const SERVICES = [
     CmpTaskSearchComponent,
     CmpIssueListComponent,
     IssueDetailComponent,
-    RegionMapComponent,
   ],
   providers: [...SERVICES]
 })

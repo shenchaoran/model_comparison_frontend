@@ -1,72 +1,30 @@
 <div class='container'>
-    <div class='div-banner'>
-        <div nz-row [nzType]="'flex'" [nzJustify]="'space-around'" [nzAlign]="'middle'" class="main">
-            <div nz-col [nzSpan]="12">
-                <div class="inline">
-                    <nz-avatar [nzShape]="'square'" [nzSize]="'large'" [nzIcon]="'chrome'" class="avatar"></nz-avatar>
-                </div>
-                <div class="inline title">
-                    <div class="text-first">Comparison Tasks</div>
-                    <div class="text-second">...</div>
-                </div>
-            </div>
-            <div nz-col [nzSpan]="12">
-                <div nz-row [nzGutter]="8">
-                    <div nz-col [nzSpan]="16">
-                        <nz-input [nzPlaceHolder]="'input task name'" [(ngModel)]="_value" [nzSize]="'large'" class="search"></nz-input>
-                    </div>
-                    <div nz-col [nzSpan]="4">
-                        <button nz-button [nzSize]="large" [nzType]="'primary'">
-                            <i class="anticon anticon-search"></i><span>Search</span>
-                        </button>
-                    </div>
-                    <div nz-col [nzSpan]="4">
-                        <button nz-button [nzSize]="large" [nzType]="'primary'">
-                            <span >NewSolution</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class='flex-box-row-nowrap'>
+        <nz-radio-group *ngIf='radioFilters && radioFilters.options && radioFilters.options.length' [ngModel]='radioFilters.options[0].value' (ngModelChange)='onRadioFiltersChange()'>
+            <label nz-radio-button *ngFor='let item of radioFilters.options' [nzValue]='item.value'><span>{{item.label}}</span></label>
+        </nz-radio-group>
+        <span class='flex-item-1-1-auto'></span>
+        <nz-input [nzType]="'search'" [nzSize]='"large"' [nzPlaceHolder]="'Search'" [(ngModel)]="filters.q" style="width: 400px;" (nzOnSearch)="onSearch()"></nz-input>
     </div>
-    <div class='div-margin'>
-        <div class='div-search div-card'>
-            <div class="main">
-                <nz-card [nzBordered]="false">
-                    <ng-template #body>
-                        <div class="font row border">
-                            <span class="tag-head">Categories: </span>
-                            <nz-checkable-tag *ngFor="let tag of tags" [nzChecked]="selectedTags.indexOf(tag) > -1" (nzChange)="handleChange($event, tag)">
-                                <span class="font">{{tag}}</span>
-                            </nz-checkable-tag>
-                        </div>
-                        <div class="font row border">
-                            <span class="tag-head">Author: </span>
-                            <nz-select style="width: 400px;" nzTags [nzPlaceHolder]="'请选择人员'" [(ngModel)]="selectedMultipleOption" [nzNotFoundContent]="'无法找到'" nzShowSearch>
-                                <nz-option *ngFor="let option of searchOptions" [nzLabel]="option.label" [nzValue]="option">
-                                </nz-option>
-                            </nz-select>
-                        </div>
-                        <div class="font row">
-                            <span class="tag-head">Order: </span>
-                            <nz-button-group>
-                                <button nz-button [nzType]="'default'" class="order">
-                                    <span>Default</span>
-                                  </button>
-                                <button nz-button [nzType]="'default'" class="order">
-                                    <span>Hot</span>
-                                  </button>
-                                <button nz-button [nzType]="'default'" class="order">
-                                    <span>Recommand</span>
-                                  </button>
-                            </nz-button-group>
-                        </div>
-                    </ng-template>
-                </nz-card>
-            </div>
+    <div class='list-box'>
+        <div class='flex-box-row-nowrap list-header'>
+            <span>{{list.length}} items found</span>
+            <span class='flex-item-1-1-auto'></span>
+            <span></span>
         </div>
-        <div class='div-list-detail div-card'>
-            <ng-content></ng-content>
-        </div>
+        <ng-content></ng-content>
+        <ng-container *ngIf='template && list'>
+            <ng-container *ngFor='let item of list'>
+                <div class='list-item'>
+                    <ng-template [ngTemplateOutlet]='template' [ngTemplateOutletContext]='{item: item}'></ng-template>
+                </div>
+            </ng-container>
+        </ng-container>
+
+    </div>
+    <div class='flex-box-row-nowrap'>
+        <span class='flex-item-1-1-auto'></span>
+        <nz-pagination *ngIf='list.length> 25' [nzPageIndex]="filters.pageNum" (nzPageIndexChange)='setPageNum($event)' [nzPageSize]='filters.pageSize' (nzPageSizeChange)='setPageSize($event)' [nzTotal]="list.length"></nz-pagination>
+        <span class='flex-item-1-1-auto'></span>
     </div>
 </div>

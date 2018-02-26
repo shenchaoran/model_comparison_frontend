@@ -10,12 +10,17 @@ export class HeaderMenuLayoutComponent implements OnInit {
     // TODO optional show menu header
     showMenu: boolean = true;
 
+    q: string;
+
     constructor(private route: ActivatedRoute) {
         this.showMenu = true;
     }
 
     ngOnInit() {
-
         postal.channel('MENU_CHANNEL').publish('menu.update');
+    }
+
+    search() {
+        postal.channel('SEARCH_CHANNEL').publish('set.q', this.q);
     }
 }
