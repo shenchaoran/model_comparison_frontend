@@ -5,7 +5,10 @@
                 <img routerLink='/home' src="assets/img/app/logo-deep.png" height="35" />
             </div>
             <div id='search'>
-                <input type='input' [(ngModel)]='q' placeholder='Search' (keypress)='search()'>
+                <form>
+                    <input type='input' name='q' [(ngModel)]='q' placeholder='Search'>
+                    <button hidden type='submit' (click)='search()'></button>
+                </form>
             </div>
             <div id="menu">
                 <ogms-baHeaderMenu [type]="'HEADER_MENUS'"></ogms-baHeaderMenu>

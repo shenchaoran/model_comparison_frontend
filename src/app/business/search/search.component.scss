@@ -2,3 +2,9 @@
     width: 980px;
     margin: 24px auto 0;
 }
+
+@media (max-width: 1199px) {
+    .nav-body {
+        width: 980px;
+    }
+}

@@ -1,9 +1,15 @@
 <ng-template #issueTemplate let-issue='item'>
     <section class='list-item'>
-        <div class='item-header'>
+        <div class='item-header flex-box-row-nowrap'>
             <a [routerLink]='issue._id'>
-                                {{issue.auth.userName}}/{{issue.meta.name}}
-                            </a>
+                {{issue.auth.userName}}/{{issue.meta.name}}
+            </a>
+            <span class='flex-item-1-1-auto'></span>
+            <span>
+                <i class="anticon anticon-star"></i>
+                {{issue.solutionIds? issue.solutionIds.length: 0}}
+            </span>
+            <span style='width: 20px;'></span>
         </div>
         <div class='item-body'>
             <div class='desc'>{{issue.meta.desc}}</div>

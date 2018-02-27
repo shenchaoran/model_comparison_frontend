@@ -55,7 +55,9 @@ const CITYFUN_SERVICES = [
 
 @NgModule({
     declarations: [],
-    imports: [],
+    imports: [
+        
+    ],
     providers: [
         TranslatorService,
         ...CITYFUN_SERVICES,

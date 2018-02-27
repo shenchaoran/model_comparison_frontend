@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { AuthGuard } from '../common/core/services/auth.guard';
+import { SearchComponent } from './search/search.component';
+import { SearchModule } from './search/search.module';
 
 const routes: Routes = [
     {
@@ -12,10 +14,6 @@ const routes: Routes = [
     {
         path: 'home',
         loadChildren: './home/home.module#HomeModule'
-    },
-    {
-        path: 'search',
-        loadChildren: './search/search.module#SearchModule'
     },
     {
         path: 'resources',
@@ -53,6 +51,10 @@ const routes: Routes = [
         loadChildren: './comparison/comparison.module#ComparisonModule'
     },
     {
+        path: 'search',
+        loadChildren: './search/search.module#SearchModule'
+    },
+    {
         path: 'help',
         loadChildren: './help/help.module#HelpModule'
     },
@@ -67,7 +69,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    imports: [RouterModule.forChild(routes)],
+    imports: [SearchModule, RouterModule.forChild(routes)],
     exports: [RouterModule]
 })
 export class WebNJGISRoutingModule {}
