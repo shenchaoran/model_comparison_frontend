@@ -1,0 +1,22 @@
+.cmpObj {
+    padding-left: 20px;
+    margin-top: 15px;
+    h3,
+    h4 {
+        font-weight: 400;
+    }
+    >section {
+        padding-left: 20px;
+    }
+    .desc {
+        font-size: 16px;
+        color: #586069;
+        word-wrap: break-word;
+        line-height: 1.5;
+        margin-bottom: 20px;
+    }
+}
+
+.cmpObj-config:not(:first-child) {
+    margin-top: 15px;
+}

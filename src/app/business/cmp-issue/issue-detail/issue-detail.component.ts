@@ -27,7 +27,7 @@ export class IssueDetailComponent implements OnInit {
                             this._notice.warning('Warning:', 'Get issues failed!');
                         }
                         else {
-                            this.issue = response.data.doc;
+                            this.issue = response.data;
                         }
                     });
             });

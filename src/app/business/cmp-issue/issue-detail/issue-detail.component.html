@@ -1,15 +1,15 @@
 <ogms-doc-detail-template>
-    <div class='doc' *ngIf='issue'>
+    <section class='doc' *ngIf='issue'>
         <div class='doc-title'>{{issue.meta.name}}</div>
         <div class='doc-body flex-box-row-nowrap'>
-            <div class='main-content flex-item-3'>
-                <div>
+            <article class='main-content flex-item-3'>
+                <section>
                     <div class='section-header flex-box-row-nowrap'>
                         <span class='title'>Basic Information</span>
                         <span class='placeholder flex-item-1-1-auto'></span>
                     </div>
                     <div class='section-body'>
-                        <dl>
+                        <dl class='table-info'>
                             <div nz-row>
                                 <dt nz-col [nzSpan]='8'>Create time</dt>
                                 <dd nz-col [nzSpan]='16'>{{issue.meta.time | date:'yyyy-MM-dd'}}</dd>
@@ -22,24 +22,24 @@
                             </div>
                         </dl>
                     </div>
-                </div>
-                <div>
+                </section>
+                <section>
                     <div class='section-header flex-box-row-nowrap'>
                         <span class='title'>Temporal ranges</span>
                         <span class='placeholder flex-item-1-1-auto'></span>
                     </div>
                     <div class='section-body'>
-                        <dl>
+                        <dl class='table-info'>
                             <div nz-row>
-                                <dt nz-col [nzSpan]='8'>Start time</dt>
-                                <dd nz-col [nzSpan]='16'>{{issue.temporal.start | date:'yyyy-MM-dd'}}</dd>
-                                <dt nz-col [nzSpan]='8'>End time</dt>
-                                <dd nz-col [nzSpan]='16'>{{issue.temporal.end | date:'yyyy-MM-dd'}}</dd>
+                                <dt nz-col [nzSpan]='10'>Start time</dt>
+                                <dd nz-col [nzSpan]='14'>{{issue.temporal.start | date:'yyyy-MM-dd'}}</dd>
+                                <dt nz-col [nzSpan]='10'>End time</dt>
+                                <dd nz-col [nzSpan]='14'>{{issue.temporal.end | date:'yyyy-MM-dd'}}</dd>
                             </div>
                         </dl>
                     </div>
-                </div>
-                <div>
+                </section>
+                <section>
                     <div class='section-header flex-box-row-nowrap'>
                         <span class='title'>Spatial region</span>
                         <span class='placeholder flex-item-1-1-auto'></span>
@@ -49,13 +49,30 @@
                             <ogms-region-map [geojson]='issue.spatial.geojson'></ogms-region-map>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class='side-content flex-item-1'>
-                <!-- TODO -->
-            </div>
+                </section>
+            </article>
+            <aside class='sider-content flex-item-1'>
+                <section class='sider-item'>
+                    <div class='sider-item-title'>
+                        <span>Solutions</span>
+                    </div>
+                    <div class='sider-item-body'>
+                        <ul>
+                            <li *ngFor='let sln of issue.solutions'>
+                                <a [routerLink]='["../../solutions", sln._id]'>{{sln.meta.name}}</a>
+                                <!-- TODO: length pipe -->
+                                <div>{{sln.meta.desc}}</div>
+                                <div>
+                                    <span *ngFor='let ms of sln.mss' [routerLink]='["../../resources/geo-models", ms.msId]' class='topic model-topic'>{{ms.msName}}</span>
+                                </div>
+                                <div>{{sln.meta.time | date: 'yyyy-MM-dd'}}</div>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+            </aside>
         </div>
-    </div>
+    </section>
 </ogms-doc-detail-template>
 
 <ogms-footer></ogms-footer>

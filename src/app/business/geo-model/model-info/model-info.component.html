@@ -1,92 +1,92 @@
 <div class='div-loading' *ngIf='_isLoading'>
-  <nz-spin [nzSpinning]='_isLoading' [nzSize]="'large'"></nz-spin>
+    <nz-spin [nzSpinning]='_isLoading' [nzSize]="'large'"></nz-spin>
 </div>
 <div id='root-container' *ngIf='!_isLoading'>
-  <div id='scroll-container' #cmpRst (scroll)='onScroll($event)'>
-    <div class='bg'>
-      <div></div>
-    </div>
-    <div class='content flex-box-col-nowrap'>
-      <div>
-        <div id='article-title'>
-          <h1>{{model.modelName}}</h1>
+    <div id='scroll-container' #cmpRst (scroll)='onScroll($event)'>
+        <div class='bg'>
+            <div></div>
         </div>
-      </div>
-      <div nz-row>
-        <div nz-col [nzSpan]='20' class="main-content">
-          <div id='cmp-rst-basic'>
-            <div class='section-header'>
-              <h2>
-                <span>Basic Information</span>
-              </h2>
-            </div>
-            <div class='section-body'>
-              <dl>
-                <div nz-row>
-                  <dt nz-col [nzSpan]='4'>Full Name</dt>
-                  <dd nz-col [nzSpan]='8'>Biome-BGC</dd>
-                  <dt nz-col [nzSpan]='4'>Organization</dt>
-                  <dd nz-col [nzSpan]='8'>OpenGMS</dd>
-                  <dt nz-col [nzSpan]='4'>Type</dt>
-                  <dd nz-col [nzSpan]='8'>Carbon Globle</dd>
-                  <dt nz-col [nzSpan]='4'>Create Time</dt>
-                  <dd nz-col [nzSpan]='8'>2018-01-01</dd>
-                  <dt nz-col [nzSpan]='4'>Description</dt>
-                  <dd nz-col [nzSpan]='20'>{{model.modelDesc}}</dd>
+        <div class='content flex-box-col-nowrap'>
+            <div>
+                <div id='article-title'>
+                    <h1>{{model.modelName}}</h1>
                 </div>
-              </dl>
             </div>
-          </div>
-          <div id='model-feature'>
-            <div class='section-header'>
-              <h2>
-                <span>IO Feature Info</span>
-              </h2>
-            </div>
-            <div class="section-body">
-              <div style="margin-bottom: 16px;">
-                <button nz-button [disabled]="_disabledButton" [nzType]="'primary'" [nzLoading]="_operating" (click)="_operateData()">Operating</button>
-                <span style="margin-left: 8px;" *ngIf="_checkedNumber">Selected {{_checkedNumber}} items</span>
-              </div>
-              <nz-table #nzTable [nzDataSource]="_dataSet" [nzPageSize]="10" (nzDataChange)="_displayDataChange($event)" (nzPageIndexChange)="_refreshStatus()" (nzPageSizeChange)="_refreshStatus()">
-                <thead nz-thead>
-                  <tr>
-                    <th nz-th nzCheckbox>
-                      <label nz-checkbox [(ngModel)]="_allChecked" [nzIndeterminate]="_indeterminate" (ngModelChange)="_checkAll($event)">
+            <div nz-row>
+                <div nz-col [nzSpan]='20' class="main-content">
+                    <div id='cmp-rst-basic'>
+                        <div class='section-header'>
+                            <h2>
+                                <span>Basic Information</span>
+                            </h2>
+                        </div>
+                        <div class='section-body'>
+                            <dl>
+                                <div nz-row>
+                                    <dt nz-col [nzSpan]='4'>Full Name</dt>
+                                    <dd nz-col [nzSpan]='8'>Biome-BGC</dd>
+                                    <dt nz-col [nzSpan]='4'>Organization</dt>
+                                    <dd nz-col [nzSpan]='8'>OpenGMS</dd>
+                                    <dt nz-col [nzSpan]='4'>Type</dt>
+                                    <dd nz-col [nzSpan]='8'>Carbon Globle</dd>
+                                    <dt nz-col [nzSpan]='4'>Create Time</dt>
+                                    <dd nz-col [nzSpan]='8'>2018-01-01</dd>
+                                    <dt nz-col [nzSpan]='4'>Description</dt>
+                                    <dd nz-col [nzSpan]='20'>{{model.modelDesc}}</dd>
+                                </div>
+                            </dl>
+                        </div>
+                    </div>
+                    <div id='model-feature'>
+                        <div class='section-header'>
+                            <h2>
+                                <span>IO Feature Info</span>
+                            </h2>
+                        </div>
+                        <div class="section-body">
+                            <div style="margin-bottom: 16px;">
+                                <button nz-button [disabled]="_disabledButton" [nzType]="'primary'" [nzLoading]="_operating" (click)="_operateData()">Operating</button>
+                                <span style="margin-left: 8px;" *ngIf="_checkedNumber">Selected {{_checkedNumber}} items</span>
+                            </div>
+                            <nz-table #nzTable [nzDataSource]="_dataSet" [nzPageSize]="10" (nzDataChange)="_displayDataChange($event)" (nzPageIndexChange)="_refreshStatus()" (nzPageSizeChange)="_refreshStatus()">
+                                <thead nz-thead>
+                                    <tr>
+                                        <th nz-th nzCheckbox>
+                                            <label nz-checkbox [(ngModel)]="_allChecked" [nzIndeterminate]="_indeterminate" (ngModelChange)="_checkAll($event)">
                       </label>
-                    </th>
-                    <th nz-th>
-                      <span>Name</span>
-                    </th>
-                    <th nz-th>
-                      <span>Unit</span>
-                    </th>
-                    <th nz-th>
-                      <span>Description</span>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody nz-tbody>
-                  <tr nz-tbody-tr *ngFor="let data of nzTable.data">
-                    <td nz-td nzCheckbox>
-                      <label nz-checkbox [(ngModel)]="data.checked" (ngModelChange)="_refreshStatus($event)">
+                                        </th>
+                                        <th nz-th>
+                                            <span>Name</span>
+                                        </th>
+                                        <th nz-th>
+                                            <span>Unit</span>
+                                        </th>
+                                        <th nz-th>
+                                            <span>Description</span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody nz-tbody>
+                                    <tr nz-tbody-tr *ngFor="let data of nzTable.data">
+                                        <td nz-td nzCheckbox>
+                                            <label nz-checkbox [(ngModel)]="data.checked" (ngModelChange)="_refreshStatus($event)">
                       </label>
-                    </td>
-                    <td nz-td>{{data.name}}</td>
-                    <td nz-td>{{data.unit}}</td>
-                    <td nz-td>{{data.desc}}</td>
-                  </tr>
-                </tbody>
-              </nz-table>
+                                        </td>
+                                        <td nz-td>{{data.name}}</td>
+                                        <td nz-td>{{data.unit}}</td>
+                                        <td nz-td>{{data.desc}}</td>
+                                    </tr>
+                                </tbody>
+                            </nz-table>
+                        </div>
+                    </div>
+                </div>
+                <div nz-col [nzSpan]='4' class="sider-content">
+
+                </div>
             </div>
-          </div>
-        </div>
-        <div nz-col [nzSpan]='4' class="side-content">
 
         </div>
-      </div>
-
     </div>
-  </div>
 
 </div>

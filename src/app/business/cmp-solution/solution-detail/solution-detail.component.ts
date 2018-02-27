@@ -29,8 +29,8 @@ export class SolutionDetailComponent implements OnInit {
                             this._notice.warning('Warning:', 'Get solution failed!');
                         }
                         else {
-                            this.solution = response.data.doc;
-                            this.geojson = _.get(this.solution, 'solution.calcuCfg.stdSrc.spatial.geojson')
+                            this.solution = response.data;
+                            this.geojson = _.get(this.solution, 'issue.spatial.geojson')
                         }
                     });
             });

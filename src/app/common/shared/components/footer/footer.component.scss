@@ -10,6 +10,10 @@
     }
 }
 
+* {
+    font-size: 12px;
+}
+
 .footer {
     margin: 0 auto;
 }
@@ -38,5 +42,10 @@
         height: 25px;
         line-height: 25px;
         font-size: 12px !important;
+    }
+    .footer-center {
+        img {
+            cursor: pointer;
+        }
     }
 }

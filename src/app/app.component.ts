@@ -14,7 +14,7 @@ import { layoutPaths } from './common/shared/theme.constants';
  * Top Level Component
  */
 @Component({
-  selector: 'njgis',
+  selector: 'ogms-app',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })

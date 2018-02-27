@@ -1,5 +1,5 @@
 <ng-template #slnTemplate let-sln='item'>
-    <div class='list-item'>
+    <section class='list-item'>
         <div class='item-header'>
             <a [routerLink]='sln._id'>
                             {{sln.auth.userName}}/{{sln.meta.name}}
@@ -8,11 +8,11 @@
         <div class='item-body'>
             <div class='desc'>{{sln.meta.desc}}</div>
             <div>
-                <span [routerLink]='["../resources/geo-models", sln._id]' *ngFor='let ms of sln.cmpCfg.ms' class='topic'>{{ms.msName}}</span>
+                <span *ngFor='let ms of sln.cmpCfg.ms' [routerLink]='["../resources/geo-models", ms.msId]' class='topic model-topic'>{{ms.msName}}</span>
             </div>
         </div>
         <div class='item-footer'>{{sln.meta.time | date: 'yyyy-MM-dd'}}</div>
-    </div>
+    </section>
 </ng-template>
 
 <ogms-list-template [template]='slnTemplate' [list]='solutions' [radioFilters]='{}' (onFiltersChange)='search($event)'>

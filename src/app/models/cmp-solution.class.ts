@@ -17,8 +17,8 @@ export class CmpSolution {
         userName: string,
         src: ResourceSrc
     };
+    issueId: string;
     cmpCfg: {
-        issueId: string,
         ms: {
             msId: string,
             msName: string,
@@ -50,8 +50,8 @@ export class CmpSolution {
             desc: '',
             time: undefined
         };
+        this.issueId = undefined;
         this.cmpCfg = {
-            issueId: '',
             ms: [],
             cmpObjs: [],
             keynote: {

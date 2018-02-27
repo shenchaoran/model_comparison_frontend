@@ -1,9 +1,9 @@
 <ng-template #issueTemplate let-issue='item'>
-    <div class='list-item'>
+    <section class='list-item'>
         <div class='item-header'>
             <a [routerLink]='issue._id'>
-                            {{issue.auth.userName}}/{{issue.meta.name}}
-                        </a>
+                                {{issue.auth.userName}}/{{issue.meta.name}}
+                            </a>
         </div>
         <div class='item-body'>
             <div class='desc'>{{issue.meta.desc}}</div>
@@ -13,7 +13,7 @@
             </div>
         </div>
         <div class='item-footer'>{{issue.meta.time | date: 'yyyy-MM-dd'}}</div>
-    </div>
+    </section>
 </ng-template>
 
 <ogms-list-template [template]='issueTemplate' [list]='issues' [radioFilters]='{}' (onFiltersChange)='search($event)'>
