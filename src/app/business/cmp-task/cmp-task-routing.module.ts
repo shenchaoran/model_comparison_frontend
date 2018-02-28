@@ -17,6 +17,9 @@ const routes: Routes = [
                 component: CmpTaskListComponent,
                 resolve: {
                     tasks: CmpTaskService
+                },
+                data: {
+                    title: 'Comparison Tasks'
                 }
             }, 
             {

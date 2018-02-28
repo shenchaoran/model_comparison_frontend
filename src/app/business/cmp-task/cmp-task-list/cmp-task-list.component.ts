@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { DynamicTitleService } from '@core/services/dynamic-title.service';
 
 @Component({
     selector: 'ogms-cmp-task-list',
@@ -9,7 +10,10 @@ import { ActivatedRoute } from '@angular/router';
 export class CmpTaskListComponent implements OnInit {
     tasks: any[];
 
-    constructor(private route: ActivatedRoute) {}
+    constructor(
+        private route: ActivatedRoute,
+        private title: DynamicTitleService
+    ) {}
 
     ngOnInit() {
         this.route.data.subscribe(resolveData => {

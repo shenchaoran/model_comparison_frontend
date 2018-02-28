@@ -22,7 +22,10 @@ const routes: Routes = [
                 children: [
                     {
                         path: '',
-                        component: ModelsComponent
+                        component: ModelsComponent,
+                        data: {
+                            title: 'Models'
+                        }
                     },
                     {
                         path: ':id',

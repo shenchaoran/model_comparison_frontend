@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CmpSlnService } from '../services';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { NzNotificationService, NzModalService } from 'ng-zorro-antd';
+import { DynamicTitleService } from '@core/services/dynamic-title.service';
 
 @Component({
     selector: 'ogms-solution-detail',
@@ -16,7 +17,8 @@ export class SolutionDetailComponent implements OnInit {
     constructor(
         private service: CmpSlnService,
         private route: ActivatedRoute,
-        private _notice: NzNotificationService
+        private _notice: NzNotificationService,
+        private title: DynamicTitleService
     ) { }
 
     ngOnInit() {
@@ -31,6 +33,7 @@ export class SolutionDetailComponent implements OnInit {
                         else {
                             this.solution = response.data;
                             this.geojson = _.get(this.solution, 'issue.spatial.geojson')
+                            this.title.setTitle(this.solution.meta.name);
                         }
                     });
             });

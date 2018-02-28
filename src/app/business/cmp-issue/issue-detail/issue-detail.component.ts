@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CmpIssueService } from '../services';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { NzNotificationService, NzModalService } from 'ng-zorro-antd';
+import { DynamicTitleService } from '@core/services/dynamic-title.service';
 
 @Component({
     selector: 'ogms-issue-detail',
@@ -14,7 +15,8 @@ export class IssueDetailComponent implements OnInit {
     constructor(
         private service: CmpIssueService,
         private route: ActivatedRoute,
-        private _notice: NzNotificationService
+        private _notice: NzNotificationService,
+        private title: DynamicTitleService
     ) { }
 
     ngOnInit() {
@@ -28,6 +30,7 @@ export class IssueDetailComponent implements OnInit {
                         }
                         else {
                             this.issue = response.data;
+                            this.title.setTitle(this.issue.meta.name);
                         }
                     });
             });

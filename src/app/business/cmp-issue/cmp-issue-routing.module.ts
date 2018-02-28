@@ -22,6 +22,9 @@ const routes: Routes = [
                         component: CmpIssueListComponent,
                         resolve: {
                             issues: CmpIssueService
+                        },
+                        data: {
+                            title: 'Comparison Issues'
                         }
                     }, 
                     {

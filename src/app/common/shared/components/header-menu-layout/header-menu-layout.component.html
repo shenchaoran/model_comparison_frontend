@@ -5,8 +5,8 @@
                 <img routerLink='/home' src="assets/img/app/logo-deep.png" height="35" />
             </div>
             <div id='search'>
-                <form>
-                    <input type='input' name='q' spellcheck="false" [(ngModel)]='q' placeholder='Search'>
+                <form autocomplete="on">
+                    <input type='input' name='q' spellcheck="false" [(ngModel)]='q' placeholder='Search' autocomplete="on">
                     <button hidden type='submit' (click)='search()'></button>
                 </form>
             </div>

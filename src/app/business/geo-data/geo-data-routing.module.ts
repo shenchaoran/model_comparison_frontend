@@ -21,7 +21,10 @@ const routes: Routes = [
                 children: [
                     {
                         path: '',
-                        component: DatasComponent
+                        component: DatasComponent,
+                        data: {
+                            title: 'Data'
+                        }
                     },
                     {
                         path: 'datainfo',

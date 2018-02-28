@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CmpSolutionListComponent } from './cmp-solution-list/cmp-solution-list.component';
 import { SolutionDetailComponent } from './solution-detail/solution-detail.component';
-import { CmpSolutionListRoutingModule } from './routing.module';
+import { CmpSolutionListRoutingModule } from './cmp-solution-routing.module';
 import { SharedModule } from '@shared';
 import { CmpSlnService } from './services';
 import { NewSlnComponent } from './new-sln/new-sln.component';

@@ -22,6 +22,9 @@ const routes: Routes = [
                         component: CmpSolutionListComponent,
                         resolve: {
                             solutions: CmpSlnService
+                        },
+                        data: {
+                            title: 'Comparison Solutions'
                         }
                     },
                     {

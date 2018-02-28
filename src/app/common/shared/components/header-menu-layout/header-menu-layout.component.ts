@@ -19,9 +19,7 @@ export class HeaderMenuLayoutComponent implements OnInit, OnDestroy {
         this.showMenu = true;
     }
 
-    ngOnDestroy() {
-        console.log('destroy');
-    }
+    ngOnDestroy() {}
 
     ngOnInit() {
         postal.channel('MENU_CHANNEL').publish('menu.update');
