@@ -26,6 +26,7 @@ export class ListTemplateComponent implements OnInit {
         }[]
     };
     @Input() list: any[];
+    @Input() count: number;
     // list item template
     @Input() template: any;
 

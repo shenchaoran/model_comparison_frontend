@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DynamicTitleService } from '@core/services/dynamic-title.service';
+import { NzNotificationService, NzModalService } from 'ng-zorro-antd';
+import { CmpTaskService } from '../services';
 
 @Component({
     selector: 'ogms-cmp-task-list',
@@ -9,15 +11,23 @@ import { DynamicTitleService } from '@core/services/dynamic-title.service';
 })
 export class CmpTaskListComponent implements OnInit {
     tasks: any[];
+    count: number;
 
     constructor(
         private route: ActivatedRoute,
-        private title: DynamicTitleService
+        private title: DynamicTitleService,
+        private service: CmpTaskService,
+        private _notice: NzNotificationService
     ) {}
 
     ngOnInit() {
         this.route.data.subscribe(resolveData => {
-            this.tasks = resolveData.tasks;
+            this.tasks = resolveData.tasks.docs;
+            this.count = resolveData.tasks.count;
         });
+    }
+
+    search(filters) {
+
     }
 }

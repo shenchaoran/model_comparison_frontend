@@ -24,7 +24,7 @@
     </div>
     <div class='flex-box-row-nowrap'>
         <span class='flex-item-1-1-auto'></span>
-        <nz-pagination *ngIf='list.length> 25' [nzPageIndex]="filters.pageNum" (nzPageIndexChange)='setPageNum($event)' [nzPageSize]='filters.pageSize' (nzPageSizeChange)='setPageSize($event)' [nzTotal]="list.length"></nz-pagination>
+        <nz-pagination *ngIf='count> 25' [nzPageIndex]="filters.pageNum" (nzPageIndexChange)='setPageNum($event)' [nzPageSize]='filters.pageSize' (nzPageSizeChange)='setPageSize($event)' [nzTotal]="count"></nz-pagination>
         <span class='flex-item-1-1-auto'></span>
     </div>
 </div>

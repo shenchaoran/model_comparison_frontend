@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { DynamicTitleService } from '@core/services/dynamic-title.service';
 import { CmpSlnService } from '../services';
 import { NzNotificationService, NzModalService } from 'ng-zorro-antd';
-import { DynamicTitleService } from '@core/services/dynamic-title.service';
 
 @Component({
     selector: 'ogms-cmp-solution-list',
@@ -10,8 +10,8 @@ import { DynamicTitleService } from '@core/services/dynamic-title.service';
     styleUrls: ['./cmp-solution-list.component.scss']
 })
 export class CmpSolutionListComponent implements OnInit {
+    solutions: any[];
     count: number;
-    solutions: any[]
 
     constructor(
         private route: ActivatedRoute,

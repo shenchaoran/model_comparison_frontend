@@ -1,9 +1,34 @@
-<div class='div-list-item' *ngFor='let task of tasks; let i=index;'>
-    <h3><a class='task-name' [routerLink]='task._id'>{{task.auth.userName}}/{{task.meta.name}}</a></h3>
-    <p>{{task.meta.desc}}</p>
-    <div class='cmp-progress'>
-        <span>Comparison progress</span>
-        <nz-progress [ngModel]='100'></nz-progress>
-    </div>
-    <div>{{task.meta.time | date: 'yyyy-MM-dd'}}</div>
-</div>
+<ng-template #taskTemplate let-task='item'>
+    <section class='list-item'>
+        <div class='item-header flex-box-row-nowrap'>
+            <a [routerLink]='task._id'>
+                {{task.auth.userName}}/{{task.meta.name}}
+            </a>
+            <span class='flex-item-1-1-auto'></span>
+            <span>
+                    <i class="anticon anticon-star"></i>
+                    {{task.solutionIds? task.solutionIds.length: 0}}
+                </span>
+            <span style='width: 20px;'></span>
+        </div>
+        <div class='item-body'>
+            <div class='desc'>{{task.meta.desc}}</div>
+            <div>
+                <span class='topic'>Topic1</span>
+                <span class='topic'>Topic2</span>
+            </div>
+            <div class='cmp-progress'>
+                <span>Comparison progress</span>
+                <div style='width: 350px;'>
+                    <nz-progress [ngModel]='100'></nz-progress>
+                </div>
+            </div>
+        </div>
+        <div class='item-footer'>{{task.meta.time | date: 'yyyy-MM-dd'}}</div>
+    </section>
+</ng-template>
+
+<ogms-list-template [count]='count' [template]='taskTemplate' [list]='tasks' [radioFilters]='{}' (onFiltersChange)='search($event)'>
+</ogms-list-template>
+
+<ogms-footer></ogms-footer>

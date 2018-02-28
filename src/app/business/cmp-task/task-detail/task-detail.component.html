@@ -1,3 +1,156 @@
-<p>
-  task-detail works!
-</p>
+<ogms-doc-detail-template>
+    <div class='doc' *ngIf='task'>
+        <div class='doc-title'>{{task.meta.name}}</div>
+        <div class='doc-body flex-box-row-nowrap'>
+            <article class='main-content flex-item-3'>
+                <section>
+                    <div class='section-header flex-box-row-nowrap'>
+                        <span class='title'>Basic Information</span>
+                        <span class='placeholder flex-item-1-1-auto'></span>
+                    </div>
+                    <div class='section-body'>
+                        <dl class='table-info'>
+                            <div nz-row>
+                                <dt nz-col [nzSpan]='4'>Create time</dt>
+                                <dd nz-col [nzSpan]='8'>{{task.meta.time | date:'yyyy-MM-dd'}}</dd>
+                                <dt nz-col [nzSpan]='4'>Author</dt>
+                                <dd nz-col [nzSpan]='8'>{{task.auth.userName | undefined}}</dd>
+                                <dt nz-col [nzSpan]='4'>Authorization</dt>
+                                <dd nz-col [nzSpan]='8'>{{task.auth.src | resourceSrc}}</dd>
+                                <dt nz-col [nzSpan]='4'>Description</dt>
+                                <dd nz-col [nzSpan]='8'>{{task.meta.desc | undefined}}</dd>
+                            </div>
+                        </dl>
+                    </div>
+                </section>
+                <section>
+                    <div class='section-header flex-box-row-nowrap'>
+                        <span class='title'>Temporal ranges</span>
+                        <span class='placeholder flex-item-1-1-auto'></span>
+                    </div>
+                    <div class='section-body'>
+                        <dl class='table-info'>
+                            <div nz-row>
+                                <dt nz-col [nzSpan]='10'>Start time</dt>
+                                <dd nz-col [nzSpan]='14'>{{task.issue.temporal.start | date:'yyyy-MM-dd'}}</dd>
+                                <dt nz-col [nzSpan]='10'>End time</dt>
+                                <dd nz-col [nzSpan]='14'>{{task.issue.temporal.end | date:'yyyy-MM-dd'}}</dd>
+                            </div>
+                        </dl>
+                    </div>
+                </section>
+                <section *ngIf='geojson'>
+                    <div class='section-header flex-box-row-nowrap'>
+                        <span class='title'>Spatial region</span>
+                        <span class='placeholder flex-item-1-1-auto'></span>
+                    </div>
+                    <div class='section-body'>
+                        <div class='embed-map-box'>
+                            <ogms-region-map [geojson]='geojson'></ogms-region-map>
+                        </div>
+                    </div>
+                </section>
+                <!-- <section>
+                    <div class="section-header flex-box-row-nowrap">
+                        <span class='title'>Comparison features</span>
+                        <span class='placeholder flex-item-1-1-auto'></span>
+                    </div>
+                    <div class="section-body">
+                        <div class='cmpObj' *ngFor='let cmpObj of task.cmpCfg.cmpObjs; let i= index'>
+                            <h3>{{i+1}}. {{cmpObj.meta.name}}</h3>
+                            <section>
+                                <nz-tabset>
+                                    <nz-tab>
+                                        <ng-template #nzTabHeading>
+                                            Introduction
+                                        </ng-template>
+                                        <section>
+                                            <div class='desc'>
+                                                <span>{{cmpObj.meta.desc}}</span>
+                                            </div>
+                                            <div class='participants'>
+                                                <span *ngFor='let dataRefer of cmpObj.dataRefers' [routerLink]='["../../resources/geo-models", dataRefer.msId]' class='topic model-topic'>{{dataRefer.msName}}</span>
+                                            </div>
+                                        </section>
+                                    </nz-tab>
+                                    <nz-tab>
+                                        <ng-template #nzTabHeading>
+                                            Configuration
+                                        </ng-template>
+                                        <section>
+                                            <section class='cmpObj-config'>
+                                                <h4>Basic Information</h4>
+                                                <dl class='table-info'>
+                                                    <div nz-row>
+                                                        <dt nz-col [nzSpan]='10'>Data structure</dt>
+                                                        <dd nz-col [nzSpan]='14'>{{cmpObj.schemaName | undefined}}</dd>
+                                                        <dt nz-col [nzSpan]='10'>Comparison method</dt>
+                                                        <dd nz-col [nzSpan]='14'>
+                                                            <span *ngFor='let method of cmpObj.methods'>
+                                                                    {{method}}
+                                                                </span>
+                                                        </dd>
+                                                    </div>
+                                                </dl>
+                                            </section>
+                                            <section class='cmpObj-config'>
+                                                <h4>Data reference</h4>
+                                                <div>
+                                                    <dl class='table-info'>
+                                                        <div *ngFor='let dataRefer of cmpObj.dataRefers' nz-row>
+                                                            <dt nz-col [nzSpan]='10'>{{dataRefer.msName}}</dt>
+                                                            <dd nz-col [nzSpan]='14'>{{dataRefer.eventName}}</dd>
+                                                        </div>
+                                                    </dl>
+                                                </div>
+                                            </section>
+                                        </section>
+                                    </nz-tab>
+                                </nz-tabset>
+                            </section>
+                        </div>
+                    </div>
+                </section> -->
+            </article>
+
+            <aside class='sider-content flex-item-1'>
+                <section class="sider-item">
+                    <div class="sider-item-title">
+                        <span>Issue</span>
+                    </div>
+                    <div class="sider-item-body">
+                        <ul>
+                            <li>
+                                <a [routerLink]='["../../issues", task.issue._id]'>{{task.issue.meta.name}}</a>
+                                <div>{{task.issue.meta.desc}}</div>
+                                <div>
+                                    <span class='topic'>Topic xxx</span>
+                                </div>
+                                <div>{{task.issue.meta.time | date: 'yyyy-MM-dd'}}</div>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+                <section class="sider-item">
+                    <div class="sider-item-title">
+                        <span>Solution</span>
+                    </div>
+                    <div class="sider-item-body">
+                        <ul>
+                            <li>
+                                <a [routerLink]='["../../solutions", task.solution._id]'>{{task.solution.meta.name}}</a>
+                                <div>{{task.solution.meta.desc}}</div>
+                                <div>
+                                    <span class='topic model-topic' *ngFor='let ms of task.solution.cmpCfg.ms'>{{ms.msName}}</span>
+                                </div>
+                                <div>{{task.solution.meta.time | date: 'yyyy-MM-dd'}}</div>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+            </aside>
+        </div>
+    </div>
+</ogms-doc-detail-template>
+
+<ogms-footer></ogms-footer>

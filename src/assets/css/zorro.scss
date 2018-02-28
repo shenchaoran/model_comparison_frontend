@@ -52,12 +52,30 @@ ogms-baheadermenu {
     .ant-menu-submenu-horizontal .ogms-menu-link:hover {
         color: #fff !important;
     }
-    .ogms-sub-menu a {
-        color: #000 !important;
-    }
-    .ogms-sub-menu .ogms-menu-link:hover {
-        // color: #575a5f !important;
-        font-weight: 700 !important;
-        color: #000 !important;
+    .menu-item {
+        .ogms-sub-menu {
+            .ant-menu-submenu-title {
+                display: flex;
+                flex-flow: row nowrap;
+                border-radius: 5px;
+                >span {
+                    flex: 1;
+                    display: flex;
+                    flex-flow: row nowrap;
+                    .ogms-menu-link {
+                        flex: 1;
+                        color: #000 !important;
+                    }
+                    .ogms-menu-link:hover {
+                        font-weight: 700 !important;
+                        color: #000 !important;
+                        width: 100%;
+                    }
+                }
+            }
+            .ant-menu-submenu-title:hover {
+                background: rgba(241, 241, 241, 0.616) !important;
+            }
+        }
     }
 }

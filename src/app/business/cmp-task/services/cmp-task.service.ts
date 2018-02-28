@@ -17,7 +17,7 @@ export class CmpTaskService implements Resolve<any> {
                 if (response.error) {
                     return Promise.reject(response.error);
                 } else {
-                    return Promise.resolve(response.data.docs);
+                    return Promise.resolve(response.data);
                 }
             });
     }
