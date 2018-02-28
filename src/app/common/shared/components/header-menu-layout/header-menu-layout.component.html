@@ -6,7 +6,7 @@
             </div>
             <div id='search'>
                 <form>
-                    <input type='input' name='q' [(ngModel)]='q' placeholder='Search'>
+                    <input type='input' name='q' spellcheck="false" [(ngModel)]='q' placeholder='Search'>
                     <button hidden type='submit' (click)='search()'></button>
                 </form>
             </div>

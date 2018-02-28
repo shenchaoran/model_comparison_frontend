@@ -4,7 +4,13 @@
 }
 
 @media (max-width: 1199px) {
-    .nav-body {
+    .container {
         width: 980px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container {
+        width: 1200px;
     }
 }
