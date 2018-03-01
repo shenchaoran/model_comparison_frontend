@@ -11,7 +11,6 @@ import { NgZorroAntdModule } from 'ng-zorro-antd';
 
 import {
     PerfectScrollbarModule,
-    PerfectScrollbarComponent,
     PERFECT_SCROLLBAR_CONFIG,
     PerfectScrollbarConfigInterface
 } from 'ngx-perfect-scrollbar';

@@ -9,7 +9,6 @@ import { TokenInterceptor } from '@core/net/token/token.interceptor';
 import { ResParserInterceptor } from '@core/net/res-parser/res-parser.interceptor';
 import {
     PerfectScrollbarModule,
-    PerfectScrollbarComponent,
     PERFECT_SCROLLBAR_CONFIG,
     PerfectScrollbarConfigInterface
 } from 'ngx-perfect-scrollbar';

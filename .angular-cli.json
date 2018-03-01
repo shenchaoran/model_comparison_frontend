@@ -30,7 +30,8 @@
             "../node_modules/openlayers/dist/ol.js",
             "../node_modules/ol3-ext/dist/ol3-ext.min.js",
             "../node_modules/quill/dist/quill.min.js",
-            "../node_modules/ol3-layerswitcher/src/ol3-layerswitcher.js"
+            "../node_modules/ol3-layerswitcher/src/ol3-layerswitcher.js",
+            "../node_modules/perfect-scrollbar/dist/perfect-scrollbar.min.js"
         ],
         "environmentSource": "environments/environment.ts",
         "environments": {
