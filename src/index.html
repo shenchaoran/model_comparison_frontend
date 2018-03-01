@@ -26,9 +26,17 @@
                 (s = ua.match(/opera.([\d.]+)/)) ? browser.opera = s[1] :
                 (s = ua.match(/version\/([\d.]+).*safari/)) ? browser.safari = s[1] : 0;
 
-            if (browser.ie < 11) {
-                window.location.href = "browser-download.html";
-            }
+            if (browser.ie) {
+                if (browser.ie < 11) {
+                    window.location.href = "browser-download.html";
+                }
+            } else if (browser.chrome) {
+
+            } else if (browser.firefox) {
+
+            } else if (browser.safari) {
+
+            } else if (browser.opera) {}
         }
     </script>
 </head>
