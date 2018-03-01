@@ -32,10 +32,12 @@
     .ps__rail-x,
     .ps__rail-y {
         background-color: rgba(0, 0, 0, 0);
-        .ps__thumb-x {
+        .ps__thumb-x,
+        .ps__thumb-y {
             background-color: rgba($color: #000, $alpha: 0.5) !important;
         }
-        .ps__thumb-x:hover {
+        .ps__thumb-x:hover,
+        .ps__thumb-y:hover {
             background-color: rgba($color: #000, $alpha: 0.7) !important;
         }
     }

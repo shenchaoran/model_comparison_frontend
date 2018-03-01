@@ -1,7 +1,10 @@
 <div class='container'>
     <div class='flex-box-row-nowrap'>
-        <nz-radio-group *ngIf='radioFilters && radioFilters.options && radioFilters.options.length' [ngModel]='radioFilters.options[0].value' (ngModelChange)='onRadioFiltersChange()'>
-            <label nz-radio-button *ngFor='let item of radioFilters.options' [nzValue]='item.value'><span>{{item.label}}</span></label>
+        <!-- <nz-radio-group *ngIf='radioFilters && radioFilters.options && radioFilters.options.length' [ngModel]='radioFilters.options[0].value' (ngModelChange)='onRadioFiltersChange()'> -->
+        <nz-radio-group [nzSize]='"large"' [ngModel]='"Created"' (ngModelChange)='onRadioFiltersChange()'>
+            <!-- <label nz-radio-button *ngFor='let item of radioFilters.options' [nzValue]='item.value'><span>{{item.label}}</span></label> -->
+            <label nz-radio-button [nzValue]='"Created"'><span>Created</span></label>
+            <label nz-radio-button [nzValue]='"Followed"'><span>Followed</span></label>
         </nz-radio-group>
         <span class='flex-item-1-1-auto'></span>
         <nz-input [nzType]="'search'" [nzSize]='"large"' [nzPlaceHolder]="'Search'" [(ngModel)]="filters.q" style="width: 400px;" (nzOnSearch)="onSearch()"></nz-input>
@@ -10,7 +13,30 @@
         <div class='flex-box-row-nowrap list-header'>
             <span>{{list.length}} items found</span>
             <span class='flex-item-1-1-auto'></span>
-            <span></span>
+            <span class='dropdown-filter'>
+                    <nz-dropdown [nzTrigger]="'click'">
+                        <span class="ant-dropdown-link" nz-dropdown>
+                            Organization&nbsp;&nbsp;<i class="anticon anticon-down"></i>
+                        </span>
+            <ul nz-menu>
+                <li nz-menu-item>1st menu item</li>
+                <li nz-menu-item>2nd menu item</li>
+                <li nz-menu-item>3rd menu item</li>
+            </ul>
+            </nz-dropdown>
+            </span>
+            <span class='dropdown-filter'>
+                <nz-dropdown [nzTrigger]="'click'">
+                    <span class="ant-dropdown-link" nz-dropdown>
+                        Sort&nbsp;&nbsp;<i class="anticon anticon-down"></i>
+                    </span>
+            <ul nz-menu>
+                <li nz-menu-item>1st menu item</li>
+                <li nz-menu-item>2nd menu item</li>
+                <li nz-menu-item>3rd menu item</li>
+            </ul>
+            </nz-dropdown>
+            </span>
         </div>
         <ng-content></ng-content>
         <ng-container *ngIf='template && list'>

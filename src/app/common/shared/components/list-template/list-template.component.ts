@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { ListFilterService } from './list-filter.service';
 
 @Component({
     selector: 'ogms-list-template',
@@ -6,6 +7,23 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
     styleUrls: ['./list-template.component.scss']
 })
 export class ListTemplateComponent implements OnInit {
+
+    sort: {
+        label: string,
+        value: string
+    }[];
+    organization: {
+        label: string,
+        value: string
+    }[];
+    radioFilters:{
+        key: string,
+        options: {
+            label: string,
+            value: string
+        }[]
+    };
+
     filters: {
         q: string,
         pageSize: number,
@@ -18,21 +36,17 @@ export class ListTemplateComponent implements OnInit {
     };
     @Output() onFiltersChange = new EventEmitter<any>();
 
-    @Input() radioFilters:{
-        key: string,
-        options: {
-            label: string,
-            value: string
-        }[]
-    };
     @Input() list: any[];
     @Input() count: number;
-    // list item template
     @Input() template: any;
+    @Input() type: string;
 
-    constructor() { }
+    constructor(
+        private filterService: ListFilterService
+    ) { }
 
     ngOnInit() {
+        this.filterService.init(this.type);
     }
 
     onRadioFiltersChange() {

@@ -51,8 +51,9 @@ import {
     BaImageLoaderService,
     BaMenuService,
     BaThemePreloader,
-    BaThemeSpinner
+    BaThemeSpinner,
 } from './services';
+import { ListFilterService } from './components/list-template/list-filter.service';
 
 import { HeaderMenuService } from './components/baHeaderMenu/baHeaderMenu.service';
 
@@ -69,7 +70,8 @@ const NGA_SERVICES = [
     BaImageLoaderService,
     BaThemePreloader,
     BaThemeSpinner,
-    BaMenuService
+    BaMenuService,
+    ListFilterService,
 ];
 
 const NGA_VALIDATORS = [EmailValidator, EqualPasswordsValidator];

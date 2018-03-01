@@ -21,6 +21,12 @@
         background-color: #f6f8fa;
         border: 1px solid #e1e4e8;
         border-radius: 3px 3px 0 0;
+        .dropdown-filter {
+            margin: 0 10px;
+            span {
+                cursor: pointer;
+            }
+        }
     }
 }
 

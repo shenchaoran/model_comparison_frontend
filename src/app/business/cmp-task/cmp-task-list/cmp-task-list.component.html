@@ -28,7 +28,7 @@
     </section>
 </ng-template>
 
-<ogms-list-template [count]='count' [template]='taskTemplate' [list]='tasks' [radioFilters]='{}' (onFiltersChange)='search($event)'>
+<ogms-list-template [count]='count' [template]='taskTemplate' [type]='"tasks"' [list]='tasks' (onFiltersChange)='search($event)'>
 </ogms-list-template>
 
 <ogms-footer></ogms-footer>
