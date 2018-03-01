@@ -1,0 +1,16 @@
+.list-item {
+    .item-header>a:hover {
+        text-decoration: underline !important;
+        color: #285eb8 !important;
+    }
+    .item-header>a {
+        font-size: 20px;
+        font-weight: 600;
+    }
+    .item-body {
+        .desc {
+            margin-bottom: 8px;
+        }
+    }
+    .item-footer {}
+}

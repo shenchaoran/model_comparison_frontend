@@ -22,7 +22,8 @@
 
 ### 动态定义Title
 
-1. 如下，注意data要放在叶节点的路由配置中，要不然太乱
+两种情况：
+- 在路由中配置 Title。如下，注意data要放在叶节点的路由配置中，要不然太乱
 ``` typescript
 {
     path: 'home',
@@ -32,8 +33,7 @@
     }
 }
 ```
-2. 在需要动态设置的组件中注入 `DynamicTitleService`
-3. 不通过路由设置Title的可以在组件内部通过 `this.title.setTitle(variable)`
+- 根据Ajax请求的数据动态设置Title。在组件内部通过 `this.title.setTitle(variable)`
 
 ### 部分模块热加载
 

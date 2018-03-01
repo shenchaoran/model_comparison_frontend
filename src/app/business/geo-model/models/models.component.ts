@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { DynamicTitleService } from '@core/services/dynamic-title.service';
 
 @Component({
   selector: 'ogms-models',
@@ -9,7 +8,6 @@ import { DynamicTitleService } from '@core/services/dynamic-title.service';
 export class ModelsComponent implements OnInit {
 
   constructor(
-      private title: DynamicTitleService
   ) { }
 
   ngOnInit() {

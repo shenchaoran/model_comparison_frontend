@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { DynamicTitleService } from '@core/services/dynamic-title.service';
 import { CmpSlnService } from '../services';
 import { NzNotificationService, NzModalService } from 'ng-zorro-antd';
 
@@ -17,7 +16,6 @@ export class CmpSolutionListComponent implements OnInit {
         private route: ActivatedRoute,
         private service: CmpSlnService,
         private _notice: NzNotificationService,
-        private title: DynamicTitleService
     ) {}
 
     ngOnInit() {

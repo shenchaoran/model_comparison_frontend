@@ -1,11 +1,11 @@
 <ogms-doc-detail-template>
-    <div class='doc' *ngIf='task'>
+    <section class='doc' *ngIf='task'>
         <div class='doc-title'>{{task.meta.name}}</div>
-        <div class='doc-body flex-box-row-nowrap'>
+        <section class='doc-body flex-box-row-nowrap'>
             <article class='main-content flex-item-3'>
                 <section>
                     <div class='section-header flex-box-row-nowrap'>
-                        <span class='title'>Basic Information</span>
+                        <span class='title'>Basic information</span>
                         <span class='placeholder flex-item-1-1-auto'></span>
                     </div>
                     <div class='section-body'>
@@ -50,67 +50,54 @@
                         </div>
                     </div>
                 </section>
-                <!-- <section>
+
+                <section>
+                    <div class="section-header flex-box-row-nowrap">
+                        <span class="title">Model running schedule</span>
+                        <span class="placeholder flex-item-1-1-auto"></span>
+                    </div>
+                    <section class='section-body'>
+                        <nz-tabset>
+                            <nz-tab *ngFor='let ms of task.solution.cmpCfg.ms'>
+                                <ng-template #nzTabHeading>
+                                    {{ms.msName}}
+                                </ng-template>
+                                <section>
+                                    <div class='ms-progress'>
+                                        <nz-progress [ngModel]="100"></nz-progress>
+                                    </div>
+                                </section>
+                            </nz-tab>
+                        </nz-tabset>
+                    </section>
+                </section>
+
+                <section>
                     <div class="section-header flex-box-row-nowrap">
                         <span class='title'>Comparison features</span>
                         <span class='placeholder flex-item-1-1-auto'></span>
                     </div>
                     <div class="section-body">
-                        <div class='cmpObj' *ngFor='let cmpObj of task.cmpCfg.cmpObjs; let i= index'>
+                        <div class='cmpObj' *ngFor='let cmpObj of task.cmpObjs; let i=index;'>
                             <h3>{{i+1}}. {{cmpObj.meta.name}}</h3>
                             <section>
+                                <div class='desc'>
+                                    <span>{{cmpObj.meta.desc}}</span>
+                                </div>
                                 <nz-tabset>
-                                    <nz-tab>
+                                    <nz-tab *ngFor="let dataRefer of cmpObj.dataRefers">
                                         <ng-template #nzTabHeading>
-                                            Introduction
+                                            {{dataRefer.msName}}
                                         </ng-template>
-                                        <section>
-                                            <div class='desc'>
-                                                <span>{{cmpObj.meta.desc}}</span>
-                                            </div>
-                                            <div class='participants'>
-                                                <span *ngFor='let dataRefer of cmpObj.dataRefers' [routerLink]='["../../resources/geo-models", dataRefer.msId]' class='topic model-topic'>{{dataRefer.msName}}</span>
-                                            </div>
-                                        </section>
-                                    </nz-tab>
-                                    <nz-tab>
-                                        <ng-template #nzTabHeading>
-                                            Configuration
-                                        </ng-template>
-                                        <section>
-                                            <section class='cmpObj-config'>
-                                                <h4>Basic Information</h4>
-                                                <dl class='table-info'>
-                                                    <div nz-row>
-                                                        <dt nz-col [nzSpan]='10'>Data structure</dt>
-                                                        <dd nz-col [nzSpan]='14'>{{cmpObj.schemaName | undefined}}</dd>
-                                                        <dt nz-col [nzSpan]='10'>Comparison method</dt>
-                                                        <dd nz-col [nzSpan]='14'>
-                                                            <span *ngFor='let method of cmpObj.methods'>
-                                                                    {{method}}
-                                                                </span>
-                                                        </dd>
-                                                    </div>
-                                                </dl>
-                                            </section>
-                                            <section class='cmpObj-config'>
-                                                <h4>Data reference</h4>
-                                                <div>
-                                                    <dl class='table-info'>
-                                                        <div *ngFor='let dataRefer of cmpObj.dataRefers' nz-row>
-                                                            <dt nz-col [nzSpan]='10'>{{dataRefer.msName}}</dt>
-                                                            <dd nz-col [nzSpan]='14'>{{dataRefer.eventName}}</dd>
-                                                        </div>
-                                                    </dl>
-                                                </div>
-                                            </section>
-                                        </section>
+                                        <div>
+
+                                        </div>
                                     </nz-tab>
                                 </nz-tabset>
                             </section>
                         </div>
                     </div>
-                </section> -->
+                </section>
             </article>
 
             <aside class='sider-content flex-item-1'>
@@ -141,7 +128,7 @@
                                 <a [routerLink]='["../../solutions", task.solution._id]'>{{task.solution.meta.name}}</a>
                                 <div>{{task.solution.meta.desc}}</div>
                                 <div>
-                                    <span class='topic model-topic' *ngFor='let ms of task.solution.cmpCfg.ms'>{{ms.msName}}</span>
+                                    <span *ngFor='let ms of task.solution.cmpCfg.ms' [routerLink]='["../../resources/geo-models", ms.msId]' class='topic model-topic'>{{ms.msName}}</span>
                                 </div>
                                 <div>{{task.solution.meta.time | date: 'yyyy-MM-dd'}}</div>
                             </li>
@@ -149,8 +136,8 @@
                     </div>
                 </section>
             </aside>
-        </div>
-    </div>
+        </section>
+    </section>
 </ogms-doc-detail-template>
 
 <ogms-footer></ogms-footer>

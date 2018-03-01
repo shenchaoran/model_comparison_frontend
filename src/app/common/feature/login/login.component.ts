@@ -5,7 +5,6 @@ import { NzNotificationService } from 'ng-zorro-antd';
 
 import { LoginService } from './login.service';
 import { ErrorHandle } from '@core/base/error-handle';
-import { DynamicTitleService } from '@core/services/dynamic-title.service';
 
 @Component({
 	selector: 'login',
@@ -24,8 +23,7 @@ export class Login extends ErrorHandle {
 		fb: FormBuilder,
 		private route: ActivatedRoute,
 		private loginService: LoginService,
-        private _notification: NzNotificationService,
-        private title: DynamicTitleService
+        private _notification: NzNotificationService
 	) {
         super();
 		this.form = fb.group({
