@@ -16,16 +16,16 @@ const routes: Routes = [
             {
                 path: '',
                 component: GeoModelComponent,
-                resolve: {
-                    geoModelTree: MSService
-                },
                 children: [
                     {
                         path: '',
                         component: ModelsComponent,
+                        resolve: {
+                            geoModelTree: MSService
+                        },
                         data: {
-                            title: 'Models'
-                        }
+                            title: 'Model Resource'
+                        },
                     },
                     {
                         path: ':id',

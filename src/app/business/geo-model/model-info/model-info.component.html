@@ -1,4 +1,4 @@
-<div class='div-loading' *ngIf='_isLoading'>
+<!-- <div class='div-loading' *ngIf='_isLoading'>
     <nz-spin [nzSpinning]='_isLoading' [nzSize]="'large'"></nz-spin>
 </div>
 <div id='root-container' *ngIf='!_isLoading'>
@@ -89,4 +89,94 @@
         </div>
     </div>
 
-</div>
+</div> -->
+
+<ogms-doc-detail-template>
+    <section class="doc" *ngIf='model'>
+        <div class="doc-title">{{model.MDL.meta.name}}</div>
+        <div class="doc-body flex-box-row-nowrap">
+            <article class="main-content flex-item-3">
+                <section>
+                    <div class="section-header flex-box-row-nowrap">
+                        <span class="title">Basic Information</span>
+                        <span class="placeholder flex-item-1-1-auto"></span>
+                    </div>
+                    <div class="section-body">
+                        <dl class="table-info">
+                            <div nz-row>
+                                <dt nz-col [nzSpan]='4'>Full Name</dt>
+                                <dd nz-col [nzSpan]='8'>{{model.MDL.meta.name}}</dd>
+                                <dt nz-col [nzSpan]='4'>Organization</dt>
+                                <dd nz-col [nzSpan]='8'>OpenGMS</dd>
+                                <dt nz-col [nzSpan]='4'>Type</dt>
+                                <dd nz-col [nzSpan]='8'>Carbon Globle</dd>
+                                <dt nz-col [nzSpan]='4'>Create Time</dt>
+                                <dd nz-col [nzSpan]='8'>2018-01-01</dd>
+                                <dt nz-col [nzSpan]='4'>Description</dt>
+                                <dd nz-col [nzSpan]='20'>{{model.MDL.meta.abstract}}</dd>
+                            </div>
+                        </dl>
+                    </div>
+                </section>
+                <section>
+                    <div class="section-header flex-box-row-nowrap">
+                        <span class="title">Detail Information</span>
+                        <span class="placeholder flex-item-1-1-auto"></span>
+                    </div>
+                    <div class="section-body">
+                        XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+                    </div>
+                </section>
+                <section>
+                    <div class="section-header flex-box-row-nowrap">
+                        <span class="title">IO Feature Info</span>
+                        <span class="placeholder flex-item-1-1-auto"></span>
+                    </div>
+                    <div class="section-body">
+                            <div >
+                                <div style="margin-bottom: 16px;">
+                                    <button nz-button [disabled]="_disabledButton" [nzType]="'primary'" [nzLoading]="_operating" (click)="_operateData()">Operating</button>
+                                    <span style="margin-left: 8px;" *ngIf="_checkedNumber">Selected {{_checkedNumber}} items</span>
+                                </div>
+                                <nz-table #nzTable [nzDataSource]="_dataSet" [nzPageSize]="10" (nzDataChange)="_displayDataChange($event)" (nzPageIndexChange)="_refreshStatus()" (nzPageSizeChange)="_refreshStatus()">
+                                    <thead nz-thead>
+                                        <tr>
+                                            <th nz-th nzCheckbox>
+                                                <label nz-checkbox [(ngModel)]="_allChecked" [nzIndeterminate]="_indeterminate" (ngModelChange)="_checkAll($event)">
+                                                </label>
+                                            </th>
+                                            <th nz-th>
+                                                <span>Name</span>
+                                            </th>
+                                            <th nz-th>
+                                                <span>Unit</span>
+                                            </th>
+                                            <th nz-th>
+                                                <span>Description</span>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody nz-tbody>
+                                        <tr nz-tbody-tr *ngFor="let data of nzTable.data">
+                                            <td nz-td nzCheckbox>
+                                                <label nz-checkbox [(ngModel)]="data.checked" (ngModelChange)="_refreshStatus($event)">
+                                                </label>
+                                            </td>
+                                            <td nz-td>{{data.name}}</td>
+                                            <td nz-td>{{data.unit}}</td>
+                                            <td nz-td>{{data.desc}}</td>
+                                        </tr>
+                                    </tbody>
+                                </nz-table>
+                            </div>
+                    </div>
+                </section>
+            </article>
+            <aside class="sider-content flex-item-1">
+
+            </aside>
+        </div>
+    </section>
+</ogms-doc-detail-template>
+
+<ogms-footer></ogms-footer>

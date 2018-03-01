@@ -1,4 +1,26 @@
-<div nz-row>
+<ng-template #modelTemplate let-model='item'>
+    <section class='list-item'>
+        <div class='item-header flex-box-row-nowrap'>
+            <a [routerLink]='model._id'>
+                {{model.auth.nodeName}}/{{model.MDL.meta.name}}
+            </a>
+            <span class='flex-item-1-1-auto'></span>
+        </div>
+        <div class='item-body'>
+            <div class='desc'>{{model.MDL.meta.abstract}}</div>
+            <!-- <div *ngFor="let keyword of model.value.MDL.meta.keywords">
+                <span class='topic'>keyword</span>
+            </div> -->
+        </div>
+        <div class='item-footer'>{{model.auth.nodeName}}</div>
+    </section>
+</ng-template>
+
+<ogms-list-template [count]='count' [template]='modelTemplate' [list]='models' [radioFilters]='{}' (onFiltersChange)='{}'>
+</ogms-list-template>
+
+<ogms-footer></ogms-footer>
+<!-- <div nz-row>
     <div nz-col [nzSpan]="24">
         <ogms-model-banner></ogms-model-banner>
     </div>
@@ -12,4 +34,4 @@
             <ogms-model-list></ogms-model-list>
         </div>
     </div>
-</div>
+</div> -->
