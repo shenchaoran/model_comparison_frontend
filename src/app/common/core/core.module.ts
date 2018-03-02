@@ -10,6 +10,7 @@ import { TranslatorService } from './translator/translator.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './net/token/token.interceptor';
 import { ResParserInterceptor } from './net/res-parser/res-parser.interceptor';
+import { DynamicTitleService } from './services';
 // import { TokenService } from './net/token/token.service';
 
 import 'rxjs/add/observable/from';
@@ -55,7 +56,9 @@ const CITYFUN_SERVICES = [
 
 @NgModule({
     declarations: [],
-    imports: [],
+    imports: [
+        
+    ],
     providers: [
         TranslatorService,
         ...CITYFUN_SERVICES,
@@ -72,6 +75,7 @@ const CITYFUN_SERVICES = [
             multi: true
         },
         { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+        DynamicTitleService,
     ]
 })
 export class CoreModule {

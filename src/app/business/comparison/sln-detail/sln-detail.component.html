@@ -20,7 +20,7 @@
         <div class='flex-item-1-1-auto' [hidden]='__currentStep !== 1'>
             <div style='margin: 10px 0;'>
                 <nz-collapseset [nzBordered]="false" [nzAccordion]='true'>
-                    <nz-collapse *ngFor="let cmpObj of cmpSolution.cmpCfg.cmpObjs" [nzActive]="cmpObj.attached.active">
+                    <nz-collapse *ngFor="let cmpObj of cmpSolution.cmpCfg.cmpObjs;let i=index" [nzActive]="i===0">
                         <div collapse-title>
                             <div class='flex-box-row-nowrap'>
                                 <span>

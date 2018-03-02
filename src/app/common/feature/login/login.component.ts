@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { NzNotificationService } from 'ng-zorro-antd';
 
 import { LoginService } from './login.service';
@@ -42,7 +42,7 @@ export class Login extends ErrorHandle {
 
 		if (localStorage.getItem('username')) {
 			this.username.setValue(localStorage.getItem('username'));
-		}
+        }
 	}
 
 	public rememberAccount(): void {

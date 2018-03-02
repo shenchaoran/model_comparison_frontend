@@ -4,7 +4,7 @@
  */
 
 import { ResourceSrc } from './resource.enum';
-import { CalcuCfg } from './cmp-task.class';
+import { CalcuCfg } from './calcu-cfg.class';
 
 export class CalcuTask {
     _id?: any;
@@ -25,6 +25,6 @@ export enum CalcuTaskState {
     START_PENDING,
     START_FAILED,
     RUNNING,
-    RUN_FAILED,
-    RUN_SUCCEED
+    FINISHED_FAILED,
+    FINISHED_SUCCEED
 }

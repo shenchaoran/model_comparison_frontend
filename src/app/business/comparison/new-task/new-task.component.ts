@@ -14,7 +14,7 @@ import {
 } from '@angular/core';
 import { CmpSlnService, CmpTaskService } from '../services';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CmpSolution, CmpTask, ResourceSrc, CmpObj, CmpMethod } from '@models';
+import { CmpSolution, CmpTask, ResourceSrc, CmpMethod } from '@models';
 import { NzNotificationService, NzModalService } from 'ng-zorro-antd';
 import { DataService } from '../../geo-data/services';
 import { MSService } from '../../geo-model/services';
@@ -46,8 +46,6 @@ export class NewTaskComponent implements OnInit, AfterViewInit, AfterViewChecked
 
     fileUploaderOptions: NgUploaderOptions;
     @ViewChildren(BaFileUploader) fileUploaders: QueryList<BaFileUploader>;
-    @Output() onFileUpload = new EventEmitter<any>();
-    @Output() onFileUploadCompleted = new EventEmitter<any>();
 
     __ms: Array<{
         msId: string;
@@ -101,7 +99,7 @@ export class NewTaskComponent implements OnInit, AfterViewInit, AfterViewChecked
         if (slnStr) {
             this.cmpSolution = JSON.parse(slnStr);
             this.__selectMode =
-                this.cmpSolution.cmpCfg.keynote.direction === 'x'
+                this.cmpSolution.cmpCfg.keynote.direction === 'multi'
                     ? 'multiple'
                     : 'single';
             this.cmpTask.cmpCfg.keynote = this.cmpSolution.cmpCfg.keynote;
@@ -246,13 +244,13 @@ export class NewTaskComponent implements OnInit, AfterViewInit, AfterViewChecked
             );
         } else {
             if (this.cmpSolution.cmpCfg.keynote.dimension === 'point') {
-                // this.cmpTask.calcuCfg.stdSrc.spatial.point = JSON.parse(
+                // this.cmpTask.calcuCfg.stdSrc.spatial.geojson = JSON.parse(
                 //     this.toolbarService.saveFeatures('EPSG:3857')
                 // );
             } else if (
                 this.cmpSolution.cmpCfg.keynote.dimension === 'polygon'
             ) {
-                // this.cmpTask.calcuCfg.stdSrc.spatial.polygon = JSON.parse(
+                // this.cmpTask.calcuCfg.stdSrc.spatial.geojson = JSON.parse(
                 //     this.toolbarService.saveFeatures('EPSG:3857')
                 // );
             }

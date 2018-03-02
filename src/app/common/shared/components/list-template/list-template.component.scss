@@ -1,0 +1,47 @@
+@media (max-width: 1199px) {
+    .container {
+        width: 980px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container {
+        width: 1200px;
+    }
+}
+
+.container {
+    margin: 24px auto 0;
+}
+
+.list-box {
+    margin: 20px 0;
+    .list-header {
+        padding: 13px 16px;
+        background-color: #f6f8fa;
+        border: 1px solid #e1e4e8;
+        border-radius: 3px 3px 0 0;
+        .dropdown-filter {
+            margin: 0 10px;
+            span {
+                cursor: pointer !important;
+            }
+        }
+    }
+}
+
+.checked-label {
+    width: 25px !important;
+    height: 10px;
+    float: left;
+}
+
+.list-item {
+    padding: 16px 13px;
+    border: 1px solid #e1e4e8;
+    border-top: none;
+}
+
+.list-item:hover {
+    background-color: #f6f8fa;
+}

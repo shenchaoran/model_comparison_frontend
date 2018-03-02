@@ -1,4 +1,0 @@
-export enum MENU_LAYOUT {
-    HEADER_MENU_LAYOUT = 0,
-    SIDER_MENU_LAYOUT
-}

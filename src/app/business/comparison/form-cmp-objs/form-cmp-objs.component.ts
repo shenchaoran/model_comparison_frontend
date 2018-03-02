@@ -44,15 +44,15 @@ export class FormCmpObjsComponent implements OnInit, OnChanges {
   // TODO 根据 dimension 限制 schemaName 的范围
   @Input()
   keynote: {
-    direction: 'x' | 'y';
+    direction: 'multi' | 'single';
     dimension: 'point' | 'polygon' | 'multi-point';
   };
   schemaNames: Array<string> = [];
   methods: Array<any> = [];
 
-  @Input() cmpObjs: Array<CmpObj> = [];
+  @Input() cmpObjs: Array<any> = [];
 
-  selectedCmpObj: CmpObj;
+  selectedCmpObj: any;
 
   constructor(
     private _notification: NzNotificationService,
@@ -99,7 +99,9 @@ export class FormCmpObjsComponent implements OnInit, OnChanges {
             if (cmpObj.methods === undefined) {
               cmpObj.methods = [];
             }
-            cmpObj.methods.push(method.value);
+            if(!_.find(cmpObj.methods, method.value)) {
+                cmpObj.methods.push(method.value);
+            }
             this.checkAccordionValid(cmpObj);
           }
         });

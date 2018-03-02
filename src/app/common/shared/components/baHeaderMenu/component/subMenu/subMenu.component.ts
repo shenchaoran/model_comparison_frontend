@@ -9,6 +9,7 @@ import { HeaderMenuMetaInfo } from '../../baHeaderMenu';
   styleUrls: ['./subMenu.component.scss']
 })
 export class SubMenuComponent implements OnInit, AfterViewInit {
+    @Input() isRoot: boolean = false;
     _subMenu: HeaderMenuMetaInfo;
     @Input() 
     set subMenu(v){

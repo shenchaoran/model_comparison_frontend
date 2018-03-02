@@ -4,3 +4,4 @@ export * from './map-module.service';
 export * from './toolbar.service';
 export * from './map.service';
 export * from './region-map.service';
+export * from './geojson.service';

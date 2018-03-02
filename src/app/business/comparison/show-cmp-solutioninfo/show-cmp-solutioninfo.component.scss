@@ -1,0 +1,80 @@
+.main {
+    padding: 20px 40px 0px 40px;
+    
+}
+
+.row {
+    margin-bottom: 12px;
+}
+
+.second-row {
+    margin-bottom: 12px;
+    margin-left: 50px;
+}
+
+.name {
+    margin-left: 12px;
+    font-size: 26px;
+    font-weight: 500px;
+    vertical-align: top;
+}
+
+.font-primary {
+    font-size: 16px;
+}
+
+.font-second {
+    font-size: 16px;
+    color:  rgb(148, 148, 148);
+}
+
+.font-bold {
+    font-size: 26px;
+    font-weight: 500;
+}
+
+.avatar {
+    color:#fc8021; 
+    background-color:#fde3cf;
+}
+
+.author {
+    margin-left: 100px;
+}
+
+.second-right {
+    padding: 12px;
+}
+
+.inline {
+    display: inline-block;
+    padding-left: 24px;
+}
+
+:host ::ng-deep .ant-tabs-bar {
+    padding-left: 40px;
+    margin-bottom: 0px;
+}
+
+:host ::ng-deep .ant-card {
+    margin-bottom: 24px;
+}
+
+:host ::ng-deep .ant-card-body {
+    max-height: 800px;
+}
+
+// :host ::ng-deep .home-task-card {
+//     height: 400px;
+// }
+
+.tab {
+    padding: 20px 140px 20px 140px;
+    background: #ECECEC;
+}
+
+.editor {
+    background: white;
+    height: 700px;
+}
+

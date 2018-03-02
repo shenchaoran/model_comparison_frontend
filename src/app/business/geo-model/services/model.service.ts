@@ -11,11 +11,11 @@ export class MSService {
         private http: _HttpClient
     ) {}
 
-    resolve() {
-        return this.getModelTabTree()
+    resolve(): Promise<any> {
+        return this.findAll({})
             .toPromise()
             .then(response => {
-                if (response.error !== undefined) {
+                if (response.error) {
                     return Promise.reject(response.error);
                 } else {
                     return Promise.resolve(response.data);
@@ -23,8 +23,18 @@ export class MSService {
             });
     }
 
-    getModelTabTree(): Observable<any> {
-        return this.http.get('/model-tools');
+    // getModelTabTree(): Observable<any> {
+    //     return this.http.get('/model-tools');
+    // }
+
+    findAll(query): Observable<any> {
+        return this.http.get('/model-tools', {
+            params: query
+        });
+    }
+
+    findOne(id): Observable<any> {
+        return this.http.get(`/model-tools/${id}`);
     }
 
     convert2List(tree: any) {

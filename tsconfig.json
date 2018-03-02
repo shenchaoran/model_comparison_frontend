@@ -23,6 +23,12 @@
             "@common/*": [
                 "app/common/*"
             ],
+            "@ol-map": [
+                "app/common/feature/ol-map"
+            ],
+            "@ol-map/*": [
+                "app/common/feature/ol-map/*"
+            ],
             "@shared": [
                 "app/common/shared"
             ],
@@ -79,6 +85,7 @@
     "include": [
         "src/**/*",
         "node_modules/jqwidgets-scripts/**/*",
-        "node_modules/ngx-uploader/src/**/*"
+        "node_modules/ngx-uploader/src/**/*",
+        "node_modules/echarts-ng2/src/component/echarts-ng2.module.ts"
     ]
 }

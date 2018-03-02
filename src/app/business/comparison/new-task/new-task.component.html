@@ -7,7 +7,7 @@
         <!-- <nz-step [nzTitle]="'Configure Comparison Data'" [nzDescription]=''></nz-step> -->
     </nz-steps>
 
-    <div class="steps-content flex-box-col-nowrap flex-item-1-1-auto debug-border debug-background scroll-y">
+    <div class="steps-content flex-box-col-nowrap flex-item-1-1-auto debug-border debug-background">
         <div class='' [hidden]='currentStep !== 0'>
             <form nz-form [nzType]="'horizontal'">
                 <h4 style='margin: 10px 0;'>Task Basic Information:</h4>
@@ -48,7 +48,7 @@
         <div class='' [hidden]='currentStep !== 2'>
             <h4 style='margin: 10px 0;'>Configure Comparison Object:</h4>
             <nz-collapseset [nzAccordion]='true'>
-                <nz-collapse *ngFor="let cmpObj of cmpTask.cmpCfg.cmpObjs" [nzActive]="cmpObj.attached.active">
+                <nz-collapse *ngFor="let cmpObj of cmpTask.cmpCfg.cmpObjs; let i=index" [nzActive]="i===0">
                     <div collapse-title>
                         <div class='flex-box-row-nowrap'>
                             <span>
@@ -79,7 +79,7 @@
 
                     <h5 style='margin: 10px 0;'>Mapping Comparison Object:</h5>
                     <nz-collapseset [nzBordered]="false" [nzAccordion]='true'>
-                        <nz-collapse *ngFor="let dataRefer of cmpObj.dataRefers" [nzActive]="dataRefer.attached.active">
+                        <nz-collapse *ngFor="let dataRefer of cmpObj.dataRefers; let i=index" [nzActive]="i===0">
                             <div collapse-title>
                                 <div class='flex-box-row-nowrap'>
                                     <span>
@@ -143,7 +143,7 @@
                                     </ng-container>
 
                                     <ng-container *ngIf='dataSrc._value === "Uploading"'>
-                                        <ba-file-uploader id='uploader-{{dataRefer.eventName}}' nz-col [nzSpan]='12' [fileUploaderOptions]="fileUploaderOptions" (onFileUpload)="_onFileUpload($event, cmpObj.id, dataRefer.msId, dataRefer.eventName)" (onFileUploadCompleted)='_onFileUploadCompleted($event, cmpObj.id, dataRefer.msId, dataRefer.eventName)'
+                                        <ba-file-uploader id='uploader-{{dataRefer.eventName}}' nz-col [nzSpan]='12' [fileUploaderOptions]="fileUploaderOptions" (onFileUploading)="_onFileUpload($event, cmpObj.id, dataRefer.msId, dataRefer.eventName)" (onFileUploadCompleted)='_onFileUploadCompleted($event, cmpObj.id, dataRefer.msId, dataRefer.eventName)'
                                             (onClear)='_onClearUploaded(cmpObj.id, dataRefer.msId, dataRefer.eventName)'></ba-file-uploader>
                                     </ng-container>
                                 </div>

@@ -12,35 +12,48 @@ export class CmpTaskService implements Resolve<any> {
     private http: _HttpClient
   ) {}
 
-  resolve() {
-    return this.getDataTabTree()
-      .toPromise()
-      .then(response => {
-        if (response.error) {
-          return Promise.reject(response.error);
-        } else {
-          const tabs = [];
-          const tasks = response.data;
-          if (tasks.personal) {
-            tabs.push({
-              name: 'Your Comparison Tasks',
-              id: 'personal',
-              data: tasks.personal
-            });
-          }
-          if (tasks.public) {
-            tabs.push({
-              name: 'Public Comparison Tasks',
-              id: 'public',
-              data: tasks.public
-            });
-          }
-          return Promise.resolve(tabs);
-        }
-      });
-  }
+//   resolve() {
+//     return this.findAll()
+//       .toPromise()
+//       .then(response => {
+//         if (response.error) {
+//           return Promise.reject(response.error);
+//         } else {
+//           const tabs = [];
+//           const tasks = response.data;
+//           if (tasks.personal) {
+//             tabs.push({
+//               name: 'Your Comparison Tasks',
+//               id: 'personal',
+//               data: tasks.personal
+//             });
+//           }
+//           if (tasks.public) {
+//             tabs.push({
+//               name: 'Public Comparison Tasks',
+//               id: 'public',
+//               data: tasks.public
+//             });
+//           }
+//           return Promise.resolve(tabs);
+//         }
+//       });
+//   }
 
-  getDataTabTree(): Observable<any> {
+resolve() {
+    return this.findAll()
+        .toPromise()
+        .then(response => {
+            if(response.error) {
+                return Promise.reject(response.error);
+            }
+            else {
+                return Promise.resolve(response.data.docs);
+            }
+        });
+}
+
+  findAll(): Observable<any> {
     return this.http.get('/comparison/tasks');
   }
 
@@ -92,6 +105,9 @@ export class CmpTaskService implements Resolve<any> {
     }
   }
 
+  /**
+   * deprecated
+   */
   publishFind(id: string) {
     if (id) {
       this.http.get(`/comparison/tasks/${id}`).subscribe(response => {
@@ -117,5 +133,25 @@ export class CmpTaskService implements Resolve<any> {
             });
         });
     });
+  }
+
+  /**
+   * 一次只请求一个计算结果
+   */
+  getCmpResult(taskId: string, cmpObjId: string, msId: string) {
+    if(taskId) {
+        return this.http.get(
+            `/comparison/tasks/${taskId}/cmpResult`, 
+            {
+                params: {
+                    msId: msId,
+                    cmpObjId: cmpObjId
+                }
+            }
+        );
+    }
+    else {
+        return undefined;
+    }
   }
 }

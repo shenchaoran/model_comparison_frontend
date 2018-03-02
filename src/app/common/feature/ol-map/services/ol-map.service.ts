@@ -114,32 +114,11 @@ export class OlMapService extends MapService {
             })
         });
 
-        // map.addLayer(
-        //     new ol.layer.Tile({
-        //         id: 'base-OSM',
-        //         source: new ol.source.OSM()
-        //     } as any)
-        // );
-        // map.addLayer(
-        //     new ol.layer.Vector({
-        //         id: 'draw-point',
-        //         source: new ol.source.Vector({
-        //             projection: 'EPSG:4326'
-        //         } as any)
-        //     } as any)
-        // );
-        // map.setView(
-        //     new ol.View({
-        //         center: [0, 0],
-        //         zoom: 2
-        //     })
-        // );
-
         const guid = mapId? mapId: uuidv1();
         this.upsertMap(guid, map);
 
         // this.loadDefaultTileLayer();
-        // this.loadDefaultVectorLayer();
+        this.loadDefaultVectorLayer();
         // this.setDefaultView();
 
         return guid;
@@ -533,9 +512,28 @@ export class OlMapService extends MapService {
         const layer = this.getLayer('draw-point');
         if(layer) {
             const source = layer.getSource();
-            const features = new ol.format.GeoJSON().readFeatures(geojson);
+            const features = new ol.format.GeoJSON().readFeatures(geojson, { featureProjection:'EPSG:3857'} as any);
             source.addFeatures(features);
         }
     }
     //endregion
+
+    public getMapExtent(extents) {
+        let minx, miny, maxx, maxy;
+        _.map(extents, extent => {
+            if(minx === undefined || minx> extent[0]) {
+                minx = extent[0];
+            }
+            if(miny === undefined || miny> extent[1]) {
+                miny = extent[1];
+            }
+            if(maxx === undefined || maxx< extent[2]) {
+                maxx = extent[2];
+            }
+            if(maxy === undefined || maxy< extent[3]) {
+                maxy = extent[3];
+            }
+        });
+        return [minx, miny, maxx, maxy];
+    }
 }

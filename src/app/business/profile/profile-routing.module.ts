@@ -2,11 +2,18 @@ import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from '@angular/router';
 
 import { ProfileComponent } from './profile.component';
+import { SiderMenuLayoutComponent, HeaderMenuLayoutComponent } from '@shared';
 
 const routes: Routes = [
   {
       path: '',
-      component: ProfileComponent
+      component: HeaderMenuLayoutComponent,
+      children: [
+          {
+            path: '',
+            component: ProfileComponent
+          }
+      ]
   },
 ];
 

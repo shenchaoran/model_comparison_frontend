@@ -2,6 +2,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 
 /**
  * 封装HttpClient，主要解决：
@@ -13,7 +14,8 @@ import { Observable } from 'rxjs/Observable';
 export class _HttpClient {
     constructor(
         private http: HttpClient,
-        @Inject('BACKEND') private backend
+        @Inject('BACKEND') private backend,
+        private loading: SlimLoadingBarService
     ) { }
 
     private appendDomain(url: string): string {
@@ -21,6 +23,7 @@ export class _HttpClient {
     }
 
     private appendJWT(url: string, appendJWT: boolean): string {
+        this.loading.start();
         url = this.appendDomain(url);
         if(appendJWT) {
             const jwtStr = localStorage.getItem('jwt');
@@ -43,6 +46,7 @@ export class _HttpClient {
         return Observable.create(observer => {
             observable
                 .subscribe(response => {
+                    this.loading.complete();
                     if (_.startsWith(_.get(response, 'status.code'), '200')) {
                         observer.next({
                             data: response.data

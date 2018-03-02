@@ -1,0 +1,28 @@
+<ng-template #issueTemplate let-issue='item'>
+    <section class='list-item'>
+        <div class='item-header flex-box-row-nowrap'>
+            <a [routerLink]='issue._id'>
+                {{issue.auth.userName}}/{{issue.meta.name}}
+            </a>
+            <span class='flex-item-1-1-auto'></span>
+            <span>
+                <i class="anticon anticon-star"></i>
+                {{issue.solutionIds? issue.solutionIds.length: 0}}
+            </span>
+            <span style='width: 20px;'></span>
+        </div>
+        <div class='item-body'>
+            <div class='desc'>{{issue.meta.desc}}</div>
+            <div>
+                <span class='topic'>Topic1</span>
+                <span class='topic'>Topic2</span>
+            </div>
+        </div>
+        <div class='item-footer'>{{issue.meta.time | date: 'yyyy-MM-dd'}}</div>
+    </section>
+</ng-template>
+
+<ogms-list-template [count]='count' [template]='issueTemplate' [list]='issues' [type]='"issues"' (onFiltersChange)='search($event)'>
+</ogms-list-template>
+
+<ogms-footer></ogms-footer>

@@ -7,7 +7,10 @@ const routes: Routes = [
     // { path: '', redirectTo: 'login', pathMatch: 'full' },
     {
         path: '',
-        component: Login
+        component: Login,
+        data: {
+            title: 'Login'
+        }
     }
 ];
 

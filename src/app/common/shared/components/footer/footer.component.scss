@@ -1,0 +1,51 @@
+@media (max-width: 1199px) {
+    .footer {
+        width: 980px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .footer {
+        width: 1200px;
+    }
+}
+
+* {
+    font-size: 12px;
+}
+
+.footer {
+    margin: 0 auto;
+}
+
+.placeholder {
+    height: 40px;
+    background: #fff;
+    margin: 0 auto;
+}
+
+.footer-body {
+    position: relative;
+    background: #fff;
+    padding: 30px 0;
+    border-top: 1px #e1e4e8 solid !important;
+    .footer-left {
+        position: absolute;
+        left: 0;
+        height: 25px;
+        line-height: 25px;
+        font-size: 12px !important;
+    }
+    .footer-right {
+        position: absolute;
+        right: 0;
+        height: 25px;
+        line-height: 25px;
+        font-size: 12px !important;
+    }
+    .footer-center {
+        img {
+            cursor: pointer;
+        }
+    }
+}

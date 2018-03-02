@@ -1,0 +1,43 @@
+:host>div {
+    background: #fff;
+}
+
+.main {
+    padding: 18px 22px ;
+}
+
+.border {
+    padding-bottom: 16px;
+    border-bottom: 1px solid #e8e8e8;
+}
+
+.text-first {
+    font-size: 30px;
+    font-weight: 500;
+}
+
+.text-second {
+    font-size: 16px;
+    color: rgb(151, 151, 151);
+}
+
+.search {
+    vertical-align: bottom;
+    width: 400px;
+}
+
+:host ::ng-deep .ant-avatar-lg {
+    width: 56px;
+    height: 56px;
+    line-height: 56px;
+}
+
+.inline {
+    display: inline-block;
+}
+
+.avatar {
+    margin-right: 20px;
+    color: white;
+    background-color: #ff7a45;
+}

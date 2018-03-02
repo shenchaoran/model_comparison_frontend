@@ -1,10 +1,18 @@
+:host {
+    height: 100%;
+    overflow: scroll;
+}
+
 .container {
+    height: 100%;
+    overflow: scroll;
     padding: 10px;
     box-sizing: border-box;
     // overflow: scroll;
     #left-item {
         flex: 1;
         padding: 10px;
+        margin-right: 10px;
     }
     #right-item {
         flex: 4;

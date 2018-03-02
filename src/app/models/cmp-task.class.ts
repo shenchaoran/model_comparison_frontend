@@ -7,8 +7,8 @@ import { ObjectID } from 'mongodb';
 import { GeoDataClass } from './UDX-data.class';
 import { ResourceSrc } from './resource.enum';
 import { LoginService } from '@feature/login/login.service';
-import { CmpObj } from './cmp-obj.class';
 import { CalcuTaskState } from './calcu-task.class';
+import { CmpState } from './cmp-state.enum';
 
 export class CmpTask {
     _id?: any;
@@ -22,6 +22,12 @@ export class CmpTask {
         userName: string,
         userId: string
     };
+    solutionId: string;
+    parameters: {
+        msId: string,
+        eventName: string,
+        dataId: string
+    }[];
     cmpCfg: {
         solutionId: string,
         ms: Array<{
@@ -32,7 +38,7 @@ export class CmpTask {
         }>,
         // 这里暂时先把sln的所有字段复制过来了，避免了多表查询
         keynote: {
-            direction: 'x'|'y',
+            direction: 'multi'|'single',
             dimension: 'point' | 'polygon' | 'multi-point'
         },
         cmpObjs: Array<{
@@ -53,34 +59,33 @@ export class CmpTask {
                 // data 存放具体比较的配置，如chart的列名，图像处理
                 data: any,
                 cmpResult: {
-                    state: CmpResultState,
+                    state: CmpState,
                     image?: [{
                       extent: any,
                       path: string,
                       title: string,
-                      state: CmpResultState
+                      state: CmpState
                     }],
                     chart?: {
-                        state: CmpResultState
+                        state: CmpState
                     },
                     GIF?: {
-                        state: CmpResultState
+                        state: CmpState
                     },
                     statistic?: {
-                        state: CmpResultState
+                        state: CmpState
                     },
                 }
             }>,
             attached: any
         }>
     };
-    // 计算配置，即输入数据
-    calcuCfg: CalcuCfg;
     cmpState: CmpState;
     calcuTasks: Array<{
       calcuTaskId: string,
       state: CalcuTaskState
     }>;
+    [key: string]: any;
 
     constructor() {
         const user = LoginService.getUser();
@@ -95,68 +100,9 @@ export class CmpTask {
             userName: user? user.username: undefined,
             userId: user? user._id: undefined
         };
-        this.cmpCfg = {
-            solutionId: undefined,
-            ms: [],
-            keynote: {
-                direction: undefined,
-                dimension: undefined
-            },
-            cmpObjs: []
-        };
+        this.solutionId = '';
+        this.parameters = [];
         this.cmpState = CmpState.INIT;
-        this.calcuCfg = {
-            dataSrc: undefined,
-            dataRefers: [],
-            stdSrc: {
-                spatial: {
-                    
-                },
-                temporal: {
-                    start: undefined,
-                    end: undefined,
-                    scale: 'DAY'
-                }
-            }
-        };
         this.calcuTasks = [];
-    }
-}
-
-export enum CmpState {
-    INIT = 0,
-    RUNNING,
-    SUCCEED,
-    FAILED
-}
-
-export enum CmpResultState {
-    RUNNING = 0,
-    SUCCEED,
-    FAILED
-}
-
-// TODO 纵向比较时，要多份数据，
-export class CalcuCfg {
-    dataSrc: 'std' | 'upload';
-    // upload
-    dataRefers?: Array<{
-        msId: string,
-        eventName: string,
-        dataId: string
-    }>;
-    // std  时空
-    stdSrc?: {
-        spatial?: {
-            dimension?: 'point' | 'polygon' | 'multi-point',
-            point?: any,
-            polygon?: any,
-            multiPoint?: any
-        },
-        temporal?: {
-            start: number,
-            end: number,
-            scale: 'YEAR' | 'DAY'
-        }
     }
 }

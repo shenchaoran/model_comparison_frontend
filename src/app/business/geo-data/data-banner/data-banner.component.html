@@ -1,0 +1,35 @@
+<div class="main">
+  <div nz-row [nzType]="'flex'" [nzJustify]="'space-around'" [nzAlign]="'middle'" class="border">
+    <div nz-col [nzSpan]="16">
+      <div class="inline">
+        <nz-avatar [nzShape]="'square'" [nzSize]="'large'" [nzIcon]="'aliwangwang'" class="avatar"></nz-avatar>
+      </div>
+      <div class="inline title">
+        <div class="text-first">Data</div>
+        <div class="text-second">standard data storage</div>
+      </div>
+    </div>
+    <div nz-col [nzSpan]="8">
+      <div nz-row [nzGutter]="8">
+        <div nz-col [nzSpan]="14">
+        </div>
+        <div nz-col [nzSpan]="8">
+          <nz-dropdown [nzPlacement]="'bottomRight'">
+            <button nz-button [nzType]="'primary'" [nzSize]="'large'" nz-dropdown>Change Data Set</button>
+            <ul nz-menu>
+              <li nz-menu-item>
+                <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">Data Set Globle</a>
+              </li>
+              <li nz-menu-item>
+                <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">Data Set For Asia</a>
+              </li>
+              <li nz-menu-item>
+                <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">Data Set For America</a>
+              </li>
+            </ul>
+          </nz-dropdown>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

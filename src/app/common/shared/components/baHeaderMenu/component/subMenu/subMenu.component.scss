@@ -2,7 +2,15 @@ a:visited {
     // color: #108ee9 !important;
 }
 
+.menu-item {
+    z-index: 999;
+}
+
 span {
     height: 100%;
     display: flex;
+}
+
+.actived-menu {
+    color: #fff !important;
 }

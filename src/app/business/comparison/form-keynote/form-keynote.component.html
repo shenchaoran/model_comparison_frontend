@@ -28,8 +28,8 @@
             </div>
             <div nz-form-control [nzValidateStatus]="'success'" nz-col [nzSpan]="12">
                 <nz-radio-group [(ngModel)]="keynote.direction" (ngModelChange)='emitNgModelChange()' name='keynote-direction' [nzSize]='"large"'>
-                    <label nz-radio-button [nzValue]="'x'" [nzDisabled]='mode==="read" && keynote.direction==="y"'><span>Horizontal</span></label>
-                    <label nz-radio-button [nzValue]="'y'" [nzDisabled]='mode==="read" && keynote.direction==="x"'><span>Vertical</span></label>
+                    <label nz-radio-button [nzValue]="'multi'" [nzDisabled]='mode==="read" && keynote.direction==="single"'><span>Multi-Models</span></label>
+                    <label nz-radio-button [nzValue]="'single'" [nzDisabled]='mode==="read" && keynote.direction==="multi"'><span>Single</span></label>
                 </nz-radio-group>
             </div>
         </div>

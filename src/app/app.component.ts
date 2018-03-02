@@ -8,13 +8,14 @@ import {
 } from './common/shared/services';
 import { BaThemeConfig } from './common/shared/theme.config';
 import { layoutPaths } from './common/shared/theme.constants';
+import { DynamicTitleService } from '@core/services/dynamic-title.service';
 
 /*
  * App Component
  * Top Level Component
  */
 @Component({
-  selector: 'njgis',
+  selector: 'ogms-app',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
@@ -26,7 +27,8 @@ export class App implements OnInit {
     private _imageLoader: BaImageLoaderService,
     private _spinner: BaThemeSpinner,
     private viewContainerRef: ViewContainerRef,
-    private themeConfig: BaThemeConfig
+    private themeConfig: BaThemeConfig,
+    private title: DynamicTitleService
   ) {
     themeConfig.config();
 

@@ -1,0 +1,31 @@
+.row {
+    padding-bottom: 8px; 
+}
+
+.avatar {
+    color: white; 
+    background-color: #ff7a45;
+}
+
+:host ::ng-deep .name {
+    font-size: 14px;
+    font-weight: 500;
+    height: 24px;
+    line-height: 24px;
+    vertical-align: top;
+    margin-left: 8px;
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    -o-text-overflow: ellipsis;
+    white-space:nowrap;
+    width:200px;
+    display:inline-block;
+}
+
+.desc {
+    color: rgb(148, 148, 148);
+}
+
+.favor-number {
+    margin-left: 6px;
+}

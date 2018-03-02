@@ -3,15 +3,36 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { GeoDataComponent } from './geo-data.component';
 import { DataService } from './services/data.service';
+import { DatasComponent } from "./datas/datas.component";
+import { DataInfoComponent } from "./data-info/data-info.component";
+import { SiderMenuLayoutComponent, HeaderMenuLayoutComponent } from '@shared';
 
 const routes: Routes = [
-    { 
-        path: '', 
-        component: GeoDataComponent,
-        resolve: {
-            geoDataResource: DataService
-        },
-        children: []
+    {
+        path: '',
+        component: HeaderMenuLayoutComponent,
+        children: [
+            { 
+                path: '', 
+                component: GeoDataComponent,
+                resolve: {
+                    geoDataResource: DataService
+                },
+                children: [
+                    {
+                        path: '',
+                        component: DataInfoComponent,
+                        data: {
+                            title: 'Data'
+                        }
+                    },
+                    {
+                        path: 'datainfo',
+                        component: DataInfoComponent
+                    }
+                ]
+            }
+        ]
     }
 ];
 
