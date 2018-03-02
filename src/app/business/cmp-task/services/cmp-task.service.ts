@@ -11,7 +11,7 @@ export class CmpTaskService implements Resolve<any> {
     constructor(private http: _HttpClient) {}
 
     resolve() {
-        return this.findAll()
+        return this.findAll({})
             .toPromise()
             .then(response => {
                 if (response.error) {
@@ -22,8 +22,10 @@ export class CmpTaskService implements Resolve<any> {
             });
     }
 
-    findAll(): Observable<any> {
-        return this.http.get('/comparison/tasks');
+    findAll(query): Observable<any> {
+        return this.http.get('/comparison/tasks', {
+            params: query
+        });
     }
 
     insert(doc): Observable<any> {

@@ -10,30 +10,29 @@ export class ListTemplateComponent implements OnInit {
 
     sort: {
         label: string,
-        value: string
+        value: string,
+        checked: boolean
     }[];
     organization: {
         label: string,
-        value: string
+        value: string,
+        checked: boolean
     }[];
-    radioFilters:{
-        key: string,
-        options: {
-            label: string,
-            value: string
-        }[]
-    };
+    owner: {
+        label: string,
+        value: string,
+        checked: boolean
+    }[];
 
     filters: {
-        q: string,
-        pageSize: number,
-        pageNum: number,
-        [key: string]: any
-    } = {
-        q: '',
-        pageNum: 1,
-        pageSize: 25
-    };
+        q?: string,
+        pageSize?: number,
+        pageNum?: number,
+        [key: string]: any,
+        owner?: string,
+        organization?: string,
+        sort?: string
+    } = {};
     @Output() onFiltersChange = new EventEmitter<any>();
 
     @Input() list: any[];
@@ -47,10 +46,25 @@ export class ListTemplateComponent implements OnInit {
 
     ngOnInit() {
         this.filterService.init(this.type);
+        this.owner = this.filterService.getOwnerFilter();
+        this.organization = this.filterService.getOrganizationFilter();
+        this.sort = this.filterService.getSortFilter();
+        if(this.owner && this.owner.length) {
+            this.filters.owner = this.owner[0].value;
+        }
     }
 
-    onRadioFiltersChange() {
-
+    changeFilters(v, type) {
+        _.map(this[type], item => {
+            if(item.value === v) {
+                item.checked = true;
+            }
+            else {
+                item.checked = false;
+            }
+        });
+        this.filters[type] = v;
+        this.onSearch();
     }
 
     onSearch() {

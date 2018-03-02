@@ -1,10 +1,9 @@
 <div class='container'>
     <div class='flex-box-row-nowrap'>
-        <!-- <nz-radio-group *ngIf='radioFilters && radioFilters.options && radioFilters.options.length' [ngModel]='radioFilters.options[0].value' (ngModelChange)='onRadioFiltersChange()'> -->
-        <nz-radio-group [nzSize]='"large"' [ngModel]='"Created"' (ngModelChange)='onRadioFiltersChange()'>
-            <!-- <label nz-radio-button *ngFor='let item of radioFilters.options' [nzValue]='item.value'><span>{{item.label}}</span></label> -->
-            <label nz-radio-button [nzValue]='"Created"'><span>Created</span></label>
-            <label nz-radio-button [nzValue]='"Followed"'><span>Followed</span></label>
+        <nz-radio-group *ngIf='owner' [ngModel]='owner[0].value' [nzSize]='"large"' (ngModelChange)='changeFilters($event, "owner")'>
+            <label nz-radio-button *ngFor='let item of owner' [nzValue]='item.value'>
+                <span>{{item.label}}</span>
+            </label>
         </nz-radio-group>
         <span class='flex-item-1-1-auto'></span>
         <nz-input [nzType]="'search'" [nzSize]='"large"' [nzPlaceHolder]="'Search'" [(ngModel)]="filters.q" style="width: 400px;" (nzOnSearch)="onSearch()"></nz-input>
@@ -13,32 +12,38 @@
         <div class='flex-box-row-nowrap list-header'>
             <span>{{list.length}} items found</span>
             <span class='flex-item-1-1-auto'></span>
-            <span class='dropdown-filter'>
+            <span *ngIf='organization' class='dropdown-filter'>
                     <nz-dropdown [nzTrigger]="'click'">
                         <span class="ant-dropdown-link" nz-dropdown>
                             Organization&nbsp;&nbsp;<i class="anticon anticon-down"></i>
                         </span>
             <ul nz-menu>
-                <li nz-menu-item>1st menu item</li>
-                <li nz-menu-item>2nd menu item</li>
-                <li nz-menu-item>3rd menu item</li>
+                <li nz-menu-item *ngFor='let item of organization' (click)='changeFilters(item.value, "organization")'>
+                    <span class='checked-label'>
+                        <i *ngIf='item.checked' class="anticon anticon-check"></i>
+                    </span>
+                    <span>{{item.label}}</span>
+                </li>
             </ul>
             </nz-dropdown>
             </span>
-            <span class='dropdown-filter'>
+            <span *ngIf='sort' class='dropdown-filter'>
                 <nz-dropdown [nzTrigger]="'click'">
                     <span class="ant-dropdown-link" nz-dropdown>
                         Sort&nbsp;&nbsp;<i class="anticon anticon-down"></i>
                     </span>
             <ul nz-menu>
-                <li nz-menu-item>1st menu item</li>
-                <li nz-menu-item>2nd menu item</li>
-                <li nz-menu-item>3rd menu item</li>
+                <li nz-menu-item *ngFor='let item of sort' (click)='changeFilters(item.value, "sort")'>
+                    <span class='checked-label'>
+                        <i *ngIf='item.checked' class="anticon anticon-check"></i>
+                    </span>
+                    <span>{{item.label}}</span>
+                </li>
             </ul>
             </nz-dropdown>
             </span>
         </div>
-        <ng-content></ng-content>
+
         <ng-container *ngIf='template && list'>
             <ng-container *ngFor='let item of list'>
                 <div class='list-item'>
@@ -54,3 +59,6 @@
         <span class='flex-item-1-1-auto'></span>
     </div>
 </div>
+
+
+<ng2-slim-loading-bar color='#e0631a' height='2px'></ng2-slim-loading-bar>

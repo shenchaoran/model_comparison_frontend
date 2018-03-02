@@ -24,10 +24,16 @@
         .dropdown-filter {
             margin: 0 10px;
             span {
-                cursor: pointer;
+                cursor: pointer !important;
             }
         }
     }
+}
+
+.checked-label {
+    width: 25px !important;
+    height: 10px;
+    float: left;
 }
 
 .list-item {

@@ -7,7 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { TranslateModule } from '@ngx-translate/core';
 import { QuillModule } from 'ngx-quill';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
-
+import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
 
 import {
     PerfectScrollbarModule,
@@ -31,6 +31,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     NgZorroAntdModule,
     QuillModule,
     PerfectScrollbarModule,
+    SlimLoadingBarModule.forRoot(),
     // ClarityModule.forChild(),
   ],
   exports: [
@@ -42,6 +43,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     NgZorroAntdModule,
     QuillModule,
     PerfectScrollbarModule,
+    SlimLoadingBarModule,
   ],
   providers: [
     {
