@@ -18,6 +18,9 @@ export class DataInfoComponent implements OnInit {
   solutions: Solution[];
   tasks: Task[];
 
+  startDate: Date;
+  endDate: Date;
+
   constructor(private mockService: MockService) { 
     this.models = mockService.getModels();
     this.datas = mockService.getDatas();
@@ -27,6 +30,8 @@ export class DataInfoComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.startDate = new Date(1980, 0, 1)
+    this.endDate = new Date(2010, 0, 1)
   }
 
 }

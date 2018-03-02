@@ -1,10 +1,18 @@
 .main {
     padding: 16px;
+    .title {
+        font-size: 18px;
+        font-weight: 450;
+    }
 }
 
 // .home-model-card {
 
 // }
+:host ::ng-deep .ant-card-head {
+    background: #f3f3f3
+}
+
 :host ::ng-deep .ant-card-body {
     padding: 0px;
     margin: 0px;

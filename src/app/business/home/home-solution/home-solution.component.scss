@@ -1,5 +1,13 @@
 .home-solution-main {
     padding: 16px;
+    .title {
+        font-size: 18px;
+        font-weight: 450;
+    }
+}
+
+:host ::ng-deep .ant-card-head {
+    background: #f3f3f3
 }
 
 :host ::ng-deep .ant-card-body {

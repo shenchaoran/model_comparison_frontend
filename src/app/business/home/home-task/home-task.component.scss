@@ -1,8 +1,16 @@
 .home-task-main {
     height: 750px;
     padding: 16px;
+    .title {
+        font-size: 18px;
+        font-weight: 450;
+    }
 }
 
 .home-task-card {
     width: 100%;
+}
+
+:host ::ng-deep .ant-card-head {
+    background: #f3f3f3
 }

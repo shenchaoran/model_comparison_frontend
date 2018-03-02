@@ -68,17 +68,14 @@
             <span nz-col [nzSpan]='4' class="time-span-left">End Date</span>
             <span nz-col [nzSpan]='8' class="time-span-right">2010-01-01</span>
             <div nz-col [nzSpan]='12' style="padding-top: 8px">
-              <nz-calendar [nzValue]='1980-05-01' [nzLocale]="'zh-cn'" [nzFullScreen]="false" style="width: 80%; border: 1px solid rgb(217, 217, 217); border-radius: 4px;"></nz-calendar>
+              <nz-calendar [nzValue]="startDate" [nzLocale]="'zh-cn'" [nzFullScreen]="false" style="width: 80%; border: 1px solid rgb(217, 217, 217); border-radius: 4px;"></nz-calendar>
             </div>
             <div nz-col [nzSpan]='12' style="padding-top: 8px">
-              <nz-calendar [nzValue]='2010-05-01' [nzLocale]="'zh-cn'" [nzFullScreen]="false" style="width: 80%; border: 1px solid rgb(217, 217, 217); border-radius: 4px;"></nz-calendar>
+              <nz-calendar [nzValue]="endDate" [nzLocale]="'zh-cn'" [nzFullScreen]="false" style="width: 80%; border: 1px solid rgb(217, 217, 217); border-radius: 4px;"></nz-calendar>
             </div>
           </div>
         </section>
       </article>
-      <aside class="sider-content flex-item-1">
-
-      </aside>
     </div>
   </section>
 </ogms-doc-detail-template>
