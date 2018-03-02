@@ -23,14 +23,15 @@
             "styles.scss"
         ],
         "scripts": [
-            "../node_modules/jquery/dist/jquery.js",
-            "../node_modules/chroma-js/chroma.js",
+            "../node_modules/jquery/dist/jquery.min.js",
+            "../node_modules/chroma-js/chroma.min.js",
             "../node_modules/lodash/lodash.min.js",
             "../node_modules/postal/lib/postal.min.js",
             "../node_modules/openlayers/dist/ol.js",
             "../node_modules/ol3-ext/dist/ol3-ext.min.js",
-            "../node_modules/quill/dist/quill.js",
-            "../node_modules/ol3-layerswitcher/src/ol3-layerswitcher.js"
+            "../node_modules/quill/dist/quill.min.js",
+            "../node_modules/ol3-layerswitcher/src/ol3-layerswitcher.js",
+            "../node_modules/perfect-scrollbar/dist/perfect-scrollbar.min.js"
         ],
         "environmentSource": "environments/environment.ts",
         "environments": {

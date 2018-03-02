@@ -24,7 +24,10 @@ const routes: Routes = [
             }, 
             {
                 path: 'new',
-                component: NewTaskComponent
+                component: NewTaskComponent,
+                data: {
+                    title: 'Create a New Task'
+                }
             },
             {
                 path: ':id',

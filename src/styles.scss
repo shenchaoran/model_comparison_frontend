@@ -15,16 +15,18 @@
 @import '~quill/dist/quill.snow';
 @import '~angular-tree-component/dist/angular-tree-component.css';
 @import '~ol3-layerswitcher/src/ol3-layerswitcher.css';
-// theme
-@import "app/common/shared/theme.scss";
-// add by SCR
 @import '~handsontable/dist/handsontable.full.css';
-@import "assets/css/my/layout.scss";
+// theme
+// @import "app/common/shared/theme.scss";
+// add by SCR
 @import "assets/css/my/custom-esri.css";
 @import "assets/css/my/custom-openlayers.css";
-@import "assets/css/my/perfectscroll.css";
 @import "assets/css/my/ng2-tree-styles.css";
 @import "assets/css/my/global.scss";
+@import "assets/css/my/scrollbar.scss";
+@import "assets/css/my/layout.scss";
+@import "assets/css/my/doc-detail.scss";
+@import "assets/css/my/doc-list.scss";
 // TODO relative path problems
 @import 'assets/css/jqwidgets/jqx.base';
 @import 'assets/css/jqwidgets/jqx.energyblue-my';

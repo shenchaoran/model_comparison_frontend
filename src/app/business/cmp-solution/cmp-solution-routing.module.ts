@@ -29,7 +29,10 @@ const routes: Routes = [
                     },
                     {
                         path: 'new',
-                        component: NewSlnComponent
+                        component: NewSlnComponent,
+                        data: {
+                            title: 'Create a New Solution'
+                        }
                     },
                     {
                         path: ':id',

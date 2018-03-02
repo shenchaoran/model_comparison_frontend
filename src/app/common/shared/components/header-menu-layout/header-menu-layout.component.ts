@@ -7,6 +7,10 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
     styleUrls: ['./header-menu-layout.component.scss']
 })
 export class HeaderMenuLayoutComponent implements OnInit, OnDestroy {
+    scrollbarCfg = {
+        wheelSpeed: 1,
+        swipeEasing: false
+    };
     // TODO optional show menu header
     showMenu: boolean = true;
 

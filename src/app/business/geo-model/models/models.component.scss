@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // .container {
 //     padding: 10px;
 //     box-sizing: border-box;
@@ -11,6 +12,41 @@
 //         padding: 10px;
 //     }
 // }
+=======
+#root-container {
+    height: 100%;
+    overflow-y: hidden;
+    #scroll-container {
+        height: 100%;
+        overflow-y: scroll;
+    }
+}
+
+.bg {
+    position: relative;
+    margin-bottom: -380px;
+    height: 420px;
+    background: url('/assets/img/article/bg-gradient.png') repeat-x;
+    div {
+        background: url('/assets/img/article/bg-main.png') no-repeat top center;
+        height: 100%;
+    }
+}
+
+.container {
+    padding: 10px;
+    box-sizing: border-box;
+    // overflow: scroll;
+    #left-item {
+        flex: 1;
+        padding: 10px;
+    }
+    #right-item {
+        flex: 4;
+        padding: 10px;
+    }
+}
+>>>>>>> 1e87e50670e97ee6646ebe84be3708c272f36801
 
 // .model-body {
 //     background: #ECECEC;

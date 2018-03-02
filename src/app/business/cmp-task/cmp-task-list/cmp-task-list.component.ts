@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { DynamicTitleService } from '@core/services/dynamic-title.service';
 import { NzNotificationService, NzModalService } from 'ng-zorro-antd';
 import { CmpTaskService } from '../services';
 
@@ -15,9 +14,8 @@ export class CmpTaskListComponent implements OnInit {
 
     constructor(
         private route: ActivatedRoute,
-        private title: DynamicTitleService,
         private service: CmpTaskService,
-        private _notice: NzNotificationService
+        private _notice: NzNotificationService,
     ) {}
 
     ngOnInit() {
@@ -28,6 +26,15 @@ export class CmpTaskListComponent implements OnInit {
     }
 
     search(filters) {
-
+        this.service.findAll(filters)
+            .subscribe(response => {
+                if(response.error) {
+                    this._notice.warning('Warning:', 'Get issues failed!');
+                }
+                else {
+                    this.tasks = response.data.docs;
+                    this.count = response.data.count;
+                }
+            });
     }
 }

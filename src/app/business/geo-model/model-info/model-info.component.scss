@@ -35,6 +35,7 @@
 //     margin-bottom: 16px;
 // }
 
+<<<<<<< HEAD
 // .bg {
 //     position: relative;
 //     margin-bottom: -320px;
@@ -45,6 +46,18 @@
 //         height: 100%;
 //     }
 // }
+=======
+.bg {
+    position: relative;
+    margin-bottom: -360px;
+    height: 420px;
+    background: url('/assets/img/article/bg-gradient.png') repeat-x;
+    div {
+        background: url('/assets/img/article/bg-main.png') no-repeat top center;
+        height: 100%;
+    }
+}
+>>>>>>> 1e87e50670e97ee6646ebe84be3708c272f36801
 
 // #article-title {
 //     background: #ffffff;
@@ -176,6 +189,7 @@
 //     }
 // }
 
+<<<<<<< HEAD
 // .ms-progress {
 //     width: 400px;
 //     margin: 10px 0;
@@ -188,3 +202,21 @@
 //         width: 310px;
 //     }
 // }
+=======
+.ms-progress {
+    width: 400px;
+    margin: 10px 0;
+    display: flex;
+    flex-flow: row nowrap;
+    span {
+        width: 90px;
+    }
+    nz-progress {
+        width: 310px;
+    }
+}
+
+:host ::ng-deep .ant-card-body {
+    padding: 0px;
+}
+>>>>>>> 1e87e50670e97ee6646ebe84be3708c272f36801

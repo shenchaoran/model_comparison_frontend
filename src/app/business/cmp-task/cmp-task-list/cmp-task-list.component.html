@@ -19,7 +19,7 @@
             </div>
             <div class='cmp-progress'>
                 <span>Comparison progress</span>
-                <div style='width: 350px;'>
+                <div class='ms-progress'>
                     <nz-progress [ngModel]='100'></nz-progress>
                 </div>
             </div>
@@ -28,7 +28,7 @@
     </section>
 </ng-template>
 
-<ogms-list-template [count]='count' [template]='taskTemplate' [list]='tasks' [radioFilters]='{}' (onFiltersChange)='search($event)'>
+<ogms-list-template [count]='count' [template]='taskTemplate' [type]='"tasks"' [list]='tasks' (onFiltersChange)='search($event)'>
 </ogms-list-template>
 
 <ogms-footer></ogms-footer>

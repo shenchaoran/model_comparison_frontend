@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CmpIssueService } from '../services';
 import { NzNotificationService, NzModalService } from 'ng-zorro-antd';
-import { DynamicTitleService } from '@core/services/dynamic-title.service';
+import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 
 @Component({
     selector: 'ogms-cmp-issue-list',
@@ -16,7 +16,7 @@ export class CmpIssueListComponent implements OnInit {
         private route: ActivatedRoute,
         private service: CmpIssueService,
         private _notice: NzNotificationService,
-        private title: DynamicTitleService
+        // private loading: SlimLoadingBarService
     ) { }
 
     ngOnInit() {
@@ -26,14 +26,11 @@ export class CmpIssueListComponent implements OnInit {
         });
     }
 
-    search(filters: {
-        q: string,
-        pageSize: number,
-        pageNum: number,
-        [key: string]: any
-    }) {
+    search(filters) {
+        // this.loading.start();
         this.service.findAll(filters)
             .subscribe(response => {
+                // this.loading.complete();
                 if(response.error) {
                     this._notice.warning('Warning:', 'Get issues failed!');
                 }
