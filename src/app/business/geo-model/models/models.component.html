@@ -1,15 +1,25 @@
-<div nz-row>
-    <div nz-col [nzSpan]="24">
-        <ogms-model-banner></ogms-model-banner>
-    </div>
-</div>
-<div class="model-body">
-    <div nz-row>
-        <div nz-col>
-            <ogms-model-search></ogms-model-search>
+<div id='root-container'>
+    <div id='scroll-container'>
+        <div class='bg'>
+            <div></div>
         </div>
-        <div nz-col>
-            <ogms-model-list></ogms-model-list>
+        <div class='content flex-box-col-nowrap'>
+            <div nz-row>
+                <div nz-col [nzSpan]="24">
+
+                </div>
+            </div>
+            <div class="model-body">
+                <div nz-row>
+                    <div nz-col>
+                        <ogms-model-banner></ogms-model-banner>
+                        <ogms-model-search></ogms-model-search>
+                    </div>
+                    <div nz-col>
+                        <ogms-model-list></ogms-model-list>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

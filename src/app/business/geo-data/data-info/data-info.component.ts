@@ -18,6 +18,14 @@ export class DataInfoComponent implements OnInit {
   solutions: Solution[];
   tasks: Task[];
 
+  _allChecked = false;
+  _disabledButton = true;
+  _checkedNumber = 0;
+  _displayData: Array<any> = [];
+  _operating = false;
+  _dataSet = [];
+  _indeterminate = false;
+
   constructor(private mockService: MockService) { 
     this.models = mockService.getModels();
     this.datas = mockService.getDatas();
@@ -27,6 +35,14 @@ export class DataInfoComponent implements OnInit {
   }
 
   ngOnInit() {
+    for (let i = 0; i < 46; i++) {
+      this._dataSet.push({
+        key    : i,
+        name   : `NPP ${i}`,
+        unit    : 'km/s',
+        desc: `This is very detail description. ${i}`,
+      });
+    }
   }
 
 }

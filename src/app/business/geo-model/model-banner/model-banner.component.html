@@ -10,26 +10,28 @@
   </div>
 </div> -->
 
-<div nz-row [nzType]="'flex'" [nzJustify]="'space-around'" [nzAlign]="'middle'" class="main">
-    <div nz-col [nzSpan]="16">
-        <div class="inline">
-            <nz-avatar [nzShape]="'square'" [nzSize]="'large'" [nzIcon]="'dingding'" class="avatar"></nz-avatar>
-        </div>
-        <div class="inline title">
-            <div class="text-first">Model</div>
-            <div class="text-second">carboon globle model</div>
-        </div>
-    </div>
-    <div nz-col [nzSpan]="8">
-        <div nz-row [nzGutter]="8">
-            <div nz-col [nzSpan]="18">
-                <nz-input [nzPlaceHolder]="'input model name'" [(ngModel)]="_value" [nzSize]="'large'" class="search"></nz-input>
+<div class="main">
+    <div nz-row [nzType]="'flex'" [nzJustify]="'space-around'" [nzAlign]="'middle'" class="border">
+        <div nz-col [nzSpan]="16">
+            <div class="inline">
+                <nz-avatar [nzShape]="'square'" [nzSize]="'large'" [nzIcon]="'dingding'" class="avatar"></nz-avatar>
             </div>
-            <div nz-col [nzSpan]="6">
-                <button nz-button [nzSize]="large" [nzType]="'primary'">
-                    <i class="anticon anticon-search"></i>
-                    <span>Search</span>
-                </button>
+            <div class="inline title">
+                <div class="text-first">Model</div>
+                <div class="text-second">carboon globle model</div>
+            </div>
+        </div>
+        <div nz-col [nzSpan]="8">
+            <div nz-row [nzGutter]="8">
+                <div nz-col [nzSpan]="18">
+                    <nz-input [nzPlaceHolder]="'input model name'" [(ngModel)]="_value" [nzSize]="'large'" class="search"></nz-input>
+                </div>
+                <div nz-col [nzSpan]="6">
+                    <button nz-button [nzSize]="large" [nzType]="'primary'">
+                        <i class="anticon anticon-search"></i>
+                        <span>Search</span>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
