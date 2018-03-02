@@ -16,7 +16,7 @@ export class CmpIssueListComponent implements OnInit {
         private route: ActivatedRoute,
         private service: CmpIssueService,
         private _notice: NzNotificationService,
-        private loading: SlimLoadingBarService
+        // private loading: SlimLoadingBarService
     ) { }
 
     ngOnInit() {
@@ -27,10 +27,10 @@ export class CmpIssueListComponent implements OnInit {
     }
 
     search(filters) {
-        this.loading.start();
+        // this.loading.start();
         this.service.findAll(filters)
             .subscribe(response => {
-                this.loading.complete();
+                // this.loading.complete();
                 if(response.error) {
                     this._notice.warning('Warning:', 'Get issues failed!');
                 }

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NzNotificationService, NzModalService } from 'ng-zorro-antd';
 import { CmpTaskService } from '../services';
-import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 
 @Component({
     selector: 'ogms-cmp-task-list',
@@ -17,7 +16,6 @@ export class CmpTaskListComponent implements OnInit {
         private route: ActivatedRoute,
         private service: CmpTaskService,
         private _notice: NzNotificationService,
-        private loading: SlimLoadingBarService,
     ) {}
 
     ngOnInit() {
@@ -28,10 +26,8 @@ export class CmpTaskListComponent implements OnInit {
     }
 
     search(filters) {
-        this.loading.start();
         this.service.findAll(filters)
             .subscribe(response => {
-                this.loading.complete();
                 if(response.error) {
                     this._notice.warning('Warning:', 'Get issues failed!');
                 }
