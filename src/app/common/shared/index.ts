@@ -35,6 +35,7 @@ import {
     ListTemplateComponent,
     FooterComponent,
     DocDetailTemplateComponent,
+    TableFeatureComponent
     // BaMessageBox,
     //
     // BaFloatWindow,
@@ -106,6 +107,7 @@ const CITYFUN_COMPONENTS = [
     ListTemplateComponent,
     FooterComponent,
     DocDetailTemplateComponent,
+    TableFeatureComponent
     // BaMessageBox,
     //
     // BaFloatWindow,

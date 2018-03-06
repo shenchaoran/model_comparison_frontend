@@ -12,6 +12,8 @@ import { CmpResultMapComponent } from './cmp-result-map/cmp-result-map.component
 import { CmpResultTableComponent } from './cmp-result-table/cmp-result-table.component';
 import { CmpResultChartComponent } from './cmp-result-chart/cmp-result-chart.component';
 import { EchartAdapterService } from '@core/services/echartAdapter.service';
+import { CmpSlnService } from "../cmp-solution/services/cmp-sln.service";
+import { MSService } from "../geo-model/services/model.service";
 
 @NgModule({
     imports: [
@@ -32,6 +34,8 @@ import { EchartAdapterService } from '@core/services/echartAdapter.service';
     providers: [
         CmpTaskService,
         EchartAdapterService,
+        CmpSlnService,
+        MSService
     ]
 })
 export class CmpTaskModule { }
