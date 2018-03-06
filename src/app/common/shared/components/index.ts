@@ -17,6 +17,7 @@ export * from './sider-menu-layout/sider-menu-layout.component';
 export * from './list-template/list-template.component';
 export * from './footer/footer.component';
 export * from './doc-detail-template/doc-detail-template.component';
+export * from './table-feature/table-feature.component';
 // export * from './baMessageBox';
 //
 // export * from './baFloatWindow';

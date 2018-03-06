@@ -7,6 +7,8 @@ import { SharedModule } from '@shared';
 import { NewTaskComponent } from './new-task/new-task.component';
 import { CmpTaskService } from './services';
 import { OlMapModule } from '@feature/ol-map/ol-map.module';
+import { CmpSlnService } from "../cmp-solution/services/cmp-sln.service";
+import { MSService } from "../geo-model/services/model.service";
 
 @NgModule({
   imports: [
@@ -16,7 +18,9 @@ import { OlMapModule } from '@feature/ol-map/ol-map.module';
   ],
   declarations: [CmpTaskListComponent, TaskDetailComponent, NewTaskComponent],
   providers: [
-    CmpTaskService
+    CmpTaskService,
+    CmpSlnService,
+    MSService
   ]
 })
 export class CmpTaskModule { }

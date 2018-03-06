@@ -24,7 +24,6 @@ export class ModelsComponent implements OnInit {
     this.route.data.subscribe(resolveData => {
       this.models = resolveData.geoModelTree.docs;
       this.count = resolveData.geoModelTree.count;
-      console.log(this.models);
     })
   }
 

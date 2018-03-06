@@ -6,6 +6,13 @@
             </label>
         </nz-radio-group>
         <span class='flex-item-1-1-auto'></span>
+        <div *ngIf='buttons'>
+            <button *ngFor="let button of buttons" nz-button [nzType]="'primary'" style="margin-left: 10px; margin-right: 10px">
+                <a [routerLink]="button.route">
+                    <span>{{button.name}}</span>
+                </a>
+            </button>
+        </div>
         <nz-input [nzType]="'search'" [nzSize]='"large"' [nzPlaceHolder]="'Search'" [(ngModel)]="filters.q" style="width: 400px;" (nzOnSearch)="onSearch()"></nz-input>
     </div>
     <div class='list-box'>

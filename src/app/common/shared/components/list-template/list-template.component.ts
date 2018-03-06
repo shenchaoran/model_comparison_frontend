@@ -39,6 +39,7 @@ export class ListTemplateComponent implements OnInit {
     @Input() count: number;
     @Input() template: any;
     @Input() type: string;
+    @Input() buttons: any[];
 
     constructor(
         private filterService: ListFilterService

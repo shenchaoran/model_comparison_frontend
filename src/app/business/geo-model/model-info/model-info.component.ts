@@ -21,7 +21,8 @@ export class ModelInfoComponent implements OnInit {
     _checkedNumber = 0;
     _displayData: Array<any> = [];
     _operating = false;
-    _dataSet = [];
+    _ioDataSet = [];
+    _paramsDataSet = [];
     _indeterminate = false;
 
     constructor(
@@ -42,54 +43,56 @@ export class ModelInfoComponent implements OnInit {
               else {
                 this.model = response.data;
                 this.title.setTitle(this.model.MDL.meta.name);
+
+                console.log(this.model.MDL.IO.schemas[0].structure[0]);
+                //add io table dataset
+                for(let i = 0; i < this.model.MDL.IO.schemas[0].structure.length; i++) {
+                    this._ioDataSet.push(this.model.MDL.IO.schemas[0].structure[i]);
+                }
+
+                for (let i = 0; i < this.model.MDL.params.length; i++) {
+                    this._paramsDataSet.push(this.model.MDL.params[i]);
+                }
               }
             })
         });
 
         this._isLoading = false;
 
-        //temp mock
-        for (let i = 0; i < 46; i++) {
-            this._dataSet.push({
-                key: i,
-                name: `NPP ${i}`,
-                unit: "km/s",
-                desc: `This is very detail description. ${i}`
-            });
-        }
+
     }
 
     _displayDataChange($event) {
         this._displayData = $event;
     }
 
-    _refreshStatus() {
+    _refreshStatus(dataset) {
         const allChecked = this._displayData.every(
             value => value.checked === true
         );
         const allUnChecked = this._displayData.every(value => !value.checked);
         this._allChecked = allChecked;
         this._indeterminate = !allChecked && !allUnChecked;
-        this._disabledButton = !this._dataSet.some(value => value.checked);
-        this._checkedNumber = this._dataSet.filter(
+        this._disabledButton = !dataset.some(value => value.checked);
+        this._checkedNumber = dataset.filter(
             value => value.checked
         ).length;
     }
 
-    _checkAll(value) {
+    _checkAll(value, dataset) {
         if (value) {
             this._displayData.forEach(data => (data.checked = true));
         } else {
             this._displayData.forEach(data => (data.checked = false));
         }
-        this._refreshStatus();
+        this._refreshStatus(dataset);
     }
 
-    _operateData() {
+    _operateData(dataset) {
         this._operating = true;
         setTimeout(_ => {
-            this._dataSet.forEach(value => (value.checked = false));
-            this._refreshStatus();
+            dataset.forEach(value => (value.checked = false));
+            this._refreshStatus(dataset);
             this._operating = false;
         }, 1000);
     }

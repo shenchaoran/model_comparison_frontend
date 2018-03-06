@@ -11,6 +11,7 @@ import { CmpTaskService } from '../services';
 export class CmpTaskListComponent implements OnInit {
     tasks: any[];
     count: number;
+    buttons : any[];
 
     constructor(
         private route: ActivatedRoute,
@@ -23,6 +24,13 @@ export class CmpTaskListComponent implements OnInit {
             this.tasks = resolveData.tasks.docs;
             this.count = resolveData.tasks.count;
         });
+
+        this.buttons = [
+            {
+                name: 'create',
+                route: 'new'
+            },
+        ]
     }
 
     search(filters) {
