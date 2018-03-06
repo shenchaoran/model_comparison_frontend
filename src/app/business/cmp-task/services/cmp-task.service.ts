@@ -94,4 +94,15 @@ export class CmpTaskService implements Resolve<any> {
             return undefined;
         }
     }
+
+    getTable(path): Observable<any> {
+        if(path) {
+            return this.http.get(path, {
+                responseType: 'text'
+            }, true, false);
+        }
+        else {
+            return undefined;
+        }
+    }
 }

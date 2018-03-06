@@ -33,30 +33,36 @@ export class _HttpClient {
             }
 
             if(url.indexOf('?') === -1) {
-                url += `&Authorization=bearer ${jwt.token}`;
+                url += `?Authorization=bearer ${jwt.token}`;
             }
             else {
-                url += `?Authorization=bearer ${jwt.token}`;
+                url += `&Authorization=bearer ${jwt.token}`;
             }
         }
         return url;
     }
 
-    private resInterceptor(observable: Observable<any>): Observable<any> {
+    private resInterceptor(observable: Observable<any>, parseRes?: boolean): Observable<any> {
         return Observable.create(observer => {
             observable
                 .subscribe(response => {
                     this.loading.complete();
-                    if (_.startsWith(_.get(response, 'status.code'), '200')) {
-                        observer.next({
-                            data: response.data
-                        });
-                        observer.complete();
+                    if(parseRes === undefined || parseRes === true) {
+                        if (_.startsWith(_.get(response, 'status.code'), '200')) {
+                            observer.next({
+                                data: response.data
+                            });
+                            observer.complete();
+                        }
+                        else {
+                            observer.next({
+                                error: response.status
+                            });
+                            observer.complete();
+                        }
                     }
                     else {
-                        observer.next({
-                            error: response.status
-                        });
+                        observer.next(response);
                         observer.complete();
                     }
                 });
@@ -66,38 +72,42 @@ export class _HttpClient {
     get(
         url: string,
         options: any = {},
-        appendJWT?: boolean
+        appendJWT?: boolean,
+        parseRes?: boolean
     ): Observable<any> {
         url = this.appendJWT(url, appendJWT);
-        return this.resInterceptor(this.http.get(url, options));
+        return this.resInterceptor(this.http.get(url, options), parseRes);
     }
 
     post(
         url: string,
         body: any|null,
         options: any = {},
-        appendJWT?: boolean
+        appendJWT?: boolean,
+        parseRes?: boolean
     ): Observable<any> {
         url = this.appendJWT(url, appendJWT);
-        return this.resInterceptor(this.http.post(url, body, options));
+        return this.resInterceptor(this.http.post(url, body, options), parseRes);
     }
 
     delete(
         url: string,
         options: any = {},
-        appendJWT?: boolean
+        appendJWT?: boolean,
+        parseRes?: boolean
     ): Observable<any> {
         url = this.appendJWT(url, appendJWT);
-        return this.resInterceptor(this.http.delete(url, options));
+        return this.resInterceptor(this.http.delete(url, options), parseRes);
     }
 
     put(
       url: string,
       body: any|null,
       options: any = {},
-      appendJWT?: boolean
+      appendJWT?: boolean,
+      parseRes?: boolean
   ): Observable<any> {
       url = this.appendJWT(url, appendJWT);
-      return this.resInterceptor(this.http.put(url, body, options));
+      return this.resInterceptor(this.http.put(url, body, options), parseRes);
   }
 }

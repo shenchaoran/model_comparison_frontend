@@ -111,4 +111,11 @@ export class RegionMapComponent implements OnInit, AfterViewInit {
     resize() {
         this.olMapService.mapResize();
     }
+
+    onMouseWheel(e) {
+        // console.log(e);
+        e.preventDefault();
+        e.stopPropagation();
+        e.cancelBubble = true;
+    }
 }

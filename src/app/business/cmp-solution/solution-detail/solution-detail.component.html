@@ -1,8 +1,8 @@
 <ogms-doc-detail-template>
     <div class='doc' *ngIf='solution'>
         <div class='doc-title'>{{solution.meta.name}}</div>
-        <div class='doc-body flex-box-row-nowrap'>
-            <article class='main-content flex-item-3'>
+        <div class='doc-body row'>
+            <article class='main-content col-xs-9 col-sm-9 col-md-9 col-lg-9'>
                 <section>
                     <div class='section-header flex-box-row-nowrap'>
                         <span class='title'>Basic information</span>
@@ -49,7 +49,7 @@
                         <span class='placeholder flex-item-1-1-auto'></span>
                     </div>
                     <div class='section-body'>
-                        <div class='embed-map-box'>
+                        <div class=''>
                             <ogms-region-map [geojson]='geojson'></ogms-region-map>
                         </div>
                     </div>
@@ -117,7 +117,7 @@
                 </section>
             </article>
 
-            <aside class='sider-content flex-item-1'>
+            <aside class='sider-content col-xs-3 col-sm-3 col-md-3 col-lg-3'>
                 <section class="sider-item">
                     <div class="sider-item-title">
                         <span>Issue</span>

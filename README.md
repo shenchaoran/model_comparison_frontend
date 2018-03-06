@@ -134,6 +134,8 @@ declare var postal: any;
 
 - 页面右下角加后台运行列表
 - docking layout
+- 页面加载速度
+- 评论系统
 
 ## Install
 

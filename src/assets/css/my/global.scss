@@ -13,6 +13,55 @@ body {
     color: #24292e;
 }
 
+.debug-border {
+    border: 1px solid #8d8d8d;
+    border-radius: 5px;
+}
+
+.debug-background {
+    background-color: #fafafa;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+h1 {
+    font-size: 32px;
+    font-weight: 600;
+}
+
+h2 {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+h3 {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+h4 {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+h5 {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+h6 {
+    font-size: 12px;
+    font-weight: 600;
+}
+
 .topic {
     display: inline-block;
     padding: 0.3em 0.9em;
@@ -43,4 +92,19 @@ body {
 
 .method-topic:hover {
     background: #86befd;
+}
+
+.ol-map {
+    border: 1px solid #e5e5e5;
+    border-radius: 5px;
+    width: 550px;
+    height: 350px;
+}
+
+.ol-full-screen,
+.cmp-ol-map:fullscreen,
+.cmp-ol-map:-moz-full-screen,
+.cmp-ol-map:-webkit-full-screen,
+.cmp-ol-map:-ms-fullscreen {
+    width: 100vw;
 }

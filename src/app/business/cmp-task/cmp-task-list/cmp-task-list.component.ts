@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NzNotificationService, NzModalService } from 'ng-zorro-antd';
 import { CmpTaskService } from '../services';
@@ -8,7 +8,7 @@ import { CmpTaskService } from '../services';
     templateUrl: './cmp-task-list.component.html',
     styleUrls: ['./cmp-task-list.component.scss']
 })
-export class CmpTaskListComponent implements OnInit {
+export class CmpTaskListComponent implements OnInit, AfterViewInit {
     tasks: any[];
     count: number;
 
@@ -23,6 +23,9 @@ export class CmpTaskListComponent implements OnInit {
             this.tasks = resolveData.tasks.docs;
             this.count = resolveData.tasks.count;
         });
+    }
+
+    ngAfterViewInit() {
     }
 
     search(filters) {

@@ -7,14 +7,21 @@ import { SharedModule } from '@shared';
 import { NewTaskComponent } from './new-task/new-task.component';
 import { CmpTaskService } from './services';
 import { OlMapModule } from '@feature/ol-map/ol-map.module';
+import { EchartsNg2Module } from 'echarts-ng2';
+import { HotTableModule } from 'angular-handsontable';
+import { CmpResultMapComponent } from './cmp-result-map/cmp-result-map.component';
+import { CmpResultTableComponent } from './cmp-result-table/cmp-result-table.component';
+import { CmpResultChartComponent } from './cmp-result-chart/cmp-result-chart.component';
 
 @NgModule({
   imports: [
     SharedModule,
     CmpTaskListRoutingModule,
     OlMapModule,
+    EchartsNg2Module,
+    HotTableModule,
   ],
-  declarations: [CmpTaskListComponent, TaskDetailComponent, NewTaskComponent],
+  declarations: [CmpTaskListComponent, TaskDetailComponent, NewTaskComponent, CmpResultMapComponent, CmpResultTableComponent, CmpResultChartComponent],
   providers: [
     CmpTaskService
   ]

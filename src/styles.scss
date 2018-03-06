@@ -4,7 +4,7 @@
 // @import "../node_modules/clarity-icons/clarity-icons.min.css";
 // @import "../node_modules/clarity-ui/clarity-ui.min.css";
 // end
-@import "~roboto-fontface/css/roboto/roboto-fontface.css";
+// @import "~roboto-fontface/css/roboto/roboto-fontface.css";
 @import "~normalize.css/normalize.css";
 @import '~font-awesome/css/font-awesome.css';
 @import "~ionicons/css/ionicons.min.css";
@@ -16,6 +16,7 @@
 @import '~angular-tree-component/dist/angular-tree-component.css';
 @import '~ol3-layerswitcher/src/ol3-layerswitcher.css';
 @import '~handsontable/dist/handsontable.full.css';
+@import '~bootstrap/dist/css/bootstrap.min.css';
 // theme
 // @import "app/common/shared/theme.scss";
 // add by SCR
@@ -27,9 +28,9 @@
 @import "assets/css/my/layout.scss";
 @import "assets/css/my/doc-detail.scss";
 @import "assets/css/my/doc-list.scss";
+@import 'assets/css/my/zorro.scss';
 // TODO relative path problems
 @import 'assets/css/jqwidgets/jqx.base';
 @import 'assets/css/jqwidgets/jqx.energyblue-my';
-@import 'assets/css/zorro.scss';
-// @import 'assets/css/ol3-ext/ol3-ext.css';
+@import 'assets/css/ol3-ext/ol3-ext.css';
 // end
