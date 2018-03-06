@@ -164,40 +164,12 @@ export const USER_MENUS: MenuClass[] = [
         },
         children: [
             {
-                path: 'x',
-                data: {
-                    menu: {
-                        title: 'xxx'
-                    }
-                },
-                disabled: true
-            },
-            {
                 path: 'profile',
                 data: {
                     menu: {
                         title: 'Profile'
                     }
                 }
-            },
-            {
-                path: 'stars',
-                data: {
-                    menu: {
-                        title: 'Stars'
-                    }
-                }
-            },
-            {
-                path: 'resources',
-                data: {
-                    menu: {
-                        title: 'Resources'
-                    }
-                }
-            },
-            {
-                isDivider: true
             },
             {
                 path: 'set-up',

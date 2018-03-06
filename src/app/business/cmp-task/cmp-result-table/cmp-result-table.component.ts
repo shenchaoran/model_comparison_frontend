@@ -14,14 +14,9 @@ export class CmpResultTableComponent implements OnInit {
     hotId;
     tableSrc: any;
 
-    @Input() type: "swipe" | "default" = "default";
-    @Input() source: {
-        path: string,
-        state: number
-    };
+    @Input() source: any;
 
     constructor(
-        @Inject('BACKEND') private backend,
         private cmpTaskService: CmpTaskService
     ) { 
         this.hotId = uuidv1();
@@ -32,22 +27,23 @@ export class CmpResultTableComponent implements OnInit {
     }
 
     ngAfterViewInit() {
-        if (this.source && this.source.path) {
+        if (this.source) {
             setTimeout(() => {
-                this.cmpTaskService.getTable(this.source.path)
-                    .subscribe(response => {
-                        console.log('table request');
-                        this.tableSrc = _
-                            .chain(response)
-                            .split('\n')
-                            .map(row => {
-                                if(row.trim() !== '') {
-                                    return row.split(',');
-                                }
-                            })
-                            .filter(item => item !== undefined)
-                            .value();
-                    })
+                this.tableSrc = this.source;
+                // this.cmpTaskService.getTable(this.source.path)
+                //     .subscribe(response => {
+                //         console.log('table request');
+                //         this.tableSrc = _
+                //             .chain(response)
+                //             .split('\n')
+                //             .map(row => {
+                //                 if(row.trim() !== '') {
+                //                     return row.split(',');
+                //                 }
+                //             })
+                //             .filter(item => item !== undefined)
+                //             .value();
+                //     })
             }, 0);
         }
 

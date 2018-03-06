@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { CmpTaskListComponent } from './cmp-task-list/cmp-task-list.component';
 import { TaskDetailComponent } from './task-detail/task-detail.component';
 import { CmpTaskListRoutingModule } from './cmp-task-routing.module';
@@ -12,18 +11,27 @@ import { HotTableModule } from 'angular-handsontable';
 import { CmpResultMapComponent } from './cmp-result-map/cmp-result-map.component';
 import { CmpResultTableComponent } from './cmp-result-table/cmp-result-table.component';
 import { CmpResultChartComponent } from './cmp-result-chart/cmp-result-chart.component';
+import { EchartAdapterService } from '@core/services/echartAdapter.service';
 
 @NgModule({
-  imports: [
-    SharedModule,
-    CmpTaskListRoutingModule,
-    OlMapModule,
-    EchartsNg2Module,
-    HotTableModule,
-  ],
-  declarations: [CmpTaskListComponent, TaskDetailComponent, NewTaskComponent, CmpResultMapComponent, CmpResultTableComponent, CmpResultChartComponent],
-  providers: [
-    CmpTaskService
-  ]
+    imports: [
+        SharedModule,
+        CmpTaskListRoutingModule,
+        OlMapModule,
+        EchartsNg2Module,
+        HotTableModule,
+    ],
+    declarations: [
+        CmpTaskListComponent,
+        TaskDetailComponent,
+        NewTaskComponent,
+        CmpResultMapComponent,
+        CmpResultTableComponent,
+        CmpResultChartComponent,
+    ],
+    providers: [
+        CmpTaskService,
+        EchartAdapterService,
+    ]
 })
 export class CmpTaskModule { }

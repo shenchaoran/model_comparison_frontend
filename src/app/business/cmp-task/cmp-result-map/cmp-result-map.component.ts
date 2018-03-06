@@ -138,7 +138,7 @@ export class CmpResultMapComponent implements OnInit, OnChanges, AfterViewInit {
                             source: new ol.source.ImageStatic({
                                 ratio: 1,
                                 params: {},
-                                url: imgLayer.path,
+                                url: `http://${this.backend.host}:${this.backend.port}${imgLayer.path}`,
                                 imageExtent: imgLayer.extent,
                                 projection: 'EPSG:3857'
                             })
@@ -161,7 +161,7 @@ export class CmpResultMapComponent implements OnInit, OnChanges, AfterViewInit {
                             source: new ol.source.ImageStatic({
                                 ratio: 1,
                                 params: {},
-                                url: imgLayer.path,
+                                url: `http://${this.backend.host}:${this.backend.port}${imgLayer.path}`,
                                 imageExtent: imgLayer.extent,
                                 projection: 'EPSG:3857'
                             })

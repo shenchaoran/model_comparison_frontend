@@ -43,6 +43,52 @@ export class TaskDetailComponent implements OnInit, AfterViewInit {
                             this.task = response.data;
                             this.title.setTitle(this.task.meta.name);
                             this.geojson = _.get(this.task, 'issue.spatial.geojson');
+
+                            _.map(this.task.cmpObjs, cmpObj => {
+                                let chartSrc = {
+                                    seriesData: [],
+                                    seriesName: []
+                                };
+                                let statisticSrc = [
+                                    ['min', 'max', 'mean', 'stdDev', 'sum']
+                                ];
+                                if (cmpObj.schemaName === 'TABLE_RAW') {
+                                    if (cmpObj.methods.indexOf('TABLE_CHART') !== -1) {
+                                        const row = _.get(cmpObj, 'stdResult.chart.row');
+                                        if (row && row.length) {
+                                            chartSrc.seriesData.push(row);
+                                            chartSrc.seriesName.push('Standard result');
+                                        }
+                                    }
+                                    if (cmpObj.methods.indexOf('TABLE_STATISTIC') !== -1) {
+                                        const row = _.get(cmpObj, 'stdResult.statistic.row');
+                                        if (row && row.length) {
+                                            statisticSrc.push(row);
+                                            // statisticSrc.seriesData.push(row);
+                                            // statisticSrc.seriesName.push('Standard result');
+                                        }
+                                    }
+                                    _.map(cmpObj.dataRefers, dataRefer => {
+                                        if (cmpObj.methods.indexOf('TABLE_CHART') !== -1) {
+                                            const row = _.get(dataRefer, 'cmpResult.chart.row');
+                                            if (row && row.length) {
+                                                chartSrc.seriesData.push(row);
+                                                chartSrc.seriesName.push(dataRefer.msName);
+                                            }
+                                        }
+                                        if (cmpObj.methods.indexOf('TABLE_STATISTIC') !== -1) {
+                                            const row = _.get(dataRefer, 'cmpResult.statistic.row');
+                                            if (row && row.length) {
+                                                statisticSrc.push(row);
+                                                // statisticSrc.seriesData.push(row);
+                                                // statisticSrc.seriesName.push(dataRefer.msName);
+                                            }
+                                        }
+                                    });
+                                    cmpObj.chartSrc = chartSrc;
+                                    cmpObj.statisticSrc = statisticSrc;
+                                }
+                            });
                         }
                     });
             });
