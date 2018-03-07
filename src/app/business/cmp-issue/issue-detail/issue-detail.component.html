@@ -11,16 +11,17 @@
                     <div class='section-body'>
                         <dl class='table-info'>
                             <div nz-row>
-                                <dt nz-col [nzSpan]='8'>Create time</dt>
-                                <dd nz-col [nzSpan]='16'>{{issue.meta.time | date:'yyyy-MM-dd'}}</dd>
-                                <dt nz-col [nzSpan]='8'>Author</dt>
-                                <dd nz-col [nzSpan]='16'>{{issue.auth.userName | undefined}}</dd>
-                                <dt nz-col [nzSpan]='8'>Authorization</dt>
-                                <dd nz-col [nzSpan]='16'>{{issue.auth.src | resourceSrc}}</dd>
-                                <dt nz-col [nzSpan]='8'>Description</dt>
-                                <dd nz-col [nzSpan]='16'>{{issue.meta.desc | undefined}}</dd>
+                                <dt nz-col [nzSpan]='4'>Author</dt>
+                                <dd nz-col [nzSpan]='8'>{{issue.auth.userName | undefined}}</dd>
+                                <dt nz-col [nzSpan]='4'>Authorization</dt>
+                                <dd nz-col [nzSpan]='8'>{{issue.auth.src | resourceSrc}}</dd>
+                                <dt nz-col [nzSpan]='4'>Create time</dt>
+                                <dd nz-col [nzSpan]='8'>{{issue.meta.time | date:'yyyy-MM-dd'}}</dd>
                             </div>
                         </dl>
+                        <div class='detail-desc'>
+                            {{issue.meta.desc}}
+                        </div>
                     </div>
                 </section>
                 <section>
@@ -61,7 +62,7 @@
                             <li *ngFor='let sln of issue.solutions'>
                                 <a [routerLink]='["../../solutions", sln._id]'>{{sln.meta.name}}</a>
                                 <!-- TODO: length pipe -->
-                                <div>{{sln.meta.desc}}</div>
+                                <div class='sider-desc'>{{sln.meta.desc | stringLimit}}</div>
                                 <div>
                                     <span *ngFor='let ms of sln.mss' [routerLink]='["../../resources/geo-models", ms.msId]' class='topic model-topic'>{{ms.msName}}</span>
                                 </div>

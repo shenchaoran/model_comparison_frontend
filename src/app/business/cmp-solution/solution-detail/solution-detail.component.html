@@ -11,10 +11,6 @@
                     <div class='section-body'>
                         <dl class='table-info'>
                             <div nz-row>
-                                <dt nz-col [nzSpan]='4'>Description</dt>
-                                <dd nz-col [nzSpan]='8'>{{solution.meta.desc | undefined}}</dd>
-                                <dt nz-col [nzSpan]='4'>Create time</dt>
-                                <dd nz-col [nzSpan]='8'>{{solution.meta.time | date:'yyyy-MM-dd'}}</dd>
                                 <dt nz-col [nzSpan]='4'>Data type</dt>
                                 <dd nz-col [nzSpan]='8'>{{solution.cmpCfg.keynote.dimension | undefined}}</dd>
                                 <dt nz-col [nzSpan]='4'>Author</dt>
@@ -23,8 +19,13 @@
                                 <dd nz-col [nzSpan]='8'>{{solution.auth.src | resourceSrc}}</dd>
                                 <dt nz-col [nzSpan]='4'>Comparison type</dt>
                                 <dd nz-col [nzSpan]='8'>{{solution.cmpCfg.keynote.direction==='multi'?'Contrast with each other':'Self contrast'}}</dd>
+                                <dt nz-col [nzSpan]='4'>Create time</dt>
+                                <dd nz-col [nzSpan]='8'>{{solution.meta.time | date:'yyyy-MM-dd'}}</dd>
                             </div>
                         </dl>
+                        <div class='detail-desc'>
+                            {{solution.meta.desc}}
+                        </div>
                     </div>
                 </section>
                 <section>
@@ -69,7 +70,7 @@
                                             Introduction
                                         </ng-template>
                                         <section>
-                                            <div class='desc'>
+                                            <div class='desc detail-desc'>
                                                 <span>{{cmpObj.meta.desc}}</span>
                                             </div>
                                             <div class='participants'>
@@ -126,7 +127,7 @@
                         <ul>
                             <li>
                                 <a [routerLink]='["../../issues", solution.issue._id]'>{{solution.issue.meta.name}}</a>
-                                <div>{{solution.issue.meta.desc}}</div>
+                                <div class='sider-desc'>{{solution.issue.meta.desc | stringLimit}}</div>
                                 <div>
                                     <span class='topic'>Topic xxx</span>
                                 </div>
@@ -143,7 +144,7 @@
                         <ul>
                             <li *ngFor='let task of solution.tasks'>
                                 <a [routerLink]='["../../tasks", task._id]'>{{task.meta.name}}</a>
-                                <div>{{task.meta.desc}}</div>
+                                <div class='sider-desc'>{{task.meta.desc | stringLimit}}</div>
                                 <div>{{task.meta.time | date: 'yyyy-MM-dd'}}</div>
                             </li>
                         </ul>

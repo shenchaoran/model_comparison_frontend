@@ -10,6 +10,10 @@ import { BaThemeConfig } from './theme.config';
 import { BaThemeConfigProvider } from './theme.configProvider';
 import { BACKEND } from '@config';
 import { HEADER_MENUS, USER_MENUS } from '@config/menu.config';
+import { DisqusModule } from "ngx-disqus";
+import { EmailValidator, EqualPasswordsValidator } from './validators';
+import { ListFilterService } from './components/list-template/list-filter.service';
+import { HeaderMenuService } from './components/baHeaderMenu/baHeaderMenu.service';
 
 import {
     BaCard,
@@ -35,17 +39,12 @@ import {
     ListTemplateComponent,
     FooterComponent,
     DocDetailTemplateComponent,
-    TableFeatureComponent
-    // BaMessageBox,
-    //
-    // BaFloatWindow,
-    // BaHouseholdTable
+    TableFeatureComponent,
 } from './components';
 
 import {
     BaScrollPosition,
     BaSlimScroll
-    // BaThemeRun
 } from './directives';
 
 import {
@@ -54,18 +53,14 @@ import {
     BaThemePreloader,
     BaThemeSpinner,
 } from './services';
-import { ListFilterService } from './components/list-template/list-filter.service';
-
-import { HeaderMenuService } from './components/baHeaderMenu/baHeaderMenu.service';
 
 import {
     BaImgPathPipe,
     MomentDatePipe,
     UndefinedPipe,
-    ResourceSrcPipe
+    ResourceSrcPipe,
+    StringLimitPipe
 } from './pipes';
-
-import { EmailValidator, EqualPasswordsValidator } from './validators';
 
 const NGA_SERVICES = [
     BaImageLoaderService,
@@ -108,23 +103,19 @@ const CITYFUN_COMPONENTS = [
     FooterComponent,
     DocDetailTemplateComponent,
     TableFeatureComponent
-    // BaMessageBox,
-    //
-    // BaFloatWindow,
-    // BaHouseholdTable
 ];
 
 const CITYFUN_DIRECTIVES = [
     BaScrollPosition,
     BaSlimScroll
-    // BaThemeRun
 ];
 
 const CITYFUN_PIPES = [
     BaImgPathPipe,
     MomentDatePipe,
     ResourceSrcPipe,
-    UndefinedPipe
+    UndefinedPipe,
+    StringLimitPipe
 ];
 
 const CITYFUN_VALIDATORS = [EmailValidator, EqualPasswordsValidator];
@@ -143,7 +134,12 @@ export * from './components';
         ...CITYFUN_DIRECTIVES,
         ...CITYFUN_PIPES
     ],
-    imports: [RouterModule, NgxSharedModule, NgUploaderModule],
+    imports: [
+        RouterModule, 
+        NgxSharedModule, 
+        NgUploaderModule,
+        DisqusModule.forRoot('shenchaoran')
+    ],
     providers: [
         ...CITYFUN_VALIDATORS,
         ...SERVICES,
@@ -163,7 +159,13 @@ export * from './components';
             useValue: USER_MENUS
         }
     ],
-    exports: [...CITYFUN_COMPONENTS, ...CITYFUN_DIRECTIVES, ...CITYFUN_PIPES, NgxSharedModule]
+    exports: [
+        ...CITYFUN_COMPONENTS, 
+        ...CITYFUN_DIRECTIVES, 
+        ...CITYFUN_PIPES, 
+        NgxSharedModule,
+        DisqusModule,
+    ]
 })
 export class SharedModule {
     static forRoot(): ModuleWithProviders {

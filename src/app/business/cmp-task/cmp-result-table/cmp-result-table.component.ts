@@ -13,6 +13,7 @@ import * as uuidv1 from 'uuid/v1';
 export class CmpResultTableComponent implements OnInit {
     hotId;
     tableSrc: any;
+    colHeaders: any;
 
     @Input() source: any;
 
@@ -23,7 +24,8 @@ export class CmpResultTableComponent implements OnInit {
     }
 
     ngOnInit() {
-
+        // TODO headers
+        this.colHeaders = ['Name', 'min', 'max', 'mean', 'stdDev', 'sum'];
     }
 
     ngAfterViewInit() {

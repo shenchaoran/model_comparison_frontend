@@ -10,6 +10,8 @@ import { DynamicTitleService } from '@core/services/dynamic-title.service';
     styleUrls: ['./task-detail.component.scss']
 })
 export class TaskDetailComponent implements OnInit, AfterViewInit {
+    pageId: string;
+    
     taskId: string;
     task: any;
     geojson: any;
@@ -34,6 +36,7 @@ export class TaskDetailComponent implements OnInit, AfterViewInit {
         this.route.params
             .subscribe((params: Params) => {
                 this.taskId = params['id'];
+                this.pageId = `/tasks/${this.taskId}`;
                 this.service.findOne(this.taskId)
                     .subscribe(response => {
                         if (response.error) {
@@ -49,9 +52,7 @@ export class TaskDetailComponent implements OnInit, AfterViewInit {
                                     seriesData: [],
                                     seriesName: []
                                 };
-                                let statisticSrc = [
-                                    ['min', 'max', 'mean', 'stdDev', 'sum']
-                                ];
+                                let statisticSrc = [];
                                 if (cmpObj.schemaName === 'TABLE_RAW') {
                                     if (cmpObj.methods.indexOf('TABLE_CHART') !== -1) {
                                         const row = _.get(cmpObj, 'stdResult.chart.row');
@@ -61,8 +62,9 @@ export class TaskDetailComponent implements OnInit, AfterViewInit {
                                         }
                                     }
                                     if (cmpObj.methods.indexOf('TABLE_STATISTIC') !== -1) {
-                                        const row = _.get(cmpObj, 'stdResult.statistic.row');
+                                        let row = _.get(cmpObj, 'stdResult.statistic.row');
                                         if (row && row.length) {
+                                            row = _.concat('Standard result', row);
                                             statisticSrc.push(row);
                                             // statisticSrc.seriesData.push(row);
                                             // statisticSrc.seriesName.push('Standard result');
@@ -77,8 +79,9 @@ export class TaskDetailComponent implements OnInit, AfterViewInit {
                                             }
                                         }
                                         if (cmpObj.methods.indexOf('TABLE_STATISTIC') !== -1) {
-                                            const row = _.get(dataRefer, 'cmpResult.statistic.row');
+                                            let row = _.get(dataRefer, 'cmpResult.statistic.row');
                                             if (row && row.length) {
+                                                row = _.concat(dataRefer.msName, row);
                                                 statisticSrc.push(row);
                                                 // statisticSrc.seriesData.push(row);
                                                 // statisticSrc.seriesName.push(dataRefer.msName);

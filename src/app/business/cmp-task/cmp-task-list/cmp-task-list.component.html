@@ -12,7 +12,7 @@
             <span style='width: 20px;'></span>
         </div>
         <div class='item-body'>
-            <div class='desc'>{{task.meta.desc}}</div>
+            <div class='desc'>{{task.meta.desc | stringLimit: 180}}</div>
             <div>
                 <span class='topic'>Topic1</span>
                 <span class='topic'>Topic2</span>

@@ -17,10 +17,11 @@
                                 <dd nz-col [nzSpan]='8'>{{task.auth.userName | undefined}}</dd>
                                 <dt nz-col [nzSpan]='4'>Authorization</dt>
                                 <dd nz-col [nzSpan]='8'>{{task.auth.src | resourceSrc}}</dd>
-                                <dt nz-col [nzSpan]='4'>Description</dt>
-                                <dd nz-col [nzSpan]='8'>{{task.meta.desc | undefined}}</dd>
                             </div>
                         </dl>
+                        <div class='detail-desc'>
+                            {{task.meta.desc}}
+                        </div>
                     </div>
                 </section>
 
@@ -83,7 +84,7 @@
                         <div class='cmpObj' *ngFor='let cmpObj of task.cmpObjs; let i=index;'>
                             <h3>{{i+1}}. {{cmpObj.meta.name}}</h3>
                             <section>
-                                <div class='desc'>
+                                <div class='desc detail-desc'>
                                     <span>{{cmpObj.meta.desc}}</span>
                                 </div>
                                 <div class='cmp-tabset'>
@@ -159,7 +160,7 @@
                         <ul>
                             <li>
                                 <a [routerLink]='["../../issues", task.issue._id]'>{{task.issue.meta.name}}</a>
-                                <div>{{task.issue.meta.desc}}</div>
+                                <div class='sider-desc'>{{task.issue.meta.desc | stringLimit}}</div>
                                 <div>
                                     <span class='topic'>Topic xxx</span>
                                 </div>
@@ -176,7 +177,7 @@
                         <ul>
                             <li>
                                 <a [routerLink]='["../../solutions", task.solution._id]'>{{task.solution.meta.name}}</a>
-                                <div>{{task.solution.meta.desc}}</div>
+                                <div class='sider-desc'>{{task.solution.meta.desc | stringLimit}}</div>
                                 <div>
                                     <span *ngFor='let ms of task.solution.cmpCfg.ms' [routerLink]='["../../resources/geo-models", ms.msId]' class='topic model-topic'>{{ms.msName}}</span>
                                 </div>
@@ -197,3 +198,5 @@
         <nz-checkbox-group [(ngModel)]='checkOpts' (ngModelChange)='onChecked()'></nz-checkbox-group>
     </ng-template>
 </nz-modal>
+
+<!-- <disqus [identifier]="pageId"></disqus> -->

@@ -49,6 +49,7 @@
         "mongodb": "^3.0.0-rc0",
         "ng-zorro-antd": "0.6",
         "ng2-slim-loading-bar": "^4.0.0",
+        "ngx-disqus": "^2.3.7",
         "ngx-perfect-scrollbar": "^5.3.0",
         "ngx-quill": "^2.0.4",
         "ngx-uploader": "^2.2.5",

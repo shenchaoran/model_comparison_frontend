@@ -1,30 +1,30 @@
 <div class="header-menu-layout">
-    <perfect-scrollbar [config]='scrollbarCfg'>
-        <header class="nav">
-            <nav class='nav-body'>
-                <div id="logo">
-                    <img routerLink='/home' src="assets/img/app/logo-deep.png" height="35" />
-                </div>
-                <div id='search'>
-                    <form autocomplete="on">
-                        <input type='input' name='q' spellcheck="false" [(ngModel)]='q' placeholder='Search' autocomplete="on">
-                        <button hidden type='submit' (click)='search()'></button>
-                    </form>
-                </div>
-                <div id="menu">
-                    <ogms-baHeaderMenu [type]="'HEADER_MENUS'"></ogms-baHeaderMenu>
-                </div>
-                <span class='flex-item-1-1-auto'></span>
-                <div id="login-menu">
-                    <ogms-header-pull-right></ogms-header-pull-right>
-                </div>
-            </nav>
-        </header>
-        <div class='body'>
-            <div class='content'>
-                <router-outlet></router-outlet>
+    <!-- <perfect-scrollbar [config]='scrollbarCfg'> -->
+    <header class="nav">
+        <nav class='nav-body'>
+            <div id="logo">
+                <img routerLink='/home' src="assets/img/app/logo-deep.png" height="35" />
             </div>
+            <div id='search'>
+                <form autocomplete="on">
+                    <input type='input' name='q' spellcheck="false" [(ngModel)]='q' placeholder='Search' autocomplete="on">
+                    <button hidden type='submit' (click)='search()'></button>
+                </form>
+            </div>
+            <div id="menu">
+                <ogms-baHeaderMenu [type]="'HEADER_MENUS'"></ogms-baHeaderMenu>
+            </div>
+            <span class='flex-item-1-1-auto'></span>
+            <div id="login-menu">
+                <ogms-header-pull-right></ogms-header-pull-right>
+            </div>
+        </nav>
+    </header>
+    <div class='body'>
+        <div class='content'>
+            <router-outlet></router-outlet>
         </div>
-    </perfect-scrollbar>
+    </div>
+    <!-- </perfect-scrollbar> -->
+    <nz-back-top></nz-back-top>
 </div>
-<nz-back-top></nz-back-top>

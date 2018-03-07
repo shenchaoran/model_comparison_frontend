@@ -3,6 +3,10 @@
     width: 5px;
 }
 
+::-webkit-scrollbar:horizontal {
+    height: 5px !important;
+}
+
  ::-webkit-scrollbar-button {}
 
  ::-webkit-scrollbar-track {
