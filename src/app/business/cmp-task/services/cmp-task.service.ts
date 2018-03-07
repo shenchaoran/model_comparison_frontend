@@ -99,7 +99,7 @@ export class CmpTaskService implements Resolve<any> {
         if(path) {
             return this.http.get(path, {
                 responseType: 'text'
-            }, true, false);
+            }, true);
         }
         else {
             return undefined;
