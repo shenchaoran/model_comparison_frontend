@@ -179,7 +179,14 @@
             <span class="placeholder flex-item-1-1-auto"></span>
           </div>
           <div class="section-body">
-
+              <nz-radio-group [(ngModel)]="radioValue">
+                  <label nz-radio [nzValue]="'A'">
+                    <span>Order By Task</span>
+                  </label>
+                  <label nz-radio [nzValue]="'B'">
+                    <span>Order By Model</span>
+                  </label>
+                </nz-radio-group>
           </div>
         </section>
         <section class="section-submit">

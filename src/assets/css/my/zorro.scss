@@ -35,6 +35,21 @@ nz-tabset {
     }
 }
 
+nz-avatar {
+    .ng-star-inserted {
+        color: #fff;
+    }
+}
+
+.ant-btn-primary {
+    i {
+        color: #fff;
+    }
+    span {
+        color: #fff;
+    }
+}
+
 .ant-table-small {
     border: none !important;
     .ant-table-placeholder {
