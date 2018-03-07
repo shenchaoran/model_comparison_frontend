@@ -99,6 +99,7 @@ export class NewTaskComponent implements OnInit {
           this.models = [];
 
           //向solution添加model详细信息
+          console.log(this.selectedSln.cmpCfg.ms);
           for (let i = 0; i < this.selectedSln.cmpCfg.ms.length; i++) {
             let modelId = this.selectedSln.cmpCfg.ms[i].msId;
             this.msService.findOne(modelId).subscribe(response => {
