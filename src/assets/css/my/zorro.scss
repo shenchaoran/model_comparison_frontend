@@ -27,6 +27,12 @@ nz-tabset {
         flex: 1;
         overflow: scroll;
     }
+    .ant-card-head-title {
+        .ng-star-inserted {
+            line-height: 48px;
+            width: 100%;
+        }
+    }
 }
 
 .ant-table-small {

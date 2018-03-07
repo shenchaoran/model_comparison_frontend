@@ -21,7 +21,7 @@
                       <span>Name</span>
                     </th>
                     <th nz-th>
-                      <span>Desc</span>
+                      <span>Author</span>
                     </th>
                     <th nz-th>
                       <span>Time</span>
@@ -38,8 +38,8 @@
                         <nz-row-expand-icon [(nzExpand)]="data.expand"></nz-row-expand-icon>
                       </td>
                       <td nz-td>{{data.meta.name}}</td>
-                      <td nz-td>{{data.meta.desc}}</td>
-                      <td nz-td>{{data.meta.time}}</td>
+                      <td nz-td>{{data.auth.userName | undefined}}</td>
+                      <td nz-td>{{data.meta.time | date:'yyyy-MM-dd'}}</td>
                       <td nz-td>
                         <a (click)="onSelectClick(data)">select</a>
                       </td>
@@ -49,12 +49,12 @@
                         <div class='section-body'>
                           <dl class='table-info'>
                             <div nz-row>
-                              <dt nz-col [nzSpan]='4'>Author</dt>
-                              <dd nz-col [nzSpan]='8'>{{data.auth.userName | undefined}}</dd>
                               <dt nz-col [nzSpan]='4'>Authorization</dt>
                               <dd nz-col [nzSpan]='8'>{{data.auth.src | resourceSrc}}</dd>
                               <dt nz-col [nzSpan]='4'>Comparison type</dt>
                               <dd nz-col [nzSpan]='8'>{{data.cmpCfg.keynote.direction==='multi'?'Contrast with each other':'Self contrast'}}</dd>
+                              <dt nz-col [nzSpan]='4'>Description</dt>
+                              <dd nz-col [nzSpan]='20'>{{data.meta.desc}}</dd>
                             </div>
                           </dl>
                         </div>
@@ -81,9 +81,9 @@
                         {{param.name}}
                       </ng-template>
                       <section>
-                        <!-- <nz-avatar nzText="P" nzSize="small" class="avatar"></nz-avatar> -->
                         <section>
-                            <span><b>Option A.</b> Upload your parameter file</span>
+                          <span>
+                            <b>Option A.</b> Upload your parameter file</span>
                         </section>
                         <span style='width: 20px; display: inline-block;'></span>
                         <span class="space">
@@ -96,17 +96,72 @@
                         </span>
                       </section>
                       <section>
-                        <section><span><b>Option B.</b> Use other users' parameter config</span></section>
-                        <nz-card class="home-task-card">
+                        <section>
+                          <span>
+                            <b>Option B.</b> Use other users' parameter config</span>
+                        </section>
+                        <section>
+                          <div nz-row>
+                            <div nz-col [nzSpan]='8' class="param-card" *ngFor="let task_param of paramCards">
+                              <div class="modelname">{{task_param.name}}</div>
+                              <div>
+                                <span class="right-margin">Author:</span>
+                                <nz-tag>{{task_param.author}}</nz-tag>
+                              </div>
+                              <div>
+                                <span class="right-margin">Temporal:</span>
+                                <nz-tag>{{task_param.temporal}}</nz-tag>
+                              </div>
+                              <div>
+                                <nz-button-group>
+                                  <button nz-button [nzType]="'primary'" [nzSize]="'small'">
+                                    <i class="anticon anticon-info-circle-o"></i>
+                                    <span>Preview</span>
+                                  </button>
+                                  <button nz-button [nzType]="'default'" [nzSize]="'small'">
+                                    <i class="anticon anticon-edit"></i>
+                                    <span>Use</span>
+                                  </button>
+                                  <button nz-button [nzType]="'default'" [nzSize]="'small'">
+                                    <i class="anticon anticon-edit"></i>
+                                    <span>Download</span>
+                                  </button>
+                                </nz-button-group>
+                              </div>
+                            </div>
+                          </div>
+
+                        </section>
+                        <!-- <nz-card>
                           <ng-template #title>
                             <div class="title">Config Examples</div>
                           </ng-template>
                           <ng-template #body>
-                            <section>
-                              <task-card *ngFor="let task of tasks" [task]="task"></task-card>
-                            </section>
+                              <div  *ngFor="let task_param of paramCards">
+                                <div class="param-card">
+                                  <div class="modelname row">{{task_param.name}}</div>
+                                  <div>
+                                      <span class="right-margin">Author:</span>
+                                      <nz-tag>{{task_param.author}}</nz-tag>
+                                  </div>
+                                    <div>
+                                      <span class="right-margin">Temporal:</span>
+                                      <nz-tag>{{task_param.temporal}}</nz-tag>
+                                    </div>
+                                  <div class="row">
+                                    <button nz-button [nzType]="'primary'" [nzSize]="size">
+                                      <i class="anticon anticon-info-circle-o"></i>
+                                      <span>Detail</span>
+                                    </button>
+                                    <button nz-button [nzType]="'default'" [nzSize]="size">
+                                      <i class="anticon anticon-edit"></i>
+                                      <span>Config</span>
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
                           </ng-template>
-                        </nz-card>
+                        </nz-card> -->
                       </section>
                     </nz-tab>
                   </nz-tabset>
@@ -116,8 +171,6 @@
             <ng-template #noSelect>
               <span class="section-none">No select solution</span>
             </ng-template>
-
-
           </div>
         </section>
         <section>
@@ -130,7 +183,7 @@
           </div>
         </section>
         <section class="section-submit">
-          <button nz-button [nzType]="'primary'" [nzSize]="large">
+          <button nz-button [nzType]="'primary'" [nzSize]="large" (click)="onSubmitTask()">
             <i class="anticon anticon-plus"></i>
             <span>Add To Task</span>
           </button>
