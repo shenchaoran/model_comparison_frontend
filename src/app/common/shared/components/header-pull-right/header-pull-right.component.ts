@@ -13,6 +13,11 @@ export class HeaderPullRightComponent implements OnInit {
     }
 
     ngOnInit() {
+        postal.channel('MENU')
+            .subscribe('logout', () => {
+                this.hasLogin = false;
+            })
+
         const jwtStr = localStorage.getItem('jwt');
         if (jwtStr !== undefined) {
             const jwt = JSON.parse(jwtStr);
@@ -25,6 +30,9 @@ export class HeaderPullRightComponent implements OnInit {
             else {
                 this.hasLogin = false;
             }
+        }
+        else {
+            this.hasLogin = false;
         }
     }
 }

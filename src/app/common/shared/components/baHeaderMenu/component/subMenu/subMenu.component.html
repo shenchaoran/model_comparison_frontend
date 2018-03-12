@@ -1,15 +1,16 @@
 <li class='menu-item' *ngIf="(subMenu && subMenu.data) else divider" nz-submenu>
     <span title>
-        <span *ngIf="(subMenu.disabled === true) else linker" class="disabled-menu-item">
+        <span *ngIf="subMenu.disabled === true" class="disabled-menu-item">
             <!-- <i *ngIf="subMenu.data && subMenu.data.menu && subMenu.data.menu.icon" class="anticon anticon-{{subMenu.data.menu.icon}}"></i>  -->
             {{subMenu.data.menu.title}}
         </span>
-    <ng-template #linker>
-        <a class='ogms-menu-link' routerLink="/{{subMenu.path}}" [routerLinkActive]="isRoot? 'actived-menu': ''">
-            <!-- <i *ngIf="subMenu.data && subMenu.data.menu && subMenu.data.menu.icon" class="anticon anticon-{{subMenu.data.menu.icon}}"></i>  -->
+    <a class='ogms-menu-link' *ngIf='subMenu.path.indexOf("sign-out") !== -1' (click)='signOut()'>
             {{subMenu.data.menu.title}}
         </a>
-    </ng-template>
+    <a class='ogms-menu-link' *ngIf='subMenu.path.indexOf("sign-out") === -1' routerLink="/{{subMenu.path}}" [routerLinkActive]="isRoot? 'actived-menu': ''">
+        <!-- <i *ngIf="subMenu.data && subMenu.data.menu && subMenu.data.menu.icon" class="anticon anticon-{{subMenu.data.menu.icon}}"></i>  -->
+        {{subMenu.data.menu.title}}
+    </a>
     </span>
 
     <!-- 子菜单 -->

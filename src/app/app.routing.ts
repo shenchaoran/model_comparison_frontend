@@ -12,6 +12,14 @@ export const routes: Routes = [
         loadChildren: './common/feature/login/login.module#LoginModule'
     },
     {
+        path: 'join',
+        loadChildren: './common/feature/sign-up/sign-up.module#SignUpModule'
+    },
+    {
+        path: 'password-reset',
+        loadChildren: './common/feature/password-reset/password-reset.module#PasswordResetModule'
+    },
+    {
         path: 'home',
         loadChildren: './business/home/home.module#HomeModule'
     },

@@ -3,8 +3,13 @@
 </div>
 
 <ng-template #gotoLogin>
-    <div class="flex-box">
-        <div class="flex-item">Login</div>
-        <div class="flex-item">Sign up</div>
+    <div>
+        <a class='ogms-menu-link' routerLink="/login" [routerLinkActive]="'actived-menu'">
+            Sign in
+        </a> &nbsp;
+        <span style='color: #586069 !important;'>or</span> &nbsp;
+        <a class='ogms-menu-link' routerLink="/join" [routerLinkActive]="'actived-menu'">
+            Sign up
+        </a>
     </div>
 </ng-template>

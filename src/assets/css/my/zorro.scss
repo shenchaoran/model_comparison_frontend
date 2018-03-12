@@ -57,13 +57,15 @@ nz-avatar {
     }
 }
 
-ogms-baheadermenu {
+ogms-baheadermenu,
+ogms-header-pull-right {
     .ant-menu-horizontal>.ant-menu-submenu:hover {
         border-bottom: 2px solid #fff;
     }
     .ant-menu-submenu-horizontal>div {
         padding: 0 9px !important;
     }
+    .ogms-menu-link,
     .ant-menu-submenu-horizontal a {
         color: rgba(255, 255, 255, 0.75) !important;
         text-decoration: none !important;
@@ -72,6 +74,7 @@ ogms-baheadermenu {
         // line-height: 1.5;
         font-weight: 600 !important;
     }
+    .ogms-menu-link:hover,
     .ant-menu-submenu-horizontal .ogms-menu-link:hover {
         color: #fff !important;
     }

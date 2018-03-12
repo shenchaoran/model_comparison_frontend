@@ -49,6 +49,11 @@ export class LoginService extends ErrorHandle {
         });
     }
 
+    public loginOut() {
+        localStorage.removeItem('jwt');
+        this._notification.success('Notice', 'Logout out succeed!');
+    }
+
     public hasLogin(): boolean {
         const jwtStr = localStorage.getItem('jwt');
         if(jwtStr) {

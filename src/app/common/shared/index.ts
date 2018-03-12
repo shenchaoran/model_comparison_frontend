@@ -14,6 +14,7 @@ import { DisqusModule } from "ngx-disqus";
 import { EmailValidator, EqualPasswordsValidator } from './validators';
 import { ListFilterService } from './components/list-template/list-filter.service';
 import { HeaderMenuService } from './components/baHeaderMenu/baHeaderMenu.service';
+import { LoginService } from '@feature/login//login.service';
 
 import {
     BaCard,
@@ -68,6 +69,7 @@ const NGA_SERVICES = [
     BaThemeSpinner,
     BaMenuService,
     ListFilterService,
+    LoginService,
 ];
 
 const NGA_VALIDATORS = [EmailValidator, EqualPasswordsValidator];
