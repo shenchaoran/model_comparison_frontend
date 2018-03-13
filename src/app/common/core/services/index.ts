@@ -1,4 +1,4 @@
-export * from './auth.guard';
+export * from './login-auth.guard';
 export * from './baThemeSpinner';
 export * from './echartAdapter.service';
 export * from './tableAdapter.service';

@@ -28,7 +28,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     providers: [
         LoginService,
         { provide: HTTP_INTERCEPTORS, useClass: ResParserInterceptor, multi: true},
-        { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
+        // { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
         {
             provide: PERFECT_SCROLLBAR_CONFIG,
             useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG

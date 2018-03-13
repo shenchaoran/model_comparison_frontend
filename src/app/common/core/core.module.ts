@@ -40,14 +40,14 @@ import 'rxjs/add/operator/do';
 import { BACKEND } from '@config';
 
 import {
-    AuthGuard,
+    // AuthGuard,
     BaThemeSpinner,
     EchartAdapterService,
     TableAdapterService
 } from './services';
 
 const CITYFUN_SERVICES = [
-    AuthGuard,
+    // AuthGuard,
 
     BaThemeSpinner,
     EchartAdapterService,
@@ -74,7 +74,7 @@ const CITYFUN_SERVICES = [
             useClass: ResParserInterceptor,
             multi: true
         },
-        { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+        // { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
         DynamicTitleService,
     ]
 })
