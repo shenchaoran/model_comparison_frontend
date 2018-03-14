@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgxSharedModule } from '@ngx-shared';
 import { SharedModule } from '@shared';
+import { JqxWidgetsModule } from '@common/jqx-widgets';
 
 import { GeoDataRoutingModule } from './geo-data-routing.module';
 import { GeoDataComponent } from './geo-data.component';
@@ -21,15 +22,27 @@ import { MockService } from "../mock/mock.service";
 import { VisualizationModule } from "../visualization/visualization.module";
 
 const SERVICES = [
-    DataService, 
+    DataService,
     LoginService,
     MockService,
     // OlMapService
 ];
 
 @NgModule({
-    imports: [NgxSharedModule, SharedModule, GeoDataRoutingModule, VisualizationModule],
-    declarations: [GeoDataComponent, DataTabsComponent, DataIntroComponent, DataBannerComponent, DatasComponent, DataInfoComponent],
+    imports: [NgxSharedModule,
+        JqxWidgetsModule,
+        SharedModule,
+        GeoDataRoutingModule,
+        VisualizationModule
+    ],
+    declarations: [
+        GeoDataComponent,
+        DataTabsComponent,
+        DataIntroComponent,
+        DataBannerComponent,
+        DatasComponent,
+        DataInfoComponent
+    ],
     providers: [...SERVICES]
 })
-export class GeoDataModule {}
+export class GeoDataModule { }

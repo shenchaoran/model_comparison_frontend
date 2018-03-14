@@ -13,6 +13,27 @@ body {
     color: #24292e;
 }
 
+@media (max-width: 1199px) {
+    .responsive-root-div {
+        width: 980px;
+        margin: 24px auto 0;
+    }
+}
+
+@media (max-width: 1599px) {
+    .responsive-root-div {
+        width: 1200px;
+        margin: 24px auto 0;
+    }
+}
+
+@media (min-width: 1600px) {
+    .responsive-root-div {
+        width: 1600px;
+        margin: 24px auto 0;
+    }
+}
+
 .debug-border {
     border: 1px solid #8d8d8d;
     border-radius: 5px;

@@ -12,6 +12,7 @@ export * from './issueCard';
 export * from './modelCard';
 export * from './solutionCard';
 export * from './taskCard';
+export * from './colorScale/colorScale.component';
 export * from './header-menu-layout/header-menu-layout.component';
 export * from './sider-menu-layout/sider-menu-layout.component';
 export * from './list-template/list-template.component';

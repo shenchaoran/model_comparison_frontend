@@ -46,6 +46,7 @@ import { CmpTaskListComponent } from './cmp-task-list/cmp-task-list.component';
 import { CmpTaskSearchComponent } from './cmp-task-search/cmp-task-search.component';
 import { CmpIssueListComponent } from './cmp-issue-list/cmp-issue-list.component';
 import { IssueDetailComponent } from './issue-detail/issue-detail.component';
+import { JqxWidgetsModule } from '@common/jqx-widgets';
 
 const SERVICES = [
   CmpSlnService,
@@ -70,6 +71,7 @@ const SERVICES = [
       OlMapModule,
       VisualizationModule,
       TestModule,
+      JqxWidgetsModule,
     ],
   declarations: [
     ComparisonComponent,

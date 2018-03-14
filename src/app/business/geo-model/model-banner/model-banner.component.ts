@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./model-banner.component.scss']
 })
 export class ModelBannerComponent implements OnInit {
-
+    _value
   constructor() { }
 
   ngOnInit() {

@@ -40,6 +40,7 @@ export class ListTemplateComponent implements OnInit {
     @Input() template: any;
     @Input() type: string;
     @Input() buttons: any[];
+    @Input() hasCreate: boolean;
 
     constructor(
         private filterService: ListFilterService

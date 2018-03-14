@@ -3,10 +3,11 @@
     "version": "0.0.0",
     "license": "MIT",
     "scripts": {
-        "ng": "ng",
         "hmr": "ng serve --port 8888 --hmr -e=dev-hmr",
         "start": "ng serve --port 8888",
-        "build": "ng build",
+        "build": "ng build --prod",
+        "build:prod": "ng build --target production --build-optimizer --vendor-chunk",
+        "build:aot": "ngc -p tsconfig-aot.json",
         "test": "ng test",
         "lint": "ng lint",
         "e2e": "ng e2e"
@@ -65,6 +66,7 @@
         "ts-md5": "^1.2.0",
         "typescript": "2.4.2",
         "uuid": "^3.1.0",
+        "webpack-bundle-analyzer": "^2.11.1",
         "wicket": "git+https://github.com/dyh333/Wicket.git",
         "zone.js": "^0.8.14"
     },

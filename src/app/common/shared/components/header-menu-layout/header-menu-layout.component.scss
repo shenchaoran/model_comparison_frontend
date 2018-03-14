@@ -19,9 +19,14 @@
                 width: 980px;
             }
         }
-        @media (min-width: 1200px) {
+        @media (max-width: 1599px) {
             .nav-body {
                 width: 1200px;
+            }
+        }
+        @media (min-width: 1600px) {
+            .nav-body {
+                width: 1600px;
             }
         }
         .nav-body {
@@ -70,10 +75,25 @@
         // padding-top: 64px;
         // height: 100%;
         width: 100%;
+        // @media (max-width: 1199px) {
+        //     .content {
+        //         width: 980px;
+        //     }
+        // }
+        // @media (max-width: 1599px) {
+        //     .content {
+        //         width: 1200px;
+        //     }
+        // }
+        // @media (min-width: 1600px) {
+        //     .content {
+        //         width: 1600px;
+        //     }
+        // }
         .content {
             // height: 100%;
             // overflow-y: hidden;
-            background: #ffffff;
+            margin: 0 auto;
         }
     }
 }

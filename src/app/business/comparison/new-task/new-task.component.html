@@ -202,7 +202,7 @@
 
     <ogms-form-cmp-objs-modal [ms]='selectedMS' [showModal]='__isCmpModalVisible' (onCancel)='modalCancel()' (onSubmit)='modalSubmit($event)'></ogms-form-cmp-objs-modal>
 
-    <nz-modal [nzVisible]="__isConfirmVisible" [nzContent]="modalContent" [nzFooter]='modalFooter' (nzOnCancel)="handleCancel($event)">
+    <nz-modal [nzVisible]="__isConfirmVisible" [nzContent]="modalContent" (nzOnCancel)="handleCancel($event)">
         <ng-template #modalContent>
             <p style='margin: 15px; font-size: 18px'>Start this comparison task right now?</p>
             <div class='flex-box-row-nowrap'>

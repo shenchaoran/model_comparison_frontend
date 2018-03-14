@@ -15,7 +15,7 @@
     </section>
 </ng-template>
 
-<ogms-list-template [count]='count' [template]='slnTemplate' [list]='solutions' [type]=' "solutions"' (onFiltersChange)='search($event)'>
+<ogms-list-template [count]='count' [template]='slnTemplate' [list]='solutions' [type]='"solutions"' [hasCreate]='true' (onFiltersChange)='search($event)'>
 </ogms-list-template>
 
 <ogms-footer></ogms-footer>

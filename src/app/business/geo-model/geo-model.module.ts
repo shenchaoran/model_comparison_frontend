@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgxSharedModule } from '@ngx-shared';
 import { SharedModule } from '@shared';
+import { JqxWidgetsModule } from '@common/jqx-widgets';
 
 import { GeoModelRoutingModule } from './geo-model-routing.module';
 import { GeoModelComponent } from './geo-model.component';
@@ -22,7 +23,12 @@ import { ModelsComponent } from './models/models.component';
 const SERVICES = [MSService];
 
 @NgModule({
-    imports: [NgxSharedModule, SharedModule, GeoModelRoutingModule],
+    imports: [
+        NgxSharedModule, 
+        SharedModule, 
+        JqxWidgetsModule,
+        GeoModelRoutingModule
+    ],
     declarations: [GeoModelComponent, ModelTreeComponent, ModelIntroComponent, NewModelComponent, ModelBannerComponent, ModelSearchComponent, ModelListComponent, ModelListCardComponent, ModelInfoComponent, ModelsComponent],
     providers: [
         MockService,

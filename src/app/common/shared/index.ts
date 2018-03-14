@@ -2,10 +2,6 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { NgxSharedModule } from '../ngx-shared';
 import { NgUploaderModule } from 'ngx-uploader';
-import { jqxTreeComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxtree';
-import { jqxExpanderComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxexpander';
-import { jqxMenuComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxmenu';
-import { jqxListBoxComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxlistbox';
 import { BaThemeConfig } from './theme.config';
 import { BaThemeConfigProvider } from './theme.configProvider';
 import { BACKEND } from '@config';
@@ -41,6 +37,7 @@ import {
     FooterComponent,
     DocDetailTemplateComponent,
     TableFeatureComponent,
+    ColorScale,
 } from './components';
 
 import {
@@ -91,10 +88,6 @@ const CITYFUN_COMPONENTS = [
     ContextMenuComponent,
     HeaderPullRightComponent,
 
-    jqxTreeComponent,
-    jqxExpanderComponent,
-    jqxMenuComponent,
-    jqxListBoxComponent,
     ModelCardComponent,
     SolutionCardComponent,
     TaskCardComponent,
@@ -104,7 +97,8 @@ const CITYFUN_COMPONENTS = [
     ListTemplateComponent,
     FooterComponent,
     DocDetailTemplateComponent,
-    TableFeatureComponent
+    TableFeatureComponent,
+    ColorScale
 ];
 
 const CITYFUN_DIRECTIVES = [

@@ -9,6 +9,7 @@ import { ActivatedRoute } from "@angular/router";
 })
 export class CmpTaskListComponent implements OnInit {
     tasks: any[];
+    _value
 
     constructor(
         private taskService: CmpTaskService,

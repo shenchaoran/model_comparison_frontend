@@ -1,0 +1,91 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "module": "es2015",
+        "sourceMap": true,
+        "declaration": false,
+        "moduleResolution": "node",
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "typeRoots": [
+            "node_modules/@types"
+        ],
+        "lib": [
+            "es2016",
+            "dom"
+        ],
+        "paths": {
+            "@common": [
+                "app/common"
+            ],
+            "@common/*": [
+                "app/common/*"
+            ],
+            "@ol-map": [
+                "app/common/feature/ol-map"
+            ],
+            "@ol-map/*": [
+                "app/common/feature/ol-map/*"
+            ],
+            "@shared": [
+                "app/common/shared"
+            ],
+            "@shared/*": [
+                "app/common/shared/*"
+            ],
+            "@core": [
+                "app/common/core/"
+            ],
+            "@core/*": [
+                "app/common/core/*"
+            ],
+            "@ngx-shared": [
+                "app/common/ngx-shared"
+            ],
+            "@ngx-shared/*": [
+                "app/common/ngx-shared/*"
+            ],
+            "@feature": [
+                "app/common/feature"
+            ],
+            "@feature/*": [
+                "app/common/feature/*"
+            ],
+            "@config": [
+                "config"
+            ],
+            "@config/*": [
+                "config/*"
+            ],
+            "@mock": [
+                "mock"
+            ],
+            "@mock/*": [
+                "mock/*"
+            ],
+            "@utils": [
+                "app/common/utils"
+            ],
+            "@utils/*": [
+                "app/common/utils/*"
+            ],
+            "@models": [
+                "app/models"
+            ],
+            "@models/*": [
+                "app/models/*"
+            ]
+        }
+    },
+    "angularCompilerOptions": {
+        "preserveWhitespaces": false,
+        "genDir": "aot",
+        "skipMetadataEmit": true
+    },
+    "include": [
+        "src/**/*",
+        "node_modules/jqwidgets-scripts/**/*",
+        "node_modules/ngx-uploader/src/**/*",
+        "node_modules/echarts-ng2/src/component/echarts-ng2.module.ts"
+    ]
+}

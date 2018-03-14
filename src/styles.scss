@@ -17,12 +17,15 @@
 @import '~ol3-layerswitcher/src/ol3-layerswitcher.css';
 @import '~handsontable/dist/handsontable.full.css';
 @import '~bootstrap/dist/css/bootstrap.min.css';
+@import '~jqwidgets-scripts/jqwidgets/styles/jqx.base.css';
+@import '~jqwidgets-scripts/jqwidgets/styles/jqx.energyblue.css';
+// @import '~ol3-ext/dist/ol3-ext.css';
 // theme
 // @import "app/common/shared/theme.scss";
 // add by SCR
-@import "assets/css/my/custom-esri.css";
-@import "assets/css/my/custom-openlayers.css";
-@import "assets/css/my/ng2-tree-styles.css";
+// @import "assets/css/my/custom-esri.css";
+// @import "assets/css/my/custom-openlayers.css";
+// @import "assets/css/my/ng2-tree-styles.css";
 @import "assets/css/my/global.scss";
 @import "assets/css/my/scrollbar.scss";
 @import "assets/css/my/layout.scss";
@@ -30,7 +33,7 @@
 @import "assets/css/my/doc-list.scss";
 @import 'assets/css/my/zorro.scss';
 // TODO relative path problems
-@import 'assets/css/jqwidgets/jqx.base';
-@import 'assets/css/jqwidgets/jqx.energyblue-my';
+// @import 'assets/css/jqwidgets/jqx.base';
+// @import 'assets/css/jqwidgets/jqx.energyblue-my';
 @import 'assets/css/ol3-ext/ol3-ext.css';
 // end

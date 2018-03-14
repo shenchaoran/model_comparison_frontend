@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./show-cmp-solution-banner.component.scss']
 })
 export class ShowCmpSolutionBannerComponent implements OnInit {
-
+    _value;
   constructor() { }
 
   ngOnInit() {

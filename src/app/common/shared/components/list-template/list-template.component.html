@@ -1,4 +1,4 @@
-<div class='container'>
+<div class='responsive-root-div'>
     <div class='flex-box-row-nowrap'>
         <nz-radio-group *ngIf='owner' [ngModel]='owner[0].value' [nzSize]='"large"' (ngModelChange)='changeFilters($event, "owner")'>
             <label nz-radio-button *ngFor='let item of owner' [nzValue]='item.value'>
@@ -6,6 +6,11 @@
             </label>
         </nz-radio-group>
         <span class='flex-item-1-1-auto'></span>
+        <ng-container *ngIf='hasCreate'>
+            <button routerLink='new' nz-button [nzType]='"primary"' [nzSize]='"large"' style='margin: 0 10px;'>
+                Create
+            </button>
+        </ng-container>
         <div *ngIf='buttons'>
             <button *ngFor="let button of buttons" nz-button [nzType]="'primary'" style="margin-left: 10px; margin-right: 10px">
                 <a [routerLink]="button.route">
