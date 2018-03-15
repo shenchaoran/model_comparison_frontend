@@ -14,3 +14,4 @@ export * from './cmp-docking-view/cmp-docking-view.component';
 export * from './baHeaderMenu/baHeaderMenu.component';
 export * from './baHeaderMenu/subMenu/subMenu.component';
 export * from './baHeaderMenu/testRecur/testRecur.component';
+export * from './cmp-tags-view/cmp-tags-view.component';

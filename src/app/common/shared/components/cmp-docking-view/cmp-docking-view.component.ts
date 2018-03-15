@@ -1,15 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
-  selector: 'ogms-cmp-docking-view',
-  templateUrl: './cmp-docking-view.component.html',
-  styleUrls: ['./cmp-docking-view.component.scss']
+    selector: 'ogms-cmp-docking-view',
+    templateUrl: './cmp-docking-view.component.html',
+    styleUrls: ['./cmp-docking-view.component.scss']
 })
 export class CmpDockingViewComponent implements OnInit {
 
-  constructor() { }
+    @Input() template;
+    @Input() template2;
 
-  ngOnInit() {
-  }
+    @Output() onChange = new EventEmitter<any>();
+
+    constructor() { }
+
+    ngOnInit() {
+    }
 
 }

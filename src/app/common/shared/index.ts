@@ -29,6 +29,7 @@ import {
     BaHeaderMenuComponent,
     SubMenuComponent,
     TestRecurComponent,
+    CmpTagsViewComponent,
 } from './components';
 
 import {
@@ -77,6 +78,7 @@ const CITYFUN_COMPONENTS = [
     TableFeatureComponent,
     SubMenuComponent,
     TestRecurComponent,
+    CmpTagsViewComponent,
 ];
 
 const CITYFUN_DIRECTIVES = [
