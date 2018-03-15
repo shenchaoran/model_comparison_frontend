@@ -6,23 +6,23 @@
         <nz-step [nzTitle]="'Comparison'" [nzDescription]=''></nz-step>
     </nz-steps>
 
-    <form nz-form [nzType]='"horizontal"' class="steps-content">
+    <form nz-form [formGroup]="cmpSln" class='steps-content'>
         <div [hidden]='currentStep !== 0'>
             <h4 class='step-title'>Solution Meta Information</h4>
             <div nz-form-item nz-row>
-                <div nz-form-label nz-col [nzSpan]="3">
-                    <label>Name</label>
+                <div nz-form-label nz-col [nzSpan]='4'>
+                    <label for='sln-name'>Name</label>
                 </div>
-                <div nz-form-control nz-col [nzSpan]="12">
-                    <nz-input [(ngModel)]='sln.meta.name' name='cmpObj-name'></nz-input>
+                <div nz-form-control nz-col [nzSpan]='20'>
+                    <nz-input formControlName='sln-name' name='sln-name' [(ngModel)]='sln.meta.name'></nz-input>
                 </div>
             </div>
             <div nz-form-item nz-row>
-                <div nz-form-label nz-col [nzSpan]="3">
-                    <label>Description</label>
+                <div nz-form-label nz-col [nzSpan]='4'>
+                    <label for='sln-desc'>Description</label>
                 </div>
-                <div nz-form-control nz-col [nzSpan]="12">
-                    <nz-input [(ngModel)]='sln.meta.desc' name='cmpObj-desc' [nzType]='"textarea"' [nzAutosize]="{minRows: 2, maxRows: 6}"></nz-input>
+                <div nz-form-control nz-col [nzSpan]='20'>
+                    <nz-input formControlName='sln-desc' name='sln-desc' [(ngModel)]='sln.meta.desc' [nzType]='"textarea"' [nzAutosize]="{minRows: 2, maxRows: 6}"></nz-input>
                 </div>
             </div>
         </div>
@@ -44,7 +44,7 @@
             <div class='step-title flex-box-row-nowrap'>
                 <h4>Computing Configuration</h4>
                 <span class='flex-item-1-1-auto'></span>
-                <span style='' class='dropdown-filter'>
+                <span class='dropdown-filter'>
                     <nz-dropdown [nzTrigger]="'click'">
                         <span class="ant-dropdown-link" nz-dropdown>
                             Layout&nbsp;&nbsp;<i class="anticon anticon-down"></i>
@@ -61,8 +61,83 @@
                 </span>
             </div>
             <div>
+
+                <!-- 公共计算配置模板 -->
+                <ng-template>
+                    <div nz-form-item nz-row>
+                        <div nz-form-label nz-col [nzSpan]='4'>
+                            <label for='factor'>I want to study the impact of:</label>
+                        </div>
+                        <div nz-form-control nz-col [nzSpan]='20'>
+                            <nz-radio-group formControlName='factor'>
+                                <label nz-radio [nzValue]="'TIME'">
+                                    <span>time</span>
+                                </label>
+                                <label nz-radio [nzValue]="'SPATIAL'">
+                                    <span>spatial</span>
+                                </label>
+                                <label nz-radio [nzValue]="'PARAMETER'">
+                                    <span>parameter</span>
+                                </label>
+                            </nz-radio-group>
+                        </div>
+                    </div>
+                </ng-template>
+
+                <!-- 独立计算配置模板 -->
                 <ng-template #msCfg let-ms='item'>
-                    <p>{{ms.MDL.meta.name}}</p>
+                    <div style='padding: 0 20px;'>
+                        <div nz-form-item nz-row>
+                            <div nz-form-label nz-col [nzSpan]='4'>
+                                <label [for]='"dataSrc"+ms._id'>Select data source</label>
+                            </div>
+                            <div nz-form-control nz-col [nzSpan]='20'>
+                                <nz-radio-group [attr.name]='"dataSrc"+ms._id' [attr.id]='"dataSrc"+ms._id' [(ngModel)]='ms.dataSrc'>
+                                    <label nz-radio [nzValue]="'STD'">
+                                                        <span>Use standard input data</span>
+                                                    </label>
+                                    <label nz-radio [nzValue]="'UPLOAD'">
+                                                        <span>Use your upload data</span>
+                                                    </label>
+                                </nz-radio-group>
+                            </div>
+                        </div>
+
+                        <nz-collapseset [nzBordered]="false">
+                            <nz-collapse [nzTitle]="'Inputs'" nzActive='true'>
+                                <ng-container *ngIf='ms.dataSrc === "STD"'>
+                                    <div nz-form-item nz-row>
+                                        <div nz-form-label nz-col [nzSpan]='4'>
+                                            <label [attr.for]='"date"+ms._id'>Date</label>
+                                        </div>
+                                        <div nz-form-control nz-col [nzSpan]='20'>
+                                            <nz-datepicker style='width: 130px;' [nzFormat]='"YYYY-MM-DD"' [formControlName]='"date"+ms._id' [attr.id]='"data"+ms._id'></nz-datepicker>
+                                        </div>
+                                    </div>
+
+                                </ng-container>
+                                <ng-container *ngIf='ms.dataSrc === "UPLOAD"'>
+
+                                </ng-container>
+                            </nz-collapse>
+                            <nz-collapse [nzTitle]="'Parameters'" nzActive='true'>
+                                <ng-container *ngIf='ms.dataSrc === "STD"'>
+
+                                </ng-container>
+                                <ng-container *ngIf='ms.dataSrc === "UPLOAD"'>
+
+                                </ng-container>
+                            </nz-collapse>
+                            <nz-collapse [nzTitle]="'Outputs'" nzActive='true'>
+                                <ng-container *ngIf='ms.dataSrc === "STD"'>
+
+                                </ng-container>
+                                <ng-container *ngIf='ms.dataSrc === "UPLOAD"'>
+
+                                </ng-container>
+                            </nz-collapse>
+                        </nz-collapseset>
+                    </div>
                 </ng-template>
 
                 <ng-container *ngIf='selectedComputeLayout === "Collapse"'>

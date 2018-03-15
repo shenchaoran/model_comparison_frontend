@@ -135,6 +135,7 @@ declare var postal: any;
 - docking layout
 - 页面加载速度
 - 评论系统
+- 和bootstrap结合
 
 ## Install
 

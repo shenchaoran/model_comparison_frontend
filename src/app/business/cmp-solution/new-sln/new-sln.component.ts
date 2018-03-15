@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CmpSolution } from '@models';
+import {
+    FormBuilder,
+    FormGroup,
+    Validators
+} from '@angular/forms';
 import { MSService } from '../../geo-model/services/model.service';
 
 @Component({
@@ -8,6 +13,8 @@ import { MSService } from '../../geo-model/services/model.service';
     styleUrls: ['./new-sln.component.scss']
 })
 export class NewSlnComponent implements OnInit {
+    cmpSln: FormGroup;
+
     sln;
     mss = [];
     msCount;
@@ -17,7 +24,7 @@ export class NewSlnComponent implements OnInit {
     doneDisabled = false;
     nextDisabled = false;
 
-    selectedComputeLayout = 'Collapse';
+    selectedComputeLayout = 'Tab';
     computeLayout = [
         {
             label: 'Collapse',
@@ -32,16 +39,21 @@ export class NewSlnComponent implements OnInit {
     ];
 
     constructor(
-        private msService: MSService
-    ) { 
+        private msService: MSService,
+        private fb: FormBuilder
+    ) {
         this.sln = new CmpSolution();
     }
 
     ngOnInit() {
+        this.cmpSln = this.fb.group({
+            
+        });
+
         this.msService.findAll({})
             .subscribe(response => {
-                if(response.error) {
-                    
+                if (response.error) {
+
                 }
                 else {
                     this.mss = response.data.docs;
