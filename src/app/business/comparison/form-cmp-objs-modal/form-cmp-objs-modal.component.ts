@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { MS } from '@models';
-import { NzNotificationService } from 'ng-zorro-antd';
+// import { NzNotificationService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'ogms-form-cmp-objs-modal',
@@ -48,7 +48,9 @@ export class FormCmpObjsModalComponent implements OnInit {
   _eventList: any[];
   isValid: boolean = false;
 
-  constructor(private _notification: NzNotificationService) {}
+  constructor(
+    //   private _notification: NzNotificationService
+    ) {}
 
   ngOnInit() {}
 

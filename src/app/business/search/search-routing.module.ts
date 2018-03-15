@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { SearchComponent } from './search.component';
 import { FiltersComponent } from './filters/filters.component';
-import { SiderMenuLayoutComponent, HeaderMenuLayoutComponent } from '@shared';
+import { HeaderMenuLayoutComponent } from '@shared';
 
 const routes: Routes = [
     { 

@@ -1,7 +1,7 @@
 // TODO divider
 import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
 import { LoginService } from '@feature/login/login.service';
-import { HeaderMenuMetaInfo } from '../../baHeaderMenu';
+import { HeaderMenuMetaInfo } from '../baHeaderMenu';
 
 @Component({
     selector: 'ogms-subMenu',

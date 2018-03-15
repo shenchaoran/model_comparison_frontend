@@ -2,7 +2,7 @@ import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from '@angular/router';
 
 import { ProfileComponent } from './profile.component';
-import { SiderMenuLayoutComponent, HeaderMenuLayoutComponent } from '@shared';
+import { HeaderMenuLayoutComponent } from '@shared';
 
 const routes: Routes = [
   {

@@ -11,11 +11,11 @@ import {
 import { NgUploaderOptions } from 'ngx-uploader';
 import * as uuidv1 from 'uuid/v1';
 @Component({
-    selector: 'ba-file-uploader',
-    styleUrls: ['./baFileUploader.scss'],
-    templateUrl: './baFileUploader.html'
+    selector: 'file-uploader',
+    styleUrls: ['./file-uploader.scss'],
+    templateUrl: './file-uploader.html'
 })
-export class BaFileUploader {
+export class FileUploader {
     _id: string;
     _showClose: boolean;
     _fileUploaderOptions:NgUploaderOptions = { url: '' };

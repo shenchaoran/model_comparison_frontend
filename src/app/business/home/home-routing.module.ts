@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import {
-    SiderMenuLayoutComponent,
     HeaderMenuLayoutComponent
 } from '@shared';
 

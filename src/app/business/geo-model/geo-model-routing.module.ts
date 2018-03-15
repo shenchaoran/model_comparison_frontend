@@ -4,7 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { GeoModelComponent } from './geo-model.component';
 import { ModelsComponent } from './models/models.component';
 import { ModelInfoComponent } from './model-info/model-info.component';
-import { SiderMenuLayoutComponent, HeaderMenuLayoutComponent } from '@shared';
+import { HeaderMenuLayoutComponent } from '@shared';
 import { MSService } from './services';
 // import { ModelTreeComponent } from './model-tree/model-tree.component';
 

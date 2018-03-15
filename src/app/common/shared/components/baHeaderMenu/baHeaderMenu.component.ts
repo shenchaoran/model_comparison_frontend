@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Router, Routes } from '@angular/router';
 
-import { HeaderMenuService } from './baHeaderMenu.service';
-import { BaMenuService } from '../baMenu/services/baMenu.service';
+import { HeaderMenuService } from './services/baHeaderMenu.service';
+import { BaMenuService } from './services/baMenu.service';
 import { HeaderMenuMetaInfo } from './baHeaderMenu';
 
 @Component({

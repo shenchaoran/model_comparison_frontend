@@ -1,5 +1,133 @@
 <div class='responsive-root-div'>
-    <p>
-        new-sln works!
-    </p>
+    <nz-steps [(nzCurrent)]="currentStep" #steps>
+        <nz-step [nzTitle]="'Basic information'" [nzDescription]=''></nz-step>
+        <nz-step [nzTitle]="'Participants'" [nzDescription]=''></nz-step>
+        <nz-step [nzTitle]="'Computing'" [nzDescription]=''></nz-step>
+        <nz-step [nzTitle]="'Comparison'" [nzDescription]=''></nz-step>
+    </nz-steps>
+
+    <form nz-form [nzType]='"horizontal"' class="steps-content">
+        <div [hidden]='currentStep !== 0'>
+            <h4 class='step-title'>Solution Meta Information</h4>
+            <div nz-form-item nz-row>
+                <div nz-form-label nz-col [nzSpan]="3">
+                    <label>Name</label>
+                </div>
+                <div nz-form-control nz-col [nzSpan]="12">
+                    <nz-input [(ngModel)]='sln.meta.name' name='cmpObj-name'></nz-input>
+                </div>
+            </div>
+            <div nz-form-item nz-row>
+                <div nz-form-label nz-col [nzSpan]="3">
+                    <label>Description</label>
+                </div>
+                <div nz-form-control nz-col [nzSpan]="12">
+                    <nz-input [(ngModel)]='sln.meta.desc' name='cmpObj-desc' [nzType]='"textarea"' [nzAutosize]="{minRows: 2, maxRows: 6}"></nz-input>
+                </div>
+            </div>
+        </div>
+
+        <div [hidden]='currentStep !== 1'>
+            <h4 class='step-title'>Select Participants</h4>
+            <div>
+                <div *ngFor='let ms of mss' class='ms-item' [ngClass]='{"checked": ms.checked}' (click)='ms.checked? ms.checked= !ms.checked: ms.checked= true'>
+                    <span class='checked-label'>
+                        <i *ngIf='ms.checked' class="anticon anticon-check"></i>
+                    </span>
+                    <span>{{ms.MDL.meta.name}}</span>
+                </div>
+            </div>
+            <nz-pagination *ngIf='msCount > 25' [(nzPageIndex)]="msPageNum" [nzTotal]="msCount" [nzSize]="'small'"></nz-pagination>
+        </div>
+
+        <div [hidden]='currentStep !== 2'>
+            <div class='step-title flex-box-row-nowrap'>
+                <h4>Computing Configuration</h4>
+                <span class='flex-item-1-1-auto'></span>
+                <span style='' class='dropdown-filter'>
+                    <nz-dropdown [nzTrigger]="'click'">
+                        <span class="ant-dropdown-link" nz-dropdown>
+                            Layout&nbsp;&nbsp;<i class="anticon anticon-down"></i>
+                        </span>
+                <ul nz-menu>
+                    <li nz-menu-item *ngFor='let item of computeLayout' (click)='onComputeLayoutChange(item)'>
+                        <span class='checked-label'>
+                                    <i *ngIf='item.checked' class="anticon anticon-check"></i>
+                                </span>
+                        <span>{{item.label}}</span>
+                    </li>
+                </ul>
+                </nz-dropdown>
+                </span>
+            </div>
+            <div>
+                <ng-template #msCfg let-ms='item'>
+                    <p>{{ms.MDL.meta.name}}</p>
+                </ng-template>
+
+                <ng-container *ngIf='selectedComputeLayout === "Collapse"'>
+                    <nz-collapseset>
+                        <ng-container *ngFor="let ms of mss">
+                            <ng-container *ngIf='ms.checked'>
+                                <nz-collapse [nzTitle]="ms.MDL.meta.name">
+                                    <ng-template [ngTemplateOutlet]='msCfg' [ngTemplateOutletContext]='{item: ms}'></ng-template>
+                                </nz-collapse>
+                            </ng-container>
+                        </ng-container>
+                    </nz-collapseset>
+                </ng-container>
+
+                <ng-container *ngIf='selectedComputeLayout === "Tab"'>
+                    <nz-tabset [nzTabPosition]="'top'" [nzType]="'card'">
+                        <div *ngFor='let ms of mss'>
+                            <ng-container *ngIf='ms.checked'>
+                                <nz-tab>
+                                    <ng-template #nzTabHeading>
+                                        {{ms.MDL.meta.name}}
+                                    </ng-template>
+                                    <div>
+                                        <ng-template [ngTemplateOutlet]='msCfg' [ngTemplateOutletContext]='{item: ms}'></ng-template>
+                                    </div>
+                                </nz-tab>
+                            </ng-container>
+                        </div>
+                    </nz-tabset>
+                </ng-container>
+            </div>
+        </div>
+
+        <div [hidden]='currentStep !== 3'>
+            <h4 class='step-title'>Comparison Configuration</h4>
+
+        </div>
+    </form>
+
+    <div class="steps-action">
+        <button nz-button [nzType]="'default'" (click)="changeStep(currentStep-1)" [disabled]="currentStep === 0">
+                        <span>Previous</span>
+                    </button>
+        <button nz-button [nzType]="'default'" (click)="changeStep(currentStep+1)" *ngIf="steps && steps.steps && currentStep < steps.steps.toArray().length-1" [disabled]='nextDisabled'>
+                        <span>Next</span>
+                    </button>
+        <button nz-button [nzType]="'primary'" (click)="done()" *ngIf="steps && steps.steps && currentStep === steps.steps.toArray().length-1" [disabled]='doneDisabled'>
+                        <span>Save</span>
+                    </button>
+    </div>
+
+    <!-- <nz-modal [nzVisible]="__isConfirmVisible" [nzContent]="modalContent" (nzOnCancel)="handleCancel($event)">
+            <ng-template #modalContent>
+                <p style='margin: 15px; font-size: 18px'>Configure this solution right now?</p>
+                <div class='flex-box-row-nowrap'>
+                    <div class='flex-item-1-1-auto'></div>
+                    <div>
+                        <button nz-button [nzType]="'default'" [nzSize]="'large'" (click)="handleCancel($event)">
+                        Later
+                    </button>
+                        <button nz-button [nzType]="'primary'" [nzSize]="'large'" (click)="handleOk($event)">
+                        Configure
+                    </button>
+                    </div>
+                </div>
+            </ng-template>
+        </nz-modal> -->
 </div>

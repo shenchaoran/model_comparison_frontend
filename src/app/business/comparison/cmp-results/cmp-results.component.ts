@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map, switchMap, filter, tap } from 'rxjs/operators';
 import { interval } from 'rxjs/observable/interval';
 import { _throw } from 'rxjs/observable/throw';
-import { NzNotificationService, NzModalService } from 'ng-zorro-antd';
+// import { NzNotificationService, NzModalService } from 'ng-zorro-antd';
 import * as uuidv1 from 'uuid/v1';
 import {
     CalcuTaskState,
@@ -38,7 +38,7 @@ export class CmpResultsComponent implements OnInit, OnDestroy, AfterViewInit {
 
     constructor(
         private service: CmpTaskService,
-        private _notice: NzNotificationService,
+        // private _notice: NzNotificationService,
         private route: ActivatedRoute
     ) {}
 
@@ -90,7 +90,7 @@ export class CmpResultsComponent implements OnInit, OnDestroy, AfterViewInit {
                 this.updateTask(cmpTask);
             },
             e => {
-                this._notice.warning('Warning:', 'Get comparison task failed!');
+                // this._notice.warning('Warning:', 'Get comparison task failed!');
             }
         );
     }
@@ -163,7 +163,7 @@ export class CmpResultsComponent implements OnInit, OnDestroy, AfterViewInit {
     refresh() {
         this.service.find(this.cmpTaskId).subscribe(response => {
             if(response.error) {
-                this._notice.warning('Warning:', 'Get comparison task failed!');
+                // this._notice.warning('Warning:', 'Get comparison task failed!');
             }
             else {
                 this.updateTask(response.data.doc);
@@ -220,7 +220,7 @@ export class CmpResultsComponent implements OnInit, OnDestroy, AfterViewInit {
             this.service.getCmpResult(this.cmpTaskId, cmpObjId, msId)
                 .subscribe(response => {
                     if(response.error) {
-                        this._notice.warning('Warning', 'Fetch comparison result failed!');
+                        // this._notice.warning('Warning', 'Fetch comparison result failed!');
                     }
                     else {
                         if(response.data.done) {

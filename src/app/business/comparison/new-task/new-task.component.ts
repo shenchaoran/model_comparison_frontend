@@ -15,7 +15,7 @@ import {
 import { CmpSlnService, CmpTaskService } from '../services';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CmpSolution, CmpTask, ResourceSrc, CmpMethod } from '@models';
-import { NzNotificationService, NzModalService } from 'ng-zorro-antd';
+// import { NzNotificationService, NzModalService } from 'ng-zorro-antd';
 import { DataService } from '../../geo-data/services';
 import { MSService } from '../../geo-model/services';
 import { MAP_TOOLBAR_CONFIG } from './map.config';
@@ -24,7 +24,7 @@ import {
     OlMapService,
     ToolbarService
 } from '@common/feature/ol-map/ol-map.module';
-import { BaFileUploader } from '@shared';
+import { FileUploader } from '@shared';
 
 declare var ol: any;
 
@@ -45,7 +45,7 @@ export class NewTaskComponent implements OnInit, AfterViewInit, AfterViewChecked
     cmpTask: CmpTask = new CmpTask();
 
     fileUploaderOptions: NgUploaderOptions;
-    @ViewChildren(BaFileUploader) fileUploaders: QueryList<BaFileUploader>;
+    @ViewChildren(FileUploader) fileUploaders: QueryList<FileUploader>;
 
     __ms: Array<{
         msId: string;
@@ -75,8 +75,8 @@ export class NewTaskComponent implements OnInit, AfterViewInit, AfterViewChecked
         private slnService: CmpSlnService,
         private route: ActivatedRoute,
         private router: Router,
-        private _notice: NzNotificationService,
-        private modalService: NzModalService,
+        // private _notice: NzNotificationService,
+        // private modalService: NzModalService,
         private dataService: DataService,
         private mapService: OlMapService,
         private toolbarService: ToolbarService,
@@ -118,10 +118,10 @@ export class NewTaskComponent implements OnInit, AfterViewInit, AfterViewChecked
             );
             this.cmpTask.calcuCfg.stdSrc.spatial.dimension = this.cmpSolution.cmpCfg.keynote.dimension;
         } else {
-            this._notice.warning(
-                'Warning',
-                'The corresponding comparison solution not found!'
-            );
+            // this._notice.warning(
+            //     'Warning',
+            //     'The corresponding comparison solution not found!'
+            // );
         }
     }
 
@@ -237,11 +237,11 @@ export class NewTaskComponent implements OnInit, AfterViewInit, AfterViewChecked
     done() {
         this.updateStepyValid();
         if (this.doneDisabled) {
-            this._notice.create(
-                'warning',
-                'Warning:',
-                'Please configure this task completely!'
-            );
+            // this._notice.create(
+            //     'warning',
+            //     'Warning:',
+            //     'Please configure this task completely!'
+            // );
         } else {
             if (this.cmpSolution.cmpCfg.keynote.dimension === 'point') {
                 // this.cmpTask.calcuCfg.stdSrc.spatial.geojson = JSON.parse(
@@ -258,15 +258,15 @@ export class NewTaskComponent implements OnInit, AfterViewInit, AfterViewChecked
             console.log(this.cmpTask);
             this.service.insert(this.cmpTask).subscribe(response => {
                 if (response.error) {
-                    this._notice.warning(
-                        'Warning',
-                        'Create comparison task failed!'
-                    );
+                    // this._notice.warning(
+                    //     'Warning',
+                    //     'Create comparison task failed!'
+                    // );
                 } else {
-                    this._notice.success(
-                        'Success',
-                        'Create comparison task succeed!'
-                    );
+                    // this._notice.success(
+                    //     'Success',
+                    //     'Create comparison task succeed!'
+                    // );
                     this.cmpTask._id = response.data.doc._id;
                     this.__isConfirmVisible = true;
                 }
@@ -380,24 +380,24 @@ export class NewTaskComponent implements OnInit, AfterViewInit, AfterViewChecked
                         });
                     }
                 });
-                this._notice.create(
-                    'success',
-                    'Info:',
-                    'loading data succeed!'
-                );
+                // this._notice.create(
+                //     'success',
+                //     'Info:',
+                //     'loading data succeed!'
+                // );
             } else {
-                this._notice.create(
-                    'warning',
-                    'Warning:',
-                    'loading data failed, please retry later!'
-                );
+                // this._notice.create(
+                //     'warning',
+                //     'Warning:',
+                //     'loading data failed, please retry later!'
+                // );
             }
         } else {
-            this._notice.create(
-                'warning',
-                'Warning:',
-                'loading data failed, please retry later!'
-            );
+            // this._notice.create(
+            //     'warning',
+            //     'Warning:',
+            //     'loading data failed, please retry later!'
+            // );
         }
     }
 
@@ -408,11 +408,11 @@ export class NewTaskComponent implements OnInit, AfterViewInit, AfterViewChecked
                     if (dataRefer.msId === msId) {
                         dataRefer.dataId = undefined;
                         // this.doneDisabled = true;
-                        this._notice.create(
-                            'success',
-                            'Success:',
-                            'Remove file succeed!'
-                        );
+                        // this._notice.create(
+                        //     'success',
+                        //     'Success:',
+                        //     'Remove file succeed!'
+                        // );
                     }
                 });
             }
@@ -505,15 +505,15 @@ export class NewTaskComponent implements OnInit, AfterViewInit, AfterViewChecked
         this.service.start(this.cmpTask._id).subscribe(response => {
             this.__isConfirmVisible = false;
             if (response.error) {
-                this._notice.warning(
-                    'Warning',
-                    'Start comparison task failed!'
-                );
+                // this._notice.warning(
+                //     'Warning',
+                //     'Start comparison task failed!'
+                // );
             } else {
-                this._notice.success(
-                    'Success',
-                    'Start comparison task succeed!'
-                );
+                // this._notice.success(
+                //     'Success',
+                //     'Start comparison task succeed!'
+                // );
                 // TODO
                 this.router.navigate(['..'], {
                     relativeTo: this.route

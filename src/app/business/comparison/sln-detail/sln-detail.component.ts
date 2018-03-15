@@ -11,7 +11,7 @@ import { CmpSolution, CmpTask, ResourceSrc, MS, CmpMethod, SchemaName } from '@m
 import { CmpSlnService } from '../services/cmp-sln.service';
 import { NzNotificationService, NzModalService } from 'ng-zorro-antd';
 import { Router, ActivatedRoute } from '@angular/router';
-import { BaFileUploader } from '@shared';
+import { FileUploader } from '@shared';
 import { NgUploaderOptions } from 'ngx-uploader';
 
 @Component({

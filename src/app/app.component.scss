@@ -1,5 +1,5 @@
 @import './common/shared/sass/conf/conf';
-@import './common/shared/components/baSidebar/baSidebar.component';
+// @import './common/shared/components/baSidebar/baSidebar.component';
 :host /deep/ {
     @mixin layout-collapsed() {
         .al-main {
@@ -49,31 +49,31 @@
             }
         }
     }
-    @mixin sidebar-overlap() {
-        .al-sidebar {
-            width: $sidebar-width;
-            @include bg-translucent-dark(0.75);
-            transition: width 0.5s ease;
-            .fa-angle-down,
-            .fa-angle-up {
-                opacity: 1;
-            }
-            .al-sidebar-sublist {
-                @include default-sublist();
-                top: auto;
-                left: auto;
-                background: none;
-                width: auto;
-                overflow: visible;
-                transition: none;
-            }
-            .sidebar-hover-elem,
-            .sidebar-select-elem {
-                left: $sidebar-width - 4;
-                transition: left 0.5s ease;
-            }
-        }
-    }
+    // @mixin sidebar-overlap() {
+    //     .al-sidebar {
+    //         width: $sidebar-width;
+    //         @include bg-translucent-dark(0.75);
+    //         transition: width 0.5s ease;
+    //         .fa-angle-down,
+    //         .fa-angle-up {
+    //             opacity: 1;
+    //         }
+    //         .al-sidebar-sublist {
+    //             // @include default-sublist();
+    //             top: auto;
+    //             left: auto;
+    //             background: none;
+    //             width: auto;
+    //             overflow: visible;
+    //             transition: none;
+    //         }
+    //         .sidebar-hover-elem,
+    //         .sidebar-select-elem {
+    //             left: $sidebar-width - 4;
+    //             transition: left 0.5s ease;
+    //         }
+    //     }
+    // }
     @mixin sidebar-hidden() {
         .al-sidebar {
             width: 0;
@@ -97,7 +97,7 @@
         }
     }
     @media (max-width: 1200px) {
-        @include sidebar-overlap();
+        // @include sidebar-overlap();
     }
     @media (max-width: $resXS) {
         .menu-collapsed {

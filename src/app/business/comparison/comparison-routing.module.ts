@@ -14,7 +14,7 @@ import { CmpResultsComponent } from './cmp-results/cmp-results.component';
 import { ShowCmpSolutionComponent } from './show-cmp-solution/show-cmp-solution.component';
 import { ShowCmpSolutioninfoComponent } from './show-cmp-solutioninfo/show-cmp-solutioninfo.component';
 import { CmpTaskListComponent } from './cmp-task-list/cmp-task-list.component';
-import { SiderMenuLayoutComponent, HeaderMenuLayoutComponent } from '@shared';
+import { HeaderMenuLayoutComponent } from '@shared';
 import { CmpIssueListComponent } from './cmp-issue-list/cmp-issue-list.component';
 
 const routes: Routes = [

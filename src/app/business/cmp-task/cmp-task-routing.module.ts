@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { CmpTaskListComponent } from './cmp-task-list/cmp-task-list.component';
 import { TaskDetailComponent } from './task-detail/task-detail.component';
-import { SiderMenuLayoutComponent, HeaderMenuLayoutComponent } from '@shared';
+import { HeaderMenuLayoutComponent } from '@shared';
 import { NewTaskComponent } from './new-task/new-task.component';
 import { CmpTaskService } from './services';
 

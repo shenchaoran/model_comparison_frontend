@@ -86,6 +86,6 @@
         "src/**/*",
         "node_modules/jqwidgets-scripts/**/*",
         "node_modules/ngx-uploader/src/**/*",
-        "node_modules/echarts-ng2/src/component/echarts-ng2.module.ts"
+        "node_modules/echarts-ng2/src/**/*"
     ]
 }

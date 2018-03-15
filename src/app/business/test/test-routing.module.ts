@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LifeLoopComponent } from './life-loop/life-loop.component';
 import { SiderNavComponent } from './sider-nav/sider-nav.component';
-import { SiderMenuLayoutComponent, HeaderMenuLayoutComponent } from '@shared';
+import { HeaderMenuLayoutComponent } from '@shared';
 
 const routes: Routes = [
     {

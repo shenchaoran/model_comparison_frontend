@@ -5,7 +5,7 @@ import { GeoDataComponent } from './geo-data.component';
 import { DataService } from './services/data.service';
 import { DatasComponent } from "./datas/datas.component";
 import { DataInfoComponent } from "./data-info/data-info.component";
-import { SiderMenuLayoutComponent, HeaderMenuLayoutComponent } from '@shared';
+import { HeaderMenuLayoutComponent } from '@shared';
 
 const routes: Routes = [
     {

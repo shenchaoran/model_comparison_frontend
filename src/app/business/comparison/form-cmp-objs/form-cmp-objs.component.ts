@@ -12,7 +12,7 @@ import {
   ChangeDetectorRef
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { NzNotificationService } from 'ng-zorro-antd';
+// import { NzNotificationService } from 'ng-zorro-antd';
 import {
   ControlValueAccessor,
   FormBuilder,
@@ -55,7 +55,7 @@ export class FormCmpObjsComponent implements OnInit, OnChanges {
   selectedCmpObj: any;
 
   constructor(
-    private _notification: NzNotificationService,
+    // private _notification: NzNotificationService,
     private msService: MSService,
     private cdRef: ChangeDetectorRef
   ) {
@@ -118,10 +118,10 @@ export class FormCmpObjsComponent implements OnInit, OnChanges {
       this.selectedCmpObj = newObj;
       this.methods = [];
     } else {
-      this._notification.warning(
-        'Warning',
-        'Please accomplish the current comparison object first!'
-      );
+    //   this._notification.warning(
+    //     'Warning',
+    //     'Please accomplish the current comparison object first!'
+    //   );
     }
   }
 

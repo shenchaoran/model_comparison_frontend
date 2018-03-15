@@ -1,0 +1,41 @@
+.steps-content {
+    margin: 12px 0;
+    padding: 10px;
+}
+
+.steps-action {
+    margin-top: 12px;
+}
+
+.step-title {
+    margin-bottom: 24px;
+}
+
+.ms-item {
+    padding: 12px 10px;
+    border: 1px solid #e1e4e8;
+    border-bottom: none;
+    cursor: pointer;
+}
+
+.checked-label {
+    width: 25px !important;
+    height: 10px;
+    float: left;
+}
+
+.ms-item.checked,
+.ms-item:hover {
+    background-color: #f6f8fa;
+}
+
+.ms-item:last-child {
+    border: 1px solid #e1e4e8;
+}
+
+.dropdown-filter {
+    margin: 0 10px;
+    span {
+        cursor: pointer !important;
+    }
+}

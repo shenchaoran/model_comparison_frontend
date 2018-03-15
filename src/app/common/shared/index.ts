@@ -9,22 +9,12 @@ import { HEADER_MENUS, USER_MENUS } from '@config/menu.config';
 import { DisqusModule } from "ngx-disqus";
 import { EmailValidator, EqualPasswordsValidator } from './validators';
 import { ListFilterService } from './components/list-template/list-filter.service';
-import { HeaderMenuService } from './components/baHeaderMenu/baHeaderMenu.service';
-import { LoginService } from '@feature/login//login.service';
+import { HeaderMenuService } from './components/baHeaderMenu/services/baHeaderMenu.service';
+import { BaMenuService } from './components/baHeaderMenu/services/baMenu.service';
+import { LoginService } from '@feature/login/login.service';
 
 import {
-    BaCard,
-    BaCopyright,
-    BaPageTop,
-    BaTitleTop,
-    BaMenuItem,
-    BaMenuHoverItem,
-    BaMenu,
-    BaSidebar,
-    BaFileUploader,
-    BaHeaderMenuComponent,
-    TestRecurComponent,
-    SubMenuComponent,
+    FileUploader,
     ContextMenuComponent,
     HeaderPullRightComponent,
     IssueCardComponent,
@@ -32,12 +22,13 @@ import {
     SolutionCardComponent,
     TaskCardComponent,
     HeaderMenuLayoutComponent,
-    SiderMenuLayoutComponent,
     ListTemplateComponent,
     FooterComponent,
     DocDetailTemplateComponent,
     TableFeatureComponent,
-    ColorScale,
+    BaHeaderMenuComponent,
+    SubMenuComponent,
+    TestRecurComponent,
 } from './components';
 
 import {
@@ -47,7 +38,6 @@ import {
 
 import {
     BaImageLoaderService,
-    BaMenuService,
     BaThemePreloader,
     BaThemeSpinner,
 } from './services';
@@ -64,41 +54,29 @@ const NGA_SERVICES = [
     BaImageLoaderService,
     BaThemePreloader,
     BaThemeSpinner,
-    BaMenuService,
     ListFilterService,
     LoginService,
+    BaMenuService,
 ];
 
 const NGA_VALIDATORS = [EmailValidator, EqualPasswordsValidator];
 
 const CITYFUN_COMPONENTS = [
-    BaCard,
-    BaCopyright,
-    BaPageTop,
-    BaTitleTop,
-    BaMenuItem,
-    BaMenuHoverItem,
-    BaMenu,
-    BaFileUploader,
-
-    BaSidebar,
-    BaHeaderMenuComponent,
-    TestRecurComponent,
-    SubMenuComponent,
+    FileUploader,
     ContextMenuComponent,
+    BaHeaderMenuComponent,
     HeaderPullRightComponent,
-
     ModelCardComponent,
     SolutionCardComponent,
     TaskCardComponent,
     IssueCardComponent,
     HeaderMenuLayoutComponent,
-    SiderMenuLayoutComponent,
     ListTemplateComponent,
     FooterComponent,
     DocDetailTemplateComponent,
     TableFeatureComponent,
-    ColorScale
+    SubMenuComponent,
+    TestRecurComponent,
 ];
 
 const CITYFUN_DIRECTIVES = [
@@ -117,12 +95,7 @@ const CITYFUN_PIPES = [
 const CITYFUN_VALIDATORS = [EmailValidator, EqualPasswordsValidator];
 const SERVICES = [HeaderMenuService];
 
-///////////////
 export * from './components';
-
-// const CITYFUN_SERVICES = [
-// 	BaMenuService
-// ];
 
 @NgModule({
     declarations: [

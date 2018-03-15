@@ -3,9 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoginService } from '@feature/login/login.service';
 import { CmpSolution, CmpTask, ResourceSrc } from '@models';
 import { CmpSlnService } from '../services/cmp-sln.service';
-import { NzNotificationService, NzModalService  } from 'ng-zorro-antd';
+// import { NzNotificationService, NzModalService  } from 'ng-zorro-antd';
 import { Router, ActivatedRoute } from '@angular/router';
-import { BaFileUploader } from '@shared';
+import { FileUploader } from '@shared';
 import { NgUploaderOptions } from 'ngx-uploader';
 
 @Component({
@@ -29,8 +29,8 @@ export class NewSolutionComponent implements OnInit {
         private fb: FormBuilder,
         private cdRef: ChangeDetectorRef,
         private service: CmpSlnService,
-        private _notice: NzNotificationService,
-        private modalService: NzModalService,
+        // private _notice: NzNotificationService,
+        // private modalService: NzModalService,
         private router: Router,
         private route: ActivatedRoute
     ) {}
@@ -104,10 +104,10 @@ export class NewSolutionComponent implements OnInit {
         this.service.insertSln(this.cmpSolution)
             .subscribe(response => {
                 if(response.error) {
-                    this._notice.warning('Warning', 'create comparison solution failed!');
+                    // this._notice.warning('Warning', 'create comparison solution failed!');
                 }
                 else {
-                    this._notice.success('Success', 'create comparison solution succeed!');
+                    // this._notice.success('Success', 'create comparison solution succeed!');
                     this.cmpSolution._id = response.data.doc._id;
                     this.__isConfirmVisible = true;
                 }

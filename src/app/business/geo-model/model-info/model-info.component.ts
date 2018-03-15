@@ -1,7 +1,7 @@
 import { Component, OnInit, HostListener } from "@angular/core";
 import { MSService } from "../services";
 import { Router, ActivatedRoute, Params } from "@angular/router";
-import { NzNotificationService, NzModalService } from "ng-zorro-antd";
+// import { NzNotificationService, NzModalService } from "ng-zorro-antd";
 import { DynamicTitleService } from "@core/services/dynamic-title.service";
 
 @Component({
@@ -28,33 +28,39 @@ export class ModelInfoComponent implements OnInit {
     constructor(
         private service: MSService,
         private route: ActivatedRoute,
-        private _notice: NzNotificationService,
+        // private _notice: NzNotificationService,
         private title: DynamicTitleService
-    ) {}
+    ) { }
 
     ngOnInit() {
         this.route.params.subscribe((params: Params) => {
-          this.modelId = params['id'];
-          this.service.findOne(this.modelId)
-            .subscribe(response => {
-              if(response.error) {
-                this._notice.warning('Warning:', 'Get model failed');
-              }
-              else {
-                this.model = response.data;
-                this.title.setTitle(this.model.MDL.meta.name);
+            this.modelId = params['id'];
+            this.service.findOne(this.modelId)
+                .subscribe(response => {
+                    if (response.error) {
+                        // this._notice.warning('Warning:', 'Get model failed');
+                    }
+                    else {
+                        this.model = response.data;
+                        this.title.setTitle(this.model.MDL.meta.name);
 
-                console.log(this.model.MDL.IO.schemas[0].structure[0]);
-                //add io table dataset
-                for(let i = 0; i < this.model.MDL.IO.schemas[0].structure.length; i++) {
-                    this._ioDataSet.push(this.model.MDL.IO.schemas[0].structure[i]);
-                }
+                        const schemaStructure = _.get(this.model, 'MDL.IO.schemas[0].structure');
+                        if (schemaStructure) {
+                            //add io table dataset
+                            for (let i = 0; i < schemaStructure.length; i++) {
+                                this._ioDataSet.push(schemaStructure[i]);
+                            }
 
-                for (let i = 0; i < this.model.MDL.params.length; i++) {
-                    this._paramsDataSet.push(this.model.MDL.params[i]);
-                }
-              }
-            })
+                        }
+                        const params = _.get(this.model, 'MDL.params');
+                        if(params) {
+                            for (let i = 0; i < params.length; i++) {
+                                this._paramsDataSet.push(params[i]);
+                            }
+                        }
+                            
+                    }
+                })
         });
 
         this._isLoading = false;
