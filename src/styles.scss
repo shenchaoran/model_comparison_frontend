@@ -6,7 +6,7 @@
 // end
 // @import "~roboto-fontface/css/roboto/roboto-fontface.css";
 @import "~normalize.css/normalize.css";
-@import '~font-awesome/css/font-awesome.css';
+@import '~font-awesome/css/font-awesome.min.css';
 @import "~ionicons/css/ionicons.min.css";
 @import "~ng2-slim-loading-bar/style.css";
 @import "~perfect-scrollbar/css/perfect-scrollbar.css";
@@ -18,7 +18,7 @@
 @import '~handsontable/dist/handsontable.full.css';
 // @import '~jqwidgets-scripts/jqwidgets/styles/jqx.base.css';
 // @import '~jqwidgets-scripts/jqwidgets/styles/jqx.energyblue.css';
-// @import '~bootstrap/dist/css/bootstrap.min.css';
+@import '~bootstrap/dist/css/bootstrap.min.css';
 // @import '~ol3-ext/dist/ol3-ext.css';
 // theme
 // @import "app/common/shared/theme.scss";

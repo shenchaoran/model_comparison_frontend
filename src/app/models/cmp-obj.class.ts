@@ -20,35 +20,25 @@
 import { GeoDataClass } from './UDX-data.class';
 import { UDXSchema } from '../models/UDX-schema.class';
 import { DataRefer } from './dataRefer.class';
-import * as uuidv1 from 'uuid/v1';
-// import { ObjectID } from 'mongodb';
+import * as ObjectID from 'objectid';
 
 export class CmpObj {
-    id?: string;
+    id: any;
     meta: {
         name: string,
         desc: string
     };
-    schemaName: string;
-    methods: any[];
-    dataRefers?: Array<DataRefer>;
-    attached?: {
-        valid?: boolean,
-        active?: boolean
-    };
+    schemaId: string;
+    methods: string[];
+    dataRefers: Array<DataRefer>
     
     constructor() {
-        this.id = uuidv1();
+        this.id = ObjectID();
         this.meta = {
             name: '',
             desc: ''
         };
-        this.schemaName = '';
         this.methods = [];
         this.dataRefers = [];
-        this.attached = {
-            valid: false,
-            active: true
-        };
     }
 }

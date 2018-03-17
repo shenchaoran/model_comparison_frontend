@@ -8,7 +8,7 @@ export class CmpMethod {
         TABLE_RAW: [
             {
                 label: 'Chart',
-                value: 'TABLE_CHART',
+                value: 'Chart',
                 checked: false
             },
             {

@@ -6,18 +6,23 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class StringLimitPipe implements PipeTransform {
 
     transform(value: string, rlength: number): string {
-        const length = value.length;
-        if(rlength === undefined) {
-            rlength = 90;
-        }
+        if (value) {
+            const length = value.length;
+            if (rlength === undefined) {
+                rlength = 90;
+            }
 
-        if(length <= rlength) {
-            return value;
+            if (length <= rlength) {
+                return value;
+            }
+            else {
+                value = value.substr(0, rlength);
+                value = value.substr(0, value.lastIndexOf(' ')) + ' ...';
+                return value;
+            }
         }
         else {
-            value = value.substr(0, rlength);
-            value = value.substr(0, value.lastIndexOf(' ')) + ' ...';
-            return value;
+            return '';
         }
     }
 

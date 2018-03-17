@@ -28,8 +28,8 @@ export class CmpTaskService implements Resolve<any> {
         });
     }
 
-    insert(doc): Observable<any> {
-        return this.http.post('/comparison/tasks', { doc: doc });
+    insert(obj): Observable<any> {
+        return this.http.post('/comparison/tasks', obj);
     }
 
     start(id: string): Observable<any> {

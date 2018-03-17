@@ -5,10 +5,11 @@ import { LifeLoopComponent } from './life-loop/life-loop.component';
 import { TestRoutingModule } from './test-routing.module';
 import { SiderNavComponent } from './sider-nav/sider-nav.component';
 import { SharedModule } from '@shared';
+import { TestComponent } from './test.component';
 
 @NgModule({
     imports: [NgxSharedModule, TestRoutingModule, SharedModule],
-    declarations: [LifeLoopComponent, SiderNavComponent],
+    declarations: [LifeLoopComponent, SiderNavComponent, TestComponent],
     exports: [LifeLoopComponent]
 })
 export class TestModule {}

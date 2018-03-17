@@ -6,7 +6,7 @@
                         </a>
         </div>
         <div class='item-body'>
-            <div class='desc'>{{sln.meta.desc | stringLimit: 180}}</div>
+            <div class='desc'>{{sln.meta.desc | stringLimit: 180 | description}}</div>
             <div>
                 <span *ngFor='let ms of sln.cmpCfg.ms' [routerLink]='["../resources/geo-models", ms.msId]' class='topic model-topic'>{{ms.msName}}</span>
             </div>

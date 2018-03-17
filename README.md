@@ -136,6 +136,7 @@ declare var postal: any;
 - 页面加载速度
 - 评论系统
 - 和bootstrap结合
+- 分割common module，打包后太大
 
 ## Install
 

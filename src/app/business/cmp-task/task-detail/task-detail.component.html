@@ -160,7 +160,7 @@
                         <ul>
                             <li>
                                 <a [routerLink]='["../../issues", task.issue._id]'>{{task.issue.meta.name}}</a>
-                                <div class='sider-desc'>{{task.issue.meta.desc | stringLimit}}</div>
+                                <div class='sider-desc'>{{task.issue.meta.desc | stringLimit | description}}</div>
                                 <div>
                                     <span class='topic'>Topic xxx</span>
                                 </div>
@@ -177,7 +177,7 @@
                         <ul>
                             <li>
                                 <a [routerLink]='["../../solutions", task.solution._id]'>{{task.solution.meta.name}}</a>
-                                <div class='sider-desc'>{{task.solution.meta.desc | stringLimit}}</div>
+                                <div class='sider-desc'>{{task.solution.meta.desc | stringLimit | description}}</div>
                                 <div>
                                     <span *ngFor='let ms of task.solution.cmpCfg.ms' [routerLink]='["../../resources/geo-models", ms.msId]' class='topic model-topic'>{{ms.msName}}</span>
                                 </div>

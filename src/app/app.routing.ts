@@ -54,10 +54,10 @@ export const routes: Routes = [
         path: 'tasks',
         loadChildren: './business/cmp-task/cmp-task.module#CmpTaskModule'
     },
-    {
-        path: 'comparison',
-        loadChildren: './business/comparison/comparison.module#ComparisonModule'
-    },
+    // {
+    //     path: 'comparison',
+    //     loadChildren: './business/comparison/comparison.module#ComparisonModule'
+    // },
     {
         path: 'search',
         loadChildren: './business/search/search.module#SearchModule'

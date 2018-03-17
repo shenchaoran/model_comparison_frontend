@@ -127,7 +127,7 @@
                         <ul>
                             <li>
                                 <a [routerLink]='["../../issues", solution.issue._id]'>{{solution.issue.meta.name}}</a>
-                                <div class='sider-desc'>{{solution.issue.meta.desc | stringLimit}}</div>
+                                <div class='sider-desc'>{{solution.issue.meta.desc | stringLimit | description}}</div>
                                 <div>
                                     <span class='topic'>Topic xxx</span>
                                 </div>
@@ -144,7 +144,7 @@
                         <ul>
                             <li *ngFor='let task of solution.tasks'>
                                 <a [routerLink]='["../../tasks", task._id]'>{{task.meta.name}}</a>
-                                <div class='sider-desc'>{{task.meta.desc | stringLimit}}</div>
+                                <div class='sider-desc'>{{task.meta.desc | stringLimit | description}}</div>
                                 <div>{{task.meta.time | date: 'yyyy-MM-dd'}}</div>
                             </li>
                         </ul>

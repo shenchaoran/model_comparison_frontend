@@ -12,7 +12,7 @@ export class ListFilterService {
 
     getOwnerFilter() {
         if(this.type === undefined) {
-            return undefined;
+            // return undefined;
         }
         if(this.type === 'issues') {
             

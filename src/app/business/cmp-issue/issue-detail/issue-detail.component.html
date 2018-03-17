@@ -62,7 +62,7 @@
                             <li *ngFor='let sln of issue.solutions'>
                                 <a [routerLink]='["../../solutions", sln._id]'>{{sln.meta.name}}</a>
                                 <!-- TODO: length pipe -->
-                                <div class='sider-desc'>{{sln.meta.desc | stringLimit}}</div>
+                                <div class='sider-desc'>{{sln.meta.desc | stringLimit | description}}</div>
                                 <div>
                                     <span *ngFor='let ms of sln.mss' [routerLink]='["../../resources/geo-models", ms.msId]' class='topic model-topic'>{{ms.msName}}</span>
                                 </div>

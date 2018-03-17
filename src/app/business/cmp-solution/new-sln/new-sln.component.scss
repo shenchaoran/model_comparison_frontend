@@ -1,14 +1,13 @@
 .steps-content {
     margin: 12px 0;
     padding: 10px;
+    .step-title {
+        margin-bottom: 24px;
+    }
 }
 
 .steps-action {
-    margin-top: 12px;
-}
-
-.step-title {
-    margin-bottom: 24px;
+    margin: 12px 0;
 }
 
 .ms-item {
@@ -37,5 +36,21 @@
     margin: 0 10px;
     span {
         cursor: pointer !important;
+    }
+}
+
+.form-item {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    >span {
+        text-align: right;
+        padding: 0 15px;
+    }
+    >span::after {
+        // content: ':'
+    }
+    >div {
+        padding: 0 15px;
     }
 }

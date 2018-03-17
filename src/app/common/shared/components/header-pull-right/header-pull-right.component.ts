@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { LoginService } from '@feature/login/login.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
     selector: 'ogms-header-pull-right',
@@ -8,31 +10,37 @@ import { Component, OnInit } from '@angular/core';
 export class HeaderPullRightComponent implements OnInit {
     hasLogin: boolean;
     
-    constructor() {
+    constructor(
+        private loginService: LoginService,
+        private router: Router,
+        private route: ActivatedRoute
+    ) {
         this.hasLogin = false;
     }
 
     ngOnInit() {
+        
         postal.channel('MENU')
             .subscribe('logout', () => {
                 this.hasLogin = false;
-            })
+            });
 
-        const jwtStr = localStorage.getItem('jwt');
-        if (jwtStr !== undefined) {
-            const jwt = JSON.parse(jwtStr);
-            if (jwt !== null && jwt.expires > Date.now()) {
-                // token is available
-                const token = jwt.token;
-                this.hasLogin = true;
-                
+        this.hasLogin = this.loginService.hasLogin();
+    }
+
+    login() {
+        this.router.navigate(['/login'], {
+            queryParams: {
+                redirect: (window as any).location.hash
             }
-            else {
-                this.hasLogin = false;
+        });
+    }
+
+    register() {
+        this.router.navigate(['/join'], {
+            queryParams: {
+                redirect: (window as any).location.hash
             }
-        }
-        else {
-            this.hasLogin = false;
-        }
+        });
     }
 }

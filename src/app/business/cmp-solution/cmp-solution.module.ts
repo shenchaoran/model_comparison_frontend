@@ -9,9 +9,16 @@ import { NewSlnComponent } from './new-sln/new-sln.component';
 import { CmpSolutionComponent } from './cmp-solution.component';
 import { OlMapModule } from '@feature/ol-map/ol-map.module';
 import { MSService } from '../geo-model/services/model.service';
+import { CmpSharedModule } from '../cmp-shared';
+import { CmpTaskService } from '../cmp-task/services';
 
 @NgModule({
-    imports: [SharedModule, OlMapModule, CmpSolutionListRoutingModule],
+    imports: [
+        SharedModule, 
+        OlMapModule, 
+        CmpSolutionListRoutingModule,
+        CmpSharedModule,
+    ],
     declarations: [
         CmpSolutionComponent,
         CmpSolutionListComponent,
@@ -21,6 +28,7 @@ import { MSService } from '../geo-model/services/model.service';
     providers: [
         CmpSlnService,
         MSService,
+        CmpTaskService,
     ]
 })
 export class CmpSolutionModule {}

@@ -4,11 +4,11 @@
 
 <ng-template #gotoLogin>
     <div>
-        <a class='ogms-menu-link' routerLink="/login" [routerLinkActive]="'actived-menu'">
+        <a class='ogms-menu-link' (click)='login()'>
             Sign in
         </a> &nbsp;
         <span style='color: #586069 !important;'>or</span> &nbsp;
-        <a class='ogms-menu-link' routerLink="/join" [routerLinkActive]="'actived-menu'">
+        <a class='ogms-menu-link' (click)='register()'>
             Sign up
         </a>
     </div>

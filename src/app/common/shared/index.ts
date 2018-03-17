@@ -48,7 +48,9 @@ import {
     MomentDatePipe,
     UndefinedPipe,
     ResourceSrcPipe,
-    StringLimitPipe
+    StringLimitPipe,
+    ArrayFilterPipe,
+    DescriptionPipe,
 } from './pipes';
 
 const NGA_SERVICES = [
@@ -91,7 +93,9 @@ const CITYFUN_PIPES = [
     MomentDatePipe,
     ResourceSrcPipe,
     UndefinedPipe,
-    StringLimitPipe
+    StringLimitPipe,
+    ArrayFilterPipe,
+    DescriptionPipe,
 ];
 
 const CITYFUN_VALIDATORS = [EmailValidator, EqualPasswordsValidator];

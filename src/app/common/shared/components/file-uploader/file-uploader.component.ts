@@ -10,10 +10,12 @@ import {
 } from '@angular/core';
 import { NgUploaderOptions } from 'ngx-uploader';
 import * as uuidv1 from 'uuid/v1';
+import { NzNotificationService } from 'ng-zorro-antd';
+
 @Component({
-    selector: 'file-uploader',
-    styleUrls: ['./file-uploader.scss'],
-    templateUrl: './file-uploader.html'
+    selector: 'ogms-file-uploader',
+    styleUrls: ['./file-uploader.component.scss'],
+    templateUrl: './file-uploader.component.html'
 })
 export class FileUploader {
     _id: string;
@@ -39,7 +41,8 @@ export class FileUploader {
     public uploadFileInProgress: boolean;
     constructor(
         private renderer: Renderer2,
-        @Inject('BACKEND') private backend
+        @Inject('BACKEND') private backend,
+        private _notice: NzNotificationService,
     ) {
         this._id = uuidv1();
     }
@@ -85,14 +88,30 @@ export class FileUploader {
     _onFileUploadCompleted(data): void {
         this._showClose = true;
         this.uploadFileInProgress = false;
-        this.onFileUploadCompleted.emit(data);
 
         if (!data.abort && data.done && !data.error) {
+            const response = JSON.parse(data.response);
+            if (_.startsWith(_.get(response, 'status.code'), '200')) {
+                this.onFileUploadCompleted.emit({
+                    data: response.data
+                });
+                this._notice.success('Success:', 'Upload succeed!');
+            } else {
+                this.onFileUploadCompleted.emit({
+                    error: 'upload failed'
+                });
+                this._notice.warning('Warning:', 'Upload server error!');
+            }
         } else {
             jQuery('#progress-' + this._id).removeClass(
                 'form-progress-uploading'
             );
             jQuery('#progress-' + this._id).addClass('form-progress-failed');
+
+            this.onFileUploadCompleted.emit({
+                error: 'upload failed'
+            });
+            this._notice.warning('Warning:', data.abort? 'Upload is aborted!': 'Upload failed!');
         }
     }
 

@@ -145,12 +145,12 @@ export class NewTaskComponent implements OnInit {
 
       console.log(this.task);
       
-      this.taskService.insert(this.task).subscribe(response => {
-        if (response.error) {
-          this._notice.warning("Warning:", "Create task failed");
-        } else {
+    //   this.taskService.insert(this.task).subscribe(response => {
+    //     if (response.error) {
+    //       this._notice.warning("Warning:", "Create task failed");
+    //     } else {
 
-        }
-      })
+    //     }
+    //   })
     }
 }

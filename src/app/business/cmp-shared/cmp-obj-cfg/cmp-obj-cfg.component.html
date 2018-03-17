@@ -1,0 +1,44 @@
+<!-- select dataRefer -->
+<ng-template #dataReferTemplate let-msInstance='msInstance' let-dataRefer='dataRefer'>
+    <div class='form-item' nz-row>
+        <span nz-col [nzSpan]='4'>DataRefer</span>
+        <!-- <div nz-col [nzSpan]='20'>
+                <nz-select style='width: 530px;' [(ngModel)]="dataRefer.eventName" [nzAllowClear]="true">
+                    <nz-option *ngFor="let event of msInstance.IO.data | filter:{type: 'input'}" [nzLabel]="event.id" [nzValue]="event.id">
+                    </nz-option>
+                </nz-select>
+            </div> -->
+        <div nz-col [nzSpan]='20'>
+            <nz-cascader style='width: 530px;' [nzSize]='"large"' [nzOptions]='msInstance.options' [ngModel]='msInstance.dataRefer' (ngModelChange)='onDataReferChange($event, msInstance, dataRefer)'></nz-cascader>
+        </div>
+    </div>
+</ng-template>
+
+<!-- layout -->
+<div style='margin-bottom: 15px;'>
+    <nz-tabset [nzType]="'card'">
+        <nz-tab *ngFor="let msInstance of _msInstances; let i=index;">
+            <ng-template #nzTabHeading>
+                {{msInstance.meta.name}}
+            </ng-template>
+            <div>
+                <ng-template [ngTemplateOutlet]='dataReferTemplate' [ngTemplateOutletContext]='{msInstance: msInstance, dataRefer: dataRefers[i]}'></ng-template>
+            </div>
+        </nz-tab>
+    </nz-tabset>
+</div>
+
+<ng-container *ngIf='!validSchema'>
+    <div class='form-item'>
+        Please select the data that has same reference schema.
+    </div>
+</ng-container>
+
+<div *ngIf='cmpObj.schemaId && validSchema' class='form-item' nz-row>
+    <span nz-col [nzSpan]='4'>Select comparison methods</span>
+    <div nz-col [nzSpan]='20'>
+        <label *ngFor='let method of methods' nz-checkbox [(ngModel)]="method.checked" (ngModelChange)="onMethodChange()">
+            <span>{{method.label}}</span>
+        </label>
+    </div>
+</div>

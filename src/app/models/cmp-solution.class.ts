@@ -1,7 +1,6 @@
 /**
  * 比较方案只是比较对象的集合
  */
-import { ObjectID } from 'mongodb';
 import { ResourceSrc } from './resource.enum';
 import { DataRefer } from './dataRefer.class';
 

@@ -1,6 +1,7 @@
+// TODO 唯一的实例 装饰器
 import { Injectable } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { NzNotificationService } from 'ng-zorro-antd';
 import { _HttpClient } from '@core/services/http.client';
 import { Observable } from 'rxjs/Observable';
@@ -13,7 +14,8 @@ export class LoginService extends ErrorHandle {
     constructor(
         private http: _HttpClient,
         private router: Router,
-        private _notification: NzNotificationService
+        private _notification: NzNotificationService,
+        private route: ActivatedRoute,
     ) {
         super();
     }
@@ -38,7 +40,14 @@ export class LoginService extends ErrorHandle {
                         } 
                         else {
                             localStorage.setItem('jwt',JSON.stringify(res.data.jwt));
-                            this.router.navigate(['/home']);
+                            let url = this.route.snapshot.queryParams['redirect'];
+                            url = (url as string).substr(2);
+                            if(!url || url.indexOf('#/login') !== -1) {
+                                this.router.navigate(['/home']);
+                            }
+                            else {
+                                this.router.navigate([url]);
+                            }
                         }
                     },
                     error: err => {
@@ -59,12 +68,10 @@ export class LoginService extends ErrorHandle {
         if(jwtStr) {
             const jwt = JSON.parse(jwtStr);
             if (jwt !== null && jwt.expires > Date.now()) {
-                if(jwt.user.username === 'Tourist') {
-                    return false;
-                }
-                else {
-                    return true;
-                }
+                return true;
+            }
+            else {
+                return false;
             }
         }
         return false;
@@ -76,6 +83,38 @@ export class LoginService extends ErrorHandle {
             const jwt = JSON.parse(jwtStr);
             if (jwt !== null && jwt.expires > Date.now()) {
                 return jwt.user;
+            }
+            else {
+                return undefined;
+            }
+        }
+        else {
+            return undefined;
+        }
+    }
+
+    getUser() {
+        const jwtStr = localStorage.getItem('jwt');
+        if(jwtStr) {
+            const jwt = JSON.parse(jwtStr);
+            if (jwt !== null && jwt.expires > Date.now()) {
+                return jwt.user;
+            }
+            else {
+                return undefined;
+            }
+        }
+        else {
+            return undefined;
+        }
+    }
+
+    getToken() {
+        const jwtStr = localStorage.getItem('jwt');
+        if(jwtStr) {
+            const jwt = JSON.parse(jwtStr);
+            if (jwt !== null && jwt.expires > Date.now()) {
+                return jwt.token;
             }
             else {
                 return undefined;

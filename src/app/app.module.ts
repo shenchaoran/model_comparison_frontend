@@ -14,6 +14,7 @@ import { App } from './app.component';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { NzNotificationService, NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';
 import { DisqusModule } from "ngx-disqus";
+import { LoginService } from '@feature/login/login.service';
 
 @NgModule({
     bootstrap: [App],
@@ -40,6 +41,7 @@ import { DisqusModule } from "ngx-disqus";
             useValue: { nzDuration: 3000, nzTop: '60px' }
         },
         NzNotificationService,
+        LoginService,
     ]
 })
 export class AppModule {}

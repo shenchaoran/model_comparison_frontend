@@ -5,14 +5,14 @@
                 {{task.auth.userName}}/{{task.meta.name}}
             </a>
             <span class='flex-item-1-1-auto'></span>
-            <span>
+            <!-- <span>
                     <i class="anticon anticon-star"></i>
                     {{task.solutionIds? task.solutionIds.length: 0}}
-                </span>
+                </span> -->
             <span style='width: 20px;'></span>
         </div>
         <div class='item-body'>
-            <div class='desc'>{{task.meta.desc | stringLimit: 180}}</div>
+            <div class='desc'>{{task.meta.desc | stringLimit: 180 | description}}</div>
             <div>
                 <span class='topic'>Topic1</span>
                 <span class='topic'>Topic2</span>

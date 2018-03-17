@@ -1,53 +1,54 @@
 <div class='responsive-root-div'>
-    <nz-steps [(nzCurrent)]="currentStep" #steps>
-        <nz-step [nzTitle]="'Basic information'" [nzDescription]=''></nz-step>
-        <nz-step [nzTitle]="'Participants'" [nzDescription]=''></nz-step>
-        <nz-step [nzTitle]="'Computing'" [nzDescription]=''></nz-step>
-        <nz-step [nzTitle]="'Comparison'" [nzDescription]=''></nz-step>
+    <nz-steps [(nzCurrent)]="currentStep">
+        <nz-step [nzTitle]="'Basic information'"></nz-step>
+        <nz-step [nzTitle]="'Participants'"></nz-step>
+        <nz-step [nzTitle]="'Computing'"></nz-step>
+        <nz-step [nzTitle]="'Comparison'"></nz-step>
     </nz-steps>
 
-    <form nz-form [formGroup]="cmpSln" class='steps-content'>
+    <div class='steps-content'>
+        <!-- basic Info -->
         <div [hidden]='currentStep !== 0'>
-            <h4 class='step-title'>Solution Meta Information</h4>
-            <div nz-form-item nz-row>
-                <div nz-form-label nz-col [nzSpan]='4'>
-                    <label for='sln-name'>Name</label>
-                </div>
-                <div nz-form-control nz-col [nzSpan]='20'>
-                    <nz-input formControlName='sln-name' name='sln-name' [(ngModel)]='sln.meta.name'></nz-input>
+            <h3 class='step-title'>Solution Meta Information</h3>
+            <div class='form-item' nz-row>
+                <span nz-col [nzSpan]='4'>Name</span>
+                <div nz-col [nzSpan]='20'>
+                    <nz-input style='width: 530px;' [(ngModel)]='cmpTask.meta.name'></nz-input>
                 </div>
             </div>
-            <div nz-form-item nz-row>
-                <div nz-form-label nz-col [nzSpan]='4'>
-                    <label for='sln-desc'>Description</label>
-                </div>
-                <div nz-form-control nz-col [nzSpan]='20'>
-                    <nz-input formControlName='sln-desc' name='sln-desc' [(ngModel)]='sln.meta.desc' [nzType]='"textarea"' [nzAutosize]="{minRows: 2, maxRows: 6}"></nz-input>
+            <div class='form-item' nz-row>
+                <span nz-col [nzSpan]='4'>Description</span>
+                <div nz-col [nzSpan]='20'>
+                    <nz-input style='width: 530px;' [(ngModel)]='cmpTask.meta.desc' [nzType]='"textarea"' [nzAutosize]="{minRows: 2, maxRows: 6}"></nz-input>
                 </div>
             </div>
         </div>
 
+        <!-- participants -->
+        <!-- TODO search -->
         <div [hidden]='currentStep !== 1'>
-            <h4 class='step-title'>Select Participants</h4>
+            <h3 class='step-title'>Select Participants</h3>
             <div>
-                <div *ngFor='let ms of mss' class='ms-item' [ngClass]='{"checked": ms.checked}' (click)='ms.checked? ms.checked= !ms.checked: ms.checked= true'>
+                <div *ngFor='let ms of msAll' class='ms-item' [ngClass]='{"checked": ms.checked}' (click)='onMSChecked(ms)'>
                     <span class='checked-label'>
                         <i *ngIf='ms.checked' class="anticon anticon-check"></i>
                     </span>
-                    <span>{{ms.MDL.meta.name}}</span>
+                    <span>{{ms?.MDL?.meta?.name}}</span>
                 </div>
             </div>
             <nz-pagination *ngIf='msCount > 25' [(nzPageIndex)]="msPageNum" [nzTotal]="msCount" [nzSize]="'small'"></nz-pagination>
         </div>
 
+        <!-- computing cfg -->
         <div [hidden]='currentStep !== 2'>
             <div class='step-title flex-box-row-nowrap'>
-                <h4>Computing Configuration</h4>
+                <h3>Computing Configuration</h3>
                 <span class='flex-item-1-1-auto'></span>
                 <span class='dropdown-filter'>
                     <nz-dropdown [nzTrigger]="'click'">
                         <span class="ant-dropdown-link" nz-dropdown>
-                            Layout&nbsp;&nbsp;<i class="anticon anticon-down"></i>
+                            Layout&nbsp;&nbsp;
+                            <i class="anticon anticon-down"></i>
                         </span>
                 <ul nz-menu>
                     <li nz-menu-item *ngFor='let item of computeLayout' (click)='onComputeLayoutChange(item)'>
@@ -61,14 +62,17 @@
                 </span>
             </div>
             <div>
+                <div>
+                    <span *ngFor='let ms of msSelected' class='topic model-topic' (click)='addInstance(ms)'>{{ms?.MDL?.meta?.name}}</span>
+                </div>
 
                 <!-- 公共计算配置模板 -->
                 <ng-template>
-                    <div nz-form-item nz-row>
-                        <div nz-form-label nz-col [nzSpan]='4'>
+                    <div nz-row>
+                        <div nz-col [nzSpan]='4'>
                             <label for='factor'>I want to study the impact of:</label>
                         </div>
-                        <div nz-form-control nz-col [nzSpan]='20'>
+                        <div nz-col [nzSpan]='20'>
                             <nz-radio-group formControlName='factor'>
                                 <label nz-radio [nzValue]="'TIME'">
                                     <span>time</span>
@@ -84,125 +88,107 @@
                     </div>
                 </ng-template>
 
-                <!-- 独立计算配置模板 -->
-                <ng-template #msCfg let-ms='item'>
-                    <div style='padding: 0 20px;'>
-                        <div nz-form-item nz-row>
-                            <div nz-form-label nz-col [nzSpan]='4'>
-                                <label [for]='"dataSrc"+ms._id'>Select data source</label>
-                            </div>
-                            <div nz-form-control nz-col [nzSpan]='20'>
-                                <nz-radio-group [attr.name]='"dataSrc"+ms._id' [attr.id]='"dataSrc"+ms._id' [(ngModel)]='ms.dataSrc'>
-                                    <label nz-radio [nzValue]="'STD'">
-                                                        <span>Use standard input data</span>
-                                                    </label>
-                                    <label nz-radio [nzValue]="'UPLOAD'">
-                                                        <span>Use your upload data</span>
-                                                    </label>
-                                </nz-radio-group>
-                            </div>
-                        </div>
-
-                        <nz-collapseset [nzBordered]="false">
-                            <nz-collapse [nzTitle]="'Inputs'" nzActive='true'>
-                                <ng-container *ngIf='ms.dataSrc === "STD"'>
-                                    <div nz-form-item nz-row>
-                                        <div nz-form-label nz-col [nzSpan]='4'>
-                                            <label [attr.for]='"date"+ms._id'>Date</label>
-                                        </div>
-                                        <div nz-form-control nz-col [nzSpan]='20'>
-                                            <nz-datepicker style='width: 130px;' [nzFormat]='"YYYY-MM-DD"' [formControlName]='"date"+ms._id' [attr.id]='"data"+ms._id'></nz-datepicker>
-                                        </div>
-                                    </div>
-
-                                </ng-container>
-                                <ng-container *ngIf='ms.dataSrc === "UPLOAD"'>
-
-                                </ng-container>
-                            </nz-collapse>
-                            <nz-collapse [nzTitle]="'Parameters'" nzActive='true'>
-                                <ng-container *ngIf='ms.dataSrc === "STD"'>
-
-                                </ng-container>
-                                <ng-container *ngIf='ms.dataSrc === "UPLOAD"'>
-
-                                </ng-container>
-                            </nz-collapse>
-                            <nz-collapse [nzTitle]="'Outputs'" nzActive='true'>
-                                <ng-container *ngIf='ms.dataSrc === "STD"'>
-
-                                </ng-container>
-                                <ng-container *ngIf='ms.dataSrc === "UPLOAD"'>
-
-                                </ng-container>
-                            </nz-collapse>
-                        </nz-collapseset>
-                    </div>
-                </ng-template>
-
                 <ng-container *ngIf='selectedComputeLayout === "Collapse"'>
                     <nz-collapseset>
-                        <ng-container *ngFor="let ms of mss">
-                            <ng-container *ngIf='ms.checked'>
-                                <nz-collapse [nzTitle]="ms.MDL.meta.name">
-                                    <ng-template [ngTemplateOutlet]='msCfg' [ngTemplateOutletContext]='{item: ms}'></ng-template>
-                                </nz-collapse>
-                            </ng-container>
+                        <ng-container *ngFor="let msInstance of msInstances">
+                            <nz-collapse [nzTitle]="msInstance?.meta?.name">
+                                <ogms-calcu-cfg [msInstance]='msInstance' (onValidationChange)='onValidationChange($event)' (onInstanceChange)='onInstanceChange($event)'></ogms-calcu-cfg>
+                            </nz-collapse>
                         </ng-container>
                     </nz-collapseset>
                 </ng-container>
 
                 <ng-container *ngIf='selectedComputeLayout === "Tab"'>
                     <nz-tabset [nzTabPosition]="'top'" [nzType]="'card'">
-                        <div *ngFor='let ms of mss'>
-                            <ng-container *ngIf='ms.checked'>
-                                <nz-tab>
-                                    <ng-template #nzTabHeading>
-                                        {{ms.MDL.meta.name}}
-                                    </ng-template>
-                                    <div>
-                                        <ng-template [ngTemplateOutlet]='msCfg' [ngTemplateOutletContext]='{item: ms}'></ng-template>
-                                    </div>
-                                </nz-tab>
-                            </ng-container>
+                        <div *ngFor='let msInstance of msInstances'>
+                            <nz-tab>
+                                <ng-template #nzTabHeading>
+                                    {{msInstance?.meta?.name}} &nbsp;&nbsp;&nbsp;
+                                    <i class="anticon anticon-cross" (click)="removeMSInstance(msInstance)"></i>
+                                </ng-template>
+                                <div>
+                                    <ogms-calcu-cfg [msInstance]='msInstance' (onValidationChange)='onValidationChange($event)' (onInstanceChange)='onInstanceChange($event)'></ogms-calcu-cfg>
+                                </div>
+                            </nz-tab>
                         </div>
                     </nz-tabset>
                 </ng-container>
             </div>
         </div>
 
+        <!-- cmp cfg -->
         <div [hidden]='currentStep !== 3'>
-            <h4 class='step-title'>Comparison Configuration</h4>
+            <div class='step-title flex-box-row-nowrap'>
+                <h3>Comparison Configuration</h3>
+                <span class='flex-item-1-1-auto'></span>
+                <span>
+                    <i style='cursor: pointer;' (click)='addCmpObj()' class='icon ion-plus-round'></i>
+                </span>
+            </div>
 
+            <ng-container *ngIf='cmpTask.cmpObjs.length === 0'>
+                <p class='form-item'>No comparison feature created!</p>
+            </ng-container>
+
+            <nz-collapseset [nzBordered]="false">
+                <nz-collapse *ngFor='let cmpObj of cmpTask.cmpObjs' [nzTitle]="cmpObj.meta.name" [nzActive]="true">
+                    <div style='margin: 0 20px;'>
+                        <ogms-cmp-obj-cfg [cmpObj]='cmpObj' [msInstances]='msInstances' (onCmpObjChange)='onCmpObjChange($event)' (onCmpObjCompleted)='onCmpObjCompleted($event)'></ogms-cmp-obj-cfg>
+                    </div>
+                </nz-collapse>
+            </nz-collapseset>
         </div>
-    </form>
+    </div>
 
     <div class="steps-action">
         <button nz-button [nzType]="'default'" (click)="changeStep(currentStep-1)" [disabled]="currentStep === 0">
                         <span>Previous</span>
                     </button>
-        <button nz-button [nzType]="'default'" (click)="changeStep(currentStep+1)" *ngIf="steps && steps.steps && currentStep < steps.steps.toArray().length-1" [disabled]='nextDisabled'>
+        <button nz-button [nzType]="'default'" (click)="changeStep(currentStep+1)" *ngIf="currentStep < 4 - 1" [disabled]='nextDisabled'>
                         <span>Next</span>
                     </button>
-        <button nz-button [nzType]="'primary'" (click)="done()" *ngIf="steps && steps.steps && currentStep === steps.steps.toArray().length-1" [disabled]='doneDisabled'>
+        <button nz-button [nzType]="'primary'" (click)="done()" *ngIf="currentStep ===  4 - 1" [disabled]='doneDisabled'>
                         <span>Save</span>
                     </button>
     </div>
 
-    <!-- <nz-modal [nzVisible]="__isConfirmVisible" [nzContent]="modalContent" (nzOnCancel)="handleCancel($event)">
+    <!-- add instance modal -->
+    <ng-container *ngIf='msAdding'>
+        <nz-modal [nzVisible]="__isMSModalVisible" [nzTitle]='"Add calculate instance of "+ msAdding?.MDL?.meta?.name + "?"' [nzContent]="modalContent" (nzOnCancel)="msCancel($event)" (nzOnOk)='msOK()' [nzOkText]='"Add"' [nzCancelText]='"Cancel"'>
             <ng-template #modalContent>
-                <p style='margin: 15px; font-size: 18px'>Configure this solution right now?</p>
-                <div class='flex-box-row-nowrap'>
-                    <div class='flex-item-1-1-auto'></div>
-                    <div>
-                        <button nz-button [nzType]="'default'" [nzSize]="'large'" (click)="handleCancel($event)">
-                        Later
-                    </button>
-                        <button nz-button [nzType]="'primary'" [nzSize]="'large'" (click)="handleOk($event)">
-                        Configure
-                    </button>
+                <div class='form-item' nz-row>
+                    <span nz-col [nzSpan]='6'>Name</span>
+                    <div nz-col [nzSpan]='18'>
+                        <nz-input [(ngModel)]='addingName'></nz-input>
+                    </div>
+                </div>
+                <div class='form-item' nz-row>
+                    <span nz-col [nzSpan]='6'>Description</span>
+                    <div nz-col [nzSpan]='18'>
+                        <nz-input [(ngModel)]='addingDesc' [nzType]='"textarea"' [nzAutosize]="{minRows: 2, maxRows: 6}"></nz-input>
                     </div>
                 </div>
             </ng-template>
-        </nz-modal> -->
+        </nz-modal>
+    </ng-container>
+
+    <!-- add cmp modal -->
+    <nz-modal [nzVisible]="__isCmpObjModalVisible" [nzTitle]='"Add a comparison object"' [nzContent]="modalContent" (nzOnCancel)="cmpObjCancel($event)" (nzOnOk)='cmpObjOK()' [nzOkText]='"Add"' [nzCancelText]='"Cancel"'>
+        <ng-template #modalContent>
+            <div class='form-item' nz-row>
+                <span nz-col [nzSpan]='6'>Name</span>
+                <div nz-col [nzSpan]='18'>
+                    <nz-input [(ngModel)]='addingName'></nz-input>
+                </div>
+            </div>
+            <div class='form-item' nz-row>
+                <span nz-col [nzSpan]='6'>Description</span>
+                <div nz-col [nzSpan]='18'>
+                    <nz-input [(ngModel)]='addingDesc' [nzType]='"textarea"' [nzAutosize]="{minRows: 2, maxRows: 6}"></nz-input>
+                </div>
+            </div>
+        </ng-template>
+    </nz-modal>
 </div>
+
+<ogms-footer></ogms-footer>
