@@ -53,7 +53,7 @@ export class TaskDetailComponent implements OnInit, AfterViewInit {
                                     seriesName: []
                                 };
                                 let statisticSrc = [];
-                                if (cmpObj.schemaName === 'TABLE_RAW') {
+                                if (cmpObj.schemaId === 'table column') {
                                     if (cmpObj.methods.indexOf('TABLE_CHART') !== -1) {
                                         const row = _.get(cmpObj, 'stdResult.chart.row');
                                         if (row && row.length) {

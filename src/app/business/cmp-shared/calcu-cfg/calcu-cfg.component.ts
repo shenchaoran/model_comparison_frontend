@@ -42,6 +42,18 @@ export class CalcuCfgComponent implements OnInit {
     ngOnInit() {
     }
 
+    onCoordinateChange(v, event) {
+        const match = v.match(/\s*\[?\s*(\d+\.?(\d+)?)\s*,\s*(\d+\.?(\d+)?)\s*\]?\s*/);
+        if(match) {
+            if(match.length === 5) {
+                event.value = [match[1], match[3]];
+            }
+            else {
+                event.value = [];
+            }
+        }
+    }
+
     onParamRadioChange(event, shouldUpdate, opt) {
         // if(shouldUpdate) {
             event.value = opt;

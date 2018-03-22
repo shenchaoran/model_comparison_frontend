@@ -30,6 +30,7 @@ import {
     SubMenuComponent,
     TestRecurComponent,
     CmpTagsViewComponent,
+    CmpDockingViewComponent,
 } from './components';
 
 import {
@@ -51,20 +52,22 @@ import {
     StringLimitPipe,
     ArrayFilterPipe,
     DescriptionPipe,
+    CoordinatePipe,
 } from './pipes';
 
-const NGA_SERVICES = [
+const SERVICES = [
     BaImageLoaderService,
     BaThemePreloader,
     BaThemeSpinner,
     ListFilterService,
     LoginService,
     BaMenuService,
+    HeaderMenuService,
 ];
 
-const NGA_VALIDATORS = [EmailValidator, EqualPasswordsValidator];
+const VALIDATORS = [EmailValidator, EqualPasswordsValidator];
 
-const CITYFUN_COMPONENTS = [
+const COMPONENTS = [
     FileUploader,
     ContextMenuComponent,
     BaHeaderMenuComponent,
@@ -81,14 +84,15 @@ const CITYFUN_COMPONENTS = [
     SubMenuComponent,
     TestRecurComponent,
     CmpTagsViewComponent,
+    CmpDockingViewComponent,
 ];
 
-const CITYFUN_DIRECTIVES = [
+const DIRECTIVES = [
     BaScrollPosition,
     BaSlimScroll
 ];
 
-const CITYFUN_PIPES = [
+const PIPES = [
     BaImgPathPipe,
     MomentDatePipe,
     ResourceSrcPipe,
@@ -96,18 +100,16 @@ const CITYFUN_PIPES = [
     StringLimitPipe,
     ArrayFilterPipe,
     DescriptionPipe,
+    CoordinatePipe,
 ];
-
-const CITYFUN_VALIDATORS = [EmailValidator, EqualPasswordsValidator];
-const SERVICES = [HeaderMenuService];
 
 export * from './components';
 
 @NgModule({
     declarations: [
-        ...CITYFUN_COMPONENTS,
-        ...CITYFUN_DIRECTIVES,
-        ...CITYFUN_PIPES
+        ...COMPONENTS,
+        ...DIRECTIVES,
+        ...PIPES
     ],
     imports: [
         RouterModule, 
@@ -116,7 +118,7 @@ export * from './components';
         DisqusModule.forRoot('shenchaoran')
     ],
     providers: [
-        ...CITYFUN_VALIDATORS,
+        ...VALIDATORS,
         ...SERVICES,
         {
             provide: 'BACKEND',
@@ -135,9 +137,9 @@ export * from './components';
         }
     ],
     exports: [
-        ...CITYFUN_COMPONENTS, 
-        ...CITYFUN_DIRECTIVES, 
-        ...CITYFUN_PIPES, 
+        ...COMPONENTS, 
+        ...DIRECTIVES, 
+        ...PIPES, 
         NgxSharedModule,
         DisqusModule,
     ]
@@ -149,8 +151,7 @@ export class SharedModule {
             providers: [
                 BaThemeConfigProvider,
                 BaThemeConfig,
-                ...NGA_VALIDATORS,
-                ...NGA_SERVICES
+                ...SERVICES
             ]
         };
     }

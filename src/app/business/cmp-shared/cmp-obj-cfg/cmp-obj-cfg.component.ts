@@ -105,12 +105,12 @@ export class CmpObjCfgComponent implements OnInit {
                 this.methods = [
                     {
                         label: 'Chart',
-                        value: 'Chart',
+                        value: 'TABLE_CHART',
                         checked: false
                     },
                     {
                         label: 'Statistic',
-                        value: 'Statistic',
+                        value: 'TABLE_STATISTIC',
                         checked: false
                     }
                 ]

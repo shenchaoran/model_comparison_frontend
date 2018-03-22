@@ -23,12 +23,11 @@
                             <div nz-col [nzSpan]='20'>
                                 <ng-container *ngIf='event.type === "input"'>
                                     <ng-container *ngIf='event.schema.structure.type === "date"'>
-                                        <!-- TODO format -->
                                         <nz-datepicker style='width: 330px;' [ngModel]='event.value' (ngModelChange)='onDateChange(event, $event)' [nzFormat]='"YYYY-MM-DD"'></nz-datepicker>
                                     </ng-container>
                                     <ng-container *ngIf='event.schema.structure.type === "coordinate"'>
                                         <!-- TODO format -->
-                                        <nz-input [(ngModel)]='event.value' style='width: 330px;'></nz-input>
+                                        <nz-input [ngModel]='event.value | coordinate' (ngModelChange)='onCoordinateChange($event, event)' style='width: 330px;'></nz-input>
                                     </ng-container>
                                 </ng-container>
 
@@ -37,13 +36,13 @@
 
                             </div>
                         </div>
-                        <!-- TODO preview -->
-                        <div>
-                            <button nz-button [nzType]='"default"'>
+                    </ng-container>
+                    <!-- TODO preview -->
+                    <div class='form-item'>
+                        <button nz-button [nzType]='"default"'>
                                 <span>Preview</span>
                             </button>
-                        </div>
-                    </ng-container>
+                    </div>
                 </ng-container>
                 <ng-container *ngIf='msInstance.IO.dataSrc === "UPLOAD"'>
                     <ng-container *ngFor='let event of msInstance.IO.data | filter: {type: "input"}'>

@@ -26,7 +26,7 @@
                 </section>
 
                 <section>
-                    <div class='section-header flex-box-row-nowrap'>
+                    <!-- <div class='section-header flex-box-row-nowrap'>
                         <span class='title'>Temporal ranges</span>
                         <span class='placeholder flex-item-1-1-auto'></span>
                     </div>
@@ -39,11 +39,11 @@
                                 <dd nz-col [nzSpan]='14'>{{task.issue.temporal.end | date:'yyyy-MM-dd'}}</dd>
                             </div>
                         </dl>
-                    </div>
+                    </div> -->
                 </section>
 
                 <section *ngIf='geojson'>
-                    <div class='section-header flex-box-row-nowrap'>
+                    <!-- <div class='section-header flex-box-row-nowrap'>
                         <span class='title'>Spatial region</span>
                         <span class='placeholder flex-item-1-1-auto'></span>
                     </div>
@@ -51,7 +51,7 @@
                         <div>
                             <ogms-region-map [geojson]='geojson'></ogms-region-map>
                         </div>
-                    </div>
+                    </div> -->
                 </section>
 
                 <section>
@@ -60,10 +60,16 @@
                         <span class="placeholder flex-item-1-1-auto"></span>
                     </div>
                     <section class='section-body'>
-                        <nz-tabset>
-                            <nz-tab *ngFor='let ms of task.solution.cmpCfg.ms'>
+                        <div *ngFor='let calcu of task.calcuTasks' class='form-item' nz-row>
+                            <span nz-col [nzSpan]='4'>{{calcu.meta.name}}</span>
+                            <div nz-col [nzSpan]='20' style='width: 350px;'>
+                                <nz-progress [ngModel]="100"></nz-progress>
+                            </div>
+                        </div>
+                        <!-- <nz-tabset>
+                            <nz-tab *ngFor='let calcu of task.calcuTasks'>
                                 <ng-template #nzTabHeading>
-                                    {{ms.msName}}
+                                    {{calcu.meta.name}}
                                 </ng-template>
                                 <section>
                                     <div class='ms-progress'>
@@ -71,7 +77,7 @@
                                     </div>
                                 </section>
                             </nz-tab>
-                        </nz-tabset>
+                        </nz-tabset> -->
                     </section>
                 </section>
 
@@ -93,7 +99,7 @@
                                         每个模型的 dataRefer 中的 field 是确定的
                                     -->
 
-                                    <ng-container *ngIf='cmpObj.schemaName === "TABLE_RAW"'>
+                                    <ng-container *ngIf='cmpObj.schemaId === "table column"'>
                                         <div class='cmp-method-section' *ngIf='cmpObj.methods.indexOf("TABLE_CHART") !== -1 && cmpObj.chartSrc'>
                                             <h4>Chart</h4>
                                             <ogms-cmp-result-chart [source]='cmpObj.chartSrc'></ogms-cmp-result-chart>
@@ -104,7 +110,7 @@
                                         </div>
                                     </ng-container>
 
-                                    <ng-container *ngIf='cmpObj.schemaName === "ASCII_GRID_RAW_BATCH"'>
+                                    <ng-container *ngIf='cmpObj.schemaId === "ASCII_GRID_RAW_BATCH"'>
                                         <nz-tabset [nzTabBarExtraTemplate]='addTab'>
                                             <ng-container *ngIf='cmpObj.stdResult'>
                                                 <nz-tab>
@@ -152,7 +158,7 @@
             </article>
 
             <aside class='sider-content col-xs-3 col-sm-3 col-md-3 col-lg-3'>
-                <section class="sider-item">
+                <section class="sider-item" *ngIf='task.issue'>
                     <div class="sider-item-title">
                         <span>Issue</span>
                     </div>
@@ -169,7 +175,7 @@
                         </ul>
                     </div>
                 </section>
-                <section class="sider-item">
+                <section class="sider-item" *ngIf='task.solution'>
                     <div class="sider-item-title">
                         <span>Solution</span>
                     </div>
