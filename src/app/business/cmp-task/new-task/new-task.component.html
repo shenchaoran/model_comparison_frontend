@@ -54,13 +54,14 @@
                                                                 <dd nz-col [nzSpan]='8'>{{data.auth.src | resourceSrc}}</dd>
                                                                 <dt nz-col [nzSpan]='4'>Comparison type</dt>
                                                                 <dd nz-col [nzSpan]='8'>{{data.cmpCfg.keynote.direction==='multi'?'Contrast with each other':'Self contrast'}}</dd>
-                                                                <dt nz-col [nzSpan]='4'>Description</dt>
-                                                                <dd nz-col [nzSpan]='20'>{{data.meta.desc}}</dd>
                                                             </div>
                                                         </dl>
                                                     </div>
                                                 </td>
                                             </tr>
+                                            <p>
+                                                {{data.meta.desc | description}}
+                                            </p>
                                         </ng-template>
                                     </tbody>
                                 </nz-table>

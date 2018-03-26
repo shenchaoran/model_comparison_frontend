@@ -71,26 +71,34 @@ export const HEADER_MENUS: MenuClass[] = [
         ]
     },
     {
-        path: 'issues',
+        path: 'calculation',
         data: {
             menu: {
-                title: 'Issues'
+                title: 'Calculation'
             }
         }
     },
-    {
-        path: 'solutions',
-        data: {
-            menu: {
-                title: 'Solutions'
-            }
-        }
-    },
+    // {
+    //     path: 'issues',
+    //     data: {
+    //         menu: {
+    //             title: 'Issues'
+    //         }
+    //     }
+    // },
+    // {
+    //     path: 'solutions',
+    //     data: {
+    //         menu: {
+    //             title: 'Solutions'
+    //         }
+    //     }
+    // },
     {
         path: 'tasks',
         data: {
             menu: {
-                title: 'Tasks'
+                title: 'Comparison'
             }
         }
     },

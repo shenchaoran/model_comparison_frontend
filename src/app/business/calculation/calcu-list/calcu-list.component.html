@@ -1,0 +1,23 @@
+<ng-template #template let-calculation='item'>
+    <section class='list-item'>
+        <div class='item-header flex-box-row-nowrap'>
+            <a [routerLink]='calculation._id'>
+                                {{calculation.auth.userName}}/{{calculation.meta.name}}
+                            </a>
+            <span class='flex-item-1-1-auto'></span>
+        </div>
+        <div class='item-body'>
+            <div class='desc'>{{calculation.meta.desc | stringLimit: 180 | description}}</div>
+            <div>
+                <span class='topic'>Topic1</span>
+                <span class='topic'>Topic2</span>
+            </div>
+        </div>
+        <div class='item-footer'>{{calculation.meta.time | date: 'yyyy-MM-dd'}}</div>
+    </section>
+</ng-template>
+
+<ogms-list-template [count]='count' [template]='template' [list]='calculations' [type]='"calculations"' (onFiltersChange)='search($event)'>
+</ogms-list-template>
+
+<ogms-footer></ogms-footer>

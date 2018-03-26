@@ -1,73 +1,80 @@
 <div class='responsive-root-div'>
-    <div class='flex-box-row-nowrap'>
-        <nz-radio-group *ngIf='owner' [ngModel]='owner[0].value' [nzSize]='"large"' (ngModelChange)='changeFilters($event, "owner")'>
-            <label nz-radio-button *ngFor='let item of owner' [nzValue]='item.value'>
+    <div *ngIf='list else listTemplate'>
+        <div class='flex-box-row-nowrap'>
+            <nz-radio-group *ngIf='owner' [ngModel]='owner[0].value' [nzSize]='"large"' (ngModelChange)='changeFilters($event, "owner")'>
+                <label nz-radio-button *ngFor='let item of owner' [nzValue]='item.value'>
                 <span>{{item.label}}</span>
             </label>
-        </nz-radio-group>
-        <span class='flex-item-1-1-auto'></span>
-        <ng-container *ngIf='hasCreate'>
-            <button routerLink='new' nz-button [nzType]='"primary"' [nzSize]='"large"' style='margin: 0 10px;'>
+            </nz-radio-group>
+            <span class='flex-item-1-1-auto'></span>
+            <ng-container *ngIf='hasCreate'>
+                <button routerLink='new' nz-button [nzType]='"primary"' [nzSize]='"large"' style='margin: 0 10px;'>
                 Create
             </button>
-        </ng-container>
-        <div *ngIf='buttons'>
-            <button *ngFor="let button of buttons" nz-button [nzType]="'primary'" style="margin-left: 10px; margin-right: 10px">
+            </ng-container>
+            <div *ngIf='buttons'>
+                <button *ngFor="let button of buttons" nz-button [nzType]="'primary'" style="margin-left: 10px; margin-right: 10px">
                 <a [routerLink]="button.route">
                     <span>{{button.name}}</span>
                 </a>
             </button>
+            </div>
+            <nz-input [nzType]="'search'" [nzSize]='"large"' [nzPlaceHolder]="'Search'" [(ngModel)]="filters.q" style="width: 400px;" (nzOnSearch)="onSearch()"></nz-input>
         </div>
-        <nz-input [nzType]="'search'" [nzSize]='"large"' [nzPlaceHolder]="'Search'" [(ngModel)]="filters.q" style="width: 400px;" (nzOnSearch)="onSearch()"></nz-input>
-    </div>
-    <div class='list-box'>
-        <div class='flex-box-row-nowrap list-header'>
-            <span>{{list.length}} items found</span>
-            <span class='flex-item-1-1-auto'></span>
-            <span *ngIf='organization' class='dropdown-filter'>
+        <div class='list-box'>
+            <div class='flex-box-row-nowrap list-header'>
+                <span>{{list.length}} items found</span>
+                <span class='flex-item-1-1-auto'></span>
+                <span *ngIf='organization' class='dropdown-filter'>
                     <nz-dropdown [nzTrigger]="'click'">
                         <span class="ant-dropdown-link" nz-dropdown>
                             Organization&nbsp;&nbsp;<i class="anticon anticon-down"></i>
                         </span>
-            <ul nz-menu>
-                <li nz-menu-item *ngFor='let item of organization' (click)='changeFilters(item.value, "organization")'>
-                    <span class='checked-label'>
+                <ul nz-menu>
+                    <li nz-menu-item *ngFor='let item of organization' (click)='changeFilters(item.value, "organization")'>
+                        <span class='checked-label'>
                         <i *ngIf='item.checked' class="anticon anticon-check"></i>
                     </span>
-                    <span>{{item.label}}</span>
-                </li>
-            </ul>
-            </nz-dropdown>
-            </span>
-            <span *ngIf='sort' class='dropdown-filter'>
+                        <span>{{item.label}}</span>
+                    </li>
+                </ul>
+                </nz-dropdown>
+                </span>
+                <span *ngIf='sort' class='dropdown-filter'>
                 <nz-dropdown [nzTrigger]="'click'">
                     <span class="ant-dropdown-link" nz-dropdown>
                         Sort&nbsp;&nbsp;<i class="anticon anticon-down"></i>
                     </span>
-            <ul nz-menu>
-                <li nz-menu-item *ngFor='let item of sort' (click)='changeFilters(item.value, "sort")'>
-                    <span class='checked-label'>
+                <ul nz-menu>
+                    <li nz-menu-item *ngFor='let item of sort' (click)='changeFilters(item.value, "sort")'>
+                        <span class='checked-label'>
                         <i *ngIf='item.checked' class="anticon anticon-check"></i>
                     </span>
-                    <span>{{item.label}}</span>
-                </li>
-            </ul>
-            </nz-dropdown>
-            </span>
-        </div>
+                        <span>{{item.label}}</span>
+                    </li>
+                </ul>
+                </nz-dropdown>
+                </span>
+            </div>
 
-        <ng-container *ngIf='template && list'>
-            <ng-container *ngFor='let item of list'>
-                <div class='list-item'>
-                    <ng-template [ngTemplateOutlet]='template' [ngTemplateOutletContext]='{item: item}'></ng-template>
-                </div>
+            <ng-container *ngIf='template && list'>
+                <ng-container *ngFor='let item of list'>
+                    <div class='list-item'>
+                        <ng-template [ngTemplateOutlet]='template' [ngTemplateOutletContext]='{item: item}'></ng-template>
+                    </div>
+                </ng-container>
             </ng-container>
-        </ng-container>
 
+        </div>
+        <div class='flex-box-row-nowrap'>
+            <span class='flex-item-1-1-auto'></span>
+            <nz-pagination *ngIf='count> 25' [nzPageIndex]="filters.pageNum" (nzPageIndexChange)='setPageNum($event)' [nzPageSize]='filters.pageSize' (nzPageSizeChange)='setPageSize($event)' [nzTotal]="count"></nz-pagination>
+            <span class='flex-item-1-1-auto'></span>
+        </div>
     </div>
-    <div class='flex-box-row-nowrap'>
-        <span class='flex-item-1-1-auto'></span>
-        <nz-pagination *ngIf='count> 25' [nzPageIndex]="filters.pageNum" (nzPageIndexChange)='setPageNum($event)' [nzPageSize]='filters.pageSize' (nzPageSizeChange)='setPageSize($event)' [nzTotal]="count"></nz-pagination>
-        <span class='flex-item-1-1-auto'></span>
-    </div>
+    <ng-template #listTemplate>
+        <div style='width: 100%;'>
+            <nz-spin [nzSize]='"large"'></nz-spin>
+        </div>
+    </ng-template>
 </div>

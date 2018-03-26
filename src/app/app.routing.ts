@@ -49,7 +49,10 @@ export const routes: Routes = [
         path: 'solutions',
         loadChildren: './business/cmp-solution/cmp-solution.module#CmpSolutionModule'
     },
-
+    {
+        path: 'calculation',
+        loadChildren: './business/calculation/calculation.module#CalculationModule'
+    },
     {
         path: 'tasks',
         loadChildren: './business/cmp-task/cmp-task.module#CmpTaskModule'

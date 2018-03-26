@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
+import { NzNotificationService } from 'ng-zorro-antd';
 
 /**
  * 封装HttpClient，主要解决：
@@ -15,7 +16,8 @@ export class _HttpClient {
     constructor(
         private http: HttpClient,
         @Inject('BACKEND') private backend,
-        private loading: SlimLoadingBarService
+        private loading: SlimLoadingBarService,
+        private notice: NzNotificationService
     ) { }
 
     private appendDomain(url: string): string {
@@ -58,6 +60,7 @@ export class _HttpClient {
                             observer.next({
                                 error: response.status
                             });
+                            this.notice.warning('Warning', 'Http request error!');
                             observer.complete();
                         }
                     }

@@ -107,7 +107,7 @@ export class CalcuCfgComponent implements OnInit, OnChanges {
 
         }
         else {
-            event.value = response.data.doc._id;
+            event.value = response.data._id;
         }
         this.onInstanceChange.emit(this.msInstance);
     }

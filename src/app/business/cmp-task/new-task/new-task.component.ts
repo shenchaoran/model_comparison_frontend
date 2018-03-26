@@ -32,7 +32,7 @@ export class NewTaskComponent implements OnInit {
             if (response.error) {
                 this._notice.warning("Warning:", "Get solution list failed!");
             } else {
-                this.solutions = response.data.docs;
+                this.solutions = response.data;
             }
         });
         const auth = {

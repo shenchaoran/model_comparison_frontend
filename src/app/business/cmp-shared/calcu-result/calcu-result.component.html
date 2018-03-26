@@ -1,106 +1,107 @@
-<div class='container' *ngIf='msInstance'>
-    <div style='padding: 0 20px;'>
-        <div class='ogms-form-item'>
-            <span nz-col [nzSpan]='4'>Progress</span>
-            <div nz-col [nzSpan]='20'>
-                <div style='width: 400px;'>
-                    <nz-progress [ngModel]="msInstance.progress"></nz-progress>
-                </div>
-            </div>
+<div *ngIf='msInstance' style='padding: 0 20px;'>
+    <div class='data-cfg'>
+        <div class='title'>Progress</div>
+        <div style='width: 400px;'>
+            <nz-progress [ngModel]="msInstance.progress"></nz-progress>
         </div>
-        <nz-collapseset [nzBordered]="false">
-            <!-- 输入数据配置 -->
-            <nz-collapse [nzTitle]="'Inputs'" nzActive='true'>
-                <ng-container *ngIf='msInstance.IO.dataSrc === "STD"'>
-                    <ng-container *ngFor='let event of msInstance.IO.std'>
-                        <div class='ogms-form-item' nz-row>
-                            <span nz-col [nzSpan]='4'>{{event.id}}</span>
-                            <div nz-col [nzSpan]='20'>
-                                <ng-container *ngIf='event.type === "input"'>
-                                    <ng-container *ngIf='event.schema.structure.type === "date"'>
-                                        <span style='width: 330px;'>
+    </div>
+    <!-- 输入数据配置 -->
+    <div class='data-cfg'>
+        <div class='title'>Inputs</div>
+        <ng-container *ngIf='msInstance.IO.dataSrc === "STD"'>
+            <ng-container *ngFor='let event of msInstance.IO.std'>
+                <div class='ogms-form-item' nz-row>
+                    <span nz-col [nzSpan]='6'>{{event.id}}</span>
+                    <div nz-col [nzSpan]='18'>
+                        <ng-container *ngIf='event.type === "input"'>
+                            <ng-container *ngIf='event.schema.structure.type === "date"'>
+                                <span style='width: 330px;'>
                                             {{event.value | date:'yyyy-MM-dd'}}
                                         </span>
-                                    </ng-container>
-                                    <ng-container *ngIf='event.schema.structure.type === "coordinate"'>
-                                        <span style='width: 330px;'>
+                            </ng-container>
+                            <ng-container *ngIf='event.schema.structure.type === "coordinate"'>
+                                <span style='width: 330px;'>
                                             {{event.value | coordinate}}
                                         </span>
-                                    </ng-container>
-                                </ng-container>
-                            </div>
-                        </div>
-                    </ng-container>
-                    <!-- TODO preview -->
-                    <div class='ogms-form-item'>
-                        <button nz-button [nzType]='"default"'>
+                            </ng-container>
+                        </ng-container>
+                    </div>
+                </div>
+            </ng-container>
+            <!-- TODO preview -->
+            <div class='ogms-form-item'>
+                <button nz-button [nzType]='"default"'>
                                 <span>Preview</span>
                             </button>
-                    </div>
-                </ng-container>
-                <ng-container *ngIf='msInstance.IO.dataSrc === "UPLOAD"'>
-                    <ng-container *ngFor='let event of msInstance.IO.data | filter: {type: "input"}'>
-                        <div class='ogms-form-item' nz-row>
-                            <span nz-col [nzSpan]='4'>{{event.id}}</span>
-                            <div nz-col [nzSpan]='20'>
-                                <button nz-button>
+            </div>
+        </ng-container>
+        <ng-container *ngIf='msInstance.IO.dataSrc === "UPLOAD"'>
+            <ng-container *ngFor='let event of msInstance.IO.data | filter: {type: "input"}'>
+                <div class='ogms-form-item' nz-row>
+                    <span nz-col [nzSpan]='6'>{{event.id}}</span>
+                    <div nz-col [nzSpan]='18'>
+                        <button nz-button>
                                         <span>Download</span>
                                     </button>
-                            </div>
-                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </ng-container>
+    </div>
+    <!-- 参数配置 -->
+    <div class='data-cfg'>
+        <div class='title'>
+            Parameters
+        </div>
+        <ng-container *ngFor='let event of msInstance.IO.data | filter: {type: "parameter"}'>
+            <div class='ogms-form-item' nz-row>
+                <span nz-col [nzSpan]='6'>{{event.id}}</span>
+                <div nz-col [nzSpan]='18' class='flex-box-col-nowrap'>
+                    <ng-container *ngIf='event.schema.structure.type === "radio"'>
+                        <span>{{event.value}}</span>
                     </ng-container>
-                </ng-container>
-            </nz-collapse>
-            <!-- 参数配置 -->
-            <nz-collapse [nzTitle]="'Parameters'" nzActive='true'>
-                <ng-container *ngFor='let event of msInstance.IO.data | filter: {type: "parameter"}'>
-                    <div class='ogms-form-item' nz-row>
-                        <span nz-col [nzSpan]='4'>{{event.id}}</span>
-                        <div nz-col [nzSpan]='20' class='flex-box-col-nowrap'>
-                            <ng-container *ngIf='event.schema.structure.type === "radio"'>
-                                <span>{{event.value}}</span>
+                    <ng-container *ngIf='event.schema.structure.type === "checkbox"'>
+                        <ng-container *ngFor='let opt of event.schema.structure.options'>
+                            <ng-container *ngIf='event.value.indexOf(opt) !== -1'>
+                                <nz-tag>
+                                    {{opt}}
+                                </nz-tag>
                             </ng-container>
-                            <ng-container *ngIf='event.schema.structure.type === "checkbox"'>
-                                <ng-container *ngFor='let opt of event.schema.structure.options'>
-                                    <ng-container *ngIf='event.value.indexOf(opt) !== -1'>
-                                        <nz-tag>
-                                            {{opt}}
-                                        </nz-tag>
-                                    </ng-container>
-                                </ng-container>
-                            </ng-container>
-                            <ng-container *ngIf='event.schema.structure.type === "value"'>
-                                <span>
+                        </ng-container>
+                    </ng-container>
+                    <ng-container *ngIf='event.schema.structure.type === "value"'>
+                        <span>
                                     {{event.value}}
                                 </span>
-                            </ng-container>
-                        </div>
-                    </div>
-                </ng-container>
-            </nz-collapse>
-            <!-- 输出配置 -->
-            <nz-collapse [nzTitle]="'Outputs'" nzActive='true'>
-                <ng-container *ngFor='let event of msInstance.IO.data | filter: {type: "output"}'>
-                    <div class='ogms-form-item' nz-row>
-                        <span nz-col [nzSpan]='4'>{{event.id}}</span>
-                        <div nz-col [nzSpan]='20'>
-                            <ng-container *ngIf='msInstance.progress === 100'>
-                                <button nz-button [nzType]='"default"'>
+                    </ng-container>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+    <!-- 输出配置 -->
+    <div class='data-cfg'>
+        <div class='title'>
+            Outputs
+        </div>
+        <ng-container *ngFor='let event of msInstance.IO.data | filter: {type: "output"}'>
+            <div class='ogms-form-item' nz-row>
+                <span nz-col [nzSpan]='6'>{{event.id}}</span>
+                <div nz-col [nzSpan]='18'>
+                    <ng-container *ngIf='msInstance.progress === 100'>
+                        <button nz-button [nzType]='"default"'>
                                         <span>Download</span>
                                     </button>
-                            </ng-container>
-                            <ng-container *ngIf='msInstance.progress !== 100'>
-                                <span>
+                    </ng-container>
+                    <ng-container *ngIf='msInstance.progress !== 100'>
+                        <span>
                                     <span style='display: inline-block'><nz-spin></nz-spin></span>
-                                <!-- <i class='icon ion-loading-a'></i> -->
-                                <!-- <i class="fas fa-spinner fa-spin"></i> -->
-                                &nbsp;&nbsp;Calculating
-                                </span>
-                            </ng-container>
-                        </div>
-                    </div>
-                </ng-container>
-            </nz-collapse>
-        </nz-collapseset>
+                        <!-- <i class='icon ion-loading-a'></i> -->
+                        <!-- <i class="fas fa-spinner fa-spin"></i> -->
+                        &nbsp;&nbsp;Calculating
+                        </span>
+                    </ng-container>
+                </div>
+            </div>
+        </ng-container>
     </div>
 </div>

@@ -4,8 +4,8 @@
             <!-- 输入数据配置 -->
             <nz-collapse [nzTitle]="'Inputs'" nzActive='true'>
                 <div class='ogms-form-item' nz-row>
-                    <span nz-col [nzSpan]='4'>Select data source</span>
-                    <div nz-col [nzSpan]='20'>
+                    <span nz-col [nzSpan]='6'>Select data source</span>
+                    <div nz-col [nzSpan]='18'>
                         <nz-radio-group [(ngModel)]='msInstance.IO.dataSrc'>
                             <label nz-radio [nzValue]="'STD'">
                                             <span>Use standard input data</span>
@@ -19,8 +19,8 @@
                 <ng-container *ngIf='msInstance.IO.dataSrc === "STD"'>
                     <ng-container *ngFor='let event of msInstance.IO.std'>
                         <div class='ogms-form-item' nz-row>
-                            <span nz-col [nzSpan]='4'>{{event.id}}</span>
-                            <div nz-col [nzSpan]='20'>
+                            <span nz-col [nzSpan]='6'>{{event.id}}</span>
+                            <div nz-col [nzSpan]='18'>
                                 <ng-container *ngIf='event.type === "input"'>
                                     <ng-container *ngIf='event.schema.structure.type === "date"'>
                                         <nz-datepicker style='width: 330px;' [ngModel]='event.value' (ngModelChange)='onDateChange(event, $event)' [nzFormat]='"YYYY-MM-DD"'></nz-datepicker>
@@ -47,8 +47,8 @@
                 <ng-container *ngIf='msInstance.IO.dataSrc === "UPLOAD"'>
                     <ng-container *ngFor='let event of msInstance.IO.data | filter: {type: "input"}'>
                         <div class='ogms-form-item' nz-row>
-                            <span nz-col [nzSpan]='4'>{{event.id}}</span>
-                            <div nz-col [nzSpan]='20'>
+                            <span nz-col [nzSpan]='6'>{{event.id}}</span>
+                            <div nz-col [nzSpan]='18'>
                                 <ogms-file-uploader id='uploader-{{msInstance._id}}-{{event.id}}' [fileUploaderOptions]="fileUploaderOptions" (onFileUploadCompleted)='_onFileUploadCompleted($event, msInstance, event)' (onClear)='_onClearUploaded(msInstance, event)'></ogms-file-uploader>
                             </div>
                         </div>
@@ -59,8 +59,8 @@
             <nz-collapse [nzTitle]="'Parameters'" nzActive='true'>
                 <ng-container *ngFor='let event of msInstance.IO.data | filter: {type: "parameter"}'>
                     <div class='ogms-form-item' nz-row>
-                        <span nz-col [nzSpan]='4'>{{event.id}}</span>
-                        <div nz-col [nzSpan]='20' class='flex-box-col-nowrap'>
+                        <span nz-col [nzSpan]='6'>{{event.id}}</span>
+                        <div nz-col [nzSpan]='18' class='flex-box-col-nowrap'>
                             <ng-container *ngIf='event.schema.structure.type === "radio"'>
                                 <div nz-row>
                                     <label nz-radio nz-col [nzSpan]='4' *ngFor='let opt of event.schema.structure.options' [nzValue]="opt" [ngModel]='event.value === opt' (ngModelChange)='onParamRadioChange(event, $event, opt)'>
@@ -84,8 +84,8 @@
             <nz-collapse [nzTitle]="'Outputs'" nzActive='true'>
                 <ng-container *ngFor='let event of msInstance.IO.data | filter: {type: "output"}'>
                     <div class='ogms-form-item' nz-row>
-                        <span nz-col [nzSpan]='4'>{{event.id}}</span>
-                        <div nz-col [nzSpan]='20'>
+                        <span nz-col [nzSpan]='6'>{{event.id}}</span>
+                        <div nz-col [nzSpan]='18'>
                             <ng-container *ngIf='event.optional'>
                                 <nz-select style="width: 250px;" [(ngModel)]="event.value" (ngModelChange)='onOutputChange(event, $event)' nzAllowClear [nzPlaceHolder]='""'>
                                     <nz-option [nzLabel]='"off"' [nzValue]='"off"'></nz-option>

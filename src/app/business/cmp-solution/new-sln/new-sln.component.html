@@ -11,14 +11,14 @@
         <div [hidden]='currentStep !== 0'>
             <h3 class='step-title'>Solution Meta Information</h3>
             <div class='ogms-form-item' nz-row>
-                <span nz-col [nzSpan]='4'>Name</span>
-                <div nz-col [nzSpan]='20'>
+                <span nz-col [nzSpan]='6'>Name</span>
+                <div nz-col [nzSpan]='18'>
                     <nz-input style='width: 530px;' [(ngModel)]='cmpTask.meta.name'></nz-input>
                 </div>
             </div>
             <div class='ogms-form-item' nz-row>
-                <span nz-col [nzSpan]='4'>Description</span>
-                <div nz-col [nzSpan]='20'>
+                <span nz-col [nzSpan]='6'>Description</span>
+                <div nz-col [nzSpan]='18'>
                     <nz-input style='width: 530px;' [(ngModel)]='cmpTask.meta.desc' [nzType]='"textarea"' [nzAutosize]="{minRows: 2, maxRows: 6}"></nz-input>
                 </div>
             </div>
@@ -69,10 +69,10 @@
                 <!-- 公共计算配置模板 -->
                 <ng-template>
                     <div nz-row>
-                        <div nz-col [nzSpan]='4'>
+                        <div nz-col [nzSpan]='6'>
                             <label for='factor'>I want to study the impact of:</label>
                         </div>
-                        <div nz-col [nzSpan]='20'>
+                        <div nz-col [nzSpan]='18'>
                             <nz-radio-group formControlName='factor'>
                                 <label nz-radio [nzValue]="'TIME'">
                                     <span>time</span>
