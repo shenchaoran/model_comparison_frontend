@@ -14,6 +14,7 @@ import { CmpResultChartComponent } from './cmp-result-chart/cmp-result-chart.com
 import { EchartAdapterService } from '@core/services/echartAdapter.service';
 import { CmpSlnService } from "../cmp-solution/services/cmp-sln.service";
 import { MSService } from "../geo-model/services/model.service";
+import { CmpSharedModule } from '../cmp-shared';
 
 @NgModule({
     imports: [
@@ -22,6 +23,7 @@ import { MSService } from "../geo-model/services/model.service";
         OlMapModule,
         EchartsNg2Module,
         HotTableModule,
+        CmpSharedModule,
     ],
     declarations: [
         CmpTaskListComponent,

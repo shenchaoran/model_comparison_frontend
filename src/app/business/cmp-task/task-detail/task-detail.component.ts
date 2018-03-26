@@ -66,8 +66,6 @@ export class TaskDetailComponent implements OnInit, AfterViewInit {
                                         if (row && row.length) {
                                             row = _.concat('Standard result', row);
                                             statisticSrc.push(row);
-                                            // statisticSrc.seriesData.push(row);
-                                            // statisticSrc.seriesName.push('Standard result');
                                         }
                                     }
                                     _.map(cmpObj.dataRefers, dataRefer => {
@@ -83,8 +81,6 @@ export class TaskDetailComponent implements OnInit, AfterViewInit {
                                             if (row && row.length) {
                                                 row = _.concat(dataRefer.msName, row);
                                                 statisticSrc.push(row);
-                                                // statisticSrc.seriesData.push(row);
-                                                // statisticSrc.seriesName.push(dataRefer.msName);
                                             }
                                         }
                                     });

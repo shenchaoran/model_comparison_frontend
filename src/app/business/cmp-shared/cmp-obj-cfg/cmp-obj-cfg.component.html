@@ -1,6 +1,6 @@
 <!-- select dataRefer -->
 <ng-template #dataReferTemplate let-msInstance='msInstance' let-dataRefer='dataRefer'>
-    <div class='form-item' nz-row>
+    <div class='ogms-form-item' nz-row>
         <span nz-col [nzSpan]='4'>DataRefer</span>
         <!-- <div nz-col [nzSpan]='20'>
                 <nz-select style='width: 530px;' [(ngModel)]="dataRefer.eventName" [nzAllowClear]="true">
@@ -29,12 +29,12 @@
 </div>
 
 <ng-container *ngIf='!validSchema'>
-    <div class='form-item'>
+    <div class='ogms-form-item'>
         Please select the data that has same reference schema.
     </div>
 </ng-container>
 
-<div *ngIf='cmpObj.schemaId && validSchema' class='form-item' nz-row>
+<div *ngIf='cmpObj.schemaId && validSchema' class='ogms-form-item' nz-row>
     <span nz-col [nzSpan]='4'>Select comparison methods</span>
     <div nz-col [nzSpan]='20'>
         <label *ngFor='let method of methods' nz-checkbox [(ngModel)]="method.checked" (ngModelChange)="onMethodChange()">

@@ -22,6 +22,9 @@
         "styles": [
             "styles.scss"
         ],
+        "addOns": [
+            "../node_modules/font-awesome/fonts/*.+(otf|eot|svg|ttf|woff|woff2)"
+        ],
         "scripts": [
             "../node_modules/jquery/dist/jquery.min.js",
             "../node_modules/chroma-js/chroma.min.js",

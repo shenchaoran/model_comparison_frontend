@@ -41,33 +41,33 @@ export class CmpObjCfgComponent implements OnInit {
     patchEventChildren(msInstance) {
         if (!msInstance.options) {
             msInstance.options = [];
-        }
-        _
-            .chain(msInstance.IO.data)
-            .filter(event => event.type !== 'parameter')
-            .map(event => {
-                const opt = {
-                    label: event.id,
-                    value: event.id,
-                    children: undefined,
-                    isLeaf: undefined
-                };
-                msInstance.options.push(opt);
-                if (event.schema.structure.type === 'table') {
-                    opt.children = [];
-                    _.map(event.schema.structure.columns, col => {
-                        opt.children.push({
-                            label: col.id,
-                            value: col.id,
-                            isLeaf: true
+            _
+                .chain(msInstance.IO.data)
+                .filter(event => event.type !== 'parameter')
+                .map(event => {
+                    const opt = {
+                        label: event.id,
+                        value: event.id,
+                        children: undefined,
+                        isLeaf: undefined
+                    };
+                    msInstance.options.push(opt);
+                    if (event.schema.structure.type === 'table') {
+                        opt.children = [];
+                        _.map(event.schema.structure.columns, col => {
+                            opt.children.push({
+                                label: col.id,
+                                value: col.id,
+                                isLeaf: true
+                            });
                         });
-                    });
-                }
-                else {
-                    opt.isLeaf = true;
-                }
-            })
-            .value();
+                    }
+                    else {
+                        opt.isLeaf = true;
+                    }
+                })
+                .value();
+        }
     }
 
     onDataReferChange(v, msInstance, dataRefer) {
@@ -90,7 +90,7 @@ export class CmpObjCfgComponent implements OnInit {
             .chain(this.dataRefers)
             .filter(dataRefer => (dataRefer.schemaId !== '' && dataRefer.schemaId !== undefined))
             .map((dataRefer, i) => {
-                if(i === 0) {
+                if (i === 0) {
                     this.schemaId = dataRefer.schemaId;
                 }
                 return dataRefer;

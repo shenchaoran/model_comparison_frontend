@@ -24,7 +24,7 @@ export class CmpTask {
     // 0-100, -1
     progress: number;
     solutionId: string;
-    calcuTasks: {
+    calcuTaskIds: {
         _id: any,
         progress: number
     }[];
@@ -45,6 +45,6 @@ export class CmpTask {
         };
         this.progress = 0;
         this.cmpObjs = [];
-        this.calcuTasks = [];
+        this.calcuTaskIds = [];
     }
 }

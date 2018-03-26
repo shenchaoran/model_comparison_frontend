@@ -30,7 +30,8 @@ export class CmpObj {
     };
     schemaId: string;
     methods: string[];
-    dataRefers: Array<DataRefer>
+    dataRefers: Array<DataRefer>;
+    progress: number;
     
     constructor() {
         this.id = ObjectID();
@@ -40,5 +41,6 @@ export class CmpObj {
         };
         this.methods = [];
         this.dataRefers = [];
+        this.progress = 0;
     }
 }

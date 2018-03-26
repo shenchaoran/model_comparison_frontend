@@ -6,7 +6,8 @@
 // end
 // @import "~roboto-fontface/css/roboto/roboto-fontface.css";
 @import "~normalize.css/normalize.css";
-@import '~font-awesome/css/font-awesome.min.css';
+$fa-font-path: '~font-awesome/fonts';
+@import '~font-awesome/scss/font-awesome';
 @import "~ionicons/css/ionicons.min.css";
 @import "~ng2-slim-loading-bar/style.css";
 @import "~perfect-scrollbar/css/perfect-scrollbar.css";
@@ -16,9 +17,11 @@
 @import '~angular-tree-component/dist/angular-tree-component.css';
 @import '~ol3-layerswitcher/src/ol3-layerswitcher.css';
 @import '~handsontable/dist/handsontable.full.css';
-// @import '~jqwidgets-scripts/jqwidgets/styles/jqx.base.css';
-// @import '~jqwidgets-scripts/jqwidgets/styles/jqx.energyblue.css';
+@import '~jqwidgets-scripts/jqwidgets/styles/jqx.base.css';
+@import '~jqwidgets-scripts/jqwidgets/styles/jqx.energyblue.css';
 @import '~bootstrap/dist/css/bootstrap.min.css';
+@import "~golden-layout/src/css/goldenlayout-base.css";
+@import "~golden-layout/src/css/goldenlayout-translucent-theme.css";
 // @import '~ol3-ext/dist/ol3-ext.css';
 // theme
 // @import "app/common/shared/theme.scss";
@@ -32,6 +35,8 @@
 @import "assets/css/my/doc-detail.scss";
 @import "assets/css/my/doc-list.scss";
 @import 'assets/css/my/zorro.scss';
+@import "assets/css/my/golden-layout.scss";
+@import "assets/css/my/form.scss";
 // TODO relative path problems
 // @import 'assets/css/jqwidgets/jqx.base';
 // @import 'assets/css/jqwidgets/jqx.energyblue-my';

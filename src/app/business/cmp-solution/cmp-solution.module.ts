@@ -11,6 +11,8 @@ import { OlMapModule } from '@feature/ol-map/ol-map.module';
 import { MSService } from '../geo-model/services/model.service';
 import { CmpSharedModule } from '../cmp-shared';
 import { CmpTaskService } from '../cmp-task/services';
+import { CalcuCfgComponent } from '../cmp-shared';
+import { ChildComponent } from './child/child.component';
 
 @NgModule({
     imports: [
@@ -23,12 +25,17 @@ import { CmpTaskService } from '../cmp-task/services';
         CmpSolutionComponent,
         CmpSolutionListComponent,
         SolutionDetailComponent,
-        NewSlnComponent
+        NewSlnComponent,
+        ChildComponent
     ],
     providers: [
         CmpSlnService,
         MSService,
         CmpTaskService,
+    ],
+    entryComponents: [
+        CalcuCfgComponent,
+        ChildComponent
     ]
 })
 export class CmpSolutionModule {}

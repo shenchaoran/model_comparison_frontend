@@ -19,6 +19,8 @@ import { NzStepsComponent } from 'ng-zorro-antd';
 import * as ObjectID from 'objectid';
 import { CmpTaskService } from '../../cmp-task/services';
 import { NzNotificationService, NzModalService } from 'ng-zorro-antd';
+import { CalcuCfgComponent } from '../../cmp-shared';
+import { ChildComponent } from '../child/child.component';
 
 @Component({
     selector: 'ogms-new-sln',
@@ -26,6 +28,13 @@ import { NzNotificationService, NzModalService } from 'ng-zorro-antd';
     styleUrls: ['./new-sln.component.scss']
 })
 export class NewSlnComponent implements OnInit, AfterViewInit {
+    config: any;
+    childComponents: {
+        name: string,
+        component: any
+    }[];
+
+
     cmpTask: CmpTask;
     msInstances: CalcuTask[] = [];
     msAll = [];
@@ -44,17 +53,22 @@ export class NewSlnComponent implements OnInit, AfterViewInit {
 
     
 
-    selectedComputeLayout = 'Tab';
+    selectedComputeLayout = 'Golden';
     computeLayout = [
         {
             label: 'Collapse',
             value: 'Collapse',
-            checked: true
+            checked: false
         },
         {
             label: 'Tab',
             value: 'Tab',
             checked: false
+        },
+        {
+            label: 'Comparable Tab',
+            value: 'Golden',
+            checked: true
         }
     ];
 
@@ -83,6 +97,22 @@ export class NewSlnComponent implements OnInit, AfterViewInit {
         }
 
         this.cmpTask = new CmpTask();
+        
+        this.config = {
+            content: [
+                {
+                    type: 'row',
+                    content: []
+                }
+            ]
+        };
+        this.childComponents = [
+            {
+                name: 'calcu-cfg',
+                component: CalcuCfgComponent
+            }
+        ]
+
         // this.init();
     }
 
@@ -146,12 +176,9 @@ export class NewSlnComponent implements OnInit, AfterViewInit {
     done() {
         console.log(this.cmpTask);
         console.log(this.msInstances);
-        this.cmpTask.calcuTasks = [];
+        this.cmpTask.calcuTaskIds = [];
         _.map(this.msInstances, msInstance => {
-            this.cmpTask.calcuTasks.push({
-                _id: msInstance._id,
-                progress: 0
-            });
+            this.cmpTask.calcuTaskIds.push(msInstance._id);
         });
         _.map(this.cmpTask.cmpObjs, cmpObj => {
             _.map(cmpObj.methods, method => {
@@ -282,6 +309,41 @@ export class NewSlnComponent implements OnInit, AfterViewInit {
         msInstance.meta.desc = this.addingDesc;
         msInstance.cmpTaskId = this.cmpTask._id;
         this.msInstances.push(msInstance);
+
+        // add Layout cfg
+        this.config = _.cloneDeep(this.config);
+        const length = this.config.content[0].content.length;
+        const obj = {
+            type: 'component',
+            title: msInstance.meta.name,
+            componentName: 'calcu-cfg',
+            componentState: {
+                msInstance: msInstance
+            }
+        };
+        if(length < 2) {
+            this.config.content[0].content.push(obj);
+        }
+        else if(length === 2) {
+            if(this.config.content[0].content[0].type === 'component') {
+                const temp = _.cloneDeep(this.config.content[0].content[0]);
+                this.config.content[0].content[0] = {
+                    type: 'stack',
+                    content: [temp]
+                }
+                this.config.content[0].content[0].content.push(obj);
+                this.config.content[0].content[0].activeItemIndex = this.config.content[0].content[0].content.length - 1;
+            }
+            else if(this.config.content[0].content[0].type === 'stack') {
+                this.config.content[0].content[0].content.push(obj);
+                console.log(this.config.content[0].content[0].content.length - 1);
+                this.config.content[0].content[0].activeItemIndex = this.config.content[0].content[0].content.length - 1;
+
+            }
+            else if(/col|row/.test(this.config.content[0].content[0].type)) {
+
+            }
+        }
 
         this.addingDesc = '';
         this.addingName = '';

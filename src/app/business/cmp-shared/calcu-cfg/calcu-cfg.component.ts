@@ -1,5 +1,5 @@
 // 创建一个calculate instance
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChange } from '@angular/core';
 import { NgUploaderOptions } from 'ngx-uploader';
 import { ResourceSrc, CalcuTask, CmpTask, CmpSolution } from '@models';
 import { LoginService } from '@feature/login/login.service';
@@ -9,7 +9,7 @@ import { LoginService } from '@feature/login/login.service';
     templateUrl: './calcu-cfg.component.html',
     styleUrls: ['./calcu-cfg.component.scss']
 })
-export class CalcuCfgComponent implements OnInit {
+export class CalcuCfgComponent implements OnInit, OnChanges {
     
     @Input() msInstance: any;
     @Output() onInstanceChange = new EventEmitter<any>();
@@ -37,6 +37,18 @@ export class CalcuCfgComponent implements OnInit {
                     'bearer ' + token
             }
         };
+    }
+
+    ngOnChanges (changes: {[key: string]: SimpleChange}) {
+        let changed;
+        _.forIn(changes, (v, k) => {
+            if(!_.isEqual(v.currentValue, v.previousValue)) {
+                changed = true;
+            }
+        });
+        if(changed) {
+            
+        }
     }
 
     ngOnInit() {

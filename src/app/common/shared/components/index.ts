@@ -13,5 +13,5 @@ export * from './table-feature/table-feature.component';
 export * from './baHeaderMenu/baHeaderMenu.component';
 export * from './baHeaderMenu/subMenu/subMenu.component';
 export * from './baHeaderMenu/testRecur/testRecur.component';
-export * from './cmp-tags-view/cmp-tags-view.component';
+export * from './cmp-tabs-view/cmp-tabs-view.component';
 export * from './cmp-docking-view/cmp-docking-view.component';

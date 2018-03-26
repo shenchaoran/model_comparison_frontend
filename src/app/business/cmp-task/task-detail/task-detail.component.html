@@ -20,7 +20,7 @@
                             </div>
                         </dl>
                         <div class='detail-desc'>
-                            {{task.meta.desc}}
+                            {{task.meta.desc | description}}
                         </div>
                     </div>
                 </section>
@@ -56,28 +56,20 @@
 
                 <section>
                     <div class="section-header flex-box-row-nowrap">
-                        <span class="title">Model running schedule</span>
+                        <span class="title">Calculation tasks</span>
                         <span class="placeholder flex-item-1-1-auto"></span>
                     </div>
                     <section class='section-body'>
-                        <div *ngFor='let calcu of task.calcuTasks' class='form-item' nz-row>
-                            <span nz-col [nzSpan]='4'>{{calcu.meta.name}}</span>
-                            <div nz-col [nzSpan]='20' style='width: 350px;'>
-                                <nz-progress [ngModel]="100"></nz-progress>
-                            </div>
-                        </div>
-                        <!-- <nz-tabset>
+                        <nz-tabset>
                             <nz-tab *ngFor='let calcu of task.calcuTasks'>
                                 <ng-template #nzTabHeading>
                                     {{calcu.meta.name}}
                                 </ng-template>
                                 <section>
-                                    <div class='ms-progress'>
-                                        <nz-progress [ngModel]="100"></nz-progress>
-                                    </div>
+                                    <ogms-calcu-result [msInstance]='calcu'></ogms-calcu-result>
                                 </section>
                             </nz-tab>
-                        </nz-tabset> -->
+                        </nz-tabset>
                     </section>
                 </section>
 
@@ -91,66 +83,73 @@
                             <h3>{{i+1}}. {{cmpObj.meta.name}}</h3>
                             <section>
                                 <div class='desc detail-desc'>
-                                    <span>{{cmpObj.meta.desc}}</span>
+                                    <p>{{cmpObj.meta.desc | description}}</p>
                                 </div>
-                                <div class='cmp-tabset'>
-                                    <!-- TODO point 情况下的数据
-                                        一个 cmpObj 只有一个 chart/table 
-                                        每个模型的 dataRefer 中的 field 是确定的
-                                    -->
+                                <ng-container *ngIf='cmpObj.progress === 100'>
+                                    <div class='cmp-tabset'>
+                                        <!-- TODO point 情况下的数据
+                                                    一个 cmpObj 只有一个 chart/table 
+                                                    每个模型的 dataRefer 中的 field 是确定的
+                                                -->
 
-                                    <ng-container *ngIf='cmpObj.schemaId === "table column"'>
-                                        <div class='cmp-method-section' *ngIf='cmpObj.methods.indexOf("TABLE_CHART") !== -1 && cmpObj.chartSrc'>
-                                            <h4>Chart</h4>
-                                            <ogms-cmp-result-chart [source]='cmpObj.chartSrc'></ogms-cmp-result-chart>
-                                        </div>
-                                        <div class='cmp-method-section' *ngIf='cmpObj.methods.indexOf("TABLE_STATISTIC") !== -1 && cmpObj.statisticSrc'>
-                                            <h4>Statistic</h4>
-                                            <ogms-cmp-result-table [source]='cmpObj.statisticSrc'></ogms-cmp-result-table>
-                                        </div>
-                                    </ng-container>
+                                        <ng-container *ngIf='cmpObj.schemaId === "table column"'>
+                                            <div class='cmp-method-section' *ngIf='cmpObj.methods.indexOf("TABLE_CHART") !== -1 && cmpObj.chartSrc'>
+                                                <h4>Chart</h4>
+                                                <ogms-cmp-result-chart [source]='cmpObj.chartSrc'></ogms-cmp-result-chart>
+                                            </div>
+                                            <div class='cmp-method-section' *ngIf='cmpObj.methods.indexOf("TABLE_STATISTIC") !== -1 && cmpObj.statisticSrc'>
+                                                <h4>Statistic</h4>
+                                                <ogms-cmp-result-table [source]='cmpObj.statisticSrc'></ogms-cmp-result-table>
+                                            </div>
+                                        </ng-container>
 
-                                    <ng-container *ngIf='cmpObj.schemaId === "ASCII_GRID_RAW_BATCH"'>
-                                        <nz-tabset [nzTabBarExtraTemplate]='addTab'>
-                                            <ng-container *ngIf='cmpObj.stdResult'>
-                                                <nz-tab>
+                                        <ng-container *ngIf='cmpObj.schemaId === "ASCII_GRID_RAW_BATCH"'>
+                                            <nz-tabset [nzTabBarExtraTemplate]='addTab'>
+                                                <ng-container *ngIf='cmpObj.stdResult'>
+                                                    <nz-tab>
+                                                        <ng-template #nzTabHeading>
+                                                            Standard result
+                                                        </ng-template>
+                                                        <div>
+                                                            <ng-container *ngIf='cmpObj.stdResult.image'>
+                                                                <ogms-cmp-result-map [layerCfg]='{label: "Standard result", layers: cmpObj.stdResult.image}'></ogms-cmp-result-map>
+                                                            </ng-container>
+                                                        </div>
+                                                    </nz-tab>
+                                                </ng-container>
+                                                <nz-tab *ngFor="let dataRefer of cmpObj.dataRefers">
                                                     <ng-template #nzTabHeading>
-                                                        Standard result
+                                                        {{dataRefer.msName}}
                                                     </ng-template>
                                                     <div>
-                                                        <ng-container *ngIf='cmpObj.stdResult.image'>
-                                                            <ogms-cmp-result-map [layerCfg]='{label: "Standard result", layers: cmpObj.stdResult.image}'></ogms-cmp-result-map>
+                                                        <ng-container *ngIf='dataRefer.cmpResult && dataRefer.cmpResult.image'>
+                                                            <ogms-cmp-result-map [layerCfg]='{label: "dataRefer.msName", layers: dataRefer.cmpResult.image}'></ogms-cmp-result-map>
                                                         </ng-container>
                                                     </div>
                                                 </nz-tab>
-                                            </ng-container>
-                                            <nz-tab *ngFor="let dataRefer of cmpObj.dataRefers">
-                                                <ng-template #nzTabHeading>
-                                                    {{dataRefer.msName}}
+                                                <nz-tab *ngFor='let tab of cmpObj.tabs'>
+                                                    <ng-template #nzTabHeading>
+                                                        {{tab.title}}
+                                                    </ng-template>
+                                                    <div>
+                                                        <ng-container *ngIf='tab.left && tab.right'>
+                                                            <ogms-cmp-result-map [type]='"swipe"' [leftCfg]='tab.left' [rightCfg]='tab.right'></ogms-cmp-result-map>
+                                                        </ng-container>
+                                                    </div>
+                                                </nz-tab>
+                                                <ng-template #addTab>
+                                                    <i class="ant-tabs-new-tab anticon anticon-plus-square" (click)='showModal(cmpObj)'></i>
                                                 </ng-template>
-                                                <div>
-                                                    <ng-container *ngIf='dataRefer.cmpResult && dataRefer.cmpResult.image'>
-                                                        <ogms-cmp-result-map [layerCfg]='{label: "dataRefer.msName", layers: dataRefer.cmpResult.image}'></ogms-cmp-result-map>
-                                                    </ng-container>
-                                                </div>
-                                            </nz-tab>
-                                            <nz-tab *ngFor='let tab of cmpObj.tabs'>
-                                                <ng-template #nzTabHeading>
-                                                    {{tab.title}}
-                                                </ng-template>
-                                                <div>
-                                                    <ng-container *ngIf='tab.left && tab.right'>
-                                                        <ogms-cmp-result-map [type]='"swipe"' [leftCfg]='tab.left' [rightCfg]='tab.right'></ogms-cmp-result-map>
-                                                    </ng-container>
-                                                </div>
-                                            </nz-tab>
-                                            <ng-template #addTab>
-                                                <i class="ant-tabs-new-tab anticon anticon-plus-square" (click)='showModal(cmpObj)'></i>
-                                            </ng-template>
-                                        </nz-tabset>
-                                    </ng-container>
+                                            </nz-tabset>
+                                        </ng-container>
 
-                                </div>
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf='cmpObj.progress !== 100'>
+                                    <span>
+                                                <span style='display: inline-block'><nz-spin></nz-spin></span> &nbsp;&nbsp;Calculating
+                                    </span>
+                                </ng-container>
                             </section>
                         </div>
                     </div>

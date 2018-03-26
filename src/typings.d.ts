@@ -43,14 +43,17 @@ interface NodeModule {
 //   easyPieChart;
 // }
 
-declare var GoogleMapsLoader: any;
-declare var L: any;
-declare var AmCharts: any;
-declare var Chart: any;
-declare var Chartist: any;
-declare const chroma: any;
+declare let GoogleMapsLoader: any;
+declare let L: any;
+declare let AmCharts: any;
+declare let Chart: any;
+declare let Chartist: any;
+declare let chroma: any;
+declare var $: any;
 declare var jQuery: any;
-declare var _: any;
+declare let _: any;
 declare var postal: any;
 // declare var proj4: any;
 // declare var ol: any;
+
+interface JQuery {}

@@ -29,7 +29,7 @@ import {
     BaHeaderMenuComponent,
     SubMenuComponent,
     TestRecurComponent,
-    CmpTagsViewComponent,
+    CmpTabsViewComponent,
     CmpDockingViewComponent,
 } from './components';
 
@@ -83,7 +83,7 @@ const COMPONENTS = [
     TableFeatureComponent,
     SubMenuComponent,
     TestRecurComponent,
-    CmpTagsViewComponent,
+    CmpTabsViewComponent,
     CmpDockingViewComponent,
 ];
 

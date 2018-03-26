@@ -1,0 +1,15 @@
+.ogms-form-item {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    >span {
+        text-align: right;
+        padding: 0 15px;
+    }
+    >span::after {
+        // content: ':'
+    }
+    >div {
+        padding: 0 15px;
+    }
+}
