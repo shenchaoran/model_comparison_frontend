@@ -15,6 +15,7 @@ import { EchartAdapterService } from '@core/services/echartAdapter.service';
 import { CmpSlnService } from "../cmp-solution/services/cmp-sln.service";
 import { MSService } from "../geo-model/services/model.service";
 import { CmpSharedModule } from '../cmp-shared';
+import { CalcuCfgComponent } from '../cmp-shared';
 
 @NgModule({
     imports: [
@@ -38,6 +39,9 @@ import { CmpSharedModule } from '../cmp-shared';
         EchartAdapterService,
         CmpSlnService,
         MSService
+    ],
+    entryComponents: [
+        CalcuCfgComponent,
     ]
 })
 export class CmpTaskModule { }

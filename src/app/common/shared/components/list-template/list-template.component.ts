@@ -43,7 +43,7 @@ export class ListTemplateComponent implements OnInit {
     @Input() hasCreate: boolean;
 
     constructor(
-        private filterService: ListFilterService
+        private filterService: ListFilterService,
     ) { }
 
     ngOnInit() {

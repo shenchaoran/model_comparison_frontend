@@ -5,14 +5,12 @@ import { SolutionDetailComponent } from './solution-detail/solution-detail.compo
 import { CmpSolutionListRoutingModule } from './cmp-solution-routing.module';
 import { SharedModule } from '@shared';
 import { CmpSlnService } from './services';
-import { NewSlnComponent } from './new-sln/new-sln.component';
 import { CmpSolutionComponent } from './cmp-solution.component';
 import { OlMapModule } from '@feature/ol-map/ol-map.module';
 import { MSService } from '../geo-model/services/model.service';
 import { CmpSharedModule } from '../cmp-shared';
 import { CmpTaskService } from '../cmp-task/services';
 import { CalcuCfgComponent } from '../cmp-shared';
-import { ChildComponent } from './child/child.component';
 
 @NgModule({
     imports: [
@@ -25,8 +23,6 @@ import { ChildComponent } from './child/child.component';
         CmpSolutionComponent,
         CmpSolutionListComponent,
         SolutionDetailComponent,
-        NewSlnComponent,
-        ChildComponent
     ],
     providers: [
         CmpSlnService,
@@ -35,7 +31,6 @@ import { ChildComponent } from './child/child.component';
     ],
     entryComponents: [
         CalcuCfgComponent,
-        ChildComponent
     ]
 })
 export class CmpSolutionModule {}

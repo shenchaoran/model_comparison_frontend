@@ -16,7 +16,8 @@ import {
     SimpleChange,
     ChangeDetectionStrategy,
     ChangeDetectorRef,
-    AfterViewInit
+    AfterViewInit,
+    Renderer2,
 } from '@angular/core';
 // declare let GoldenLayout: any;
 import * as GoldenLayout from 'golden-layout';
@@ -28,6 +29,9 @@ import * as GoldenLayout from 'golden-layout';
     // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CmpTabsViewComponent implements OnInit, OnChanges, AfterViewInit {
+    
+    _loading = true;
+
     @Input() config: any;
     @Input() childComponents: {
         name: string,
@@ -39,6 +43,8 @@ export class CmpTabsViewComponent implements OnInit, OnChanges, AfterViewInit {
         private el: ElementRef,
         private viewContainer: ViewContainerRef,
         private componentFactoryResolver: ComponentFactoryResolver,
+        private renderer: Renderer2,
+        private elRef: ElementRef
         // private cdRef: ChangeDetectorRef
     ) { }
 
@@ -52,7 +58,7 @@ export class CmpTabsViewComponent implements OnInit, OnChanges, AfterViewInit {
             }
         });
         if (hadChanged) {
-        console.log('changed');
+            console.log('changed');
             this.initLayout();
         }
     }
@@ -69,7 +75,7 @@ export class CmpTabsViewComponent implements OnInit, OnChanges, AfterViewInit {
         if (this.config && this.childComponents) {
 
             this.viewContainer.clear();
-            if(this.layout && this.layout.destroy) {
+            if (this.layout && this.layout.destroy) {
                 this.layout.destroy();
             }
 
@@ -88,8 +94,11 @@ export class CmpTabsViewComponent implements OnInit, OnChanges, AfterViewInit {
                 });
             });
 
+            this.renderer.setStyle($(this.el.nativeElement).find('#layout')[0], 'height', '600px');
+            this.layout.on('initialised', () => {
+                this.layout.updateSize();
+            });
             this.layout.init();
-            this.layout.updateSize();
             this.layout.on('itemDestroyed', item => {
                 if (item.container) {
                     let compRef = item.container["compRef"];

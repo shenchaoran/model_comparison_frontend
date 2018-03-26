@@ -1,81 +1,40 @@
-.main-content {
-    font-size: 16px;
-    :host ::ng-deep table {
-        padding-top: 18px;
-    }
-
-
-
-    :host ::ng-deep ant-card-body {
-        height: 160px;
-    }
-
-    .table {
-        margin-top: 16px;
-    }
-
-    section {
-        padding-bottom: 12px;
-    }
-    
-    .section-none {
-        font-size: 16px;
-    
-    }
-
-    .section-submit {
-        text-align: center;
-    }
-
-    :host ::ng-deep space {
-        padding: auto 18px auto 12px;
-    }
-
-    .avatar {
-        color: white; 
-        background-color: #ff7a45;
+.steps-content {
+    margin: 12px 0;
+    padding: 10px;
+    .step-title {
+        margin-bottom: 24px;
     }
 }
 
-:host ::ng-deep .ant-card {
-    width: 500px;
+.steps-action {
+    margin: 12px 0;
 }
 
-.param-card {
-    width: 33.3%;
-    height: 170px;
-    border: 1px solid #e9e9e9;
-    padding: 16px 18px;
+.ms-item {
+    padding: 12px 10px;
+    border: 1px solid #e1e4e8;
+    border-bottom: none;
+    cursor: pointer;
+}
 
-    div {
-        margin-bottom: 14px;
-    }
-    
-    .normal {
-        font-size: 14px;
-    }
-    
-    .modelname {
-        font-size: 16px;
-        font-weight: 500;
-    }
+.checked-label {
+    width: 25px !important;
+    height: 10px;
+    float: left;
+}
 
-    .avatar {
-        font-size: 14px;
-        color:#f56a00;
-        background-color:#fde3cf;
-    }
-    
-    .center {
-        height: 22px;
-        line-height: 22px;
-    }
-    
-    .right-margin {
-        margin-right: 10px;
-    }
-    
-    :host ::ng-deep .ant-btn {
-        margin-right: 12px;
+.ms-item.checked,
+.ms-item:hover {
+    background-color: #f6f8fa;
+}
+
+.ms-item:last-child {
+    border: 1px solid #e1e4e8;
+}
+
+.dropdown-filter {
+    margin: 0 10px;
+    span {
+        cursor: pointer !important;
     }
 }

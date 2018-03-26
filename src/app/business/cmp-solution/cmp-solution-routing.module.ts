@@ -4,7 +4,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { CmpSolutionListComponent } from './cmp-solution-list/cmp-solution-list.component';
 import { SolutionDetailComponent } from './solution-detail/solution-detail.component';
 import { HeaderMenuLayoutComponent } from '@shared';
-import { NewSlnComponent } from './new-sln/new-sln.component';
 import { CmpSlnService } from './services';
 import { CmpSolutionComponent } from './cmp-solution.component';
 
@@ -25,13 +24,6 @@ const routes: Routes = [
                         },
                         data: {
                             title: 'Comparison Solutions'
-                        }
-                    },
-                    {
-                        path: 'new',
-                        component: NewSlnComponent,
-                        data: {
-                            title: 'Create a New Solution'
                         }
                     },
                     {
