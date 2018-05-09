@@ -1,26 +1,39 @@
 # Model Comparison
 
-## 业务设计
+## 技术实现
 
-### 模型
+### 后台：
 
-### 数据
+- FTP上传下载
+- 分布式计算和存储
 
-### Issue
+### 前台：
 
-待解决或已解决的地理问题。
+    - 数据
+        - 分类列表：输入（标准数据集）、输出、模型关联
+        - 数据详情：可以预览和下载数据
+        - 数据可视化列表页面
+        - 数据可视化服务调用配置页面
+        - 数据处理工具列表页面
+        - 数据处理工具调用配置页面
+        - 数据比较列表页面
+        - 数据比较配置及结果页面
+    - 模型
+        - 模型列表页面
+        - 模型配置详情页面
+    - 计算
+        - 计算记录列表页面
+        - 计算记录配置详情页面
+    - 比较
+        - 比较记录列表页面
+        - 比较配置详情页面
+            - 视角：配置过程、计算结果、计算耗费资源的统计
+    - 个人空间
+        - 所有的个人资源列表
 
-### Solution
+## How to reuse the code
 
-地理问题的解决方案。
-
-### Task
-
-根据方案配置出来的运行结果。
-
-## 如何使用
-
-### 动态定义Title
+### dynamic define title
 
 两种情况：
 - 在路由中配置 Title。如下，注意data要放在叶节点的路由配置中，要不然太乱
@@ -35,7 +48,7 @@
 ```
 - 根据Ajax请求的数据动态设置Title。在组件内部通过 `this.title.setTitle(variable)`
 
-### 部分模块热加载
+### module preload
 
 ``` typescript
 {
@@ -47,16 +60,15 @@
 }
 ```
 
-### 响应式
+### responsive
 
-暂定分为三种分辨率
+暂定分为四种分辨率
 ``` css
 @media max-width(979px) {}
 @media min-width(980px) {}
 @media min-width(1200px) {}
+@media min-width(1600px) {}
 ```
-
-### 
 
 ## Architecture
 
@@ -114,7 +126,7 @@ angular自带的一些常用模块，一般大多数module中都要用，所以�
 - 文件和文件夹命名：烤串命名法
 - 文件命名：feature.type.ts
 
-## 如何引用第三方库
+## How to use 3td party module
 
 在`typings.d.ts`中添加声明。
 ``` typescript

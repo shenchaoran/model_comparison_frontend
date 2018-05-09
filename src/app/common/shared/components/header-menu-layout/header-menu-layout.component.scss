@@ -14,21 +14,6 @@
         // position: fixed;
         // top: 0;
         // left: 0;
-        @media (max-width: 1199px) {
-            .nav-body {
-                width: 980px;
-            }
-        }
-        @media (max-width: 1599px) {
-            .nav-body {
-                width: 1200px;
-            }
-        }
-        @media (min-width: 1600px) {
-            .nav-body {
-                width: 1600px;
-            }
-        }
         .nav-body {
             padding: 0;
             margin: 0 auto;
@@ -75,21 +60,6 @@
         // padding-top: 64px;
         // height: 100%;
         width: 100%;
-        // @media (max-width: 1199px) {
-        //     .content {
-        //         width: 980px;
-        //     }
-        // }
-        // @media (max-width: 1599px) {
-        //     .content {
-        //         width: 1200px;
-        //     }
-        // }
-        // @media (min-width: 1600px) {
-        //     .content {
-        //         width: 1600px;
-        //     }
-        // }
         .content {
             // height: 100%;
             // overflow-y: hidden;

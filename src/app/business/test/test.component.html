@@ -1,18 +1,12 @@
 <router-outlet>
 </router-outlet>
 
-<ogms-file-uploader id='uploader' [fileUploaderOptions]="fileUploaderOptions" (onFileUploading)="_onFileUpload($event)" (onFileUploadCompleted)='_onFileUploadCompleted($event)' (onClear)='_onClearUploaded()' [size]='"large"'></ogms-file-uploader>
-
-<ogms-file-uploader id='uploader' [fileUploaderOptions]="fileUploaderOptions" (onFileUploading)="_onFileUpload($event)" (onFileUploadCompleted)='_onFileUploadCompleted($event)' (onClear)='_onClearUploaded()' [size]='"default"'></ogms-file-uploader>
-
-<ogms-file-uploader id='uploader' [fileUploaderOptions]="fileUploaderOptions" (onFileUploading)="_onFileUpload($event)" (onFileUploadCompleted)='_onFileUploadCompleted($event)' (onClear)='_onClearUploaded()' [size]='"small"'></ogms-file-uploader>
-
-<i class="fa fa-times-circle"></i>
-<i class="fas fa-times-circle"></i>
-
-<nz-datepicker style='width: 250px;' [(ngModel)]='date' (ngModelChange)='onDateChange($event)' [nzFormat]='"YYYY-MM-DD"'></nz-datepicker>
-
-
-<div class='cmp-tabs'>
-    <ogms-cmp-tabs-view></ogms-cmp-tabs-view>
+<div class='ogms-responsive-div'>
+    <ogms-file-uploader id='uploader' [fileUploaderOptions]="fileUploaderOptions" (onFileUploading)="_onFileUpload($event)" (onFileUploadCompleted)='_onFileUploadCompleted($event)'
+        (onClear)='_onClearUploaded()' [size]='"large"'></ogms-file-uploader>
+    <ogms-file-uploader id='uploader' [fileUploaderOptions]="fileUploaderOptions" (onFileUploading)="_onFileUpload($event)" (onFileUploadCompleted)='_onFileUploadCompleted($event)'
+        (onClear)='_onClearUploaded()'></ogms-file-uploader>
+    <ogms-file-uploader id='uploader' [fileUploaderOptions]="fileUploaderOptions" (onFileUploading)="_onFileUpload($event)" (onFileUploadCompleted)='_onFileUploadCompleted($event)'
+        (onClear)='_onClearUploaded()' [size]='"small"'></ogms-file-uploader>
+    <!-- <nz-datepicker style='width: 250px;' [(ngModel)]='date' (ngModelChange)='onDateChange($event)' [nzFormat]='"YYYY-MM-DD"'></nz-datepicker> -->
 </div>

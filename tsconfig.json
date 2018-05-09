@@ -1,5 +1,5 @@
 {
-    "compileOnSave": false,
+    "compileOnSave": true,
     "compilerOptions": {
         "outDir": "./dist/out-tsc",
         "baseUrl": "src",
@@ -10,6 +10,11 @@
         "experimentalDecorators": true,
         "target": "es5",
         "skipDefaultLibCheck": true,
+        "plugins": [
+            {
+                "name": "@angular/language-service"
+            }
+        ],
         "typeRoots": [
             "node_modules/@types"
         ],

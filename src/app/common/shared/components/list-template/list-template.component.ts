@@ -8,64 +8,58 @@ import { ListFilterService } from './list-filter.service';
 })
 export class ListTemplateComponent implements OnInit {
 
-    sort: {
-        label: string,
-        value: string,
-        checked: boolean
-    }[];
-    organization: {
-        label: string,
-        value: string,
-        checked: boolean
-    }[];
-    owner: {
-        label: string,
-        value: string,
-        checked: boolean
-    }[];
-
+    _ownerFilterV;
+    
     filters: {
         q?: string,
         pageSize?: number,
         pageNum?: number,
-        [key: string]: any,
         owner?: string,
         organization?: string,
-        sort?: string
+        sort?: string,
+        [key: string]: any
     } = {};
     @Output() onFiltersChange = new EventEmitter<any>();
 
     @Input() list: any[];
     @Input() count: number;
     @Input() template: any;
+    
     @Input() type: string;
-    @Input() buttons: any[];
-    @Input() hasCreate: boolean;
 
-    constructor(
-        private filterService: ListFilterService,
-    ) { }
+    @Input() withCreateBtn: boolean;
+    @Input() ownerFilter: {
+        label: string,
+        value: string,
+        checked: boolean
+    }[];
+    @Input() otherFilters: {
+        label: string,
+        value: string,
+        options: {
+            label: string,
+            value: string,
+            checked: boolean
+        }[]
+    }[];
+
+    constructor() { }
 
     ngOnInit() {
-        this.filterService.init(this.type);
-        this.owner = this.filterService.getOwnerFilter();
-        this.organization = this.filterService.getOrganizationFilter();
-        this.sort = this.filterService.getSortFilter();
-        if(this.owner && this.owner.length) {
-            this.filters.owner = this.owner[0].value;
-        }
+        
     }
 
     changeFilters(v, type) {
-        _.map(this[type], item => {
-            if(item.value === v) {
-                item.checked = true;
-            }
-            else {
-                item.checked = false;
-            }
-        });
-        this.filters[type] = v;
+        if(type === 'owner') {
+            _.map(this.ownerFilter, opt => opt.checked = opt.value===v);
+            this.filters.owner = v;
+        }
+        else {
+            let filter = _.find(this.otherFilters, filter => filter.value === type);
+            _.map(filter.options, opt => opt.checked = opt.value=== v);
+            this.filters[filter.value] = v;
+        }
+        // console.log(this.filters);
         this.onSearch();
     }
 
@@ -75,12 +69,12 @@ export class ListTemplateComponent implements OnInit {
 
     setPageNum(pageNum) {
         this.filters.pageNum = pageNum;
-        this.onFiltersChange.emit(this.filters);
+        this.onSearch();
     }
 
     setPageSize(pageSize) {
         this.filters.pageSize = pageSize;
-        this.onFiltersChange.emit(this.filters);
+        this.onSearch();
     }
 
 }

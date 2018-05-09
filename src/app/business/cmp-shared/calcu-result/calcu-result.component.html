@@ -2,7 +2,7 @@
     <div class='data-cfg'>
         <div class='title'>Progress</div>
         <div style='width: 400px;'>
-            <nz-progress [ngModel]="msInstance.progress"></nz-progress>
+            <nz-progress [nzPercent]="msInstance.progress?msInstance.progress:0"></nz-progress>
         </div>
     </div>
     <!-- 输入数据配置 -->
@@ -11,18 +11,18 @@
         <ng-container *ngIf='msInstance.IO.dataSrc === "STD"'>
             <ng-container *ngFor='let event of msInstance.IO.std'>
                 <div class='ogms-form-item' nz-row>
-                    <span nz-col [nzSpan]='6'>{{event.id}}</span>
-                    <div nz-col [nzSpan]='18'>
+                    <span nz-col nzSpan='6'>{{event.id}}</span>
+                    <div nz-col nzSpan='18'>
                         <ng-container *ngIf='event.type === "input"'>
                             <ng-container *ngIf='event.schema.structure.type === "date"'>
                                 <span style='width: 330px;'>
-                                            {{event.value | date:'yyyy-MM-dd'}}
-                                        </span>
+                                                {{event.value | date:'yyyy-MM-dd'}}
+                                            </span>
                             </ng-container>
                             <ng-container *ngIf='event.schema.structure.type === "coordinate"'>
                                 <span style='width: 330px;'>
-                                            {{event.value | coordinate}}
-                                        </span>
+                                                {{event.value | coordinate}}
+                                            </span>
                             </ng-container>
                         </ng-container>
                     </div>
@@ -30,19 +30,15 @@
             </ng-container>
             <!-- TODO preview -->
             <div class='ogms-form-item'>
-                <button nz-button [nzType]='"default"'>
-                                <span>Preview</span>
-                            </button>
+                <button nz-button>Preview</button>
             </div>
         </ng-container>
         <ng-container *ngIf='msInstance.IO.dataSrc === "UPLOAD"'>
             <ng-container *ngFor='let event of msInstance.IO.data | filter: {type: "input"}'>
                 <div class='ogms-form-item' nz-row>
-                    <span nz-col [nzSpan]='6'>{{event.id}}</span>
-                    <div nz-col [nzSpan]='18'>
-                        <button nz-button>
-                                        <span>Download</span>
-                                    </button>
+                    <span nz-col nzSpan='6'>{{event.id}}</span>
+                    <div nz-col nzSpan='18'>
+                        <button nz-button>Download</button>
                     </div>
                 </div>
             </ng-container>
@@ -55,24 +51,20 @@
         </div>
         <ng-container *ngFor='let event of msInstance.IO.data | filter: {type: "parameter"}'>
             <div class='ogms-form-item' nz-row>
-                <span nz-col [nzSpan]='6'>{{event.id}}</span>
-                <div nz-col [nzSpan]='18' class='flex-box-col-nowrap'>
+                <span nz-col nzSpan='6'>{{event.id}}</span>
+                <div nz-col nzSpan='18' class='flex-box-col-nowrap'>
                     <ng-container *ngIf='event.schema.structure.type === "radio"'>
                         <span>{{event.value}}</span>
                     </ng-container>
                     <ng-container *ngIf='event.schema.structure.type === "checkbox"'>
                         <ng-container *ngFor='let opt of event.schema.structure.options'>
                             <ng-container *ngIf='event.value.indexOf(opt) !== -1'>
-                                <nz-tag>
-                                    {{opt}}
-                                </nz-tag>
+                                <nz-tag nzColor='purple'>{{opt}}</nz-tag>
                             </ng-container>
                         </ng-container>
                     </ng-container>
                     <ng-container *ngIf='event.schema.structure.type === "value"'>
-                        <span>
-                                    {{event.value}}
-                                </span>
+                        <span>{{event.value}}</span>
                     </ng-container>
                 </div>
             </div>
@@ -85,16 +77,14 @@
         </div>
         <ng-container *ngFor='let event of msInstance.IO.data | filter: {type: "output"}'>
             <div class='ogms-form-item' nz-row>
-                <span nz-col [nzSpan]='6'>{{event.id}}</span>
-                <div nz-col [nzSpan]='18'>
+                <span nz-col nzSpan='6'>{{event.id}}</span>
+                <div nz-col nzSpan='18'>
                     <ng-container *ngIf='msInstance.progress === 100'>
-                        <button nz-button [nzType]='"default"'>
-                                        <span>Download</span>
-                                    </button>
+                        <button nz-button>Download</button>
                     </ng-container>
                     <ng-container *ngIf='msInstance.progress !== 100'>
                         <span>
-                                    <span style='display: inline-block'><nz-spin></nz-spin></span>
+                                        <span style='display: inline-block'><nz-spin></nz-spin></span>
                         <!-- <i class='icon ion-loading-a'></i> -->
                         <!-- <i class="fas fa-spinner fa-spin"></i> -->
                         &nbsp;&nbsp;Calculating

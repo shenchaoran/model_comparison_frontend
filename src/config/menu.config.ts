@@ -33,48 +33,40 @@ export const HEADER_MENUS: MenuClass[] = [
         }
     },
     {
-        path: 'resources',
+        path: 'datasets',
         data: {
             menu: {
-                title: 'Resources',
-                id: 'resources',
+                title: 'Datasets',
+                id: 'datasets',
                 icon: ''
             }
-        },
-        children: [
-            {
-                path: 'geo-models',
-                data: {
-                    menu: {
-                        title: 'Model',
-                        id: 'model',
-                        icon: 'appstore-o',
-                        selected: true,
-                        expanded: false,
-                        order: 0
-                    }
-                }
-            },
-            {
-                path: 'geo-data',
-                data: {
-                    menu: {
-                        title: 'Data',
-                        id: 'data',
-                        icon: 'database',
-                        selected: true,
-                        expanded: false,
-                        order: 0
-                    }
-                }
-            },
-        ]
+        }
     },
     {
-        path: 'calculation',
+        path: 'models',
         data: {
             menu: {
-                title: 'Calculation'
+                title: 'Models',
+                id: 'models',
+                icon: ''
+            }
+        }
+    },
+    {
+        path: 'results',
+        data: {
+            menu: {
+                title: 'Results & Diagnostics',
+                id: 'results',
+                icon: ''
+            }
+        }
+    },
+    {
+        path: 'comparison',
+        data: {
+            menu: {
+                title: 'Comparison'
             }
         }
     },
@@ -94,14 +86,14 @@ export const HEADER_MENUS: MenuClass[] = [
     //         }
     //     }
     // },
-    {
-        path: 'tasks',
-        data: {
-            menu: {
-                title: 'Comparison'
-            }
-        }
-    },
+    // {
+    //     path: 'tasks',
+    //     data: {
+    //         menu: {
+    //             title: 'Comparison'
+    //         }
+    //     }
+    // },
     {
         path: 'test',
         data: {

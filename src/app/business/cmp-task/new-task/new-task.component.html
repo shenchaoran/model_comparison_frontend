@@ -1,4 +1,4 @@
-<div class='responsive-root-div'>
+<div class='ogms-responsive-div'>
     <nz-steps [(nzCurrent)]="currentStep">
         <nz-step [nzTitle]="'Basic information'"></nz-step>
         <nz-step [nzTitle]="'Participants'"></nz-step>
@@ -11,15 +11,15 @@
         <div [hidden]='currentStep !== 0'>
             <h3 class='step-title'>Solution Meta Information</h3>
             <div class='ogms-form-item' nz-row>
-                <span nz-col [nzSpan]='6'>Name</span>
-                <div nz-col [nzSpan]='18'>
-                    <nz-input style='width: 530px;' [(ngModel)]='cmpTask.meta.name'></nz-input>
+                <span nz-col nzSpan='6'>Name</span>
+                <div nz-col nzSpan='18'>
+                    <input nz-input style='width: 530px;' [(ngModel)]='cmpTask.meta.name'>
                 </div>
             </div>
             <div class='ogms-form-item' nz-row>
-                <span nz-col [nzSpan]='6'>Description</span>
-                <div nz-col [nzSpan]='18'>
-                    <nz-input style='width: 530px;' [(ngModel)]='cmpTask.meta.desc' [nzType]='"textarea"' [nzAutosize]="{minRows: 2, maxRows: 6}"></nz-input>
+                <span nz-col nzSpan='6'>Description</span>
+                <div nz-col nzSpan='18'>
+                    <textarea nz-input style='width: 530px;' [(ngModel)]='cmpTask.meta.desc' [nzAutosize]="{minRows: 2, maxRows: 6}"></textarea>
                 </div>
             </div>
         </div>
@@ -69,10 +69,10 @@
                 <!-- 公共计算配置模板 -->
                 <ng-template>
                     <div nz-row>
-                        <div nz-col [nzSpan]='6'>
+                        <div nz-col nzSpan='6'>
                             <label for='factor'>I want to study the impact of:</label>
                         </div>
-                        <div nz-col [nzSpan]='18'>
+                        <div nz-col nzSpan='18'>
                             <nz-radio-group formControlName='factor'>
                                 <label nz-radio [nzValue]="'TIME'">
                                     <span>time</span>
@@ -93,13 +93,13 @@
                 </ng-container>
 
                 <ng-container *ngIf='selectedComputeLayout === "Collapse"'>
-                    <nz-collapseset>
+                    <nz-collapse>
                         <ng-container *ngFor="let msInstance of msInstances">
-                            <nz-collapse [nzTitle]="msInstance?.meta?.name">
+                            <nz-collapse-panel [nzHeader]="msInstance?.meta?.name">
                                 <ogms-calcu-cfg [msInstance]='msInstance' (onValidationChange)='onValidationChange($event)' (onInstanceChange)='onInstanceChange($event)'></ogms-calcu-cfg>
-                            </nz-collapse>
+                            </nz-collapse-panel>
                         </ng-container>
-                    </nz-collapseset>
+                    </nz-collapse>
                 </ng-container>
 
                 <ng-container *ngIf='selectedComputeLayout === "Tab"'>
@@ -134,25 +134,25 @@
                 <p class='ogms-form-item'>No comparison feature created!</p>
             </ng-container>
 
-            <nz-collapseset [nzBordered]="false">
-                <nz-collapse *ngFor='let cmpObj of cmpTask.cmpObjs' [nzTitle]="cmpObj.meta.name" [nzActive]="true">
+            <nz-collapse [nzBordered]="false">
+                <nz-collapse-panel *ngFor='let cmpObj of cmpTask.cmpObjs' [nzHeader]="cmpObj.meta.name" [nzActive]="true">
                     <div style='margin: 0 20px;'>
                         <ogms-cmp-obj-cfg [cmpObj]='cmpObj' [msInstances]='msInstances' (onCmpObjChange)='onCmpObjChange($event)' (onCmpObjCompleted)='onCmpObjCompleted($event)'></ogms-cmp-obj-cfg>
                     </div>
-                </nz-collapse>
-            </nz-collapseset>
+                </nz-collapse-panel>
+            </nz-collapse>
         </div>
     </div>
 
     <div class="steps-action">
         <button nz-button [nzType]="'default'" (click)="changeStep(currentStep-1)" [disabled]="currentStep === 0">
-                        <span>Previous</span>
+                        Previous
                     </button>
         <button nz-button [nzType]="'default'" (click)="changeStep(currentStep+1)" *ngIf="currentStep < 4 - 1" [disabled]='nextDisabled'>
-                        <span>Next</span>
+                        Next
                     </button>
         <button nz-button [nzType]="'primary'" (click)="done()" *ngIf="currentStep ===  4 - 1" [disabled]='doneDisabled'>
-                        <span>Save</span>
+                        Save
                     </button>
     </div>
 
@@ -161,15 +161,15 @@
         <nz-modal [nzVisible]="__isMSModalVisible" [nzTitle]='"Add calculate instance of "+ msAdding?.MDL?.meta?.name + "?"' [nzContent]="modalContent" (nzOnCancel)="msCancel($event)" (nzOnOk)='msOK()' [nzOkText]='"Add"' [nzCancelText]='"Cancel"'>
             <ng-template #modalContent>
                 <div class='ogms-form-item' nz-row>
-                    <span nz-col [nzSpan]='6'>Name</span>
-                    <div nz-col [nzSpan]='18'>
-                        <nz-input [(ngModel)]='addingName'></nz-input>
+                    <span nz-col nzSpan='6'>Name</span>
+                    <div nz-col nzSpan='18'>
+                        <input nz-input [(ngModel)]='addingName'>
                     </div>
                 </div>
                 <div class='ogms-form-item' nz-row>
-                    <span nz-col [nzSpan]='6'>Description</span>
-                    <div nz-col [nzSpan]='18'>
-                        <nz-input [(ngModel)]='addingDesc' [nzType]='"textarea"' [nzAutosize]="{minRows: 2, maxRows: 6}"></nz-input>
+                    <span nz-col nzSpan='6'>Description</span>
+                    <div nz-col nzSpan='18'>
+                        <textarea nz-input [(ngModel)]='addingDesc' [nzAutosize]="{minRows: 2, maxRows: 6}"></textarea>
                     </div>
                 </div>
             </ng-template>
@@ -180,15 +180,15 @@
     <nz-modal [nzVisible]="__isCmpObjModalVisible" [nzTitle]='"Add a comparison object"' [nzContent]="modalContent" (nzOnCancel)="cmpObjCancel($event)" (nzOnOk)='cmpObjOK()' [nzOkText]='"Add"' [nzCancelText]='"Cancel"'>
         <ng-template #modalContent>
             <div class='ogms-form-item' nz-row>
-                <span nz-col [nzSpan]='6'>Name</span>
-                <div nz-col [nzSpan]='18'>
-                    <nz-input [(ngModel)]='addingName'></nz-input>
+                <span nz-col nzSpan='6'>Name</span>
+                <div nz-col nzSpan='18'>
+                    <input nz-input [(ngModel)]='addingName'>
                 </div>
             </div>
             <div class='ogms-form-item' nz-row>
-                <span nz-col [nzSpan]='6'>Description</span>
-                <div nz-col [nzSpan]='18'>
-                    <nz-input [(ngModel)]='addingDesc' [nzType]='"textarea"' [nzAutosize]="{minRows: 2, maxRows: 6}"></nz-input>
+                <span nz-col nzSpan='6'>Description</span>
+                <div nz-col nzSpan='18'>
+                    <textarea nz-input [(ngModel)]='addingDesc' [nzAutosize]="{minRows: 2, maxRows: 6}"></textarea>
                 </div>
             </div>
         </ng-template>

@@ -70,7 +70,7 @@
                                     <button nz-button [disabled]="_disabledButton" [nzType]="'primary'" [nzLoading]="_operating" (click)="_operateData()">Operating</button>
                                     <span style="margin-left: 8px;" *ngIf="_checkedNumber">Selected {{_checkedNumber}} items</span>
                                 </div>
-                                <nz-table #nzTable [nzDataSource]="_dataSet" [nzPageSize]="10" (nzDataChange)="_displayDataChange($event)" (nzPageIndexChange)="_refreshStatus()" (nzPageSizeChange)="_refreshStatus()">
+                                <nz-table #nzTable [nzData]="_dataSet" [nzPageSize]="10" (nzDataChange)="_displayDataChange($event)" (nzPageIndexChange)="_refreshStatus()" (nzPageSizeChange)="_refreshStatus()">
                                     <thead nz-thead>
                                         <tr>
                                             <th nz-th nzCheckbox>
@@ -100,7 +100,7 @@
                 <button nz-button [disabled]="_disabledButton" [nzType]="'primary'" [nzLoading]="_operating" (click)="_operateData()">Export as txt</button>
                 <span style="margin-left: 8px;" *ngIf="_checkedNumber">Selected {{_checkedNumber}} items</span>
               </div>
-              <nz-table #nzTable [nzDataSource]="_dataSet" [nzPageSize]="10" (nzDataChange)="_displayDataChange($event)" (nzPageIndexChange)="_refreshStatus()" (nzPageSizeChange)="_refreshStatus()">
+              <nz-table #nzTable [nzData]="_dataSet" [nzPageSize]="10" (nzDataChange)="_displayDataChange($event)" (nzPageIndexChange)="_refreshStatus()" (nzPageSizeChange)="_refreshStatus()">
                 <thead nz-thead>
                   <tr>
                     <th nz-th nzCheckbox>
@@ -178,7 +178,7 @@
                         <span class="placeholder flex-item-1-1-auto"></span>
                     </div>
                     <div class="section-body">
-                        <dl class="table-info">
+                        <dl class="ogms-table-info">
                             <div nz-row>
                                 <dt nz-col [nzSpan]='4'>Full Name</dt>
                                 <dd nz-col [nzSpan]='8'>{{model.MDL.meta.name}}</dd>
@@ -215,7 +215,7 @@
                                 <button nz-button [disabled]="_disabledButton" [nzType]="'primary'" [nzLoading]="_operating" (click)="_operateData(_ioDataset)">Operating</button>
                                 <span style="margin-left: 8px;" *ngIf="_checkedNumber">Selected {{_checkedNumber}} items</span>
                             </div>
-                            <nz-table #nzTable [nzDataSource]="_ioDataSet" [nzPageSize]="10" (nzDataChange)="_displayDataChange($event)" (nzPageIndexChange)="_refreshStatus(_ioDataset)" (nzPageSizeChange)="_refreshStatus(_ioDataset)">
+                            <nz-table #nzTable [nzData]="_ioDataSet" [nzPageSize]="10" (nzDataChange)="_displayDataChange($event)" (nzPageIndexChange)="_refreshStatus(_ioDataset)" (nzPageSizeChange)="_refreshStatus(_ioDataset)">
                                 <thead nz-thead>
                                     <tr>
                                         <th nz-th nzCheckbox>

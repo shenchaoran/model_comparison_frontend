@@ -3,6 +3,7 @@ import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChange
 import { NgUploaderOptions } from 'ngx-uploader';
 import { ResourceSrc, CalcuTask, CmpTask, CmpSolution } from '@models';
 import { LoginService } from '@feature/login/login.service';
+import { DynamicTitleService } from '@core/services/dynamic-title.service';
 
 @Component({
     selector: 'ogms-calcu-cfg',
@@ -10,7 +11,8 @@ import { LoginService } from '@feature/login/login.service';
     styleUrls: ['./calcu-cfg.component.scss']
 })
 export class CalcuCfgComponent implements OnInit, OnChanges {
-    
+    _width = '500px';
+
     @Input() msInstance: any;
     @Output() onInstanceChange = new EventEmitter<any>();
     @Output() onValidationChange = new EventEmitter<any>();
@@ -19,6 +21,7 @@ export class CalcuCfgComponent implements OnInit, OnChanges {
 
     constructor(
         private loginService: LoginService,
+        // private title: DynamicTitleService,
     ) { 
         const token = this.loginService.getToken();
         const user = this.loginService.getUser();
@@ -47,7 +50,7 @@ export class CalcuCfgComponent implements OnInit, OnChanges {
             }
         });
         if(changed) {
-            
+            // this.title.setTitle(this.msInstance.meta.name);
         }
     }
 

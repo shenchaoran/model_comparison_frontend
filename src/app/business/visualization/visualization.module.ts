@@ -9,6 +9,15 @@ import { OlMapService } from '@feature/ol-map/ol-map.module.ts';
 import { TableComponent } from './table/table.component';
 import { SwipeMapComponent } from './swipe-map/swipe-map.component';
 import { GeojsonMapComponent } from './geojson-map/geojson-map.component';
+import { DrawFeatureComponent } from './draw-feature/draw-feature.component';
+
+const COMPONENTS = [
+    AsciiGridComponent, 
+    TableComponent, 
+    SwipeMapComponent, 
+    GeojsonMapComponent, 
+    DrawFeatureComponent
+]
 
 @NgModule({
     imports: [
@@ -17,16 +26,13 @@ import { GeojsonMapComponent } from './geojson-map/geojson-map.component';
         HotTableModule,
     ],
     declarations: [
-        AsciiGridComponent, 
-        TableComponent, 
-        SwipeMapComponent, GeojsonMapComponent
+        ...COMPONENTS
     ],
     exports: [
-        AsciiGridComponent,
-        TableComponent,
-        EchartsNg2Module,
-        SwipeMapComponent,
+        ...COMPONENTS
     ],
-    providers: [OlMapService]
+    providers: [
+        OlMapService
+    ]
 })
 export class VisualizationModule {}

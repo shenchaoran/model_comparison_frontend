@@ -1,7 +1,14 @@
-.list-item {
-    .item-header>a:hover {
+
+.list-template-item {
+    padding: 5px 12px;
+    border: 1px solid #e1e4e8;
+    border-top: none;
+    .item-header>a:first-child:hover {
         text-decoration: underline !important;
         color: #285eb8 !important;
+    }
+    .item-header>a:not(:first-child) {
+        padding: 0 10px;
     }
     .item-header>a {
         font-size: 20px;
@@ -15,4 +22,8 @@
         }
     }
     .item-footer {}
+}
+
+.list-template-item:hover {
+    background-color: #f6f8fa;
 }

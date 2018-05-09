@@ -9,14 +9,14 @@
                         <span class='placeholder flex-item-1-1-auto'></span>
                     </div>
                     <div class='section-body'>
-                        <dl class='table-info'>
+                        <dl class='ogms-table-info'>
                             <div nz-row>
-                                <dt nz-col [nzSpan]='4'>Author</dt>
-                                <dd nz-col [nzSpan]='8'>{{calculation.auth.userName | undefined}}</dd>
-                                <dt nz-col [nzSpan]='4'>Authorization</dt>
-                                <dd nz-col [nzSpan]='8'>{{calculation.auth.src | resourceSrc}}</dd>
-                                <dt nz-col [nzSpan]='4'>Create time</dt>
-                                <dd nz-col [nzSpan]='8'>{{calculation.meta.time | date:'yyyy-MM-dd'}}</dd>
+                                <dt nz-col nzSpan='4'>Author</dt>
+                                <dd nz-col nzSpan='8'>{{calculation.auth.userName | undefined}}</dd>
+                                <dt nz-col nzSpan='4'>Authorization</dt>
+                                <dd nz-col nzSpan='8'>{{calculation.auth.src | resourceSrc}}</dd>
+                                <dt nz-col nzSpan='4'>Create time</dt>
+                                <dd nz-col nzSpan='8'>{{calculation.meta.time | date:'yyyy-MM-dd'}}</dd>
                             </div>
                         </dl>
                         <div class='detail-desc'>
@@ -30,7 +30,7 @@
                         <span class='placeholder flex-item-1-1-auto'></span>
                     </div>
                     <div class='section-body'>
-                        <ogms-calcu-result [msInstance]='calculation'></ogms-calcu-result>
+                        <ogms-calcu-result [ngModel]='calculation' ngDefaultControl></ogms-calcu-result>
                     </div>
                 </section>
             </article>

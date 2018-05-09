@@ -1,7 +1,3 @@
-.container {
-    margin: 24px auto 0;
-}
-
 .list-box {
     margin: 20px 0;
     .list-header {
@@ -24,12 +20,6 @@
     float: left;
 }
 
-.list-item {
-    padding: 16px 13px;
-    border: 1px solid #e1e4e8;
-    border-top: none;
-}
-
-.list-item:hover {
-    background-color: #f6f8fa;
+.filter-li {
+    padding-right: 18px;
 }

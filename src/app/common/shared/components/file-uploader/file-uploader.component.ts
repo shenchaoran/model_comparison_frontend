@@ -22,6 +22,7 @@ export class FileUploader {
     _showClose: boolean;
     _fileUploaderOptions:NgUploaderOptions = { url: '' };
     @Input() size: string = 'default';
+    @Input() width;
     @Input()
     set fileUploaderOptions(v) {
         this._fileUploaderOptions = _.cloneDeep(v);

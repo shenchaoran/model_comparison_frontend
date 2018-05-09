@@ -7,6 +7,7 @@ export const routes: Routes = [
         redirectTo: 'home',
         pathMatch: 'full'
     },
+
     {
         path: 'login',
         loadChildren: './common/feature/login/login.module#LoginModule'
@@ -19,28 +20,28 @@ export const routes: Routes = [
         path: 'password-reset',
         loadChildren: './common/feature/password-reset/password-reset.module#PasswordResetModule'
     },
+
     {
         path: 'home',
         loadChildren: './business/home/home.module#HomeModule'
     },
+
     {
-        path: 'resources',
-        children: [
-            {
-                path: '',
-                redirectTo: 'geo-models',
-                pathMatch: 'full'
-            },
-            {
-                path: 'geo-models',
-                loadChildren: './business/geo-model/geo-model.module#GeoModelModule'
-            },
-            {
-                path: 'geo-data',
-                loadChildren: './business/geo-data/geo-data.module#GeoDataModule'
-            },
-        ]
+        path: 'datasets',
+        loadChildren: './business/datasets/datasets.module#DatasetsModule'
     },
+    {
+        path: 'models',
+        loadChildren: './business/models/models.module#ModelsModule'
+    },
+    {
+        path: 'results',
+        loadChildren: './business/home/home.module#HomeModule'
+    },
+    // {
+    //     path: 'resources',
+    //     loadChildren: './business/resources/resources.module#ResourcesModule'
+    // },
     {
         path: 'issues',
         loadChildren: './business/cmp-issue/cmp-issue.module#CmpIssueModule'

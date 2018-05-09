@@ -1,5 +1,5 @@
 <ng-template #taskTemplate let-task='item'>
-    <section class='list-item'>
+    <section>
         <div class='item-header flex-box-row-nowrap'>
             <a [routerLink]='task._id'>
                 {{task.auth.userName}}/{{task.meta.name}}
@@ -20,7 +20,7 @@
             <div class='cmp-progress'>
                 <span>Comparison progress</span>
                 <div class='ms-progress'>
-                    <nz-progress [ngModel]='100'></nz-progress>
+                    <nz-progress [nzPercent]='100'></nz-progress>
                 </div>
             </div>
         </div>
@@ -28,7 +28,14 @@
     </section>
 </ng-template>
 
-<ogms-list-template [count]='count' [template]='taskTemplate' [type]='"tasks"' [list]='tasks' [buttons]='buttons' (onFiltersChange)='search($event)'>
+<ogms-list-template 
+    [count]='count' 
+    [template]='taskTemplate' 
+    [list]='tasks' 
+    [withCreateBtn]='true'
+    [ownerFilter]='ownerFilter'
+    [otherFilters]='otherFilters'
+    (onFiltersChange)='search($event)'> 
 </ogms-list-template>
 
 <ogms-footer></ogms-footer>

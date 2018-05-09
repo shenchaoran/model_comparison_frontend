@@ -20,10 +20,8 @@
         "testTsconfig": "tsconfig.spec.json",
         "prefix": "ogms",
         "styles": [
-            "styles.scss"
-        ],
-        "addOns": [
-            "../node_modules/font-awesome/fonts/*.+(otf|eot|svg|ttf|woff|woff2)"
+            "styles.scss",
+            "styles.less"
         ],
         "scripts": [
             "../node_modules/jquery/dist/jquery.min.js",

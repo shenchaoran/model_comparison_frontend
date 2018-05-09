@@ -79,7 +79,7 @@ export class ModelInfoComponent implements OnInit {
         const allUnChecked = this._displayData.every(value => !value.checked);
         this._allChecked = allChecked;
         this._indeterminate = !allChecked && !allUnChecked;
-        this._disabledButton = !dataset.some(value => value.checked);
+        this._disabledButton = dataset?!dataset.some(value => value.checked):false;
         this._checkedNumber = dataset.filter(
             value => value.checked
         ).length;

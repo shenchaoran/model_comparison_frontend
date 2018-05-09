@@ -7,7 +7,7 @@ import { SharedModule } from '@shared';
 import { CmpSlnService } from './services';
 import { CmpSolutionComponent } from './cmp-solution.component';
 import { OlMapModule } from '@feature/ol-map/ol-map.module';
-import { MSService } from '../geo-model/services/model.service';
+import { MSService } from '../models/services/geo-models.service';
 import { CmpSharedModule } from '../cmp-shared';
 import { CmpTaskService } from '../cmp-task/services';
 import { CalcuCfgComponent } from '../cmp-shared';

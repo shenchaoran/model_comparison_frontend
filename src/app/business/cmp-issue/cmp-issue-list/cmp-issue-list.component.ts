@@ -12,6 +12,77 @@ import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 export class CmpIssueListComponent implements OnInit {
     issues: any[];
     count: number;
+
+    withCreateBtn: boolean = true;
+    ownerFilter: {
+        label: string,
+        value: string,
+        checked: boolean
+    }[] = [
+        {
+            label: 'Created',
+            value: 'Created',
+            checked: false
+        },
+        {
+            label: 'Followed',
+            value: 'Followed',
+            checked: false
+        }
+    ];
+    otherFilters: {
+        label: string,
+        value: string,
+        options: {
+            label: string,
+            value: string,
+            checked: boolean
+        }[]
+    }[] = [
+        {
+            label: 'Organization',
+            value: 'organization',
+            options: [
+                {
+                    label: 'OGMS',
+                    value: 'OGMS',
+                    checked: false
+                },
+                {
+                    label: 'SUMS',
+                    value: 'SUMS',
+                    checked: false
+                }
+            ]
+        },
+        {
+            label: 'Sort',
+            value: 'sort',
+            options: [
+                {
+                    label: 'Most followed',
+                    value: 'Most followed',
+                    checked: false
+                },
+                {
+                    label: 'Least followed',
+                    value: 'Least followed',
+                    checked: false
+                },
+                {
+                    label: 'Newest',
+                    value: 'Newest',
+                    checked: false
+                },
+                {
+                    label: 'Oldest',
+                    value: 'Oldest',
+                    checked: false
+                }
+            ]
+        }
+    ];
+
     constructor(
         private route: ActivatedRoute,
         private service: CmpIssueService,

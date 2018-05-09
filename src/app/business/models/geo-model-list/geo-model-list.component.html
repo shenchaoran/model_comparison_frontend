@@ -1,0 +1,29 @@
+<ng-template #modelTemplate let-model='item'>
+    <section>
+        <div class='item-header flex-box-row-nowrap'>
+            <a [routerLink]='model._id'>
+                {{model.auth.nodeName}}/{{model.MDL.meta.name}}
+            </a>
+            <span class='flex-item-1-1-auto'></span>
+            <a [routerLink]='model._id'><i class="fa fa-info"></i></a>
+            <a [routerLink]='[model._id, "invoke"]'><i class="fa fa-share"></i></a>
+        </div>
+        <div class='item-body'>
+            <span class='topic'>{{model.MDL.meta.topic}}</span>
+            <div class='desc'>{{model.MDL.meta.abstract}}</div>
+        </div>
+        <div class='item-footer'>{{model.auth.nodeName}}</div>
+    </section>
+</ng-template>
+
+<ogms-list-template 
+    [count]='count' 
+    [template]='modelTemplate' 
+    [list]='models' 
+    [withCreateBtn]='withCreateBtn'  
+    [ownerFilter]='ownerFilter'
+    [otherFilters]='otherFilters'
+    (onFiltersChange)='search($event)'>
+</ogms-list-template>
+
+<ogms-footer></ogms-footer>

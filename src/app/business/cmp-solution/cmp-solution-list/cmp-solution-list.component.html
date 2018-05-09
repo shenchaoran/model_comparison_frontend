@@ -1,5 +1,5 @@
 <ng-template #slnTemplate let-sln='item'>
-    <section class='list-item'>
+    <section>
         <div class='item-header'>
             <a [routerLink]='sln._id'>
                             {{sln.auth.userName}}/{{sln.meta.name}}
@@ -15,7 +15,14 @@
     </section>
 </ng-template>
 
-<ogms-list-template [count]='count' [template]='slnTemplate' [list]='solutions' [type]='"solutions"' [hasCreate]='true' (onFiltersChange)='search($event)'>
+<ogms-list-template 
+    [count]='count' 
+    [template]='slnTemplate' 
+    [list]='solutions' 
+    [withCreateBtn]='true' 
+    [ownerFilter]='ownerFilter'
+    [otherFilters]='otherFilters'
+    (onFiltersChange)='search($event)'>
 </ogms-list-template>
 
 <ogms-footer></ogms-footer>

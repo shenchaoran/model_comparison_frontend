@@ -6,8 +6,7 @@
 // end
 // @import "~roboto-fontface/css/roboto/roboto-fontface.css";
 @import "~normalize.css/normalize.css";
-$fa-font-path: '~font-awesome/fonts';
-@import '~font-awesome/scss/font-awesome';
+@import '~font-awesome/css/font-awesome.min.css';
 @import "~ionicons/css/ionicons.min.css";
 @import "~ng2-slim-loading-bar/style.css";
 @import "~perfect-scrollbar/css/perfect-scrollbar.css";
@@ -22,6 +21,9 @@ $fa-font-path: '~font-awesome/fonts';
 @import '~bootstrap/dist/css/bootstrap.min.css';
 @import "~golden-layout/src/css/goldenlayout-base.css";
 @import "~golden-layout/src/css/goldenlayout-translucent-theme.css";
+// @import "~ng-zorro-antd/src/components.less";
+// @import "~ng-zorro-antd/src/style/index.less";
+// @import "assets/css/my/zorro";
 // @import '~ol3-ext/dist/ol3-ext.css';
 // theme
 // @import "app/common/shared/theme.scss";

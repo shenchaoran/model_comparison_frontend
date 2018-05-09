@@ -39,7 +39,17 @@
     white-space: nowrap;
     vertical-align: middle;
     button {
-        height: 100%;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+    .btn.large {
+        line-height: 35px;
+    }
+    .btn.default {
+        line-height: 30px;
+    }
+    .btn.small {
+        line-height: 25px;
     }
 }
 

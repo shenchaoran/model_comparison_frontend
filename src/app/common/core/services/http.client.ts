@@ -60,6 +60,7 @@ export class _HttpClient {
                             observer.next({
                                 error: response.status
                             });
+                            console.log(response.status);
                             this.notice.warning('Warning', 'Http request error!');
                             observer.complete();
                         }

@@ -4,7 +4,7 @@ import {
     FormGroup,
     Validators
 } from '@angular/forms';
-import { MSService } from '../../geo-model/services/model.service';
+import { MSService } from '../../models/services/geo-models.service';
 import { 
     ResourceSrc, 
     CalcuTask, 
@@ -207,14 +207,14 @@ export class NewTaskComponent implements OnInit, AfterViewInit {
                     this.cmpTask._id = response.data;
                     const self = this;
                     this.confirmModal.confirm({
-                        title: 'Start the comparison task right now?',
-                        content: '',
-                        okText: 'Yes',
-                        cancelText: 'Later',
-                        onOk() {
+                        nzTitle: 'Start the comparison task right now?',
+                        nzContent: '',
+                        nzOkText: 'Yes',
+                        nzCancelText: 'Later',
+                        nzOnOk() {
                             self.startTask();
                         },
-                        onCancel() {
+                        nzOnCancel() {
                             self.gotoDetail();
                         }
                     });

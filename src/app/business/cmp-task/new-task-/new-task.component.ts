@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { CmpSlnService } from "../../cmp-solution/services/cmp-sln.service";
-import { MSService } from "../../geo-model/services/model.service";
+import { MSService } from "../../models/services/geo-models.service";
 import { CmpTaskService } from "../services/cmp-task.service";
 import { NzNotificationService, NzModalService } from "ng-zorro-antd";
 

@@ -14,7 +14,7 @@
                                 <div class="content">Current: {{selectedSln? selectedSln.meta.name : 'No selected solution' }}</div>
                             </div>
                             <div class="table">
-                                <nz-table #nzTable [nzDataSource]="solutions" [nzPageSize]="10">
+                                <nz-table #nzTable [nzData]="solutions" [nzPageSize]="10">
                                     <thead nz-thead>
                                         <tr>
                                             <th nz-th nzExpand></th>
@@ -48,12 +48,12 @@
                                             <tr nz-tbody-tr *ngIf="data.expand">
                                                 <td nz-td colspan="24">
                                                     <div class='section-body'>
-                                                        <dl class='table-info'>
+                                                        <dl class='ogms-table-info'>
                                                             <div nz-row>
-                                                                <dt nz-col [nzSpan]='4'>Authorization</dt>
-                                                                <dd nz-col [nzSpan]='8'>{{data.auth.src | resourceSrc}}</dd>
-                                                                <dt nz-col [nzSpan]='4'>Comparison type</dt>
-                                                                <dd nz-col [nzSpan]='8'>{{data.cmpCfg.keynote.direction==='multi'?'Contrast with each other':'Self contrast'}}</dd>
+                                                                <dt nz-col nzSpan='4'>Authorization</dt>
+                                                                <dd nz-col nzSpan='8'>{{data.auth.src | resourceSrc}}</dd>
+                                                                <dt nz-col nzSpan='4'>Comparison type</dt>
+                                                                <dd nz-col nzSpan='8'>{{data.cmpCfg.keynote.direction==='multi'?'Contrast with each other':'Self contrast'}}</dd>
                                                             </div>
                                                         </dl>
                                                     </div>
@@ -75,8 +75,8 @@
                         </div>
                         <div class="section-body">
                             <div *ngIf="selectedSln; else noSelect">
-                                <nz-collapseset nzAccordion [nzBordered]="false">
-                                    <nz-collapse *ngFor="let model of selectedSln.cmpCfg.models" [nzTitle]="model.MDL.meta.name" [nzActive]="false">
+                                <nz-collapse nzAccordion [nzBordered]="false">
+                                    <nz-collapse-panel *ngFor="let model of selectedSln.cmpCfg.models" [nzHeader]="model.MDL.meta.name" [nzActive]="false">
                                         <nz-tabset>
                                             <nz-tab *ngFor="let param of model.MDL.params">
                                                 <ng-template #nzTabHeading>
@@ -92,7 +92,7 @@
                                         <nz-upload nzAction="https://jsonplaceholder.typicode.com/posts/">
                                           <button nz-button>
                                             <i class="anticon anticon-upload"></i>
-                                            <span>Click to Upload</span>
+                                            Click to Upload
                                                     </button>
                                                     </nz-upload>
                                                     </span>
@@ -104,7 +104,7 @@
                                                     </section>
                                                     <section>
                                                         <div nz-row>
-                                                            <div nz-col [nzSpan]='8' class="param-card" *ngFor="let task_param of paramCards">
+                                                            <div nz-col nzSpan='8' class="param-card" *ngFor="let task_param of paramCards">
                                                                 <div class="modelname">{{task_param.name}}</div>
                                                                 <div>
                                                                     <span class="right-margin">Author:</span>
@@ -118,15 +118,15 @@
                                                                     <nz-button-group>
                                                                         <button nz-button [nzType]="'primary'" [nzSize]="'small'">
                                                   <i class="anticon anticon-info-circle-o"></i>
-                                                  <span>Preview</span>
+                                                  Preview
                                                 </button>
                                                                         <button nz-button [nzType]="'default'" [nzSize]="'small'">
                                                   <i class="anticon anticon-edit"></i>
-                                                  <span>Use</span>
+                                                  Use
                                                 </button>
                                                                         <button nz-button [nzType]="'default'" [nzSize]="'small'">
                                                   <i class="anticon anticon-edit"></i>
-                                                  <span>Download</span>
+                                                  Download
                                                 </button>
                                                                     </nz-button-group>
                                                                 </div>
@@ -167,8 +167,8 @@
                                                 </section>
                                             </nz-tab>
                                         </nz-tabset>
-                                    </nz-collapse>
-                                </nz-collapseset>
+                                    </nz-collapse-panel>
+                                </nz-collapse>
                             </div>
                             <ng-template #noSelect>
                                 <span class="section-none">No select solution</span>
@@ -194,7 +194,7 @@
                     <section class="section-submit">
                         <button nz-button [nzType]="'primary'" [nzSize]="large" (click)="onSubmitTask()">
                           <i class="anticon anticon-plus"></i>
-                          <span>Add To Task</span>
+                          Add To Task
                         </button>
                     </section>
                 </article>

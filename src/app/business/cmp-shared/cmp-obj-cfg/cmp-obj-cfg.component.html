@@ -1,8 +1,8 @@
 <!-- select dataRefer -->
 <ng-template #dataReferTemplate let-msInstance='msInstance' let-dataRefer='dataRefer'>
     <div class='ogms-form-item' nz-row>
-        <span nz-col [nzSpan]='6'>DataRefer</span>
-        <div nz-col [nzSpan]='18'>
+        <span nz-col nzSpan='6'>DataRefer</span>
+        <div nz-col nzSpan='18'>
             <nz-cascader style='width: 530px;' [nzSize]='"large"' [nzOptions]='msInstance.options' [ngModel]='msInstance.dataRefer' (ngModelChange)='onDataReferChange($event, msInstance, dataRefer)'></nz-cascader>
         </div>
     </div>
@@ -29,8 +29,8 @@
 </ng-container>
 
 <div *ngIf='cmpObj.schemaId && validSchema' class='ogms-form-item' nz-row>
-    <span nz-col [nzSpan]='6'>Select comparison methods</span>
-    <div nz-col [nzSpan]='18'>
+    <span nz-col nzSpan='6'>Select comparison methods</span>
+    <div nz-col nzSpan='18'>
         <label *ngFor='let method of methods' nz-checkbox [(ngModel)]="method.checked" (ngModelChange)="onMethodChange()">
             <span>{{method.label}}</span>
         </label>

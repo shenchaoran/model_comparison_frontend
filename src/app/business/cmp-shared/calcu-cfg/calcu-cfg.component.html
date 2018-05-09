@@ -1,104 +1,98 @@
-<div class='responsive-root-div' *ngIf='msInstance'>
-    <div style='padding: 0 20px;'>
-        <nz-collapseset [nzBordered]="false">
-            <!-- 输入数据配置 -->
-            <nz-collapse [nzTitle]="'Inputs'" nzActive='true'>
+<div *ngIf='msInstance'>
+    <nz-collapse [nzBordered]="true">
+        <!-- 输入数据配置 -->
+        <nz-collapse-panel [nzHeader]="'Inputs'" nzActive='true'>
+            <div class='ogms-form-item' nz-row>
+                <span nz-col nzSpan='6'>Select data source</span>
+                <div nz-col nzSpan='18'>
+                    <nz-radio-group [(ngModel)]='msInstance.IO.dataSrc'>
+                        <label nz-radio [nzValue]="'STD'">Use standard input data</label>
+                        <label nz-radio [nzValue]="'UPLOAD'">Use your personal data</label>
+                    </nz-radio-group>
+                </div>
+            </div>
+            <ng-container *ngIf='msInstance.IO.dataSrc === "STD"'>
+                <ng-container *ngFor='let event of msInstance.IO.std'>
+                    <div class='ogms-form-item' nz-row>
+                        <span nz-col nzSpan='6'>{{event.id}}</span>
+                        <div nz-col nzSpan='18'>
+                            <ng-container *ngIf='event.type === "input"'>
+                                <ng-container *ngIf='event.schema.structure.type === "date"'>
+                                    <!-- <nz-datepicker style='width: 330px;' [ngModel]='event.value' (ngModelChange)='onDateChange(event, $event)' [nzFormat]='"YYYY-MM-DD"'></nz-datepicker> -->
+                                    <input nz-input style='width: 330px;' [ngModel]='event.value | date:"yyyy-MM-dd"' (ngModelChange)='onDateChange(event, $event)'>
+                                </ng-container>
+                                <ng-container *ngIf='event.schema.structure.type === "coordinate"'>
+                                    <!-- TODO format -->
+                                    <input nz-input [ngModel]='event.value | coordinate' (ngModelChange)='onCoordinateChange($event, event)' style='width: 330px;'>
+                                </ng-container>
+                            </ng-container>
+
+                            <ng-container *ngIf='event.type === "parameter"'>
+                            </ng-container>
+
+                        </div>
+                    </div>
+                </ng-container>
+                <!-- TODO preview -->
+                <div class='ogms-form-item'>
+                    <button nz-button [nzType]='"default"'>
+                        Preview
+                    </button>
+                </div>
+            </ng-container>
+            <ng-container *ngIf='msInstance.IO.dataSrc === "UPLOAD"'>
+                <ng-container *ngFor='let event of msInstance.IO.data | filter: {type: "input"}'>
+                    <div class='ogms-form-item' nz-row>
+                        <span nz-col nzSpan='6'>{{event.id}}</span>
+                        <div nz-col nzSpan='18'>
+                            <ogms-file-uploader id='uploader-{{msInstance._id}}-{{event.id}}' [width]='_width' [fileUploaderOptions]="fileUploaderOptions"
+                                (onFileUploadCompleted)='_onFileUploadCompleted($event, msInstance, event)' (onClear)='_onClearUploaded(msInstance, event)'></ogms-file-uploader>
+                        </div>
+                    </div>
+                </ng-container>
+            </ng-container>
+        </nz-collapse-panel>
+        <!-- 参数配置 -->
+        <nz-collapse-panel [nzHeader]="'Parameters'" nzActive='true'>
+            <ng-container *ngFor='let event of msInstance.IO.data | filter: {type: "parameter"}'>
                 <div class='ogms-form-item' nz-row>
-                    <span nz-col [nzSpan]='6'>Select data source</span>
-                    <div nz-col [nzSpan]='18'>
-                        <nz-radio-group [(ngModel)]='msInstance.IO.dataSrc'>
-                            <label nz-radio [nzValue]="'STD'">
-                                            <span>Use standard input data</span>
-                                        </label>
-                            <label nz-radio [nzValue]="'UPLOAD'">
-                                            <span>Use your upload data</span>
-                                        </label>
-                        </nz-radio-group>
+                    <span nz-col nzSpan='6'>{{event.id}}</span>
+                    <div nz-col nzSpan='18' class='flex-box-col-nowrap'>
+                        <ng-container *ngIf='event.schema.structure.type === "radio"'>
+                            <div nz-row>
+                                <label nz-radio nz-col nzSpan='4' *ngFor='let opt of event.schema.structure.options' [nzValue]="opt" [ngModel]='event.value === opt'
+                                    (ngModelChange)='onParamRadioChange(event, $event, opt)'>{{opt}}</label>
+                            </div>
+                        </ng-container>
+                        <ng-container *ngIf='event.schema.structure.type === "checkbox"'>
+                            <label nz-checkbox nz-col nzSpan='4' *ngFor='let opt of event.schema.structure.options' [ngModel]='event.value.indexOf(opt) !== -1'
+                                (ngModelChange)='onParamCheckboxChange(event, $event, opt)'>{{opt}}</label>
+                        </ng-container>
+                        <ng-container *ngIf='event.schema.structure.type === "value"'>
+                            <input nz-input [(ngModel)]='event.value'>
+                        </ng-container>
                     </div>
                 </div>
-                <ng-container *ngIf='msInstance.IO.dataSrc === "STD"'>
-                    <ng-container *ngFor='let event of msInstance.IO.std'>
-                        <div class='ogms-form-item' nz-row>
-                            <span nz-col [nzSpan]='6'>{{event.id}}</span>
-                            <div nz-col [nzSpan]='18'>
-                                <ng-container *ngIf='event.type === "input"'>
-                                    <ng-container *ngIf='event.schema.structure.type === "date"'>
-                                        <nz-datepicker style='width: 330px;' [ngModel]='event.value' (ngModelChange)='onDateChange(event, $event)' [nzFormat]='"YYYY-MM-DD"'></nz-datepicker>
-                                    </ng-container>
-                                    <ng-container *ngIf='event.schema.structure.type === "coordinate"'>
-                                        <!-- TODO format -->
-                                        <nz-input [ngModel]='event.value | coordinate' (ngModelChange)='onCoordinateChange($event, event)' style='width: 330px;'></nz-input>
-                                    </ng-container>
-                                </ng-container>
-
-                                <ng-container *ngIf='event.type === "parameter"'>
-                                </ng-container>
-
-                            </div>
-                        </div>
-                    </ng-container>
-                    <!-- TODO preview -->
-                    <div class='ogms-form-item'>
-                        <button nz-button [nzType]='"default"'>
-                                <span>Preview</span>
-                            </button>
+            </ng-container>
+        </nz-collapse-panel>
+        <!-- 输出配置 -->
+        <nz-collapse-panel [nzHeader]="'Outputs'" nzActive='true'>
+            <ng-container *ngFor='let event of msInstance.IO.data | filter: {type: "output"}'>
+                <div class='ogms-form-item' nz-row>
+                    <span nz-col nzSpan='6'>{{event.id}}</span>
+                    <div nz-col nzSpan='18'>
+                        <ng-container *ngIf='event.optional'>
+                            <nz-select style="width: 250px;" [(ngModel)]="event.value" (ngModelChange)='onOutputChange(event, $event)' nzAllowClear [nzPlaceHolder]='""'>
+                                <nz-option [nzLabel]='"off"' [nzValue]='"off"'></nz-option>
+                                <nz-option [nzLabel]="event.value" [nzValue]="event.value"></nz-option>
+                            </nz-select>
+                        </ng-container>
+                        <ng-container *ngIf='!event.optional'>
+                            <input nz-input [style.width]='_width' [(ngModel)]='event.value'>
+                        </ng-container>
                     </div>
-                </ng-container>
-                <ng-container *ngIf='msInstance.IO.dataSrc === "UPLOAD"'>
-                    <ng-container *ngFor='let event of msInstance.IO.data | filter: {type: "input"}'>
-                        <div class='ogms-form-item' nz-row>
-                            <span nz-col [nzSpan]='6'>{{event.id}}</span>
-                            <div nz-col [nzSpan]='18'>
-                                <ogms-file-uploader id='uploader-{{msInstance._id}}-{{event.id}}' [fileUploaderOptions]="fileUploaderOptions" (onFileUploadCompleted)='_onFileUploadCompleted($event, msInstance, event)' (onClear)='_onClearUploaded(msInstance, event)'></ogms-file-uploader>
-                            </div>
-                        </div>
-                    </ng-container>
-                </ng-container>
-            </nz-collapse>
-            <!-- 参数配置 -->
-            <nz-collapse [nzTitle]="'Parameters'" nzActive='true'>
-                <ng-container *ngFor='let event of msInstance.IO.data | filter: {type: "parameter"}'>
-                    <div class='ogms-form-item' nz-row>
-                        <span nz-col [nzSpan]='6'>{{event.id}}</span>
-                        <div nz-col [nzSpan]='18' class='flex-box-col-nowrap'>
-                            <ng-container *ngIf='event.schema.structure.type === "radio"'>
-                                <div nz-row>
-                                    <label nz-radio nz-col [nzSpan]='4' *ngFor='let opt of event.schema.structure.options' [nzValue]="opt" [ngModel]='event.value === opt' (ngModelChange)='onParamRadioChange(event, $event, opt)'>
-                                                <span>{{opt}}</span>
-                                            </label>
-                                </div>
-                            </ng-container>
-                            <ng-container *ngIf='event.schema.structure.type === "checkbox"'>
-                                <label nz-checkbox nz-col [nzSpan]='4' *ngFor='let opt of event.schema.structure.options' [ngModel]='event.value.indexOf(opt) !== -1' (ngModelChange)='onParamCheckboxChange(event, $event, opt)'>
-                                            <span>{{opt}}</span>
-                                        </label>
-                            </ng-container>
-                            <ng-container *ngIf='event.schema.structure.type === "value"'>
-                                <nz-input [(ngModel)]='event.value'></nz-input>
-                            </ng-container>
-                        </div>
-                    </div>
-                </ng-container>
-            </nz-collapse>
-            <!-- 输出配置 -->
-            <nz-collapse [nzTitle]="'Outputs'" nzActive='true'>
-                <ng-container *ngFor='let event of msInstance.IO.data | filter: {type: "output"}'>
-                    <div class='ogms-form-item' nz-row>
-                        <span nz-col [nzSpan]='6'>{{event.id}}</span>
-                        <div nz-col [nzSpan]='18'>
-                            <ng-container *ngIf='event.optional'>
-                                <nz-select style="width: 250px;" [(ngModel)]="event.value" (ngModelChange)='onOutputChange(event, $event)' nzAllowClear [nzPlaceHolder]='""'>
-                                    <nz-option [nzLabel]='"off"' [nzValue]='"off"'></nz-option>
-                                    <nz-option [nzLabel]="event.value" [nzValue]="event.value"></nz-option>
-                                </nz-select>
-                            </ng-container>
-                            <ng-container *ngIf='!event.optional'>
-                                <nz-input style='width: 330px;' [(ngModel)]='event.value'></nz-input>
-                            </ng-container>
-                        </div>
-                    </div>
-                </ng-container>
-            </nz-collapse>
-        </nz-collapseset>
-    </div>
+                </div>
+            </ng-container>
+        </nz-collapse-panel>
+    </nz-collapse>
 </div>

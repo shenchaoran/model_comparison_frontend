@@ -1,0 +1,50 @@
+<nz-spin [nzSpinning]='_isLoading'>
+    <article class='ogms-responsive-div' style='margin: 24px auto !important;'>
+        <div>
+            <h2>Data Configuration</h2>
+        </div>
+        <section>
+            <div class='section-header flex-box-row-nowrap'>
+                <span class='title'>Basic information</span>
+                <span class='placeholder flex-item-1-1-auto'></span>
+            </div>
+            <div class='section-body'>
+                <div class='ogms-form-item' nz-row>
+                    <span nz-col nzSpan='6'>Name</span>
+                    <div nz-col nzSpan='18'>
+                        <input nz-input style='width: 530px;' [(ngModel)]='msInstance.meta.name'>
+                    </div>
+                </div>
+                <div class='ogms-form-item' nz-row>
+                    <span nz-col nzSpan='6'>Description</span>
+                    <div nz-col nzSpan='18'>
+                        <textarea nz-input style='width: 530px;' [(ngModel)]='msInstance.meta.desc' [nzAutosize]="{minRows: 2, maxRows: 6}"></textarea>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section>
+            <div class='section-header flex-box-row-nowrap'>
+                <span class='title'>IO</span>
+                <span class='placeholder flex-item-1-1-auto'></span>
+            </div>
+            <div class='section-body'>
+                <ogms-calcu-cfg [msInstance]='msInstance' (onInstanceChange)='onInstanceChange($event)'></ogms-calcu-cfg>
+            </div>
+        </section>
+        <section>
+            <div class='section-header flex-box-row-nowrap'>
+                <span class='title'>Operating</span>
+                <span class='placeholder flex-item-1-1-auto'></span>
+            </div>
+            <div class='section-body'>
+                <button nz-button [nzType]='"primary"' (click)='invoke("save")'>
+                    <i class="fa fa-save"></i>Save</button>
+                <button nz-button [nzType]='"primary"' (click)='invoke("invoke")'>
+                    <i class="fa fa-play"></i>Invoke</button>
+            </div>
+        </section>
+    </article>
+</nz-spin>
+
+<ogms-footer></ogms-footer>

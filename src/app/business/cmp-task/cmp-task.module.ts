@@ -13,7 +13,7 @@ import { CmpResultTableComponent } from './cmp-result-table/cmp-result-table.com
 import { CmpResultChartComponent } from './cmp-result-chart/cmp-result-chart.component';
 import { EchartAdapterService } from '@core/services/echartAdapter.service';
 import { CmpSlnService } from "../cmp-solution/services/cmp-sln.service";
-import { MSService } from "../geo-model/services/model.service";
+import { MSService } from "../models/services/geo-models.service";
 import { CmpSharedModule } from '../cmp-shared';
 import { CalcuCfgComponent } from '../cmp-shared';
 
