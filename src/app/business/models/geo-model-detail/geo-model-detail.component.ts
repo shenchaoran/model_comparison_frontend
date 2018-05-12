@@ -3,6 +3,7 @@ import { MSService } from "../services/geo-models.service";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 // import { NzNotificationService, NzModalService } from "ng-zorro-antd";
 import { DynamicTitleService } from "@core/services/dynamic-title.service";
+import { ReactiveFormsModule } from "@angular/forms";
 
 @Component({
     selector: 'ogms-geo-model-detail',

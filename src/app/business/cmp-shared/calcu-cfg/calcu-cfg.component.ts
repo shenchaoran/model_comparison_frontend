@@ -4,6 +4,7 @@ import { NgUploaderOptions } from 'ngx-uploader';
 import { ResourceSrc, CalcuTask, CmpTask, CmpSolution } from '@models';
 import { LoginService } from '@feature/login/login.service';
 import { DynamicTitleService } from '@core/services/dynamic-title.service';
+import { ReactiveFormsModule } from "@angular/forms";
 
 @Component({
     selector: 'ogms-calcu-cfg',
@@ -11,9 +12,9 @@ import { DynamicTitleService } from '@core/services/dynamic-title.service';
     styleUrls: ['./calcu-cfg.component.scss']
 })
 export class CalcuCfgComponent implements OnInit, OnChanges {
-    _width = '500px';
 
     @Input() msInstance: any;
+    @Input() width = '350px';
     @Output() onInstanceChange = new EventEmitter<any>();
     @Output() onValidationChange = new EventEmitter<any>();
     

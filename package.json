@@ -47,7 +47,7 @@
         "jqwidgets-scripts": "5.4.0",
         "lodash": "^4.17.4",
         "moment": "^2.18.1",
-        "ng-zorro-antd": "^0.7.0-beta.3",
+        "ng-zorro-antd": "^0.7.0-beta.1",
         "ng2-slim-loading-bar": "^4.0.0",
         "ngx-bootstrap": "^2.0.3",
         "ngx-disqus": "^2.3.7",

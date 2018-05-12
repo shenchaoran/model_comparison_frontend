@@ -19,11 +19,11 @@
                             <ng-container *ngIf='event.type === "input"'>
                                 <ng-container *ngIf='event.schema.structure.type === "date"'>
                                     <!-- <nz-datepicker style='width: 330px;' [ngModel]='event.value' (ngModelChange)='onDateChange(event, $event)' [nzFormat]='"YYYY-MM-DD"'></nz-datepicker> -->
-                                    <input nz-input style='width: 330px;' [ngModel]='event.value | date:"yyyy-MM-dd"' (ngModelChange)='onDateChange(event, $event)'>
+                                    <input nz-input [style.width]='width' [ngModel]='event.value | date:"yyyy-MM-dd"' (ngModelChange)='onDateChange(event, $event)'>
                                 </ng-container>
                                 <ng-container *ngIf='event.schema.structure.type === "coordinate"'>
                                     <!-- TODO format -->
-                                    <input nz-input [ngModel]='event.value | coordinate' (ngModelChange)='onCoordinateChange($event, event)' style='width: 330px;'>
+                                    <input nz-input [style.width]='width' [ngModel]='event.value | coordinate' (ngModelChange)='onCoordinateChange($event, event)' style='width: 330px;'>
                                 </ng-container>
                             </ng-container>
 
@@ -45,7 +45,7 @@
                     <div class='ogms-form-item' nz-row>
                         <span nz-col nzSpan='6'>{{event.id}}</span>
                         <div nz-col nzSpan='18'>
-                            <ogms-file-uploader id='uploader-{{msInstance._id}}-{{event.id}}' [width]='_width' [fileUploaderOptions]="fileUploaderOptions"
+                            <ogms-file-uploader id='uploader-{{msInstance._id}}-{{event.id}}' [width]='width' [fileUploaderOptions]="fileUploaderOptions"
                                 (onFileUploadCompleted)='_onFileUploadCompleted($event, msInstance, event)' (onClear)='_onClearUploaded(msInstance, event)'></ogms-file-uploader>
                         </div>
                     </div>
@@ -69,7 +69,7 @@
                                 (ngModelChange)='onParamCheckboxChange(event, $event, opt)'>{{opt}}</label>
                         </ng-container>
                         <ng-container *ngIf='event.schema.structure.type === "value"'>
-                            <input nz-input [(ngModel)]='event.value'>
+                            <input nz-input [style.width]='width' [(ngModel)]='event.value'>
                         </ng-container>
                     </div>
                 </div>
@@ -82,13 +82,13 @@
                     <span nz-col nzSpan='6'>{{event.id}}</span>
                     <div nz-col nzSpan='18'>
                         <ng-container *ngIf='event.optional'>
-                            <nz-select style="width: 250px;" [(ngModel)]="event.value" (ngModelChange)='onOutputChange(event, $event)' nzAllowClear [nzPlaceHolder]='""'>
+                            <nz-select [style.width]="width" [(ngModel)]="event.value" (ngModelChange)='onOutputChange(event, $event)' nzAllowClear [nzPlaceHolder]='""'>
                                 <nz-option [nzLabel]='"off"' [nzValue]='"off"'></nz-option>
                                 <nz-option [nzLabel]="event.value" [nzValue]="event.value"></nz-option>
                             </nz-select>
                         </ng-container>
                         <ng-container *ngIf='!event.optional'>
-                            <input nz-input [style.width]='_width' [(ngModel)]='event.value'>
+                            <input nz-input [style.width]='width' [(ngModel)]='event.value'>
                         </ng-container>
                     </div>
                 </div>

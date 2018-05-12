@@ -7,8 +7,14 @@ import { SharedModule } from '@shared';
 import { TestComponent } from './test.component';
 
 @NgModule({
-    imports: [NgxSharedModule, TestRoutingModule, SharedModule],
-    declarations: [SiderNavComponent, TestComponent],
+    imports: [
+        TestRoutingModule,
+        SharedModule
+    ],
+    declarations: [
+        SiderNavComponent,
+        TestComponent
+    ],
     exports: []
 })
-export class TestModule {}
+export class TestModule { }

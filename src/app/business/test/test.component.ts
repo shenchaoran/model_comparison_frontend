@@ -10,6 +10,8 @@ import { ResourceSrc } from '@models';
 export class TestComponent implements OnInit {
     date;
     fileUploaderOptions: NgUploaderOptions;
+    select;
+    
     constructor() {
         this.fileUploaderOptions = {
             url: '/data',

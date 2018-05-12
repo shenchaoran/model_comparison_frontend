@@ -31,6 +31,7 @@ export class CalcuTask {
         std: any[]
     };
     state: CalcuTaskState;
+    progress: number;
 
     constructor() {
         this.meta = {

@@ -7,6 +7,7 @@ import { GeoModelDetailComponent } from './geo-model-detail/geo-model-detail.com
 import { GeoModelListComponent } from './geo-model-list/geo-model-list.component';
 import { InvokeComponent } from './invoke/invoke.component';
 import { CmpSharedModule } from '../cmp-shared';
+import { LoginService } from '@feature/login/login.service';
 
 @NgModule({
     imports: [
@@ -20,7 +21,8 @@ import { CmpSharedModule } from '../cmp-shared';
         InvokeComponent
     ],
     providers: [
-        MSService
+        MSService,
+        LoginService
     ]
 })
 export class ModelsModule { }

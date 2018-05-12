@@ -82,18 +82,13 @@ export class NewTaskComponent implements OnInit, AfterViewInit {
         private confirmModal: NzModalService
     ) {
         
+        let hasLogin = this.loginService.checkLogin();
+        if(!hasLogin) {
+            return 
+        }
+        
         const token = this.loginService.getToken();
         const user = this.loginService.getUser();
-
-        if(!user) {
-            this.router.navigate(['../..', 'login'], {
-                relativeTo: this.route,
-                queryParams: {
-                    redirect: (window as any).location.hash
-                }
-            });
-            return;
-        }
 
         this.cmpTask = new CmpTask();
         

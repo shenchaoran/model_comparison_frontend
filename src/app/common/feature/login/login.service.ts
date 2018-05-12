@@ -124,4 +124,22 @@ export class LoginService extends ErrorHandle {
             return undefined;
         }
     }
+
+    /**
+     * 检查是否登录，如果没有登录，先登录在重定向到这个页面
+     * @returns hasLogin
+     * @memberof LoginService
+     */
+    checkLogin() {
+        let user = this.getUser();
+        if(!user) {
+            this.router.navigate(['../..', 'login'], {
+                relativeTo: this.route,
+                queryParams: {
+                    redirect: (window as any).location.hash
+                }
+            });
+        }
+        return !(user === undefined);
+    }
 }

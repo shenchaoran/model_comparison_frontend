@@ -23,7 +23,7 @@ import { LoginService } from '@feature/login/login.service';
         BrowserModule,
         BrowserAnimationsModule,
         BrowserAnimationsModule,
-        // NgZorroAntdModule.forRoot(),
+        NgZorroAntdModule.forRoot(),
         RouterModule,
         routing,
 

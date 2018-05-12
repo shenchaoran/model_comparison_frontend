@@ -1,4 +1,4 @@
-<div class="ogms-responsive-div flex-box-row-nowrap">
+<div class="ogms-responsive-div flex-box-row-nowrap"  style='margin-top: 24px !important'>
     <div class="left">
         <ng-container *ngIf='stdList'>
             <div *ngFor='let std of stdList' (click)='select(std)' class='list-item' [class.selected]='selectedSTD && std._id===selectedSTD._id'>

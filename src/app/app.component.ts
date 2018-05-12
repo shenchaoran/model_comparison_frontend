@@ -21,6 +21,7 @@ import { DynamicTitleService } from '@core/services/dynamic-title.service';
 })
 export class App implements OnInit {
   isMenuCollapsed: boolean = false;
+  select
 
   constructor(
     private _state: GlobalState,

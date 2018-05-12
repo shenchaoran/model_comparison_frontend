@@ -25,22 +25,20 @@
     .doc-title {
         background: #ffffff;
         padding: 15px 29px;
-        margin: 0;
-        font-size: 2.5em;
-        line-height: 1.15;
-        font-weight: 400;
+        margin-top: 20px;
+        margin-bottom: 10px;
+        font-weight: 500;
+        line-height: 1.1;
+        font-size: 36px;
         vertical-align: sub;
-        color: #333;
-        font-family: arial, tahoma, 'Microsoft Yahei', '\5b8b\4f53', sans-serif;
+        color: rgb(33, 33, 33);
+        font-family: Verdana, Arial, Helvetica, Sans-Serif;
     }
     .doc-body {
         .main-content {
             // flex: 1;
             padding: 0 29px 29px 0;
             background: #fff;
-            .section-header {
-                border-left: solid 12px #4F9CEE;
-            }
         }
         .sider-content {
             padding: 0 15px;
@@ -104,6 +102,9 @@
                 background: #fff;
             }
         }
+        .section-header {
+            border-left: solid 12px #4F9CEE;
+        }
     }
 }
 
@@ -114,7 +115,7 @@ section {
             padding: 0 8px 0 18px;
             background: #fff;
             font-size: 20px;
-            // font-weight: 400;
+            font-weight: 500;
             line-height: 24px;
         }
         .placeholder {

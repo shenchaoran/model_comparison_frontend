@@ -9,4 +9,10 @@
     <ogms-file-uploader id='uploader' [fileUploaderOptions]="fileUploaderOptions" (onFileUploading)="_onFileUpload($event)" (onFileUploadCompleted)='_onFileUploadCompleted($event)'
         (onClear)='_onClearUploaded()' [size]='"small"'></ogms-file-uploader>
     <!-- <nz-datepicker style='width: 250px;' [(ngModel)]='date' (ngModelChange)='onDateChange($event)' [nzFormat]='"YYYY-MM-DD"'></nz-datepicker> -->
+    <br>
+    <br>
+    <nz-select style="width: 120px;" [(ngModel)]='select' nzAllowClear nzPlaceHolder="Choose">
+        <nz-option nzValue="jack" nzLabel="Jack"></nz-option>
+        <nz-option nzValue="lucy" nzLabel="Lucy"></nz-option>
+    </nz-select>
 </div>
