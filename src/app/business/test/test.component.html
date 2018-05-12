@@ -1,18 +1,8 @@
+<ul>
+    <li><a routerLink='sider-nav'>sider-nav</a></li>
+    <li><a routerLink='reactive-form'>reactive-form</a></li>
+    <li><a routerLink='file-uploader'>file-uploader</a></li>
+</ul>
+
 <router-outlet>
 </router-outlet>
-
-<div class='ogms-responsive-div'>
-    <ogms-file-uploader id='uploader' [fileUploaderOptions]="fileUploaderOptions" (onFileUploading)="_onFileUpload($event)" (onFileUploadCompleted)='_onFileUploadCompleted($event)'
-        (onClear)='_onClearUploaded()' [size]='"large"'></ogms-file-uploader>
-    <ogms-file-uploader id='uploader' [fileUploaderOptions]="fileUploaderOptions" (onFileUploading)="_onFileUpload($event)" (onFileUploadCompleted)='_onFileUploadCompleted($event)'
-        (onClear)='_onClearUploaded()'></ogms-file-uploader>
-    <ogms-file-uploader id='uploader' [fileUploaderOptions]="fileUploaderOptions" (onFileUploading)="_onFileUpload($event)" (onFileUploadCompleted)='_onFileUploadCompleted($event)'
-        (onClear)='_onClearUploaded()' [size]='"small"'></ogms-file-uploader>
-    <!-- <nz-datepicker style='width: 250px;' [(ngModel)]='date' (ngModelChange)='onDateChange($event)' [nzFormat]='"YYYY-MM-DD"'></nz-datepicker> -->
-    <br>
-    <br>
-    <nz-select style="width: 120px;" [(ngModel)]='select' nzAllowClear nzPlaceHolder="Choose">
-        <nz-option nzValue="jack" nzLabel="Jack"></nz-option>
-        <nz-option nzValue="lucy" nzLabel="Lucy"></nz-option>
-    </nz-select>
-</div>

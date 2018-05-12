@@ -4,7 +4,13 @@ import { NgUploaderOptions } from 'ngx-uploader';
 import { ResourceSrc, CalcuTask, CmpTask, CmpSolution } from '@models';
 import { LoginService } from '@feature/login/login.service';
 import { DynamicTitleService } from '@core/services/dynamic-title.service';
-import { ReactiveFormsModule } from "@angular/forms";
+import {
+  AbstractControl,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators
+} from '@angular/forms';
 
 @Component({
     selector: 'ogms-calcu-cfg',
@@ -13,8 +19,11 @@ import { ReactiveFormsModule } from "@angular/forms";
 })
 export class CalcuCfgComponent implements OnInit, OnChanges {
 
+    calcuForm: FormGroup;
+
     @Input() msInstance: any;
     @Input() width = '350px';
+
     @Output() onInstanceChange = new EventEmitter<any>();
     @Output() onValidationChange = new EventEmitter<any>();
     
@@ -22,6 +31,7 @@ export class CalcuCfgComponent implements OnInit, OnChanges {
 
     constructor(
         private loginService: LoginService,
+        private fb: FormBuilder,
         // private title: DynamicTitleService,
     ) { 
         const token = this.loginService.getToken();
@@ -41,6 +51,17 @@ export class CalcuCfgComponent implements OnInit, OnChanges {
                     'bearer ' + token
             }
         };
+
+        this.calcuForm = this.fb.group({
+            dataSrc: [],
+            schemas: [],
+            data: this.fb.array([
+
+            ]),
+            std: this.fb.array([
+
+            ])
+        });
     }
 
     ngOnChanges (changes: {[key: string]: SimpleChange}) {

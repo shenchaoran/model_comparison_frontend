@@ -5,6 +5,8 @@ import { TestRoutingModule } from './test-routing.module';
 import { SiderNavComponent } from './sider-nav/sider-nav.component';
 import { SharedModule } from '@shared';
 import { TestComponent } from './test.component';
+import { ReactiveFormComponent } from './reactive-form/reactive-form.component';
+import { FileUploaderTestComponent } from './file-uploader-test/file-uploader-test.component';
 
 @NgModule({
     imports: [
@@ -13,7 +15,9 @@ import { TestComponent } from './test.component';
     ],
     declarations: [
         SiderNavComponent,
-        TestComponent
+        TestComponent,
+        ReactiveFormComponent,
+        FileUploaderTestComponent
     ],
     exports: []
 })
