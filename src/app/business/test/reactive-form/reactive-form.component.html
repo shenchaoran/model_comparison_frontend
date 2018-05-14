@@ -76,6 +76,15 @@
                 <nz-form-explain *ngIf="validateForm.get('obj.prop2').dirty&&validateForm.get('obj.prop2').hasError('required')">Please write something here!</nz-form-explain>
             </nz-form-control>
         </nz-form-item>
+        <div formGroupName='nested'>
+            <nz-form-item>
+                <nz-form-label [nzSpan]="7" nzRequired>Object nested prop</nz-form-label>
+                <!-- <nz-form-control [nzSpan]="12"> -->
+                    <!-- <textarea nz-input rows="2" placeholder="write any thing" [ngModel]='validateForm.controls["obj"].controls["nested"].value | json'></textarea> -->
+                    <!-- <nz-form-explain *ngIf="validateForm.get('obj.nested').dirty&&validateForm.get('obj.nested').hasError('required')">Please write something here!</nz-form-explain> -->
+                <!-- </nz-form-control> -->
+            </nz-form-item>
+        </div>
     </div>
     <div formArrayName='array'>
         <ng-container *ngFor='let item of validateForm.controls["array"].controls;let i=index;'>

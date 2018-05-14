@@ -23,7 +23,8 @@ export class ReactiveFormComponent implements OnInit {
             this.validateForm.controls[key].markAsDirty();
             this.validateForm.controls[key].updateValueAndValidity();
         }
-        console.log(value);
+        // console.log(value);
+        console.log(this.validateForm.controls["obj"]);
     }
 
     resetForm(e: MouseEvent): void {
@@ -60,14 +61,18 @@ export class ReactiveFormComponent implements OnInit {
 
     constructor(private fb: FormBuilder) {
         this.validateForm = this.fb.group({
-            userName: ['', [Validators.required], [this.userNameAsyncValidator]],
+            userName: ['scr', [Validators.required], [this.userNameAsyncValidator]],
             email: ['', [Validators.email]],
             password: ['', [Validators.required]],
             confirm: ['', [this.confirmValidator]],
             comment: ['', [Validators.required]],
             obj: this.fb.group({
                 prop1: ['prop1',[Validators.required]],
-                prop2: ['prop2',[Validators.required]]
+                prop2: ['prop2',[Validators.required]],
+                nested: [{
+                    a:1,
+                    b:2
+                }]
             }),
             array: this.fb.array([
                 this.fb.group({
@@ -80,6 +85,9 @@ export class ReactiveFormComponent implements OnInit {
                 }),
             ])
         });
+        // console.log(this.validateForm.get["obj"]);
+        console.log(this.validateForm.controls["obj"]);
+        // console.log(this.validateForm.get["userName"]);
     }
 
     ngOnInit() {

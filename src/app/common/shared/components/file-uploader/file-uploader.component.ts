@@ -23,6 +23,7 @@ export class FileUploader {
     _fileUploaderOptions:NgUploaderOptions = { url: '' };
     @Input() size: string = 'default';
     @Input() width;
+    @Input() label = '';
     @Input()
     set fileUploaderOptions(v) {
         this._fileUploaderOptions = _.cloneDeep(v);
@@ -34,7 +35,6 @@ export class FileUploader {
     @Output() onFileUploading = new EventEmitter<any>();
     @Output() onFileUploadCompleted = new EventEmitter<any>();
     @Output() onClear = new EventEmitter<any>();
-    defaultValue: string = '';
 
     @ViewChild('fileUpload') public _fileUpload: ElementRef;
     @ViewChild('inputText') public _inputText: ElementRef;

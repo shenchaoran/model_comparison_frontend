@@ -4,7 +4,7 @@
     <div class="input-group {{size}}" [ngClass]="{uploading: uploadFileInProgress}">
         <div class="upload-group">
             <div class='upload-input-group'>
-                <input #inputText type="text" [ngModel]="defaultValue" readonly>
+                <input #inputText type="text" [ngModel]="label" readonly>
                 <i class="icon ion-close-circled {{size}}" aria-hidden="true" [hidden]='!_showClose' (click)='clearUploaded()'></i>
             </div>
             <span id='progress-{{_id}}' class='form-progress {{size}}'></span>

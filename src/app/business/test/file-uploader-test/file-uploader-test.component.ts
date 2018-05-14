@@ -9,9 +9,14 @@ import { ResourceSrc } from '@models';
 })
 export class FileUploaderTestComponent implements OnInit {
 
-    date;
     fileUploaderOptions: NgUploaderOptions;
-    select;
+    fileId;
+
+    checkOptionsOne = [
+        { label: 'Apple', value: 'Apple', checked: true },
+        { label: 'Pear', value: 'Pear', checked: false },
+        { label: 'Orange', value: 'Orange', checked: false }
+      ];
 
     constructor() {
         this.fileUploaderOptions = {
@@ -33,9 +38,9 @@ export class FileUploaderTestComponent implements OnInit {
     ngOnInit() {
     }
 
-    onDateChange(e) {
-        // console.log(e);
-        // console.log(this.date);
+    onUploaded(id) {
+        console.log(id);
+        this.fileId = id;
     }
 
     _onFileUpload(e, msId, eventId) {

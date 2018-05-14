@@ -5,6 +5,13 @@ import { Router, ActivatedRoute, Params } from "@angular/router";
 import { DynamicTitleService } from "@core/services/dynamic-title.service";
 import { LoginService } from '@feature/login/login.service';
 import { ResourceSrc } from '@models';
+import {
+    AbstractControl,
+    FormBuilder,
+    FormControl,
+    FormGroup,
+    Validators,
+} from '@angular/forms';
 
 @Component({
     selector: 'ogms-invoke',
@@ -13,18 +20,19 @@ import { ResourceSrc } from '@models';
 })
 export class InvokeComponent implements OnInit {
     _isLoading = true;
-    _disableBtn = true;
     _width = '520px';
 
     modelId: string;
     model: any;
 
     msInstance;
+    msiForm: FormGroup;
 
     constructor(
         private service: MSService,
         private route: ActivatedRoute,
         private loginService: LoginService,
+        private fb: FormBuilder,
         // private _notice: NzNotificationService,
         private title: DynamicTitleService
     ) { 
@@ -32,7 +40,6 @@ export class InvokeComponent implements OnInit {
     }
 
     ngOnInit() {
-
         this.route.params.subscribe((params: Params) => {
             this.modelId = params['id'];
             this.service.findOne(this.modelId)
@@ -41,13 +48,28 @@ export class InvokeComponent implements OnInit {
                         // this._notice.warning('Warning:', 'Get model failed');
                     }
                     else {
+                        let user = this.loginService.getUser();
                         this.model = response.data;
                         this.title.setTitle(this.model.MDL.meta.name);
                         this.msInstance = this.service.newInstance(this.model);
-
                         this.msInstance.auth.src = '' + ResourceSrc.PUBLIC;
                         this.msInstance.cmpTaskId = undefined;
+                        this.msInstance.auth.userId = user._id;
+                        this.msInstance.auth.userName = user.username;
 
+                        this.msiForm = this.fb.group({
+                            _id: this.msInstance._id,
+                            name: ['', Validators.required],
+                            desc: ['', Validators.required],
+                            src: [this.msInstance.auth.src, Validators.required],
+                            IO: ['', Validators.required]
+                        });
+                        // this.msiForm.statusChanges
+                        //     // .filter(status => status === 'VALID')
+                        //     .subscribe(status => {
+                        //         console.log(status);
+                        //         console.log(this.msiForm);
+                        //     });
                     }
                     this._isLoading = false;
                 })
@@ -55,34 +77,34 @@ export class InvokeComponent implements OnInit {
 
     }
 
-    onInstanceChange(msInstance) {
-        this.msInstance = msInstance;
-        let valid = this.checkValid();
-        this._disableBtn = !valid;
-    }
-
-    checkValid() {
-        let valid = true;
-        _.forIn(this.msInstance.meta, (v, k) => {
-            if(v === undefined) {
-                valid = false;
-            }
-        });
-    }
-
     invoke(type) {
         if (type === 'save') {
-
+            this.msInstance.state = 0;
+            this.msInstance.progress = 0;
         }
         else if (type === 'invoke') {
-
+            this.msInstance.state = 1;
         }
 
         this.msInstance.meta.time = (new Date()).getTime();
-        // TODO 检查
+        this.msInstance.meta.name = this.msiForm.value.name;
+        this.msInstance.meta.desc = this.msiForm.value.desc;
+        this.msInstance.auth.src = this.msiForm.value.src;
+        this.msInstance.IO = this.msiForm.value.IO;
 
-        let user = this.loginService.getUser();
-        this.msInstance.auth.userId = user._id;
-        this.msInstance.auth.userName = user.username;
+        console.log(this.msInstance);
+        this.service.invoke(this.modelId, {
+            msInstance: this.msInstance,
+            type: type
+        })
+            .subscribe(response => {
+                if(response.error) {
+
+                }
+                else {
+                    let msrId = response.data;
+                    // TODO
+                }
+            })
     }
 }

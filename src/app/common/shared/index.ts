@@ -31,6 +31,8 @@ import {
     TestRecurComponent,
     CmpTabsViewComponent,
     CmpDockingViewComponent,
+    FileUploaderFormItemComponent,
+    CheckBoxFormItemComponent,
 } from './components';
 
 import {
@@ -85,6 +87,8 @@ const COMPONENTS = [
     TestRecurComponent,
     CmpTabsViewComponent,
     CmpDockingViewComponent,
+    FileUploaderFormItemComponent,
+    CheckBoxFormItemComponent,
 ];
 
 const DIRECTIVES = [

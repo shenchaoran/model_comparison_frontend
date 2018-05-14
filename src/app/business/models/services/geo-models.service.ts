@@ -33,43 +33,8 @@ export class MSService {
         return this.http.get(`/model-tools/${id}`);
     }
 
-    // 返回的data还是list形式，过滤了点还是区域这个控制参数类型
-    UDXDataFilter(MS, filter: 'point' | 'polygon' | 'multi-point'): Event[] {
-        const filtered: Event[] = [];
-        const data = MS.MDL.IO.data;
-        const fathers = _.filter(data, item => item.parentId === 'root');
-        const recurFunc = (father) => {
-            let childrenId = [];
-            if (father.options && father.options.length) {
-                if (father.optionType === 'value') {
-                    if (_.indexOf(father.options, filter) !== -1) {
-                        const newFathers = _.filter(data, item => item.parentId === father.id + '#' + filter);
-                        _.map(newFathers, recurFunc);
-                    }
-                }
-                else if (father.optionType === 'file') {
-                    childrenId = father.options;
-                }
-            }
-            else {
-                filtered.push(father);
-                if (father.childrenId && father.childrenId.length) {
-                    childrenId = father.childrenId;
-                }
-            }
-
-            _.map(childrenId, id => {
-                const newFather = _.find(data, item => item.id === id);
-                recurFunc(newFather);
-            });
-
-        };
-        _.map(fathers, recurFunc);
-        return filtered;
-    }
-
-    UDXData2Tree(MS) {
-        return MS;
+    invoke(id, obj): Observable<any> {
+        return this.http.post(`/model-tools/${id}/invoke`, obj);
     }
 
     /**
