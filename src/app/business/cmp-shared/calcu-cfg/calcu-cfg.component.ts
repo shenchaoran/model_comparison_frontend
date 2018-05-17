@@ -98,7 +98,8 @@ export class CalcuCfgComponent implements OnInit, OnChanges {
                 id: [event.id],
                 schema: [event.schema],
                 optional: [event.optional],
-                value: [event.value, Validators.required]
+                value: [event.value, Validators.required],
+                temp: [event.value]
             })
         }
         let inputCtrls = _

@@ -2,6 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { DataService } from '../services/data.service';
 import { ActivatedRoute, Router } from '@angular/router';
 declare var ol: any;
+import {
+    AbstractControl,
+    FormBuilder,
+    FormControl,
+    FormGroup,
+    Validators,
+    ControlValueAccessor,
+    NG_VALIDATORS,
+    NG_VALUE_ACCESSOR
+} from '@angular/forms';
 
 @Component({
     selector: 'ogms-geo-data',
@@ -43,7 +53,8 @@ export class GeoDataComponent implements OnInit {
     constructor(
         private service: DataService,
         private route: ActivatedRoute,
-        private router: Router
+        private router: Router,
+        private fb: FormBuilder
     ) { }
 
     ngOnInit() {

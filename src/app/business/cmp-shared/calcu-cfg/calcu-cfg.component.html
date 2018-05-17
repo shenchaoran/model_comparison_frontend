@@ -7,8 +7,8 @@
                     <nz-form-label nzSpan='6' nzRequired>Select data source</nz-form-label>
                     <nz-form-control nzSpan='18'>
                         <nz-radio-group formControlName='dataSrc' (ngModelChange)='changeValidate($event)'>
-                            <label nz-radio [nzValue]="'STD'">Use standard input data</label>
-                            <label nz-radio [nzValue]="'UPLOAD'">Use your personal data</label>
+                            <label nz-radio-button [nzValue]="'STD'">Use standard input data</label>
+                            <label nz-radio-button [nzValue]="'UPLOAD'">Use your personal data</label>
                         </nz-radio-group>
                     </nz-form-control>
                 </nz-form-item>
@@ -67,7 +67,7 @@
                                 <nz-form-control nzSpan='18' nzHasFeedback>
                                     <ng-container *ngIf='item.value.schema.structure.type === "radio"'>
                                         <nz-radio-group formControlName='value' [style.width]='width'>
-                                            <label nz-radio *ngFor='let opt of item.value.schema.structure.options' [nzValue]="opt">{{opt}}</label>
+                                            <label nz-radio-button *ngFor='let opt of item.value.schema.structure.options' [nzValue]="opt">{{opt}}</label>
                                         </nz-radio-group>
                                     </ng-container>
                                     <ng-container *ngIf='item.value.schema.structure.type === "checkbox"'>
@@ -91,10 +91,14 @@
                                 <nz-form-label nzSpan='6' nzRequired>{{item.value.id}}</nz-form-label>
                                 <nz-form-control nzSpan='18' nzHasFeedback>
                                     <ng-container *ngIf='item.value.optional'>
-                                        <nz-select formControlName='value' [style.width]="width" nzAllowClear [nzPlaceHolder]='""'>
+                                        <!-- <nz-select formControlName='value' [style.width]="width" nzAllowClear [nzPlaceHolder]='""'>
                                             <nz-option [nzLabel]='"off"' [nzValue]='"off"'></nz-option>
                                             <nz-option [nzLabel]="item.value.value" [nzValue]="item.value.value"></nz-option>
-                                        </nz-select>
+                                        </nz-select> -->
+                                        <nz-radio-group formControlName='value' [style.width]='width'>
+                                            <label nz-radio-button [nzValue]="'off'">off</label>
+                                            <label nz-radio-button [nzValue]="item.value.temp">{{item.value.temp}}</label>
+                                        </nz-radio-group>
                                     </ng-container>
                                     <ng-container *ngIf='!item.value.optional'>
                                         <input formControlName='value' nz-input [style.width]='width'>
