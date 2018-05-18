@@ -44,13 +44,10 @@ export class InvokeComponent implements OnInit {
             this.modelId = params['id'];
             this.service.findOne(this.modelId)
                 .subscribe(response => {
-                    if (response.error) {
-                        // this._notice.warning('Warning:', 'Get model failed');
-                    }
-                    else {
+                    if (!response.error) {
                         let user = this.loginService.getUser();
                         this.model = response.data;
-                        this.title.setTitle(this.model.MDL.meta.name);
+                        // this.title.setTitle(this.model.MDL.meta.name);
                         this.msInstance = this.service.newInstance(this.model);
                         this.msInstance.auth.src = '' + ResourceSrc.PUBLIC;
                         this.msInstance.cmpTaskId = undefined;

@@ -70,30 +70,6 @@ export const HEADER_MENUS: MenuClass[] = [
             }
         }
     },
-    // {
-    //     path: 'issues',
-    //     data: {
-    //         menu: {
-    //             title: 'Issues'
-    //         }
-    //     }
-    // },
-    // {
-    //     path: 'solutions',
-    //     data: {
-    //         menu: {
-    //             title: 'Solutions'
-    //         }
-    //     }
-    // },
-    // {
-    //     path: 'tasks',
-    //     data: {
-    //         menu: {
-    //             title: 'Comparison'
-    //         }
-    //     }
-    // },
     {
         path: 'test',
         data: {
@@ -102,45 +78,6 @@ export const HEADER_MENUS: MenuClass[] = [
             }
         }
     }
-    // {
-    //     path: 'comparison',
-    //     data: {
-    //         menu: {
-    //             title: 'Comparison',
-    //             id: 'comparison',
-    //             icon: 'smile-o',
-    //             selected: true,
-    //             expanded: false,
-    //             order: 0
-    //         }
-    //     },
-    //     children: [
-    //         {
-    //             path: 'solutions',
-    //             data: {
-    //                 menu: {
-    //                     title: 'Comparison Solution'
-    //                 }
-    //             }
-    //         },
-    //         {
-    //             path: 'tasks',
-    //             data: {
-    //                 menu: {
-    //                     title: 'Comparison Task'
-    //                 }
-    //             }
-    //         },
-    //         {
-    //             path: 'scenes',
-    //             data: {
-    //                 menu: {
-    //                     title: 'Comparison Scene'
-    //                 }
-    //             }
-    //         }
-    //     ]
-    // },
     // {
     //     path: 'help',
     //     data: {

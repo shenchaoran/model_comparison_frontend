@@ -57,7 +57,8 @@ export class FileUploaderFormItemComponent implements OnInit {
                 this.v = undefined;
             }
             else {
-                this.v = res.data._id;
+                this.label = res.data.meta.name;
+                this.v = res.data.meta.path;
             }
         }
         else {

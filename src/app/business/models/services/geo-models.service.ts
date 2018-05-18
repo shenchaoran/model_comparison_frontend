@@ -38,7 +38,11 @@ export class MSService {
     }
 
     /**
-     * 将schema放在data下面
+     * 创建一个 计算任务 实例，并将schema放在event下面
+     * 
+     * @param {any} ms 
+     * @returns {CalcuTask} 
+     * @memberof MSService
      */
     newInstance(ms): CalcuTask {
         const task = new CalcuTask();
@@ -47,49 +51,20 @@ export class MSService {
         task.nodeName = ms.auth.nodeName;
         task.IO = _.cloneDeep(ms.MDL.IO);
         task.IO.dataSrc = 'STD';
-        function setEventValue(event) {
-            if (event.type === 'output') {
-                if (event.optional) {
-                    event.options = [
-                        {
-                            label: 'off',
-                            value: 'off'
-                        },
-                        {
-                            label: event.id,
-                            value: event.id
-                        }
-                    ];
-                    event.value = event.defaultOutput ? event.id : 'off';
-                }
-                else {
-                    event.value = event.id;
-                }
-            }
-
-            if (event.type === 'input' && _.get(event, 'schema.structure.type') === 'date') {
-                event.value = (new Date()).getTime();
-            }
-            if (_.get(event, 'schema.structure.type') === 'checkbox') {
-                event.value = [];
-            }
-            if (_.get(event, 'schema.structure.type') === 'radio') {
-                event.value = _.get(event, 'event.schema.structure.options[0]');
-            }
-        }
+        task.stdInputId = ms.stdInputId;
+        task.stdOutputId = ms.stdOutputId;
         _.map(task.IO.schemas, schema => {
-            _.map(task.IO.data, event => {
-                if (event.schemaId === schema.id) {
-                    event.schema = schema;
-                    setEventValue(event);
-                }
-            });
-            _.map(task.IO.std, event => {
-                if (event.schemaId === schema.id) {
-                    event.schema = schema;
-                    setEventValue(event);
-                }
-            })
+            function appendSchema(type) {
+                _.map(task.IO[type], event => {
+                    if (event.schemaId === schema.id) {
+                        event.schema = schema;
+                    }
+                });
+            }
+            appendSchema('inputs');
+            appendSchema('std');
+            appendSchema('parameters');
+            appendSchema('outputs');
         });
 
         return task;

@@ -1,7 +1,7 @@
 <nz-spin [nzSpinning]='_isLoading'>
-    <form *ngIf='msInstance' [formGroup]='msiForm'>
+    <form *ngIf='msiForm' [formGroup]='msiForm'>
         <article class='doc ogms-responsive-div' style='margin: 24px auto !important;'>
-            <div class="doc-title">Data Configuration</div>
+            <div class="doc-title">{{model.MDL.meta.name}} Data Configuration</div>
             <div class='doc-body'>
                 <section>
                     <div class='section-header flex-box-row-nowrap'>

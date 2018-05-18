@@ -9,7 +9,7 @@
             <a [routerLink]='[model._id, "invoke"]'><i class="fa fa-share"></i></a>
         </div>
         <div class='item-body'>
-            <span class='topic'>{{model.MDL.meta.topic}}</span>
+            <span *ngIf='model.topic' class='topic'>{{model.topic}}</span>
             <div class='desc'>{{model.MDL.meta.abstract}}</div>
         </div>
         <div class='item-footer'>{{model.auth.nodeName}}</div>

@@ -30,6 +30,8 @@ export class CalcuTask {
         data: any[],
         std: any[]
     };
+    stdInputId: string;
+    stdOutputId: string;
     state: CalcuTaskState;
     progress: number;
 

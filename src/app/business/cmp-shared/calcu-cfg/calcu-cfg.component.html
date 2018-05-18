@@ -1,8 +1,8 @@
 <!-- <div *ngIf='v'> -->
-    <form [formGroup]='IOForm'>
+    <form *ngIf='IOForm' [formGroup]='IOForm'>
         <nz-collapse [nzBordered]="true">
             <!-- 输入数据配置 -->
-            <nz-collapse-panel [nzHeader]="'Inputs'" nzActive='true'>
+            <nz-collapse-panel *ngIf='IOForm.controls["std"].controls.length || IOForm.controls["inputs"].controls.length' [nzHeader]="'Inputs'" nzActive='true'>
                 <nz-form-item>
                     <nz-form-label nzSpan='6' nzRequired>Select data source</nz-form-label>
                     <nz-form-control nzSpan='18'>
@@ -18,7 +18,7 @@
                         <ng-container *ngFor='let item of IOForm.controls["std"].controls;let i=index;'>
                             <div [formGroupName]='i'>
                                 <nz-form-item>
-                                    <nz-form-label nzSpan='6' nzRequired>{{item.value.id}}</nz-form-label>
+                                    <nz-form-label nzSpan='6' nzRequired><span [nz-tooltip]='item.value.description'>{{item.value.name}}</span></nz-form-label>
                                     <nz-form-control nzSpan='18' nzHasFeedback>
                                         <ng-container *ngIf='item.value?.schema?.structure?.type === "date"'>
                                             <!-- <nz-datepicker style='width: 330px;' [ngModel]='event.value' (ngModelChange)='onDateChange(event, $event)' [nzFormat]='"YYYY-MM-DD"'></nz-datepicker> -->
@@ -41,14 +41,13 @@
                     </div>
                 </ng-container>
                 <ng-container *ngIf='IOForm.controls["dataSrc"].value === "UPLOAD"'>
-                    <div formArrayName='input'>
-                        <ng-container *ngFor='let item of IOForm.controls["input"].controls;let i=index;'>
+                    <div formArrayName='inputs'>
+                        <ng-container *ngFor='let item of IOForm.controls["inputs"].controls;let i=index;'>
                             <div [formGroupName]='i'>
                                 <nz-form-item>
-                                    <nz-form-label nzSpan='6' nzRequired>{{item.value.id}}</nz-form-label>
+                                    <nz-form-label nzSpan='6' nzRequired><span [nz-tooltip]='item.value.description'>{{item.value.name}}</span></nz-form-label>
                                     <nz-form-control nzSpan='18' nzHasFeedback>
-                                        <ogms-file-uploader-form-item formControlName='value' [width]='width'
-                                            [label]='item.value?.value' [fileUploaderOptions]="fileUploaderOptions"></ogms-file-uploader-form-item>
+                                        <ogms-file-uploader-form-item formControlName='value' [width]='width' [fileUploaderOptions]="fileUploaderOptions"></ogms-file-uploader-form-item>
                                     </nz-form-control>
                                 </nz-form-item>
                             </div>
@@ -58,12 +57,12 @@
             </nz-collapse-panel>
 
             <!-- 参数配置 -->
-            <nz-collapse-panel [nzHeader]="'Parameters'" nzActive='true'>
-                <div formArrayName='parameter'>
-                    <ng-container *ngFor='let item of IOForm.controls["parameter"].controls;let i=index;'>
+            <nz-collapse-panel *ngIf='IOForm.controls["parameters"].controls.length' [nzHeader]="'Parameters'" nzActive='true'>
+                <div formArrayName='parameters'>
+                    <ng-container *ngFor='let item of IOForm.controls["parameters"].controls;let i=index;'>
                         <div [formGroupName]='i'>
                             <nz-form-item>
-                                <nz-form-label nzSpan='6' nzRequired>{{item.value.id}}</nz-form-label>
+                                <nz-form-label nzSpan='6' nzRequired><span [nz-tooltip]='item.value.description'>{{item.value.name}}</span></nz-form-label>
                                 <nz-form-control nzSpan='18' nzHasFeedback>
                                     <ng-container *ngIf='item.value.schema.structure.type === "radio"'>
                                         <nz-radio-group formControlName='value' [style.width]='width'>
@@ -83,12 +82,12 @@
                 </div>
             </nz-collapse-panel>
             <!-- 输出配置 -->
-            <nz-collapse-panel [nzHeader]="'Outputs'" nzActive='true'>
-                <div formArrayName='output'>
-                    <ng-container *ngFor='let item of IOForm.controls["output"].controls;let i=index;'>
+            <nz-collapse-panel *ngIf='IOForm.controls["outputs"].controls.length' [nzHeader]="'Outputs'" nzActive='true'>
+                <div formArrayName='outputs'>
+                    <ng-container *ngFor='let item of IOForm.controls["outputs"].controls;let i=index;'>
                         <div [formGroupName]='i'>
                             <nz-form-item>
-                                <nz-form-label nzSpan='6' nzRequired>{{item.value.id}}</nz-form-label>
+                                <nz-form-label nzSpan='6' nzRequired><span [nz-tooltip]='item.value.description'>{{item.value.name}}</span></nz-form-label>
                                 <nz-form-control nzSpan='18' nzHasFeedback>
                                     <ng-container *ngIf='item.value.optional'>
                                         <!-- <nz-select formControlName='value' [style.width]="width" nzAllowClear [nzPlaceHolder]='""'>

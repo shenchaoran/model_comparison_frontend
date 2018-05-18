@@ -95,21 +95,22 @@ export class CalcuCfgComponent implements OnInit, OnChanges {
     buildForm() {
         let myFormGroup = (event) => {
             return this.fb.group({
-                id: [event.id],
-                schema: [event.schema],
-                optional: [event.optional],
+                id: event.id,
+                name: event.name,
+                description: event.description,
+                schema: event.schema,
+                optional: event.optional,
                 value: [event.value, Validators.required],
-                temp: [event.value]
+                temp: event.value,
+                ext: event.ext
             })
         }
         let inputCtrls = _
-            .chain(this._v.data)
-            .filter(item => item.type === 'input')
+            .chain(this._v.inputs)
             .map(myFormGroup)
             .value();
         let outputCtrls = _
-            .chain(this._v.data)
-            .filter(item => item.type === 'output')
+            .chain(this._v.outputs)
             .map(myFormGroup)
             .value();
         let stdCtrls = _
@@ -117,16 +118,15 @@ export class CalcuCfgComponent implements OnInit, OnChanges {
             .map(myFormGroup)
             .value();
         let paraCtrls = _
-            .chain(this._v.data)
-            .filter(item => item.type === 'parameter')
+            .chain(this._v.parameters)
             .map(myFormGroup)
             .value();
         this.IOForm = this.fb.group({
             dataSrc: ['STD', [Validators.required]],
-            input: this.fb.array(inputCtrls),
-            output: this.fb.array(outputCtrls),
+            inputs: this.fb.array(inputCtrls),
+            outputs: this.fb.array(outputCtrls),
             std: this.fb.array(stdCtrls),
-            parameter: this.fb.array(paraCtrls)
+            parameters: this.fb.array(paraCtrls)
         });
         this.changeValidate('STD');
         // console.log(this.IOForm);
@@ -136,44 +136,22 @@ export class CalcuCfgComponent implements OnInit, OnChanges {
                 // console.log(status);
                 // console.log(this.IOForm);
                 this._v.dataSrc = this.IOForm.value.dataSrc;
-                this._v.data = _.concat(
-                    _.map(this.IOForm.value.input, item => {
+                let setV = (tag) => {
+                    this._v[tag] = _.map(this.IOForm.value[tag], item => {
                         return {
                             id: item.id,
-                            type: 'input',
-                            description: '',
+                            description: item.description,
                             schemaId: item.schema.id,
-                            value: item.value
+                            value: item.value,
+                            ext: item.ext
                         };
-                    }),
-                    _.map(this.IOForm.value.parameter, item => {
-                        return {
-                            id: item.id,
-                            type: 'parameter',
-                            description: '',
-                            schemaId: item.schema.id,
-                            value: item.value
-                        };
-                    }),
-                    _.map(this.IOForm.value.output, item => {
-                        return {
-                            id: item.id,
-                            type: 'output',
-                            description: '',
-                            schemaId: item.schema.id,
-                            value: item.value
-                        };
-                    })
-                );
-                this._v.std = _.map(this.IOForm.value.std, item => {
-                    return {
-                        id: item.id,
-                        type: 'input',
-                        description: '',
-                        schemaId: item.schema.id,
-                        value: item.value
-                    };
-                });
+                    });
+                }
+                setV('inputs');
+                setV('outputs');
+                setV('std');
+                setV('parameters');
+                
                 this.propagateChange(this._v);
             });
     }
@@ -188,10 +166,10 @@ export class CalcuCfgComponent implements OnInit, OnChanges {
         let requireCtrl;
         if(v === 'UPLOAD') {
             clearCtrl = 'std';
-            requireCtrl = 'input';
+            requireCtrl = 'inputs';
         }
         else if(v === 'STD') {
-            clearCtrl = 'input';
+            clearCtrl = 'inputs';
             requireCtrl = 'std';
         }
         _.map((this.IOForm.get(clearCtrl) as any).controls, control => {
@@ -212,53 +190,6 @@ export class CalcuCfgComponent implements OnInit, OnChanges {
             }
         });
     }
-
-    // onCoordinateChange(v, event) {
-    //     const match = v.match(/\s*\[?\s*(\d+\.?(\d+)?)\s*,\s*(\d+\.?(\d+)?)\s*\]?\s*/);
-    //     if (match) {
-    //         if (match.length === 5) {
-    //             event.value = [match[1], match[3]];
-    //         }
-    //         else {
-    //             event.value = [];
-    //         }
-    //     }
-    // }
-
-    // onParamRadioChange(event, shouldUpdate, opt) {
-    //     // if(shouldUpdate) {
-    //     event.value = opt;
-    //     // }
-    //     this.onInstanceChange.emit(this.msInstance);
-    // }
-
-    // onParamCheckboxChange(event, shouldPush, opt) {
-    //     if (!event.value) {
-    //         event.value = [];
-    //     }
-    //     if (shouldPush) {
-    //         if (_.indexOf(event.value, opt) === -1) {
-    //             event.value.push(opt);
-    //         }
-    //     }
-    //     else {
-    //         _.remove(event.value, opt);
-    //     }
-    //     this.onInstanceChange.emit(this.msInstance);
-    // }
-
-    // onOutputChange(event, e) {
-    //     if (e === '' || e === undefined || e === null) {
-    //         event.value = 'off';
-    //     }
-    //     this.onInstanceChange.emit(this.msInstance);
-    // }
-
-    // onDateChange(event, e) {
-    //     event.value = e.getTime();
-    //     this.onInstanceChange.emit(this.msInstance);
-    // }
-
 
     private propagateChange = (e: any) => { };
 

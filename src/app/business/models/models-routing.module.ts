@@ -24,7 +24,10 @@ const routes: Routes = [
             },
             {
                 path: ':id',
-                component: GeoModelDetailComponent
+                component: GeoModelDetailComponent,
+                data: {
+                    title: 'Model Resource'
+                },
             },
             {
                 path: ':id/invoke',
