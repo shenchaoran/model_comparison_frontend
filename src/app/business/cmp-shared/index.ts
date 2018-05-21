@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '@shared';
+import { RouterModule, Routes } from '@angular/router';
 
 ////////////////////////////////////////////
 import { CalcuCfgComponent } from './calcu-cfg/calcu-cfg.component';
@@ -22,6 +23,7 @@ const COMPONENTS = [
 @NgModule({
     imports: [
         SharedModule,
+        RouterModule,
     ],
     declarations: [
         ...COMPONENTS

@@ -9,6 +9,8 @@ import { InvokeComponent } from './invoke/invoke.component';
 import { CmpSharedModule } from '../cmp-shared';
 import { LoginService } from '@feature/login/login.service';
 
+export * from './services/geo-models.service';
+
 @NgModule({
     imports: [
         SharedModule,

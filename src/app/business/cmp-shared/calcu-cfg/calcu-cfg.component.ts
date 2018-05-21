@@ -4,11 +4,15 @@ import {
     ChangeDetectionStrategy,
     forwardRef,
     ViewChild,
+    AfterViewInit,
+    HostListener,
+    Inject,
 } from '@angular/core';
 import { NgUploaderOptions } from 'ngx-uploader';
 import { ResourceSrc, CalcuTask, CmpTask, CmpSolution } from '@models';
 import { LoginService } from '@feature/login/login.service';
 import { DynamicTitleService } from '@core/services/dynamic-title.service';
+import * as uuidv1 from 'uuid/v1';
 import {
     AbstractControl,
     FormBuilder,
@@ -19,6 +23,7 @@ import {
     NG_VALIDATORS,
     NG_VALUE_ACCESSOR
 } from '@angular/forms';
+declare var ol: any;
 
 @Component({
     selector: 'ogms-calcu-cfg',
@@ -38,23 +43,29 @@ import {
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CalcuCfgComponent implements OnInit, OnChanges {
+export class CalcuCfgComponent implements OnInit, OnChanges, AfterViewInit {
     _v;
-    @Input() set v(v) {
-        this._v = v;
-        this.buildForm();
-    }
+    _isVisible = false;
+    firstClick = true;
+    mapDivID = uuidv1();
+    map;
 
     IOForm: FormGroup;
-
+    @Input() set v(v) {
+        this._v = v;
+        this.appendSchema();
+        if (this._v.mode !== 'read') {
+            this.buildForm();
+        }
+    }
+    @Input() mode: 'read' | 'write' = 'write';
     @Input() width = '350px';
-
-    // @Output() onInstanceChange = new EventEmitter<any>();
-    // @Output() onValidationChange = new EventEmitter<any>();
+    @Output() onValidChange = new EventEmitter<boolean>();
 
     fileUploaderOptions: NgUploaderOptions;
 
     constructor(
+        @Inject('BACKEND') private backend,
         private loginService: LoginService,
         private fb: FormBuilder,
         // private title: DynamicTitleService,
@@ -90,24 +101,90 @@ export class CalcuCfgComponent implements OnInit, OnChanges {
         }
     }
 
-    ngOnInit() {}
+    ngAfterViewInit() {
+
+    }
+
+    buildMap() {
+        if (this.firstClick) {
+            this.firstClick = false;
+            // setTimeout(() => {
+            console.log(jQuery(`#${this.mapDivID}`).length);
+
+            this.map = new ol.Map({
+                target: this.mapDivID,
+                layers: [new ol.layer.Group({
+                    title: 'Base',
+                    layers: [
+                        new ol.layer.Tile({
+                            title: 'OSM',
+                            visible: true,
+                            source: new ol.source.OSM()
+                        })
+                    ]
+                })],
+                view: new ol.View({
+                    center: [0, 0],
+                    zoom: 4
+                }),
+                controls: ol.control
+                    .defaults({
+                        attribution: false,
+                        rotate: false,
+                        zoom: false
+                    })
+                    .extend([
+                        new ol.control.FullScreen(),
+                        new ol.control.ScaleLine()
+                    ])
+            });
+            // }, 0);
+        }
+        this._isVisible = true;
+    }
+
+    ngOnInit() { }
+
+    appendSchema() {
+        _.map(this._v.schemas, schema => {
+            let appendSchema = (type) => {
+                _.map(this._v[type], event => {
+                    if (event.schemaId === schema.id) {
+                        event.schema = schema;
+                    }
+                });
+            }
+            appendSchema('inputs');
+            appendSchema('std');
+            appendSchema('parameters');
+            appendSchema('outputs');
+        });
+    }
 
     buildForm() {
-        let myFormGroup = (event) => {
-            return this.fb.group({
+        let myFormGroup = (event, type?) => {
+            let gp = {
                 id: event.id,
                 name: event.name,
                 description: event.description,
                 schema: event.schema,
                 optional: event.optional,
-                value: [event.value, Validators.required],
+                value: event.value,
+                file:  undefined,
                 temp: event.value,
                 ext: event.ext
-            })
+            };
+            // if(type === 'inputs') {
+            //     _.set(gp, 'file', [ undefined, Validators.required]);
+            // }
+            // else {
+            //     _.set(gp, 'value', [event.value, Validators.required]);
+            // }
+            return this.fb.group(gp);
         }
         let inputCtrls = _
             .chain(this._v.inputs)
-            .map(myFormGroup)
+            .map(item => myFormGroup(item, 'inputs'))
             .value();
         let outputCtrls = _
             .chain(this._v.outputs)
@@ -122,7 +199,7 @@ export class CalcuCfgComponent implements OnInit, OnChanges {
             .map(myFormGroup)
             .value();
         this.IOForm = this.fb.group({
-            dataSrc: ['STD', [Validators.required]],
+            dataSrc: [this._v.dataSrc === '' || !this._v.dataSrc ? 'STD' : this._v.dataSrc, [Validators.required]],
             inputs: this.fb.array(inputCtrls),
             outputs: this.fb.array(outputCtrls),
             std: this.fb.array(stdCtrls),
@@ -131,29 +208,69 @@ export class CalcuCfgComponent implements OnInit, OnChanges {
         this.changeValidate('STD');
         // console.log(this.IOForm);
         this.IOForm.statusChanges
-            .filter(status => status === 'VALID')
+            // .filter(status => status === 'VALID')
             .subscribe(status => {
                 // console.log(status);
                 // console.log(this.IOForm);
-                this._v.dataSrc = this.IOForm.value.dataSrc;
-                let setV = (tag) => {
-                    this._v[tag] = _.map(this.IOForm.value[tag], item => {
-                        return {
-                            id: item.id,
-                            description: item.description,
-                            schemaId: item.schema.id,
-                            value: item.value,
-                            ext: item.ext
-                        };
-                    });
+                if(status === 'VALID') {
+                    const dataSrc = this._v.dataSrc = this.IOForm.value.dataSrc;
+                    let setV = (tag) => {
+                        this._v[tag] = _.map(this.IOForm.value[tag], item => {
+                            return {
+                                id: item.id,
+                                name: item.name,
+                                description: item.description,
+                                schemaId: item.schema.id,
+                                optional: item.optional,
+                                // value: item.value,
+                                value: (dataSrc === 'UPLOAD' && tag === 'inputs')? item.file.value: item.value,
+                                fname: (dataSrc === 'UPLOAD' && tag === 'inputs')? item.file.fname: undefined,
+                                ext: item.ext
+                            };
+                        });
+                    }
+                    setV('inputs');
+                    setV('outputs');
+                    setV('std');
+                    setV('parameters');
+                    console.log(this._v);
+                    this.propagateChange(this._v);
                 }
-                setV('inputs');
-                setV('outputs');
-                setV('std');
-                setV('parameters');
                 
-                this.propagateChange(this._v);
+                this.onValidChange.emit(status === 'VALID');
             });
+    }
+
+    download(url) {
+        if(url === 'STD') {
+            // TODO
+            _.map(this._v.inputs, (input, i) => {
+                window.open(`http://${this.backend.host}:${this.backend.port}${input.url}`, i);
+            })
+        }
+        else {
+            window.open(`http://${this.backend.host}:${this.backend.port}${url}`);
+        }
+    }
+
+    modalCancel() {
+        this._isVisible = false;
+    }
+
+    modalOk() {
+        this._isVisible = false;
+    }
+
+    onMouseWheel(e) {
+        // console.log(e);
+        e.preventDefault();
+        e.stopPropagation();
+        e.cancelBubble = true;
+    }
+
+    @HostListener('window:resize')
+    resize() {
+        this.map.updateSize();
     }
 
     /**
@@ -161,34 +278,79 @@ export class CalcuCfgComponent implements OnInit, OnChanges {
      * @param v 
      */
     changeValidate(v) {
-        // console.log(v);
-        let clearCtrl;
-        let requireCtrl;
-        if(v === 'UPLOAD') {
-            clearCtrl = 'std';
-            requireCtrl = 'inputs';
-        }
-        else if(v === 'STD') {
-            clearCtrl = 'inputs';
-            requireCtrl = 'std';
-        }
-        _.map((this.IOForm.get(clearCtrl) as any).controls, control => {
-            let leafCtrl = control.get('value');
-            if(leafCtrl) {
-                leafCtrl.clearValidators();
-                leafCtrl.markAsPristine();
-                leafCtrl.updateValueAndValidity();
-            }
-        });
+        if (v === 'UPLOAD') {
+            _.map((this.IOForm.get('std') as any).controls, control => {
+                let leafCtrl = control.get('file');
+                if (leafCtrl) {
+                    leafCtrl.clearValidators();
+                    leafCtrl.markAsPristine();
+                    leafCtrl.updateValueAndValidity();
+                }
+                leafCtrl = control.get('value');
+                if (leafCtrl) {
+                    leafCtrl.clearValidators();
+                    leafCtrl.markAsPristine();
+                    leafCtrl.updateValueAndValidity();
+                }
+            });
+            _.map((this.IOForm.get('inputs') as any).controls, control => {
+                let leafCtrl = control.get('value');
+                if (leafCtrl) {
+                    leafCtrl.clearValidators();
+                    leafCtrl.markAsPristine();
+                    leafCtrl.updateValueAndValidity();
+                }
+                leafCtrl = control.get('file');
+                if (leafCtrl) {
+                    leafCtrl.setValidators(Validators.required);
+                    leafCtrl.markAsDirty();
+                    leafCtrl.updateValueAndValidity();
+                }
+            });
 
-        _.map((this.IOForm.get(requireCtrl) as any).controls, control => {
+        }
+        else if (v === 'STD') {
+            _.map((this.IOForm.get('inputs') as any).controls, control => {
+                let leafCtrl = control.get('file');
+                if (leafCtrl) {
+                    leafCtrl.clearValidators();
+                    leafCtrl.markAsPristine();
+                    leafCtrl.updateValueAndValidity();
+                }
+                leafCtrl = control.get('value');
+                if (leafCtrl) {
+                    leafCtrl.clearValidators();
+                    leafCtrl.markAsPristine();
+                    leafCtrl.updateValueAndValidity();
+                }
+            });
+            _.map((this.IOForm.get('std') as any).controls, control => {
+                let leafCtrl = control.get('value');
+                if (leafCtrl) {
+                    leafCtrl.setValidators(Validators.required);
+                    leafCtrl.markAsDirty();
+                    leafCtrl.updateValueAndValidity();
+                }
+                leafCtrl = control.get('file');
+                if (leafCtrl) {
+                    leafCtrl.clearValidators();
+                    leafCtrl.markAsPristine();
+                    leafCtrl.updateValueAndValidity();
+                }
+            });
+        }
+        _.map((this.IOForm.get('outputs') as any).controls, control => {
             let leafCtrl = control.get('value');
-            if(leafCtrl) {
+            if (leafCtrl) {
                 leafCtrl.setValidators(Validators.required);
                 leafCtrl.markAsDirty();
                 leafCtrl.updateValueAndValidity();
             }
         });
+        // TODO 触发验证
+        this.IOForm.get('std').updateValueAndValidity();
+        this.IOForm.get('inputs').updateValueAndValidity();
+        this.IOForm.get('outputs').updateValueAndValidity();
     }
 
     private propagateChange = (e: any) => { };

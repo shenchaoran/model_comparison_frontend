@@ -1,0 +1,16 @@
+<ng-template #modelTemplate let-sln='item'>
+    <section>
+    </section>
+</ng-template>
+
+<ogms-list-template 
+    [count]='count' 
+    [template]='modelTemplate' 
+    [list]='list' 
+    [withCreateBtn]='withCreateBtn'  
+    [ownerFilter]='ownerFilter'
+    [otherFilters]='otherFilters'
+    (onFiltersChange)='search($event)'>
+</ogms-list-template>
+
+<ogms-footer></ogms-footer>

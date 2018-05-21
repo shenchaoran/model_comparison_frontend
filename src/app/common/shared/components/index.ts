@@ -17,3 +17,5 @@ export * from './cmp-tabs-view/cmp-tabs-view.component';
 export * from './cmp-docking-view/cmp-docking-view.component';
 export * from './file-uploader-form-item/file-uploader-form-item.component';
 export * from './check-box-form-item/check-box-form-item.component';
+export * from './list-base/list-base.component';
+export * from './doc-base/doc-base.component';

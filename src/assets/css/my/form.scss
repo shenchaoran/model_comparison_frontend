@@ -1,15 +1,18 @@
 .ogms-form-item {
     margin-bottom: 20px;
-    display: flex;
-    align-items: center;
+    display: flex !important;
+    align-items: center !important;
     >span {
-        // text-align: right;
+        text-align: right;
         padding: 0 15px;
     }
     >span::after {
-        // content: ':'
+        content: ':'
     }
     >div {
-        padding: 0 15px;
+        // padding: 0 15px;
+    }
+    .ogms-clear-after::after{
+        content: none;
     }
 }

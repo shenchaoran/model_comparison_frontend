@@ -38,7 +38,10 @@ import {
 })
 export class FileUploaderFormItemComponent implements OnInit {
     // ngModel 的值是一个后台返回的id
-    v;
+    v: {
+        value: string,
+        fname: string
+    };
 
     @Input() width;
     @Input() label;
@@ -58,7 +61,10 @@ export class FileUploaderFormItemComponent implements OnInit {
             }
             else {
                 this.label = res.data.meta.name;
-                this.v = res.data.meta.path;
+                this.v = {
+                    value: res.data._id,
+                    fname: res.data.meta.name
+                };
             }
         }
         else {

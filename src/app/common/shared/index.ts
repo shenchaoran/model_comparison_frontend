@@ -7,7 +7,7 @@ import { BaThemeConfigProvider } from './theme.configProvider';
 import { BACKEND } from '@config';
 import { HEADER_MENUS, USER_MENUS } from '@config/menu.config';
 import { DisqusModule } from "ngx-disqus";
-import { EmailValidator, EqualPasswordsValidator } from './validators';
+// import { EmailValidator, EqualPasswordsValidator } from './validators';
 import { ListFilterService } from './components/list-template/list-filter.service';
 import { HeaderMenuService } from './components/baHeaderMenu/services/baHeaderMenu.service';
 import { BaMenuService } from './components/baHeaderMenu/services/baMenu.service';
@@ -33,6 +33,8 @@ import {
     CmpDockingViewComponent,
     FileUploaderFormItemComponent,
     CheckBoxFormItemComponent,
+    ListBaseComponent,
+    DocBaseComponent,
 } from './components';
 
 import {
@@ -44,6 +46,7 @@ import {
     BaImageLoaderService,
     BaThemePreloader,
     BaThemeSpinner,
+    ListBaseService,
 } from './services';
 
 import {
@@ -65,9 +68,13 @@ const SERVICES = [
     LoginService,
     BaMenuService,
     HeaderMenuService,
+    ListBaseService,
 ];
 
-const VALIDATORS = [EmailValidator, EqualPasswordsValidator];
+const VALIDATORS = [
+    // EmailValidator,
+    // EqualPasswordsValidator
+];
 
 const COMPONENTS = [
     FileUploader,
@@ -89,6 +96,8 @@ const COMPONENTS = [
     CmpDockingViewComponent,
     FileUploaderFormItemComponent,
     CheckBoxFormItemComponent,
+    ListBaseComponent,
+    DocBaseComponent,
 ];
 
 const DIRECTIVES = [
@@ -108,16 +117,21 @@ const PIPES = [
 ];
 
 export * from './components';
+export * from './services';
+export * from './pipes';
+export * from './directives';
+// export * from './validators';
 
 @NgModule({
     declarations: [
         ...COMPONENTS,
         ...DIRECTIVES,
-        ...PIPES
+        ...PIPES,
+        ...VALIDATORS
     ],
     imports: [
-        RouterModule, 
-        NgxSharedModule, 
+        RouterModule,
+        NgxSharedModule,
         NgUploaderModule,
         DisqusModule.forRoot('shenchaoran')
     ],
@@ -141,9 +155,10 @@ export * from './components';
         }
     ],
     exports: [
-        ...COMPONENTS, 
-        ...DIRECTIVES, 
-        ...PIPES, 
+        ...COMPONENTS,
+        ...DIRECTIVES,
+        ...PIPES,
+        RouterModule,
         NgxSharedModule,
         DisqusModule,
     ]

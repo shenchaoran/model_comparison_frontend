@@ -36,12 +36,13 @@ export const routes: Routes = [
     },
     {
         path: 'results',
-        loadChildren: './business/home/home.module#HomeModule'
+        loadChildren: './business/results/results.module#ResultsModule'
     },
-    // {
-    //     path: 'resources',
-    //     loadChildren: './business/resources/resources.module#ResourcesModule'
-    // },
+    {
+        path: 'comparison',
+        loadChildren: './business/comparison/comparison.module#ComparisonModule'
+    },
+
     {
         path: 'issues',
         loadChildren: './business/cmp-issue/cmp-issue.module#CmpIssueModule'
@@ -58,10 +59,7 @@ export const routes: Routes = [
         path: 'tasks',
         loadChildren: './business/cmp-task/cmp-task.module#CmpTaskModule'
     },
-    // {
-    //     path: 'comparison',
-    //     loadChildren: './business/comparison/comparison.module#ComparisonModule'
-    // },
+    
     {
         path: 'search',
         loadChildren: './business/search/search.module#SearchModule'

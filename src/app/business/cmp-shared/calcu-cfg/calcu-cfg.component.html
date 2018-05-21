@@ -1,8 +1,115 @@
 <!-- <div *ngIf='v'> -->
+<ng-container *ngIf='mode === "read"'>
+    <nz-collapse [nzBordered]="true">
+        <!-- 输入数据配置 -->
+        <nz-collapse-panel *ngIf='_v.std.length || _v.inputs.length' [nzHeader]="'Inputs'" nzActive='true'>
+            <div class='ogms-form-item' nz-row>
+                <span nz-col nzSpan='6'>Data source</span>
+                <div nz-col nzSpan='18'>{{_v.dataSrc==='STD'?"Use standard input data":"Use your personal data"}}</div>
+            </div>
+
+            <ng-container *ngIf='_v.dataSrc === "STD"'>
+                <ng-container *ngFor='let item of _v.std;let i=index;'>
+                    <div class='ogms-form-item' nz-row>
+                        <span nz-col nzSpan='6'>{{item.name}}</span>
+                        <div nz-col nzSpan='18'>
+                            <ng-container *ngIf='item.schema?.structure?.type === "date"'>
+                                <span [style.width]='width'>{{item.value}}</span>
+                            </ng-container>
+                            <ng-container *ngIf='item.schema?.structure?.type === "coordinate"'>
+                                <!-- TODO format -->
+                                <span [style.width]='width'>{{item.value}}</span>
+                                &nbsp;&nbsp;
+                                <button nz-button (click)='buildMap()'>
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </ng-container>
+                        </div>
+                    </div>
+                </ng-container>
+                <!-- TODO preview -->
+                <div class='ogms-form-item' nz-row>
+                    <span nz-col nzSpan='6' class='ogms-clear-after'>
+                        <button nz-button [nzType]='"default"'>
+                            Preview
+                        </button>
+                    </span>
+                    <div nz-col nzSpan='18'>
+                        <button nz-button [nzType]='"default"' (click)='download("STD")'>
+                            Download
+                        </button>
+                    </div>
+                </div>
+            </ng-container>
+            <ng-container *ngIf='_v.dataSrc === "UPLOAD"'>
+                <ng-container *ngFor='let item of _v.inputs;let i=index;'>
+                    <div class='ogms-form-item' nz-row>
+                        <span nz-col nzSpan='6'>{{item.name}}</span>
+                        <div nz-col nzSpan='18'>
+                            <span [style.width]='width'><a (click)='download(item.url)'>{{item.fname}}</a></span>
+                        </div>
+                    </div>
+                </ng-container>
+            </ng-container>
+        </nz-collapse-panel>
+
+        <!-- 参数配置 -->
+        <nz-collapse-panel *ngIf='_v.parameters.length' [nzHeader]="'Parameters'" nzActive='true'>
+            <ng-container *ngFor='let item of _v.parameters;let i=index;'>
+                <ng-container *ngIf='item.schema.structure.type === "radio"'>
+                    <div class='ogms-form-item' nz-row>
+                        <span nz-col nzSpan='6'>{{item.name}}</span>
+                        <div nz-col nzSpan='18'>
+                            <span>{{item.value}}</span>
+                        </div>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf='item.schema.structure.type === "checkbox"'>
+                    <div class='ogms-form-item' nz-row>
+                        <span nz-col nzSpan='6'>{{item.name}}</span>
+                        <div nz-col nzSpan='18'>
+                            <span *ngFor='let opt of item.value'>{{opt}}</span>
+                        </div>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf='item.schema.structure.type === "value"'>
+                    <div class='ogms-form-item' nz-row>
+                        <span nz-col nzSpan='6'>{{item.name}}</span>
+                        <div nz-col nzSpan='18'>
+                            <span>{{item.value}}</span>
+                        </div>
+                    </div>
+                </ng-container>
+            </ng-container>
+        </nz-collapse-panel>
+        <!-- 输出配置 -->
+        <nz-collapse-panel *ngIf='_v.outputs.length' [nzHeader]="'Outputs'" nzActive='true'>
+            <ng-container *ngFor='let item of _v.outputs;let i=index;'>
+                <div class='ogms-form-item' nz-row>
+                    <span nz-col nzSpan='6'>{{item.name}}</span>
+                    <div nz-col nzSpan='18'>
+                        <span><a (click)='download(item.url)'>{{item.fname}}</a></span>
+                        <!-- &nbsp;&nbsp;
+                        <button nz-button [nzType]='"default"'>
+                            Preview
+                        </button> -->
+                        <!-- &nbsp;&nbsp; -->
+                        <!-- <button nz-button (click)='download(item.url)' [nzType]='"default"'>
+                            Download
+                        </button> -->
+                    </div>
+                </div>
+            </ng-container>
+        </nz-collapse-panel>
+    </nz-collapse>
+</ng-container>
+
+<ng-container *ngIf='mode === "write"'>
     <form *ngIf='IOForm' [formGroup]='IOForm'>
         <nz-collapse [nzBordered]="true">
             <!-- 输入数据配置 -->
-            <nz-collapse-panel *ngIf='IOForm.controls["std"].controls.length || IOForm.controls["inputs"].controls.length' [nzHeader]="'Inputs'" nzActive='true'>
+            <nz-collapse-panel *ngIf='IOForm.controls["std"].controls.length || IOForm.controls["inputs"].controls.length' [nzHeader]="'Inputs'"
+                nzActive='true'>
                 <nz-form-item>
                     <nz-form-label nzSpan='6' nzRequired>Select data source</nz-form-label>
                     <nz-form-control nzSpan='18'>
@@ -18,7 +125,9 @@
                         <ng-container *ngFor='let item of IOForm.controls["std"].controls;let i=index;'>
                             <div [formGroupName]='i'>
                                 <nz-form-item>
-                                    <nz-form-label nzSpan='6' nzRequired><span [nz-tooltip]='item.value.description'>{{item.value.name}}</span></nz-form-label>
+                                    <nz-form-label nzSpan='6' nzRequired>
+                                        <span [nz-tooltip]='item.value.description'>{{item.value.name}}</span>
+                                    </nz-form-label>
                                     <nz-form-control nzSpan='18' nzHasFeedback>
                                         <ng-container *ngIf='item.value?.schema?.structure?.type === "date"'>
                                             <!-- <nz-datepicker style='width: 330px;' [ngModel]='event.value' (ngModelChange)='onDateChange(event, $event)' [nzFormat]='"YYYY-MM-DD"'></nz-datepicker> -->
@@ -45,9 +154,11 @@
                         <ng-container *ngFor='let item of IOForm.controls["inputs"].controls;let i=index;'>
                             <div [formGroupName]='i'>
                                 <nz-form-item>
-                                    <nz-form-label nzSpan='6' nzRequired><span [nz-tooltip]='item.value.description'>{{item.value.name}}</span></nz-form-label>
+                                    <nz-form-label nzSpan='6' nzRequired>
+                                        <span [nz-tooltip]='item.value.description'>{{item.value.name}}</span>
+                                    </nz-form-label>
                                     <nz-form-control nzSpan='18' nzHasFeedback>
-                                        <ogms-file-uploader-form-item formControlName='value' [width]='width' [fileUploaderOptions]="fileUploaderOptions"></ogms-file-uploader-form-item>
+                                        <ogms-file-uploader-form-item formControlName='file' [width]='width' [fileUploaderOptions]="fileUploaderOptions"></ogms-file-uploader-form-item>
                                     </nz-form-control>
                                 </nz-form-item>
                             </div>
@@ -62,7 +173,9 @@
                     <ng-container *ngFor='let item of IOForm.controls["parameters"].controls;let i=index;'>
                         <div [formGroupName]='i'>
                             <nz-form-item>
-                                <nz-form-label nzSpan='6' nzRequired><span [nz-tooltip]='item.value.description'>{{item.value.name}}</span></nz-form-label>
+                                <nz-form-label nzSpan='6' nzRequired>
+                                    <span [nz-tooltip]='item.value.description'>{{item.value.name}}</span>
+                                </nz-form-label>
                                 <nz-form-control nzSpan='18' nzHasFeedback>
                                     <ng-container *ngIf='item.value.schema.structure.type === "radio"'>
                                         <nz-radio-group formControlName='value' [style.width]='width'>
@@ -87,13 +200,15 @@
                     <ng-container *ngFor='let item of IOForm.controls["outputs"].controls;let i=index;'>
                         <div [formGroupName]='i'>
                             <nz-form-item>
-                                <nz-form-label nzSpan='6' nzRequired><span [nz-tooltip]='item.value.description'>{{item.value.name}}</span></nz-form-label>
+                                <nz-form-label nzSpan='6' nzRequired>
+                                    <span [nz-tooltip]='item.value.description'>{{item.value.name}}</span>
+                                </nz-form-label>
                                 <nz-form-control nzSpan='18' nzHasFeedback>
                                     <ng-container *ngIf='item.value.optional'>
                                         <!-- <nz-select formControlName='value' [style.width]="width" nzAllowClear [nzPlaceHolder]='""'>
-                                            <nz-option [nzLabel]='"off"' [nzValue]='"off"'></nz-option>
-                                            <nz-option [nzLabel]="item.value.value" [nzValue]="item.value.value"></nz-option>
-                                        </nz-select> -->
+                                                        <nz-option [nzLabel]='"off"' [nzValue]='"off"'></nz-option>
+                                                        <nz-option [nzLabel]="item.value.value" [nzValue]="item.value.value"></nz-option>
+                                                    </nz-select> -->
                                         <nz-radio-group formControlName='value' [style.width]='width'>
                                             <label nz-radio-button [nzValue]="'off'">off</label>
                                             <label nz-radio-button [nzValue]="item.value.temp">{{item.value.temp}}</label>
@@ -110,4 +225,19 @@
             </nz-collapse-panel>
         </nz-collapse>
     </form>
+</ng-container>
 <!-- </div> -->
+
+<nz-modal [(nzVisible)]="_isVisible" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="modalFooter" (nzOnCancel)="modalCancel()" [nzWidth]='670'>
+    <ng-template #modalTitle>
+        Site Position
+    </ng-template>
+
+    <ng-template #modalContent>
+        <div id='{{mapDivID}}' [style.width]='"650px"' [style.height]='"350px"' (mousewheel)='onMouseWheel($event)'></div>
+    </ng-template>
+
+    <ng-template #modalFooter>
+        <button nz-button nzType="primary" (click)="modalOk()">OK</button>
+    </ng-template>
+</nz-modal>

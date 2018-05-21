@@ -32,17 +32,17 @@ export class CmpTaskService implements Resolve<any> {
         return this.http.post('/comparison/tasks', obj);
     }
 
-    start(id: string): Observable<any> {
+    findOne(id: string): Observable<any> {
         if (id) {
-            return this.http.post(`/comparison/tasks/${id}/start`, undefined);
+            return this.http.get(`/comparison/tasks/${id}`);
         } else {
             return undefined;
         }
     }
 
-    findOne(id: string): Observable<any> {
+    start(id: string): Observable<any> {
         if (id) {
-            return this.http.get(`/comparison/tasks/${id}`);
+            return this.http.post(`/comparison/tasks/${id}/start`, undefined);
         } else {
             return undefined;
         }

@@ -1,17 +1,17 @@
 import { Component, OnInit, HostListener } from "@angular/core";
 import { MSService } from "../services/geo-models.service";
 import { Router, ActivatedRoute, Params } from "@angular/router";
-// import { NzNotificationService, NzModalService } from "ng-zorro-antd";
+import { NzNotificationService, NzModalService } from "ng-zorro-antd";
 import { DynamicTitleService } from "@core/services/dynamic-title.service";
 import { ReactiveFormsModule } from "@angular/forms";
+import { DocBaseComponent } from '@shared';
 
 @Component({
     selector: 'ogms-geo-model-detail',
     templateUrl: './geo-model-detail.component.html',
     styleUrls: ['./geo-model-detail.component.scss']
 })
-export class GeoModelDetailComponent implements OnInit {
-    modelId: string;
+export class GeoModelDetailComponent extends DocBaseComponent implements OnInit {
     model: any;
     solutions: any[];
 
@@ -22,51 +22,39 @@ export class GeoModelDetailComponent implements OnInit {
     _checkedNumber = 0;
     _displayData: Array<any> = [];
     _operating = false;
-    _ioDataSet = [];
+    _ioDataset = [];
     _paramsDataSet = [];
     _indeterminate = false;
 
     constructor(
-        private service: MSService,
-        private route: ActivatedRoute,
-        // private _notice: NzNotificationService,
-        private title: DynamicTitleService
-    ) { }
+        protected route: ActivatedRoute,
+        protected service: MSService,
+        protected _notice: NzNotificationService,
+        protected title: DynamicTitleService
+    ) {
+        super(route, service, _notice, title);
+    }
 
     ngOnInit() {
-        this.route.params.subscribe((params: Params) => {
-            this.modelId = params['id'];
-            this.service.findOne(this.modelId)
-                .subscribe(response => {
-                    if (response.error) {
-                        // this._notice.warning('Warning:', 'Get model failed');
-                    }
-                    else {
-                        this.model = response.data;
-                        this.title.setTitle(this.model.MDL.meta.name);
+        super.ngOnInit();
+        this._subscriptions.push(this.doc.subscribe(doc => {
+            this.model = doc;
+            this.title.setTitle(this.model.MDL.meta.name);
 
-                        const schemaStructure = _.get(this.model, 'MDL.IO.schemas[0].structure');
-                        if (schemaStructure) {
-                            //add io table dataset
-                            for (let i = 0; i < schemaStructure.length; i++) {
-                                this._ioDataSet.push(schemaStructure[i]);
-                            }
-
-                        }
-                        const params = _.get(this.model, 'MDL.params');
-                        if (params) {
-                            for (let i = 0; i < params.length; i++) {
-                                this._paramsDataSet.push(params[i]);
-                            }
-                        }
-
-                    }
-                })
-        });
-
-        this._isLoading = false;
-
-
+            const schemaStructure = _.get(this.model, 'MDL.IO.schemas[0].structure');
+            if (schemaStructure) {
+                //add io table dataset
+                for (let i = 0; i < schemaStructure.length; i++) {
+                    this._ioDataset.push(schemaStructure[i]);
+                }
+            }
+            const params = _.get(this.model, 'MDL.params');
+            if (params) {
+                for (let i = 0; i < params.length; i++) {
+                    this._paramsDataSet.push(params[i]);
+                }
+            }
+        }));
     }
 
     _displayDataChange($event) {
@@ -80,10 +68,10 @@ export class GeoModelDetailComponent implements OnInit {
         const allUnChecked = this._displayData.every(value => !value.checked);
         this._allChecked = allChecked;
         this._indeterminate = !allChecked && !allUnChecked;
-        this._disabledButton = dataset?!dataset.some(value => value.checked):false;
-        this._checkedNumber = dataset?dataset.filter(
+        this._disabledButton = dataset ? !dataset.some(value => value.checked) : false;
+        this._checkedNumber = dataset ? dataset.filter(
             value => value.checked
-        ).length:0;
+        ).length : 0;
     }
 
     _checkAll(value, dataset) {

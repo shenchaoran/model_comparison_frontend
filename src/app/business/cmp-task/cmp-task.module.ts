@@ -17,6 +17,22 @@ import { MSService } from "../models/services/geo-models.service";
 import { CmpSharedModule } from '../cmp-shared';
 import { CalcuCfgComponent } from '../cmp-shared';
 
+const COMPONENTS = [
+    CmpTaskListComponent,
+    TaskDetailComponent,
+    NewTaskComponent,
+    CmpResultMapComponent,
+    CmpResultTableComponent,
+    CmpResultChartComponent,
+];
+const SERVICES = [
+    CmpTaskService,
+    EchartAdapterService,
+    CmpSlnService,
+    MSService,
+];
+
+
 @NgModule({
     imports: [
         SharedModule,
@@ -27,21 +43,16 @@ import { CalcuCfgComponent } from '../cmp-shared';
         CmpSharedModule,
     ],
     declarations: [
-        CmpTaskListComponent,
-        TaskDetailComponent,
-        NewTaskComponent,
-        CmpResultMapComponent,
-        CmpResultTableComponent,
-        CmpResultChartComponent,
+        ...COMPONENTS,
     ],
     providers: [
-        CmpTaskService,
-        EchartAdapterService,
-        CmpSlnService,
-        MSService
+        ...SERVICES,
     ],
     entryComponents: [
         CalcuCfgComponent,
+    ],
+    exports: [
+        ...COMPONENTS
     ]
 })
 export class CmpTaskModule { }

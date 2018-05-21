@@ -22,6 +22,8 @@ export class CalcuTask {
     };
     msId: string;
     msName: string;
+    topic: string;
+    topicId: string;
     cmpTaskId: string;
     nodeName: string;
     IO: {
@@ -34,6 +36,7 @@ export class CalcuTask {
     stdOutputId: string;
     state: CalcuTaskState;
     progress: number;
+    [key: string]: any;
 
     constructor() {
         this.meta = {

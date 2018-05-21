@@ -31,7 +31,10 @@ const routes: Routes = [
             },
             {
                 path: ':id/invoke',
-                component: InvokeComponent
+                component: InvokeComponent,
+                data: {
+                    title: 'Model Invoke'
+                }
             }
         ]
     }

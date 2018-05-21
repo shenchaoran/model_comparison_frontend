@@ -53,6 +53,14 @@ export const HEADER_MENUS: MenuClass[] = [
         }
     },
     {
+        path: 'comparison',
+        data: {
+            menu: {
+                title: 'Comparison'
+            }
+        }
+    },
+    {
         path: 'results',
         data: {
             menu: {
@@ -60,15 +68,25 @@ export const HEADER_MENUS: MenuClass[] = [
                 id: 'results',
                 icon: ''
             }
-        }
-    },
-    {
-        path: 'comparison',
-        data: {
-            menu: {
-                title: 'Comparison'
+        },
+        children: [
+            {
+                path: 'calculation',
+                data: {
+                    menu: {
+                        title: 'Calculation Result'
+                    }
+                }
+            },
+            {
+                path: 'comparison',
+                data: {
+                    menu: {
+                        title: 'Comparison Result'
+                    }
+                }
             }
-        }
+        ]
     },
     {
         path: 'test',
