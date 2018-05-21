@@ -34,4 +34,5 @@ export class CalcuDetailComponent extends DocBaseComponent implements OnInit {
         }));
     }
 
+    
 }
