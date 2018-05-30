@@ -3,5 +3,5 @@
     [fileUploaderOptions]='fileUploaderOptions'
     [label]='label'
     (onFileUploadCompleted)='emitChange($event)' 
-    (onClear)='emitChange()'
+    (onClear)='emitChange(undefined)'
 ></ogms-file-uploader>

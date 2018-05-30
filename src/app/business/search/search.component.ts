@@ -26,7 +26,7 @@ export class SearchComponent implements OnInit {
 
     constructor(
         private service: SearchService,
-        private _notice: NzNotificationService,
+//private _notice: NzNotificationService,
         private route: ActivatedRoute
     ) { }
 
@@ -41,7 +41,7 @@ export class SearchComponent implements OnInit {
                 this.service.search(this.options)
                     .subscribe(response => {
                         if(response.error) {
-                            this._notice.warning('Warning:', 'Get comparison task failed!');
+                            // this._notice.warning('Warning:', 'Get comparison task failed!');
                         }
                         else {
                             this.categories = response.data.categories;
@@ -60,7 +60,7 @@ export class SearchComponent implements OnInit {
         this.service.search(this.options)
             .subscribe(response => {
                 if(response.error) {
-                    this._notice.warning('Warning:', 'Get comparison task failed!');
+                    // this._notice.warning('Warning:', 'Get comparison task failed!');
                 }
                 else {
                     this.categories = response.data.categories;

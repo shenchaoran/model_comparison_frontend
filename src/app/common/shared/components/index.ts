@@ -19,3 +19,5 @@ export * from './file-uploader-form-item/file-uploader-form-item.component';
 export * from './check-box-form-item/check-box-form-item.component';
 export * from './list-base/list-base.component';
 export * from './doc-base/doc-base.component';
+export * from './ogms-base/ogms-base.component';
+export * from './map-base/map-base.component';

@@ -16,6 +16,7 @@ import { CmpSlnService } from "../cmp-solution/services/cmp-sln.service";
 import { MSService } from "../models/services/geo-models.service";
 import { CmpSharedModule } from '../cmp-shared';
 import { CalcuCfgComponent } from '../cmp-shared';
+import { NzNotificationService, NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';
 
 const COMPONENTS = [
     CmpTaskListComponent,
@@ -30,6 +31,7 @@ const SERVICES = [
     EchartAdapterService,
     CmpSlnService,
     MSService,
+    NzNotificationService
 ];
 
 

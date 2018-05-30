@@ -5,6 +5,7 @@ import { HeaderMenuLayoutComponent } from '@shared';
 import { TestComponent } from './test.component';
 import { ReactiveFormComponent } from './reactive-form/reactive-form.component';
 import { FileUploaderTestComponent } from './file-uploader-test/file-uploader-test.component';
+import { LeafletTestComponent } from './leaflet-test/leaflet-test.component';
 
 const routes: Routes = [
     {
@@ -26,6 +27,10 @@ const routes: Routes = [
                     {
                         path: 'file-uploader',
                         component: FileUploaderTestComponent
+                    },
+                    {
+                        path: 'leaflet',
+                        component: LeafletTestComponent
                     }
                 ]
             }

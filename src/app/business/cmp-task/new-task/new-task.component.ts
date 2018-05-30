@@ -78,7 +78,7 @@ export class NewTaskComponent implements OnInit, AfterViewInit {
         private route: ActivatedRoute,
         private loginService: LoginService,
         private cmpTaskService: CmpTaskService,
-        private _notice: NzNotificationService,
+//private _notice: NzNotificationService,
         private confirmModal: NzModalService
     ) {
         
@@ -195,10 +195,10 @@ export class NewTaskComponent implements OnInit, AfterViewInit {
         })
             .subscribe(response => {
                 if(response.error) {
-                    this._notice.warning('Warning', 'Create comparison task failed!');
+                    // this._notice.warning('Warning', 'Create comparison task failed!');
                 }
                 else {
-                    this._notice.success('Success', 'Create comparison task success!');
+                    // this._notice.success('Success', 'Create comparison task success!');
                     this.cmpTask._id = response.data;
                     const self = this;
                     this.confirmModal.confirm({
@@ -221,10 +221,10 @@ export class NewTaskComponent implements OnInit, AfterViewInit {
         this.cmpTaskService.start(this.cmpTask._id)
             .subscribe(response => {
                 if(response.error) {
-                    this._notice.warning('Warning', 'Start comparison task failed!');
+                    // this._notice.warning('Warning', 'Start comparison task failed!');
                 }
                 else {
-                    this._notice.warning('Success', 'Start comparison task succeed!');
+                    // this._notice.warning('Success', 'Start comparison task succeed!');
                 }
             });
     }
@@ -277,7 +277,7 @@ export class NewTaskComponent implements OnInit, AfterViewInit {
 
     }
 
-    onCmpObjCompleted(e) {}
+    onCmpObjCompleted() {}
 
     // valid of instance
     onValidationChange(e: {
@@ -293,11 +293,11 @@ export class NewTaskComponent implements OnInit, AfterViewInit {
         }
     }
 
-    msCancel(e) {
+    msCancel() {
         this.__isMSModalVisible = false;
     }
 
-    msOK(e) {
+    msOK() {
         const msInstance = this.msService.newInstance(this.msAdding);
         msInstance.meta.name = this.addingName;
         msInstance.meta.desc = this.addingDesc;
@@ -345,7 +345,7 @@ export class NewTaskComponent implements OnInit, AfterViewInit {
         this.validateStepy();
     }
 
-    cmpObjOK(e) {
+    cmpObjOK() {
         const cmpObj = new CmpObj();
         cmpObj.meta.name = this.addingName;
         cmpObj.meta.desc = this.addingDesc;
@@ -357,7 +357,7 @@ export class NewTaskComponent implements OnInit, AfterViewInit {
         this.validateStepy();
     }
 
-    cmpObjCancel(e) {
+    cmpObjCancel() {
         this.__isCmpObjModalVisible = false;
     }
 }

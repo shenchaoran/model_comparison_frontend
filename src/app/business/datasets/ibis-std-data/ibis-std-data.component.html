@@ -1,0 +1,58 @@
+<ng-container *ngIf='std'>
+    <ng-container *ngIf='!_selectedEvent'>
+        <section>
+            <h3>Basic information</h3>
+            <div>
+                <dl class='ogms-table-info'>
+                    <div nz-row>
+                        <dt nz-col nzSpan='5'>Start date</dt>
+                        <dd nz-col nzSpan='7'>{{std.content.temporal.start | date:'yyyy-MM-dd'}}</dd>
+                        <dt nz-col nzSpan='5'>End date</dt>
+                        <dd nz-col nzSpan='7'>{{std.content.temporal.end | date:'yyyy-MM-dd'}}</dd>
+                        <dt nz-col nzSpan='5'>Time scale</dt>
+                        <dd nz-col nzSpan='7'>{{std.content.temporal.scale}}</dd>
+                        <dt nz-col nzSpan='5'>Spatial resolution</dt>
+                        <dd nz-col nzSpan='7'>
+                            {{std.content.spatial.x}} {{std.content.spatial.scale}} * {{std.content.spatial.y}} {{std.content.spatial.scale}}
+                        </dd>
+                    </div>
+                    <div>
+                        {{std.meta.description}}
+                    </div>
+                </dl>
+            </div>
+        </section>
+        <section>
+            <h3>Site distribution</h3>
+            <div>
+                <h4>Select site to preview or download data.</h4>
+                <ogms-site-map (onSiteSelected)='fetchData($event, undefined)'></ogms-site-map>
+                <!-- <ogms-site-map-leaflet (onSiteSelected)='fetchData($event, undefined)'></ogms-site-map-leaflet> -->
+            </div>
+        </section>
+    </ng-container>
+
+    <ng-container *ngIf='!!_selectedEvent'>
+        <div class='data-detail'>
+            <div class='flex-box-row-nowrap header'>
+                <button nz-button (click)='clearEvent()'>
+                    <i class="anticon anticon-arrow-left"></i>
+                </button>
+                <span class='flex-item-1-1-auto'></span>
+                <button nz-button [nzType]='"primary"' (click)='downloadData()'>
+                    Download
+                </button>
+            </div>
+            <ng-container *ngIf='_selectedEvent?.id === "-i"'>
+                <pre class='line-numbers language-none'><code class='language-none'>{{site.data['-i']}}</code></pre>
+                <!-- <ogms-handsome-table [matrix]='site.data["-i"]'></ogms-handsome-table> -->
+            </ng-container>
+            <ng-container *ngIf='_selectedEvent?.id === "-s"'>
+                <pre class='line-numbers language-none'><code class='language-none'>{{site.data['-s']}}</code></pre>
+            </ng-container>
+            <ng-container *ngIf='_selectedEvent?.id === "-o"'>
+                <pre class='line-numbers language-none'><code class='language-none'>{{site.data['-o']}}</code></pre>
+            </ng-container>
+        </div>
+    </ng-container>
+</ng-container>

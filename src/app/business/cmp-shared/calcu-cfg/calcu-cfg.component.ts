@@ -13,6 +13,7 @@ import { ResourceSrc, CalcuTask, CmpTask, CmpSolution } from '@models';
 import { LoginService } from '@feature/login/login.service';
 import { DynamicTitleService } from '@core/services/dynamic-title.service';
 import * as uuidv1 from 'uuid/v1';
+declare const ol: any;
 import {
     AbstractControl,
     FormBuilder,
@@ -23,7 +24,6 @@ import {
     NG_VALIDATORS,
     NG_VALUE_ACCESSOR
 } from '@angular/forms';
-declare var ol: any;
 
 @Component({
     selector: 'ogms-calcu-cfg',
@@ -270,7 +270,9 @@ export class CalcuCfgComponent implements OnInit, OnChanges, AfterViewInit {
 
     @HostListener('window:resize')
     resize() {
-        this.map.updateSize();
+        if(this.map) {
+            this.map.updateSize();
+        }
     }
 
     /**

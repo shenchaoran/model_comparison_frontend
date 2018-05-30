@@ -3,6 +3,9 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { GeoDataComponent} from './geo-data/geo-data.component';
 import { HeaderMenuLayoutComponent } from '@shared';
+import { DatasetsComponent } from './datasets/datasets.component';
+import { IbisStdDataComponent } from './ibis-std-data/ibis-std-data.component';
+import { BiomeStdDataComponent } from './biome-std-data/biome-std-data.component';
 
 const routes: Routes = [
     {
@@ -11,7 +14,7 @@ const routes: Routes = [
         children: [
             {
                 path: '',
-                component: GeoDataComponent
+                component: DatasetsComponent
             }
         ]
     }

@@ -17,6 +17,7 @@ import { MockService } from "../mock/mock.service";
 import { ModelListCardComponent } from './model-list-card/model-list-card.component';
 import { ModelInfoComponent } from './model-info/model-info.component';
 import { ModelsComponent } from './models/models.component';
+import { NzNotificationService, NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';
 
 const SERVICES = [MSService];
 
@@ -28,18 +29,19 @@ const SERVICES = [MSService];
     ],
     declarations: [
         GeoModelComponent,
-        // ModelTreeComponent,
-        // ModelIntroComponent,
-        // NewModelComponent,
-        // ModelBannerComponent,
-        // ModelSearchComponent,
-        // ModelListComponent,
-        // ModelListCardComponent,
+        ModelTreeComponent,
+        ModelIntroComponent,
+        NewModelComponent,
+        ModelBannerComponent,
+        ModelSearchComponent,
+        ModelListComponent,
+        ModelListCardComponent,
         ModelInfoComponent,
         ModelsComponent
     ],
     providers: [
         MockService,
+        NzNotificationService,
         ...SERVICES
     ]
 })

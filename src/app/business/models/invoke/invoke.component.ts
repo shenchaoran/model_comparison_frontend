@@ -26,14 +26,15 @@ export class InvokeComponent extends DocBaseComponent implements OnInit {
     msiForm: FormGroup;
 
     constructor(
-        protected route: ActivatedRoute,
-        protected service: MSService,
-        protected _notice: NzNotificationService,
-        protected title: DynamicTitleService,
-        protected loginService: LoginService,
-        protected fb: FormBuilder
+        public route: ActivatedRoute,
+        public service: MSService,
+//private _notice: NzNotificationService,
+        public title: DynamicTitleService,
+        public loginService: LoginService,
+        public fb: FormBuilder,
+        public router: Router
     ) {
-        super(route, service, _notice, title);
+        super(route, service, title);
         let hasLogin = this.loginService.checkLogin();
     }
 
@@ -86,12 +87,9 @@ export class InvokeComponent extends DocBaseComponent implements OnInit {
             type: type
         })
             .subscribe(response => {
-                if (response.error) {
-
-                }
-                else {
+                if (!response.error) {
                     let msrId = response.data;
-                    // TODO
+                    this.router.navigate(['/results/calculation', msrId])
                 }
             }));
     }

@@ -23,7 +23,7 @@ export class Login extends ErrorHandle {
 		fb: FormBuilder,
 		private route: ActivatedRoute,
 		private loginService: LoginService,
-        private _notification: NzNotificationService
+//private _notice: NzNotificationService
 	) {
         super();
 		this.form = fb.group({
@@ -64,22 +64,22 @@ export class Login extends ErrorHandle {
 				.subscribe({
 					next: err => {
                         if(err) {
-                            this._notification.create(
-                                'warning',
-                                'Warning:',
-                                'login failed, please retry later!'
-                            );
+                            // this._notification.create(
+                            //     'warning',
+                            //     'Warning:',
+                            //     'login failed, please retry later!'
+                            // );
                             // this.loginErrorInfo = JSON.stringify(err);
                             this.loginErrorInfo = 'login failed, please retry later!';
 						    this.submitted = false;
                         }
                     },
                     error: err => {
-                        this._notification.create(
-                            'warning',
-                            'Warning:',
-                            'login failed, please retry later!'
-                        );
+                        // this._notification.create(
+                        //     'warning',
+                        //     'Warning:',
+                        //     'login failed, please retry later!'
+                        // );
                         this.handleError(err)
                     }
 				});

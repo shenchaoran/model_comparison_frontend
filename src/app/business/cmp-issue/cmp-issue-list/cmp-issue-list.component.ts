@@ -86,7 +86,7 @@ export class CmpIssueListComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private service: CmpIssueService,
-        private _notice: NzNotificationService,
+//private _notice: NzNotificationService,
         // private loading: SlimLoadingBarService
     ) { }
 
@@ -103,7 +103,7 @@ export class CmpIssueListComponent implements OnInit {
             .subscribe(response => {
                 // this.loading.complete();
                 if(response.error) {
-                    this._notice.warning('Warning:', 'Get issues failed!');
+                    // this._notice.warning('Warning:', 'Get issues failed!');
                 }
                 else {
                     this.issues = response.data.docs;

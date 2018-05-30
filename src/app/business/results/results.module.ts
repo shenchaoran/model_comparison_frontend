@@ -10,6 +10,7 @@ import { CmpTaskService } from './services/cmp-task.service';
 import { CalcuTaskService } from './services/calcu-task.service';
 import { CmpSlnService } from '../comparison/comparison.module';
 import { CmpSharedModule } from '../cmp-shared';
+import { NzNotificationService, NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';
 
 export * from './services/cmp-task.service';
 export * from './services/calcu-task.service';
@@ -30,6 +31,7 @@ export * from './services/calcu-task.service';
         CmpSlnService,
         CmpTaskService,
         CalcuTaskService,
+        NzNotificationService,
     ]
 })
 export class ResultsModule { }

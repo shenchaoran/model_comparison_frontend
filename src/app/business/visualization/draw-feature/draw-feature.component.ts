@@ -9,9 +9,9 @@ import {
     EventEmitter,
 } from '@angular/core';
 import * as uuidv1 from 'uuid/v1';
+declare const ol: any;
 import { OlMapService } from '@feature/ol-map/ol-map.module.ts';
 import { GeoJSONService } from '@feature/ol-map/services/geojson.service';
-declare var ol: any;
 
 @Component({
     selector: 'ogms-draw-feature',

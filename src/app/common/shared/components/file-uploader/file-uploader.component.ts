@@ -43,7 +43,7 @@ export class FileUploader {
     constructor(
         private renderer: Renderer2,
         @Inject('BACKEND') private backend,
-        private _notice: NzNotificationService,
+//private _notice: NzNotificationService,
     ) {
         this._id = uuidv1();
     }
@@ -96,12 +96,12 @@ export class FileUploader {
                 this.onFileUploadCompleted.emit({
                     data: response.data
                 });
-                this._notice.success('Success:', 'Upload succeed!');
+                // this._notice.success('Success:', 'Upload succeed!');
             } else {
                 this.onFileUploadCompleted.emit({
                     error: 'upload failed'
                 });
-                this._notice.warning('Warning:', 'Upload server error!');
+                // this._notice.warning('Warning:', 'Upload server error!');
             }
         } else {
             jQuery('#progress-' + this._id).removeClass(
@@ -112,7 +112,7 @@ export class FileUploader {
             this.onFileUploadCompleted.emit({
                 error: 'upload failed'
             });
-            this._notice.warning('Warning:', data.abort? 'Upload is aborted!': 'Upload failed!');
+            // this._notice.warning('Warning:', data.abort? 'Upload is aborted!': 'Upload failed!');
         }
     }
 

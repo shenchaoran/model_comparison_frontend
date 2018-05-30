@@ -28,7 +28,7 @@ export class TaskDetailComponent implements OnInit, AfterViewInit {
     constructor(
         private service: CmpTaskService,
         private route: ActivatedRoute,
-        private _notice: NzNotificationService,
+//private _notice: NzNotificationService,
         private title: DynamicTitleService
     ) { }
 
@@ -40,7 +40,7 @@ export class TaskDetailComponent implements OnInit, AfterViewInit {
                 this.service.findOne(this.taskId)
                     .subscribe(response => {
                         if (response.error) {
-                            this._notice.warning('Warning:', 'Get task failed!');
+                            // this._notice.warning('Warning:', 'Get task failed!');
                         }
                         else {
                             this.task = response.data;

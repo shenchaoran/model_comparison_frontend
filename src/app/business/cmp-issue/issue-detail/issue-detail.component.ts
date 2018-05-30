@@ -15,7 +15,7 @@ export class IssueDetailComponent implements OnInit {
     constructor(
         private service: CmpIssueService,
         private route: ActivatedRoute,
-        private _notice: NzNotificationService,
+//private _notice: NzNotificationService,
         private title: DynamicTitleService
     ) { }
 
@@ -26,7 +26,7 @@ export class IssueDetailComponent implements OnInit {
                 this.service.findOne(this.issueId)
                     .subscribe(response => {
                         if(response.error) {
-                            this._notice.warning('Warning:', 'Get issues failed!');
+                            // this._notice.warning('Warning:', 'Get issues failed!');
                         }
                         else {
                             this.issue = response.data;

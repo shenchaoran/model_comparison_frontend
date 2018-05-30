@@ -16,12 +16,12 @@ export class SolutionDetailComponent extends DocBaseComponent implements OnInit 
     geojson;
 
     constructor(
-        protected route: ActivatedRoute,
-        protected service: CmpSlnService,
-        protected _notice: NzNotificationService,
-        protected title: DynamicTitleService
+        public route: ActivatedRoute,
+        public service: CmpSlnService,
+//private _notice: NzNotificationService,
+        public title: DynamicTitleService
     ) { 
-        super(route, service, _notice, title);
+        super(route, service, title);
     }
 
     ngOnInit() {

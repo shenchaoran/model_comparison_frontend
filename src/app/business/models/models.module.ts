@@ -8,6 +8,7 @@ import { GeoModelListComponent } from './geo-model-list/geo-model-list.component
 import { InvokeComponent } from './invoke/invoke.component';
 import { CmpSharedModule } from '../cmp-shared';
 import { LoginService } from '@feature/login/login.service';
+import { NzNotificationService, NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';
 
 export * from './services/geo-models.service';
 
@@ -24,7 +25,8 @@ export * from './services/geo-models.service';
     ],
     providers: [
         MSService,
-        LoginService
+        LoginService,
+        NzNotificationService
     ]
 })
 export class ModelsModule { }

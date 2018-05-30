@@ -53,7 +53,9 @@ declare var $: any;
 declare var jQuery: any;
 declare let _: any;
 declare var postal: any;
+declare let Handsontable: any;
+declare let geojsonvt: any;
+// declare let ol: any;
 // declare var proj4: any;
-// declare var ol: any;
 
 interface JQuery {}

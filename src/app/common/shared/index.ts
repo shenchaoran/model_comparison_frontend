@@ -12,6 +12,7 @@ import { ListFilterService } from './components/list-template/list-filter.servic
 import { HeaderMenuService } from './components/baHeaderMenu/services/baHeaderMenu.service';
 import { BaMenuService } from './components/baHeaderMenu/services/baMenu.service';
 import { LoginService } from '@feature/login/login.service';
+import { NzNotificationService, NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';
 
 import {
     FileUploader,
@@ -35,6 +36,8 @@ import {
     CheckBoxFormItemComponent,
     ListBaseComponent,
     DocBaseComponent,
+    OgmsBaseComponent,
+    MapBaseComponent,
 } from './components';
 
 import {
@@ -98,6 +101,8 @@ const COMPONENTS = [
     CheckBoxFormItemComponent,
     ListBaseComponent,
     DocBaseComponent,
+    OgmsBaseComponent,
+    MapBaseComponent,
 ];
 
 const DIRECTIVES = [
@@ -152,7 +157,8 @@ export * from './directives';
         {
             provide: 'USER_MENUS',
             useValue: USER_MENUS
-        }
+        },
+        NzNotificationService
     ],
     exports: [
         ...COMPONENTS,

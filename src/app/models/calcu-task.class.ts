@@ -54,6 +54,13 @@ export class CalcuTask {
                 src: ResourceSrc.PUBLIC
             };
         }
+        else {
+            this.auth = {
+                userId: undefined,
+                userName: undefined,
+                src: undefined
+            };
+        }
     }
 }
 

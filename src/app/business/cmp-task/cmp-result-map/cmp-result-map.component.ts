@@ -13,9 +13,9 @@ import {
 } from '@angular/core';
 import { OlMapService } from '@feature/ol-map/ol-map.module.ts';
 import * as uuidv1 from 'uuid/v1';
-declare var ol: any;
 import { CmpState } from '@models';
 import * as path from 'path';
+declare const ol: any;
 
 @Component({
     selector: 'ogms-cmp-result-map',

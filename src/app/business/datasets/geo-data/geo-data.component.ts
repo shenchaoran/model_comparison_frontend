@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../services/data.service';
 import { ActivatedRoute, Router } from '@angular/router';
-declare var ol: any;
 import {
     AbstractControl,
     FormBuilder,
@@ -12,6 +11,7 @@ import {
     NG_VALIDATORS,
     NG_VALUE_ACCESSOR
 } from '@angular/forms';
+declare const ol: any;
 
 @Component({
     selector: 'ogms-geo-data',

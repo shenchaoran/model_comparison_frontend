@@ -17,11 +17,11 @@ export class CalcuListComponent extends ListBaseComponent implements OnInit {
     withCreateBtn = false;
 
     constructor(
-        protected route: ActivatedRoute,
-        protected service: CalcuTaskService,
-        protected _notice: NzNotificationService,
-        protected title: DynamicTitleService
+        public route: ActivatedRoute,
+        public service: CalcuTaskService,
+//private _notice: NzNotificationService,
+        public title: DynamicTitleService
     ) { 
-        super(route, service, _notice, title);
+        super(route, service, title);
     }
 }

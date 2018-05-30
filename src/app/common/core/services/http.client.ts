@@ -17,7 +17,7 @@ export class _HttpClient {
         private http: HttpClient,
         @Inject('BACKEND') private backend,
         private loading: SlimLoadingBarService,
-        private notice: NzNotificationService
+//private _notice: NzNotificationService
     ) { }
 
     private appendDomain(url: string): string {
@@ -61,11 +61,12 @@ export class _HttpClient {
                                 error: response.status
                             });
                             console.log(response.status);
-                            this.notice.warning('Warning', 'Http request error!');
+                            // this.notice.warning('Warning', 'Http request error!');
                             observer.complete();
                         }
                     }
                     else {
+                        // TODO 因为 默认的 responseType 为json，所以parseRes为 false时，同时要设置options的 responseType
                         observer.next(response);
                         observer.complete();
                     }

@@ -13,7 +13,6 @@ import {
 import * as uuidv1 from 'uuid/v1';
 import { OlMapService, ToolbarService, GeoJSONService } from '../services';
 import { Observable } from 'rxjs';
-// declare var ol: any;
 import * as ol from 'openlayers';
 
 @Component({

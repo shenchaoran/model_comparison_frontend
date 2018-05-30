@@ -16,7 +16,7 @@ export class CalcuDetailComponent implements OnInit {
 
     constructor(
         private service: CalculationService,
-        private notice: NzNotificationService,
+//private _notice: NzNotificationService,
         private route: ActivatedRoute
     ) { }
 

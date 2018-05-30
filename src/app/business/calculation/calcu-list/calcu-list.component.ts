@@ -16,15 +16,15 @@ export class CalcuListComponent implements OnInit {
 
     constructor(
         private service: CalculationService,
-        private notice: NzNotificationService
+//private _notice: NzNotificationService
     ) { }
 
     ngOnInit() {
-        this.search();
+        this.search(undefined);
     }
 
-    search() {
-        this.service.findAll()
+    search(filters) {
+        this.service.findAll(filters)
             .subscribe(response => {
                 if(!response.error) {
                     this.calculations = response.data.docs;

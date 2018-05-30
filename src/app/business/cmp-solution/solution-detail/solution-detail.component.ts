@@ -17,7 +17,7 @@ export class SolutionDetailComponent implements OnInit {
     constructor(
         private service: CmpSlnService,
         private route: ActivatedRoute,
-        private _notice: NzNotificationService,
+//private _notice: NzNotificationService,
         private title: DynamicTitleService
     ) { }
 
@@ -28,7 +28,7 @@ export class SolutionDetailComponent implements OnInit {
                 this.service.findOne(this.solutionId)
                     .subscribe(response => {
                         if(response.error) {
-                            this._notice.warning('Warning:', 'Get solution failed!');
+                            // this._notice.warning('Warning:', 'Get solution failed!');
                         }
                         else {
                             this.solution = response.data;

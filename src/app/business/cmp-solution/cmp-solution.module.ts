@@ -11,6 +11,7 @@ import { OlMapModule } from '@feature/ol-map/ol-map.module';
 import { CmpSharedModule } from '../cmp-shared';
 import { CmpTaskService } from '../cmp-task/services';
 import { CalcuCfgComponent } from '../cmp-shared';
+import { NzNotificationService, NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';
 
 @NgModule({
     imports: [
@@ -28,6 +29,7 @@ import { CalcuCfgComponent } from '../cmp-shared';
         CmpSlnService,
         MSService,
         CmpTaskService,
+        NzNotificationService,
     ],
     entryComponents: [
         CalcuCfgComponent,

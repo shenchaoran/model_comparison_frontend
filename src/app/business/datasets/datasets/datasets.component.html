@@ -1,0 +1,43 @@
+<div class="ogms-responsive-div flex-box-row-nowrap" style='margin-top: 24px !important'>
+    <div class="ogms-left">
+        <div class='menu'>
+            <ul nz-menu [nzMode]='"inline"'>
+                <li nz-menu-item *ngFor='let item of stdList; let i=index;' [nzSelected]='i===0' (click)='onClassSelected(item)'>
+                    <!-- <span title [routerLink]='item.stdClass' [queryParams]='{id: item._id}'>{{item.meta.name}}</span> -->
+                    <span title>{{item.meta.name}}</span>
+                </li>
+            </ul>
+        </div>
+        <ng-container *ngIf='_eventMenuVisiable'>
+            <div class='menu'>
+                <ul nz-menu [nzMode]='"inline"'>
+                    <li nz-submenu [nzOpen]='true'>
+                        <span title>Inputs</span>
+                        <ul>
+                            <li *ngFor='let item of selectedSTD?.content?.IO?.inputs; let i=index;' nz-menu-item (click)='onEventSelected(item)'>{{item.name}}</li>
+                        </ul>
+                    </li>
+                    <li nz-submenu>
+                        <span title>Outputs</span>
+                        <ul>
+                            <li *ngFor='let item of selectedSTD?.content?.IO?.outputs' nz-menu-item (click)='onEventSelected(item)'>{{item.name}}</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </ng-container>
+    </div>
+    <div class="ogms-right flex-item-1-1-auto">
+        <!-- <router-outlet></router-outlet> -->
+
+        <!-- TODO: 隐藏还是只显示一个 -->
+        <ng-container *ngIf='selectedSTD?.stdClass === "IBIS_STD_DATA"'>
+            <ogms-ibis-std-data [selectedEvent]='selectedEvent' (onEventCleared)='selectedEvent=undefined;' [std]='selectedSTD' (onSiteSelected)='_eventMenuVisiable = $event;'></ogms-ibis-std-data>
+        </ng-container>
+        <ng-container *ngIf='selectedSTD?.stdClass === "BIOME_BGC_STD_DATA"'>
+            <ogms-biome-std-data [selectedEvent]='selectedEvent' [std]='selectedSTD'></ogms-biome-std-data>
+        </ng-container>
+    </div>
+</div>
+
+<ogms-footer></ogms-footer>

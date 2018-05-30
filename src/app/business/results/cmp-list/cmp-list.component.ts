@@ -16,11 +16,11 @@ export class CmpListComponent extends ListBaseComponent implements OnInit {
     withCreateBtn = false;
 
     constructor(
-        protected route: ActivatedRoute,
-        protected service: CmpTaskService,
-        protected _notice: NzNotificationService,
-        protected title: DynamicTitleService
+        public route: ActivatedRoute,
+        public service: CmpTaskService,
+//private _notice: NzNotificationService,
+        public title: DynamicTitleService
     ) { 
-        super(route, service, _notice, title);
+        super(route, service, title);
     }
 }

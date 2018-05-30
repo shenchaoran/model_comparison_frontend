@@ -14,7 +14,6 @@ import { OLSymbolService } from './ol-symbol.service';
 // import * as ol from 'openlayers';
 // import { Button, TextButton } from 'ol3-ext';
 // 在angular.cli.json中添加过的script相当于添加到全局变量中了，这里声明一下通过编译器就行了
-declare var ol: any;
 
 export abstract class MapService extends ErrorHandle {
     _map: any;

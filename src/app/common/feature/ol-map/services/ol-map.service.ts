@@ -9,7 +9,7 @@ import { MapService } from './map.service';
 import { OLSymbolService } from './ol-symbol.service';
 import { OL_MAP_DRAW_TYPE } from '../models';
 import { ColorConverter } from '@utils/colorCoverter.service';
-declare var ol: any;
+declare const ol: any;
 
 @Injectable()
 export class OlMapService extends MapService {

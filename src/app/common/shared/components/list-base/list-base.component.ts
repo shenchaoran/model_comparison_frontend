@@ -3,6 +3,7 @@ import { ListBaseService } from '../../services/list-base.service';
 import { ActivatedRoute } from "@angular/router";
 import { NzNotificationService, NzModalService } from "ng-zorro-antd";
 import { DynamicTitleService } from '@core/services/dynamic-title.service';
+import { OgmsBaseComponent } from '../ogms-base/ogms-base.component';
 /**
  * list 类型的组件基类，极大地复用了组件模板代码
  * 组件继承只能继承类，不能继承模板，不同list 模板的区别在于 list item template
@@ -17,12 +18,11 @@ import { DynamicTitleService } from '@core/services/dynamic-title.service';
     styleUrls: ['./list-base.component.scss']
 })
 
-export class ListBaseComponent implements OnInit, OnDestroy {
-    protected _subscriptions = [];
-    protected count;
-    protected list;
-    protected withCreateBtn = false;
-    protected ownerFilter: {
+export class ListBaseComponent extends OgmsBaseComponent implements OnInit, OnDestroy {
+    public count;
+    public list;
+    public withCreateBtn = false;
+    public ownerFilter: {
         label: string,
         value: string,
         checked: boolean
@@ -38,7 +38,7 @@ export class ListBaseComponent implements OnInit, OnDestroy {
                 checked: false
             }
         ];
-    protected otherFilters: {
+        public otherFilters: {
         label: string,
         value: string,
         options: {
@@ -92,11 +92,13 @@ export class ListBaseComponent implements OnInit, OnDestroy {
         ];
 
     constructor(
-        protected route: ActivatedRoute,
-        protected service: ListBaseService,
-        protected _notice: NzNotificationService,
-        protected title: DynamicTitleService
-    ) { }
+        public route: ActivatedRoute,
+        public service: ListBaseService,
+//private _notice: NzNotificationService,
+        public title: DynamicTitleService
+    ) { 
+        super();
+    }
 
 
     ngOnInit() {
@@ -119,11 +121,5 @@ export class ListBaseComponent implements OnInit, OnDestroy {
                     this.count = response.data.count;
                 }
             }));
-    }
-
-    ngOnDestroy() {
-        _.map(this._subscriptions, subscription => {
-            subscription.unsubscribe();
-        })
     }
 }

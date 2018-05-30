@@ -16,7 +16,7 @@ export class ModelsComponent implements OnInit {
   constructor(
       private route: ActivatedRoute,
       private service: MSService,
-      private _notice: NzNotificationService,
+//private _notice: NzNotificationService,
       private title: DynamicTitleService
   ) { }
 

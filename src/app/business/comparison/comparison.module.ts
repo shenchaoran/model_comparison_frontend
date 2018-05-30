@@ -9,6 +9,7 @@ import { SolutionDetailComponent } from './solution-detail/solution-detail.compo
 import { TaskConfigComponent } from './task-config/task-config.component';
 import { CmpSlnService } from './services/cmp-sln.service';
 import { CmpTaskService } from '../results/services/cmp-task.service';
+import { NzNotificationService, NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';
 
 export * from './services/cmp-sln.service';
 
@@ -27,6 +28,7 @@ export * from './services/cmp-sln.service';
     providers: [
         CmpSlnService,
         CmpTaskService,
+        NzNotificationService
     ]
 })
 export class ComparisonModule { }

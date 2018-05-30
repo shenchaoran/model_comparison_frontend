@@ -10,8 +10,8 @@ import * as uuidv1 from 'uuid/v1';
 import { setTimeout } from 'core-js/library/web/timers';
 import { OlMapService } from '@feature/ol-map/ol-map.module.ts';
 import { GeoJSONService } from '@feature/ol-map/services/geojson.service'; 
-declare var ol: any;
 import { CmpState } from '@models';
+declare const ol: any;
 
 @Component({
     selector: 'ogms-geojson-map',

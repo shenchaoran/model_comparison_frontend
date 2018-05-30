@@ -11,6 +11,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './net/token/token.interceptor';
 import { ResParserInterceptor } from './net/res-parser/res-parser.interceptor';
 import { DynamicTitleService } from './services';
+import { NzNotificationService, NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';
 // import { TokenService } from './net/token/token.service';
 
 import 'rxjs/add/observable/from';
@@ -51,7 +52,8 @@ const CITYFUN_SERVICES = [
 
     BaThemeSpinner,
     EchartAdapterService,
-    TableAdapterService
+    TableAdapterService,
+    NzNotificationService
 ];
 
 @NgModule({

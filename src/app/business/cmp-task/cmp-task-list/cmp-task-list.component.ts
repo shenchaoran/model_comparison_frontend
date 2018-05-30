@@ -86,7 +86,7 @@ export class CmpTaskListComponent implements OnInit, AfterViewInit {
     constructor(
         private route: ActivatedRoute,
         private service: CmpTaskService,
-        private _notice: NzNotificationService,
+//private _notice: NzNotificationService,
     ) {}
 
     ngOnInit() {
@@ -103,7 +103,7 @@ export class CmpTaskListComponent implements OnInit, AfterViewInit {
         this.service.findAll(filters)
             .subscribe(response => {
                 if(response.error) {
-                    this._notice.warning('Warning:', 'Get issues failed!');
+                    // this._notice.warning('Warning:', 'Get issues failed!');
                 }
                 else {
                     this.tasks = response.data.docs;

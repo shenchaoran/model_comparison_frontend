@@ -14,7 +14,7 @@ export class LoginService extends ErrorHandle {
     constructor(
         private http: _HttpClient,
         private router: Router,
-        private _notification: NzNotificationService,
+//private _notice: NzNotificationService,
         private route: ActivatedRoute,
     ) {
         super();
@@ -60,7 +60,7 @@ export class LoginService extends ErrorHandle {
 
     public loginOut() {
         localStorage.removeItem('jwt');
-        this._notification.success('Notice', 'Logout out succeed!');
+        // this._notification.success('Notice', 'Logout out succeed!');
     }
 
     public hasLogin(): boolean {

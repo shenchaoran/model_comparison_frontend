@@ -7,6 +7,7 @@ import { FiltersComponent } from './filters/filters.component';
 import { SearchRoutingModule } from './search-routing.module';
 import { ResultsComponent } from './results/results.component';
 import { SearchService } from './services';
+import { NzNotificationService, NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import { SearchService } from './services';
     ResultsComponent
   ],
   providers: [
-    SearchService
+    SearchService,
+    NzNotificationService
   ]
 })
 export class SearchModule { }

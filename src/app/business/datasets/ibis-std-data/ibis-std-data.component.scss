@@ -1,0 +1,15 @@
+.data-detail {
+    border-top: 1px;
+    margin-top: 4px;
+    pre {
+        max-height: 500px;
+        margin: 3px 8px;
+    }
+    .header {
+        margin-bottom: 12px;
+        padding: 5px 10px;
+        border-radius: 5px;
+        border-top: 1px #e1e4e8 solid !important;
+        border-bottom: 1px #e1e4e8 solid !important;
+    }
+}

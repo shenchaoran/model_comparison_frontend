@@ -7,6 +7,10 @@ import { NzNotificationService, NzModalService } from "ng-zorro-antd";
 import { DynamicTitleService } from "@core/services/dynamic-title.service";
 import { ReactiveFormsModule } from "@angular/forms";
 import { DocBaseComponent } from '@shared';
+import { Observable } from 'rxjs';
+import { map, switchMap, filter, tap } from 'rxjs/operators';
+import { interval } from 'rxjs/observable/interval';
+import { _throw } from 'rxjs/observable/throw';
 
 @Component({
     selector: 'ogms-calcu-detail',
@@ -18,12 +22,12 @@ export class CalcuDetailComponent extends DocBaseComponent implements OnInit {
     msRecord;
 
     constructor(
-        protected route: ActivatedRoute,
-        protected service: CalcuTaskService,
-        protected _notice: NzNotificationService,
-        protected title: DynamicTitleService
+        public route: ActivatedRoute,
+        public service: CalcuTaskService,
+//private _notice: NzNotificationService,
+        public title: DynamicTitleService
     ) { 
-        super(route, service, _notice, title);
+        super(route, service, title);
     }
 
     ngOnInit() {
@@ -31,8 +35,31 @@ export class CalcuDetailComponent extends DocBaseComponent implements OnInit {
         this._subscriptions.push(this.doc.subscribe(doc => {
             this.msRecord = doc;
             this.msRecord.IO.mode = 'read';
+            if(this.msRecord.progress < 100) {
+                this.fetchInterval();
+            }
         }));
     }
 
-    
+    private fetchInterval() {
+        const record$ = interval(2000).pipe(
+            switchMap((v, i) => {
+                return this.service.findOne(this.msRecord._id);
+            }),
+            map(response => {
+                if(!response.error) {
+                    return response.data;
+                }
+            })
+        )
+
+        const _subscription = record$.subscribe(doc => {
+            this.msRecord = doc;
+            this.msRecord.IO.mode = 'read';
+            if(this.msRecord.progress === 100 || this.msRecord.progress === -1) {
+                _subscription.unsubscribe();
+            }
+        });
+        this._subscriptions.push(_subscription);
+    }
 }

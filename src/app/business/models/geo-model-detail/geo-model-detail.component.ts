@@ -27,12 +27,12 @@ export class GeoModelDetailComponent extends DocBaseComponent implements OnInit 
     _indeterminate = false;
 
     constructor(
-        protected route: ActivatedRoute,
-        protected service: MSService,
-        protected _notice: NzNotificationService,
-        protected title: DynamicTitleService
+        public route: ActivatedRoute,
+        public service: MSService,
+//private _notice: NzNotificationService,
+        public title: DynamicTitleService
     ) {
-        super(route, service, _notice, title);
+        super(route, service, title);
     }
 
     ngOnInit() {

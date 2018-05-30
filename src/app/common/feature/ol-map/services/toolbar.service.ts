@@ -6,7 +6,7 @@ import { OlMapService } from '../services/ol-map.service';
 import { Observable } from 'rxjs';
 import * as proj4x from 'proj4';
 const proj4 = (proj4x as any).default;
-declare var ol: any;
+declare const ol: any;
 
 @Injectable()
 export class ToolbarService {

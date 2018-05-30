@@ -17,8 +17,29 @@
                                 <dd nz-col nzSpan='8'>{{msRecord.auth.src | resourceSrc}}</dd>
                                 <dt nz-col nzSpan='4'>Create time</dt>
                                 <dd nz-col nzSpan='8'>{{msRecord.meta.time | date:'yyyy-MM-dd'}}</dd>
+                                <ng-container *ngIf='msRecord.state !== 4'>    
+                                    <dt nz-col nzSpan='4'>Status</dt>
+                                    <dd nz-col nzSpan='8'>
+                                        <span>
+                                        {{
+                                            msRecord.state === 0? 'To configured'
+                                            : msRecord.state === 1? 'Could start'
+                                            : msRecord.state === 2? 'Starting'
+                                            : msRecord.state === 3? 'Invoking failed'
+                                            : msRecord.state === 5? 'Run failed'
+                                            : msRecord.state === 6? 'Run succeed'
+                                            : ''
+                                        }}
+                                        </span>
+                                    </dd>
+                                </ng-container>
                             </div>
                         </dl>
+                        <div>
+                            <ng-container *ngIf='msRecord.state === 4'>
+                                <nz-progress [nzPercent]="msRecord.progress" [nzWidth]='400'></nz-progress>
+                            </ng-container>
+                        </div>
                         <div class='detail-desc'>
                             {{msRecord.meta.desc | description}}
                         </div>
@@ -32,15 +53,6 @@
                     <div class='section-body'>
                         <!-- <ogms-calcu-result [ngModel]='msRecord.IO'></ogms-calcu-result> -->
                         <ogms-calcu-cfg [v]='msRecord.IO' [mode]='"read"' [width]='_width'></ogms-calcu-cfg>
-                    </div>
-                </section>
-                <section>
-                    <div class='section-header flex-box-row-nowrap'>
-                        <span class='title'>Status</span>
-                        <span class='placeholder flex-item-1-1-auto'></span>
-                    </div>
-                    <div class='section-body'>
-                        
                     </div>
                 </section>
             </article>
