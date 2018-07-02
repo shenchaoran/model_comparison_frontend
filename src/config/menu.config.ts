@@ -87,15 +87,16 @@ export const HEADER_MENUS: MenuClass[] = [
                 }
             }
         ]
-    },
-    {
-        path: 'test',
-        data: {
-            menu: {
-                title: 'Test'
-            }
-        }
     }
+    // ,
+    // {
+    //     path: 'test',
+    //     data: {
+    //         menu: {
+    //             title: 'Test'
+    //         }
+    //     }
+    // }
     // {
     //     path: 'help',
     //     data: {
