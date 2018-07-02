@@ -107,7 +107,7 @@ export class NewTaskComponent implements OnInit, AfterViewInit {
             }
         ]
 
-        // this.init();
+        this.init();
     }
 
     init() {
@@ -307,12 +307,14 @@ export class NewTaskComponent implements OnInit, AfterViewInit {
         // add Layout cfg
         this.config = _.cloneDeep(this.config);
         const length = this.config.content[0].content.length;
+        _.set(msInstance.IO, 'mode', 'write');
         const obj = {
             type: 'component',
             title: msInstance.meta.name,
             componentName: 'calcu-cfg',
             componentState: {
-                msInstance: msInstance
+                msInstance: msInstance,
+                v: msInstance.IO
             }
         };
         if(length < 2) {
@@ -343,6 +345,9 @@ export class NewTaskComponent implements OnInit, AfterViewInit {
         this.addingName = '';
         this.__isMSModalVisible = false;
         this.validateStepy();
+
+        
+        this.config = _.cloneDeep(this.config);
     }
 
     cmpObjOK() {
