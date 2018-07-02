@@ -96,7 +96,7 @@
                     <nz-collapse>
                         <ng-container *ngFor="let msInstance of msInstances">
                             <nz-collapse-panel [nzHeader]="msInstance?.meta?.name">
-                                <!-- <ogms-calcu-cfg (onValidationChange)='onValidationChange($event)' (onInstanceChange)='onInstanceChange($event)'></ogms-calcu-cfg> -->
+                                <ogms-calcu-cfg (onValidationChange)='onValidationChange($event)' (onInstanceChange)='onInstanceChange($event)'></ogms-calcu-cfg>
                             </nz-collapse-panel>
                         </ng-container>
                     </nz-collapse>
