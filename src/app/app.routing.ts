@@ -65,10 +65,6 @@ export const routes: Routes = [
         loadChildren: './business/search/search.module#SearchModule'
     },
     {
-        path: 'help',
-        loadChildren: './business/help/help.module#HelpModule'
-    },
-    {
         path: 'users/:username',
         loadChildren: './business/profile/profile.module#ProfileModule'
     },
