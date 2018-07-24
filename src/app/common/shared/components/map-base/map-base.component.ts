@@ -7,7 +7,7 @@ import {
 import * as uuidv1 from 'uuid/v1';
 import { OgmsBaseComponent } from '../ogms-base/ogms-base.component';
 import { DocBaseComponent } from '../doc-base/doc-base.component';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 declare const ol: any;
 
 @Component({

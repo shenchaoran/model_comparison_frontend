@@ -12,11 +12,8 @@ import {
     HttpHeaders,
     HttpEvent
 } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/throw';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 /**
  * TOKEN拦截器，其注册细节见 `core.module`
@@ -42,9 +39,11 @@ export class TokenInterceptor implements HttpInterceptor {
             }
         });
         if (shouldSkiped) {
-            return next.handle(req).do((event: any) => {
-                return Observable.create(observer => observer.next(event));
-            });
+            return next.handle(req).pipe(
+                tap((event: any) => {
+                    return Observable.create(observer => observer.next(event));
+                })
+            );
         }
         // endregion
 
@@ -98,12 +97,14 @@ export class TokenInterceptor implements HttpInterceptor {
                     // });
             } else {
                 // token has experied
-                return next.handle(req).do((event: any) => {
-                    this.redirect2Login();
-                    return Observable.create(observer =>
-                        observer.error({ status: 401 })
-                    );
-                });
+                return next.handle(req).pipe(
+                    tap((event: any) => {
+                        this.redirect2Login();
+                        return Observable.create(observer =>
+                            observer.error({ status: 401 })
+                        );
+                    })
+                );
             }
         }
     }

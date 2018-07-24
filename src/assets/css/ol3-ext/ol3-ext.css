@@ -716,7 +716,7 @@
     -weblit-transition: -webkit-transform 0.2s linear;
     clear: both;
     display: block;
-    #border: 1px solid transparent;
+    border: 1px solid transparent;
     box-sizing: border-box;
 }
 

@@ -1,7 +1,7 @@
 // tslint:disable:no-console class-name
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 import { NzNotificationService } from 'ng-zorro-antd';
 

@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { _HttpClient } from '@core/services/http.client';
 import { Router, Routes } from '@angular/router';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 import { HEADER_MENUS } from '@config/menu.config';
 import { ErrorHandle } from '@core/base/error-handle';

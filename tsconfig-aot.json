@@ -78,7 +78,7 @@
         }
     },
     "angularCompilerOptions": {
-        "preserveWhitespaces": false,
+        "preserveWhitespaces": "off",
         "genDir": "aot",
         "skipMetadataEmit": true
     },

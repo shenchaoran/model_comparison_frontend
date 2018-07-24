@@ -12,11 +12,12 @@ import {
     HttpHeaders,
     HttpEvent
 } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/throw';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
+
+
+
+
 
 /**
  * 统一处理response
@@ -41,9 +42,11 @@ export class ResParserInterceptor implements HttpInterceptor {
             }
         });
         if (shouldSkiped) {
-            return next.handle(req).do((event: any) => {
-                return Observable.create(observer => observer.next(event));
-            });
+            return next.handle(req).pipe(
+                tap((event: any) => {
+                    return Observable.create(observer => observer.next(event));
+                })
+            );
         }
         // endregion
 

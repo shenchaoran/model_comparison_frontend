@@ -7,10 +7,8 @@ import { NzNotificationService, NzModalService } from "ng-zorro-antd";
 import { DynamicTitleService } from "@core/services/dynamic-title.service";
 import { ReactiveFormsModule } from "@angular/forms";
 import { DocBaseComponent } from '@shared';
-import { Observable } from 'rxjs';
+import { Observable, interval } from 'rxjs';
 import { map, switchMap, filter, tap } from 'rxjs/operators';
-import { interval } from 'rxjs/observable/interval';
-import { _throw } from 'rxjs/observable/throw';
 
 @Component({
     selector: 'ogms-calcu-detail',

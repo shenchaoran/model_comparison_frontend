@@ -2,8 +2,7 @@
 
 import { Injectable } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
+import { Observable, Subscription } from 'rxjs';
 import * as uuidv1 from 'uuid/v1';
 import { _HttpClient } from '@core/services/http.client';
 import * as echarts from 'echarts';

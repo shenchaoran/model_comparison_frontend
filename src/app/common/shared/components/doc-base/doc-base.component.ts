@@ -3,7 +3,7 @@ import { ListBaseService } from '../../services';
 import { ActivatedRoute, Params } from "@angular/router";
 import { NzNotificationService, NzModalService } from "ng-zorro-antd";
 import { DynamicTitleService } from '@core/services/dynamic-title.service';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { OgmsBaseComponent } from '../ogms-base/ogms-base.component';
 
 /**

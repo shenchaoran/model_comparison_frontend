@@ -4,8 +4,8 @@ import { HttpHeaders } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NzNotificationService } from 'ng-zorro-antd';
 import { _HttpClient } from '@core/services/http.client';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/throw';
+import { Observable } from 'rxjs';
+
 
 import { ErrorHandle } from '@core/base/error-handle';
 

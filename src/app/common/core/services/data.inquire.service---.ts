@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { _HttpClient } from './http.client';
 import { Resolve } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/toPromise';
+import { Observable } from 'rxjs';
+
 import { ErrorHandle } from '../../../common/core/base/error-handle';
 
 import { APIS, BACKEND } from '@config/api.config';

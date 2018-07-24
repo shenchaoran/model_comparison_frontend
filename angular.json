@@ -1,0 +1,208 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "web-njgis": {
+      "root": "",
+      "sourceRoot": "src",
+      "projectType": "application",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "prod",
+            "index": "src/index.html",
+            "main": "src/main.ts",
+            "tsConfig": "src/tsconfig.app.json",
+            "polyfills": "src/polyfills.ts",
+            "assets": [
+              "src/assets",
+              "src/config",
+              "src/browser-download.html",
+              "src/favicon.ico"
+            ],
+            "styles": [
+              "src/styles.scss",
+              "src/styles.less"
+            ],
+            "scripts": [
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/chroma-js/chroma.min.js",
+              "node_modules/lodash/lodash.min.js",
+              "node_modules/postal/lib/postal.min.js",
+              "node_modules/openlayers/dist/ol.js",
+              "node_modules/ol3-ext/dist/ol3-ext.min.js",
+              "node_modules/ol3-layerswitcher/src/ol3-layerswitcher.js",
+              "node_modules/quill/dist/quill.min.js",
+              "node_modules/perfect-scrollbar/dist/perfect-scrollbar.min.js",
+              "node_modules/prismjs/prism.js",
+              "node_modules/prismjs/plugins/line-numbers/prism-line-numbers.min.js",
+              "node_modules/handsontable/dist/handsontable.full.min.js",
+              "node_modules/leaflet/dist/leaflet.js",
+              "node_modules/geojson-vt/geojson-vt-dev.js",
+              "node_modules/topojson/dist/topojson.min.js"
+            ]
+          },
+          "configurations": {
+            "dev-hmr": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.dev-hmr.ts"
+                }
+              ]
+            },
+            "production": {
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "web-njgis:build"
+          },
+          "configurations": {
+            "dev-hmr": {
+              "browserTarget": "web-njgis:build:dev-hmr"
+            },
+            "production": {
+              "browserTarget": "web-njgis:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "web-njgis:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "src/test.ts",
+            "karmaConfig": "./karma.conf.js",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "src/tsconfig.spec.json",
+            "scripts": [
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/chroma-js/chroma.min.js",
+              "node_modules/lodash/lodash.min.js",
+              "node_modules/postal/lib/postal.min.js",
+              "node_modules/openlayers/dist/ol.js",
+              "node_modules/ol3-ext/dist/ol3-ext.min.js",
+              "node_modules/ol3-layerswitcher/src/ol3-layerswitcher.js",
+              "node_modules/quill/dist/quill.min.js",
+              "node_modules/perfect-scrollbar/dist/perfect-scrollbar.min.js",
+              "node_modules/prismjs/prism.js",
+              "node_modules/prismjs/plugins/line-numbers/prism-line-numbers.min.js",
+              "node_modules/handsontable/dist/handsontable.full.min.js",
+              "node_modules/leaflet/dist/leaflet.js",
+              "node_modules/geojson-vt/geojson-vt-dev.js",
+              "node_modules/topojson/dist/topojson.min.js"
+            ],
+            "styles": [
+              "src/styles.scss",
+              "src/styles.less"
+            ],
+            "assets": [
+              "src/assets",
+              "src/config",
+              "src/browser-download.html",
+              "src/favicon.ico"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "src/tsconfig.app.json",
+              "src/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "web-njgis-e2e": {
+      "root": "",
+      "sourceRoot": "e2e",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "./protractor.conf.js",
+            "devServerTarget": "web-njgis:serve"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "e2e/tsconfig.e2e.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "web-njgis",
+  "schematics": {
+    "@schematics/angular:class": {
+      "spec": false
+    },
+    "@schematics/angular:component": {
+      "spec": false,
+      "index": true,
+      "prefix": "ogms",
+      "styleext": "scss"
+    },
+    "@schematics/angular:directive": {
+      "flat": true,
+      "spec": false,
+      "prefix": "ogms"
+    },
+    "@schematics/angular:guard": {
+      "flat": true,
+      "spec": false
+    },
+    "@schematics/angular:interface": {
+      "prefix": ""
+    },
+    "@schematics/angular:module": {
+      "flat": false,
+      "spec": false,
+      "routing": true
+    },
+    "@schematics/angular:pipe": {
+      "flat": true,
+      "spec": false
+    },
+    "@schematics/angular:service": {
+      "flat": true,
+      "spec": false
+    }
+  }
+}

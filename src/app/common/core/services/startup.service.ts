@@ -8,9 +8,9 @@ import { _HttpClient } from './http.client';
 // import { ACLService } from '../acl/acl.service';
 // import { TitleService } from '@core/services/title.service';
 
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/toPromise';
-import 'rxjs/add/operator/catch';
+
+
+
 /**
  * 用于应用启动时
  * 一般用来获取应用所需要的基础数据等
