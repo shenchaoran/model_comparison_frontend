@@ -87,29 +87,15 @@ export const HEADER_MENUS: MenuClass[] = [
                 }
             }
         ]
+    },
+    {
+        path: 'test',
+        data: {
+            menu: {
+                title: 'Test'
+            }
+        }
     }
-    // ,
-    // {
-    //     path: 'test',
-    //     data: {
-    //         menu: {
-    //             title: 'Test'
-    //         }
-    //     }
-    // }
-    // {
-    //     path: 'help',
-    //     data: {
-    //         menu: {
-    //             title: 'Help',
-    //             id: 'help',
-    //             icon: 'question',
-    //             selected: true,
-    //             expanded: false,
-    //             order: 0
-    //         }
-    //     }
-    // }
 ];
 
 // 登录成功后的用户菜单

@@ -11,6 +11,7 @@ import { VisualizationModule } from '../visualization/visualization.module';
 import { NzNotificationService, NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';
 import { LeafletTestComponent } from './leaflet-test/leaflet-test.component';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { OlModule } from '../ol/ol.module'
 
 @NgModule({
     imports: [
@@ -18,6 +19,7 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
         SharedModule,
         VisualizationModule,
         LeafletModule,
+        OlModule,
     ],
     declarations: [
         SiderNavComponent,
