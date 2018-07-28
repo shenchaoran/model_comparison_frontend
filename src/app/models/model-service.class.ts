@@ -21,6 +21,9 @@ export class MS {
         },
         runtime: any;
     };
+    stdIds: string[];
+    topic: string;
+    exeName: string;
 }
 
 export class Event {

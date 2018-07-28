@@ -10,6 +10,7 @@ import { CalcuResultComponent } from './calcu-result/calcu-result.component';
 import { StdDataBaseComponent } from './std-data-base/std-data-base.component';
 ////////////////////////////////////////////
 import { LoginService } from '@feature/login/login.service';
+import { StdDataService } from '../datasets/services/std-data.service';
 ////////////////////////////////////////////
 export { CalcuCfgComponent } from './calcu-cfg/calcu-cfg.component';
 export { CmpObjCfgComponent } from './cmp-obj-cfg/cmp-obj-cfg.component';
@@ -37,7 +38,8 @@ const COMPONENTS = [
     ],
     providers: [
         LoginService,
-        NzNotificationService
+        NzNotificationService,
+        StdDataService
     ]
 })
 export class CmpSharedModule { }

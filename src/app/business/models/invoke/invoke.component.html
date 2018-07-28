@@ -38,7 +38,7 @@
                         <span class='placeholder flex-item-1-1-auto'></span>
                     </div>
                     <div class='section-body'>
-                        <ogms-calcu-cfg *ngIf='msInstance' [v]='msInstance.IO' formControlName='IO' [width]='_width'></ogms-calcu-cfg>
+                        <ogms-calcu-cfg formControlName='IO' *ngIf='msInstance' [IO]='msInstance.IO' [stdIds]='msInstance.ms.stdIds' [width]='_width'></ogms-calcu-cfg>
                     </div>
                 </section>
                 <section>
@@ -46,11 +46,15 @@
                         <span class='title'>Operating</span>
                         <span class='placeholder flex-item-1-1-auto'></span>
                     </div>
-                    <div class='section-body'>
+                    <div id='form-submit' class='section-body'>
                         <button nz-button [nzType]='"primary"' (click)='invoke("save")' [disabled]='!msiForm.valid'>
-                            <i class="fa fa-save"></i>Save</button>
+                            <i class="fa fa-save"></i>
+                            Save
+                        </button>
                         <button nz-button [nzType]='"primary"' (click)='invoke("invoke")' [disabled]='!msiForm.valid'>
-                            <i class="fa fa-play"></i>Invoke</button>
+                            <i class="fa fa-play"></i>
+                            Invoke
+                        </button>
                     </div>
                 </section>
             </div>

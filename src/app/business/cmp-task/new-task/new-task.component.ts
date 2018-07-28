@@ -298,7 +298,7 @@ export class NewTaskComponent implements OnInit, AfterViewInit {
     }
 
     msOK() {
-        const msInstance = this.msService.newInstance(this.msAdding);
+        const msInstance = new CalcuTask(this.msAdding);
         msInstance.meta.name = this.addingName;
         msInstance.meta.desc = this.addingDesc;
         msInstance.cmpTaskId = this.cmpTask._id;

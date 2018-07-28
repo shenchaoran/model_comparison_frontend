@@ -4,7 +4,7 @@ import { Router, ActivatedRoute, Params } from "@angular/router";
 import { NzNotificationService, NzModalService } from "ng-zorro-antd";
 import { DynamicTitleService } from "@core/services/dynamic-title.service";
 import { LoginService } from '@feature/login/login.service';
-import { ResourceSrc } from '@models';
+import { ResourceSrc, CalcuTaskState, CalcuTask } from '@models';
 import {
     AbstractControl,
     FormBuilder,
@@ -35,20 +35,17 @@ export class InvokeComponent extends DocBaseComponent implements OnInit {
         public router: Router
     ) {
         super(route, service, title);
-        let hasLogin = this.loginService.checkLogin();
+        this.loginService.checkLogin();
     }
 
     ngOnInit() {
         super.ngOnInit();
         this._subscriptions.push(this.doc.subscribe(doc => {
-            let user = this.loginService.getUser();
             this.model = doc;
             // this.title.setTitle(this.model.MDL.meta.name);
-            this.msInstance = this.service.newInstance(this.model);
-            this.msInstance.auth.src = '' + ResourceSrc.PUBLIC;
+            this.msInstance = new CalcuTask(this.model);
             this.msInstance.cmpTaskId = undefined;
-            this.msInstance.auth.userId = user._id;
-            this.msInstance.auth.userName = user.username;
+            this.msInstance.IO.mode = 'write';
 
             this.msiForm = this.fb.group({
                 _id: this.msInstance._id,
@@ -57,39 +54,36 @@ export class InvokeComponent extends DocBaseComponent implements OnInit {
                 src: [this.msInstance.auth.src, Validators.required],
                 IO: ['', Validators.required]
             });
-            // this.msiForm.statusChanges
-            //     // .filter(status => status === 'VALID')
-            //     .subscribe(status => {
-            //         console.log(status);
-            //         console.log(this.msiForm);
-            //     });
+            this.msiForm.statusChanges
+                // .filter(status => status === 'VALID')
+                .subscribe(status => {
+                    // console.log(status);
+                    // console.log(this.msiForm);
+                    if(status === 'VALID') {
+                        this.msInstance.meta.name = this.msiForm.value['name'];
+                        this.msInstance.meta.desc = this.msiForm.value['desc'];
+                        this.msInstance.auth.src = this.msiForm.value.src;
+                        this.msInstance.std = this.msiForm.value['IO'].std;
+                        this.msInstance.IO = this.msiForm.value['IO'].IO;
+                    }
+                });
         }));
     }
 
     invoke(type) {
         if (type === 'save') {
-            this.msInstance.state = 0;
+            this.msInstance.state = CalcuTaskState.INIT;
             this.msInstance.progress = 0;
         }
         else if (type === 'invoke') {
-            this.msInstance.state = 1;
+            this.msInstance.state = CalcuTaskState.START_PENDING;
         }
-
-        this.msInstance.meta.time = (new Date()).getTime();
-        this.msInstance.meta.name = this.msiForm.value.name;
-        this.msInstance.meta.desc = this.msiForm.value.desc;
-        this.msInstance.auth.src = this.msiForm.value.src;
-        this.msInstance.IO = this.msiForm.value.IO;
-
         // console.log(this.msInstance);
-        this._subscriptions.push(this.service.invoke(this.msInstance.msId, {
-            msInstance: this.msInstance,
-            type: type
-        })
+        this._subscriptions.push(this.service.invoke(this.msInstance)
             .subscribe(response => {
                 if (!response.error) {
                     let msrId = response.data;
-                    this.router.navigate(['/results/calculation', msrId])
+                    // this.router.navigate(['/results/calculation', msrId])
                 }
             }));
     }

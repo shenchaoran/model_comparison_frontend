@@ -75,6 +75,7 @@
     "topojson": "^3.0.2",
     "ts-md5": "^1.2.0",
     "typescript": "2.7.2",
+    "typescript-string-enums": "^0.3.5",
     "uuid": "^3.1.0",
     "webpack-bundle-analyzer": "^2.11.1",
     "wicket": "git+https://github.com/dyh333/Wicket.git",

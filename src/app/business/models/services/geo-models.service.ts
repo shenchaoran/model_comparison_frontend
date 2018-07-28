@@ -28,41 +28,9 @@ export class MSService extends ListBaseService {
             });
     }
 
-    invoke(id, obj): Observable<any> {
-        return this.http.post(`/model-tools/${id}/invoke`, obj);
-    }
-
-    /**
-     * 创建一个 计算任务 实例，并将schema放在event下面
-     * 
-     * @param {any} ms 
-     * @returns {CalcuTask} 
-     * @memberof MSService
-     */
-    newInstance(ms): CalcuTask {
-        const task = new CalcuTask();
-        task.msId = ms._id;
-        task.msName = ms.MDL.meta.name;
-        task.topic = ms.topic;
-        task.nodeName = ms.auth.nodeName;
-        task.IO = _.cloneDeep(ms.MDL.IO);
-        task.IO.dataSrc = 'STD';
-        task.stdId = ms.stdId;
-        task.stdClass = ms.stdClass;
-        _.map(task.IO.schemas, schema => {
-            function appendSchema(type) {
-                _.map(task.IO[type], event => {
-                    if (event.schemaId === schema.id) {
-                        event.schema = schema;
-                    }
-                });
-            }
-            appendSchema('inputs');
-            appendSchema('std');
-            appendSchema('parameters');
-            appendSchema('outputs');
+    invoke(obj): Observable<any> {
+        return this.http.post(`/model-tools/invoke`, {
+            msInstance: obj
         });
-
-        return task;
     }
 }

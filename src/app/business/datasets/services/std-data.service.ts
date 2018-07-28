@@ -27,4 +27,12 @@ export class StdDataService extends ListBaseService {
             params: query
         })
     }
+
+    fetchDbEntries(ids): Observable<any> {
+        return this.http.get(`/std-data/docs`, {
+            params: {
+                ids: ids
+            }
+        })
+    }
 }

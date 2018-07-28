@@ -50,7 +50,7 @@ export class _HttpClient {
                 .subscribe(response => {
                     this.loading.complete();
                     if(parseRes === undefined || parseRes === true) {
-                        if (_.startsWith(_.get(response, 'status.code'), '200')) {
+                        if (!response.error) {
                             observer.next({
                                 data: response.data
                             });
@@ -58,9 +58,9 @@ export class _HttpClient {
                         }
                         else {
                             observer.next({
-                                error: response.status
+                                error: response.error
                             });
-                            console.log(response.status);
+                            console.log(response.error);
                             // this.notice.warning('Warning', 'Http request error!');
                             observer.complete();
                         }

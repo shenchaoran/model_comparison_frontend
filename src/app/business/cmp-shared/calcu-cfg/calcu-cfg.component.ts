@@ -11,9 +11,7 @@ import {
 import { NgUploaderOptions } from 'ngx-uploader';
 import { ResourceSrc, CalcuTask, CmpTask, CmpSolution } from '@models';
 import { LoginService } from '@feature/login/login.service';
-import { DynamicTitleService } from '@core/services/dynamic-title.service';
-import * as uuidv1 from 'uuid/v1';
-declare const ol: any;
+import { StdDataService } from '../../datasets/services/std-data.service';
 import {
     AbstractControl,
     FormBuilder,
@@ -24,7 +22,21 @@ import {
     NG_VALIDATORS,
     NG_VALUE_ACCESSOR
 } from '@angular/forms';
-
+/**
+ * 有 read 和 write 两种模式
+ * read:
+ *      Input: IO, std
+ *      Output: ngModel: { IO, std }
+ * write:
+ *      Input: IO, stdIds
+ *      Output: ngModel: { IO, std }
+ *
+ * @export
+ * @class CalcuCfgComponent
+ * @implements {OnInit}
+ * @implements {OnChanges}
+ * @implements {AfterViewInit}
+ */
 @Component({
     selector: 'ogms-calcu-cfg',
     templateUrl: './calcu-cfg.component.html',
@@ -44,20 +56,23 @@ import {
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CalcuCfgComponent implements OnInit, OnChanges, AfterViewInit {
-    _v;
-    _isVisible = false;
-    firstClick = true;
-    mapDivID = uuidv1();
-    map;
+    _IO;
+    _stds;
+
+    // _isVisible = false;
 
     IOForm: FormGroup;
-    @Input() set v(v) {
-        this._v = v;
+    @Input() set IO(v) {
+        this._IO = v;
         this.appendSchema();
-        if (this._v.mode !== 'read') {
+        if (this._IO.mode !== 'read') {
             this.buildForm();
         }
     }
+    @Input() set stdIds(v) {
+        this.fetchStds(v);
+    }
+    @Input() std;
     @Input() mode: 'read' | 'write' = 'write';
     @Input() width = '350px';
     @Output() onValidChange = new EventEmitter<boolean>();
@@ -68,7 +83,7 @@ export class CalcuCfgComponent implements OnInit, OnChanges, AfterViewInit {
         @Inject('BACKEND') private backend,
         private loginService: LoginService,
         private fb: FormBuilder,
-        // private title: DynamicTitleService,
+        private stdService: StdDataService
     ) {
         const token = this.loginService.getToken();
         const user = this.loginService.getUser();
@@ -90,74 +105,83 @@ export class CalcuCfgComponent implements OnInit, OnChanges, AfterViewInit {
     }
 
     ngOnChanges(changes: { [key: string]: SimpleChange }) {
-        let changed;
-        _.forIn(changes, (v, k) => {
-            if (!_.isEqual(v.currentValue, v.previousValue)) {
-                changed = true;
-            }
-        });
-        if (changed) {
-            // this.title.setTitle(this.msInstance.meta.name);
-        }
+        // let changed;
+        // _.forIn(changes, (v, k) => {
+        //     if (!_.isEqual(v.currentValue, v.previousValue)) {
+        //         changed = true;
+        //     }
+        // });
+        // if (changed) {
+        //     // this.title.setTitle(this.msInstance.meta.name);
+        // }
     }
 
-    ngAfterViewInit() {
+    fetchStds(stdIds) {
+        this.stdService.fetchDbEntries(stdIds)
+            .subscribe(response => {
+                if (!response.error) {
+                    this._stds = response.data;
+                    
 
+                }
+            })
     }
+
+    ngAfterViewInit() {}
 
     buildMap() {
-        if (this.firstClick) {
-            this.firstClick = false;
-            // setTimeout(() => {
-            console.log(jQuery(`#${this.mapDivID}`).length);
+        // if (this.firstClick) {
+        //     this.firstClick = false;
+        //     // setTimeout(() => {
+        //     console.log(jQuery(`#${this.mapDivID}`).length);
 
-            this.map = new ol.Map({
-                target: this.mapDivID,
-                layers: [new ol.layer.Group({
-                    title: 'Base',
-                    layers: [
-                        new ol.layer.Tile({
-                            title: 'OSM',
-                            visible: true,
-                            source: new ol.source.OSM()
-                        })
-                    ]
-                })],
-                view: new ol.View({
-                    center: [0, 0],
-                    zoom: 4
-                }),
-                controls: ol.control
-                    .defaults({
-                        attribution: false,
-                        rotate: false,
-                        zoom: false
-                    })
-                    .extend([
-                        new ol.control.FullScreen(),
-                        new ol.control.ScaleLine()
-                    ])
-            });
-            // }, 0);
-        }
-        this._isVisible = true;
+        //     this.map = new ol.Map({
+        //         target: this.mapDivID,
+        //         layers: [new ol.layer.Group({
+        //             title: 'Base',
+        //             layers: [
+        //                 new ol.layer.Tile({
+        //                     title: 'OSM',
+        //                     visible: true,
+        //                     source: new ol.source.OSM()
+        //                 })
+        //             ]
+        //         })],
+        //         view: new ol.View({
+        //             center: [0, 0],
+        //             zoom: 4
+        //         }),
+        //         controls: ol.control
+        //             .defaults({
+        //                 attribution: false,
+        //                 rotate: false,
+        //                 zoom: false
+        //             })
+        //             .extend([
+        //                 new ol.control.FullScreen(),
+        //                 new ol.control.ScaleLine()
+        //             ])
+        //     });
+        //     // }, 0);
+        // }
+        // this._isVisible = true;
     }
 
     ngOnInit() { }
 
     appendSchema() {
-        _.map(this._v.schemas, schema => {
-            let appendSchema = (type) => {
-                _.map(this._v[type], event => {
-                    if (event.schemaId === schema.id) {
-                        event.schema = schema;
-                    }
-                });
-            }
-            appendSchema('inputs');
-            appendSchema('std');
-            appendSchema('parameters');
-            appendSchema('outputs');
+        let appendSchema = (type, schema) => {
+            _.map(this._IO[type], event => {
+                if (event.schemaId === schema.id) {
+                    event.schema = schema;
+                }
+            });
+        }
+        _.map(this._IO.schemas, schema => {
+            appendSchema('inputs', schema);
+            appendSchema('std', schema);
+            appendSchema('parameters', schema);
+            appendSchema('outputs', schema);
         });
     }
 
@@ -169,7 +193,7 @@ export class CalcuCfgComponent implements OnInit, OnChanges, AfterViewInit {
                 description: event.description,
                 schema: event.schema,
                 optional: event.optional,
-                value: event.value,
+                value: type === 'outputs'? event.name: event.value,
                 file:  undefined,
                 temp: event.value,
                 ext: event.ext
@@ -182,30 +206,20 @@ export class CalcuCfgComponent implements OnInit, OnChanges, AfterViewInit {
             // }
             return this.fb.group(gp);
         }
-        let inputCtrls = _
-            .chain(this._v.inputs)
-            .map(item => myFormGroup(item, 'inputs'))
-            .value();
-        let outputCtrls = _
-            .chain(this._v.outputs)
-            .map(myFormGroup)
-            .value();
-        let stdCtrls = _
-            .chain(this._v.std)
-            .map(myFormGroup)
-            .value();
-        let paraCtrls = _
-            .chain(this._v.parameters)
-            .map(myFormGroup)
-            .value();
+        let inputCtrls = _.map(this._IO.inputs, item => myFormGroup(item, 'inputs'));
+        let outputCtrls = _.map(this._IO.outputs, item => myFormGroup(item, 'outputs'));
+        let stdCtrls = _.map(this._IO.std, item => myFormGroup(item, 'std'));
+        let paraCtrls = _.map(this._IO.parameters, item => myFormGroup(item, 'parameters'));
+        let dataSrc = this._IO.dataSrc === '' || !this._IO.dataSrc ? 'STD' : this._IO.dataSrc;
         this.IOForm = this.fb.group({
-            dataSrc: [this._v.dataSrc === '' || !this._v.dataSrc ? 'STD' : this._v.dataSrc, [Validators.required]],
+            dataSrc: [dataSrc, [Validators.required]],
             inputs: this.fb.array(inputCtrls),
             outputs: this.fb.array(outputCtrls),
             std: this.fb.array(stdCtrls),
-            parameters: this.fb.array(paraCtrls)
+            parameters: this.fb.array(paraCtrls),
+            STD: ['', [Validators.required]]
         });
-        this.changeValidate('STD');
+        this.changeValidate(dataSrc);
         // console.log(this.IOForm);
         this.IOForm.statusChanges
             // .filter(status => status === 'VALID')
@@ -213,14 +227,14 @@ export class CalcuCfgComponent implements OnInit, OnChanges, AfterViewInit {
                 // console.log(status);
                 // console.log(this.IOForm);
                 if(status === 'VALID') {
-                    const dataSrc = this._v.dataSrc = this.IOForm.value.dataSrc;
+                    const dataSrc = this._IO.dataSrc = this.IOForm.value.dataSrc;
                     let setV = (tag) => {
-                        this._v[tag] = _.map(this.IOForm.value[tag], item => {
+                        this._IO[tag] = _.map(this.IOForm.value[tag], item => {
                             return {
                                 id: item.id,
                                 name: item.name,
                                 description: item.description,
-                                schemaId: item.schema.id,
+                                schemaId: _.get(item, 'schema.id'),
                                 optional: item.optional,
                                 // value: item.value,
                                 value: (dataSrc === 'UPLOAD' && tag === 'inputs')? item.file.value: item.value,
@@ -233,8 +247,12 @@ export class CalcuCfgComponent implements OnInit, OnChanges, AfterViewInit {
                     setV('outputs');
                     setV('std');
                     setV('parameters');
-                    console.log(this._v);
-                    this.propagateChange(this._v);
+                    this.std = this.IOForm.value.STD
+                    console.log(this._IO);
+                    this.propagateChange({
+                        IO: this._IO,
+                        std: this.std
+                    });
                 }
                 
                 this.onValidChange.emit(status === 'VALID');
@@ -244,7 +262,7 @@ export class CalcuCfgComponent implements OnInit, OnChanges, AfterViewInit {
     download(url) {
         if(url === 'STD') {
             // TODO
-            _.map(this._v.inputs, (input, i) => {
+            _.map(this._IO.inputs, (input, i) => {
                 window.open(`http://${this.backend.host}:${this.backend.port}${input.url}`, i);
             })
         }
@@ -253,13 +271,13 @@ export class CalcuCfgComponent implements OnInit, OnChanges, AfterViewInit {
         }
     }
 
-    modalCancel() {
-        this._isVisible = false;
-    }
+    // modalCancel() {
+    //     this._isVisible = false;
+    // }
 
-    modalOk() {
-        this._isVisible = false;
-    }
+    // modalOk() {
+    //     this._isVisible = false;
+    // }
 
     onMouseWheel(e) {
         // console.log(e);
@@ -268,12 +286,12 @@ export class CalcuCfgComponent implements OnInit, OnChanges, AfterViewInit {
         e.cancelBubble = true;
     }
 
-    @HostListener('window:resize')
-    resize() {
-        if(this.map) {
-            this.map.updateSize();
-        }
-    }
+    // @HostListener('window:resize')
+    // resize() {
+    //     if(this.map) {
+    //         this.map.updateSize();
+    //     }
+    // }
 
     /**
      * 改变验证器规则
@@ -359,7 +377,7 @@ export class CalcuCfgComponent implements OnInit, OnChanges, AfterViewInit {
 
     public writeValue(obj: any) {
         if (obj) {
-            this._v = obj;
+            this._IO = obj;
             this.buildForm();
         }
     }

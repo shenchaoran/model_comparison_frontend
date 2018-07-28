@@ -110,6 +110,7 @@
             <!-- 输入数据配置 -->
             <nz-collapse-panel *ngIf='IOForm.controls["std"].controls.length || IOForm.controls["inputs"].controls.length' [nzHeader]="'Inputs'"
                 nzActive='true'>
+
                 <nz-form-item>
                     <nz-form-label nzSpan='6' nzRequired>Select data source</nz-form-label>
                     <nz-form-control nzSpan='18'>
@@ -121,6 +122,33 @@
                 </nz-form-item>
 
                 <ng-container *ngIf='IOForm.controls["dataSrc"].value === "STD"'>
+                    <nz-form-item>
+                        <nz-form-label nzSpan='6' nzRequired>Select standard data source</nz-form-label>
+                        <nz-form-control nzSpan='18'>
+                            <nz-select formControlName="STD" nzAllowClear [style.width]='width'>
+                                <nz-option
+                                    *ngFor="let item of _stds"
+                                    [nzLabel]="item.meta.name"
+                                    [nzValue]="item">
+                                </nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+
+                    <ng-container *ngIf='IOForm.controls["STD"].value'>
+                        <nz-form-item>
+                            <nz-form-label nzSpan='6' nzRequired>Preview standard datasets</nz-form-label>
+                            <nz-form-control nzSpan='18'>
+                                <a target='_blank' [routerLink]='["../../../datasets", IOForm.controls["STD"].value._id]'>
+                                    <button nz-button>
+                                        <i class="anticon anticon-search"></i>
+                                        Preview
+                                    </button>
+                                </a>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </ng-container>
+
                     <div formArrayName='std'>
                         <ng-container *ngFor='let item of IOForm.controls["std"].controls;let i=index;'>
                             <div [formGroupName]='i'>
@@ -142,13 +170,8 @@
                             </div>
                         </ng-container>
                     </div>
-                    <!-- TODO preview -->
-                    <div class='ogms-form-item'>
-                        <button nz-button [nzType]='"default"'>
-                            Preview
-                        </button>
-                    </div>
                 </ng-container>
+
                 <ng-container *ngIf='IOForm.controls["dataSrc"].value === "UPLOAD"'>
                     <div formArrayName='inputs'>
                         <ng-container *ngFor='let item of IOForm.controls["inputs"].controls;let i=index;'>
@@ -165,6 +188,7 @@
                         </ng-container>
                     </div>
                 </ng-container>
+
             </nz-collapse-panel>
 
             <!-- 参数配置 -->
@@ -194,6 +218,7 @@
                     </ng-container>
                 </div>
             </nz-collapse-panel>
+
             <!-- 输出配置 -->
             <nz-collapse-panel *ngIf='IOForm.controls["outputs"].controls.length' [nzHeader]="'Outputs'" nzActive='true'>
                 <div formArrayName='outputs'>
@@ -228,7 +253,7 @@
 </ng-container>
 <!-- </div> -->
 
-<nz-modal [(nzVisible)]="_isVisible" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="modalFooter" (nzOnCancel)="modalCancel()" [nzWidth]='670'>
+<!-- <nz-modal [(nzVisible)]="_isVisible" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="modalFooter" (nzOnCancel)="modalCancel()" [nzWidth]='670'>
     <ng-template #modalTitle>
         Site Position
     </ng-template>
@@ -240,4 +265,4 @@
     <ng-template #modalFooter>
         <button nz-button nzType="primary" (click)="modalOk()">OK</button>
     </ng-template>
-</nz-modal>
+</nz-modal> -->
