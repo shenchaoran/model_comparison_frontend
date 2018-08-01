@@ -44,3 +44,4 @@ export class CalcuResultComponent implements OnInit {
         window.open(url)
     }
 }
+ 

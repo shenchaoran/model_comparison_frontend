@@ -33,4 +33,8 @@ export class MSService extends ListBaseService {
             msInstance: obj
         });
     }
+
+    getLog(msrId) {
+        return this.http.get(`/calculation/log/${msrId}`)
+    }
 }
