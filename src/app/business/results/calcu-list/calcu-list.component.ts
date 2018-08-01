@@ -14,7 +14,20 @@ import { ListBaseComponent } from '@common/shared';
   styleUrls: ['./calcu-list.component.scss']
 })
 export class CalcuListComponent extends ListBaseComponent implements OnInit {
+    
     withCreateBtn = false;
+    searchFilters: {
+        q?: string,
+        pageSize?: number,
+        pageNum?: number,
+        owner?: string,
+        organization?: string,
+        sort?: string,
+        [key: string]: any
+    } = {
+        pageSize: 10,
+        pageNum: 1
+    };
 
     constructor(
         public route: ActivatedRoute,

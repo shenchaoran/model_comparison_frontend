@@ -1,5 +1,5 @@
 <ng-container *ngIf='IO'>
-    <nz-collapse nzBordered='true'>
+    <nz-collapse nzBordered='false'>
         <nz-collapse-panel [nzHeader]="'Inputs'" nzActive="true">
             <ng-container *ngFor='let event of IO.inputs'>
                 <div class='ogms-form-item' nz-row>
@@ -10,6 +10,7 @@
                 </div>
             </ng-container>
         </nz-collapse-panel>
+
         <nz-collapse-panel *ngIf='IO?.paramsters?.length' [nzHeader]="'Parameters'" nzActive="true">
             <ng-container *ngFor='let event of IO.paramsters'>
                 <div class='ogms-form-item' nz-row>
@@ -20,6 +21,7 @@
                 </div>
             </ng-container>
         </nz-collapse-panel>
+
         <nz-collapse-panel [nzHeader]="'Outputs'" nzActive="true">
             <ng-container *ngFor='let event of IO.outputs'>
                 <div class='ogms-form-item' nz-row>
@@ -30,8 +32,8 @@
                 </div>
             </ng-container>
         </nz-collapse-panel>
-        <nz-collapse-panel [nzHeader]="'Log'" nzActive="true">
-            
-        </nz-collapse-panel>
+
+        <!-- <nz-collapse-panel [nzHeader]="'Log'" nzActive="true">   
+        </nz-collapse-panel> -->
     </nz-collapse>
 </ng-container>

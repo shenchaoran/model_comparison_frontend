@@ -4,13 +4,13 @@
             <ng-container *ngIf='withCreateBtn'>
                 <button routerLink='new' nz-button nzType='primary' [nzSize]='"large"' style='margin: 0 10px 0 0;'>Create</button>
             </ng-container>
-            <nz-radio-group *ngIf='ownerFilter' [ngModel]='_ownerFilterV' [nzSize]='"large"' (ngModelChange)='changeFilters($event, "owner")'>
-                <label nz-radio-button *ngFor='let item of ownerFilter' [nzValue]='item.value'>{{item.label}}</label>
+            <nz-radio-group *ngIf='starFilters' [ngModel]='_ownerFilterV' [nzSize]='"large"' (ngModelChange)='changeFilters($event, "owner")'>
+                <label nz-radio-button *ngFor='let item of starFilters' [nzValue]='item.value'>{{item.label}}</label>
             </nz-radio-group>
             <span class='flex-item-1-1-auto'></span>
             <div style='width: 400px;'>
                 <nz-input-group nzSearch [nzSuffix]="suffixIconButton" [nzSize]='"large"'>
-                    <input type="text" nz-input placeholder="Search" [(ngModel)]="filters.q" (nzOnSearch)="onSearch()">
+                    <input type="text" nz-input placeholder="Search" [(ngModel)]="searchFilters.q" (nzOnSearch)="onSearch()">
                 </nz-input-group>
                 <ng-template #suffixIconButton>
                     <button nz-button nzType="primary" nzSearch (click)='onSearch()' [nzSize]='"large"'>
@@ -24,7 +24,7 @@
                 <span>{{count}} items found</span>
                 <span class='flex-item-1-1-auto'></span>
 
-                <ng-container *ngFor='let filter of otherFilters'>
+                <ng-container *ngFor='let filter of sortsFilters'>
                     <span class='dropdown-filter'>
                         <nz-dropdown [nzTrigger]="'click'">
                             <span class="ant-dropdown-link" nz-dropdown>
@@ -51,16 +51,22 @@
                     </div>
                 </ng-container>
             </ng-container>
-
         </div>
 
         <div class='flex-box-row-nowrap'>
-            <span class='flex-item-1-1-auto'></span>
-            <nz-pagination *ngIf='count> 25' [nzPageIndex]="filters.pageNum" (nzPageIndexChange)='setPageNum($event)' [nzPageSize]='filters.pageSize'
-                (nzPageSizeChange)='setPageSize($event)' [nzTotal]="count"></nz-pagination>
-            <span class='flex-item-1-1-auto'></span>
+            <!-- <span class='flex-item-1-1-auto'></span> -->
+            <nz-pagination 
+                *ngIf='count> 25' 
+                [nzPageIndex]="searchFilters.pageNum" 
+                (nzPageIndexChange)='setPageNum($event)' 
+                nzShowSizeChanger
+                [nzPageSize]='searchFilters.pageSize'
+                (nzPageSizeChange)='setPageSize($event)' 
+                [nzTotal]="count"></nz-pagination>
+            <!-- <span class='flex-item-1-1-auto'></span> -->
         </div>
     </div>
+
     <ng-template #listTemplate>
         <div style='width: 100%;'>
             <nz-spin [nzSize]='"large"'></nz-spin>

@@ -14,7 +14,7 @@ export class CmpIssueListComponent implements OnInit {
     count: number;
 
     withCreateBtn: boolean = true;
-    ownerFilter: {
+    starFilters: {
         label: string,
         value: string,
         checked: boolean
@@ -30,7 +30,7 @@ export class CmpIssueListComponent implements OnInit {
             checked: false
         }
     ];
-    otherFilters: {
+    sortsFilters: {
         label: string,
         value: string,
         options: {

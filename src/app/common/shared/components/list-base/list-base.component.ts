@@ -19,10 +19,11 @@ import { OgmsBaseComponent } from '../ogms-base/ogms-base.component';
 })
 
 export class ListBaseComponent extends OgmsBaseComponent implements OnInit, OnDestroy {
+    public _loading = true;
     public count;
     public list;
     public withCreateBtn = false;
-    public ownerFilter: {
+    public starFilters: {
         label: string,
         value: string,
         checked: boolean
@@ -38,7 +39,7 @@ export class ListBaseComponent extends OgmsBaseComponent implements OnInit, OnDe
                 checked: false
             }
         ];
-    public otherFilters: {
+    public sortsFilters: {
         label: string,
         value: string,
         options: {
@@ -102,8 +103,12 @@ export class ListBaseComponent extends OgmsBaseComponent implements OnInit, OnDe
 
 
     ngOnInit() {
-        this._subscriptions.push(this.service.findAll({})
+        let pageSize = _.get(this, 'searchFilters.pageSize')
+        this._subscriptions.push(this.service.findAll(pageSize? {
+            pageSize: pageSize
+        }: {})
             .subscribe(response => {
+                this._loading = false
                 if (response.error) {
                     return Promise.reject(response.error);
                 } else {
@@ -114,8 +119,10 @@ export class ListBaseComponent extends OgmsBaseComponent implements OnInit, OnDe
     }
 
     search(filters) {
+        this._loading = true
         this._subscriptions.push(this.service.findAll(filters)
             .subscribe(response => {
+                this._loading = false
                 if (!response.error) {
                     this.list = response.data.docs;
                     this.count = response.data.count;

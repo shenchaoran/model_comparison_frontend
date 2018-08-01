@@ -35,12 +35,12 @@ export const routes: Routes = [
         loadChildren: './business/models/models.module#ModelsModule'
     },
     {
-        path: 'results',
-        loadChildren: './business/results/results.module#ResultsModule'
-    },
-    {
         path: 'comparison',
         loadChildren: './business/comparison/comparison.module#ComparisonModule'
+    },
+    {
+        path: 'results',
+        loadChildren: './business/results/results.module#ResultsModule'
     },
 
     // {
@@ -51,10 +51,6 @@ export const routes: Routes = [
     //     path: 'solutions',
     //     loadChildren: './business/cmp-solution/cmp-solution.module#CmpSolutionModule'
     // },
-    {
-        path: 'calculation',
-        loadChildren: './business/calculation/calculation.module#CalculationModule'
-    },
     // {
     //     path: 'tasks',
     //     loadChildren: './business/cmp-task/cmp-task.module#CmpTaskModule'

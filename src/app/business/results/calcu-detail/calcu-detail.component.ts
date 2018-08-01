@@ -7,8 +7,8 @@ import { NzNotificationService, NzModalService } from "ng-zorro-antd";
 import { DynamicTitleService } from "@core/services/dynamic-title.service";
 import { ReactiveFormsModule } from "@angular/forms";
 import { DocBaseComponent } from '@shared';
-import { Observable, interval } from 'rxjs';
-import { map, switchMap, filter, tap } from 'rxjs/operators';
+import { Observable, interval } from 'rxjs'
+import { map, switchMap, filter, tap, startWith } from 'rxjs/operators';
 
 @Component({
     selector: 'ogms-calcu-detail',
@@ -31,14 +31,14 @@ export class CalcuDetailComponent extends DocBaseComponent implements OnInit {
         super.ngOnInit();
         this._subscriptions.push(this.doc.subscribe(doc => {
             this.msRecord = doc;
-            if(this.msRecord.progress < 100) {
-                // this.fetchInterval();
+            if(this.msRecord.progress < 100 && this.msRecord.progress > 0) {
+                this.fetchInterval();
             }
         }));
     }
 
     private fetchInterval() {
-        const record$ = interval(2000).pipe(
+        const record$ = interval(3000).pipe(
             switchMap((v, i) => {
                 return this.service.findOne(this.msRecord._id);
             }),
@@ -51,11 +51,9 @@ export class CalcuDetailComponent extends DocBaseComponent implements OnInit {
 
         const _subscription = record$.subscribe(doc => {
             this.msRecord = doc;
-            this.msRecord.IO.mode = 'read';
             if(this.msRecord.progress === 100 || this.msRecord.progress === -1) {
                 _subscription.unsubscribe();
             }
         });
-        this._subscriptions.push(_subscription);
     }
 }

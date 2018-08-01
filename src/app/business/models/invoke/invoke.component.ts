@@ -29,7 +29,7 @@ export class InvokeComponent extends DocBaseComponent implements OnInit {
     constructor(
         public route: ActivatedRoute,
         public service: MSService,
-//private _notice: NzNotificationService,
+        //private _notice: NzNotificationService,
         public title: DynamicTitleService,
         public loginService: LoginService,
         public fb: FormBuilder,
@@ -50,17 +50,15 @@ export class InvokeComponent extends DocBaseComponent implements OnInit {
 
             this.msiForm = this.fb.group({
                 _id: this.msInstance._id,
-                name: ['', Validators.required],
-                desc: ['', Validators.required],
+                name: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(25)]],
+                desc: ['', [Validators.required, Validators.minLength(20), Validators.maxLength(140)]],
                 src: [this.msInstance.auth.src, Validators.required],
                 IO: ['', Validators.required]
             });
             this.msiForm.statusChanges
                 // .filter(status => status === 'VALID')
                 .subscribe(status => {
-                    // console.log(status);
-                    // console.log(this.msiForm);
-                    if(status === 'VALID') {
+                    if (status === 'VALID') {
                         this.msInstance.meta.name = this.msiForm.value['name'];
                         this.msInstance.meta.desc = this.msiForm.value['desc'];
                         this.msInstance.auth.src = this.msiForm.value.src;
@@ -74,17 +72,15 @@ export class InvokeComponent extends DocBaseComponent implements OnInit {
     invoke(type) {
         if (type === 'save') {
             this.msInstance.state = CalcuTaskState.INIT;
-            this.msInstance.progress = 0;
         }
         else if (type === 'invoke') {
             this.msInstance.state = CalcuTaskState.START_PENDING;
         }
-        // console.log(this.msInstance);
         this._subscriptions.push(this.service.invoke(this.msInstance)
             .subscribe(response => {
                 if (!response.error) {
                     let res = response.data;
-                    if(res.code === 200) 
+                    if (res.code === 200)
                         this.router.navigate(['/results/calculation', res.msrId])
                 }
             }));

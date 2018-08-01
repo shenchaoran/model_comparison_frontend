@@ -1,5 +1,5 @@
 <form *ngIf='IOForm' [formGroup]='IOForm'>
-    <nz-collapse [nzBordered]="true">
+    <nz-collapse [nzBordered]="false">
         <!-- 输入数据配置 -->
         <nz-collapse-panel *ngIf='IOForm.controls["std"].controls.length || IOForm.controls["inputs"].controls.length' [nzHeader]="'Inputs'"
             nzActive='true'>

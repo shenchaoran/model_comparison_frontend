@@ -10,7 +10,7 @@ export class ListTemplateComponent implements OnInit {
 
     _ownerFilterV;
     
-    filters: {
+    @Input() searchFilters: {
         q?: string,
         pageSize?: number,
         pageNum?: number,
@@ -18,22 +18,23 @@ export class ListTemplateComponent implements OnInit {
         organization?: string,
         sort?: string,
         [key: string]: any
-    } = {};
-    @Output() onFiltersChange = new EventEmitter<any>();
-
+    } = {
+        pageSize: 15,
+        pageNum: 1
+    };
     @Input() list: any[];
     @Input() count: number;
     @Input() template: any;
     
-    @Input() type: string;
+    // @Input() type: string;
 
     @Input() withCreateBtn: boolean;
-    @Input() ownerFilter: {
+    @Input() starFilters: {
         label: string,
         value: string,
         checked: boolean
     }[];
-    @Input() otherFilters: {
+    @Input() sortsFilters: {
         label: string,
         value: string,
         options: {
@@ -43,6 +44,8 @@ export class ListTemplateComponent implements OnInit {
         }[]
     }[];
 
+    @Output() onFiltersChange = new EventEmitter<any>();
+
     constructor() { }
 
     ngOnInit() {
@@ -51,29 +54,28 @@ export class ListTemplateComponent implements OnInit {
 
     changeFilters(v, type) {
         if(type === 'owner') {
-            _.map(this.ownerFilter, opt => opt.checked = opt.value===v);
-            this.filters.owner = v;
+            _.map(this.starFilters, opt => opt.checked = opt.value===v);
+            this.searchFilters.owner = v;
         }
         else {
-            let filter = _.find(this.otherFilters, filter => filter.value === type);
+            let filter = _.find(this.sortsFilters, filter => filter.value === type);
             _.map(filter.options, opt => opt.checked = opt.value=== v);
-            this.filters[filter.value] = v;
+            this.searchFilters[filter.value] = v;
         }
-        // console.log(this.filters);
         this.onSearch();
     }
 
     onSearch() {
-        this.onFiltersChange.emit(this.filters);
+        this.onFiltersChange.emit(this.searchFilters);
     }
 
     setPageNum(pageNum) {
-        this.filters.pageNum = pageNum;
+        this.searchFilters.pageNum = pageNum;
         this.onSearch();
     }
 
     setPageSize(pageSize) {
-        this.filters.pageSize = pageSize;
+        this.searchFilters.pageSize = pageSize;
         this.onSearch();
     }
 

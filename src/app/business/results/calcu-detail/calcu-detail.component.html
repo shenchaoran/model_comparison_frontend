@@ -16,32 +16,40 @@
                                 <dt nz-col nzSpan='4'>Authorization</dt>
                                 <dd nz-col nzSpan='8'>{{msRecord.auth.src | resourceSrc}}</dd>
                                 <dt nz-col nzSpan='4'>Create time</dt>
-                                <dd nz-col nzSpan='8'>{{msRecord.meta.time | date:'yyyy-MM-dd'}}</dd>
-                                <ng-container *ngIf='msRecord.state !== 4'>    
-                                    <dt nz-col nzSpan='4'>Status</dt>
-                                    <dd nz-col nzSpan='8'>
-                                        <span>
-                                        {{
-                                            msRecord.state === 0? 'To configured'
-                                            : msRecord.state === 1? 'Could start'
-                                            : msRecord.state === 2? 'Starting'
-                                            : msRecord.state === 3? 'Invoking failed'
-                                            : msRecord.state === 5? 'Run failed'
-                                            : msRecord.state === 6? 'Run succeed'
-                                            : ''
-                                        }}
-                                        </span>
-                                    </dd>
-                                </ng-container>
+                                <dd nz-col nzSpan='8'>{{msRecord.meta.time | date:'yyyy-MM-dd'}}</dd> 
+                                <dt nz-col nzSpan='4'>Status</dt>
+                                <dd nz-col nzSpan='8'>
+                                    <span>
+                                    {{
+                                        msRecord.state === 'INIT'? 'To configured'
+                                        : msRecord.state === 'RUNNING'? 'Running'
+                                        : msRecord.state === 'COULD_START'? 'Could start'
+                                        : msRecord.state === 'START_PENDING'? 'Starting'
+                                        : msRecord.state === 'START_FAILED'? 'Invoking failed'
+                                        : msRecord.state === 'FINISHED_FAILED'? 'Run failed'
+                                        : msRecord.state === 'FINISHED_SUCCEED'? 'Run succeed'
+                                        : 'Unknown'
+                                    }}
+                                    </span>
+                                </dd>
                             </div>
                         </dl>
-                        <div>
-                            <ng-container *ngIf='msRecord.state === 4'>
-                                <nz-progress [nzPercent]="msRecord.progress" [nzWidth]='400'></nz-progress>
-                            </ng-container>
-                        </div>
                         <div class='detail-desc'>
                             {{msRecord.meta.desc | description}}
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class='section-header flex-box-row-nowrap'>
+                        <span class='title'>Progress</span>
+                        <span class='placeholder flex-item-1-1-auto'></span>
+                    </div>
+                    <div class='section-body'>
+                        <div [style.width]='_width'>
+                            <nz-progress 
+                                [nzPercent]="!msRecord.progress? 0: msRecord.progress" 
+                                [nzStatus]="msRecord.state === 'FINISHED_SUCCEED'? 'success': msRecord.state === 'FINISHED_FAILED'? 'exception': 'active'">
+                            </nz-progress>
                         </div>
                     </div>
                 </section>

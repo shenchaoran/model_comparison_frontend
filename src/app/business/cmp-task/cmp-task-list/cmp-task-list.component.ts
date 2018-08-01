@@ -14,7 +14,7 @@ export class CmpTaskListComponent implements OnInit, AfterViewInit {
     buttons : any[];
     
     withCreateBtn: boolean = true;
-    ownerFilter: {
+    starFilters: {
         label: string,
         value: string,
         checked: boolean
@@ -30,7 +30,7 @@ export class CmpTaskListComponent implements OnInit, AfterViewInit {
             checked: false
         }
     ];
-    otherFilters: {
+    sortsFilters: {
         label: string,
         value: string,
         options: {
