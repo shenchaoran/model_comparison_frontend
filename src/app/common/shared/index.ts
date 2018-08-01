@@ -139,7 +139,8 @@ export * from './directives';
             provide: 'BACKEND',
             useValue: {
                 host: BACKEND.host,
-                port: BACKEND.port
+                port: BACKEND.port,
+                API_prefix: BACKEND.API_prefix
             }
         },
         {

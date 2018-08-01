@@ -13,31 +13,6 @@ import { ResParserInterceptor } from './net/res-parser/res-parser.interceptor';
 import { DynamicTitleService } from './services';
 import { NzNotificationService, NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';
 // import { TokenService } from './net/token/token.service';
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import { BACKEND } from '@config';
 
 import {
@@ -68,7 +43,8 @@ const CITYFUN_SERVICES = [
             provide: 'BACKEND',
             useValue: {
                 host: BACKEND.host,
-                port: BACKEND.port
+                port: BACKEND.port,
+                API_prefix: BACKEND.API_prefix
             }
         },
         {

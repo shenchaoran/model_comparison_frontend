@@ -31,11 +31,14 @@
         <!-- <router-outlet></router-outlet> -->
 
         <!-- TODO: 隐藏还是只显示一个 -->
-        <ng-container *ngIf='selectedSTD?.stdClass === "IBIS_STD_DATA"'>
+        <!-- <ng-container *ngIf='selectedSTD?.stdClass === "IBIS_STD_DATA"'>
             <ogms-ibis-std-data [selectedEvent]='selectedEvent' (onEventCleared)='selectedEvent=undefined;' [std]='selectedSTD' (onSiteSelected)='_eventMenuVisiable = $event;'></ogms-ibis-std-data>
         </ng-container>
         <ng-container *ngIf='selectedSTD?.stdClass === "BIOME_BGC_STD_DATA"'>
             <ogms-biome-std-data [selectedEvent]='selectedEvent' [std]='selectedSTD'></ogms-biome-std-data>
+        </ng-container> -->
+        <ng-container *ngIf='selectedSTD?.meta?.name === "Carbon Simulation Global Datasets"'>
+            <ogms-site-data></ogms-site-data>
         </ng-container>
     </div>
 </div>

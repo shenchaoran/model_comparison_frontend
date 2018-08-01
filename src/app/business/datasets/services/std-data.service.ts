@@ -16,17 +16,17 @@ export class StdDataService extends ListBaseService {
     }
 
 
-    preview(id, query): Observable<any> {
-        return this.http.get(`/std-data/${id}/preview`, {
-            params: query
-        });
-    }
+    // preview(id, query): Observable<any> {
+    //     return this.http.get(`/std-data/${id}/preview`, {
+    //         params: query
+    //     });
+    // }
 
-    download(id, query): Observable<any> {
-        return this.http.get(`/std-data/${id}/download`, {
-            params: query
-        })
-    }
+    // download(id, query): Observable<any> {
+    //     return this.http.get(`/std-data/${id}/download`, {
+    //         params: query
+    //     })
+    // }
 
     fetchDbEntries(ids): Observable<any> {
         return this.http.get(`/std-data/docs`, {

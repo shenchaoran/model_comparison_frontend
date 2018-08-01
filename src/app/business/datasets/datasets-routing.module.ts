@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { GeoDataComponent} from './geo-data/geo-data.component';
 import { HeaderMenuLayoutComponent } from '@shared';
 import { DatasetsComponent } from './datasets/datasets.component';
-import { IbisStdDataComponent } from './ibis-std-data/ibis-std-data.component';
-import { BiomeStdDataComponent } from './biome-std-data/biome-std-data.component';
+// import { IbisStdDataComponent } from './ibis-std-data/ibis-std-data.component';
+// import { BiomeStdDataComponent } from './biome-std-data/biome-std-data.component';
 
 const routes: Routes = [
     {

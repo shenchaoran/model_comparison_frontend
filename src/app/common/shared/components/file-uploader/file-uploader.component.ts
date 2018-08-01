@@ -27,7 +27,7 @@ export class FileUploader {
     @Input()
     set fileUploaderOptions(v) {
         this._fileUploaderOptions = _.cloneDeep(v);
-        this._fileUploaderOptions.url = `http://${this.backend.host}:${this.backend.port}${v.url}`;
+        this._fileUploaderOptions.url = `http://${this.backend.host}:${this.backend.port}${this.backend.API_prefix}${v.url}`;
     };
     get fileUploaderOptions() {
         return this._fileUploaderOptions;
@@ -92,14 +92,14 @@ export class FileUploader {
 
         if (!data.abort && data.done && !data.error) {
             const response = JSON.parse(data.response);
-            if (_.startsWith(_.get(response, 'status.code'), '200')) {
+            if (!response.error) {
                 this.onFileUploadCompleted.emit({
                     data: response.data
                 });
                 // this._notice.success('Success:', 'Upload succeed!');
             } else {
                 this.onFileUploadCompleted.emit({
-                    error: 'upload failed'
+                    error: response.error
                 });
                 // this._notice.warning('Warning:', 'Upload server error!');
             }

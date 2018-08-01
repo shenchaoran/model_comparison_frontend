@@ -16,17 +16,17 @@ export class MSService extends ListBaseService {
         super(http);
     }
 
-    resolve(): Promise<any> {
-        return this.findAll({})
-            .toPromise()
-            .then(response => {
-                if (response.error) {
-                    return Promise.reject(response.error);
-                } else {
-                    return Promise.resolve(response.data);
-                }
-            });
-    }
+    // resolve(): Promise<any> {
+    //     return this.findAll({})
+    //         .toPromise()
+    //         .then(response => {
+    //             if (response.error) {
+    //                 return Promise.reject(response.error);
+    //             } else {
+    //                 return Promise.resolve(response.data);
+    //             }
+    //         });
+    // }
 
     invoke(obj): Observable<any> {
         return this.http.post(`/model-tools/invoke`, {

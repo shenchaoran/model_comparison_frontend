@@ -10,10 +10,8 @@ import { TableComponent } from './table/table.component';
 import { SwipeMapComponent } from './swipe-map/swipe-map.component';
 import { GeojsonMapComponent } from './geojson-map/geojson-map.component';
 import { DrawFeatureComponent } from './draw-feature/draw-feature.component';
-import { SiteMapComponent } from './site-map/site-map.component';
 import { HandsomeTableComponent } from './handsome-table/handsome-table.component';
 import { NzNotificationService, NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';
-import { SiteMapLeafletComponent } from './site-map-leaflet/site-map-leaflet.component';
 
 const COMPONENTS = [
     AsciiGridComponent, 
@@ -21,9 +19,7 @@ const COMPONENTS = [
     SwipeMapComponent, 
     GeojsonMapComponent, 
     DrawFeatureComponent,
-    SiteMapComponent,
     HandsomeTableComponent,
-    SiteMapLeafletComponent,
 ]
 
 @NgModule({

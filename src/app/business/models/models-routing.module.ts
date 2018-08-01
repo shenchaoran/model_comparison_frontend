@@ -15,9 +15,9 @@ const routes: Routes = [
             {
                 path: '',
                 component: GeoModelListComponent,
-                resolve: {
-                    geoModelTree: MSService
-                },
+                // resolve: {
+                //     geoModelTree: MSService
+                // },
                 data: {
                     title: 'Model Resource'
                 },

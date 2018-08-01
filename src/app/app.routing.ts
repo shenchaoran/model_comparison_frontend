@@ -43,22 +43,22 @@ export const routes: Routes = [
         loadChildren: './business/comparison/comparison.module#ComparisonModule'
     },
 
-    {
-        path: 'issues',
-        loadChildren: './business/cmp-issue/cmp-issue.module#CmpIssueModule'
-    },
-    {
-        path: 'solutions',
-        loadChildren: './business/cmp-solution/cmp-solution.module#CmpSolutionModule'
-    },
+    // {
+    //     path: 'issues',
+    //     loadChildren: './business/cmp-issue/cmp-issue.module#CmpIssueModule'
+    // },
+    // {
+    //     path: 'solutions',
+    //     loadChildren: './business/cmp-solution/cmp-solution.module#CmpSolutionModule'
+    // },
     {
         path: 'calculation',
         loadChildren: './business/calculation/calculation.module#CalculationModule'
     },
-    {
-        path: 'tasks',
-        loadChildren: './business/cmp-task/cmp-task.module#CmpTaskModule'
-    },
+    // {
+    //     path: 'tasks',
+    //     loadChildren: './business/cmp-task/cmp-task.module#CmpTaskModule'
+    // },
     
     {
         path: 'search',

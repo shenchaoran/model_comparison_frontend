@@ -21,7 +21,7 @@
         </div>
         <div class='list-box'>
             <div class='flex-box-row-nowrap list-header'>
-                <span>{{list.length}} items found</span>
+                <span>{{count}} items found</span>
                 <span class='flex-item-1-1-auto'></span>
 
                 <ng-container *ngFor='let filter of otherFilters'>
@@ -53,6 +53,7 @@
             </ng-container>
 
         </div>
+
         <div class='flex-box-row-nowrap'>
             <span class='flex-item-1-1-auto'></span>
             <nz-pagination *ngIf='count> 25' [nzPageIndex]="filters.pageNum" (nzPageIndexChange)='setPageNum($event)' [nzPageSize]='filters.pageSize'

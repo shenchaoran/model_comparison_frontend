@@ -21,7 +21,7 @@ export class _HttpClient {
     ) { }
 
     private appendDomain(url: string): string {
-        return `http://${this.backend.host}:${this.backend.port}${url}`;
+        return `http://${this.backend.host}:${this.backend.port}${this.backend.API_prefix}${url}`;
     }
 
     private appendJWT(url: string, appendJWT: boolean): string {

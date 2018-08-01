@@ -22,7 +22,6 @@ export class CalcuDetailComponent extends DocBaseComponent implements OnInit {
     constructor(
         public route: ActivatedRoute,
         public service: CalcuTaskService,
-//private _notice: NzNotificationService,
         public title: DynamicTitleService
     ) { 
         super(route, service, title);
@@ -32,9 +31,8 @@ export class CalcuDetailComponent extends DocBaseComponent implements OnInit {
         super.ngOnInit();
         this._subscriptions.push(this.doc.subscribe(doc => {
             this.msRecord = doc;
-            this.msRecord.IO.mode = 'read';
             if(this.msRecord.progress < 100) {
-                this.fetchInterval();
+                // this.fetchInterval();
             }
         }));
     }

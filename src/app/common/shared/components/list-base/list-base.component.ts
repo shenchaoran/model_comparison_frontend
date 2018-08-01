@@ -38,7 +38,7 @@ export class ListBaseComponent extends OgmsBaseComponent implements OnInit, OnDe
                 checked: false
             }
         ];
-        public otherFilters: {
+    public otherFilters: {
         label: string,
         value: string,
         options: {
@@ -94,9 +94,9 @@ export class ListBaseComponent extends OgmsBaseComponent implements OnInit, OnDe
     constructor(
         public route: ActivatedRoute,
         public service: ListBaseService,
-//private _notice: NzNotificationService,
+        //private _notice: NzNotificationService,
         public title: DynamicTitleService
-    ) { 
+    ) {
         super();
     }
 

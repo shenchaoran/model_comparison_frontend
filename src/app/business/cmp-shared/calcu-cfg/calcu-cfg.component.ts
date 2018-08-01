@@ -59,21 +59,18 @@ export class CalcuCfgComponent implements OnInit, OnChanges, AfterViewInit {
     _IO;
     _stds;
 
-    // _isVisible = false;
+    _isVisible = false;
 
     IOForm: FormGroup;
     @Input() set IO(v) {
         this._IO = v;
         this.appendSchema();
-        if (this._IO.mode !== 'read') {
-            this.buildForm();
-        }
+        this.buildForm();
     }
     @Input() set stdIds(v) {
         this.fetchStds(v);
     }
     @Input() std;
-    @Input() mode: 'read' | 'write' = 'write';
     @Input() width = '350px';
     @Output() onValidChange = new EventEmitter<boolean>();
 
@@ -121,51 +118,11 @@ export class CalcuCfgComponent implements OnInit, OnChanges, AfterViewInit {
             .subscribe(response => {
                 if (!response.error) {
                     this._stds = response.data;
-                    
-
                 }
             })
     }
 
     ngAfterViewInit() {}
-
-    buildMap() {
-        // if (this.firstClick) {
-        //     this.firstClick = false;
-        //     // setTimeout(() => {
-        //     console.log(jQuery(`#${this.mapDivID}`).length);
-
-        //     this.map = new ol.Map({
-        //         target: this.mapDivID,
-        //         layers: [new ol.layer.Group({
-        //             title: 'Base',
-        //             layers: [
-        //                 new ol.layer.Tile({
-        //                     title: 'OSM',
-        //                     visible: true,
-        //                     source: new ol.source.OSM()
-        //                 })
-        //             ]
-        //         })],
-        //         view: new ol.View({
-        //             center: [0, 0],
-        //             zoom: 4
-        //         }),
-        //         controls: ol.control
-        //             .defaults({
-        //                 attribution: false,
-        //                 rotate: false,
-        //                 zoom: false
-        //             })
-        //             .extend([
-        //                 new ol.control.FullScreen(),
-        //                 new ol.control.ScaleLine()
-        //             ])
-        //     });
-        //     // }, 0);
-        // }
-        // this._isVisible = true;
-    }
 
     ngOnInit() { }
 
@@ -188,15 +145,16 @@ export class CalcuCfgComponent implements OnInit, OnChanges, AfterViewInit {
     buildForm() {
         let myFormGroup = (event, type?) => {
             let gp = {
-                id: event.id,
-                name: event.name,
-                description: event.description,
-                schema: event.schema,
-                optional: event.optional,
-                value: type === 'outputs'? event.name: event.value,
-                file:  undefined,
-                temp: event.value,
-                ext: event.ext
+                id: [event.id],
+                name: [event.name],
+                description: [event.description],
+                schema: [event.schema],
+                optional: [event.optional],
+                value: [type === 'outputs'? undefined: event.value, null],
+                file: [undefined],
+                fname: [type === 'outputs'? event.name: undefined],
+                temp: [event.value, undefined],
+                ext: [event.ext]
             };
             // if(type === 'inputs') {
             //     _.set(gp, 'file', [ undefined, Validators.required]);
@@ -220,12 +178,10 @@ export class CalcuCfgComponent implements OnInit, OnChanges, AfterViewInit {
             STD: ['', [Validators.required]]
         });
         this.changeValidate(dataSrc);
-        // console.log(this.IOForm);
         this.IOForm.statusChanges
             // .filter(status => status === 'VALID')
             .subscribe(status => {
                 // console.log(status);
-                // console.log(this.IOForm);
                 if(status === 'VALID') {
                     const dataSrc = this._IO.dataSrc = this.IOForm.value.dataSrc;
                     let setV = (tag) => {
@@ -236,9 +192,10 @@ export class CalcuCfgComponent implements OnInit, OnChanges, AfterViewInit {
                                 description: item.description,
                                 schemaId: _.get(item, 'schema.id'),
                                 optional: item.optional,
-                                // value: item.value,
-                                value: (dataSrc === 'UPLOAD' && tag === 'inputs')? item.file.value: item.value,
-                                fname: (dataSrc === 'UPLOAD' && tag === 'inputs')? item.file.fname: undefined,
+                                cached: item.file? true: false,
+                                value: (dataSrc === 'UPLOAD' && tag === 'inputs')? _.get(item, 'file.value'): 
+                                        (tag === 'std' && item.id === '--index')? item.value: undefined,
+                                fname: (dataSrc === 'UPLOAD' && tag === 'inputs')? _.get(item, 'file.fname'): item.fname,
                                 ext: item.ext
                             };
                         });
@@ -248,7 +205,7 @@ export class CalcuCfgComponent implements OnInit, OnChanges, AfterViewInit {
                     setV('std');
                     setV('parameters');
                     this.std = this.IOForm.value.STD
-                    console.log(this._IO);
+                    // console.log(this._IO);
                     this.propagateChange({
                         IO: this._IO,
                         std: this.std
@@ -263,114 +220,103 @@ export class CalcuCfgComponent implements OnInit, OnChanges, AfterViewInit {
         if(url === 'STD') {
             // TODO
             _.map(this._IO.inputs, (input, i) => {
-                window.open(`http://${this.backend.host}:${this.backend.port}${input.url}`, i);
+                window.open(`http://${this.backend.host}:${this.backend.port}${this.backend.API_prefix}${input.url}`, i);
             })
         }
         else {
-            window.open(`http://${this.backend.host}:${this.backend.port}${url}`);
+            window.open(`http://${this.backend.host}:${this.backend.port}${this.backend.API_prefix}${url}`);
         }
     }
 
-    // modalCancel() {
-    //     this._isVisible = false;
-    // }
-
-    // modalOk() {
-    //     this._isVisible = false;
-    // }
-
-    onMouseWheel(e) {
-        // console.log(e);
-        e.preventDefault();
-        e.stopPropagation();
-        e.cancelBubble = true;
+    onSiteSelected(site) {
+        let siteCtrl = _
+            .chain((this.IOForm.get('std') as any).controls)
+            .find(control => {
+                return _.get(control, 'value.schema.structure.type')  === 'coordinate-index';
+            })
+            .value()
+        
+        // 这样更新好像不行，需要从叶节点更新
+        // siteCtrl.value.temp = site
+        // siteCtrl.value.value = site.index
+        // siteCtrl.markAsDirty()
+        // siteCtrl.updateValueAndValidity()
+        
+        // 手动设置表单项的值，并标记为脏的，触发验证
+        // 注意，此处直接设置父表单项的值并触发验证不行，必须从叶节点开始
+        let siteValueCtrl = siteCtrl.get('value')
+        siteValueCtrl.value = site.index
+        // siteValueCtrl.markAsDirty();
+        siteValueCtrl.updateValueAndValidity();
+        
+        let tmpCtrl = siteCtrl.get('temp')
+        tmpCtrl.value = site
+        // tmpCtrl.markAsDirty();
+        tmpCtrl.updateValueAndValidity();
     }
 
-    // @HostListener('window:resize')
-    // resize() {
-    //     if(this.map) {
-    //         this.map.updateSize();
-    //     }
-    // }
+    modalOk() {
+        this._isVisible = false;
+    }
 
     /**
-     * 改变验证器规则
+     * 两种验证器规则，需要动态更改：
+     *      使用 输入数据时
+     *      使用 标准数据集时
      * @param v 
      */
     changeValidate(v) {
-        if (v === 'UPLOAD') {
-            _.map((this.IOForm.get('std') as any).controls, control => {
-                let leafCtrl = control.get('file');
-                if (leafCtrl) {
-                    leafCtrl.clearValidators();
-                    leafCtrl.markAsPristine();
-                    leafCtrl.updateValueAndValidity();
+        let rulesOfRequired = {
+            UPLOAD: {
+                std: {
+                    value: false,
+                    file: false,
+                    fname: false,
+                    temp: false
+                },
+                inputs: {
+                    value: false,
+                    file: true,
+                    fname: false
                 }
-                leafCtrl = control.get('value');
-                if (leafCtrl) {
-                    leafCtrl.clearValidators();
-                    leafCtrl.markAsPristine();
-                    leafCtrl.updateValueAndValidity();
+            },
+            STD: {
+                std: {
+                    value: true,
+                    file: false,
+                    fname: false
+                },
+                inputs: {
+                    value: false,
+                    file: false,
+                    fname: false
                 }
-            });
-            _.map((this.IOForm.get('inputs') as any).controls, control => {
-                let leafCtrl = control.get('value');
-                if (leafCtrl) {
-                    leafCtrl.clearValidators();
-                    leafCtrl.markAsPristine();
-                    leafCtrl.updateValueAndValidity();
-                }
-                leafCtrl = control.get('file');
-                if (leafCtrl) {
-                    leafCtrl.setValidators(Validators.required);
-                    leafCtrl.markAsDirty();
-                    leafCtrl.updateValueAndValidity();
-                }
-            });
-
-        }
-        else if (v === 'STD') {
-            _.map((this.IOForm.get('inputs') as any).controls, control => {
-                let leafCtrl = control.get('file');
-                if (leafCtrl) {
-                    leafCtrl.clearValidators();
-                    leafCtrl.markAsPristine();
-                    leafCtrl.updateValueAndValidity();
-                }
-                leafCtrl = control.get('value');
-                if (leafCtrl) {
-                    leafCtrl.clearValidators();
-                    leafCtrl.markAsPristine();
-                    leafCtrl.updateValueAndValidity();
-                }
-            });
-            _.map((this.IOForm.get('std') as any).controls, control => {
-                let leafCtrl = control.get('value');
-                if (leafCtrl) {
-                    leafCtrl.setValidators(Validators.required);
-                    leafCtrl.markAsDirty();
-                    leafCtrl.updateValueAndValidity();
-                }
-                leafCtrl = control.get('file');
-                if (leafCtrl) {
-                    leafCtrl.clearValidators();
-                    leafCtrl.markAsPristine();
-                    leafCtrl.updateValueAndValidity();
-                }
-            });
-        }
-        _.map((this.IOForm.get('outputs') as any).controls, control => {
-            let leafCtrl = control.get('value');
-            if (leafCtrl) {
-                leafCtrl.setValidators(Validators.required);
-                leafCtrl.markAsDirty();
-                leafCtrl.updateValueAndValidity();
             }
-        });
-        // TODO 触发验证
-        this.IOForm.get('std').updateValueAndValidity();
-        this.IOForm.get('inputs').updateValueAndValidity();
-        this.IOForm.get('outputs').updateValueAndValidity();
+        }
+        let updateValidity = (rules, tag) => {
+            _.map((this.IOForm.get(tag) as any).controls, control => {
+                for(let key in rules[tag]) {
+                    let leafCtrl = control.get(key)
+                    if(rules[tag][key]) {
+                        leafCtrl.markAsPristine()
+                        leafCtrl.setValidators(Validators.required)
+                    }
+                    else {
+                        leafCtrl.clearValidators()
+                        leafCtrl.value = undefined
+                    }
+                    leafCtrl.updateValueAndValidity()
+                }
+            })
+        }
+        updateValidity(rulesOfRequired[v], 'std')
+        updateValidity(rulesOfRequired[v], 'inputs')
+        if(v === 'UPLOAD') {
+            let STDCtrl = this.IOForm.get('STD') as any
+            STDCtrl.value = undefined
+            STDCtrl.clearValidators()
+            STDCtrl.updateValueAndValidity()
+        }
     }
 
     private propagateChange = (e: any) => { };

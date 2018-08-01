@@ -21,6 +21,7 @@ import { DocBaseComponent } from '@shared';
 })
 export class InvokeComponent extends DocBaseComponent implements OnInit {
     _width = '520px';
+
     model: any;
     msInstance;
     msiForm: FormGroup;
@@ -82,8 +83,9 @@ export class InvokeComponent extends DocBaseComponent implements OnInit {
         this._subscriptions.push(this.service.invoke(this.msInstance)
             .subscribe(response => {
                 if (!response.error) {
-                    let msrId = response.data;
-                    // this.router.navigate(['/results/calculation', msrId])
+                    let res = response.data;
+                    if(res.code === 200) 
+                        this.router.navigate(['/results/calculation', res.msrId])
                 }
             }));
     }

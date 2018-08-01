@@ -3,7 +3,7 @@ import { ActivatedRoute } from "@angular/router";
 import { MSService } from "../services/geo-models.service";
 import { NzNotificationService, NzModalService } from "ng-zorro-antd";
 import { DynamicTitleService } from '@core/services/dynamic-title.service';
-import { ListBaseService, ListBaseComponent } from '@shared';
+import { ListBaseComponent } from '@shared';
 
 @Component({
     selector: 'ogms-geo-model-list',

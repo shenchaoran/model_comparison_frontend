@@ -51,8 +51,7 @@
                         <span class='placeholder flex-item-1-1-auto'></span>
                     </div>
                     <div class='section-body'>
-                        <!-- <ogms-calcu-result [ngModel]='msRecord.IO'></ogms-calcu-result> -->
-                        <ogms-calcu-cfg [IO]='msRecord.IO' [std]='msRecord.std' [mode]='"read"' [width]='_width'></ogms-calcu-cfg>
+                        <ogms-calcu-result [msr]='msRecord'></ogms-calcu-result>
                     </div>
                 </section>
             </article>
