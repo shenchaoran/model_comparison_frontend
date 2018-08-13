@@ -1,0 +1,128 @@
+body {
+    word-wrap: break-word;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+    font-size: 14px;
+    line-height: 1.5;
+    // color: rgb(33, 33, 33) !important;
+    background-color: #fff;
+    a {
+        color: rgb(51, 122, 183) !important;
+    }
+}
+
+@media (max-width: 1199px) {
+    .ogms-responsive-div {
+        width: 980px !important;
+        margin:0 auto !important;
+    }
+}
+
+@media (max-width: 1599px) {
+    .ogms-responsive-div {
+        width: 1200px !important;
+        margin: 0 auto !important;
+    }
+}
+
+@media (min-width: 1600px) {
+    .ogms-responsive-div {
+        width: 1600px !important;
+        margin: 0 auto !important;
+    }
+}
+
+.debug-border {
+    border: 1px solid #8d8d8d;
+    border-radius: 5px;
+}
+
+.debug-background {
+    background-color: #fafafa;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+h1 {
+    font-size: 32px;
+    font-weight: 600;
+}
+
+h2 {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+h3 {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+h4 {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+h5 {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+h6 {
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.topic {
+    display: inline-block;
+    padding: 0.3em 0.9em;
+    margin: 0 0.5em 0.5em 0;
+    white-space: nowrap;
+    background-color: #E1ECF4;
+    border-radius: 3px;
+    cursor: pointer;
+    outline: none;
+}
+
+.topic:hover {
+    text-decoration: none;
+    background-color: #cee0ed;
+}
+
+.model-topic {
+    background: #bcbdfaab;
+}
+
+.model-topic:hover {
+    background: #bcbdfa
+}
+
+.method-topic {
+    background: #b6d8ff;
+}
+
+.method-topic:hover {
+    background: #86befd;
+}
+
+.ol-map {
+    border: 1px solid #e5e5e5;
+    border-radius: 5px;
+    width: 550px;
+    height: 350px;
+}
+
+.ol-full-screen,
+.cmp-ol-map:fullscreen,
+.cmp-ol-map:-moz-full-screen,
+.cmp-ol-map:-webkit-full-screen,
+.cmp-ol-map:-ms-fullscreen {
+    width: 100vw;
+}

@@ -7,9 +7,9 @@ import { LoginService } from './login.service';
 import { NgxSharedModule } from '@ngx-shared';
 import { TokenInterceptor } from '@core/net/token/token.interceptor';
 import { ResParserInterceptor } from '@core/net/res-parser/res-parser.interceptor';
+import { NzNotificationService, NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';
 import {
     PerfectScrollbarModule,
-    PerfectScrollbarComponent,
     PERFECT_SCROLLBAR_CONFIG,
     PerfectScrollbarConfigInterface
 } from 'ngx-perfect-scrollbar';
@@ -29,11 +29,12 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     providers: [
         LoginService,
         { provide: HTTP_INTERCEPTORS, useClass: ResParserInterceptor, multi: true},
-        { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
+        // { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
         {
             provide: PERFECT_SCROLLBAR_CONFIG,
             useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
-        }
+        },
+        NzNotificationService
     ]
 })
 export class LoginModule { }

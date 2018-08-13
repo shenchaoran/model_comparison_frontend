@@ -1,0 +1,24 @@
+<ng-template #modelTemplate let-sln='item'>
+    <section>
+        <div class='item-header flex-box-row-nowrap'>
+            <a [routerLink]='sln._id'>
+                {{sln.auth.userName}}/{{sln.meta.name}}
+            </a>
+            <span class='flex-item-1-1-auto'></span>
+            <a [routerLink]='sln._id'><i class="fa fa-info"></i></a>
+            <a [routerLink]='[sln._id, "invoke"]'><i class="fa fa-share"></i></a>
+        </div>
+        <div class='item-body'>
+            <div class='desc'>{{sln.meta.desc | stringLimit: 180 | description}}</div>
+            <div>
+                <span *ngFor='let ms of sln.cmpCfg.ms' [routerLink]='["../resources/geo-models", ms.msId]' class='topic model-topic'>{{ms.msName}}</span>
+            </div>
+        </div>
+        <div class='item-footer'>{{sln.meta.time | date: 'yyyy-MM-dd'}}</div>
+    </section>
+</ng-template>
+
+<ogms-list-template 
+[template]='modelTemplate'
+[service]='service'>
+</ogms-list-template>

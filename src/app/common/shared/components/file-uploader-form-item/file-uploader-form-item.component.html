@@ -1,0 +1,7 @@
+<ogms-file-uploader
+    [width]='width'
+    [fileUploaderOptions]='fileUploaderOptions'
+    [label]='label'
+    (onFileUploadCompleted)='emitChange($event)' 
+    (onClear)='emitChange(undefined)'
+></ogms-file-uploader>

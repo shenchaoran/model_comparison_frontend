@@ -8,7 +8,7 @@ import {
   HostListener
 } from '@angular/core';
 import * as ol from 'openlayers';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 import { Layer, LAYER_TYPE, Map, MAP_TYPE } from '../models';
 import { OlMapService } from '../services/ol-map.service';

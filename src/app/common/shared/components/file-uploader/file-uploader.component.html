@@ -1,0 +1,16 @@
+<div [style.width]='width'>
+    <input #fileUpload style='display: none' ngFileSelect type="file" [options]="fileUploaderOptions" (onUpload)="_onFileUpload($event)"
+        (beforeUpload)="beforeFileUpload($event)">
+    <div class="input-group {{size}}" [ngClass]="{uploading: uploadFileInProgress}">
+        <div class="upload-group">
+            <div class='upload-input-group'>
+                <input #inputText type="text" [ngModel]="label" readonly>
+                <i class="icon ion-close-circled {{size}}" aria-hidden="true" [hidden]='!_showClose' (click)='clearUploaded()'></i>
+            </div>
+            <span id='progress-{{_id}}' class='form-progress {{size}}'></span>
+        </div>
+        <span class="input-group-btn {{size}}">
+            <button class="btn btn-success {{size}}" type="button" (click)="bringFileSelector();">Browse</button>
+        </span>
+    </div>
+</div>

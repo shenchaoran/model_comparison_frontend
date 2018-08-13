@@ -1,0 +1,96 @@
+* {
+    font-size: 14px;
+    user-select: none;
+}
+
+.filter {
+    ul {
+        padding: 0;
+        border: 1px #e1e4e8 solid !important;
+        border-radius: 3px;
+        li {
+            list-style-type: none;
+            position: relative;
+            border-bottom: 1px solid #e1e4e8;
+            a {
+                padding: 8px 10px;
+                color: #285eb8
+            }
+            a:hover {
+                color: #285eb8 !important;
+            }
+            .selected {
+                font-weight: 600;
+                color: #24292e;
+            }
+            .count-tag {
+                display: inline-block;
+                margin-top: 4px;
+                padding: 2px 8px;
+                font-size: 12px;
+                font-weight: 600;
+                line-height: 1;
+                color: #586069;
+                background-color: rgba(27, 31, 35, 0.08);
+                border-radius: 20px;
+            }
+            .selected-tip {
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                width: 2px;
+                background-color: #e36209;
+            }
+        }
+        li:last-child {
+            border: none;
+        }
+        li:hover {
+            text-decoration: none;
+            background-color: #f6f8fa;
+        }
+    }
+}
+
+.sub-filter {
+    margin-top: 15px;
+    padding: 16px;
+    border: 1px #e1e4e8 solid !important;
+    border-radius: 3px;
+    .sub-title {
+        font-size: 14px;
+        margin-bottom: 8px;
+        color: #24292e;
+        font-weight: 600;
+    }
+    ul {
+        padding: 0;
+        color: #24292e;
+        li {
+            list-style-type: none;
+            a {
+                position: relative;
+                padding: 4px 10px;
+                margin: 0 0 2px;
+                font-size: 12px;
+                text-decoration: none;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                cursor: pointer;
+                border-radius: 3px;
+                color: #586069;
+            }
+            a:hover {
+                background-color: #eaecef;
+            }
+            .selected:hover {
+                background-color: #0366d6 !important;
+            }
+            .selected {
+                color: #fff;
+                background-color: #0366d6;
+            }
+        }
+    }
+}

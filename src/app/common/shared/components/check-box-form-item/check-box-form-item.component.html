@@ -1,0 +1,5 @@
+<!-- <nz-checkbox-group [style.width]='width' [(ngModel)]='checkOptionsOne' (ngModelChange)='emitChange()'></nz-checkbox-group>
+<nz-checkbox-group [(ngModel)]="checkOptionsOne"></nz-checkbox-group> -->
+<div [style.width]='width'>
+    <label *ngFor='let opt of _checkOpts' nz-checkbox [(ngModel)]='opt.checked' (ngModelChange)='emitChange()'>{{opt.label}}</label>
+</div>

@@ -1,0 +1,29 @@
+.ogms-left {
+    width: 300px !important;
+    // .list-item {
+    //     padding: 5px 10px;
+    //     border: 1px solid #e1e4e8;
+    //     border-bottom: none;
+    //     cursor: pointer;
+    // }
+    
+    // .list-item:hover,
+    // .list-item.selected {
+    //     background-color: #f6f8fa;
+    // }
+    
+    // .list-item:last-child {
+    //     border: 1px solid #e1e4e8;
+    // }
+    .menu {
+        width: 300px !important;
+        border-radius: 5px;
+        border: 1px #e1e4e8 solid !important;
+        margin-bottom: 25px;
+    }
+}
+
+.ogms-left,
+.ogms-right {
+    margin: 0 10px;
+}

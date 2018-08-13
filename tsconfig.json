@@ -1,5 +1,5 @@
 {
-    "compileOnSave": false,
+    "compileOnSave": true,
     "compilerOptions": {
         "outDir": "./dist/out-tsc",
         "baseUrl": "src",
@@ -9,6 +9,12 @@
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "target": "es5",
+        "skipDefaultLibCheck": true,
+        "plugins": [
+            {
+                "name": "@angular/language-service"
+            }
+        ],
         "typeRoots": [
             "node_modules/@types"
         ],
@@ -22,6 +28,12 @@
             ],
             "@common/*": [
                 "app/common/*"
+            ],
+            "@ol-map": [
+                "app/common/feature/ol-map"
+            ],
+            "@ol-map/*": [
+                "app/common/feature/ol-map/*"
             ],
             "@shared": [
                 "app/common/shared"
@@ -74,11 +86,12 @@
         }
     },
     "angularCompilerOptions": {
-        "preserveWhitespaces": false
+        "preserveWhitespaces": "off"
     },
     "include": [
         "src/**/*",
         "node_modules/jqwidgets-scripts/**/*",
-        "node_modules/ngx-uploader/src/**/*"
+        "node_modules/ngx-uploader/src/**/*",
+        "node_modules/echarts-ng2/src/**/*"
     ]
 }

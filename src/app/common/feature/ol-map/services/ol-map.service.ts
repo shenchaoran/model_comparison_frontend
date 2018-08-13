@@ -1,18 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
+import { Observable } from 'rxjs';
 import { _HttpClient } from '@core/services/http.client';
 import * as uuidv1 from 'uuid/v1';
-
-import * as ol from 'openlayers';
 import * as echarts from 'echarts';
-
 import { MapService } from './map.service';
-
 import { OLSymbolService } from './ol-symbol.service';
 import { OL_MAP_DRAW_TYPE } from '../models';
 import { ColorConverter } from '@utils/colorCoverter.service';
+declare const ol: any;
 
 @Injectable()
 export class OlMapService extends MapService {
@@ -21,7 +17,7 @@ export class OlMapService extends MapService {
     }
 
     // region toolbar
-    pan() {}
+    pan() { }
 
     zoomIn() {
         let currentZoom = this.selectedMap.getView().getZoom();
@@ -95,13 +91,40 @@ export class OlMapService extends MapService {
 
     //
     public createMap(domId: string) {
+        const baseGroup = new ol.layer.Group({
+            title: 'Base',
+            layers: [
+                new ol.layer.Tile({
+                    title: 'OSM',
+                    visible: true,
+                    source: new ol.source.OSM()
+                })
+            ]
+        });
         const map = new ol.Map({
             target: domId,
-            controls: [new ol.control.ScaleLine()]
+            layers: [
+                baseGroup
+            ],
+            view: new ol.View({
+                center: [0, 0],
+                zoom: 2
+            }),
+            controls: ol.control
+                .defaults({
+                    attribution: false,
+                    rotate: false,
+                    zoom: false
+                })
+                .extend([
+                    new ol.control.FullScreen(),
+                    new ol.control.ScaleLine()
+                ])
         });
         const guid = uuidv1();
         this.upsertMap(guid, map);
-        return guid;
+        this.loadDefaultVectorLayer();
+        return map;
     }
 
     public createDefaultMap(domId: string, mapId?: string) {
@@ -114,32 +137,11 @@ export class OlMapService extends MapService {
             })
         });
 
-        // map.addLayer(
-        //     new ol.layer.Tile({
-        //         id: 'base-OSM',
-        //         source: new ol.source.OSM()
-        //     } as any)
-        // );
-        // map.addLayer(
-        //     new ol.layer.Vector({
-        //         id: 'draw-point',
-        //         source: new ol.source.Vector({
-        //             projection: 'EPSG:4326'
-        //         } as any)
-        //     } as any)
-        // );
-        // map.setView(
-        //     new ol.View({
-        //         center: [0, 0],
-        //         zoom: 2
-        //     })
-        // );
-
-        const guid = mapId? mapId: uuidv1();
+        const guid = mapId ? mapId : uuidv1();
         this.upsertMap(guid, map);
 
         // this.loadDefaultTileLayer();
-        // this.loadDefaultVectorLayer();
+        this.loadDefaultVectorLayer();
         // this.setDefaultView();
 
         return guid;
@@ -154,9 +156,9 @@ export class OlMapService extends MapService {
         );
     }
 
-    public loadDefaultImageLayer() {}
+    public loadDefaultImageLayer() { }
 
-    public loadDefaultVectorLayer() {
+    private loadDefaultVectorLayer() {
         this.selectedMap.addLayer(
             new ol.layer.Vector({
                 id: 'draw-point',
@@ -185,11 +187,11 @@ export class OlMapService extends MapService {
         );
     }
 
-    public loadTileLayer() {}
+    public loadTileLayer() { }
 
-    public loadImageLayer() {}
+    public loadImageLayer() { }
 
-    public loadVectorLayer() {}
+    public loadVectorLayer() { }
 
     public getLayer(id: string) {
         return _.find(this.selectedMap.getLayers().getArray(), layer => {
@@ -531,11 +533,206 @@ export class OlMapService extends MapService {
 
     public addFeaturesByJSON(geojson: any) {
         const layer = this.getLayer('draw-point');
-        if(layer) {
+        if (layer) {
             const source = layer.getSource();
-            const features = new ol.format.GeoJSON().readFeatures(geojson);
+            const features = new ol.format.GeoJSON().readFeatures(geojson, { featureProjection: 'EPSG:3857' } as any);
             source.addFeatures(features);
         }
     }
     //endregion
+
+    public getMapExtent(extents) {
+        let minx, miny, maxx, maxy;
+        _.map(extents, extent => {
+            if (minx === undefined || minx > extent[0]) {
+                minx = extent[0];
+            }
+            if (miny === undefined || miny > extent[1]) {
+                miny = extent[1];
+            }
+            if (maxx === undefined || maxx < extent[2]) {
+                maxx = extent[2];
+            }
+            if (maxy === undefined || maxy < extent[3]) {
+                maxy = extent[3];
+            }
+        });
+        return [minx, miny, maxx, maxy];
+    }
+
+    public addDrawPointBar() {
+        const mainBar = new ol.control.Bar();
+        this.selectedMap.addControl(mainBar);
+
+        const inter = new ol.interaction.Draw({
+            type: 'Point',
+            source: this.getLayer('draw-point').getSource()
+        });
+        // inter.on('drawend', _.get(cfg, 'point.cb'));
+        const pointEdit = new ol.control.Toggle({
+            html: '<i class="fa fa-map-marker" ></i>',
+            title: 'Point',
+            interaction: inter
+        });
+        mainBar.addControl(pointEdit);
+    }
+
+    public addDrawBar(cfg: {
+        point?: any,
+        polygon?: any,
+        polyline?: any,
+        rectangle?: any,
+        circle?: any
+    }) {
+        const mainBar = new ol.control.Bar();
+        this.selectedMap.addControl(mainBar);
+
+        if (_.get(cfg, 'point.add')) {
+            const inter = new ol.interaction.Draw({
+                type: 'Point',
+                source: this.getLayer('draw-point').getSource()
+            });
+            inter.on('drawend', _.get(cfg, 'point.cb'));
+            const pointEdit = new ol.control.Toggle({
+                html: '<i class="fa fa-map-marker" ></i>',
+                title: 'Point',
+                interaction: inter
+            });
+            mainBar.addControl(pointEdit);
+        }
+
+        if (_.get(cfg, 'polyline.add')) {
+            const inter = new ol.interaction.Draw({
+                type: 'LineString',
+                source: this.getLayer('draw-polyline').getSource(),
+                // Count inserted points
+                geometryFunction: function (coordinates, geometry) {
+                    if (geometry) geometry.setCoordinates(coordinates);
+                    else geometry = new ol.geom.LineString(coordinates);
+                    this.nbpts = geometry.getCoordinates().length;
+                    return geometry;
+                }
+            });
+            inter.on('drawend', _.get(cfg, 'polyline.cb'));
+
+            const polylineEdit = new ol.control.Toggle({
+                html: '<i class="fa fa-share-alt" ></i>',
+                title: 'LineString',
+                interaction: inter,
+                // Options bar associated with the control
+                bar: new ol.control.Bar({
+                    controls: [
+                        new ol.control.TextButton({
+                            html: 'undo',
+                            title: 'Delete last point',
+                            handleClick: function () {
+                                if (polylineEdit.getInteraction().nbpts > 1)
+                                    polylineEdit.getInteraction().removeLastPoint();
+                            }
+                        }),
+                        new ol.control.TextButton({
+                            html: 'Finish',
+                            title: 'finish',
+                            handleClick: function () {
+                                // Prevent null objects on finishDrawing
+                                if (polylineEdit.getInteraction().nbpts > 2)
+                                    polylineEdit.getInteraction().finishDrawing();
+                            }
+                        })
+                    ]
+                })
+            });
+            mainBar.addControl(polylineEdit);
+        }
+
+        if (_.get(cfg, 'polygon.add')) {
+            const inter = new ol.interaction.Draw({
+                type: 'Polygon',
+                source: this.getLayer('draw-polygon').getSource(),
+                // Count inserted points
+                geometryFunction: function (coordinates, geometry) {
+                    this.nbpts = coordinates[0].length;
+                    if (geometry)
+                        geometry.setCoordinates([
+                            coordinates[0].concat([coordinates[0][0]])
+                        ]);
+                    else geometry = new ol.geom.Polygon(coordinates);
+                    return geometry;
+                }
+            });
+            inter.on('drawend', _.get(cfg, 'polygon.cb'));
+            
+            const polygonEdit = new ol.control.Toggle({
+                html: '<i class="fa fa-bookmark-o fa-rotate-270" ></i>',
+                title: 'Polygon',
+                interaction: inter,
+                // Options bar ssociated with the control
+                bar: new ol.control.Bar({
+                    controls: [
+                        new ol.control.TextButton({
+                            html: 'undo', //'<i class="fa fa-mail-reply"></i>',
+                            title: 'undo last point',
+                            handleClick: function () {
+                                if (polygonEdit.getInteraction().nbpts > 1)
+                                    polygonEdit.getInteraction().removeLastPoint();
+                            }
+                        }),
+                        new ol.control.TextButton({
+                            html: 'finish',
+                            title: 'finish',
+                            handleClick: function () {
+                                // Prevent null objects on finishDrawing
+                                if (polygonEdit.getInteraction().nbpts > 3)
+                                    polygonEdit.getInteraction().finishDrawing();
+                            }
+                        })
+                    ]
+                })
+            });
+            mainBar.addControl(polygonEdit);
+        }
+
+        if (_.get(cfg, 'rectangle.add')) {
+            const inter = new ol.interaction.DrawRegular({
+                source: this.getLayer('draw-polygon').getSource(),
+                sides: 4,
+                canRotate: false
+            });
+            inter.on('drawstart', function (e) {
+                e.feature.on('change', function () {
+                    //   console.log('change');
+                });
+            });
+            inter.on('drawing', function (e) {
+                if (e.feature.getGeometry().getArea)
+                    jQuery('#info').html(
+                        (e.feature.getGeometry().getArea() / 1000000).toFixed(2) +
+                        ' km<sup>2</sup>'
+                    );
+            });
+            inter.on('drawend', _.get(cfg, 'polygon.cb'));
+            const drawRect = new ol.control.Toggle({
+                html: '<i class="fa fa-square-o" aria-hidden="true"></i>',
+                title: 'Draw Rectangle',
+                interaction: inter
+            });
+            mainBar.addControl(drawRect);
+        }
+
+        if(_.get(cfg, 'circle.add')) {
+            const inter = new ol.interaction.Draw({
+                type: 'Circle',
+                source: this.getLayer('draw-polygon').getSource(),
+            });
+            inter.on('drawend', _.get(cfg, 'cycle.cb'));
+            const drawCycle = new ol.control.Toggle({
+                html: '<i class="fa fa-circle" aria-hidden="true"></i>',
+                title: 'Draw Circle',
+                interaction: inter
+            });
+            mainBar.addControl(drawCycle);
+        }
+    }
+
+    // TODO delete bar and selection bar
 }

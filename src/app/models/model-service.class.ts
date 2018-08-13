@@ -1,4 +1,4 @@
-import { ObjectID } from 'mongodb';
+
 import { ResourceSrc } from './resource.enum';
 import { UDXSchema } from './UDX-schema.class';
 
@@ -16,27 +16,19 @@ export class MS {
         },
         IO: {
             schemas: UDXSchema[],
-            data: Event[]
+            data: Event[],
+            std?: any[]
         },
         runtime: any;
     };
-    attached?: {[key: string]: any};
+    stdIds: string[];
+    topic: string;
+    exeName: string;
 }
 
-// 可以还原出一棵树，可以表现父子关系、多选一关系
-// 表示可选关系时，
 export class Event {
-    // 当前event name
     id: string;
-    // 级联关系
-    parentId?: string;
-    childrenId?: Array<string>;
-    // 多选一关系
-    options?: Array<string>;
-    optionType?: 'value' | 'file';
-    // 输入还是输出
-    type?: 'input' | 'output';
-    description?: string;
-    optional?: boolean;
-    schemaId?: string;
+    type: 'input' | 'output' | 'parameter';
+    description: string;
+    schemaId: string;
 }

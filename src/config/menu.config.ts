@@ -18,196 +18,143 @@ export class MenuClass {
     disabled?: boolean;
 }
 
-
 export const HEADER_MENUS: MenuClass[] = [
     {
-        path: 'webNJGIS',
+        path: 'home',
+        data: {
+            menu: {
+                title: 'Home',
+                id: 'home',
+                icon: 'home',
+                selected: true,
+                expanded: false,
+                order: 0
+            }
+        }
+    },
+    {
+        path: 'datasets',
+        data: {
+            menu: {
+                title: 'Datasets',
+                id: 'datasets',
+                icon: ''
+            }
+        }
+    },
+    {
+        path: 'models',
+        data: {
+            menu: {
+                title: 'Models',
+                id: 'models',
+                icon: ''
+            }
+        }
+    },
+    {
+        path: 'comparison',
+        data: {
+            menu: {
+                title: 'Comparison'
+            }
+        },
         children: [
             {
-                path: 'home',
+                path: 'methods',
                 data: {
                     menu: {
-                        title: 'Home',
-                        id: 'home',
-                        icon: 'home',
-                        selected: true,
-                        expanded: false,
-                        order: 0
+                        title: 'Comparison methods'
                     }
                 }
             },
             {
-                path: 'geo-models',
+                path: 'solutions',
                 data: {
                     menu: {
-                        title: 'Model',
-                        id: 'model',
-                        icon: 'appstore-o',
-                        selected: true,
-                        expanded: false,
-                        order: 0
+                        title: 'Comparison solutions'
                     }
                 }
-            },
+            }
+        ]
+    },
+    {
+        path: 'results',
+        data: {
+            menu: {
+                title: 'Results & Diagnostics',
+                id: 'results',
+                icon: ''
+            }
+        },
+        children: [
             {
-                path: 'geo-data',
+                path: 'calculation',
                 data: {
                     menu: {
-                        title: 'Data',
-                        id: 'data',
-                        icon: 'database',
-                        selected: true,
-                        expanded: false,
-                        order: 0
+                        title: 'Calculation Result'
                     }
                 }
-                // children: [
-                //     {
-                //         path: 'std-data-set',
-                //         data: {
-                //             menu: {
-                //                 title: 'Standard Data Set'
-                //             }
-                //         }
-                //     },
-                //     {
-                //         path: 'data-processor',
-                //         data: {
-                //             menu: {
-                //                 title: 'Data Processor'
-                //             }
-                //         }
-                //     }
-                // ]
             },
             {
                 path: 'comparison',
                 data: {
                     menu: {
-                        title: 'Comparison',
-                        id: 'comparison',
-                        icon: 'smile-o',
-                        selected: true,
-                        expanded: false,
-                        order: 0
-                    }
-                },
-                children: [
-                    {
-                        path: 'solutions',
-                        data: {
-                            menu: {
-                                title: 'Comparison Solution'
-                            }
-                        }
-                    },
-                    {
-                        path: 'tasks',
-                        data: {
-                            menu: {
-                                title: 'Comparison Task'
-                            }
-                        }
-                    },
-                    {
-                        path: 'scenes',
-                        data: {
-                            menu: {
-                                title: 'Comparison Scene'
-                            }
-                        }
-                    }
-                ]
-            },
-            {
-                path: 'help',
-                data: {
-                    menu: {
-                        title: 'Help',
-                        id: 'help',
-                        icon: 'question',
-                        selected: true,
-                        expanded: false,
-                        order: 0
+                        title: 'Comparison Result'
                     }
                 }
             }
         ]
+    },
+    {
+        path: 'test',
+        data: {
+            menu: {
+                title: 'Test'
+            }
+        }
     }
 ];
 
 // 登录成功后的用户菜单
 export const USER_MENUS: MenuClass[] = [
     {
-        path: 'webNJGIS',
+        path: 'user',
+        data: {
+            menu: {
+                title: 'User',
+                id: 'user',
+                icon: 'user',
+                selected: true,
+                expanded: false,
+                order: 0
+            }
+        },
         children: [
             {
-                path: 'user',
+                path: 'profile',
                 data: {
                     menu: {
-                        title: 'User',
-                        id: 'user',
-                        icon: 'user',
-                        selected: true,
-                        expanded: false,
-                        order: 0
+                        title: 'Profile'
                     }
-                },
-                children: [
-                    {
-                        path: 'x',
-                        data: {
-                            menu: {
-                                title: 'xxx'
-                            }
-                        },
-                        disabled: true
-                    },
-                    {
-                        path: 'profile',
-                        data: {
-                            menu: {
-                                title: 'Profile'
-                            }
-                        }
-                    },
-                    {
-                        path: 'stars',
-                        data: {
-                            menu: {
-                                title: 'Stars'
-                            }
-                        }
-                    },
-                    {
-                        path: 'resources',
-                        data: {
-                            menu: {
-                                title: 'Resources'
-                            }
-                        }
-                    },
-                    {
-                        isDivider: true
-                    },
-                    {
-                        path: 'set-up',
-                        data: {
-                            menu: {
-                                title: 'Setting'
-                            }
-                        }
-                    },
-                    {
-                        path: 'sign-out',
-                        data: {
-                            menu: {
-                                title: 'Sign Out'
-                            }
-                        }
+                }
+            },
+            {
+                path: 'set-up',
+                data: {
+                    menu: {
+                        title: 'Setting'
                     }
-                ]
+                }
+            },
+            {
+                path: 'sign-out',
+                data: {
+                    menu: {
+                        title: 'Sign Out'
+                    }
+                }
             }
         ]
     }
-]
+];

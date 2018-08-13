@@ -1,64 +1,63 @@
+import { MethodDetailComponent } from './method-detail/method-detail.component';
+import { MethodListComponent } from './method-list/method-list.component';
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-
-import { ComparisonComponent } from './comparison.component';
-import { CmpTaskComponent } from './cmp-task/cmp-task.component';
-import { CmpSolutionComponent } from './cmp-solution/cmp-solution.component';
-import { CmpSceneComponent } from './cmp-scene/cmp-scene.component';
-import { NewSolutionComponent } from './new-solution/new-solution.component';
-import { NewTaskComponent } from './new-task/new-task.component';
-import { CmpSlnService, CmpTaskService, CmpSceneService } from './services';
-import { MSService } from '../geo-model/services';
-import { DataService } from '../geo-data/services';
+import { Routes, RouterModule } from '@angular/router';
+import { SolutionDetailComponent } from './solution-detail/solution-detail.component';
+import { TaskConfigComponent } from './task-config/task-config.component';
+import { SolutionListComponent } from './solution-list/solution-list.component';
+import { HeaderMenuLayoutComponent, DocDetailTemplateComponent } from '@shared';
 
 const routes: Routes = [
-    { 
+    {
         path: '',
-        component: ComparisonComponent,
+        component: HeaderMenuLayoutComponent,
         children: [
             {
                 path: '',
-                redirectTo: 'solutions',
+                redirectTo: 'methods',
                 pathMatch: 'full'
             },
             {
+                path: 'methods',
+                component: MethodListComponent,
+                data: {
+                    title: 'Comparison Methods'
+                }
+            },
+            {
+                path: 'methods/:id',
+                component: DocDetailTemplateComponent,
+                children: [{
+                    path: '',
+                    component: MethodDetailComponent,
+                    data: {
+                        title: 'Comporison Method'
+                    }
+                }]
+            },
+            {
                 path: 'solutions',
-                component: CmpSolutionComponent,
-                children: [],
-                resolve: {
-                    solutionTabTree: CmpSlnService
+                component: SolutionListComponent,
+                data: {
+                    title: 'Comparison Solutions'
                 }
             },
             {
-                path: 'solutions/new',
-                component: NewSolutionComponent
+                path: 'solutions/:id',
+                component: DocDetailTemplateComponent,
+                children: [{
+                    path: '',
+                    component: SolutionDetailComponent,
+                    data: {
+                        title: 'Comparison Solution'
+                    }
+                }]
             },
             {
-                path: 'tasks',
-                component: CmpTaskComponent,
-                resolve: {
-                    taskTabTree: CmpTaskService
-                }
-            },
-            {
-                path: 'tasks/new',
-                component: NewTaskComponent,
-                resolve: {
-                    geoDataResource: DataService,
-                    geoModelTree: MSService
-                },
-                children: [
-                    // {
-                    //     path: '',
-                    //     loadChildren: '../../common/feature/ol-map/ol-map.module#OlMapModule'
-                    // }
-                ]
-            },
-            {
-                path: 'scenes',
-                component: CmpSceneComponent,
-                resolve: {
-                    sceneTabTree: CmpSceneService
+                path: 'solutions/:id/invoke',
+                component: TaskConfigComponent,
+                data: {
+                    title: 'Comparison Task Configure'
                 }
             }
         ]
@@ -66,7 +65,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    imports: [RouterModule.forChild(routes)],
-    exports: [RouterModule]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
 })
-export class CmpRoutingModule {}
+export class ComparisonRoutingModule { }

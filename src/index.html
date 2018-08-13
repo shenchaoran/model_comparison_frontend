@@ -6,8 +6,9 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="environment" content="mock">
-    <title>WebNJGIS</title>
+    <title>Model Comparison</title>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet"> -->
 
     <!-- <script src="https://unpkg.com/core-js/client/shim.min.js"></script>
     <script src="https://unpkg.com/zone.js@0.6.25?main=browser"></script>
@@ -26,16 +27,24 @@
                 (s = ua.match(/opera.([\d.]+)/)) ? browser.opera = s[1] :
                 (s = ua.match(/version\/([\d.]+).*safari/)) ? browser.safari = s[1] : 0;
 
-            if (browser.ie < 11) {
-                window.location.href = "browser-download.html";
-            }
+            if (browser.ie) {
+                if (browser.ie < 11) {
+                    window.location.href = "browser-download.html";
+                }
+            } else if (browser.chrome) {
+
+            } else if (browser.firefox) {
+
+            } else if (browser.safari) {
+
+            } else if (browser.opera) {}
         }
     </script>
 </head>
 
 <body onload="detectBrowser()">
-    <njgis>
-    </njgis>
+    <ogms-app>
+    </ogms-app>
 
     <div id="preloader">
         <div></div>

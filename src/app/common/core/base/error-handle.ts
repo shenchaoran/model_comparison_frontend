@@ -1,5 +1,5 @@
 
-import { Observable } from 'rxjs/Observable';
+import {throwError as observableThrowError,  Observable } from 'rxjs';
 
 export class ErrorHandle {
     constructor() {}
@@ -11,6 +11,6 @@ export class ErrorHandle {
               ? `${error.status} - ${error.statusText}`
               : 'Server error';
         console.error(errMsg);
-        return Observable.throw(errMsg);
+        return observableThrowError(errMsg);
     }
 }

@@ -2,146 +2,173 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { NgxSharedModule } from '../ngx-shared';
 import { NgUploaderModule } from 'ngx-uploader';
-import { jqxTreeComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxtree';
-import { jqxExpanderComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxexpander';
-import { jqxMenuComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxmenu';
-import { jqxListBoxComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxlistbox';
 import { BaThemeConfig } from './theme.config';
 import { BaThemeConfigProvider } from './theme.configProvider';
 import { BACKEND } from '@config';
+import { HEADER_MENUS, USER_MENUS } from '@config/menu.config';
+import { DisqusModule } from "ngx-disqus";
+// import { EmailValidator, EqualPasswordsValidator } from './validators';
+import { ListFilterService } from './components/list-template/list-filter.service';
+import { HeaderMenuService } from './components/baHeaderMenu/services/baHeaderMenu.service';
+import { BaMenuService } from './components/baHeaderMenu/services/baMenu.service';
+import { LoginService } from '@feature/login/login.service';
+import { NzNotificationService, NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';
 
 import {
-  BaCard,
-  BaCopyright,
-  BaPageTop,
-  BaTitleTop,
-  BaMenuItem,
-  BaMenuHoverItem,
-  BaMenu,
-  BaSidebar,
-  BaFileUploader,
-  FileUploader,
-  BaHeaderMenuComponent,
-  TestRecurComponent,
-  SubMenuComponent,
-  ContextMenuComponent,
-  HeaderPullRightComponent
-  // BaMessageBox,
-  //
-  // BaFloatWindow,
-  // BaHouseholdTable
+    FileUploader,
+    ContextMenuComponent,
+    HeaderPullRightComponent,
+    HeaderMenuLayoutComponent,
+    ListTemplateComponent,
+    FooterComponent,
+    DocDetailTemplateComponent,
+    TableFeatureComponent,
+    BaHeaderMenuComponent,
+    SubMenuComponent,
+    CmpTabsViewComponent,
+    CmpDockingViewComponent,
+    FileUploaderFormItemComponent,
+    CheckBoxFormItemComponent,
+    DocBaseComponent,
+    OgmsBaseComponent,
+    MapBaseComponent,
+    CardsTemplateComponent,
 } from './components';
 
 import {
-  BaScrollPosition,
-  BaSlimScroll
-  // BaThemeRun
+    BaScrollPosition,
+    BaSlimScroll
 } from './directives';
 
 import {
-  BaImageLoaderService,
-  BaMenuService,
-  BaThemePreloader,
-  BaThemeSpinner
+    BaImageLoaderService,
+    BaThemePreloader,
+    BaThemeSpinner,
+    ListBaseService,
 } from './services';
 
-import { HeaderMenuService } from './components/baHeaderMenu/baHeaderMenu.service';
-
 import {
-  BaImgPathPipe,
-  MomentDatePipe,
-  DateStrFormatPipe,
-  StringPipe
+    BaImgPathPipe,
+    MomentDatePipe,
+    UndefinedPipe,
+    ResourceSrcPipe,
+    StringLimitPipe,
+    ArrayFilterPipe,
+    DescriptionPipe,
+    CoordinatePipe,
 } from './pipes';
 
-import { EmailValidator, EqualPasswordsValidator } from './validators';
-
-const NGA_SERVICES = [
-  BaImageLoaderService,
-  BaThemePreloader,
-  BaThemeSpinner,
-  BaMenuService
+const SERVICES = [
+    BaImageLoaderService,
+    BaThemePreloader,
+    BaThemeSpinner,
+    ListFilterService,
+    LoginService,
+    BaMenuService,
+    HeaderMenuService,
+    ListBaseService,
 ];
 
-const NGA_VALIDATORS = [EmailValidator, EqualPasswordsValidator];
-
-const CITYFUN_COMPONENTS = [
-  BaCard,
-  BaCopyright,
-  BaPageTop,
-  BaTitleTop,
-  BaMenuItem,
-  BaMenuHoverItem,
-  BaMenu,
-  BaFileUploader,
-
-  BaSidebar,
-  FileUploader,
-  BaHeaderMenuComponent,
-  TestRecurComponent,
-  SubMenuComponent,
-  ContextMenuComponent,
-  HeaderPullRightComponent,
-
-  jqxTreeComponent,
-  jqxExpanderComponent,
-  jqxMenuComponent,
-  jqxListBoxComponent
-  // BaMessageBox,
-  //
-  // BaFloatWindow,
-  // BaHouseholdTable
+const VALIDATORS = [
+    // EmailValidator,
+    // EqualPasswordsValidator
 ];
 
-const CITYFUN_DIRECTIVES = [
-  BaScrollPosition,
-  BaSlimScroll
-  // BaThemeRun
+const COMPONENTS = [
+    FileUploader,
+    ContextMenuComponent,
+    BaHeaderMenuComponent,
+    HeaderPullRightComponent,
+    HeaderMenuLayoutComponent,
+    ListTemplateComponent,
+    FooterComponent,
+    DocDetailTemplateComponent,
+    TableFeatureComponent,
+    SubMenuComponent,
+    CmpTabsViewComponent,
+    CmpDockingViewComponent,
+    FileUploaderFormItemComponent,
+    CheckBoxFormItemComponent,
+    DocBaseComponent,
+    OgmsBaseComponent,
+    MapBaseComponent,
+    CardsTemplateComponent,
 ];
 
-const CITYFUN_PIPES = [BaImgPathPipe, MomentDatePipe, DateStrFormatPipe];
+const DIRECTIVES = [
+    BaScrollPosition,
+    BaSlimScroll
+];
 
-const CITYFUN_VALIDATORS = [EmailValidator, EqualPasswordsValidator];
-const SERVICES = [HeaderMenuService];
+const PIPES = [
+    BaImgPathPipe,
+    MomentDatePipe,
+    ResourceSrcPipe,
+    UndefinedPipe,
+    StringLimitPipe,
+    ArrayFilterPipe,
+    DescriptionPipe,
+    CoordinatePipe,
+];
 
-///////////////
 export * from './components';
-
-
-// const CITYFUN_SERVICES = [
-// 	BaMenuService
-// ];
+export * from './services';
+export * from './pipes';
+export * from './directives';
+// export * from './validators';
 
 @NgModule({
-  declarations: [
-    ...CITYFUN_COMPONENTS,
-    ...CITYFUN_DIRECTIVES,
-    ...CITYFUN_PIPES
-  ],
-  imports: [RouterModule, NgxSharedModule, NgUploaderModule],
-  providers: [
-      ...CITYFUN_VALIDATORS, 
-      ...SERVICES,
-      {
-        provide: 'BACKEND',
-        useValue: {
-            host: BACKEND.host,
-            port: BACKEND.port
-        }
-    },
+    declarations: [
+        ...COMPONENTS,
+        ...DIRECTIVES,
+        ...PIPES,
+        ...VALIDATORS
     ],
-  exports: [...CITYFUN_COMPONENTS, ...CITYFUN_DIRECTIVES, ...CITYFUN_PIPES]
+    imports: [
+        RouterModule,
+        NgxSharedModule,
+        NgUploaderModule,
+        DisqusModule.forRoot('shenchaoran')
+    ],
+    providers: [
+        ...VALIDATORS,
+        ...SERVICES,
+        {
+            provide: 'BACKEND',
+            useValue: {
+                host: BACKEND.host,
+                port: BACKEND.port,
+                API_prefix: BACKEND.API_prefix
+            }
+        },
+        {
+            provide: 'HEADER_MENUS',
+            useValue: HEADER_MENUS
+        },
+        {
+            provide: 'USER_MENUS',
+            useValue: USER_MENUS
+        },
+        NzNotificationService
+    ],
+    exports: [
+        ...COMPONENTS,
+        ...DIRECTIVES,
+        ...PIPES,
+        RouterModule,
+        NgxSharedModule,
+        DisqusModule,
+    ]
 })
 export class SharedModule {
-  static forRoot(): ModuleWithProviders {
-    return <ModuleWithProviders>{
-      ngModule: SharedModule,
-      providers: [
-        BaThemeConfigProvider,
-        BaThemeConfig,
-        ...NGA_VALIDATORS,
-        ...NGA_SERVICES
-      ]
-    };
-  }
+    static forRoot(): ModuleWithProviders {
+        return <ModuleWithProviders>{
+            ngModule: SharedModule,
+            providers: [
+                BaThemeConfigProvider,
+                BaThemeConfig,
+                ...SERVICES
+            ]
+        };
+    }
 }

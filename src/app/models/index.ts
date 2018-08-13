@@ -1,6 +1,5 @@
 export * from './cmp-method.class';
 export * from './cmp-obj.class';
-export * from './cmp-scene.class';
 export * from './cmp-solution.class';
 export * from './cmp-task.class';
 export * from './model-service.class';
@@ -11,3 +10,6 @@ export * from './UDX-schema.class';
 export * from './UDX-type.class';
 export * from './user.class';
 export * from './calcu-task.class';
+export * from './cmp-state.enum';
+export * from './cmp-issue.class';
+export * from './dataRefer.class';

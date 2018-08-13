@@ -1,0 +1,65 @@
+<nz-spin [nzSpinning]='_isLoading'>
+    <form *ngIf='msiForm' [formGroup]='msiForm'>
+        <article class='doc ogms-responsive-div' style='margin: 24px auto !important;'>
+            <div class="doc-title">{{model.MDL.meta.name}} Data Configuration</div>
+            <div class='doc-body'>
+                <section>
+                    <div class='section-header flex-box-row-nowrap'>
+                        <span class='title'>Basic information</span>
+                        <span class='placeholder flex-item-1-1-auto'></span>
+                    </div>
+                    <div class='section-body'>
+                        <nz-form-item>
+                            <nz-form-label nzSpan='6' nzRequired>Name</nz-form-label>
+                            <nz-form-control nzSpan='18' nzHasFeedback>
+                                <input nz-input [style.width]='_width' formControlName='name'>
+                            </nz-form-control>
+                        </nz-form-item>
+                        <nz-form-item>
+                            <nz-form-label nzSpan="6" nzRequired>Description</nz-form-label>
+                            <nz-form-control nzSpan="18" nzHasFeedback>
+                                <textarea nz-input [style.width]='_width' formControlName='desc' [nzAutosize]="{minRows: 2, maxRows: 6}"></textarea>
+                            </nz-form-control>
+                        </nz-form-item>
+                        <nz-form-item>
+                            <nz-form-label nzSpan="6" nzRequired>Authority</nz-form-label>
+                            <nz-form-control nzSpan="18">
+                                <nz-radio-group formControlName="src">
+                                    <label nz-radio-button nzValue="2">Public</label>
+                                    <label nz-radio-button nzValue="3">Private</label>
+                                </nz-radio-group>
+                            </nz-form-control>
+                        </nz-form-item>
+                    </div>
+                </section>
+                <section>
+                    <div class='section-header flex-box-row-nowrap'>
+                        <span class='title'>IO</span>
+                        <span class='placeholder flex-item-1-1-auto'></span>
+                    </div>
+                    <div class='section-body'>
+                        <ogms-calcu-cfg formControlName='IO' *ngIf='msInstance' [IO]='msInstance.IO' [stdIds]='msInstance.ms.stdIds' [width]='_width'></ogms-calcu-cfg>
+                    </div>
+                </section>
+                <section>
+                    <div class='section-header flex-box-row-nowrap'>
+                        <span class='title'>Operating</span>
+                        <span class='placeholder flex-item-1-1-auto'></span>
+                    </div>
+                    <div id='form-submit' class='section-body'>
+                        <button nz-button [nzType]='"primary"' (click)='invoke("save")' [disabled]='!msiForm.valid'>
+                            <i class="fa fa-save"></i>
+                            Save
+                        </button>
+                        <button nz-button [nzType]='"primary"' (click)='invoke("invoke")' [disabled]='!msiForm.valid'>
+                            <i class="fa fa-play"></i>
+                            Invoke
+                        </button>
+                    </div>
+                </section>
+            </div>
+        </article>
+    </form>
+</nz-spin>
+
+

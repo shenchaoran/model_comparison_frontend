@@ -4,27 +4,45 @@
 // @import "../node_modules/clarity-icons/clarity-icons.min.css";
 // @import "../node_modules/clarity-ui/clarity-ui.min.css";
 // end
-@import "~roboto-fontface/css/roboto/roboto-fontface.css";
+// @import "~roboto-fontface/css/roboto/roboto-fontface.css";
 @import "~normalize.css/normalize.css";
-@import '~font-awesome/css/font-awesome.css';
+@import '~font-awesome/css/font-awesome.min.css';
 @import "~ionicons/css/ionicons.min.css";
 @import "~ng2-slim-loading-bar/style.css";
 @import "~perfect-scrollbar/css/perfect-scrollbar.css";
 @import "~openlayers/dist/ol.css";
-@import '~quill/dist/quill.bubble';
-@import '~quill/dist/quill.snow';
-@import '~angular-tree-component/dist/angular-tree-component.css';
-// theme
-@import "app/common/shared/theme.scss";
-// add by SCR
+@import "~prismjs/themes/prism-coy.css";
+@import "~prismjs/plugins/line-numbers/prism-line-numbers.css";
+// @import '~quill/dist/quill.bubble';
+// @import '~quill/dist/quill.snow';
+// @import '~angular-tree-component/dist/angular-tree-component.css';
+// @import '~ol3-layerswitcher/src/ol3-layerswitcher.css';
 // @import '~handsontable/dist/handsontable.full.css';
-@import "assets/css/my/custom-esri.css";
-@import "assets/css/my/custom-openlayers.css";
-@import "assets/css/my/perfectscroll.css";
-@import "assets/css/my/ng2-tree-styles.css";
+// @import '~jqwidgets-scripts/jqwidgets/styles/jqx.base.css';
+// @import '~jqwidgets-scripts/jqwidgets/styles/jqx.energyblue.css';
+// @import '~bootstrap/dist/css/bootstrap.min.css';
+@import "~golden-layout/src/css/goldenlayout-base.css";
+@import "~golden-layout/src/css/goldenlayout-translucent-theme.css";
+// @import "~handsontable/dist/handsontable.full.min.css";
+// @import "~leaflet/dist/leaflet.css";
+// @import "~ng-zorro-antd/src/components.less";
+// @import "~ng-zorro-antd/src/style/index.less";
+// @import '~ol3-ext/dist/ol3-ext.css';
+// theme
+// @import "app/common/shared/theme.scss";
+// add by SCR
+// @import "assets/css/my/custom-esri.css";
+// @import "assets/css/my/custom-openlayers.css";
+// @import "assets/css/my/ng2-tree-styles.css";
+@import "assets/css/my/global.scss";
+@import "assets/css/my/scrollbar.scss";
+@import "assets/css/my/layout.scss";
+@import "assets/css/my/doc-detail.scss";
+@import "assets/css/my/doc-list.scss";
+// @import "assets/css/my/golden-layout.scss";
+@import "assets/css/my/form.scss";
 // TODO relative path problems
-@import 'assets/css/jqwidgets/jqx.base';
-@import 'assets/css/jqwidgets/jqx.energyblue-my';
-@import 'assets/css/zorro.scss';
-@import 'assets/css/ol3-ext/ol3-ext.css';
+// @import 'assets/css/jqwidgets/jqx.base';
+// @import 'assets/css/jqwidgets/jqx.energyblue-my';
+// @import 'assets/css/ol3-ext/ol3-ext.css';
 // end

@@ -3,8 +3,13 @@
 </div>
 
 <ng-template #gotoLogin>
-    <div class="flex-box">
-        <div class="flex-item">Login</div>
-        <div class="flex-item">Sign up</div>
+    <div>
+        <a class='ogms-menu-link' (click)='login()'>
+            Sign in
+        </a> &nbsp;
+        <span style='color: #586069 !important;'>or</span> &nbsp;
+        <a class='ogms-menu-link' (click)='register()'>
+            Sign up
+        </a>
     </div>
 </ng-template>

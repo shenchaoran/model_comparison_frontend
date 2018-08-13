@@ -4,27 +4,91 @@
  */
 
 import { ResourceSrc } from './resource.enum';
-import { CalcuCfg } from './cmp-task.class';
+import * as ObjectID from 'objectid';
+import { LoginService } from '@feature/login/login.service';
+import { Enum } from 'typescript-string-enums';
+
 
 export class CalcuTask {
     _id?: any;
-    msId: string;
+    meta: {
+        name: string,
+        desc: string,
+        time: number
+    };
+    auth: {
+        userId: string,
+        userName: string,
+        src: ResourceSrc
+    };
+    ms: any;
+    topic: string;
     cmpTaskId: string;
-    nodeName: string;
-    calcuCfg: CalcuCfg;
-    output: Array<{
-        eventName: string;
-        dataId: string;
-    }>;
+    node: any;
+    IO: {
+        dataSrc: 'STD' | 'UPLOAD',
+        schemas: any[],
+        data: any[],
+        std: any[]
+    };
+    std: any;
     state: CalcuTaskState;
+    progress: number;
+    // [key: string]: any;
+
+    constructor(ms?) {
+        if (ms) {
+            this.ms = ms;
+            this.topic = ms.topic;
+            this.IO = _.cloneDeep(ms.MDL.IO);
+            this.IO.dataSrc = 'STD';
+            let appendSchema = (type, schema) => {
+                _.map(this.IO[type], event => {
+                    if (event.schemaId === schema.id) {
+                        event.schema = schema;
+                    }
+                });
+            }
+            _.map(this.IO.schemas, schema => {
+                appendSchema('inputs', schema);
+                appendSchema('std', schema);
+                appendSchema('parameters', schema);
+                appendSchema('outputs', schema);
+            });
+        }
+        
+        this.meta = {
+            name: undefined,
+            desc: undefined,
+            time: new Date().getTime()
+        };
+        this._id = ObjectID();
+        this.state = CalcuTaskState.INIT;
+        const user = LoginService.getUser();
+        if(user) {
+            this.auth = {
+                userId: user._id,
+                userName: user.username,
+                src: ResourceSrc.PUBLIC
+            };
+        }
+        else {
+            this.auth = {
+                userId: undefined,
+                userName: undefined,
+                src: undefined
+            };
+        }
+    }
 }
 
-export enum CalcuTaskState {
-    INIT = 0,
-    PAUSE,
-    START_PENDING,
-    START_FAILED,
-    RUNNING,
-    RUN_FAILED,
-    RUN_SUCCEED
-}
+export const CalcuTaskState = Enum(
+    'INIT',
+    'PAUSE',
+    'START_PENDING',
+    'START_FAILED',
+    'RUNNING',
+    'FINISHED_FAILED',
+    'FINISHED_SUCCEED'
+);
+export type CalcuTaskState = Enum<typeof CalcuTaskState>;

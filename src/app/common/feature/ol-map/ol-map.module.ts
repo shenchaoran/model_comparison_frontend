@@ -3,7 +3,6 @@ import { NgxSharedModule } from '@ngx-shared';
 import { SharedModule } from '@shared';
 import { MAP_MODULES_CONFIG, MAP_TOOLBAR_CONFIG } from '@config/map.config';
 
-import { OlMapRoutingModule } from './ol-map-routing.module';
 import { OlMapComponent } from './ol-map.component';
 import { LayerTreeComponent } from './layer-tree/layer-tree.component';
 import { LegendComponent } from './legend/legend.component';
@@ -17,6 +16,7 @@ import {
     ToolbarService
 } from './services';
 import { CompareLayoutComponent } from './compare-layout/compare-layout.component';
+import { RegionMapComponent } from './region-map/region-map.component';
 
 const SERVICES = [
     OlMapService,
@@ -41,19 +41,21 @@ export {
     OlMapService,
     OLSymbolService,
     ToolbarService,
-    RegionMapService
+    RegionMapService,
+    GeoJSONService,
 } from './services';
 ///////////////////////////////
 
 @NgModule({
-    imports: [NgxSharedModule, SharedModule, OlMapRoutingModule],
+    imports: [NgxSharedModule, SharedModule],
     declarations: [
         LayoutComponent,
         OlMapComponent,
         LayerTreeComponent,
         LegendComponent,
         BasemapComponent,
-        CompareLayoutComponent
+        CompareLayoutComponent,
+        RegionMapComponent
     ],
     exports: [
         LayoutComponent,
@@ -61,7 +63,8 @@ export {
         LayerTreeComponent,
         LegendComponent,
         BasemapComponent,
-        CompareLayoutComponent
+        CompareLayoutComponent,
+        RegionMapComponent
     ],
     providers: [
         ...SERVICES,

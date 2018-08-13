@@ -1,0 +1,77 @@
+<ogms-doc-detail-template>
+    <section class='doc' *ngIf='issue'>
+        <div class='doc-title'>{{issue.meta.name}}</div>
+        <div class='doc-body row'>
+            <article class='main-content col-xs-9 col-sm-9 col-md-9 col-lg-9'>
+                <section>
+                    <div class='section-header flex-box-row-nowrap'>
+                        <span class='title'>Basic information</span>
+                        <span class='placeholder flex-item-1-1-auto'></span>
+                    </div>
+                    <div class='section-body'>
+                        <dl class='ogms-table-info'>
+                            <div nz-row>
+                                <dt nz-col nzSpan='4'>Author</dt>
+                                <dd nz-col nzSpan='8'>{{issue.auth.userName | undefined}}</dd>
+                                <dt nz-col nzSpan='4'>Authorization</dt>
+                                <dd nz-col nzSpan='8'>{{issue.auth.src | resourceSrc}}</dd>
+                                <dt nz-col nzSpan='4'>Create time</dt>
+                                <dd nz-col nzSpan='8'>{{issue.meta.time | date:'yyyy-MM-dd'}}</dd>
+                            </div>
+                        </dl>
+                        <div class='detail-desc'>
+                            {{issue.meta.desc}}
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class='section-header flex-box-row-nowrap'>
+                        <span class='title'>Temporal ranges</span>
+                        <span class='placeholder flex-item-1-1-auto'></span>
+                    </div>
+                    <div class='section-body'>
+                        <dl class='ogms-table-info'>
+                            <div nz-row>
+                                <dt nz-col nzSpan='10'>Start time</dt>
+                                <dd nz-col nzSpan='14'>{{issue.temporal.start | date:'yyyy-MM-dd'}}</dd>
+                                <dt nz-col nzSpan='10'>End time</dt>
+                                <dd nz-col nzSpan='14'>{{issue.temporal.end | date:'yyyy-MM-dd'}}</dd>
+                            </div>
+                        </dl>
+                    </div>
+                </section>
+                <section>
+                    <div class='section-header flex-box-row-nowrap'>
+                        <span class='title'>Spatial region</span>
+                        <span class='placeholder flex-item-1-1-auto'></span>
+                    </div>
+                    <div class='section-body'>
+                        <div class=''>
+                            <ogms-region-map [geojson]='issue.spatial.geojson'></ogms-region-map>
+                        </div>
+                    </div>
+                </section>
+            </article>
+            <aside class='sider-content col-xs-3 col-sm-3 col-md-3 col-lg-3'>
+                <section class='sider-item'>
+                    <div class='sider-item-title'>
+                        <span>Solutions</span>
+                    </div>
+                    <div class='sider-item-body'>
+                        <ul>
+                            <li *ngFor='let sln of issue.solutions'>
+                                <a [routerLink]='["../../solutions", sln._id]'>{{sln.meta.name}}</a>
+                                <!-- TODO: length pipe -->
+                                <div class='sider-desc'>{{sln.meta.desc | stringLimit | description}}</div>
+                                <div>
+                                    <span *ngFor='let ms of sln.mss' [routerLink]='["../../resources/geo-models", ms.msId]' class='topic model-topic'>{{ms.msName}}</span>
+                                </div>
+                                <div>{{sln.meta.time | date: 'yyyy-MM-dd'}}</div>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+            </aside>
+        </div>
+    </section>
+</ogms-doc-detail-template>

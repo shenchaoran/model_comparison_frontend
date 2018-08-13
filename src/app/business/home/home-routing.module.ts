@@ -1,10 +1,26 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import {
+    HeaderMenuLayoutComponent
+} from '@shared';
+
 import { HomeComponent } from './home.component';
 
 const routes: Routes = [
-    { path: '', component: HomeComponent }
+    { 
+        path: '', 
+        component: HeaderMenuLayoutComponent,
+        children: [
+            {
+                path: '',
+                component: HomeComponent,
+                data: {
+                    title: 'Model Comparison'
+                }
+            }
+        ]
+    }
 ];
 
 @NgModule({

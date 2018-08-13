@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { NzNotificationService } from 'ng-zorro-antd';
 
 import { LoginService } from './login.service';
@@ -23,7 +23,7 @@ export class Login extends ErrorHandle {
 		fb: FormBuilder,
 		private route: ActivatedRoute,
 		private loginService: LoginService,
-        private _notification: NzNotificationService
+//private _notice: NzNotificationService
 	) {
         super();
 		this.form = fb.group({
@@ -42,7 +42,7 @@ export class Login extends ErrorHandle {
 
 		if (localStorage.getItem('username')) {
 			this.username.setValue(localStorage.getItem('username'));
-		}
+        }
 	}
 
 	public rememberAccount(): void {
@@ -64,22 +64,22 @@ export class Login extends ErrorHandle {
 				.subscribe({
 					next: err => {
                         if(err) {
-                            this._notification.create(
-                                'warning',
-                                'Warning:',
-                                'login failed, please retry later!'
-                            );
+                            // this._notification.create(
+                            //     'warning',
+                            //     'Warning:',
+                            //     'login failed, please retry later!'
+                            // );
                             // this.loginErrorInfo = JSON.stringify(err);
                             this.loginErrorInfo = 'login failed, please retry later!';
 						    this.submitted = false;
                         }
                     },
                     error: err => {
-                        this._notification.create(
-                            'warning',
-                            'Warning:',
-                            'login failed, please retry later!'
-                        );
+                        // this._notification.create(
+                        //     'warning',
+                        //     'Warning:',
+                        //     'login failed, please retry later!'
+                        // );
                         this.handleError(err)
                     }
 				});

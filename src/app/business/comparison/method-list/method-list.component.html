@@ -1,0 +1,22 @@
+<ng-template #template let-item='item'>
+    <section>
+        <div class='item-header flex-box-row-nowrap'>
+            <a [routerLink]='item._id'>
+                {{item.meta.name}}
+            </a>
+            <span class='flex-item-1-1-auto'></span>
+            <a [routerLink]='item._id'>
+                <i class="fa fa-info"></i>
+            </a>
+            <a [routerLink]='[item._id, "invoke"]'>
+                <i class="fa fa-share"></i>
+            </a>
+        </div>
+        <div class='item-body'>
+            <div class='desc'>{{item.meta.desc | stringLimit: 180 | description}}</div>
+        </div>
+        <div class='item-footer'>{{item.meta.time | date: 'yyyy-MM-dd'}}</div>
+    </section>
+</ng-template>
+
+<ogms-list-template [template]='template' [service]='service'></ogms-list-template>
