@@ -24,10 +24,11 @@ export class _HttpClient {
         return `http://${this.backend.host}:${this.backend.port}${this.backend.API_prefix}${url}`;
     }
 
-    private appendJWT(url: string, appendJWT: boolean): string {
-        this.loading.start();
+    private appendJWT(url: string, appendJWT: boolean, withRequestProgress?: boolean): string {
+        if(withRequestProgress !== false)
+            this.loading.start();
         url = this.appendDomain(url);
-        if(appendJWT) {
+        if(appendJWT !== false) {
             const jwtStr = localStorage.getItem('jwt');
             let jwt = undefined;
             if(jwtStr) {
@@ -44,12 +45,13 @@ export class _HttpClient {
         return url;
     }
 
-    private resInterceptor(observable: Observable<any>, parseRes?: boolean): Observable<any> {
+    private resInterceptor(observable: Observable<any>, parseRes?: boolean, withRequestProgress?: boolean): Observable<any> {
         return Observable.create(observer => {
             observable
                 .subscribe(response => {
-                    this.loading.complete();
-                    if(parseRes === undefined || parseRes === true) {
+                    if(withRequestProgress !== false)
+                        this.loading.complete();
+                    if(parseRes !== false) {
                         if (!response.error) {
                             observer.next({
                                 data: response.data
@@ -78,10 +80,11 @@ export class _HttpClient {
         url: string,
         options: any = {},
         appendJWT?: boolean,
-        parseRes?: boolean
+        parseRes?: boolean,
+        withRequestProgress?: boolean
     ): Observable<any> {
-        url = this.appendJWT(url, appendJWT);
-        return this.resInterceptor(this.http.get(url, options), parseRes);
+        url = this.appendJWT(url, appendJWT, withRequestProgress);
+        return this.resInterceptor(this.http.get(url, options), parseRes, withRequestProgress);
     }
 
     post(
@@ -89,10 +92,11 @@ export class _HttpClient {
         body: any|null,
         options: any = {},
         appendJWT?: boolean,
-        parseRes?: boolean
+        parseRes?: boolean,
+        withRequestProgress?: boolean
     ): Observable<any> {
-        url = this.appendJWT(url, appendJWT);
-        return this.resInterceptor(this.http.post(url, body, options), parseRes);
+        url = this.appendJWT(url, appendJWT, withRequestProgress);
+        return this.resInterceptor(this.http.post(url, body, options), parseRes, withRequestProgress);
     }
 
     delete(

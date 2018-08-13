@@ -8,6 +8,7 @@ import { DynamicTitleService } from "@core/services/dynamic-title.service";
 import { ReactiveFormsModule } from "@angular/forms";
 import { DocBaseComponent } from '@shared';
 import { Observable, interval } from 'rxjs'
+import { CalcuTaskState } from '@models'
 import { map, switchMap, filter, tap, startWith } from 'rxjs/operators';
 
 @Component({
@@ -31,16 +32,14 @@ export class CalcuDetailComponent extends DocBaseComponent implements OnInit {
         super.ngOnInit();
         this._subscriptions.push(this.doc.subscribe(doc => {
             this.msRecord = doc;
-            if(this.msRecord.progress < 100 && this.msRecord.progress > 0) {
-                this.fetchInterval();
-            }
+            this.fetchInterval();
         }));
     }
 
     private fetchInterval() {
         const record$ = interval(3000).pipe(
             switchMap((v, i) => {
-                return this.service.findOne(this.msRecord._id);
+                return this.service.findOne(this.msRecord._id, false);
             }),
             map(response => {
                 if(!response.error) {
@@ -49,11 +48,12 @@ export class CalcuDetailComponent extends DocBaseComponent implements OnInit {
             })
         )
 
-        const _subscription = record$.subscribe(doc => {
+        const subscription = record$.subscribe(doc => {
             this.msRecord = doc;
-            if(this.msRecord.progress === 100 || this.msRecord.progress === -1) {
-                _subscription.unsubscribe();
+            if(this.msRecord.state !== CalcuTaskState.RUNNING) {
+                subscription.unsubscribe();
             }
         });
+        this._subscriptions.push(subscription)
     }
 }

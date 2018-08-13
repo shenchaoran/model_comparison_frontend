@@ -4,6 +4,7 @@ import { SolutionDetailComponent } from './solution-detail/solution-detail.compo
 import { TaskConfigComponent } from './task-config/task-config.component';
 import { SolutionListComponent } from './solution-list/solution-list.component';
 import { HeaderMenuLayoutComponent } from '@shared';
+import { CmpMethodsComponent } from './cmp-methods/cmp-methods.component'
 
 const routes: Routes = [
     {
@@ -12,24 +13,38 @@ const routes: Routes = [
         children: [
             {
                 path: '',
+                redirectTo: 'cmp-methods',
+                pathMatch: 'full'
+            },
+            {
+                path: 'cmp-methods',
+                component: CmpMethodsComponent,
+                data: {
+                    title: 'Comparison Methods'
+                }
+            },
+            {
+                path: 'cmp-solutions',
                 component: SolutionListComponent,
                 data: {
-                    title: 'Comparison Solution'
-                }
-            },
-            {
-                path: ':id',
-                component: SolutionDetailComponent,
-                data: {
-                    title: 'Comparison Solution'
-                }
-            },
-            {
-                path: ':id/invoke',
-                component: TaskConfigComponent,
-                data: {
-                    title: 'Comparison Configure'
-                }
+                    title: 'Comparison Solutions'
+                },
+                children: [   
+                    {
+                        path: ':id',
+                        component: SolutionDetailComponent,
+                        data: {
+                            title: 'Comparison Solution'
+                        }
+                    },
+                    {
+                        path: ':id/invoke',
+                        component: TaskConfigComponent,
+                        data: {
+                            title: 'Comparison Configure'
+                        }
+                    }
+                ]
             }
         ]
     }

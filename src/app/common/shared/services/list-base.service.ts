@@ -22,7 +22,7 @@ export class ListBaseService {
         return this.http.post(`/${this.baseUrl}`, {doc: doc});
     }
 
-    findOne(id): Observable<any> {
-        return this.http.get(`/${this.baseUrl}/${id}`);
+    findOne(id, withRequestProgress?): Observable<any> {
+        return this.http.get(`/${this.baseUrl}/${id}`, undefined, undefined, undefined, withRequestProgress);
     }
 }

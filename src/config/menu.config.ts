@@ -58,7 +58,25 @@ export const HEADER_MENUS: MenuClass[] = [
             menu: {
                 title: 'Comparison'
             }
-        }
+        },
+        children: [
+            {
+                path: 'cmp-methods',
+                data: {
+                    menu: {
+                        title: 'Comparison methods'
+                    }
+                }
+            },
+            {
+                path: 'cmp-solutions',
+                data: {
+                    menu: {
+                        title: 'Comparison solutions'
+                    }
+                }
+            }
+        ]
     },
     {
         path: 'results',

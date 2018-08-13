@@ -17,3 +17,4 @@ export * from './list-base/list-base.component';
 export * from './doc-base/doc-base.component';
 export * from './ogms-base/ogms-base.component';
 export * from './map-base/map-base.component';
+export * from './cards-layout/cards-layout.component';

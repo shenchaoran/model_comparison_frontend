@@ -7,10 +7,10 @@ import { ListFilterService } from './list-filter.service';
     styleUrls: ['./list-template.component.scss']
 })
 export class ListTemplateComponent implements OnInit {
-
+    public _loading = true;
     _ownerFilterV;
-    
-    @Input() searchFilters: {
+
+    @Input() public searchFilters: {
         q?: string,
         pageSize?: number,
         pageNum?: number,
@@ -19,22 +19,30 @@ export class ListTemplateComponent implements OnInit {
         sort?: string,
         [key: string]: any
     } = {
-        pageSize: 15,
-        pageNum: 1
-    };
-    @Input() list: any[];
-    @Input() count: number;
-    @Input() template: any;
-    
-    // @Input() type: string;
-
-    @Input() withCreateBtn: boolean;
-    @Input() starFilters: {
+            pageSize: 15,
+            pageNum: 1
+        };
+    @Input() public list: any[];
+    @Input() public count: number;
+    @Input() public template: any;
+    @Input() public withCreateBtn: boolean;
+    @Input() public starFilters: {
         label: string,
         value: string,
         checked: boolean
-    }[];
-    @Input() sortsFilters: {
+    }[] = [
+            {
+                label: 'Created',
+                value: 'Created',
+                checked: false
+            },
+            {
+                label: 'Followed',
+                value: 'Followed',
+                checked: false
+            }
+        ];
+    @Input() public sortsFilters: {
         label: string,
         value: string,
         options: {
@@ -42,24 +50,67 @@ export class ListTemplateComponent implements OnInit {
             value: string,
             checked: boolean
         }[]
-    }[];
+    }[] = [
+            {
+                label: 'Organization',
+                value: 'organization',
+                options: [
+                    {
+                        label: 'OGMS',
+                        value: 'OGMS',
+                        checked: false
+                    },
+                    {
+                        label: 'SUMS',
+                        value: 'SUMS',
+                        checked: false
+                    }
+                ]
+            },
+            {
+                label: 'Sort',
+                value: 'sort',
+                options: [
+                    {
+                        label: 'Most followed',
+                        value: 'Most followed',
+                        checked: false
+                    },
+                    {
+                        label: 'Least followed',
+                        value: 'Least followed',
+                        checked: false
+                    },
+                    {
+                        label: 'Newest',
+                        value: 'Newest',
+                        checked: false
+                    },
+                    {
+                        label: 'Oldest',
+                        value: 'Oldest',
+                        checked: false
+                    }
+                ]
+            }
+        ];
 
-    @Output() onFiltersChange = new EventEmitter<any>();
+    @Output() public onFiltersChange = new EventEmitter<any>();
 
     constructor() { }
 
     ngOnInit() {
-        
+
     }
 
     changeFilters(v, type) {
-        if(type === 'owner') {
-            _.map(this.starFilters, opt => opt.checked = opt.value===v);
+        if (type === 'owner') {
+            _.map(this.starFilters, opt => opt.checked = opt.value === v);
             this.searchFilters.owner = v;
         }
         else {
             let filter = _.find(this.sortsFilters, filter => filter.value === type);
-            _.map(filter.options, opt => opt.checked = opt.value=== v);
+            _.map(filter.options, opt => opt.checked = opt.value === v);
             this.searchFilters[filter.value] = v;
         }
         this.onSearch();

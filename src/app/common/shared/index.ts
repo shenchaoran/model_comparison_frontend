@@ -34,6 +34,7 @@ import {
     DocBaseComponent,
     OgmsBaseComponent,
     MapBaseComponent,
+    CardsLayoutComponent,
 } from './components';
 
 import {
@@ -95,6 +96,7 @@ const COMPONENTS = [
     DocBaseComponent,
     OgmsBaseComponent,
     MapBaseComponent,
+    CardsLayoutComponent,
 ];
 
 const DIRECTIVES = [

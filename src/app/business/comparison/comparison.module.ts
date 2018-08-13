@@ -10,6 +10,7 @@ import { TaskConfigComponent } from './task-config/task-config.component';
 import { CmpSlnService } from './services/cmp-sln.service';
 import { CmpTaskService } from '../results/services/cmp-task.service';
 import { NzNotificationService, NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';
+import { CmpMethodsComponent } from './cmp-methods/cmp-methods.component';
 
 export * from './services/cmp-sln.service';
 
@@ -24,6 +25,7 @@ export * from './services/cmp-sln.service';
         SolutionListComponent,
         SolutionDetailComponent,
         TaskConfigComponent,
+        CmpMethodsComponent,
     ],
     providers: [
         CmpSlnService,
