@@ -73,6 +73,7 @@
     "roboto-fontface": "0.7.0",
     "rxjs": "^6.2.2",
     "rxjs-compat": "^6.2.2",
+    "showdown": "^1.8.6",
     "topojson": "^3.0.2",
     "ts-md5": "^1.2.0",
     "typescript": "2.7.2",

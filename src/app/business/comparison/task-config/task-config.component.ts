@@ -1,8 +1,8 @@
 import { Component, OnInit, HostListener } from "@angular/core";
 import { CmpSlnService } from "../services/cmp-sln.service";
 import { Router, ActivatedRoute, Params } from "@angular/router";
-import { NzNotificationService, NzModalService } from "ng-zorro-antd";
 import { DynamicTitleService } from "@core/services/dynamic-title.service";
+import { NzNotificationService, NzModalService } from "ng-zorro-antd";
 import { ReactiveFormsModule } from "@angular/forms";
 import { DocBaseComponent } from '@shared';
 

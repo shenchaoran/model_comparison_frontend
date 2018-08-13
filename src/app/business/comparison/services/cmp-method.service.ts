@@ -5,9 +5,7 @@ import { Resolve } from '@angular/router';
 import { _HttpClient } from '@core/services/http.client';
 import { ListBaseService } from '@shared';
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable()
 export class CmpMethodService extends ListBaseService {
     protected baseUrl = 'comparison/methods';
 
