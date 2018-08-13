@@ -4,7 +4,7 @@ import { CmpDetailComponent } from './cmp-detail/cmp-detail.component';
 import { CmpListComponent } from './cmp-list/cmp-list.component';
 import { CalcuDetailComponent } from './calcu-detail/calcu-detail.component';
 import { CalcuListComponent } from './calcu-list/calcu-list.component';
-import { HeaderMenuLayoutComponent } from '@shared';
+import { HeaderMenuLayoutComponent, DocDetailTemplateComponent } from '@shared';
 
 const routes: Routes = [
     {
@@ -25,10 +25,16 @@ const routes: Routes = [
             },
             {
                 path: 'calculation/:id',
-                component: CalcuDetailComponent,
-                data: {
-                    title: 'Results & Diagnostics'
-                }
+                component: DocDetailTemplateComponent,
+                children: [
+                    {
+                        path: '',
+                        component: CalcuDetailComponent,
+                        data: {
+                            title: 'Results & Diagnostics'
+                        }
+                    }
+                ]
             },
             {
                 path: 'comparison',

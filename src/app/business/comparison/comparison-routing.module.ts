@@ -1,10 +1,11 @@
+import { MethodDetailComponent } from './method-detail/method-detail.component';
+import { MethodListComponent } from './method-list/method-list.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { SolutionDetailComponent } from './solution-detail/solution-detail.component';
 import { TaskConfigComponent } from './task-config/task-config.component';
 import { SolutionListComponent } from './solution-list/solution-list.component';
-import { HeaderMenuLayoutComponent } from '@shared';
-import { CmpMethodsComponent } from './cmp-methods/cmp-methods.component'
+import { HeaderMenuLayoutComponent, DocDetailTemplateComponent } from '@shared';
 
 const routes: Routes = [
     {
@@ -13,38 +14,51 @@ const routes: Routes = [
         children: [
             {
                 path: '',
-                redirectTo: 'cmp-methods',
+                redirectTo: 'methods',
                 pathMatch: 'full'
             },
             {
-                path: 'cmp-methods',
-                component: CmpMethodsComponent,
+                path: 'methods',
+                component: MethodListComponent,
                 data: {
                     title: 'Comparison Methods'
                 }
             },
             {
-                path: 'cmp-solutions',
+                path: 'methods/:id',
+                component: DocDetailTemplateComponent,
+                children: [{
+                    path: '',
+                    component: MethodDetailComponent,
+                    data: {
+                        title: 'Comporison Method'
+                    }
+                }]
+            },
+            {
+                path: 'solutions',
                 component: SolutionListComponent,
                 data: {
                     title: 'Comparison Solutions'
-                },
-                children: [   
-                    {
-                        path: ':id',
-                        component: SolutionDetailComponent,
-                        data: {
-                            title: 'Comparison Solution'
-                        }
-                    },
-                    {
-                        path: ':id/invoke',
-                        component: TaskConfigComponent,
-                        data: {
-                            title: 'Comparison Configure'
-                        }
+                }
+            },
+            {
+                path: 'solutions/:id',
+                component: DocDetailTemplateComponent,
+                children: [{
+                    path: '',
+                    component: SolutionDetailComponent,
+                    data: {
+                        title: 'Comparison Solution'
                     }
-                ]
+                }]
+            },
+            {
+                path: 'solutions/:id/invoke',
+                component: TaskConfigComponent,
+                data: {
+                    title: 'Comparison Task Configure'
+                }
             }
         ]
     }

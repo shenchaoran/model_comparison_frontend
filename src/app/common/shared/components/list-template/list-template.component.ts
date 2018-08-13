@@ -1,15 +1,22 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { ListFilterService } from './list-filter.service';
+import { OgmsBaseComponent } from '../ogms-base/ogms-base.component';
+import { DynamicTitleService } from '@core/services/dynamic-title.service';
+import { ActivatedRoute } from "@angular/router";
+import { ListBaseService } from '../../services/list-base.service';
 
 @Component({
     selector: 'ogms-list-template',
     templateUrl: './list-template.component.html',
     styleUrls: ['./list-template.component.scss']
 })
-export class ListTemplateComponent implements OnInit {
-    public _loading = true;
+export class ListTemplateComponent extends OgmsBaseComponent implements OnInit, OnDestroy {
+    _loading = true;
+    list: any[];
+    count: number;
     _ownerFilterV;
 
+    @Input() public service: any;
     @Input() public searchFilters: {
         q?: string,
         pageSize?: number,
@@ -22,10 +29,8 @@ export class ListTemplateComponent implements OnInit {
             pageSize: 15,
             pageNum: 1
         };
-    @Input() public list: any[];
-    @Input() public count: number;
     @Input() public template: any;
-    @Input() public withCreateBtn: boolean;
+    @Input() public withCreateBtn: boolean = false;
     @Input() public starFilters: {
         label: string,
         value: string,
@@ -95,12 +100,40 @@ export class ListTemplateComponent implements OnInit {
             }
         ];
 
-    @Output() public onFiltersChange = new EventEmitter<any>();
-
-    constructor() { }
+    constructor(
+        public route: ActivatedRoute,
+        // public service: ListBaseService,
+        public title: DynamicTitleService
+    ) { 
+        super()
+    }
 
     ngOnInit() {
+        let pageSize = _.get(this, 'searchFilters.pageSize')
+        this._subscriptions.push(this.service.findAll(pageSize? {
+            pageSize: pageSize
+        }: {})
+            .subscribe(response => {
+                this._loading = false
+                if (response.error) {
+                    return Promise.reject(response.error);
+                } else {
+                    this.list = response.data.docs;
+                    this.count = response.data.count;
+                }
+            }));
+    }
 
+    search() {
+        this._loading = true
+        this._subscriptions.push(this.service.findAll(this.searchFilters)
+            .subscribe(response => {
+                this._loading = false
+                if (!response.error) {
+                    this.list = response.data.docs;
+                    this.count = response.data.count;
+                }
+            }));
     }
 
     changeFilters(v, type) {
@@ -113,21 +146,17 @@ export class ListTemplateComponent implements OnInit {
             _.map(filter.options, opt => opt.checked = opt.value === v);
             this.searchFilters[filter.value] = v;
         }
-        this.onSearch();
-    }
-
-    onSearch() {
-        this.onFiltersChange.emit(this.searchFilters);
+        this.search();
     }
 
     setPageNum(pageNum) {
         this.searchFilters.pageNum = pageNum;
-        this.onSearch();
+        this.search();
     }
 
     setPageSize(pageSize) {
         this.searchFilters.pageSize = pageSize;
-        this.onSearch();
+        this.search();
     }
 
 }

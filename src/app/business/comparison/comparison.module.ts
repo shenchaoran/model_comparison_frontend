@@ -9,8 +9,10 @@ import { SolutionDetailComponent } from './solution-detail/solution-detail.compo
 import { TaskConfigComponent } from './task-config/task-config.component';
 import { CmpSlnService } from './services/cmp-sln.service';
 import { CmpTaskService } from '../results/services/cmp-task.service';
+import { CmpMethodService } from './services/cmp-method.service';
 import { NzNotificationService, NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';
-import { CmpMethodsComponent } from './cmp-methods/cmp-methods.component';
+import { MethodDetailComponent } from './method-detail/method-detail.component';
+import { MethodListComponent } from './method-list/method-list.component';
 
 export * from './services/cmp-sln.service';
 
@@ -25,12 +27,14 @@ export * from './services/cmp-sln.service';
         SolutionListComponent,
         SolutionDetailComponent,
         TaskConfigComponent,
-        CmpMethodsComponent,
+        MethodDetailComponent,
+        MethodListComponent,
     ],
     providers: [
         CmpSlnService,
         CmpTaskService,
-        NzNotificationService
+        CmpMethodService,
+        NzNotificationService,
     ]
 })
 export class ComparisonModule { }

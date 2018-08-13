@@ -1,29 +1,36 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ListBaseService } from '../../services/list-base.service';
-import { ActivatedRoute } from "@angular/router";
-import { NzNotificationService, NzModalService } from "ng-zorro-antd";
+import { Component, OnInit, Input } from '@angular/core';
+import { ListTemplateComponent } from '../list-template/list-template.component';
 import { DynamicTitleService } from '@core/services/dynamic-title.service';
+import { ActivatedRoute } from "@angular/router";
 import { OgmsBaseComponent } from '../ogms-base/ogms-base.component';
-/**
- * list 类型的组件基类，极大地复用了组件模板代码
- * 组件继承只能继承类，不能继承模板，不同list 模板的区别在于 list item template
- * 
- * @export
- * @class ListBaseComponent
- * @implements {OnInit}
- */
-@Component({
-    selector: 'ogms-list-base',
-    templateUrl: './list-base.component.html',
-    styleUrls: ['./list-base.component.scss']
-})
 
-export class ListBaseComponent extends OgmsBaseComponent implements OnInit, OnDestroy {
-    public _loading = true;
-    public count;
-    public list;
-    public withCreateBtn = false;
-    public starFilters: {
+@Component({
+    selector: 'ogms-cards-template',
+    templateUrl: './cards-template.component.html',
+    styleUrls: ['./cards-template.component.scss']
+})
+export class CardsTemplateComponent extends OgmsBaseComponent implements OnInit {
+    _loading = true;
+    list: any[];
+    count: number;
+    _ownerFilterV;
+
+    @Input() public service: any;
+    @Input() public searchFilters: {
+        q?: string,
+        pageSize?: number,
+        pageNum?: number,
+        owner?: string,
+        organization?: string,
+        sort?: string,
+        [key: string]: any
+    } = {
+            pageSize: 15,
+            pageNum: 1
+        };
+    @Input() public template: any;
+    @Input() public withCreateBtn: boolean = false;
+    @Input() public starFilters: {
         label: string,
         value: string,
         checked: boolean
@@ -39,7 +46,7 @@ export class ListBaseComponent extends OgmsBaseComponent implements OnInit, OnDe
                 checked: false
             }
         ];
-    public sortsFilters: {
+    @Input() public sortsFilters: {
         label: string,
         value: string,
         options: {
@@ -94,13 +101,11 @@ export class ListBaseComponent extends OgmsBaseComponent implements OnInit, OnDe
 
     constructor(
         public route: ActivatedRoute,
-        public service: ListBaseService,
-        //private _notice: NzNotificationService,
+        // public service: ListBaseService,
         public title: DynamicTitleService
-    ) {
-        super();
+    ) { 
+        super()
     }
-
 
     ngOnInit() {
         let pageSize = _.get(this, 'searchFilters.pageSize')
@@ -118,9 +123,9 @@ export class ListBaseComponent extends OgmsBaseComponent implements OnInit, OnDe
             }));
     }
 
-    search(filters) {
+    search() {
         this._loading = true
-        this._subscriptions.push(this.service.findAll(filters)
+        this._subscriptions.push(this.service.findAll(this.searchFilters)
             .subscribe(response => {
                 this._loading = false
                 if (!response.error) {
@@ -129,4 +134,28 @@ export class ListBaseComponent extends OgmsBaseComponent implements OnInit, OnDe
                 }
             }));
     }
+
+    changeFilters(v, type) {
+        if (type === 'owner') {
+            _.map(this.starFilters, opt => opt.checked = opt.value === v);
+            this.searchFilters.owner = v;
+        }
+        else {
+            let filter = _.find(this.sortsFilters, filter => filter.value === type);
+            _.map(filter.options, opt => opt.checked = opt.value === v);
+            this.searchFilters[filter.value] = v;
+        }
+        this.search();
+    }
+
+    setPageNum(pageNum) {
+        this.searchFilters.pageNum = pageNum;
+        this.search();
+    }
+
+    setPageSize(pageSize) {
+        this.searchFilters.pageSize = pageSize;
+        this.search();
+    }
+
 }

@@ -25,16 +25,14 @@ import {
     TableFeatureComponent,
     BaHeaderMenuComponent,
     SubMenuComponent,
-    TestRecurComponent,
     CmpTabsViewComponent,
     CmpDockingViewComponent,
     FileUploaderFormItemComponent,
     CheckBoxFormItemComponent,
-    ListBaseComponent,
     DocBaseComponent,
     OgmsBaseComponent,
     MapBaseComponent,
-    CardsLayoutComponent,
+    CardsTemplateComponent,
 } from './components';
 
 import {
@@ -87,16 +85,14 @@ const COMPONENTS = [
     DocDetailTemplateComponent,
     TableFeatureComponent,
     SubMenuComponent,
-    TestRecurComponent,
     CmpTabsViewComponent,
     CmpDockingViewComponent,
     FileUploaderFormItemComponent,
     CheckBoxFormItemComponent,
-    ListBaseComponent,
     DocBaseComponent,
     OgmsBaseComponent,
     MapBaseComponent,
-    CardsLayoutComponent,
+    CardsTemplateComponent,
 ];
 
 const DIRECTIVES = [

@@ -1,6 +1,3 @@
-<ng-container *ngIf='_loading'>
-
-</ng-container>
 <ng-container>
     <ng-template #template let-msRecord='item'>
         <section>
@@ -23,14 +20,8 @@
     </ng-template>
 
     <ogms-list-template 
-        [count]='count' 
         [template]='template' 
-        [list]='list' 
-        [withCreateBtn]='withCreateBtn' 
-        [starFilters]='starFilters'
-        [sortsFilters]='sortsFilters' 
-        [searchFilters]='searchFilters'
-        (onFiltersChange)='search($event)'>
+        [service]='service'>
     </ogms-list-template>
 </ng-container>
 
