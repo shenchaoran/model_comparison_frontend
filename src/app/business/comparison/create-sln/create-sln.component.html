@@ -1,3 +1,57 @@
-<p>
-  create-sln works!
-</p>
+<div class="container flex-box-col-nowrap max-size">
+    <nz-steps [(nzCurrent)]="currentStep">
+        <nz-step [nzTitle]="'Define Comparison Keynote'" [nzDescription]=''></nz-step>
+        <!-- <nz-step [nzTitle]="'Select Participants'" [nzDescription]=''></nz-step> -->
+        <nz-step [nzTitle]="'Add Comparison Object'" [nzDescription]=''></nz-step>
+        <!-- <nz-step [nzTitle]="'Configure data'" [nzDescription]=''></nz-step> -->
+        <!-- <nz-step [nzTitle]="'Preview outline'" [nzDescription]=''></nz-step> -->
+    </nz-steps>
+
+    <div class="steps-content flex-box-col-nowrap flex-item-1-1-auto debug-border debug-background">
+
+        <!-- <div class='flex-item-1-1-auto' [hidden]='currentStep !== 1'>
+            <ogms-form-participants [selectMode]='__selectMode' [ngModel]='cmpSln.cmpCfg.ms' (ngModelChange)='onParticipantsChange($event)'></ogms-form-participants>
+        </div> -->
+
+        <div class='flex-item-1-1-auto' [hidden]='currentStep !== 1'>
+            <ogms-form-cmp-objs [mode]='mode' [keynote]='__tempKeynote' (onCmpObjsChange)='onCmpObjsChange($event)'></ogms-form-cmp-objs>
+        </div>
+
+        <!-- <div [hidden]='currentStep !== 2'>
+            <ogms-form-cmp-task></ogms-form-cmp-task>
+        </div> -->
+
+        <!-- <div [hidden]='currentStep !== 2'>
+            <ogms-form-sln-outline></ogms-form-sln-outline>
+        </div> -->
+    </div>
+
+    <div class="steps-action">
+        <button nz-button [nzType]="'default'" (click)="changeStep(currentStep-1)" [disabled]="currentStep === 0">
+                    <span>Previous</span>
+                </button>
+        <button nz-button [nzType]="'default'" (click)="changeStep(currentStep+1)" *ngIf="currentStep < 1" [disabled]='nextDisabled'>
+                    <span>Next</span>
+                </button>
+        <button nz-button [nzType]="'primary'" (click)="done()" *ngIf="currentStep === 1" [disabled]='doneDisabled'>
+                    <span>Save</span>
+                </button>
+    </div>
+
+    <nz-modal [nzVisible]="__isConfirmVisible" [nzContent]="modalContent" [nzFooter]='modalFooter' (nzOnCancel)="handleCancel($event)">
+        <ng-template #modalContent>
+            <p style='margin: 15px; font-size: 18px'>Configure this solution right now?</p>
+            <div class='flex-box-row-nowrap'>
+                <div class='flex-item-1-1-auto'></div>
+                <div>
+                    <button nz-button [nzType]="'default'" [nzSize]="'large'" (click)="handleCancel($event)">
+                    Later
+                </button>
+                    <button nz-button [nzType]="'primary'" [nzSize]="'large'" (click)="handleOk($event)">
+                    Configure
+                </button>
+                </div>
+            </div>
+        </ng-template>
+    </nz-modal>
+</div>
