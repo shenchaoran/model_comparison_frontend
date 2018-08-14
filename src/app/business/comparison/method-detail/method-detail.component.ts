@@ -27,6 +27,7 @@ export class MethodDetailComponent extends DocBaseComponent implements OnInit, A
             this.method = doc;
             let converter = new showdown.Converter();
             let html = converter.makeHtml(this.method.md);
+            console.log(this.method.md)
             this.renderer2.setProperty(this.div.nativeElement, 'innerHTML', html)
         }));
     }
