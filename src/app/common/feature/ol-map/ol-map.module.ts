@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { NgxSharedModule } from '@ngx-shared';
 import { SharedModule } from '@shared';
-import { MAP_MODULES_CONFIG, MAP_TOOLBAR_CONFIG } from '@config/map.config';
+import { MAP_TOOLBAR_CONFIG } from '@config/map.config';
 
 import { OlMapComponent } from './ol-map.component';
 import { LayerTreeComponent } from './layer-tree/layer-tree.component';

@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '@shared';
 
-import { OlMapModule } from '@feature/ol-map/ol-map.module';
 import { CmpSharedModule } from '../cmp-shared';
 import { ComparisonRoutingModule } from './comparison-routing.module';
 import { SolutionListComponent } from './solution-list/solution-list.component';
@@ -13,6 +12,7 @@ import { CmpMethodService } from './services/cmp-method.service';
 import { NzNotificationService, NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';
 import { MethodDetailComponent } from './method-detail/method-detail.component';
 import { MethodListComponent } from './method-list/method-list.component';
+import { CreateSlnComponent } from './create-sln/create-sln.component';
 
 export * from './services/cmp-sln.service';
 
@@ -20,7 +20,6 @@ export * from './services/cmp-sln.service';
     imports: [
         SharedModule,
         ComparisonRoutingModule,
-        OlMapModule,
         CmpSharedModule,
     ],
     declarations: [
@@ -29,6 +28,7 @@ export * from './services/cmp-sln.service';
         TaskConfigComponent,
         MethodDetailComponent,
         MethodListComponent,
+        CreateSlnComponent,
     ],
     providers: [
         CmpSlnService,

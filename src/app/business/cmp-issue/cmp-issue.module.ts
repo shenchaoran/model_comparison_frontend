@@ -7,11 +7,10 @@ import { SharedModule } from '@shared';
 import { NewIssueComponent } from './new-issue/new-issue.component';
 import { CmpIssueService } from './services';
 import { CmpIssueComponent } from './cmp-issue.component';
-import { OlMapModule } from '@feature/ol-map/ol-map.module';
 import { NzNotificationService, NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';
 
 @NgModule({
-    imports: [SharedModule, OlMapModule, CmpIssueListRoutingModule],
+    imports: [SharedModule, CmpIssueListRoutingModule],
     declarations: [CmpIssueListComponent, IssueDetailComponent, NewIssueComponent, CmpIssueComponent],
     providers: [
         CmpIssueService,

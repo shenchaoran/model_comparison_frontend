@@ -1,14 +1,5 @@
 {
     "useage": "--proxy-config proxy.conf.json",
-    "/scripts.bundle.js.map": {
-        "target": "http://localhost:8888"
-    },
-    "/custom-elements.min.js.map": {
-        "target": "http://localhost:8888"
-    },
-    "/.*.js.map": {
-        "target": "http://localhost:8888"
-    },
     "**": {
         "target": "http://localhost:9999"
     }

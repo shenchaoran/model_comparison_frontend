@@ -7,7 +7,6 @@ import { SharedModule } from '@shared';
 import { CmpSlnService } from './services';
 import { CmpSolutionComponent } from './cmp-solution.component';
 import { MSService } from '../models/services/geo-models.service';
-import { OlMapModule } from '@feature/ol-map/ol-map.module';
 import { CmpSharedModule } from '../cmp-shared';
 import { CmpTaskService } from '../cmp-task/services';
 import { CalcuCfgComponent } from '../cmp-shared';
@@ -15,8 +14,7 @@ import { NzNotificationService, NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';
 
 @NgModule({
     imports: [
-        SharedModule, 
-        OlMapModule, 
+        SharedModule,
         CmpSolutionListRoutingModule,
         CmpSharedModule,
     ],
