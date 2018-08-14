@@ -14,7 +14,7 @@ export enum SchemaName {
 export class UDXSchema {
     id: string;
     src: ResourceSrc;
-    schemaName?: string;
+    name?: string;
     description?: string;
     structure: any[];
     semantic?: {

@@ -1,6 +1,5 @@
 import { Injectable, Inject } from '@angular/core';
 
-import { MAP_MODULES_CONFIG, MAP_TOOLBAR_CONFIG } from '@config/map.config';
 import { MapToolBarItemType, MapToolbarItemCfg } from '../models';
 import { OlMapService } from '../services/ol-map.service';
 import { Observable } from 'rxjs';

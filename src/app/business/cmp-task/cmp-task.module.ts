@@ -5,7 +5,6 @@ import { CmpTaskListRoutingModule } from './cmp-task-routing.module';
 import { SharedModule } from '@shared';
 import { NewTaskComponent } from './new-task/new-task.component';
 import { CmpTaskService } from './services';
-import { OlMapModule } from '@feature/ol-map/ol-map.module';
 import { EchartsNg2Module } from 'echarts-ng2';
 import { HotTableModule } from 'angular-handsontable';
 import { CmpResultMapComponent } from './cmp-result-map/cmp-result-map.component';
@@ -39,7 +38,6 @@ const SERVICES = [
     imports: [
         SharedModule,
         CmpTaskListRoutingModule,
-        OlMapModule,
         EchartsNg2Module,
         HotTableModule,
         CmpSharedModule,

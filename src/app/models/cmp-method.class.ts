@@ -60,7 +60,7 @@ export class CmpMethod {
         ]
     };
 
-    static find(schemaName: string): Array<any> {
-        return (_.cloneDeep(_.get(CmpMethod.METHODS, schemaName))) as Array<any>;
+    static find(name: string): Array<any> {
+        return (_.cloneDeep(_.get(CmpMethod.METHODS, name))) as Array<any>;
     }
 }

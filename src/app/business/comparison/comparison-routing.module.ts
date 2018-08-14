@@ -6,6 +6,7 @@ import { SolutionDetailComponent } from './solution-detail/solution-detail.compo
 import { TaskConfigComponent } from './task-config/task-config.component';
 import { SolutionListComponent } from './solution-list/solution-list.component';
 import { HeaderMenuLayoutComponent, DocDetailTemplateComponent } from '@shared';
+import { CreateSlnComponent } from './create-sln/create-sln.component';
 
 const routes: Routes = [
     {
@@ -41,6 +42,17 @@ const routes: Routes = [
                 data: {
                     title: 'Comparison Solutions'
                 }
+            },
+            {
+                path: 'solutions/create',
+                component: DocDetailTemplateComponent,
+                children: [{
+                    path: '',
+                    component: CreateSlnComponent,
+                    data: {
+                        title: 'Create Solution'
+                    }
+                }]
             },
             {
                 path: 'solutions/:id',

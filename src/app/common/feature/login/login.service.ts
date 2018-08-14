@@ -27,7 +27,7 @@ export class LoginService extends ErrorHandle {
                 password: password
             };
             this.http
-                .post('/auth/login', loginPostData)
+                .post('/auth/login', loginPostData, undefined, false)
                 .subscribe({
                     next: response => {
                         const res = <any>response;

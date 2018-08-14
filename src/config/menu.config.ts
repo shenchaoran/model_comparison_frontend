@@ -75,6 +75,14 @@ export const HEADER_MENUS: MenuClass[] = [
                         title: 'Comparison solutions'
                     }
                 }
+            },
+            {
+                path: 'solutions/create',
+                data: {
+                    menu: {
+                        title: 'Create solutions'
+                    }
+                }
             }
         ]
     },

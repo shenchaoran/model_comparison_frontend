@@ -19,7 +19,6 @@ export class CmpDetailComponent extends DocBaseComponent implements OnInit {
     constructor(
         public route: ActivatedRoute,
         public service: CmpTaskService,
-//private _notice: NzNotificationService,
         public title: DynamicTitleService
     ) { 
         super(route, service, title);
