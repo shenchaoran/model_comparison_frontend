@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { HeaderMenuLayoutComponent } from '@shared';
+import { HeaderMenuLayoutComponent } from '@common/shared';
 import { DatasetsComponent } from './datasets/datasets.component';
 // import { IbisStdDataComponent } from './ibis-std-data/ibis-std-data.component';
 // import { BiomeStdDataComponent } from './biome-std-data/biome-std-data.component';

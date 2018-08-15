@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { _HttpClient } from '@core/services/http.client';
+import { _HttpClient } from '@common/core/services/http.client';
 import * as uuidv1 from 'uuid/v1';
 import * as echarts from 'echarts';
-import { MapService } from './map.service';
-import { OLSymbolService } from './ol-symbol.service';
-import { OL_MAP_DRAW_TYPE } from '../models';
-import { ColorConverter } from '@utils/colorCoverter.service';
+import { MapService } from '@common/feature/ol-map/services/map.service';
+import { OLSymbolService } from '@common/feature/ol-map/services/ol-symbol.service';
+import { OL_MAP_DRAW_TYPE } from '@common/feature/ol-map/models';
+import { ColorConverter } from '@common/utils/colorCoverter.service';
 declare const ol: any;
 
 @Injectable()
@@ -418,7 +418,7 @@ export class OlMapService extends MapService {
 
     private clearGraphics() {
         jQuery('#map').css('cursor', '');
-        //清除Overlays
+        //æ¸…é™¤Overlays
         this.selectedMap.getOverlays().clear();
 
         let layers = this.selectedMap.getLayers();

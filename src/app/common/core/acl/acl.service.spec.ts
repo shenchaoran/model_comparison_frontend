@@ -1,5 +1,5 @@
-import { ACLService } from './acl.service';
-import { ACLType } from './acl.type';
+import { ACLService } from '@common/core/acl/acl.service';
+import { ACLType } from '@common/core/acl/acl.type';
 
 describe('service: ACLService', () => {
 

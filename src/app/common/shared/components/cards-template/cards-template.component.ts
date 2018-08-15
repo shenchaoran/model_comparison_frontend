@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ListTemplateComponent } from '../list-template/list-template.component';
-import { DynamicTitleService } from '@core/services/dynamic-title.service';
+import { ListTemplateComponent } from '@common/shared/components/list-template/list-template.component';
+import { DynamicTitleService } from '@common/core/services/dynamic-title.service';
 import { ActivatedRoute } from "@angular/router";
-import { OgmsBaseComponent } from '../ogms-base/ogms-base.component';
+import { OgmsBaseComponent } from '@common/shared/components/ogms-base/ogms-base.component';
 
 @Component({
     selector: 'ogms-cards-template',

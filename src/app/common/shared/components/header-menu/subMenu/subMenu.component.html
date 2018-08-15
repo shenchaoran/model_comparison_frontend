@@ -4,13 +4,13 @@
             <!-- <i *ngIf="subMenu.data && subMenu.data.menu && subMenu.data.menu.icon" class="anticon anticon-{{subMenu.data.menu.icon}}"></i>  -->
             {{subMenu.data.menu.title}}
         </span>
-    <a class='ogms-menu-link' *ngIf='subMenu.path.indexOf("sign-out") !== -1' (click)='signOut()'>
+        <a class='ogms-menu-link' *ngIf='subMenu.path.indexOf("sign-out") !== -1' (click)='signOut()'>
             {{subMenu.data.menu.title}}
         </a>
-    <a class='ogms-menu-link' *ngIf='subMenu.path.indexOf("sign-out") === -1' routerLink="/{{subMenu.path}}" [routerLinkActive]="isRoot? 'actived-menu': ''">
-        <!-- <i *ngIf="subMenu.data && subMenu.data.menu && subMenu.data.menu.icon" class="anticon anticon-{{subMenu.data.menu.icon}}"></i>  -->
-        {{subMenu.data.menu.title}}
-    </a>
+        <a class='ogms-menu-link' *ngIf='subMenu.path.indexOf("sign-out") === -1' routerLink="/{{subMenu.path}}" [routerLinkActive]="isRoot? 'actived-menu': ''">
+            <!-- <i *ngIf="subMenu.data && subMenu.data.menu && subMenu.data.menu.icon" class="anticon anticon-{{subMenu.data.menu.icon}}"></i>  -->
+            {{subMenu.data.menu.title}}
+        </a>
     </span>
 
     <!-- 子菜单 -->

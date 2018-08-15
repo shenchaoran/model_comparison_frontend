@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit, Input, Output } from '@angular/core';
 import * as uuidv1 from 'uuid/v1';
-import { OgmsBaseComponent } from '@shared';
+import { OgmsBaseComponent } from '@common/shared';
 
 @Component({
     selector: 'ogms-handsome-table',

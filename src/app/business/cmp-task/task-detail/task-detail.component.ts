@@ -2,7 +2,7 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { CmpTaskService } from '../services';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { NzNotificationService, NzModalService } from 'ng-zorro-antd';
-import { DynamicTitleService } from '@core/services/dynamic-title.service';
+import { DynamicTitleService } from '@common/core/services/dynamic-title.service';
 
 @Component({
     selector: 'ogms-task-detail',

@@ -1,17 +1,17 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { NgxSharedModule } from '../ngx-shared';
+import { NgxSharedModule } from '@common/ngx-shared';
 import { NgUploaderModule } from 'ngx-uploader';
-import { BaThemeConfig } from './theme.config';
-import { BaThemeConfigProvider } from './theme.configProvider';
+import { BaThemeConfig } from '@common/shared/theme.config';
+import { BaThemeConfigProvider } from '@common/shared/theme.configProvider';
 import { BACKEND } from '@config';
 import { HEADER_MENUS, USER_MENUS } from '@config/menu.config';
 import { DisqusModule } from "ngx-disqus";
 // import { EmailValidator, EqualPasswordsValidator } from './validators';
-import { ListFilterService } from './components/list-template/list-filter.service';
-import { HeaderMenuService } from './components/baHeaderMenu/services/baHeaderMenu.service';
-import { BaMenuService } from './components/baHeaderMenu/services/baMenu.service';
-import { LoginService } from '@feature/login/login.service';
+import { ListFilterService } from '@common/shared/components/list-template/list-filter.service';
+import { HeaderMenuService } from './components/header-menu/services/header-menu.service';
+import { BaMenuService } from './components/header-menu/services/baMenu.service';
+import { LoginService } from '@common/feature/login/login.service';
 import { NzNotificationService, NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';
 
 import {
@@ -23,7 +23,6 @@ import {
     FooterComponent,
     DocDetailTemplateComponent,
     TableFeatureComponent,
-    BaHeaderMenuComponent,
     SubMenuComponent,
     CmpTabsViewComponent,
     CmpDockingViewComponent,
@@ -33,6 +32,7 @@ import {
     OgmsBaseComponent,
     MapBaseComponent,
     CardsTemplateComponent,
+    HeaderMenuComponent,
 } from './components';
 
 import {
@@ -77,7 +77,7 @@ const VALIDATORS = [
 const COMPONENTS = [
     FileUploader,
     ContextMenuComponent,
-    BaHeaderMenuComponent,
+    HeaderMenuComponent,
     HeaderPullRightComponent,
     HeaderMenuLayoutComponent,
     ListTemplateComponent,
@@ -111,10 +111,10 @@ const PIPES = [
     CoordinatePipe,
 ];
 
-export * from './components';
-export * from './services';
-export * from './pipes';
-export * from './directives';
+export * from '@common/shared/components';
+export * from '@common/shared/services';
+export * from '@common/shared/pipes';
+export * from '@common/shared/directives';
 // export * from './validators';
 
 @NgModule({

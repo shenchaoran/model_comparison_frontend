@@ -1,22 +1,22 @@
 import { NgModule } from '@angular/core';
-import { NgxSharedModule } from '@ngx-shared';
-import { SharedModule } from '@shared';
+import { NgxSharedModule } from '@common/ngx-shared';
+import { SharedModule } from '@common/shared';
 import { MAP_TOOLBAR_CONFIG } from '@config/map.config';
 
-import { OlMapComponent } from './ol-map.component';
-import { LayerTreeComponent } from './layer-tree/layer-tree.component';
-import { LegendComponent } from './legend/legend.component';
-import { LayoutComponent } from './layout/layout.component';
-import { BasemapComponent } from './basemap/basemap.component';
+import { OlMapComponent } from '@common/feature/ol-map/ol-map.component';
+import { LayerTreeComponent } from '@common/feature/ol-map/layer-tree/layer-tree.component';
+import { LegendComponent } from '@common/feature/ol-map/legend/legend.component';
+import { LayoutComponent } from '@common/feature/ol-map/layout/layout.component';
+import { BasemapComponent } from '@common/feature/ol-map/basemap/basemap.component';
 
 import {
     OlMapService,
     OLSymbolService,
     MapModuleService,
     ToolbarService
-} from './services';
-import { CompareLayoutComponent } from './compare-layout/compare-layout.component';
-import { RegionMapComponent } from './region-map/region-map.component';
+} from '@common/feature/ol-map/services';
+import { CompareLayoutComponent } from '@common/feature/ol-map/compare-layout/compare-layout.component';
+import { RegionMapComponent } from '@common/feature/ol-map/region-map/region-map.component';
 
 const SERVICES = [
     OlMapService,
@@ -26,16 +26,16 @@ const SERVICES = [
 ];
 
 ///////////////////////////////
-export { OlMapComponent } from './ol-map.component';
-export { BasemapComponent } from './basemap/basemap.component';
+export { OlMapComponent } from '@common/feature/ol-map/ol-map.component';
+export { BasemapComponent } from '@common/feature/ol-map/basemap/basemap.component';
 export {
     CompareLayoutComponent
-} from './compare-layout/compare-layout.component';
-export { LayerTreeComponent } from './layer-tree/layer-tree.component';
-export { LayoutComponent } from './layout/layout.component';
-export { LegendComponent } from './legend/legend.component';
+} from '@common/feature/ol-map/compare-layout/compare-layout.component';
+export { LayerTreeComponent } from '@common/feature/ol-map/layer-tree/layer-tree.component';
+export { LayoutComponent } from '@common/feature/ol-map/layout/layout.component';
+export { LegendComponent } from '@common/feature/ol-map/legend/legend.component';
 
-export { MapModuleService } from './services';
+export { MapModuleService } from '@common/feature/ol-map/services';
 export {
     MapService,
     OlMapService,
@@ -43,7 +43,7 @@ export {
     ToolbarService,
     RegionMapService,
     GeoJSONService,
-} from './services';
+} from '@common/feature/ol-map/services';
 ///////////////////////////////
 
 @NgModule({

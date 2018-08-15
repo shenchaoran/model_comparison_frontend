@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as _ from 'lodash';
 
-import { colorHelper } from './theme.constants';
+import { colorHelper } from '@common/shared/theme.constants';
 
 @Injectable()
 export class BaThemeConfigProvider {

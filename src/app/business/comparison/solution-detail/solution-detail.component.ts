@@ -2,9 +2,9 @@ import { Component, OnInit, HostListener, OnDestroy } from "@angular/core";
 import { CmpSlnService } from "../services/cmp-sln.service";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { NzNotificationService, NzModalService } from "ng-zorro-antd";
-import { DynamicTitleService } from "@core/services/dynamic-title.service";
+import { DynamicTitleService } from "@common/core/services/dynamic-title.service";
 import { ReactiveFormsModule } from "@angular/forms";
-import { DocBaseComponent } from '@shared';
+import { DocBaseComponent } from '@common/shared';
 
 @Component({
     selector: 'ogms-solution-detail',

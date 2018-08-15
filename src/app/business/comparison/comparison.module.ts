@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { SharedModule } from '@shared';
+import { SharedModule } from '@common/shared';
 
 import { CmpSharedModule } from '../cmp-shared';
 import { ComparisonRoutingModule } from './comparison-routing.module';

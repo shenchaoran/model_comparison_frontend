@@ -1,5 +1,5 @@
-import { MapModuleCfg } from '@feature/ol-map/models/map-module-config.class';
-import { MapToolbarItemCfg, MapToolbarCfg, MapToolBarIconType, MapToolBarItemType, TOOLBAR_POSITION } from '@feature/ol-map/models/map-toolbar-config.class';
+import { MapModuleCfg } from '@common/feature/ol-map/models/map-module-config.class';
+import { MapToolbarItemCfg, MapToolbarCfg, MapToolBarIconType, MapToolBarItemType, TOOLBAR_POSITION } from '@common/feature/ol-map/models/map-toolbar-config.class';
 
 // 配置地图加载的模块，包括：工具栏、图例、图层树、主地图
 export const MAP_MODULES_CONFIG: MapModuleCfg[] = [

@@ -3,11 +3,11 @@
  * cmp task 和参与比较的model task相关联
  */
 
-import { GeoDataClass } from './UDX-data.class';
-import { ResourceSrc } from './resource.enum';
-import { LoginService } from '@feature/login/login.service';
-import { CalcuTaskState } from './calcu-task.class';
-import { CmpObj } from './cmp-obj.class';
+import { GeoDataClass } from '@models/UDX-data.class';
+import { ResourceSrc } from '@models/resource.enum';
+import { LoginService } from '@common/feature/login/login.service';
+import { CalcuTaskState } from '@models/calcu-task.class';
+import { CmpObj } from '@models/cmp-obj.class';
 
 export class CmpTask {
     _id?: any;

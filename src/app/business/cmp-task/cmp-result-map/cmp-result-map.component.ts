@@ -11,7 +11,7 @@ import {
     ViewChild,
     Inject
 } from '@angular/core';
-import { OlMapService } from '@feature/ol-map/ol-map.module.ts';
+import { OlMapService } from '@common/feature/ol-map/ol-map.module';
 import * as uuidv1 from 'uuid/v1';
 import { CmpState } from '@models';
 import * as path from 'path';

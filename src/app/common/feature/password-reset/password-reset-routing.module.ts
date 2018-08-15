@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { PasswordResetComponent } from './password-reset.component';
+import { PasswordResetComponent } from '@common/feature/password-reset/password-reset.component';
 
 const routes: Routes = [
     { path: '', component: PasswordResetComponent }

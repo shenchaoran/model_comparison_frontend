@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { CmpSolutionListComponent } from './cmp-solution-list/cmp-solution-list.component';
 import { SolutionDetailComponent } from './solution-detail/solution-detail.component';
-import { HeaderMenuLayoutComponent } from '@shared';
+import { HeaderMenuLayoutComponent } from '@common/shared';
 import { CmpSlnService } from './services';
 import { CmpSolutionComponent } from './cmp-solution.component';
 

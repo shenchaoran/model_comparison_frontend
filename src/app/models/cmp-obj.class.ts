@@ -17,9 +17,9 @@
  *      
  */
 
-import { GeoDataClass } from './UDX-data.class';
-import { UDXSchema } from '../models/UDX-schema.class';
-import { DataRefer } from './dataRefer.class';
+import { GeoDataClass } from '@models/UDX-data.class';
+import { UDXSchema } from '@models/UDX-schema.class';
+import { DataRefer } from '@models/dataRefer.class';
 import * as ObjectID from 'objectid';
 
 export class CmpObj {

@@ -4,11 +4,11 @@ import { Injectable } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
 import { Observable, Subscription } from 'rxjs';
 import * as uuidv1 from 'uuid/v1';
-import { _HttpClient } from '@core/services/http.client';
+import { _HttpClient } from '@common/core/services/http.client';
 import * as echarts from 'echarts';
-import { OL_MAP_DRAW_TYPE } from '../models';
-import { ErrorHandle } from '@core/base/error-handle';
-import { OLSymbolService } from './ol-symbol.service';
+import { OL_MAP_DRAW_TYPE } from '@common/feature/ol-map/models';
+import { ErrorHandle } from '@common/core/base/error-handle';
+import { OLSymbolService } from '@common/feature/ol-map/services/ol-symbol.service';
 
 // import * as ol from 'openlayers';
 // import { Button, TextButton } from 'ol3-ext';

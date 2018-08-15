@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { SharedModule } from '@shared';
+import { SharedModule } from '@common/shared';
 import { RouterModule, Routes } from '@angular/router';
 
 //////////////////// component ////////////////////////
@@ -10,7 +10,7 @@ import { StdDataBaseComponent } from './std-data-base/std-data-base.component';
 import { CmpMethodCfgComponent } from './cmp-method-cfg/cmp-method-cfg.component';
 import { OlModule } from '../ol/ol.module'
 //////////////////// service ////////////////////////
-import { LoginService } from '@feature/login/login.service';
+import { LoginService } from '@common/feature/login/login.service';
 import { StdDataService } from '../datasets/services/std-data.service';
 import { NzNotificationService, NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';
 ////////////////////// export //////////////////////

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { CmpSolutionListComponent } from './cmp-solution-list/cmp-solution-list.component';
 import { SolutionDetailComponent } from './solution-detail/solution-detail.component';
 import { CmpSolutionListRoutingModule } from './cmp-solution-routing.module';
-import { SharedModule } from '@shared';
+import { SharedModule } from '@common/shared';
 import { CmpSlnService } from './services';
 import { CmpSolutionComponent } from './cmp-solution.component';
 import { MSService } from '../models/services/geo-models.service';

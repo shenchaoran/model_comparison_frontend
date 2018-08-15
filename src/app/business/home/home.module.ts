@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
-import { NgxSharedModule } from '@ngx-shared';
-import { SharedModule } from '@shared';
+import { NgxSharedModule } from '@common/ngx-shared';
+import { SharedModule } from '@common/shared';
 
 import { HomeComponent } from './home.component';
 import { FeatureRoutingModule } from './home-routing.module';

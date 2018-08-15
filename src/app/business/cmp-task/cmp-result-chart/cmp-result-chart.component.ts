@@ -2,7 +2,7 @@
 
 import { Component, OnInit, Input, Output, Inject, AfterViewInit } from '@angular/core';
 import { CmpTaskService } from '../services/cmp-task.service';
-import { EchartAdapterService } from '@core/services/echartAdapter.service';
+import { EchartAdapterService } from '@common/core/services/echartAdapter.service';
 
 @Component({
     selector: 'ogms-cmp-result-chart',

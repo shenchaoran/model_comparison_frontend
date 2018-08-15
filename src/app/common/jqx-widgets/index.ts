@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { NgxSharedModule } from '../ngx-shared';
+import { NgxSharedModule } from '@common/ngx-shared';
 
 import { jqxBarGaugeComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxbargauge';
 import { jqxBulletChartComponent } from 'jqwidgets-scripts/jqwidgets-ts/angular_jqxbulletchart';

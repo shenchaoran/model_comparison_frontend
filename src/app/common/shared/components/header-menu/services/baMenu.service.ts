@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { _HttpClient } from '@core/services/http.client';
+import { _HttpClient } from '@common/core/services/http.client';
 import { Router, Routes } from '@angular/router';
 import { Observable, BehaviorSubject } from 'rxjs';
 
 import { HEADER_MENUS } from '@config/menu.config';
-import { ErrorHandle } from '@core/base/error-handle';
+import { ErrorHandle } from '@common/core/base/error-handle';
 
 @Injectable()
 export class BaMenuService extends ErrorHandle {

@@ -2,8 +2,8 @@ import { Component, OnInit, OnDestroy, HostListener } from "@angular/core";
 import { MSService } from "../services/geo-models.service";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { NzNotificationService, NzModalService } from "ng-zorro-antd";
-import { DynamicTitleService } from "@core/services/dynamic-title.service";
-import { LoginService } from '@feature/login/login.service';
+import { DynamicTitleService } from "@common/core/services/dynamic-title.service";
+import { LoginService } from '@common/feature/login/login.service';
 import { ResourceSrc, CalcuTaskState, CalcuTask } from '@models';
 import {
     AbstractControl,
@@ -12,7 +12,7 @@ import {
     FormGroup,
     Validators,
 } from '@angular/forms';
-import { DocBaseComponent } from '@shared';
+import { DocBaseComponent } from '@common/shared';
 
 @Component({
     selector: 'ogms-invoke',

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { TokenData } from './token.type';
+import { TokenData } from '@common/core/net/token/token.type';
 
 /** 存储键 */
 const KEY = '_user';

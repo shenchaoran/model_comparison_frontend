@@ -3,8 +3,8 @@ import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/fo
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { NzNotificationService } from 'ng-zorro-antd';
 
-import { LoginService } from './login.service';
-import { ErrorHandle } from '@core/base/error-handle';
+import { LoginService } from '@common/feature/login/login.service';
+import { ErrorHandle } from '@common/core/base/error-handle';
 
 @Component({
 	selector: 'login',

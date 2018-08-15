@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import { CmpSlnService } from '../services/cmp-sln.service';
 import { NzNotificationService, NzModalService } from "ng-zorro-antd";
-import { DynamicTitleService } from '@core/services/dynamic-title.service';
+import { DynamicTitleService } from '@common/core/services/dynamic-title.service';
 
 @Component({
     selector: 'ogms-solution-list',

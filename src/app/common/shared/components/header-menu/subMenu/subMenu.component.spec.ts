@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { SubMenuComponent } from './subMenu.component';
+import { SubMenuComponent } from '@common/shared/components/header-menu/subMenu/subMenu.component';
 
 describe('SubMenuComponent', () => {
   let component: SubMenuComponent;

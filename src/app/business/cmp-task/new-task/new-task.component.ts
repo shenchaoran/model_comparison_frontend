@@ -14,7 +14,7 @@ import {
     CmpObj,
  } from '@models';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LoginService } from '@feature/login/login.service';
+import { LoginService } from '@common/feature/login/login.service';
 import { NzStepsComponent } from 'ng-zorro-antd';
 import * as ObjectID from 'objectid';
 import { CmpTaskService } from '../services';

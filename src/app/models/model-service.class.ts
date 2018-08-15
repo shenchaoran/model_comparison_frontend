@@ -1,6 +1,6 @@
 
-import { ResourceSrc } from './resource.enum';
-import { UDXSchema } from './UDX-schema.class';
+import { ResourceSrc } from '@models/resource.enum';
+import { UDXSchema } from '@models/UDX-schema.class';
 
 export class MS {
     _id: string;

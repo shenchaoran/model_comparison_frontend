@@ -1,7 +1,7 @@
 /**
  * 比较问题：描述实际遇到的地理问题
  */
-import { ResourceSrc } from './resource.enum';
+import { ResourceSrc } from '@models/resource.enum';
 
 export class CmpIssue {
     _id?: any;

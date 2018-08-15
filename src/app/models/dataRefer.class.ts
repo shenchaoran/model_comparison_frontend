@@ -1,4 +1,4 @@
-import { CmpResult } from './cmp-result.class';
+import { CmpResult } from '@models/cmp-result.class';
 
 export class DataRefer {
     msId: string;

@@ -5,10 +5,10 @@ import {
   BaImageLoaderService,
   BaThemePreloader,
   BaThemeSpinner
-} from './common/shared/services';
-import { BaThemeConfig } from './common/shared/theme.config';
-import { layoutPaths } from './common/shared/theme.constants';
-import { DynamicTitleService } from '@core/services/dynamic-title.service';
+} from '@common/shared/services';
+import { BaThemeConfig } from '@common/shared/theme.config';
+import { layoutPaths } from '@common/shared/theme.constants';
+import { DynamicTitleService } from '@common/core/services/dynamic-title.service';
 
 /*
  * App Component

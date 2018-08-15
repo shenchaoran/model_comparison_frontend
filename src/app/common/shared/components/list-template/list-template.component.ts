@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
-import { ListFilterService } from './list-filter.service';
-import { OgmsBaseComponent } from '../ogms-base/ogms-base.component';
-import { DynamicTitleService } from '@core/services/dynamic-title.service';
+import { ListFilterService } from '@common/shared/components/list-template/list-filter.service';
+import { OgmsBaseComponent } from '@common/shared/components/ogms-base/ogms-base.component';
+import { DynamicTitleService } from '@common/core/services/dynamic-title.service';
 import { ActivatedRoute } from "@angular/router";
-import { ListBaseService } from '../../services/list-base.service';
+import { ListBaseService } from '@common/shared/services/list-base.service';
 
 @Component({
     selector: 'ogms-list-template',

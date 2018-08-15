@@ -4,9 +4,9 @@ import { MSService } from '../../models/models.module';
 import { CalcuTaskService } from '../services/calcu-task.service';
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { NzNotificationService, NzModalService } from "ng-zorro-antd";
-import { DynamicTitleService } from "@core/services/dynamic-title.service";
+import { DynamicTitleService } from "@common/core/services/dynamic-title.service";
 import { ReactiveFormsModule } from "@angular/forms";
-import { DocBaseComponent } from '@shared';
+import { DocBaseComponent } from '@common/shared';
 import { Observable, interval } from 'rxjs'
 import { CalcuTaskState } from '@models'
 import { map, switchMap, filter, tap, startWith } from 'rxjs/operators';

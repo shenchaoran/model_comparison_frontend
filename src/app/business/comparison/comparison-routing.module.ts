@@ -5,7 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { SolutionDetailComponent } from './solution-detail/solution-detail.component';
 import { TaskConfigComponent } from './task-config/task-config.component';
 import { SolutionListComponent } from './solution-list/solution-list.component';
-import { HeaderMenuLayoutComponent, DocDetailTemplateComponent } from '@shared';
+import { HeaderMenuLayoutComponent, DocDetailTemplateComponent } from '@common/shared';
 import { CreateSlnComponent } from './create-sln/create-sln.component';
 
 const routes: Routes = [

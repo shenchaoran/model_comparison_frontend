@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { HeaderMenuLayoutComponent } from '@shared';
+import { HeaderMenuLayoutComponent } from '@common/shared';
 import { CalcuListComponent } from './calcu-list/calcu-list.component';
 import { CalcuDetailComponent } from './calcu-detail/calcu-detail.component';
 

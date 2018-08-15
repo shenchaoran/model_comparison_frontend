@@ -1,4 +1,4 @@
-import { LAYER_TYPE } from './layer-type.enum';
+import { LAYER_TYPE } from '@common/feature/ol-map/models/layer-type.enum';
 
 export class Layer {
     id: string;

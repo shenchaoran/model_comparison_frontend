@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
 
-import { SubMenu } from './sub-menu';
+import { SubMenu } from '@common/shared/components/context-menu/sub-menu';
 
 @Component({
     selector: 'ogms-context-menu',

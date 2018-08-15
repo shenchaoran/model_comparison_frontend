@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { _HttpClient } from '@core/services/http.client';
+import { _HttpClient } from '@common/core/services/http.client';
 import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Resolve } from '@angular/router';
 

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { SharedModule } from '@shared';
+import { SharedModule } from '@common/shared';
 
 import { ResultsRoutingModule } from './results-routing.module';
 import { CalcuListComponent } from './calcu-list/calcu-list.component';

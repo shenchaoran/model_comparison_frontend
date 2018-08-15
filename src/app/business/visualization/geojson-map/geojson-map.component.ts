@@ -8,8 +8,8 @@ import {
 } from '@angular/core';
 import * as uuidv1 from 'uuid/v1';
 import { setTimeout } from 'core-js/library/web/timers';
-import { OlMapService } from '@feature/ol-map/ol-map.module.ts';
-import { GeoJSONService } from '@feature/ol-map/services/geojson.service'; 
+import { OlMapService } from '@common/feature/ol-map/ol-map.module';
+import { GeoJSONService } from '@common/feature/ol-map/services/geojson.service'; 
 import { CmpState } from '@models';
 declare const ol: any;
 

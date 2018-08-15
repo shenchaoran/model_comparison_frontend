@@ -1,8 +1,8 @@
 /**
  * 比较方案只是比较对象的集合
  */
-import { ResourceSrc } from './resource.enum';
-import { DataRefer } from './dataRefer.class';
+import { ResourceSrc } from '@models/resource.enum';
+import { DataRefer } from '@models/dataRefer.class';
 
 export class CmpSolution {
     _id?: any;

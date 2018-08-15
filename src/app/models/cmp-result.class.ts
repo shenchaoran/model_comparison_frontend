@@ -1,4 +1,4 @@
-import { CmpState } from './cmp-state.enum';
+import { CmpState } from '@models/cmp-state.enum';
 
 export class CmpResult {
     image?: [{

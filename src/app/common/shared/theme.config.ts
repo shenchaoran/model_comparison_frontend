@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
-import { BaThemeConfigProvider } from './theme.configProvider';
-import { colorHelper } from './theme.constants';
+import { BaThemeConfigProvider } from '@common/shared/theme.configProvider';
+import { colorHelper } from '@common/shared/theme.constants';
 
 @Injectable()
 export class BaThemeConfig {

@@ -1,7 +1,6 @@
 // TODO divider
 import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
-import { LoginService } from '@feature/login/login.service';
-import { HeaderMenuMetaInfo } from '../baHeaderMenu';
+import { LoginService } from '@common/feature/login/login.service';
 
 @Component({
     selector: 'ogms-subMenu',
@@ -36,4 +35,22 @@ export class SubMenuComponent implements OnInit, AfterViewInit {
             .channel('MENU')
             .publish('logout');
     }
+}
+
+export class HeaderMenuMetaInfo {
+    path: string;
+    disabled: boolean;
+    data?: {
+        menu: {
+            title: string;
+            id?: string;
+            icon?: string;
+            selected?: boolean;
+            expanded?: boolean;
+            order?: number
+        }
+    };
+    children?: Array<HeaderMenuMetaInfo>;
+
+    constructor(){}
 }
