@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '@common/shared';
-// import { VisualizationModule } from '../visualization/visualization.module';
 
 import { NzNotificationService, NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';
 import { DatasetsRoutingModule } from './datasets-routing.module';
@@ -13,7 +12,6 @@ import { SiteDataComponent } from './site-data/site-data.component'
 @NgModule({
     imports: [
         SharedModule,
-        // VisualizationModule,
         DatasetsRoutingModule,
         OlModule,
 

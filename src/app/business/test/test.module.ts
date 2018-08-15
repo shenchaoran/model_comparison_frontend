@@ -7,7 +7,6 @@ import { SharedModule } from '@common/shared';
 import { TestComponent } from './test.component';
 import { ReactiveFormComponent } from './reactive-form/reactive-form.component';
 import { FileUploaderTestComponent } from './file-uploader-test/file-uploader-test.component';
-// import { VisualizationModule } from '../visualization/visualization.module';
 import { NzNotificationService, NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';
 import { LeafletTestComponent } from './leaflet-test/leaflet-test.component';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
@@ -17,7 +16,6 @@ import { OlModule } from '../ol/ol.module'
     imports: [
         TestRoutingModule,
         SharedModule,
-        // VisualizationModule,
         LeafletModule,
         OlModule,
     ],

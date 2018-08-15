@@ -1,0 +1,23 @@
+$width: 620px;
+
+.form-item {
+    display: flex;
+    flex-flow: column nowrap;
+    >* {
+        width: 100%;
+        margin-bottom: 20px;
+        // align-items: center;
+    }
+}
+.form-item.use-default-width {
+    >* {
+        width: $width;
+    }
+}
+
+.stepy-btn-group{
+    margin: 20px 0;
+    >button:not(:last-child) {
+        margin-right: 35px;
+    }
+}

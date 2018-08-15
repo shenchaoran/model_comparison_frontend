@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Routes } from '@angular/router';
-import { HeaderMenuService } from './services/header-menu.service';
+import { HeaderMenuService } from '@common/shared/components/header-menu/services/header-menu.service';
 
 @Component({
   selector: 'ogms-header-menu',

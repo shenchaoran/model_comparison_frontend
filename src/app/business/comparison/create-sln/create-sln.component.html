@@ -1,57 +1,128 @@
+<h1>Create Comparison Solution</h1>
 <div class="container flex-box-col-nowrap max-size">
-    <nz-steps [(nzCurrent)]="currentStep">
-        <nz-step [nzTitle]="'Define Comparison Keynote'" [nzDescription]=''></nz-step>
-        <!-- <nz-step [nzTitle]="'Select Participants'" [nzDescription]=''></nz-step> -->
-        <nz-step [nzTitle]="'Add Comparison Object'" [nzDescription]=''></nz-step>
-        <!-- <nz-step [nzTitle]="'Configure data'" [nzDescription]=''></nz-step> -->
-        <!-- <nz-step [nzTitle]="'Preview outline'" [nzDescription]=''></nz-step> -->
-    </nz-steps>
+    <form [formGroup]='slnFG'>
+        <mat-horizontal-stepper linear #stepper>
+            <mat-step>
+                <ng-template matStepLabel>Basic Information</ng-template>
+                <div class='form-item use-default-width'>
+                    <mat-form-field>
+                        <mat-label>Solution name</mat-label>
+                        <input matInput placeholder='Solution name' formControlName='name' required>
+                        <mat-hint>please input solution name</mat-hint>
+                        <mat-error *ngIf='slnFG.get("name").hasError("required")'>必填</mat-error>
+                        <mat-error *ngIf='slnFG.get("name").hasError("minLength")'>最小长度</mat-error>
+                        <mat-error *ngIf='slnFG.get("name").hasError("maxLength")'>最大长度</mat-error>
+                    </mat-form-field>
 
-    <div class="steps-content flex-box-col-nowrap flex-item-1-1-auto debug-border debug-background">
+                    <mat-form-field>
+                        <mat-label>Solution description</mat-label>
+                        <textarea matInput placeholder='Solution name' formControlName='desc' required></textarea>
+                        <mat-hint>please input solution description</mat-hint>
+                        <mat-error *ngIf='slnFG.get("desc").hasError("required")'>必填</mat-error>
+                        <mat-error *ngIf='slnFG.get("desc").hasError("minLength")'>最小长度</mat-error>
+                        <mat-error *ngIf='slnFG.get("desc").hasError("maxLength")'>最大长度</mat-error>
+                    </mat-form-field>
 
-        <!-- <div class='flex-item-1-1-auto' [hidden]='currentStep !== 1'>
-            <ogms-form-participants [selectMode]='__selectMode' [ngModel]='cmpSln.cmpCfg.ms' (ngModelChange)='onParticipantsChange($event)'></ogms-form-participants>
-        </div> -->
+                    <mat-form-field>
+                        <mat-label>Authorition</mat-label>
+                        <mat-select matInput placeholder="Select your authorition" formControlName='auth' required>
+                            <mat-option value="'Private'">
+                                <!-- <mat-icon>visibility_off</mat-icon> -->
+                                <span>Private</span>
+                            </mat-option>
+                            <mat-option value="'Public'">
+                                <!-- <mat-icon>visibility</mat-icon> -->
+                                <span>Public</span>
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
 
-        <div class='flex-item-1-1-auto' [hidden]='currentStep !== 1'>
-            <ogms-form-cmp-objs [mode]='mode' [keynote]='__tempKeynote' (onCmpObjsChange)='onCmpObjsChange($event)'></ogms-form-cmp-objs>
-        </div>
+                    <!-- <div>
+                        <label></label>
+                        <mat-stroked-button-toggle-group #group>
+                            <mat-stroked-button-toggle value="left">
+                                <mat-icon>visibility_off</mat-icon><span>Private</span>
+                            </mat-stroked-button-toggle>
+                            <mat-stroked-button-toggle value="center">
+                                <mat-icon>visibility</mat-icon><span>Public</span>
+                            </mat-stroked-button-toggle>
+                        </mat-stroked-button-toggle-group>
+                    </div> -->
+                </div>
+                <div class='stepy-btn-group'>
+                    <button mat-stroked-button matStepperNext color="primary">Next</button>
+                </div>
+            </mat-step>
+            <mat-step>
+                <ng-template matStepLabel>Select Participants</ng-template>
+                <ng-container *ngIf='_isMSListLoading else msListTemplate'>
+                    <mat-spinner></mat-spinner>
+                </ng-container>
+                <ng-template #msListTemplate>
+                    <div class='form-item use-default-width'>
+                        <mat-selection-list formControlName='msIds' #mss>
+                            <mat-list-option *ngFor='let ms of msList' [value]='ms._id'>
+                                {{ms.MDL.meta.name}}
+                            </mat-list-option>
+                        </mat-selection-list>
+                        <p>Options selected: {{mss.selectedOptions.selected.length}}</p>
+                    </div>
+                </ng-template>
+                <div class='stepy-btn-group'>
+                    <button mat-stroked-button matStepperPrevious color="primary">Back</button>
+                    <button mat-stroked-button matStepperNext color="primary">Next</button>
+                </div>
+            </mat-step>
+            <mat-step>
+                <ng-template matStepLabel>Add Comparison Feature</ng-template>
+                <div class='form-item' formArrayName='cmpObjs'>
+                    <ng-container *ngIf='slnFG.get("cmpObjs").value?.length === 0 else cmpObjsTemplate'>
+                        <p><i>No comparison configuration</i></p>
+                    </ng-container>
+                    <ng-template #cmpObjsTemplate>
+                        <ng-container *ngFor='let cmpObj of slnFG.get("cmpObjs").value; let i=index;'>
+                            <ogms-cmp-obj-cfg formGroupName='i'></ogms-cmp-obj-cfg>
+                        </ng-container>
+                    </ng-template>
+                    <div class='flex-box-row-nowrap'>
+                        <button mat-stroked-button color='primary' class='flex-item-1-1-auto'><mat-icon>add</mat-icon>Add comparison feature</button>
+                    </div>
+                </div>
+                <div class='stepy-btn-group'>
+                    <button mat-stroked-button matStepperPrevious color="primary">Back</button>
+                    <button mat-stroked-button matStepperNext color="primary">Next</button>
+                </div>
+            </mat-step>
+            <mat-step>
+                <ng-template matStepLabel>Preview outline</ng-template>
+                <div class='form-item'>
 
-        <!-- <div [hidden]='currentStep !== 2'>
-            <ogms-form-cmp-task></ogms-form-cmp-task>
-        </div> -->
+                </div>
+                <div class='stepy-btn-group'>
+                    <button mat-stroked-button matStepperPrevious color="primary">Back</button>
+                    <button mat-stroked-button color="warn" (click)="stepper.reset()">Reset</button>
+                </div>
+            </mat-step>
+        </mat-horizontal-stepper>
+    </form>
 
-        <!-- <div [hidden]='currentStep !== 2'>
-            <ogms-form-sln-outline></ogms-form-sln-outline>
-        </div> -->
-    </div>
-
-    <div class="steps-action">
-        <button nz-button [nzType]="'default'" (click)="changeStep(currentStep-1)" [disabled]="currentStep === 0">
-                    <span>Previous</span>
-                </button>
-        <button nz-button [nzType]="'default'" (click)="changeStep(currentStep+1)" *ngIf="currentStep < 1" [disabled]='nextDisabled'>
-                    <span>Next</span>
-                </button>
-        <button nz-button [nzType]="'primary'" (click)="done()" *ngIf="currentStep === 1" [disabled]='doneDisabled'>
-                    <span>Save</span>
-                </button>
-    </div>
-
-    <nz-modal [nzVisible]="__isConfirmVisible" [nzContent]="modalContent" [nzFooter]='modalFooter' (nzOnCancel)="handleCancel($event)">
+    <nz-modal [nzVisible]="_isConfirmVisible" [nzContent]="modalContent" [nzFooter]='modalFooter' (nzOnCancel)="handleCancel($event)">
         <ng-template #modalContent>
             <p style='margin: 15px; font-size: 18px'>Configure this solution right now?</p>
             <div class='flex-box-row-nowrap'>
                 <div class='flex-item-1-1-auto'></div>
                 <div>
                     <button nz-button [nzType]="'default'" [nzSize]="'large'" (click)="handleCancel($event)">
-                    Later
-                </button>
+                        Later
+                    </button>
                     <button nz-button [nzType]="'primary'" [nzSize]="'large'" (click)="handleOk($event)">
-                    Configure
-                </button>
+                        Configure
+                    </button>
                 </div>
             </div>
+        </ng-template>
+        <ng-template #modalFooter>
+
         </ng-template>
     </nz-modal>
 </div>

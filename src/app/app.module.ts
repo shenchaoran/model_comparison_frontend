@@ -22,7 +22,6 @@ import { LoginService } from '@common/feature/login/login.service';
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
-        BrowserAnimationsModule,
         NgZorroAntdModule,
         RouterModule,
         routing,

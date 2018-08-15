@@ -1,4 +1,3 @@
-import { feature } from '../../mock/issue.model';
 import { Component, OnInit, AfterViewInit, Input, Output, EventEmitter, HostListener } from '@angular/core';
 import * as uuidv1 from 'uuid/v1';
 import { GEOSERVER } from '@config'

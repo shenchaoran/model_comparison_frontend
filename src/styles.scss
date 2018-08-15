@@ -13,6 +13,7 @@
 @import "~openlayers/dist/ol.css";
 @import "~prismjs/themes/prism-coy.css";
 @import "~prismjs/plugins/line-numbers/prism-line-numbers.css";
+// @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 // @import '~quill/dist/quill.bubble';
 // @import '~quill/dist/quill.snow';
 // @import '~angular-tree-component/dist/angular-tree-component.css';
@@ -39,8 +40,9 @@
 @import "assets/css/my/layout.scss";
 @import "assets/css/my/doc-detail.scss";
 @import "assets/css/my/doc-list.scss";
-// @import "assets/css/my/golden-layout.scss";
 @import "assets/css/my/form.scss";
+@import "assets/css/my/material-theme.scss";
+// @import "assets/css/my/golden-layout.scss";
 // TODO relative path problems
 // @import 'assets/css/jqwidgets/jqx.base';
 // @import 'assets/css/jqwidgets/jqx.energyblue-my';

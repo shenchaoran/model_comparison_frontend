@@ -1,11 +1,10 @@
 import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { LoginService } from '@common/feature/login/login.service';
 import { CmpSolution, CmpTask, ResourceSrc } from '@models';
 import { CmpSlnService } from '../services/cmp-sln.service';
+import { MSService } from '../../models/services/geo-models.service';
 import { NzNotificationService, NzModalService } from 'ng-zorro-antd';
 import { Router, ActivatedRoute } from '@angular/router';
-import { NgUploaderOptions } from 'ngx-uploader';
 
 @Component({
     selector: 'ogms-create-sln',
@@ -13,56 +12,42 @@ import { NgUploaderOptions } from 'ngx-uploader';
     styleUrls: ['./create-sln.component.scss']
 })
 export class CreateSlnComponent implements OnInit {
-    mode = 'write';
-    currentStep = 0;
+    _isMSListLoading: boolean = true;
+    _doneDisabled: boolean = true;
+    _isConfirmVisible: boolean = false;
+
+    slnFG: FormGroup;
+    msList: any[];
     cmpSln: CmpSolution = new CmpSolution();
-
-    __tempKeynote: any;
-
-    nextDisabled: boolean = true;
-    doneDisabled: boolean = true;
-
-    __isConfirmVisible: boolean = false;
 
     constructor(
         private fb: FormBuilder,
         private cdRef: ChangeDetectorRef,
         private service: CmpSlnService,
+        private msService: MSService,
         private _notice: NzNotificationService,
-        private modalService: NzModalService,
         private router: Router,
         private route: ActivatedRoute
     ) { }
 
     ngOnInit() {
-    }
+        this.slnFG = this.fb.group({
+            name: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(25)]],
+            desc: ['', [Validators.required, Validators.minLength(20), Validators.maxLength(140)]],
+            auth: ['Public', [Validators.required]],
+            msIds: [[], [Validators.required]],
+            cmpObjs: [[], [Validators.required]]
+        });
 
-    onKeynoteChange(e) {
-        const user = LoginService.getUser();
-        this.cmpSln.cmpCfg.keynote = {
-            direction: e.direction,
-            dimension: e.dimension
-        };
-        this.cmpSln.meta = {
-            name: e.attached.solutionMeta.name,
-            desc: e.attached.solutionMeta.desc,
-            time: (new Date()).getTime()
-        };
-        this.cmpSln.auth = {
-            userId: user._id,
-            userName: user.username,
-            src: ResourceSrc.PRIVATE
-        }
-
-        if (this.cmpSln.cmpCfg.keynote.dimension
-            && this.cmpSln.cmpCfg.keynote.direction
-            && this.cmpSln.meta.name
-            && this.cmpSln.meta.desc) {
-            this.nextDisabled = false;
-        }
-        else {
-            this.nextDisabled = true;
-        }
+        this.msService.findAll({
+            pageSize: 100
+        })
+            .subscribe(response => {
+                if(!response.error) {
+                    this.msList = response.data.docs;
+                    this._isMSListLoading = false;
+                }
+            })
     }
 
     onCmpObjsChange(e) {
@@ -74,25 +59,10 @@ export class CreateSlnComponent implements OnInit {
                 _.unset(temp, 'dataRefers');
                 return temp;
             });
-            this.doneDisabled = false;
+            this._doneDisabled = false;
         }
         else {
-            this.doneDisabled = true;
-        }
-    }
-
-    changeStep(newStep) {
-        if (this.currentStep < newStep) {
-            this.nextDisabled = true;
-            // this.nextDisabled = false;
-        }
-        else if (this.currentStep > newStep) {
-            this.nextDisabled = false;
-        }
-        this.currentStep = newStep;
-
-        if (newStep === 1) {
-            this.__tempKeynote = _.cloneDeep(this.cmpSln.cmpCfg.keynote);
+            this._doneDisabled = true;
         }
     }
 
@@ -106,17 +76,17 @@ export class CreateSlnComponent implements OnInit {
                 else {
                     this._notice.success('Success', 'create comparison solution succeed!');
                     this.cmpSln._id = response.data.doc._id;
-                    this.__isConfirmVisible = true;
+                    this._isConfirmVisible = true;
                 }
             });
     }
 
     handleCancel(e) {
-        this.__isConfirmVisible = false;
+        this._isConfirmVisible = false;
     }
 
     handleOk(e) {
-        this.__isConfirmVisible = true;
+        this._isConfirmVisible = true;
         localStorage.setItem('cmpSolution', JSON.stringify(this.cmpSln));
         this.router.navigate(['../..', 'tasks', 'new'], {
             relativeTo: this.route

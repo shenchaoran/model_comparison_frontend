@@ -42,19 +42,6 @@ export const routes: Routes = [
         path: 'results',
         loadChildren: './business/results/results.module#ResultsModule'
     },
-
-    // {
-    //     path: 'issues',
-    //     loadChildren: './business/cmp-issue/cmp-issue.module#CmpIssueModule'
-    // },
-    // {
-    //     path: 'solutions',
-    //     loadChildren: './business/cmp-solution/cmp-solution.module#CmpSolutionModule'
-    // },
-    // {
-    //     path: 'tasks',
-    //     loadChildren: './business/cmp-task/cmp-task.module#CmpTaskModule'
-    // },
     
     {
         path: 'search',

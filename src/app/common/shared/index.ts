@@ -9,8 +9,8 @@ import { HEADER_MENUS, USER_MENUS } from '@config/menu.config';
 import { DisqusModule } from "ngx-disqus";
 // import { EmailValidator, EqualPasswordsValidator } from './validators';
 import { ListFilterService } from '@common/shared/components/list-template/list-filter.service';
-import { HeaderMenuService } from './components/header-menu/services/header-menu.service';
-import { BaMenuService } from './components/header-menu/services/baMenu.service';
+import { HeaderMenuService } from '@common/shared/components/header-menu/services/header-menu.service';
+import { BaMenuService } from '@common/shared/components/header-menu/services/baMenu.service';
 import { LoginService } from '@common/feature/login/login.service';
 import { NzNotificationService, NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';
 
@@ -33,19 +33,19 @@ import {
     MapBaseComponent,
     CardsTemplateComponent,
     HeaderMenuComponent,
-} from './components';
+} from '@common/shared/components';
 
 import {
     BaScrollPosition,
     BaSlimScroll
-} from './directives';
+} from '@common/shared/directives';
 
 import {
     BaImageLoaderService,
     BaThemePreloader,
     BaThemeSpinner,
     ListBaseService,
-} from './services';
+} from '@common/shared/services';
 
 import {
     BaImgPathPipe,
@@ -56,7 +56,7 @@ import {
     ArrayFilterPipe,
     DescriptionPipe,
     CoordinatePipe,
-} from './pipes';
+} from '@common/shared/pipes';
 
 const SERVICES = [
     BaImageLoaderService,
