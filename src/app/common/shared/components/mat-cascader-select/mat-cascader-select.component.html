@@ -1,0 +1,13 @@
+<div class='mat-cascader-select'>
+    <ng-container *ngIf='_flapSource'>
+        <ng-container *ngFor='let flapSRC of _flapSource; let i=index'>
+            <mat-form-field>
+                <mat-select [placeholder]="flapSRC.placeholder" (selectionChange)='onSelected($event, i)'>
+                    <mat-option *ngFor="let opt of flapSRC.options; let j=index" [value]="{value: opt.value, index: j}">
+                        {{opt.label}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </ng-container>
+    </ng-container>
+</div>

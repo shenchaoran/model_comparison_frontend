@@ -60,8 +60,9 @@
                 </ng-container>
                 <ng-template #msListTemplate>
                     <div class='form-item use-default-width'>
-                        <mat-selection-list formControlName='msIds' #mss>
-                            <mat-list-option *ngFor='let ms of msList' [value]='ms._id'>
+                        <!-- TODO 这里最好再把模型列表按照可参与对比的类型分类，否则选择的几个模型毫无关联可能会出错 -->
+                        <mat-selection-list formControlName='participants' #mss (selectionChange)='onParticipantsChange()'>
+                            <mat-list-option *ngFor='let ms of msList' [value]='ms'>
                                 {{ms.MDL.meta.name}}
                             </mat-list-option>
                         </mat-selection-list>
@@ -76,16 +77,23 @@
             <mat-step>
                 <ng-template matStepLabel>Add Comparison Feature</ng-template>
                 <div class='form-item' formArrayName='cmpObjs'>
-                    <ng-container *ngIf='slnFG.get("cmpObjs").value?.length === 0 else cmpObjsTemplate'>
+                    <ng-container *ngIf='cmpObjs.controls?.length === 0 else cmpObjsTemplate'>
                         <p><i>No comparison configuration</i></p>
                     </ng-container>
                     <ng-template #cmpObjsTemplate>
-                        <ng-container *ngFor='let cmpObj of slnFG.get("cmpObjs").value; let i=index;'>
-                            <ogms-cmp-obj-cfg formGroupName='i'></ogms-cmp-obj-cfg>
+                        <ng-container *ngFor='let cmpObj of cmpObjs.controls; let i=index;'>
+                            <ogms-cmp-obj-cfg [formControlName]='i' [participants]='participants.value'></ogms-cmp-obj-cfg>
                         </ng-container>
                     </ng-template>
                     <div class='flex-box-row-nowrap'>
-                        <button mat-stroked-button color='primary' class='flex-item-1-1-auto'><mat-icon>add</mat-icon>Add comparison feature</button>
+                        <button id='add-cmpObj-btn' 
+                        mat-stroked-button color='primary' 
+                        class='flex-item-1-1-auto' 
+                        (click)='addCmpObj()' 
+                        [disabled]='participantsNum === 0'>
+                            <mat-icon>add</mat-icon>
+                            <span>Add comparison feature</span>
+                        </button>
                     </div>
                 </div>
                 <div class='stepy-btn-group'>

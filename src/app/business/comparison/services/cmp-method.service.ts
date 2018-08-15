@@ -14,4 +14,10 @@ export class CmpMethodService extends ListBaseService {
     ) {
         super(http);
     }
+
+    findAllMatched(query) {
+        return this.http.get(`${this.baseUrl}/matched`, {
+            params: query
+        })
+    }
 }

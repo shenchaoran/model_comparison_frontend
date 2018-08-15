@@ -7,6 +7,7 @@ import { BaThemeConfigProvider } from '@common/shared/theme.configProvider';
 import { BACKEND } from '@config';
 import { HEADER_MENUS, USER_MENUS } from '@config/menu.config';
 import { DisqusModule } from "ngx-disqus";
+import {MatSharedModule} from '../mat-shared';
 // import { EmailValidator, EqualPasswordsValidator } from './validators';
 import { ListFilterService } from '@common/shared/components/list-template/list-filter.service';
 import { HeaderMenuService } from '@common/shared/components/header-menu/services/header-menu.service';
@@ -33,6 +34,7 @@ import {
     MapBaseComponent,
     CardsTemplateComponent,
     HeaderMenuComponent,
+    MatCascaderSelectComponent,
 } from '@common/shared/components';
 
 import {
@@ -93,6 +95,7 @@ const COMPONENTS = [
     OgmsBaseComponent,
     MapBaseComponent,
     CardsTemplateComponent,
+    MatCascaderSelectComponent,
 ];
 
 const DIRECTIVES = [
@@ -128,7 +131,8 @@ export * from '@common/shared/directives';
         RouterModule,
         NgxSharedModule,
         NgUploaderModule,
-        DisqusModule.forRoot('shenchaoran')
+        DisqusModule.forRoot('shenchaoran'),
+        MatSharedModule,
     ],
     providers: [
         ...VALIDATORS,
@@ -158,6 +162,7 @@ export * from '@common/shared/directives';
         RouterModule,
         NgxSharedModule,
         DisqusModule,
+        
     ]
 })
 export class SharedModule {

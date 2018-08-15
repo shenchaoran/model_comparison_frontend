@@ -1,0 +1,28 @@
+.cmpObj-basic-info {
+    display: flex;
+    flex-flow: column nowrap;
+    mat-form-field {
+        width: 50%;
+    }
+}
+
+.dataRefer-group {
+    margin: 20px 0;
+}
+
+.dataRefer-item {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    label {
+        margin-right: 20px;
+        width: 250px;
+    }
+    ogms-mat-cascader-select {
+        flex: 1;
+    }
+}
+
+.form-item:not(:last-child) {
+    margin-bottom: 20px;
+}

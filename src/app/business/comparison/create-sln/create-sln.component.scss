@@ -3,6 +3,7 @@ $width: 620px;
 .form-item {
     display: flex;
     flex-flow: column nowrap;
+    margin: 20px;
     >* {
         width: 100%;
         margin-bottom: 20px;
@@ -20,4 +21,8 @@ $width: 620px;
     >button:not(:last-child) {
         margin-right: 35px;
     }
+}
+
+#add-cmpObj-btn {
+    margin: 20px 0;
 }

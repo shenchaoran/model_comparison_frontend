@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
 import { CmpSolution, CmpTask, ResourceSrc } from '@models';
 import { CmpSlnService } from '../services/cmp-sln.service';
 import { MSService } from '../../models/services/geo-models.service';
@@ -19,6 +19,16 @@ export class CreateSlnComponent implements OnInit {
     slnFG: FormGroup;
     msList: any[];
     cmpSln: CmpSolution = new CmpSolution();
+    get cmpObjs() {
+        return this.slnFG.get('cmpObjs') as FormArray;
+    }
+    get participants() {
+        return this.slnFG.get('participants');
+    }
+    get participantsNum() {
+        let num = _.get(this.slnFG.get('participants'), 'value.length');
+        return num? num: 0;
+    }
 
     constructor(
         private fb: FormBuilder,
@@ -32,11 +42,11 @@ export class CreateSlnComponent implements OnInit {
 
     ngOnInit() {
         this.slnFG = this.fb.group({
-            name: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(25)]],
-            desc: ['', [Validators.required, Validators.minLength(20), Validators.maxLength(140)]],
+            name: [null, [Validators.required, Validators.minLength(8), Validators.maxLength(25)]],
+            desc: [null, [Validators.required, Validators.minLength(20), Validators.maxLength(140)]],
             auth: ['Public', [Validators.required]],
-            msIds: [[], [Validators.required]],
-            cmpObjs: [[], [Validators.required]]
+            participants: [null, [Validators.required]],
+            cmpObjs: this.fb.array([])
         });
 
         this.msService.findAll({
@@ -50,20 +60,21 @@ export class CreateSlnComponent implements OnInit {
             })
     }
 
-    onCmpObjsChange(e) {
-        if (e.valid) {
-            this.cmpSln.cmpCfg.cmpObjs = _.map(e.data, cmpObj => {
-                const temp = _.cloneDeep(cmpObj);
-                _.unset(temp, 'attached');
-                _.unset(temp, 'cmpResults');
-                _.unset(temp, 'dataRefers');
-                return temp;
-            });
-            this._doneDisabled = false;
-        }
-        else {
-            this._doneDisabled = true;
-        }
+    onParticipantsChange() {
+        this.cmpObjs;
+        this.slnFG.setControl('cmpObjs', this.fb.array([]));
+        // this.slnFG.patchValue({
+        //     cmpObjs: this.fb.array([])
+        // })
+        // cmpObjsCtrl.reset([]);
+        // cmpObjsCtrl.markAsDirty();
+        // cmpObjsCtrl.updateValueAndValidity();
+    }
+
+    addCmpObj() {
+        this.cmpObjs.push(new FormControl({}))
+        // this.cmpObjs.markAsDirty();
+        this.cmpObjs.updateValueAndValidity();
     }
 
     done() {

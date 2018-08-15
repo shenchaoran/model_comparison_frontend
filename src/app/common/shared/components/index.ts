@@ -16,3 +16,4 @@ export * from '@common/shared/components/doc-base/doc-base.component';
 export * from '@common/shared/components/ogms-base/ogms-base.component';
 export * from '@common/shared/components/map-base/map-base.component';
 export * from '@common/shared/components/cards-template/cards-template.component';
+export * from '@common/shared/components/mat-cascader-select/mat-cascader-select.component';
