@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy, Inject } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, FormArray, FormControl } from '@angular/forms';
 import { CmpSolution, ResourceSrc } from '@models';
 import { CmpSlnService } from '../services/cmp-sln.service';
@@ -7,6 +7,7 @@ import { NzNotificationService, NzModalService } from 'ng-zorro-antd';
 import { Router, ActivatedRoute } from '@angular/router';
 import * as uuidv1 from 'uuid/v1';
 import { CmpMethodService } from '../services/cmp-method.service';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
 @Component({
     selector: 'ogms-create-sln',
@@ -14,9 +15,6 @@ import { CmpMethodService } from '../services/cmp-method.service';
     styleUrls: ['./create-sln.component.scss']
 })
 export class CreateSlnComponent implements OnInit {
-    _isMSListLoading: boolean = true;
-    _doneDisabled: boolean = true;
-    _isConfirmVisible: boolean = false;
 
     cmpMethods;
     slnFG: FormGroup;
@@ -41,7 +39,8 @@ export class CreateSlnComponent implements OnInit {
         private _notice: NzNotificationService,
         private router: Router,
         private route: ActivatedRoute,
-        private cmpMethodService: CmpMethodService
+        private cmpMethodService: CmpMethodService,
+        public dialog: MatDialog
     ) { }
 
     ngOnInit() {
@@ -56,7 +55,6 @@ export class CreateSlnComponent implements OnInit {
             .subscribe(state => {
                 if (state === 'VALID') {
                     let v = this.slnFG.value;
-                    console.log(v);
 
                     this.cmpSln.meta.name = v.name;
                     this.cmpSln.meta.desc = v.desc;
@@ -73,9 +71,10 @@ export class CreateSlnComponent implements OnInit {
                                     field: dataRefer.selected[2]
                                 };
                             }),
-                            methods: _.map(cmpObj.methods, method => method.id)
+                            methods: _.map(cmpObj.methods, method => method._id)
                         }
                     });
+                    console.log(JSON.stringify(this.cmpSln));
                 }
             })
 
@@ -94,7 +93,6 @@ export class CreateSlnComponent implements OnInit {
             .subscribe(response => {
                 if (!response.error) {
                     this.msList = response.data.docs;
-                    this._isMSListLoading = false;
                 }
             });
 
@@ -105,7 +103,6 @@ export class CreateSlnComponent implements OnInit {
                 }
             })
     }
-
 
     addCmpObj() {
         this.cmpObjs.push(new FormControl({
@@ -120,30 +117,46 @@ export class CreateSlnComponent implements OnInit {
         this.cmpObjs.updateValueAndValidity();
     }
 
-    done() {
-        console.log(this.cmpSln);
+    submitSln() {
         this.service.insert(this.cmpSln)
             .subscribe(response => {
-                if (response.error) {
-                    this._notice.warning('Warning', 'create comparison solution failed!');
-                }
-                else {
+                if (!response.error) {
                     this._notice.success('Success', 'create comparison solution succeed!');
-                    this.cmpSln._id = response.data.doc._id;
-                    this._isConfirmVisible = true;
+                    this.cmpSln._id = response.data._id;
+                    
+                    this.dialog.open(SlnConfirmDialog)
+                        .afterClosed()
+                        .subscribe(result => {
+                            if(result === 'outline') {
+                                this.router.navigate(['..', this.cmpSln._id,], {
+                                    relativeTo: this.route
+                                });
+                            }
+                            else if(result === 'configure') {
+                                this.router.navigate(['../..', 'tasks', 'new'], {
+                                    relativeTo: this.route,
+                                    queryParams: {
+                                        slnId: this.cmpSln._id
+                                    }
+                                });
+                            }
+                        });
                 }
             });
     }
-
-    handleCancel(e) {
-        this._isConfirmVisible = false;
-    }
-
-    handleOk(e) {
-        this._isConfirmVisible = true;
-        localStorage.setItem('cmpSolution', JSON.stringify(this.cmpSln));
-        this.router.navigate(['../..', 'tasks', 'new'], {
-            relativeTo: this.route
-        });
-    }
 }
+
+@Component({
+    selector: 'ogms-sln-confirm-dialog',
+    template: `
+        <h2 mat-dialog-title>Configure this solution right now?</h2>
+        <mat-dialog-content></mat-dialog-content>
+        <mat-dialog-actions align='end'>
+            <div>
+                <button mat-button [mat-dialog-close]='"outline"'>Later</button>
+                <button mat-button [mat-dialog-close]='"configure"' cdkFocusInitial>Configure</button>
+            </div>
+        </mat-dialog-actions>
+    `
+})
+export class SlnConfirmDialog {}

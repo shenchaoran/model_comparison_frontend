@@ -55,7 +55,7 @@
             </mat-step>
             <mat-step>
                 <ng-template matStepLabel>Select Participants</ng-template>
-                <ng-container *ngIf='_isMSListLoading else msListTemplate'>
+                <ng-container *ngIf='!msList else msListTemplate'>
                     <mat-spinner></mat-spinner>
                 </ng-container>
                 <ng-template #msListTemplate>
@@ -115,33 +115,17 @@
             <mat-step>
                 <ng-template matStepLabel>Preview outline</ng-template>
                 <div class='form-container'>
-
+                    <p>this is a outline</p>
+                    <p>this is a outline</p>
+                    <p>this is a outline</p>
+                    <p>this is a outline</p>
+                    <p>this is a outline</p>
                 </div>
                 <div class='stepy-btn-group'>
                     <button mat-stroked-button matStepperPrevious color="primary">Back</button>
-                    <button mat-stroked-button color="warn" (click)="stepper.reset()">Reset</button>
+                    <button mat-stroked-button color="primary" (click)="submitSln()" [disabled]='!slnFG.valid' cdkFocusInitial>Submit</button>
                 </div>
             </mat-step>
         </mat-horizontal-stepper>
     </form>
-
-    <nz-modal [nzVisible]="_isConfirmVisible" [nzContent]="modalContent" [nzFooter]='modalFooter' (nzOnCancel)="handleCancel($event)">
-        <ng-template #modalContent>
-            <p style='margin: 15px; font-size: 18px'>Configure this solution right now?</p>
-            <div class='flex-box-row-nowrap'>
-                <div class='flex-item-1-1-auto'></div>
-                <div>
-                    <button nz-button [nzType]="'default'" [nzSize]="'large'" (click)="handleCancel($event)">
-                        Later
-                    </button>
-                    <button nz-button [nzType]="'primary'" [nzSize]="'large'" (click)="handleOk($event)">
-                        Configure
-                    </button>
-                </div>
-            </div>
-        </ng-template>
-        <ng-template #modalFooter>
-
-        </ng-template>
-    </nz-modal>
 </div>

@@ -13,7 +13,7 @@ import { CmpMethodService } from './services/cmp-method.service';
 import { NzNotificationService, NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';
 import { MethodDetailComponent } from './method-detail/method-detail.component';
 import { MethodListComponent } from './method-list/method-list.component';
-import { CreateSlnComponent } from './create-sln/create-sln.component';
+import { CreateSlnComponent, SlnConfirmDialog } from './create-sln/create-sln.component';
 import { MSService } from '../models/services/geo-models.service';
 
 export * from './services/cmp-sln.service';
@@ -32,6 +32,10 @@ export * from './services/cmp-sln.service';
         MethodDetailComponent,
         MethodListComponent,
         CreateSlnComponent,
+        SlnConfirmDialog,
+    ],
+    entryComponents: [
+        SlnConfirmDialog
     ],
     providers: [
         CmpSlnService,
