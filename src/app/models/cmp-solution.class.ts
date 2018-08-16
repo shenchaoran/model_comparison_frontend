@@ -3,6 +3,8 @@
  */
 import { ResourceSrc } from '@models/resource.enum';
 import { DataRefer } from '@models/dataRefer.class';
+import { CmpObj } from './cmp-obj.class';
+import { LoginService } from '@common/feature/login/login.service';
 
 export class CmpSolution {
     _id?: any;
@@ -17,30 +19,8 @@ export class CmpSolution {
         src: ResourceSrc
     };
     issueId: string;
-    cmpCfg: {
-        ms: {
-            msId: string,
-            msName: string,
-            participate: boolean
-        }[],
-        keynote: {
-            direction: 'multi'|'single',
-            dimension: 'point' | 'polygon' | 'multi-point'
-        },
-        cmpObjs: {
-            id: string,
-            // 比较对象描述
-            meta: {
-                name: string,
-                desc: string
-            },
-            // 比较对象配置
-            schemaId: string,
-            methods: string[],
-            dataRefers: DataRefer[],
-            attached: any
-        }[]
-    };
+    participants: any[];
+    cmpObjs: CmpObj[];
     [key: string]: any;
 
     constructor() {
@@ -49,19 +29,21 @@ export class CmpSolution {
             desc: '',
             time: undefined
         };
-        this.issueId = undefined;
-        this.cmpCfg = {
-            ms: [],
-            cmpObjs: [],
-            keynote: {
-                direction: undefined,
-                dimension: undefined
-            }
-        };
-        this.auth = {
-            userId: undefined,
-            userName: undefined,
-            src: undefined
-        };
+        this.cmpObjs = [];
+        const user = LoginService.getUser();
+        if(user) {
+            this.auth = {
+                userId: user._id,
+                userName: user.username,
+                src: ResourceSrc.PUBLIC
+            };
+        }
+        else {
+            this.auth = {
+                userId: undefined,
+                userName: undefined,
+                src: undefined
+            };
+        }
     }
 }

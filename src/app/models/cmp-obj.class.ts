@@ -24,21 +24,17 @@ import * as ObjectID from 'objectid';
 
 export class CmpObj {
     id: any;
-    meta: {
-        name: string,
-        desc: string
-    };
-    schemaId: string;
-    methods: string[];
+    name: string;
+    desc: string;
+    // 此处的数据参考是比较对象的数据参考，可能是输入，但绝大多数都是输出
+    // TODO 对于日期的处理，暂时理解为时间区域内只有一个输出
     dataRefers: Array<DataRefer>;
-    progress: number;
+    schemaId?: string;
+    methods: string[];
+    progress?: number;
     
     constructor() {
         this.id = ObjectID();
-        this.meta = {
-            name: '',
-            desc: ''
-        };
         this.methods = [];
         this.dataRefers = [];
         this.progress = 0;

@@ -36,7 +36,7 @@ import {
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CmpObjCfgComponent implements OnInit {
+export class CmpObjCfgComponent implements ControlValueAccessor, OnInit {
     _formLoading;
     _methodLoading = true;
     _cmpObj;
@@ -113,6 +113,7 @@ export class CmpObjCfgComponent implements OnInit {
                 });
 
                 this.cmpObjFG = this.fb.group({
+                    id: this._cmpObj.id,
                     name: ['', [Validators.required, Validators.minLength(8)]],
                     desc: ['', [Validators.required, Validators.minLength(25)]],
                     dataRefers: this.fb.array(_.map(this._participants, ms => {
@@ -129,7 +130,7 @@ export class CmpObjCfgComponent implements OnInit {
                     .subscribe(state => {
                         console.log(state);
                         if (state === 'VALID') {
-                            console.log(this.cmpObjFG.value);
+                            return this.propagateChange(this.cmpObjFG.value);
                         }
                     })
             });
@@ -137,10 +138,6 @@ export class CmpObjCfgComponent implements OnInit {
 
     ngOnInit() {
 
-    }
-
-    onSelected(v) {
-        console.log(v);
     }
 
     private propagateChange = (e: any) => { };

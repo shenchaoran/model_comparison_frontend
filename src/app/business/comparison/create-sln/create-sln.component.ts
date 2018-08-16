@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, FormArray, FormControl } from '@angular/forms';
-import { CmpSolution, CmpTask, ResourceSrc } from '@models';
+import { CmpSolution, ResourceSrc } from '@models';
 import { CmpSlnService } from '../services/cmp-sln.service';
 import { MSService } from '../../models/services/geo-models.service';
 import { NzNotificationService, NzModalService } from 'ng-zorro-antd';
@@ -30,7 +30,7 @@ export class CreateSlnComponent implements OnInit {
     }
     get participantsNum() {
         let num = _.get(this.slnFG.get('participants'), 'value.length');
-        return num? num: 0;
+        return num ? num : 0;
     }
 
     constructor(
@@ -52,38 +52,60 @@ export class CreateSlnComponent implements OnInit {
             participants: [null, [Validators.required]],
             cmpObjs: this.fb.array([])
         });
+        this.slnFG.statusChanges
+            .subscribe(state => {
+                if (state === 'VALID') {
+                    let v = this.slnFG.value;
+                    console.log(v);
 
-        this.queryMethod()
-        this.msService.findAll({
-            pageSize: 100
-        })
-            .subscribe(response => {
-                if(!response.error) {
-                    this.msList = response.data.docs;
-                    this._isMSListLoading = false;
+                    this.cmpSln.meta.name = v.name;
+                    this.cmpSln.meta.desc = v.desc;
+                    this.cmpSln.auth.src = v.auth;
+                    this.cmpSln.participants = v.participants;
+                    this.cmpSln.cmpObjs = _.map(v.cmpObjs, cmpObj => {
+                        return {
+                            ...cmpObj,
+                            dataRefers: _.map(cmpObj.dataRefers, dataRefer => {
+                                return {
+                                    msId: dataRefer.msId,
+                                    msName: dataRefer.msName,
+                                    eventId: dataRefer.selected[1],
+                                    field: dataRefer.selected[2]
+                                };
+                            }),
+                            methods: _.map(cmpObj.methods, method => method.id)
+                        }
+                    });
                 }
             })
+
+        this.fetchData();
     }
 
     onParticipantsChange() {
         this.cmpObjs;
         this.slnFG.setControl('cmpObjs', this.fb.array([]));
-        // this.slnFG.patchValue({
-        //     cmpObjs: this.fb.array([])
-        // })
-        // cmpObjsCtrl.reset([]);
-        // cmpObjsCtrl.markAsDirty();
-        // cmpObjsCtrl.updateValueAndValidity();
     }
 
-    queryMethod() {
+    fetchData() {
+        this.msService.findAll({
+            pageSize: 100
+        })
+            .subscribe(response => {
+                if (!response.error) {
+                    this.msList = response.data.docs;
+                    this._isMSListLoading = false;
+                }
+            });
+
         this.cmpMethodService.findAll({})
             .subscribe(response => {
-                if(!response.error) {
+                if (!response.error) {
                     this.cmpMethods = response.data.docs
                 }
             })
     }
+
 
     addCmpObj() {
         this.cmpObjs.push(new FormControl({

@@ -9,7 +9,7 @@ import {
     Inject,
 } from '@angular/core';
 import { NgUploaderOptions } from 'ngx-uploader';
-import { ResourceSrc, CalcuTask, CmpTask, CmpSolution } from '@models';
+import { ResourceSrc, CalcuTask, CmpSolution } from '@models';
 import { LoginService } from '@common/feature/login/login.service';
 import { StdDataService } from '../../datasets/services/std-data.service';
 import {
