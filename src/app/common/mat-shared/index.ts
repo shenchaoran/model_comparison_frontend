@@ -39,7 +39,7 @@ import {
     MatAutocompleteModule,
     MatButtonToggleModule,
     MatPseudoCheckboxModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
 } from '@angular/material';
 
 const MAT_MODULES = [

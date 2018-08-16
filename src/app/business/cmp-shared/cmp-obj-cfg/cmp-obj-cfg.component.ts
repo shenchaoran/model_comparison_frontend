@@ -11,12 +11,12 @@ import {
     HostListener,
     Inject,
 } from '@angular/core';
-import { ResourceSrc, CalcuTask, CmpTask, CmpSolution, CmpObj, DataRefer } from '@models';
 import {
     AbstractControl,
     FormBuilder,
     FormControl,
     FormGroup,
+    FormArray,
     Validators,
     ControlValueAccessor,
     NG_VALIDATORS,
@@ -38,36 +38,46 @@ import {
 })
 export class CmpObjCfgComponent implements OnInit {
     _formLoading;
-    _methodLoading;
+    _methodLoading = true;
     _cmpObj;
     _participants;
     _dataReferCfgs;
+    _cmpMethods;
 
-    cmpMethods: any[];
+    cmpMethods$: Subject<any[]> = new Subject();
     cmpObj$: Subject<any> = new Subject();
     participants$: Subject<any[]> = new Subject();
+
     cmpObjFG: FormGroup;
 
     @Input()
+    set methods(v) {
+        this.cmpMethods$.next(v);
+    }
+    @Input()
     set participants(v) {
         this.participants$.next(v)
+    }
+    get methodsFG() {
+        return this.cmpObjFG.get('methods');
     }
 
     constructor(
         private fb: FormBuilder,
         private cmpMethodService: CmpMethodService
     ) {
-        combineLatest(this.cmpObj$, this.participants$)
+        combineLatest(this.cmpObj$, this.participants$, this.cmpMethods$)
             .subscribe(v => {
                 this._cmpObj = v[0];
                 this._participants = v[1];
+                this._cmpMethods = v[2];
                 function getCasCaderData(type, ms) {
                     return _.map(ms.MDL.IO[type], event => {
                         return {
                             placeholder: 'Table column',
                             label: event.name,
                             value: event,
-                            children: (()=> {
+                            children: (() => {
                                 let targetSchema = _.chain(ms.MDL.IO.schemas)
                                     .find(schema => schema.id = event.schemaId)
                                     .value();
@@ -100,23 +110,28 @@ export class CmpObjCfgComponent implements OnInit {
                         ]
                     };
                     return cfg;
-                })
+                });
 
                 this.cmpObjFG = this.fb.group({
                     name: ['', [Validators.required, Validators.minLength(8)]],
                     desc: ['', [Validators.required, Validators.minLength(25)]],
                     dataRefers: this.fb.array(_.map(this._participants, ms => {
                         return this.fb.group({
-                            msId: [ms._id, [Validators.required]],
-                            msName: [ms.MDL.meta.name, [Validators.required]],
-                            selected: [null, [Validators.required]]
-                            // eventId: [null, [Validators.required]],
-                            // eventName: [null, [Validators.required]],
-                            // colId: [null, [Validators.required]]
+                            msId: ms._id,
+                            msName: ms.MDL.meta.name,
+                            selected: [[], [Validators.required]]
                         });
                     })),
-                    methods: this.fb.array([])
-                })
+                    methods: [null, [Validators.required]]
+                });
+
+                this.cmpObjFG.statusChanges
+                    .subscribe(state => {
+                        console.log(state);
+                        if (state === 'VALID') {
+                            console.log(this.cmpObjFG.value);
+                        }
+                    })
             });
     }
 
@@ -124,15 +139,8 @@ export class CmpObjCfgComponent implements OnInit {
 
     }
 
-    queryMethod(schemaType) {
-        this.cmpMethodService.findAllMatched({
-            schemaType: schemaType
-        })
-            .subscribe(response => {
-                if(!response.error) {
-                    this.cmpMethods = response.doc
-                }
-            })
+    onSelected(v) {
+        console.log(v);
     }
 
     private propagateChange = (e: any) => { };

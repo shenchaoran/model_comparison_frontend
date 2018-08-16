@@ -1,3 +1,28 @@
+form {
+    position: relative;
+
+    .form-container {
+        // padding-bottom: 20px;
+        margin: 0 30px;
+    }
+    
+    .form-container:last-child {
+        margin-bottom: 0;
+    }
+
+    .form-item {
+        margin-bottom: 20px;
+    }
+
+    .title {
+        font-size: 18px;
+        i {
+            padding: 5px;
+            background: #efefef;
+        }
+    }
+}
+
 .cmpObj-basic-info {
     display: flex;
     flex-flow: column nowrap;
@@ -21,12 +46,4 @@
     ogms-mat-cascader-select {
         flex: 1;
     }
-}
-
-.form-item:not(:last-child) {
-    margin-bottom: 20px;
-}
-
-form>div:not(:first-child){
-    margin-top: 30px;
 }

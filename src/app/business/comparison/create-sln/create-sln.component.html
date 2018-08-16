@@ -4,26 +4,26 @@
         <mat-horizontal-stepper linear #stepper>
             <mat-step>
                 <ng-template matStepLabel>Basic Information</ng-template>
-                <div class='form-item use-default-width'>
-                    <mat-form-field>
+                <div class='form-container'>
+                    <mat-form-field class='form-item'>
                         <mat-label>Solution name</mat-label>
                         <input matInput placeholder='Solution name' formControlName='name' required>
-                        <mat-hint>please input solution name</mat-hint>
+                        <!-- <mat-hint>please input solution name</mat-hint> -->
                         <mat-error *ngIf='slnFG.get("name").hasError("required")'>必填</mat-error>
                         <mat-error *ngIf='slnFG.get("name").hasError("minLength")'>最小长度</mat-error>
                         <mat-error *ngIf='slnFG.get("name").hasError("maxLength")'>最大长度</mat-error>
                     </mat-form-field>
 
-                    <mat-form-field>
+                    <mat-form-field class='form-item'>
                         <mat-label>Solution description</mat-label>
                         <textarea matInput placeholder='Solution name' formControlName='desc' required></textarea>
-                        <mat-hint>please input solution description</mat-hint>
+                        <!-- <mat-hint>please input solution description</mat-hint> -->
                         <mat-error *ngIf='slnFG.get("desc").hasError("required")'>必填</mat-error>
                         <mat-error *ngIf='slnFG.get("desc").hasError("minLength")'>最小长度</mat-error>
                         <mat-error *ngIf='slnFG.get("desc").hasError("maxLength")'>最大长度</mat-error>
                     </mat-form-field>
 
-                    <mat-form-field>
+                    <mat-form-field class='form-item'>
                         <mat-label>Authorition</mat-label>
                         <mat-select matInput placeholder="Select your authorition" formControlName='auth' required>
                             <mat-option value="'Private'">
@@ -59,14 +59,16 @@
                     <mat-spinner></mat-spinner>
                 </ng-container>
                 <ng-template #msListTemplate>
-                    <div class='form-item use-default-width'>
-                        <!-- TODO 这里最好再把模型列表按照可参与对比的类型分类，否则选择的几个模型毫无关联可能会出错 -->
-                        <mat-selection-list formControlName='participants' #mss (selectionChange)='onParticipantsChange()'>
-                            <mat-list-option *ngFor='let ms of msList' [value]='ms'>
-                                {{ms.MDL.meta.name}}
-                            </mat-list-option>
-                        </mat-selection-list>
-                        <p>Options selected: {{mss.selectedOptions.selected.length}}</p>
+                    <div class='form-container'>
+                        <div class='form-item use-default-width'>
+                            <!-- TODO 这里最好再把模型列表按照可参与对比的类型分类，否则选择的几个模型毫无关联可能会出错 -->
+                            <mat-selection-list formControlName='participants' #mss (selectionChange)='onParticipantsChange()'>
+                                <mat-list-option *ngFor='let ms of msList' [value]='ms'>
+                                    {{ms.MDL.meta.name}}
+                                </mat-list-option>
+                            </mat-selection-list>
+                            <p>Options selected: {{mss.selectedOptions.selected.length}}</p>
+                        </div>
                     </div>
                 </ng-template>
                 <div class='stepy-btn-group'>
@@ -76,26 +78,35 @@
             </mat-step>
             <mat-step>
                 <ng-template matStepLabel>Add Comparison Feature</ng-template>
-                <div class='form-item' formArrayName='cmpObjs'>
-                    <ng-container *ngIf='cmpObjs.controls?.length === 0 else cmpObjsTemplate'>
-                        <p><i>No comparison configuration</i></p>
-                    </ng-container>
-                    <ng-template #cmpObjsTemplate>
-                        <ng-container *ngFor='let cmpObj of cmpObjs.controls; let i=index;'>
-                            <ogms-cmp-obj-cfg [formControlName]='i' [participants]='participants.value'></ogms-cmp-obj-cfg>
+                <ng-container *ngIf='!cmpMethods || cmpMethods.length === 0 else cmpObjsTemplate'>
+                    <mat-spinner></mat-spinner>
+                </ng-container>
+                <ng-template #cmpObjsTemplate>
+                    <div formArrayName='cmpObjs'>
+                        <ng-container *ngIf='cmpObjs.controls?.length === 0 else cmpObjCfgTemplate'>
+                            <p>
+                                <i>No comparison configuration</i>
+                            </p>
                         </ng-container>
-                    </ng-template>
-                    <div class='flex-box-row-nowrap'>
-                        <button id='add-cmpObj-btn' 
-                        mat-stroked-button color='primary' 
-                        class='flex-item-1-1-auto' 
-                        (click)='addCmpObj()' 
-                        [disabled]='participantsNum === 0'>
-                            <mat-icon>add</mat-icon>
-                            <span>Add comparison feature</span>
-                        </button>
+                        <ng-template #cmpObjCfgTemplate>
+                            <div>
+                                <div class='form-container cmpObj-form-container' *ngFor='let cmpObj of cmpObjs.controls; let i=index;'>
+                                    <ogms-cmp-obj-cfg [methods]='cmpMethods' [formControlName]='i' [participants]='participants.value'></ogms-cmp-obj-cfg>
+
+                                    <span class='close-tag' (click)='removeCmpObj(i)'>
+                                        <mat-icon>cancel</mat-icon>
+                                    </span>
+                                </div>
+                            </div>
+                        </ng-template>
+                        <div class='flex-box-row-nowrap form-item' id='add-cmpObj-btn'>
+                            <button mat-stroked-button color='primary' class='flex-item-1-1-auto' (click)='addCmpObj()' [disabled]='participantsNum === 0'>
+                                <mat-icon>add</mat-icon>
+                                <span>Add comparison feature</span>
+                            </button>
+                        </div>
                     </div>
-                </div>
+                </ng-template>
                 <div class='stepy-btn-group'>
                     <button mat-stroked-button matStepperPrevious color="primary">Back</button>
                     <button mat-stroked-button matStepperNext color="primary">Next</button>
@@ -103,7 +114,7 @@
             </mat-step>
             <mat-step>
                 <ng-template matStepLabel>Preview outline</ng-template>
-                <div class='form-item'>
+                <div class='form-container'>
 
                 </div>
                 <div class='stepy-btn-group'>

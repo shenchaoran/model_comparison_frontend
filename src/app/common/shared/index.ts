@@ -35,6 +35,7 @@ import {
     CardsTemplateComponent,
     HeaderMenuComponent,
     MatCascaderSelectComponent,
+    CascaderSelectValidator,
 } from '@common/shared/components';
 
 import {
@@ -72,6 +73,7 @@ const SERVICES = [
 ];
 
 const VALIDATORS = [
+    // CascaderSelectValidator,
     // EmailValidator,
     // EqualPasswordsValidator
 ];

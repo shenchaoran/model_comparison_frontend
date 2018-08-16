@@ -1,10 +1,12 @@
 import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup, FormArray, FormControl } from '@angular/forms';
 import { CmpSolution, CmpTask, ResourceSrc } from '@models';
 import { CmpSlnService } from '../services/cmp-sln.service';
 import { MSService } from '../../models/services/geo-models.service';
 import { NzNotificationService, NzModalService } from 'ng-zorro-antd';
 import { Router, ActivatedRoute } from '@angular/router';
+import * as uuidv1 from 'uuid/v1';
+import { CmpMethodService } from '../services/cmp-method.service';
 
 @Component({
     selector: 'ogms-create-sln',
@@ -16,6 +18,7 @@ export class CreateSlnComponent implements OnInit {
     _doneDisabled: boolean = true;
     _isConfirmVisible: boolean = false;
 
+    cmpMethods;
     slnFG: FormGroup;
     msList: any[];
     cmpSln: CmpSolution = new CmpSolution();
@@ -37,7 +40,8 @@ export class CreateSlnComponent implements OnInit {
         private msService: MSService,
         private _notice: NzNotificationService,
         private router: Router,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private cmpMethodService: CmpMethodService
     ) { }
 
     ngOnInit() {
@@ -49,6 +53,7 @@ export class CreateSlnComponent implements OnInit {
             cmpObjs: this.fb.array([])
         });
 
+        this.queryMethod()
         this.msService.findAll({
             pageSize: 100
         })
@@ -71,9 +76,25 @@ export class CreateSlnComponent implements OnInit {
         // cmpObjsCtrl.updateValueAndValidity();
     }
 
+    queryMethod() {
+        this.cmpMethodService.findAll({})
+            .subscribe(response => {
+                if(!response.error) {
+                    this.cmpMethods = response.data.docs
+                }
+            })
+    }
+
     addCmpObj() {
-        this.cmpObjs.push(new FormControl({}))
+        this.cmpObjs.push(new FormControl({
+            id: uuidv1()
+        }));
         // this.cmpObjs.markAsDirty();
+        this.cmpObjs.updateValueAndValidity();
+    }
+
+    removeCmpObj(index) {
+        this.cmpObjs.removeAt(index);
         this.cmpObjs.updateValueAndValidity();
     }
 

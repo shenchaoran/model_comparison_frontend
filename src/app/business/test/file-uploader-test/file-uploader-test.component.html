@@ -13,7 +13,9 @@
 
     <span [nz-tooltip]='"s"'>with tooltip</span>
 
+    <ogms-mat-cascader-select [source]='source' [(ngModel)]='selectData' (ngModelChange)='onSelected($event)'></ogms-mat-cascader-select>
+
     <!-- <ogms-handsome-table></ogms-handsome-table> -->
 
-    <div id='map' style='width: 500px; height: 350px;'></div>
+    <!-- <div id='map' style='width: 500px; height: 350px;'></div> -->
 </div>

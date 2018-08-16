@@ -1,28 +1,53 @@
 $width: 620px;
+$dividerColor: #d2d2d2;
+.form-container {
+    padding-bottom: 20px;
+    margin: 0 30px 35px;
+}
 
 .form-item {
     display: flex;
     flex-flow: column nowrap;
-    margin: 20px;
+    margin-bottom: 20px;
     >* {
-        width: 100%;
-        margin-bottom: 20px;
-        // align-items: center;
-    }
-}
-.form-item.use-default-width {
-    >* {
-        width: $width;
+        width: 100%; // align-items: center;
     }
 }
 
-.stepy-btn-group{
+// .form-item.use-default-width {
+//     >* {
+//         width: $width;
+//     }
+// }
+
+.stepy-btn-group {
     margin: 20px 0;
     >button:not(:last-child) {
         margin-right: 35px;
     }
 }
 
+.cmpObj-form-container{
+    position: relative;
+    &:not(:last-child) {
+        border-bottom: 1px dashed $dividerColor;
+    }
+    
+    .close-tag {
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin: 15px 15px;
+        cursor: pointer;
+        &:hover {
+            filter: drop-shadow(0 0 0 black);
+        }
+    }
+}
+
 #add-cmpObj-btn {
-    margin: 20px 0;
+    padding: 10px 0;
+    border: 1px dashed $dividerColor;
+    border-left: none;
+    border-right: none;
 }
