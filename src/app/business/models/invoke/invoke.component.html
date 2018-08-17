@@ -4,7 +4,7 @@
 <ng-template #docTemp>
     <article class='doc ogms-responsive-div' style='margin: 24px auto !important;'>
         <form [formGroup]='msiForm'>
-            
+
             <div class="doc-title">{{model.MDL.meta.name}} Data Configuration</div>
             <div class='doc-body'>
                 <section>
@@ -13,50 +13,44 @@
                         <span class='placeholder flex-item-1-1-auto'></span>
                     </div>
                     <div class='section-body'>
-                        <nz-form-item>
-                            <nz-form-label nzSpan='6' nzRequired>Name</nz-form-label>
-                            <nz-form-control nzSpan='18' nzHasFeedback>
-                                <input nz-input [style.width]='_width' formControlName='name'>
-                            </nz-form-control>
-                        </nz-form-item>
-                        <nz-form-item>
-                            <nz-form-label nzSpan="6" nzRequired>Description</nz-form-label>
-                            <nz-form-control nzSpan="18" nzHasFeedback>
-                                <textarea nz-input [style.width]='_width' formControlName='desc' [nzAutosize]="{minRows: 2, maxRows: 6}"></textarea>
-                            </nz-form-control>
-                        </nz-form-item>
-                        <nz-form-item>
-                            <nz-form-label nzSpan="6" nzRequired>Authority</nz-form-label>
-                            <nz-form-control nzSpan="18">
-                                <nz-radio-group formControlName="src">
-                                    <label nz-radio-button nzValue="2">Public</label>
-                                    <label nz-radio-button nzValue="3">Private</label>
-                                </nz-radio-group>
-                            </nz-form-control>
-                        </nz-form-item>
+                        <mat-form-field class='form-item'>
+                            <input matInput formControlName='name' placeholder="Name">
+                        </mat-form-field>
+                        <mat-form-field class='form-item'>
+                            <textarea matInput formControlName='desc' placeholder="Description"></textarea>
+                        </mat-form-field>
+                        <div class='auth-group'>
+                            <label>Authorition: </label>
+                            <mat-button-toggle-group formControlName='src' required>
+                                <mat-button-toggle value='Private'>Private</mat-button-toggle>
+                                <mat-button-toggle value='Public'>Public</mat-button-toggle>
+                            </mat-button-toggle-group>
+                        </div>
                     </div>
                 </section>
+
                 <section>
                     <div class='section-header flex-box-row-nowrap'>
                         <span class='title'>IO</span>
                         <span class='placeholder flex-item-1-1-auto'></span>
                     </div>
                     <div class='section-body'>
-                        <ogms-calcu-cfg formControlName='msInstance' *ngIf='msInstance'></ogms-calcu-cfg>
+                        <ogms-calcu-cfg formControlName='msInstance' *ngIf='msInstance' (onValidChange)='onCalcuCfgChange($event)'></ogms-calcu-cfg>
                     </div>
                 </section>
+
                 <section>
                     <div class='section-header flex-box-row-nowrap'>
                         <span class='title'>Operating</span>
                         <span class='placeholder flex-item-1-1-auto'></span>
                     </div>
                     <div id='form-submit' class='section-body'>
-                        <button nz-button [nzType]='"primary"' (click)='invoke("save")' [disabled]='!msiForm.valid'>
-                            <i class="fa fa-save"></i>
+                        <button mat-stroked-button color='primary' (click)='invoke("save")' [disabled]='!msiForm.valid'>
+                            <mat-icon>save</mat-icon>
                             Save
                         </button>
-                        <button nz-button [nzType]='"primary"' (click)='invoke("invoke")' [disabled]='!msiForm.valid'>
-                            <i class="fa fa-play"></i>
+                        <button mat-stroked-button color='primary' (click)='invoke("invoke")' [disabled]='!msiForm.valid'>
+                            <mat-icon>play_arrow</mat-icon>
                             Invoke
                         </button>
                     </div>

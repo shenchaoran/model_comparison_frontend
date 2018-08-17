@@ -41,7 +41,7 @@
                 </div>
                 <div class='ms-chip-list'>
                     <p>Please select the following tag to create calculation instance.</p>
-                    <mat-chip-list class='msList-container flex-item-1-1-auto'>
+                    <mat-chip-list class='form-item'>
                         <mat-chip *ngFor='let ms of sln.participants' color="primary" selected (click)='addInstance(ms)'>{{ms.MDL.meta.name}}</mat-chip>
                     </mat-chip-list>
                 </div>

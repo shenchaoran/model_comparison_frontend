@@ -84,4 +84,11 @@ export class InvokeComponent extends DocBaseComponent implements OnInit {
                 }
             }));
     }
+
+    onCalcuCfgChange(valid) {
+        // TODO 自定义验证器
+        let ctrl = this.msiForm.get('msInstance');
+        ctrl.markAsDirty();
+        ctrl.updateValueAndValidity();
+    }
 }

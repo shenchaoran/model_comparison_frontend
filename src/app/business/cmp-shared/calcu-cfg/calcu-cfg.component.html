@@ -18,13 +18,16 @@
                         <mat-select placeholder='Select standard data source' formControlName='STD'>
                             <mat-option *ngFor='let item of stds' [value]='item'>{{item.meta.name}}</mat-option>
                         </mat-select>
+                        <button id='preview-btn' (click)='onSuffixClick($event)' mat-button matSuffix mat-icon-button *ngIf="IOForm.controls['STD'].value" target='_blank' [routerLink]='["../../../datasets", IOForm.controls["STD"].value._id]'>
+                            <mat-icon>call_made</mat-icon>
+                        </button>
                     </mat-form-field>
 
                     <div formArrayName='std'>
                         <ng-container *ngFor='let item of IOForm.controls["std"].controls;let i=index;'>
                             <div [formGroupName]='i'>
                                 <div *ngIf='item.value?.schema?.structure?.type === "coordinate-index"' class='form-item select-pt-group'>
-                                    <button mat-button color='primary' (click)='_isVisible=true'>
+                                    <button mat-button color='primary' (click)='showSiteDialog()'>
                                         <mat-icon>location_on</mat-icon>Select simulation point
                                     </button>
                                     <mat-form-field>
@@ -33,12 +36,6 @@
                                 </div>
                             </div>
                         </ng-container>
-                    </div>
-                    <div *ngIf='IOForm.controls["STD"].value' class='form-item preview-std-group'>
-                        <button mat-button color='primary' target='_blank' [routerLink]='["../../../datasets", IOForm.controls["STD"].value._id]'>
-                                <mat-icon>redo</mat-icon>
-                                Preview standard datasets
-                        </button>
                     </div>
                 </ng-container>
 
@@ -109,13 +106,4 @@
             </section>
         </mat-expansion-panel>
     </mat-accordion>
-
 </form>
-<!-- </div> -->
-
-<nz-modal [(nzVisible)]="_isVisible" [nzTitle]="'Select site to simulation'" [nzWidth]="600" [nzContent]="modalContent" [nzOkText]="'OK'"
-    [nzCancelText]="'Cancel'" [nzWrapClassName]="''" (nzOnCancel)="_isVisible = false" (nzOnOk)="modalOk($event)">
-    <ng-template #modalContent>
-        <ogms-global-site (onSiteSelected)='onSiteSelected($event)'></ogms-global-site>
-    </ng-template>
-</nz-modal>

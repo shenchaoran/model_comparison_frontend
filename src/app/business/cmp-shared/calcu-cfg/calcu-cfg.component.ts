@@ -7,6 +7,7 @@ import {
     AfterViewInit,
     HostListener,
     Inject,
+    ChangeDetectorRef,
 } from '@angular/core';
 import { NgUploaderOptions } from 'ngx-uploader';
 import { ResourceSrc, CalcuTask, CmpSolution } from '@models';
@@ -24,6 +25,7 @@ import {
 } from '@angular/forms';
 import { timer } from 'rxjs';
 import { debounce } from 'rxjs/operators';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
     selector: 'ogms-calcu-cfg',
@@ -48,8 +50,6 @@ export class CalcuCfgComponent implements OnInit, AfterViewInit {
     stds;
     selectedSTD;
 
-    _isVisible = false;
-
     IOForm: FormGroup;
     @Input() set msInstance(v) {
         this.init(v);
@@ -63,7 +63,9 @@ export class CalcuCfgComponent implements OnInit, AfterViewInit {
         @Inject('BACKEND') private backend,
         private loginService: LoginService,
         private fb: FormBuilder,
-        private stdService: StdDataService
+        private stdService: StdDataService,
+        public dialog: MatDialog,
+        public cdRef: ChangeDetectorRef,
     ) {
         const token = this.loginService.getToken();
         const user = this.loginService.getUser();
@@ -100,7 +102,7 @@ export class CalcuCfgComponent implements OnInit, AfterViewInit {
             })
     }
 
-    ngAfterViewInit() {}
+    ngAfterViewInit() { }
 
     ngOnInit() { }
 
@@ -128,9 +130,9 @@ export class CalcuCfgComponent implements OnInit, AfterViewInit {
                 description: [event.description],
                 schema: [event.schema],
                 optional: [event.optional],
-                value: [type === 'outputs'? undefined: event.value, null],
+                value: [type === 'outputs' ? undefined : event.value, null],
                 file: [undefined],
-                fname: [type === 'outputs'? event.name: undefined],
+                fname: [type === 'outputs' ? event.name : undefined],
                 temp: [event.value, undefined],
                 ext: [event.ext]
             };
@@ -157,7 +159,7 @@ export class CalcuCfgComponent implements OnInit, AfterViewInit {
             )
             .subscribe(status => {
                 // console.log(status);
-                if(status === 'VALID') {
+                if (status === 'VALID') {
                     const dataSrc = this._msInstance.IO.dataSrc = this.IOForm.value.dataSrc;
                     let setV = (tag) => {
                         this._msInstance.IO[tag] = _.map(this.IOForm.value[tag], item => {
@@ -167,10 +169,10 @@ export class CalcuCfgComponent implements OnInit, AfterViewInit {
                                 description: item.description,
                                 schemaId: _.get(item, 'schema.id'),
                                 optional: item.optional,
-                                cached: item.file? true: false,
-                                value: (dataSrc === 'UPLOAD' && tag === 'inputs')? _.get(item, 'file.value'): 
-                                        (tag === 'std' && item.id === '--index')? item.value: undefined,
-                                fname: (dataSrc === 'UPLOAD' && tag === 'inputs')? _.get(item, 'file.fname'): item.fname,
+                                cached: item.file ? true : false,
+                                value: (dataSrc === 'UPLOAD' && tag === 'inputs') ? _.get(item, 'file.value') :
+                                    (tag === 'std' && item.id === '--index') ? item.value : undefined,
+                                fname: (dataSrc === 'UPLOAD' && tag === 'inputs') ? _.get(item, 'file.fname') : item.fname,
                                 ext: item.ext
                             };
                         });
@@ -182,13 +184,15 @@ export class CalcuCfgComponent implements OnInit, AfterViewInit {
                     this._msInstance.std = this.IOForm.value.STD;
                     this.propagateChange(this._msInstance);
                 }
-                
-                this.onValidChange.emit(status === 'VALID');
+                else {
+                    this.propagateChange(null);
+                    // this.onValidChange.emit(status === 'VALID');
+                }
             });
     }
 
     download(url) {
-        if(url === 'STD') {
+        if (url === 'STD') {
             // TODO
             _.map(this._msInstance.IO.inputs, (input, i) => {
                 window.open(`http://${this.backend.host}:${this.backend.port}${this.backend.API_prefix}${input.url}`, i);
@@ -199,35 +203,37 @@ export class CalcuCfgComponent implements OnInit, AfterViewInit {
         }
     }
 
-    onSiteSelected(site) {
-        let siteCtrl = _
-            .chain((this.IOForm.get('std') as any).controls)
-            .find(control => {
-                return _.get(control, 'value.schema.structure.type')  === 'coordinate-index';
-            })
-            .value()
-        
-        // 这样更新好像不行，需要从叶节点更新
-        // siteCtrl.value.temp = site
-        // siteCtrl.value.value = site.index
-        // siteCtrl.markAsDirty()
-        // siteCtrl.updateValueAndValidity()
-        
-        // 手动设置表单项的值，并标记为脏的，触发验证
-        // 注意，此处直接设置父表单项的值并触发验证不行，必须从叶节点开始
-        let siteValueCtrl = siteCtrl.get('value')
-        siteValueCtrl.value = site.index
-        // siteValueCtrl.markAsDirty();
-        siteValueCtrl.updateValueAndValidity();
-        
-        let tmpCtrl = siteCtrl.get('temp')
-        tmpCtrl.value = site
-        // tmpCtrl.markAsDirty();
-        tmpCtrl.updateValueAndValidity();
+    onSuffixClick(e) {
+        e.stopPropagation();
     }
 
-    modalOk() {
-        this._isVisible = false;
+    showSiteDialog() {
+        this.dialog.open(SiteDialog)
+            .afterClosed()
+            .subscribe(site => {
+                if (site) {
+                    let siteCtrl = _
+                        .chain((this.IOForm.get('std') as any).controls)
+                        .find(control => {
+                            return _.get(control, 'value.schema.structure.type') === 'coordinate-index';
+                        })
+                        .value()
+
+                    // 手动设置表单项的值，并标记为脏的，触发验证
+                    // 注意，此处直接设置父表单项的值并触发验证不行，必须从叶节点开始
+                    let siteValueCtrl = siteCtrl.get('value')
+                    siteValueCtrl.setValue(site.index);
+                    // siteValueCtrl.markAsDirty();
+                    siteValueCtrl.updateValueAndValidity();
+
+                    let tmpCtrl = siteCtrl.get('temp')
+                    tmpCtrl.setValue(site);
+                    // tmpCtrl.markAsDirty();
+                    tmpCtrl.updateValueAndValidity();
+                    // 手动更新，否则 label 总是不显示值
+                    this.cdRef.markForCheck();
+                }
+            });
     }
 
     /**
@@ -266,9 +272,9 @@ export class CalcuCfgComponent implements OnInit, AfterViewInit {
         }
         let updateValidity = (rules, tag) => {
             _.map((this.IOForm.get(tag) as any).controls, control => {
-                for(let key in rules[tag]) {
+                for (let key in rules[tag]) {
                     let leafCtrl = control.get(key)
-                    if(rules[tag][key]) {
+                    if (rules[tag][key]) {
                         leafCtrl.markAsPristine()
                         leafCtrl.setValidators(Validators.required)
                     }
@@ -282,7 +288,7 @@ export class CalcuCfgComponent implements OnInit, AfterViewInit {
         }
         updateValidity(rulesOfRequired[v], 'std')
         updateValidity(rulesOfRequired[v], 'inputs')
-        if(v === 'UPLOAD') {
+        if (v === 'UPLOAD') {
             let STDCtrl = this.IOForm.get('STD') as any
             STDCtrl.value = undefined
             STDCtrl.clearValidators()
@@ -301,4 +307,43 @@ export class CalcuCfgComponent implements OnInit, AfterViewInit {
     }
 
     public registerOnTouched(fn: any) { }
+}
+
+@Component({
+    selector: 'ogms-site-select-dialog',
+    template: `
+        <h2 mat-dialog-title>Select site to simulation</h2>
+        <mat-dialog-content>
+            <ogms-global-site (onSiteSelected)='onSiteSelected($event)'></ogms-global-site>
+        </mat-dialog-content>
+        <mat-dialog-actions align='end'>
+            <div>
+                <button mat-button (click)='onNoClick()'>Cancel</button>
+                <button mat-button (click)='onYesClick()' cdkFocusInitial [disabled]='!site'>OK</button>
+            </div>
+        </mat-dialog-actions>
+    `
+})
+export class SiteDialog {
+    site;
+    constructor(public dialogRef: MatDialogRef<SiteDialog>) { 
+        this.dialogRef.beforeClose()
+            .subscribe(v => {
+                if(this.site) {
+                    this.dialogRef.close(this.site);
+                }
+            })
+    }
+
+    onSiteSelected(e) {
+        this.site = e;
+    }
+
+    onNoClick() {
+        this.dialogRef.close();
+    }
+
+    onYesClick() {
+        this.dialogRef.close(this.site)
+    }
 }

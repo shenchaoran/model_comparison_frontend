@@ -25,7 +25,7 @@ export * from './services/geo-models.service';
     declarations: [
         GeoModelDetailComponent,
         GeoModelListComponent,
-        InvokeComponent
+        InvokeComponent,
     ],
     providers: [
         MSService,

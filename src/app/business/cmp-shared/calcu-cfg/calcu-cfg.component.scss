@@ -34,6 +34,9 @@ $form-item-width: 600px;
     &.std-src-group {
         display: inline-block !important;
         width: $form-item-width;
+        #preview-btn {
+            margin-left: 20px;
+        }
     }
 
     &.select-pt-group {

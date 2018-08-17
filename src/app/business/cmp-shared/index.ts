@@ -4,7 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { MatSharedModule } from '@common/mat-shared'
 
 //////////////////// component ////////////////////////
-import { CalcuCfgComponent } from './calcu-cfg/calcu-cfg.component';
+import { CalcuCfgComponent, SiteDialog } from './calcu-cfg/calcu-cfg.component';
 import { CmpObjCfgComponent } from './cmp-obj-cfg/cmp-obj-cfg.component';
 import { CalcuResultComponent } from './calcu-result/calcu-result.component';
 import { StdDataBaseComponent } from './std-data-base/std-data-base.component';
@@ -27,6 +27,7 @@ const COMPONENTS = [
     CalcuResultComponent,
     StdDataBaseComponent,
     CmpMethodCfgComponent,
+    SiteDialog,
 ];
 const SERVICES = [
     LoginService,
@@ -44,6 +45,9 @@ const SERVICES = [
     ],
     declarations: [
         ...COMPONENTS
+    ],
+    entryComponents: [
+        SiteDialog,
     ],
     exports: [
         ...COMPONENTS
