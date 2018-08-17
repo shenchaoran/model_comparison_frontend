@@ -61,5 +61,9 @@
                 </div>
             </div>
         </form>
+        <div class='submit-action-group'>
+            <button mat-stroked-button color='primary' (click)='submitTask("save")'>Save</button>
+            <button mat-stroked-button color='primary' (click)='submitTask("run")' [disabled]="_submitDisabled">Start Comparison</button>
+        </div>
     </article>
 </ng-template>

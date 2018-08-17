@@ -52,6 +52,7 @@ export class InvokeComponent extends DocBaseComponent implements OnInit {
                 name: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(25)]],
                 desc: ['', [Validators.required, Validators.minLength(20), Validators.maxLength(140)]],
                 src: [this.msInstance.auth.src, Validators.required],
+                // TODO validator
                 msInstance: [this.msInstance, Validators.required]
             });
             this.msiForm.statusChanges

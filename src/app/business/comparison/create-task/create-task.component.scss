@@ -48,3 +48,9 @@ mat-chip {
 .calcu-cfg-container{
     margin-top: 20px;
 }
+
+.submit-action-group {
+    button:not(:last-child) {
+        margin-right: 35px;
+    }
+}

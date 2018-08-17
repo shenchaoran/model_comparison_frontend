@@ -15,6 +15,8 @@ import { CmpTask, CalcuTask } from '@models';
 export class CreateTaskComponent extends DocBaseComponent implements OnInit {
     sln;
     taskFG;
+
+    _submitDisabled = true;
     _selectedTabIndex = 0;
     _tabLabelCfg: {
         id:any,
@@ -29,9 +31,6 @@ export class CreateTaskComponent extends DocBaseComponent implements OnInit {
         return (this.taskFG.get('calcuTasks') as FormArray);
     }
 
-    getTabId(i) {
-    }
-
     constructor(
         public route: ActivatedRoute,
         public service: CmpSlnService,
@@ -44,6 +43,7 @@ export class CreateTaskComponent extends DocBaseComponent implements OnInit {
             name: [null, [Validators.required, Validators.minLength(8), Validators.maxLength(25)]],
             desc: [null, [Validators.required, Validators.minLength(20), Validators.maxLength(140)]],
             auth: ['Public', [Validators.required]],
+            // TODO validator
             calcuTasks: this.fb.array([], Validators.required)
         });
 
@@ -51,6 +51,7 @@ export class CreateTaskComponent extends DocBaseComponent implements OnInit {
             .subscribe(status => {
                 if(status === 'VALID') {
                     // console.log(this.taskFG.value);
+                    this._submitDisabled = false;
                 }
             })
     }
@@ -60,6 +61,16 @@ export class CreateTaskComponent extends DocBaseComponent implements OnInit {
         this.doc.subscribe(doc => {
             this.sln = doc;
         });
+    }
+
+    submitTask(type) {
+        if(type === 'save') {
+
+        }
+        else if(type === 'run') {
+
+        }
+        // TODO
     }
 
     addInstance(ms) {
