@@ -34,7 +34,7 @@
         <p class='title'><i>Comparison Method</i><p>
         <div class='form-container'>
             <br>
-            <div class='form-item'>
+            <mat-form-field class='form-item method-select-group'>
                 <mat-select placeholder='Comparison methods' formControlName='methods' multiple>
                     <mat-select-trigger>
                         {{methodsFG.value ? methodsFG.value[0].meta.name : ''}}
@@ -46,7 +46,14 @@
                         {{method.meta.name}}
                     </mat-option>
                 </mat-select>
-            </div>
+            </mat-form-field>
+            
+            <!-- <p>Comparison methods: </p>
+            <div class='form-item auth-group'>
+                <mat-button-toggle-group formControlName='methods' required multiple>
+                    <mat-button-toggle *ngFor='let method of _cmpMethods' [value]='method'>{{method.meta.name}}</mat-button-toggle>
+                </mat-button-toggle-group>
+            </div> -->
         </div>
     </form>
 </ng-template>

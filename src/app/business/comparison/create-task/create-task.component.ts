@@ -50,7 +50,7 @@ export class CreateTaskComponent extends DocBaseComponent implements OnInit {
         this.taskFG.statusChanges
             .subscribe(status => {
                 if(status === 'VALID') {
-                    console.log(this.taskFG.value);
+                    // console.log(this.taskFG.value);
                 }
             })
     }

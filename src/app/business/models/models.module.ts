@@ -1,3 +1,4 @@
+import { MatSharedModule } from './../../common/mat-shared/index';
 import { OlModule } from '../ol/ol.module';
 import { NgModule } from '@angular/core';
 import { SharedModule } from '@common/shared';
@@ -19,6 +20,7 @@ export * from './services/geo-models.service';
         ModelsRoutingModule,
         CmpSharedModule,
         OlModule,
+        MatSharedModule,
     ],
     declarations: [
         GeoModelDetailComponent,

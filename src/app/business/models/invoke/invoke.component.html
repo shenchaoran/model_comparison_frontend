@@ -1,6 +1,10 @@
-<nz-spin [nzSpinning]='_isLoading'>
-    <form *ngIf='msiForm' [formGroup]='msiForm'>
-        <article class='doc ogms-responsive-div' style='margin: 24px auto !important;'>
+<div class='loading-container' *ngIf='!msiForm else docTemp'>
+    <mat-spinner></mat-spinner>
+</div>
+<ng-template #docTemp>
+    <article class='doc ogms-responsive-div' style='margin: 24px auto !important;'>
+        <form [formGroup]='msiForm'>
+            
             <div class="doc-title">{{model.MDL.meta.name}} Data Configuration</div>
             <div class='doc-body'>
                 <section>
@@ -58,8 +62,6 @@
                     </div>
                 </section>
             </div>
-        </article>
-    </form>
-</nz-spin>
-
-
+        </form>
+    </article>
+</ng-template>

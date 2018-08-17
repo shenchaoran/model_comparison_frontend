@@ -3,15 +3,38 @@ $dividerColor: #d2d2d2;
 .form-container {
     padding-bottom: 20px;
     margin: 0 30px 35px;
+    &.ms-list-group,
+    &.basic-info-group {
+        width: $width;
+    }
 }
 
 .form-item {
     display: flex;
-    flex-flow: column nowrap;
+    flex-flow: row nowrap;
     margin-bottom: 20px;
+    width: 100%;
+    align-items: center;
     >* {
         width: 100%; // align-items: center;
+        flex: 1;
     }
+    &.auth-group {
+        label {
+            flex: 0 1 30%;
+        }
+        mat-button-toggle-group {
+            flex: 1 1 70%;
+            display: flex;
+            mat-button-toggle {
+                flex: 1 1 auto;
+            }
+        }
+    }
+}
+
+mat-form-field {
+    display: inline-block !important;
 }
 
 // .form-item.use-default-width {

@@ -1,11 +1,65 @@
-nz-radio-group {
-    label:first-child {
-        margin-left: 8px !important;
+$form-item-width: 600px;
+.form-container {
+    padding-bottom: 20px;
+    margin: 0 30px 35px;
+}
+
+.form-item {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    margin-bottom: 20px;
+    width: $form-item-width;
+    >* {
+        width: 100%; // align-items: center;
+    }
+    &.data-src-group {
+        mat-button-toggle-group {
+            display: flex;
+            mat-button-toggle {
+                flex: 1 1 auto;
+            }
+        }
+    }
+    
+    &.file-uploader-group {
+        label {
+            width: 250px;
+        }
+        ogms-file-uploader-form-item {
+            flex: 1;
+        }
+    }
+    
+    &.std-src-group {
+        display: inline-block !important;
+        width: $form-item-width;
+    }
+
+    &.select-pt-group {
+        >button {
+            width: 50%;
+        }
+        >mat-form-field {
+            width: 50%;
+        }
+    }
+
+    &.preview-std-group {
+        button {
+            width: 50%;
+        }
+    }
+
+    &.output-group {
+
     }
 }
 
-.form-site-coor {
-    span {
-        margin: auto 20px;
+mat-expansion-panel-header {
+    background: #f1f1f1 !important;
+    margin-bottom: 10px;
+    &:hover {
+        filter: brightness(0.9) !important;
     }
 }

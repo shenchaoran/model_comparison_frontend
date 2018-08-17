@@ -1,63 +1,65 @@
-<h1>Create Comparison Task</h1>
-<ng-container *ngIf='!sln'>
+<div class='loading-container' *ngIf='!sln else docTemp'>
     <mat-spinner></mat-spinner>
-</ng-container>
-<article *ngIf='sln'>
-    <form [formGroup]='taskFG'>
-        <h3>Basic Information</h3>
-        <div class='form-container'>
-            <mat-form-field class='form-item'>
-                <input matInput placeholder='Task name' formControlName='name' required>
-                <!-- <mat-hint>please input Task name</mat-hint> -->
-                <mat-error *ngIf='taskFG.get("name").hasError("required")'>必填</mat-error>
-                <mat-error *ngIf='taskFG.get("name").hasError("minLength")'>最小长度</mat-error>
-                <mat-error *ngIf='taskFG.get("name").hasError("maxLength")'>最大长度</mat-error>
-            </mat-form-field>
+</div>
+<ng-template #docTemp>
+    <h1>Create Comparison Task</h1>
+    <article>
+        <form [formGroup]='taskFG'>
+            <h3>Basic Information</h3>
+            <div class='form-container basic-form-group'>
+                <mat-form-field class='form-item'>
+                    <input matInput placeholder='Task name' formControlName='name' required>
+                    <!-- <mat-hint>please input Task name</mat-hint> -->
+                    <mat-error *ngIf='taskFG.get("name").hasError("required")'>必填</mat-error>
+                    <mat-error *ngIf='taskFG.get("name").hasError("minLength")'>最小长度</mat-error>
+                    <mat-error *ngIf='taskFG.get("name").hasError("maxLength")'>最大长度</mat-error>
+                </mat-form-field>
 
-            <mat-form-field class='form-item'>
-                <textarea matInput placeholder='Task name' formControlName='desc' required></textarea>
-                <!-- <mat-hint>please input Task description</mat-hint> -->
-                <mat-error *ngIf='taskFG.get("desc").hasError("required")'>必填</mat-error>
-                <mat-error *ngIf='taskFG.get("desc").hasError("minLength")'>最小长度</mat-error>
-                <mat-error *ngIf='taskFG.get("desc").hasError("maxLength")'>最大长度</mat-error>
-            </mat-form-field>
+                <mat-form-field class='form-item'>
+                    <textarea matInput placeholder='Task name' formControlName='desc' required></textarea>
+                    <!-- <mat-hint>please input Task description</mat-hint> -->
+                    <mat-error *ngIf='taskFG.get("desc").hasError("required")'>必填</mat-error>
+                    <mat-error *ngIf='taskFG.get("desc").hasError("minLength")'>最小长度</mat-error>
+                    <mat-error *ngIf='taskFG.get("desc").hasError("maxLength")'>最大长度</mat-error>
+                </mat-form-field>
 
-            <mat-form-field class='form-item'>
-                <mat-select matInput placeholder="Select your authorition" formControlName='auth' required>
-                    <mat-option value="'Private'">
-                        <!-- <mat-icon>visibility_off</mat-icon> -->
-                        <span>Private</span>
-                    </mat-option>
-                    <mat-option value="'Public'">
-                        <!-- <mat-icon>visibility</mat-icon> -->
-                        <span>Public</span>
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-
-        <h3>Add Calculation Instances</h3>
-        <div class='form-container'>
-            <div class='ms-chip-list'>
-                <label>Add instance of: </label>
-                <mat-chip-list class='msList-container flex-item-1-1-auto'>
-                    <mat-chip *ngFor='let ms of sln.participants' color="primary" selected (click)='addInstance(ms)'>{{ms.MDL.meta.name}}</mat-chip>
-                </mat-chip-list>
+                <div class='form-item auth-group'>
+                    <label>Authorition: </label>
+                    <mat-button-toggle-group formControlName='auth'>
+                        <mat-button-toggle value='Private'>Private</mat-button-toggle>
+                        <mat-button-toggle value='Public'>Public</mat-button-toggle>
+                    </mat-button-toggle-group>
+                </div>
             </div>
-            <ng-container *ngIf='!calTasksCtrl?.controls?.length else calcuTasksTemplate'>
-                <p><i>No calculation instance, please add one!</i></p>
-            </ng-container>
-            <ng-template #calcuTasksTemplate>
-                <mat-tab-group class='form-item' [selectedIndex]='_selectedTabIndex' formArrayName='calcuTasks'>
-                    <mat-tab *ngFor='let calcuTask of calTasksCtrl.controls; let i=index'>
-                        <ng-template mat-tab-label>
-                            <input matInput placeholder='Instance name' [(ngModel)]='_tabLabelCfg[i].label' (ngModelChange)='changeTabName($event, i)' [ngModelOptions]="{standalone: true}">
-                            <mat-icon (click)='delInstance(i)'>clear</mat-icon>
-                        </ng-template>
-                        <ogms-calcu-cfg [formControlName]='i'></ogms-calcu-cfg>
-                    </mat-tab>
-                </mat-tab-group>
-            </ng-template>
-        </div>
-    </form>
-</article>
+
+            <h3>Add Calculation Instances</h3>
+            <div class='form-container'>
+                <div *ngIf='!calTasksCtrl?.controls?.length'>
+                    <p>
+                        <i>No calculation instance, please add one!</i>
+                    </p>
+                </div>
+                <div class='ms-chip-list'>
+                    <p>Please select the following tag to create calculation instance.</p>
+                    <mat-chip-list class='msList-container flex-item-1-1-auto'>
+                        <mat-chip *ngFor='let ms of sln.participants' color="primary" selected (click)='addInstance(ms)'>{{ms.MDL.meta.name}}</mat-chip>
+                    </mat-chip-list>
+                </div>
+                <div *ngIf='calTasksCtrl?.controls?.length'>
+                    <mat-tab-group class='form-item calcu-instance-group' [selectedIndex]='_selectedTabIndex' formArrayName='calcuTasks'>
+                        <mat-tab *ngFor='let calcuTask of calTasksCtrl.controls; let i=index'>
+                            <ng-template mat-tab-label>
+                                <input matInput placeholder='Instance name' [(ngModel)]='_tabLabelCfg[i].label' (ngModelChange)='changeTabName($event, i)'
+                                    [ngModelOptions]="{standalone: true}">
+                                <mat-icon (click)='delInstance(i)'>clear</mat-icon>
+                            </ng-template>
+                            <div class='calcu-cfg-container'>
+                                <ogms-calcu-cfg [formControlName]='i'></ogms-calcu-cfg>
+                            </div>
+                        </mat-tab>
+                    </mat-tab-group>
+                </div>
+            </div>
+        </form>
+    </article>
+</ng-template>
