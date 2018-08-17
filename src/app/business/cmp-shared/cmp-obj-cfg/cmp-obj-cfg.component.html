@@ -7,7 +7,6 @@
         <p class='title'><i>Basic Information</i><p>
         <div class='form-container cmpObj-basic-info'>
             <mat-form-field class='form-item'>
-                <mat-label>Comparison feature name</mat-label>
                 <input matInput placeholder='Comparison feature name' formControlName='name' required>
                 <!-- <mat-hint>please input solution name</mat-hint> -->
                 <mat-error *ngIf='cmpObjFG.get("name").hasError("required")'>必填</mat-error>
@@ -16,7 +15,6 @@
             </mat-form-field>
 
             <mat-form-field class='form-item'>
-                <mat-label>Comparison feature description</mat-label>
                 <textarea matInput placeholder='Comparison feature description' formControlName='desc' required></textarea>
                 <!-- <mat-hint>please input solution description</mat-hint> -->
                 <mat-error *ngIf='cmpObjFG.get("desc").hasError("required")'>必填</mat-error>

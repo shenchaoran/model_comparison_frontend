@@ -3,10 +3,10 @@ import { MethodListComponent } from './method-list/method-list.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { SolutionDetailComponent } from './solution-detail/solution-detail.component';
-import { TaskConfigComponent } from './task-config/task-config.component';
 import { SolutionListComponent } from './solution-list/solution-list.component';
 import { HeaderMenuLayoutComponent, DocDetailTemplateComponent } from '@common/shared';
 import { CreateSlnComponent } from './create-sln/create-sln.component';
+import { CreateTaskComponent } from './create-task/create-task.component';
 
 const routes: Routes = [
     {
@@ -26,17 +26,6 @@ const routes: Routes = [
                 }
             },
             {
-                path: 'methods/:id',
-                component: DocDetailTemplateComponent,
-                children: [{
-                    path: '',
-                    component: MethodDetailComponent,
-                    data: {
-                        title: 'Comporison Method'
-                    }
-                }]
-            },
-            {
                 path: 'solutions',
                 component: SolutionListComponent,
                 data: {
@@ -44,40 +33,45 @@ const routes: Routes = [
                 }
             },
             {
-                path: 'solutions/create',
+                path: '',
                 component: DocDetailTemplateComponent,
-                children: [{
-                    path: '',
-                    component: CreateSlnComponent,
-                    data: {
-                        title: 'Create Solution'
+                children: [
+                    {
+                        path: 'methods/:id',
+                        component: MethodDetailComponent,
+                        data: {
+                            title: 'Comporison Method'
+                        }
+                    },
+                    {
+                        path: 'solutions/create',
+                        component: CreateSlnComponent,
+                        data: {
+                            title: 'Create Solution'
+                        }
+                    },
+                    {
+                        path: 'solutions/:id',
+                        component: SolutionDetailComponent,
+                        data: {
+                            title: 'Comparison Solution'
+                        }
+                    },
+                    {
+                        path: 'solutions/:id/invoke',
+                        component: CreateTaskComponent,
+                        data: {
+                            title: 'Comparison Task Configuration'
+                        }
                     }
-                }]
-            },
-            {
-                path: 'solutions/:id',
-                component: DocDetailTemplateComponent,
-                children: [{
-                    path: '',
-                    component: SolutionDetailComponent,
-                    data: {
-                        title: 'Comparison Solution'
-                    }
-                }]
-            },
-            {
-                path: 'solutions/:id/invoke',
-                component: TaskConfigComponent,
-                data: {
-                    title: 'Comparison Task Configure'
-                }
+                ]
             }
         ]
     }
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule]
 })
 export class ComparisonRoutingModule { }

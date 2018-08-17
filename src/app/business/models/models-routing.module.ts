@@ -23,31 +23,31 @@ const routes: Routes = [
                 },
             },
             {
-                path: ':id',
+                path: '',
                 component: DocDetailTemplateComponent,
                 children: [
                     {
-                        path: '',
+                        path: ':id',
                         component: GeoModelDetailComponent,
                         data: {
                             title: 'Model Resource'
                         }
+                    },
+                    {
+                        path: ':id/invoke',
+                        component: InvokeComponent,
+                        data: {
+                            title: 'Model Invoke'
+                        }
                     }
                 ]
-            },
-            {
-                path: ':id/invoke',
-                component: InvokeComponent,
-                data: {
-                    title: 'Model Invoke'
-                }
             }
         ]
     }
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule]
 })
 export class ModelsRoutingModule { }

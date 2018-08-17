@@ -74,7 +74,7 @@ export class CreateSlnComponent implements OnInit {
                             methods: _.map(cmpObj.methods, method => method._id)
                         }
                     });
-                    console.log(JSON.stringify(this.cmpSln));
+                    // console.log(JSON.stringify(this.cmpSln));
                 }
             })
 

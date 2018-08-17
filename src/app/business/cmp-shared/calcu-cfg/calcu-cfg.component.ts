@@ -22,21 +22,9 @@ import {
     NG_VALIDATORS,
     NG_VALUE_ACCESSOR
 } from '@angular/forms';
-/**
- * 有 read 和 write 两种模式
- * read:
- *      Input: IO, std
- *      Output: ngModel: { IO, std }
- * write:
- *      Input: IO, stdIds
- *      Output: ngModel: { IO, std }
- *
- * @export
- * @class CalcuCfgComponent
- * @implements {OnInit}
- * @implements {OnChanges}
- * @implements {AfterViewInit}
- */
+import { timer } from 'rxjs';
+import { debounce } from 'rxjs/operators';
+
 @Component({
     selector: 'ogms-calcu-cfg',
     templateUrl: './calcu-cfg.component.html',
@@ -55,22 +43,17 @@ import {
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CalcuCfgComponent implements OnInit, OnChanges, AfterViewInit {
-    _IO;
-    _stds;
+export class CalcuCfgComponent implements OnInit, AfterViewInit {
+    _msInstance;
+    stds;
+    selectedSTD;
 
     _isVisible = false;
 
     IOForm: FormGroup;
-    @Input() set IO(v) {
-        this._IO = v;
-        this.appendSchema();
-        this.buildForm();
+    @Input() set msInstance(v) {
+        this.init(v);
     }
-    @Input() set stdIds(v) {
-        this.fetchStds(v);
-    }
-    @Input() std;
     @Input() width = '350px';
     @Output() onValidChange = new EventEmitter<boolean>();
 
@@ -101,23 +84,18 @@ export class CalcuCfgComponent implements OnInit, OnChanges, AfterViewInit {
         };
     }
 
-    ngOnChanges(changes: { [key: string]: SimpleChange }) {
-        // let changed;
-        // _.forIn(changes, (v, k) => {
-        //     if (!_.isEqual(v.currentValue, v.previousValue)) {
-        //         changed = true;
-        //     }
-        // });
-        // if (changed) {
-        //     // this.title.setTitle(this.msInstance.meta.name);
-        // }
+    init(v) {
+        this._msInstance = v;
+        this.fetchStds(v.ms.stdIds);
+        this.appendSchema();
+        this.buildForm();
     }
 
     fetchStds(stdIds) {
         this.stdService.fetchDbEntries(stdIds)
             .subscribe(response => {
                 if (!response.error) {
-                    this._stds = response.data;
+                    this.stds = response.data;
                 }
             })
     }
@@ -128,13 +106,13 @@ export class CalcuCfgComponent implements OnInit, OnChanges, AfterViewInit {
 
     appendSchema() {
         let appendSchema = (type, schema) => {
-            _.map(this._IO[type], event => {
+            _.map(this._msInstance.IO[type], event => {
                 if (event.schemaId === schema.id) {
                     event.schema = schema;
                 }
             });
         }
-        _.map(this._IO.schemas, schema => {
+        _.map(this._msInstance.IO.schemas, schema => {
             appendSchema('inputs', schema);
             appendSchema('std', schema);
             appendSchema('parameters', schema);
@@ -156,19 +134,13 @@ export class CalcuCfgComponent implements OnInit, OnChanges, AfterViewInit {
                 temp: [event.value, undefined],
                 ext: [event.ext]
             };
-            // if(type === 'inputs') {
-            //     _.set(gp, 'file', [ undefined, Validators.required]);
-            // }
-            // else {
-            //     _.set(gp, 'value', [event.value, Validators.required]);
-            // }
             return this.fb.group(gp);
         }
-        let inputCtrls = _.map(this._IO.inputs, item => myFormGroup(item, 'inputs'));
-        let outputCtrls = _.map(this._IO.outputs, item => myFormGroup(item, 'outputs'));
-        let stdCtrls = _.map(this._IO.std, item => myFormGroup(item, 'std'));
-        let paraCtrls = _.map(this._IO.parameters, item => myFormGroup(item, 'parameters'));
-        let dataSrc = this._IO.dataSrc === '' || !this._IO.dataSrc ? 'STD' : this._IO.dataSrc;
+        let inputCtrls = _.map(this._msInstance.IO.inputs, item => myFormGroup(item, 'inputs'));
+        let outputCtrls = _.map(this._msInstance.IO.outputs, item => myFormGroup(item, 'outputs'));
+        let stdCtrls = _.map(this._msInstance.IO.std, item => myFormGroup(item, 'std'));
+        let paraCtrls = _.map(this._msInstance.IO.parameters, item => myFormGroup(item, 'parameters'));
+        let dataSrc = this._msInstance.IO.dataSrc === '' || !this._msInstance.IO.dataSrc ? 'STD' : this._msInstance.IO.dataSrc;
         this.IOForm = this.fb.group({
             dataSrc: [dataSrc, [Validators.required]],
             inputs: this.fb.array(inputCtrls),
@@ -180,12 +152,15 @@ export class CalcuCfgComponent implements OnInit, OnChanges, AfterViewInit {
         this.changeValidate(dataSrc);
         this.IOForm.statusChanges
             // .filter(status => status === 'VALID')
+            .pipe(
+                debounce(() => timer(500))
+            )
             .subscribe(status => {
                 // console.log(status);
                 if(status === 'VALID') {
-                    const dataSrc = this._IO.dataSrc = this.IOForm.value.dataSrc;
+                    const dataSrc = this._msInstance.IO.dataSrc = this.IOForm.value.dataSrc;
                     let setV = (tag) => {
-                        this._IO[tag] = _.map(this.IOForm.value[tag], item => {
+                        this._msInstance.IO[tag] = _.map(this.IOForm.value[tag], item => {
                             return {
                                 id: item.id,
                                 name: item.name,
@@ -204,12 +179,8 @@ export class CalcuCfgComponent implements OnInit, OnChanges, AfterViewInit {
                     setV('outputs');
                     setV('std');
                     setV('parameters');
-                    this.std = this.IOForm.value.STD
-                    // console.log(this._IO);
-                    this.propagateChange({
-                        IO: this._IO,
-                        std: this.std
-                    });
+                    this._msInstance.std = this.IOForm.value.STD;
+                    this.propagateChange(this._msInstance);
                 }
                 
                 this.onValidChange.emit(status === 'VALID');
@@ -219,7 +190,7 @@ export class CalcuCfgComponent implements OnInit, OnChanges, AfterViewInit {
     download(url) {
         if(url === 'STD') {
             // TODO
-            _.map(this._IO.inputs, (input, i) => {
+            _.map(this._msInstance.IO.inputs, (input, i) => {
                 window.open(`http://${this.backend.host}:${this.backend.port}${this.backend.API_prefix}${input.url}`, i);
             })
         }
@@ -322,10 +293,7 @@ export class CalcuCfgComponent implements OnInit, OnChanges, AfterViewInit {
     private propagateChange = (e: any) => { };
 
     public writeValue(obj: any) {
-        if (obj) {
-            this._IO = obj;
-            this.buildForm();
-        }
+        this.init(obj);
     }
 
     public registerOnChange(fn: any) {

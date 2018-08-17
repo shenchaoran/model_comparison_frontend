@@ -46,14 +46,13 @@ export class InvokeComponent extends DocBaseComponent implements OnInit {
             // this.title.setTitle(this.model.MDL.meta.name);
             this.msInstance = new CalcuTask(this.model);
             this.msInstance.cmpTaskId = undefined;
-            this.msInstance.IO.mode = 'write';
 
             this.msiForm = this.fb.group({
                 _id: this.msInstance._id,
                 name: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(25)]],
                 desc: ['', [Validators.required, Validators.minLength(20), Validators.maxLength(140)]],
                 src: [this.msInstance.auth.src, Validators.required],
-                IO: ['', Validators.required]
+                msInstance: [this.msInstance, Validators.required]
             });
             this.msiForm.statusChanges
                 // .filter(status => status === 'VALID')
@@ -62,8 +61,8 @@ export class InvokeComponent extends DocBaseComponent implements OnInit {
                         this.msInstance.meta.name = this.msiForm.value['name'];
                         this.msInstance.meta.desc = this.msiForm.value['desc'];
                         this.msInstance.auth.src = this.msiForm.value.src;
-                        this.msInstance.std = this.msiForm.value['IO'].std;
-                        this.msInstance.IO = this.msiForm.value['IO'].IO;
+                        this.msInstance.std = this.msiForm.value['msInstance'].std;
+                        this.msInstance.IO = this.msiForm.value['msInstance'].IO;
                     }
                 });
         }));

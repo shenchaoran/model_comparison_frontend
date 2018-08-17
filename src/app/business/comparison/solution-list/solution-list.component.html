@@ -11,7 +11,7 @@
         <div class='item-body'>
             <div class='desc'>{{sln.meta.desc | stringLimit: 180 | description}}</div>
             <div>
-                <span *ngFor='let ms of sln.participants' [routerLink]='["../resources/geo-models", ms._id]' class='topic model-topic'>{{ms.msName}}</span>
+                <span *ngFor='let ms of sln.participants' [routerLink]='["../resources/geo-models", ms._id]' class='topic model-topic'>{{ms.MDL.meta.name}}</span>
             </div>
         </div>
         <div class='item-footer'>{{sln.meta.time | date: 'yyyy-MM-dd'}}</div>

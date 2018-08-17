@@ -6,7 +6,6 @@
                 <ng-template matStepLabel>Basic Information</ng-template>
                 <div class='form-container'>
                     <mat-form-field class='form-item'>
-                        <mat-label>Solution name</mat-label>
                         <input matInput placeholder='Solution name' formControlName='name' required>
                         <!-- <mat-hint>please input solution name</mat-hint> -->
                         <mat-error *ngIf='slnFG.get("name").hasError("required")'>必填</mat-error>
@@ -15,7 +14,6 @@
                     </mat-form-field>
 
                     <mat-form-field class='form-item'>
-                        <mat-label>Solution description</mat-label>
                         <textarea matInput placeholder='Solution name' formControlName='desc' required></textarea>
                         <!-- <mat-hint>please input solution description</mat-hint> -->
                         <mat-error *ngIf='slnFG.get("desc").hasError("required")'>必填</mat-error>
@@ -24,8 +22,7 @@
                     </mat-form-field>
 
                     <mat-form-field class='form-item'>
-                        <mat-label>Authorition</mat-label>
-                        <mat-select matInput placeholder="Select your authorition" formControlName='auth' required>
+                        <mat-select matInput placeholder="Authorition" formControlName='auth' required>
                             <mat-option value="'Private'">
                                 <!-- <mat-icon>visibility_off</mat-icon> -->
                                 <span>Private</span>
@@ -67,7 +64,7 @@
                                     {{ms.MDL.meta.name}}
                                 </mat-list-option>
                             </mat-selection-list>
-                            <p>Options selected: {{mss.selectedOptions.selected.length}}</p>
+                            <!-- <p>Options selected: {{mss.selectedOptions.selected.length}}</p> -->
                         </div>
                     </div>
                 </ng-template>

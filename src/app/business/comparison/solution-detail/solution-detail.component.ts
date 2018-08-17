@@ -13,12 +13,10 @@ import { DocBaseComponent } from '@common/shared';
 })
 export class SolutionDetailComponent extends DocBaseComponent implements OnInit {
     sln;
-    geojson;
 
     constructor(
         public route: ActivatedRoute,
         public service: CmpSlnService,
-//private _notice: NzNotificationService,
         public title: DynamicTitleService
     ) { 
         super(route, service, title);
@@ -28,7 +26,6 @@ export class SolutionDetailComponent extends DocBaseComponent implements OnInit 
         super.ngOnInit();
         this._subscriptions.push(this.doc.subscribe(doc => {
             this.sln = doc;
-            this.geojson = _.get(this.sln, 'issue.spatial.geojson');
         }));
     }
 }
