@@ -11,6 +11,7 @@ import {
     FormControl,
     FormGroup,
     Validators,
+    ValidatorFn,
 } from '@angular/forms';
 import { DocBaseComponent } from '@common/shared';
 
@@ -49,21 +50,23 @@ export class InvokeComponent extends DocBaseComponent implements OnInit {
 
             this.msiForm = this.fb.group({
                 _id: this.msInstance._id,
-                name: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(25)]],
+                name: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(25)]],
                 desc: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(140)]],
-                src: [this.msInstance.auth.src, Validators.required],
-                // TODO validator
-                msInstance: [this.msInstance, Validators.required]
+                src: [ResourceSrc.PUBLIC, Validators.required],
+                msInstance: [null, Validators.required]
             });
             this.msiForm.statusChanges
                 // .filter(status => status === 'VALID')
                 .subscribe(status => {
-                    if (status === 'VALID') {
-                        this.msInstance.meta.name = this.msiForm.value['name'];
-                        this.msInstance.meta.desc = this.msiForm.value['desc'];
-                        this.msInstance.auth.src = this.msiForm.value.src;
-                        this.msInstance.std = this.msiForm.value['msInstance'].std;
-                        this.msInstance.IO = this.msiForm.value['msInstance'].IO;
+                    let hint = this.msInstanceValidator();
+                    if(hint === null) {
+                        if (status === 'VALID') {
+                            this.msInstance.meta.name = this.msiForm.value['name'];
+                            this.msInstance.meta.desc = this.msiForm.value['desc'];
+                            this.msInstance.auth.src = this.msiForm.value.src;
+                            this.msInstance.std = this.msiForm.value['msInstance'].std;
+                            this.msInstance.IO = this.msiForm.value['msInstance'].IO;
+                        }
                     }
                 });
         }));
@@ -88,8 +91,58 @@ export class InvokeComponent extends DocBaseComponent implements OnInit {
 
     onCalcuCfgChange(valid) {
         // TODO 自定义验证器
+        // let ctrl = this.msiForm.get('msInstance');
+        // ctrl.setErrors({'invalid': true});
+        // ctrl.updateValueAndValidity();
+        if(!valid)
+            this.msiForm.setErrors({});
+    }
+
+    msInstanceValidator(): { [key: string]: any } | null {
         let ctrl = this.msiForm.get('msInstance');
-        ctrl.markAsDirty();
-        ctrl.updateValueAndValidity();
+        let isValid = true;
+        let msInstance = ctrl.value;
+        if(!ctrl || !msInstance) {
+            isValid = false;
+            return {};
+        }
+        if (msInstance.std && msInstance) {
+            let dataSrc = msInstance.IO.dataSrc;
+            for (let key in msInstance.IO) {
+                if (!isValid)
+                    break;
+                for (let event of msInstance.IO[key]) {
+                    if (!isValid)
+                        break;
+
+                    if (key === 'inputs') {
+                        isValid = dataSrc === 'UPLOAD' ? Boolean(event.value && event.fname) : true;
+                    }
+                    else if (key === 'outputs') {
+                        isValid = Boolean(event.fname);
+                    }
+                    else if (key === 'std') {
+                        isValid = dataSrc === 'UPLOAD'? false:
+                             event.id === '--index' ? Boolean(event.value) : true;
+                    }
+                    else if (key === 'parameters') {
+                        // TODO
+                    }
+                }
+            }
+        }
+        else {
+            isValid = false;
+        }
+
+        if(isValid) {
+            return null;
+        }
+        else {
+            this.msiForm.setErrors({});
+            return {
+                'invalid-ms-invoke-config': msInstance
+            };
+        }
     }
 }

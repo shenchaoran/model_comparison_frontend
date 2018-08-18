@@ -4,7 +4,6 @@
 <ng-template #docTemp>
     <article class='doc ogms-responsive-div' style='margin: 24px auto !important;'>
         <form [formGroup]='msiForm'>
-
             <div class="doc-title">{{model.MDL.meta.name}} Data Configuration</div>
             <div class='doc-body'>
                 <section>
@@ -21,9 +20,9 @@
                         </mat-form-field>
                         <div class='auth-group'>
                             <label>Authorition: </label>
-                            <mat-button-toggle-group formControlName='src' required>
-                                <mat-button-toggle value='Private'>Private</mat-button-toggle>
-                                <mat-button-toggle value='Public'>Public</mat-button-toggle>
+                            <mat-button-toggle-group formControlName='src'>
+                                <mat-button-toggle value='PRIVATE'>Private</mat-button-toggle>
+                                <mat-button-toggle value='PUBLIC'>Public</mat-button-toggle>
                             </mat-button-toggle-group>
                         </div>
                     </div>
@@ -35,7 +34,7 @@
                         <span class='placeholder flex-item-1-1-auto'></span>
                     </div>
                     <div class='section-body'>
-                        <ogms-calcu-cfg formControlName='msInstance' *ngIf='msInstance' (onValidChange)='onCalcuCfgChange($event)'></ogms-calcu-cfg>
+                        <ogms-calcu-cfg formControlName='msInstance' *ngIf='msInstance' [msInstance]='msInstance' (onValidChange)='onCalcuCfgChange($event)'></ogms-calcu-cfg>
                     </div>
                 </section>
 

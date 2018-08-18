@@ -114,7 +114,7 @@ export class CmpObjCfgComponent implements ControlValueAccessor, OnInit {
 
                 this.cmpObjFG = this.fb.group({
                     id: this._cmpObj.id,
-                    name: ['', [Validators.required, Validators.minLength(8)]],
+                    name: ['', [Validators.required, Validators.minLength(1)]],
                     desc: ['', [Validators.required, Validators.minLength(2)]],
                     dataRefers: this.fb.array(_.map(this._participants, ms => {
                         return this.fb.group({

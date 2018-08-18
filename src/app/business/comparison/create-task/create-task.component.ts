@@ -4,7 +4,7 @@ import { Router, ActivatedRoute, Params } from "@angular/router";
 import { DynamicTitleService } from "@common/core/services/dynamic-title.service";
 import { DocBaseComponent } from '@common/shared';
 import { FormBuilder, Validators, FormGroup, FormArray, FormControl } from '@angular/forms';
-import { CmpTask, CalcuTask } from '@models';
+import { CmpTask, CalcuTask,ResourceSrc } from '@models';
 
 
 @Component({
@@ -16,7 +16,6 @@ export class CreateTaskComponent extends DocBaseComponent implements OnInit {
     sln;
     taskFG;
 
-    _submitDisabled = true;
     _selectedTabIndex = 0;
     _tabLabelCfg: {
         id:any,
@@ -40,9 +39,9 @@ export class CreateTaskComponent extends DocBaseComponent implements OnInit {
         super(route, service, title);
 
         this.taskFG = this.fb.group({
-            name: [null, [Validators.required, Validators.minLength(8), Validators.maxLength(25)]],
+            name: [null, [Validators.required, Validators.minLength(1), Validators.maxLength(25)]],
             desc: [null, [Validators.required, Validators.minLength(2), Validators.maxLength(140)]],
-            auth: ['Public', [Validators.required]],
+            auth: [ResourceSrc.PUBLIC, [Validators.required]],
             // TODO validator
             calcuTasks: this.fb.array([], Validators.required)
         });
@@ -51,7 +50,6 @@ export class CreateTaskComponent extends DocBaseComponent implements OnInit {
             .subscribe(status => {
                 if(status === 'VALID') {
                     // console.log(this.taskFG.value);
-                    this._submitDisabled = false;
                 }
             })
     }
@@ -73,9 +71,14 @@ export class CreateTaskComponent extends DocBaseComponent implements OnInit {
         // TODO
     }
 
+    onCalcuValidChange(valid) {
+        if(!valid)
+            this.taskFG.setErrors({});
+    }
+
     addInstance(ms) {
         let newCalTask = new CalcuTask(ms);
-        this.calTasksCtrl.push(new FormControl(newCalTask))
+        this.calTasksCtrl.push(new FormControl(newCalTask, Validators.required))
         this.calTasksCtrl.updateValueAndValidity();
 
         this._selectedTabIndex = this.calTasksCtrl.controls.length - 1;

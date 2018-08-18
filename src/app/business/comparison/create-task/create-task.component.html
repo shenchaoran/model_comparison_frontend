@@ -26,8 +26,8 @@
                 <div class='form-item auth-group'>
                     <label>Authorition: </label>
                     <mat-button-toggle-group formControlName='auth'>
-                        <mat-button-toggle value='Private'>Private</mat-button-toggle>
-                        <mat-button-toggle value='Public'>Public</mat-button-toggle>
+                        <mat-button-toggle value='PRIVATE'>Private</mat-button-toggle>
+                        <mat-button-toggle value='PUBLIC'>Public</mat-button-toggle>
                     </mat-button-toggle-group>
                 </div>
             </div>
@@ -54,7 +54,7 @@
                                 <mat-icon (click)='delInstance(i)'>clear</mat-icon>
                             </ng-template>
                             <div class='calcu-cfg-container'>
-                                <ogms-calcu-cfg [formControlName]='i'></ogms-calcu-cfg>
+                                <ogms-calcu-cfg [formControlName]='i' (onValidChange)='onCalcuValidChange($event)'></ogms-calcu-cfg>
                             </div>
                         </mat-tab>
                     </mat-tab-group>
@@ -63,7 +63,7 @@
         </form>
         <div class='submit-action-group'>
             <button mat-stroked-button color='primary' (click)='submitTask("save")'>Save</button>
-            <button mat-stroked-button color='primary' (click)='submitTask("run")' [disabled]="_submitDisabled">Start Comparison</button>
+            <button mat-stroked-button color='primary' (click)='submitTask("run")' [disabled]="!taskFG.valid">Start Comparison</button>
         </div>
     </article>
 </ng-template>

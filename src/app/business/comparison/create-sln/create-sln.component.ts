@@ -45,9 +45,9 @@ export class CreateSlnComponent implements OnInit {
 
     ngOnInit() {
         this.slnFG = this.fb.group({
-            name: [null, [Validators.required, Validators.minLength(8), Validators.maxLength(25)]],
+            name: [null, [Validators.required, Validators.minLength(1), Validators.maxLength(25)]],
             desc: [null, [Validators.required, Validators.minLength(2), Validators.maxLength(140)]],
-            auth: ['Public', [Validators.required]],
+            auth: [ResourceSrc.PUBLIC, [Validators.required]],
             participants: [null, [Validators.required]],
             cmpObjs: this.fb.array([])
         });

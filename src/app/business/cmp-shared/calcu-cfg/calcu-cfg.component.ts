@@ -91,6 +91,7 @@ export class CalcuCfgComponent implements OnInit, AfterViewInit {
         this.fetchStds(v.ms.stdIds);
         this.appendSchema();
         this.buildForm();
+        this.onValidChange.emit(false);
     }
 
     fetchStds(stdIds) {
@@ -185,8 +186,8 @@ export class CalcuCfgComponent implements OnInit, AfterViewInit {
                     this.propagateChange(this._msInstance);
                 }
                 else {
-                    this.propagateChange(null);
-                    // this.onValidChange.emit(status === 'VALID');
+                    // this.propagateChange(null);
+                    this.onValidChange.emit(false);
                 }
             });
     }
@@ -255,6 +256,11 @@ export class CalcuCfgComponent implements OnInit, AfterViewInit {
                     value: false,
                     file: true,
                     fname: false
+                },
+                outputs: {
+                    value: false,
+                    file: false,
+                    fname: true
                 }
             },
             STD: {
@@ -267,39 +273,44 @@ export class CalcuCfgComponent implements OnInit, AfterViewInit {
                     value: false,
                     file: false,
                     fname: false
+                },
+                outputs: {
+                    value: false,
+                    file: false,
+                    fname: true
                 }
             }
         }
-        let updateValidity = (rules, tag) => {
+        let rules = rulesOfRequired[v];
+        for (let tag in rules) {
             _.map((this.IOForm.get(tag) as any).controls, control => {
                 for (let key in rules[tag]) {
                     let leafCtrl = control.get(key)
                     if (rules[tag][key]) {
-                        leafCtrl.markAsPristine()
+                        leafCtrl.markAsPristine();
                         leafCtrl.setValidators(Validators.required)
                     }
                     else {
-                        leafCtrl.clearValidators()
-                        leafCtrl.value = undefined
+                        leafCtrl.clearValidators();
                     }
+                    // leafCtrl.setValue(null);
                     leafCtrl.updateValueAndValidity()
                 }
-            })
+            });
         }
-        updateValidity(rulesOfRequired[v], 'std')
-        updateValidity(rulesOfRequired[v], 'inputs')
-        if (v === 'UPLOAD') {
-            let STDCtrl = this.IOForm.get('STD') as any
-            STDCtrl.value = undefined
-            STDCtrl.clearValidators()
-            STDCtrl.updateValueAndValidity()
-        }
+        // if (v === 'UPLOAD') {
+        //     let STDCtrl = this.IOForm.get('STD') as any
+        //     STDCtrl.setValue(null);
+        //     STDCtrl.clearValidators()
+        //     STDCtrl.updateValueAndValidity()
+        // }
     }
 
     private propagateChange = (e: any) => { };
 
     public writeValue(obj: any) {
-        this.init(obj);
+        if(obj)
+            this.init(obj);
     }
 
     public registerOnChange(fn: any) {
@@ -326,10 +337,10 @@ export class CalcuCfgComponent implements OnInit, AfterViewInit {
 })
 export class SiteDialog {
     site;
-    constructor(public dialogRef: MatDialogRef<SiteDialog>) { 
+    constructor(public dialogRef: MatDialogRef<SiteDialog>) {
         this.dialogRef.beforeClose()
             .subscribe(v => {
-                if(this.site) {
+                if (this.site) {
                     this.dialogRef.close(this.site);
                 }
             })

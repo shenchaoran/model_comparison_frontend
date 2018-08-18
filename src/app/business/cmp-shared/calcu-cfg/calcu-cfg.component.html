@@ -15,7 +15,7 @@
 
                 <ng-container *ngIf='IOForm.controls["dataSrc"].value === "STD" else uploadTemplate'>
                     <mat-form-field class='form-item std-src-group'>
-                        <mat-select placeholder='Select standard data source' formControlName='STD'>
+                        <mat-select placeholder='Select standard data source' formControlName='STD' #dataSrc>
                             <mat-option *ngFor='let item of stds' [value]='item'>{{item.meta.name}}</mat-option>
                         </mat-select>
                         <button id='preview-btn' (click)='onSuffixClick($event)' mat-button matSuffix mat-icon-button *ngIf="IOForm.controls['STD'].value" target='_blank' [routerLink]='["../../../datasets", IOForm.controls["STD"].value._id]'>
@@ -23,7 +23,7 @@
                         </button>
                     </mat-form-field>
 
-                    <div formArrayName='std'>
+                    <div formArrayName='std' *ngIf='IOForm.get("STD").value'>
                         <ng-container *ngFor='let item of IOForm.controls["std"].controls;let i=index;'>
                             <div [formGroupName]='i'>
                                 <div *ngIf='item.value?.schema?.structure?.type === "coordinate-index"' class='form-item select-pt-group'>
@@ -32,6 +32,7 @@
                                     </button>
                                     <mat-form-field>
                                         <input matInput [value]='item.value.temp?.coor' placeholder='Coordinate' disabled>
+                                        <!-- <mat-error *ngIf='item.get("value").hasError("required")'>please select point</mat-error> -->
                                     </mat-form-field>
                                 </div>
                             </div>
