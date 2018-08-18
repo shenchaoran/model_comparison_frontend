@@ -41,7 +41,7 @@ export class CreateTaskComponent extends DocBaseComponent implements OnInit {
 
         this.taskFG = this.fb.group({
             name: [null, [Validators.required, Validators.minLength(8), Validators.maxLength(25)]],
-            desc: [null, [Validators.required, Validators.minLength(20), Validators.maxLength(140)]],
+            desc: [null, [Validators.required, Validators.minLength(2), Validators.maxLength(140)]],
             auth: ['Public', [Validators.required]],
             // TODO validator
             calcuTasks: this.fb.array([], Validators.required)
