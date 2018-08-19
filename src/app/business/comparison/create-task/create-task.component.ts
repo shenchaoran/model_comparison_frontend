@@ -5,6 +5,7 @@ import { DynamicTitleService } from "@common/core/services/dynamic-title.service
 import { DocBaseComponent } from '@common/shared';
 import { FormBuilder, Validators, FormGroup, FormArray, FormControl } from '@angular/forms';
 import { CmpTask, CalcuTask,ResourceSrc } from '@models';
+import { CmpTaskService } from '../../services';
 
 
 @Component({
@@ -14,6 +15,7 @@ import { CmpTask, CalcuTask,ResourceSrc } from '@models';
 })
 export class CreateTaskComponent extends DocBaseComponent implements OnInit {
     sln;
+    task;
     taskFG;
 
     _selectedTabIndex = 0;
@@ -37,6 +39,7 @@ export class CreateTaskComponent extends DocBaseComponent implements OnInit {
         private fb: FormBuilder
     ) { 
         super(route, service, title);
+        this.task = new CmpTask();
 
         this.taskFG = this.fb.group({
             name: [null, [Validators.required, Validators.minLength(1), Validators.maxLength(25)]],
@@ -68,6 +71,9 @@ export class CreateTaskComponent extends DocBaseComponent implements OnInit {
         else if(type === 'run') {
 
         }
+        this.task.meta.name = this.taskFG.value.name;
+        this.task.meta.desc = this.taskFG.value.desc;
+        this.task.auth.src = this.taskFG.value.auth;
         // TODO
     }
 

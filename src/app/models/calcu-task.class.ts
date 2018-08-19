@@ -57,12 +57,12 @@ export class CalcuTask {
             });
         }
         
+        this._id = ObjectID();
         this.meta = {
             name: undefined,
             desc: undefined,
             time: new Date().getTime()
         };
-        this._id = ObjectID();
         this.state = CalcuTaskState.INIT;
         const user = LoginService.getUser();
         if(user) {
