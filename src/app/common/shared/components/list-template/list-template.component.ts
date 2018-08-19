@@ -3,7 +3,6 @@ import { ListFilterService } from '@common/shared/components/list-template/list-
 import { OgmsBaseComponent } from '@common/shared/components/ogms-base/ogms-base.component';
 import { DynamicTitleService } from '@common/core/services/dynamic-title.service';
 import { ActivatedRoute } from "@angular/router";
-import { ListBaseService } from '@common/shared/services/list-base.service';
 
 @Component({
     selector: 'ogms-list-template',
@@ -102,7 +101,6 @@ export class ListTemplateComponent extends OgmsBaseComponent implements OnInit, 
 
     constructor(
         public route: ActivatedRoute,
-        // public service: ListBaseService,
         public title: DynamicTitleService
     ) { 
         super()

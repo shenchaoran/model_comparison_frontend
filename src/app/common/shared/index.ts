@@ -47,7 +47,6 @@ import {
     BaImageLoaderService,
     BaThemePreloader,
     BaThemeSpinner,
-    ListBaseService,
 } from '@common/shared/services';
 
 import {
@@ -69,7 +68,6 @@ const SERVICES = [
     LoginService,
     BaMenuService,
     HeaderMenuService,
-    ListBaseService,
 ];
 
 const VALIDATORS = [

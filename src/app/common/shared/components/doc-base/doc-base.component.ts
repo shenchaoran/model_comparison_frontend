@@ -24,7 +24,7 @@ export class DocBaseComponent extends OgmsBaseComponent implements OnInit, OnDes
 
     constructor(
         public route: ActivatedRoute,
-        public service: ListBaseService,
+        public cmpSlnService: ListBaseService,
 //private _notice: NzNotificationService,
         public title: DynamicTitleService
     ) { 
@@ -35,7 +35,7 @@ export class DocBaseComponent extends OgmsBaseComponent implements OnInit, OnDes
         this.doc = Observable.create(observer => {
             this._subscriptions.push(this.route.params.subscribe((params: Params) => {
                 const docId = params['id'];
-                this.service.findOne(docId)
+                this.cmpSlnService.findOne(docId)
                     .subscribe(response => {
                         if (!response.error) {
                             this._isLoading = false;

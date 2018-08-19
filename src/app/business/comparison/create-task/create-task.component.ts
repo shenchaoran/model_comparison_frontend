@@ -1,11 +1,11 @@
 import { Component, OnInit, HostListener } from "@angular/core";
-import { CmpSlnService } from "../../services/cmp-sln.service";
+import { CmpSlnService, CmpTaskService } from "../../services";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { DynamicTitleService } from "@common/core/services/dynamic-title.service";
 import { DocBaseComponent } from '@common/shared';
 import { FormBuilder, Validators, FormGroup, FormArray, FormControl } from '@angular/forms';
-import { CmpTask, CalcuTask,ResourceSrc } from '@models';
-import { CmpTaskService } from '../../services';
+import { CmpTask, CalcuTask,ResourceSrc, CmpState } from '@models';
+
 
 
 @Component({
@@ -15,33 +15,35 @@ import { CmpTaskService } from '../../services';
 })
 export class CreateTaskComponent extends DocBaseComponent implements OnInit {
     sln;
-    task;
-    taskFG;
+    cmpTask;
+    calcuTasks = [];
+    cmpTaskFG;
 
     _selectedTabIndex = 0;
     _tabLabelCfg: {
-        id:any,
+        id: any,
         name: string,
         index: number,
         useDefault?: boolean,
         label: string
     }[] = [];
-    _tabName = [];
 
     get calTasksCtrl() {
-        return (this.taskFG.get('calcuTasks') as FormArray);
+        return (this.cmpTaskFG.get('calcuTasks') as FormArray);
     }
 
     constructor(
         public route: ActivatedRoute,
-        public service: CmpSlnService,
+        public router: Router,
+        public cmpSlnService: CmpSlnService,
         public title: DynamicTitleService,
-        private fb: FormBuilder
+        private fb: FormBuilder,
+        public cmpTaskService: CmpTaskService,
     ) { 
-        super(route, service, title);
-        this.task = new CmpTask();
+        super(route, cmpSlnService, title);
+        this.cmpTask = new CmpTask();
 
-        this.taskFG = this.fb.group({
+        this.cmpTaskFG = this.fb.group({
             name: [null, [Validators.required, Validators.minLength(1), Validators.maxLength(25)]],
             desc: [null, [Validators.required, Validators.minLength(2), Validators.maxLength(140)]],
             auth: [ResourceSrc.PUBLIC, [Validators.required]],
@@ -49,7 +51,7 @@ export class CreateTaskComponent extends DocBaseComponent implements OnInit {
             calcuTasks: this.fb.array([], Validators.required)
         });
 
-        this.taskFG.statusChanges
+        this.cmpTaskFG.statusChanges
             .subscribe(status => {
                 if(status === 'VALID') {
                     // console.log(this.taskFG.value);
@@ -66,20 +68,40 @@ export class CreateTaskComponent extends DocBaseComponent implements OnInit {
 
     submitTask(type) {
         if(type === 'save') {
-
+            this.cmpTask.state = CmpState.INIT;
         }
         else if(type === 'run') {
-
+            this.cmpTask.state = CmpState.COULD_START;
         }
-        this.task.meta.name = this.taskFG.value.name;
-        this.task.meta.desc = this.taskFG.value.desc;
-        this.task.auth.src = this.taskFG.value.auth;
-        // TODO
+        this.cmpTask.meta.name = this.cmpTaskFG.value.name;
+        this.cmpTask.meta.desc = this.cmpTaskFG.value.desc;
+        this.cmpTask.auth.src = this.cmpTaskFG.value.auth;
+        this.cmpTask.solutionId = this.sln._id;
+        this.cmpTask.issueId = this.sln.issueId;
+        this.cmpTask.calcuTaskIds = [];
+        _.map(this.cmpTaskFG.value.calcuTasks, (calcuTask, i) =>{
+            this.cmpTask.calcuTaskIds.push({
+                _id: calcuTask._id,
+                progress: 0
+            });
+
+            calcuTask.meta.name = this._tabLabelCfg[i].label;
+            this.calcuTasks.push(calcuTask);
+        })
+        this.cmpTaskService.insert({
+            cmpTask: this.cmpTask,
+            calcuTasks: this.calcuTasks
+        })
+            .subscribe(response => {
+                if(!response.error) {
+                    this.router.navigate(['/results/comparison', response.data]);
+                }
+            })
     }
 
     onCalcuValidChange(valid) {
         if(!valid)
-            this.taskFG.setErrors({});
+            this.cmpTaskFG.setErrors({});
     }
 
     addInstance(ms) {

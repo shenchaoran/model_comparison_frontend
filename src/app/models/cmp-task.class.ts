@@ -53,10 +53,10 @@ export class CmpTask {
 
 export const CmpState = Enum(
     'INIT',
+    'COULD_START',
     'RUNNING',
     'FINISHED_SUCCEED',
-    'FINISHED_FAILED',
-    'FINISHED'
+    'FINISHED_FAILED'
 )
 export type CmpState = Enum<typeof CmpState>
 

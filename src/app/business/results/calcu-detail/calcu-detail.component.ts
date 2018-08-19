@@ -22,10 +22,10 @@ export class CalcuDetailComponent extends DocBaseComponent implements OnInit {
 
     constructor(
         public route: ActivatedRoute,
-        public service: CalcuTaskService,
+        public cmpSlnService: CalcuTaskService,
         public title: DynamicTitleService
     ) { 
-        super(route, service, title);
+        super(route, cmpSlnService, title);
     }
 
     ngOnInit() {
@@ -39,7 +39,7 @@ export class CalcuDetailComponent extends DocBaseComponent implements OnInit {
     private fetchInterval() {
         const record$ = interval(3000).pipe(
             switchMap((v, i) => {
-                return this.service.findOne(this.msRecord._id, false);
+                return this.cmpSlnService.findOne(this.msRecord._id, false);
             }),
             map(response => {
                 if(!response.error) {

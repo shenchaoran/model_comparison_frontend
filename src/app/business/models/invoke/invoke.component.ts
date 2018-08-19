@@ -29,14 +29,14 @@ export class InvokeComponent extends DocBaseComponent implements OnInit {
 
     constructor(
         public route: ActivatedRoute,
-        public service: MSService,
+        public cmpSlnService: MSService,
         //private _notice: NzNotificationService,
         public title: DynamicTitleService,
         public loginService: LoginService,
         public fb: FormBuilder,
         public router: Router
     ) {
-        super(route, service, title);
+        super(route, cmpSlnService, title);
         this.loginService.checkLogin();
     }
 
@@ -79,7 +79,7 @@ export class InvokeComponent extends DocBaseComponent implements OnInit {
         else if (type === 'invoke') {
             this.msInstance.state = CalcuTaskState.START_PENDING;
         }
-        this._subscriptions.push(this.service.invoke(this.msInstance)
+        this._subscriptions.push(this.cmpSlnService.invoke(this.msInstance)
             .subscribe(response => {
                 if (!response.error) {
                     let res = response.data;

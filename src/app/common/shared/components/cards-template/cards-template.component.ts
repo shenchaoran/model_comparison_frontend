@@ -101,7 +101,6 @@ export class CardsTemplateComponent extends OgmsBaseComponent implements OnInit 
 
     constructor(
         public route: ActivatedRoute,
-        // public service: ListBaseService,
         public title: DynamicTitleService
     ) { 
         super()

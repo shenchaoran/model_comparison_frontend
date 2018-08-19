@@ -18,10 +18,10 @@ export class CmpDetailComponent extends DocBaseComponent implements OnInit {
 
     constructor(
         public route: ActivatedRoute,
-        public service: CmpTaskService,
+        public cmpSlnService: CmpTaskService,
         public title: DynamicTitleService
     ) { 
-        super(route, service, title);
+        super(route, cmpSlnService, title);
     }
 
     ngOnInit() {

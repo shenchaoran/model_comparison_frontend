@@ -4,7 +4,7 @@ import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Resolve } from '@angular/router';
 import { _HttpClient } from '@common/core/services/http.client';
 import { MS, Event, CalcuTask } from '@models';
-import { ListBaseService } from '@common/shared';
+import { ListBaseService } from './list-base.service';
 
 @Injectable()
 export class MSService extends ListBaseService {

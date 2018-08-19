@@ -16,10 +16,10 @@ export class SolutionDetailComponent extends DocBaseComponent implements OnInit 
 
     constructor(
         public route: ActivatedRoute,
-        public service: CmpSlnService,
+        public cmpSlnService: CmpSlnService,
         public title: DynamicTitleService
     ) { 
-        super(route, service, title);
+        super(route, cmpSlnService, title);
     }
 
     ngOnInit() {

@@ -14,11 +14,11 @@ export class MethodDetailComponent extends DocBaseComponent implements OnInit, A
     @ViewChild('div') div: ElementRef;
     constructor(
         public route: ActivatedRoute,
-        public service: CmpMethodService,
+        public cmpSlnService: CmpMethodService,
         public title: DynamicTitleService,
         private renderer2: Renderer2
     ) {
-        super(route, service, title)
+        super(route, cmpSlnService, title)
     }
 
     ngOnInit() {
