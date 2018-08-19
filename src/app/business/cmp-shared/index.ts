@@ -12,7 +12,7 @@ import { CmpMethodCfgComponent } from './cmp-method-cfg/cmp-method-cfg.component
 import { OlModule } from '../ol/ol.module'
 //////////////////// service ////////////////////////
 import { LoginService } from '@common/feature/login/login.service';
-import { StdDataService } from '../datasets/services/std-data.service';
+import { StdDataService } from '../services/std-data.service';
 import { NzNotificationService, NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';
 ////////////////////// export //////////////////////
 export { CalcuCfgComponent } from './calcu-cfg/calcu-cfg.component';

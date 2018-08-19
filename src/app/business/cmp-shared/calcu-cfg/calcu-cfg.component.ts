@@ -12,7 +12,7 @@ import {
 import { NgUploaderOptions } from 'ngx-uploader';
 import { ResourceSrc, CalcuTask, CmpSolution } from '@models';
 import { LoginService } from '@common/feature/login/login.service';
-import { StdDataService } from '../../datasets/services/std-data.service';
+import { StdDataService } from '../../services/std-data.service';
 import {
     AbstractControl,
     FormBuilder,
@@ -330,7 +330,7 @@ export class CalcuCfgComponent implements OnInit, AfterViewInit {
         <mat-dialog-actions align='end'>
             <div>
                 <button mat-button (click)='onNoClick()'>Cancel</button>
-                <button mat-button (click)='onYesClick()' cdkFocusInitial [disabled]='!site'>OK</button>
+                <button mat-button color='primary' (click)='onYesClick()' cdkFocusInitial [disabled]='!site'>OK</button>
             </div>
         </mat-dialog-actions>
     `

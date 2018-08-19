@@ -1,7 +1,7 @@
 import { Observable, Subject, from, of, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { CmpMethodService } from '../../comparison/services/cmp-method.service';
-import { CasCaderData } from '@shared';
+import { CmpMethodService } from '../../services/cmp-method.service';
+import { CasCaderData } from '@common/shared';
 import {
     Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChange,
     ChangeDetectionStrategy,

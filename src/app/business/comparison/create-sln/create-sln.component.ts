@@ -1,12 +1,12 @@
 import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy, Inject } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, FormArray, FormControl } from '@angular/forms';
 import { CmpSolution, ResourceSrc } from '@models';
-import { CmpSlnService } from '../services/cmp-sln.service';
-import { MSService } from '../../models/services/geo-models.service';
+import { CmpSlnService } from '../../services/cmp-sln.service';
+import { MSService } from '../../services/geo-models.service';
 import { NzNotificationService, NzModalService } from 'ng-zorro-antd';
 import { Router, ActivatedRoute } from '@angular/router';
 import * as uuidv1 from 'uuid/v1';
-import { CmpMethodService } from '../services/cmp-method.service';
+import { CmpMethodService } from '../../services/cmp-method.service';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
 @Component({

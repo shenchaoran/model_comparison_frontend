@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CmpMethodService } from '../services/cmp-method.service';
+import { CmpMethodService } from '../../services/cmp-method.service';
 
 @Component({
     selector: 'ogms-method-list',

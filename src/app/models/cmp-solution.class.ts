@@ -3,7 +3,7 @@
  */
 import { ResourceSrc } from '@models/resource.enum';
 import { DataRefer } from '@models/dataRefer.class';
-import { CmpObj } from './cmp-obj.class';
+import { CmpObj } from '@models/cmp-obj.class';
 import { LoginService } from '@common/feature/login/login.service';
 
 export class CmpSolution {

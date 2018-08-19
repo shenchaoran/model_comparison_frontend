@@ -1,5 +1,5 @@
 import { Component, OnInit, HostListener } from "@angular/core";
-import { CmpSlnService } from "../services/cmp-sln.service";
+import { CmpSlnService } from "../../services/cmp-sln.service";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { DynamicTitleService } from "@common/core/services/dynamic-title.service";
 import { DocBaseComponent } from '@common/shared';

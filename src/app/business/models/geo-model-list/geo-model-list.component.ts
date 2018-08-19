@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
-import { MSService } from "../services/geo-models.service";
+import { MSService } from "../../services/geo-models.service";
 import { NzNotificationService, NzModalService } from "ng-zorro-antd";
 import { DynamicTitleService } from '@common/core/services/dynamic-title.service';
 

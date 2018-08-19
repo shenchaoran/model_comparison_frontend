@@ -1,6 +1,6 @@
 import { Component, OnInit, HostListener } from "@angular/core";
 import { CmpSlnService } from "../../comparison/comparison.module";
-import { CmpTaskService } from '../services/cmp-task.service';
+import { CmpTaskService } from '../../services/cmp-task.service';
 import { MSService } from '../../models/models.module';
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { NzNotificationService, NzModalService } from "ng-zorro-antd";

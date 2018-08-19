@@ -10,4 +10,4 @@ export * from '@models/user.class';
 export * from '@models/calcu-task.class';
 export * from '@models/cmp-state.enum';
 export * from '@models/dataRefer.class';
-export * from './cmp-task.class';
+export * from '@models/cmp-task.class';

@@ -17,7 +17,7 @@ import {
     NG_VALIDATORS,
     NG_VALUE_ACCESSOR
 } from '@angular/forms';
-import { CascaderSelectValidator } from './cascader-select.validator';
+import { CascaderSelectValidator } from '@common/shared/components/mat-cascader-select/cascader-select.validator';
 import { Subject, combineLatest } from 'rxjs';
 
 @Component({

@@ -1,7 +1,7 @@
 import { Component, OnInit, HostListener } from "@angular/core";
 import { CmpSlnService } from "../../comparison/comparison.module";
 import { MSService } from '../../models/models.module';
-import { CalcuTaskService } from '../services/calcu-task.service';
+import { CalcuTaskService } from '../../services/calcu-task.service';
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { NzNotificationService, NzModalService } from "ng-zorro-antd";
 import { DynamicTitleService } from "@common/core/services/dynamic-title.service";
