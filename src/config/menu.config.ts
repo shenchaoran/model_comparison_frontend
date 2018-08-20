@@ -121,45 +121,6 @@ export const HEADER_MENUS: MenuClass[] = [
                 title: 'Test'
             }
         }
-    },
-    {
-        path: 'user',
-        data: {
-            menu: {
-                title: 'User',
-                id: 'user',
-                icon: 'user',
-                selected: true,
-                expanded: false,
-                order: 0
-            }
-        },
-        children: [
-            {
-                path: 'profile',
-                data: {
-                    menu: {
-                        title: 'Profile'
-                    }
-                }
-            },
-            {
-                path: 'set-up',
-                data: {
-                    menu: {
-                        title: 'Setting'
-                    }
-                }
-            },
-            {
-                path: 'sign-out',
-                data: {
-                    menu: {
-                        title: 'Sign Out'
-                    }
-                }
-            }
-        ]
     }
 ];
 
