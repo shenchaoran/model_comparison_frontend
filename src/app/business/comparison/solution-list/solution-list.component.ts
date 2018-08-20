@@ -10,6 +10,11 @@ import { DynamicTitleService } from '@common/core/services/dynamic-title.service
     styleUrls: ['./solution-list.component.scss']
 })
 export class SolutionListComponent {
+    createBtn = {
+        display: true,
+        url: '/comparison/solutions/create'
+    }
+
     constructor(
         public service: CmpSlnService,
         public route: ActivatedRoute,

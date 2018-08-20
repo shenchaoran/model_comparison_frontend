@@ -15,6 +15,10 @@ export class ListTemplateComponent extends OgmsBaseComponent implements OnInit, 
     count: number;
     _ownerFilterV;
 
+    @Input() public createBtn: {
+        display: boolean,
+        url: string
+    };
     @Input() public service: any;
     @Input() public searchFilters: {
         q?: string,

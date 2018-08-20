@@ -1,64 +1,60 @@
-<div class='ogms-responsive-div' style='margin-top: 24px !important'>
-    <div *ngIf='list else listTemplate'>
-        <div id='nav-filter-group'>
-            <mat-button-toggle-group *ngIf='starFilters' [ngModel]='_ownerFilterV' (ngModelChange)='changeFilters($event, "owner")'>
-                <mat-button-toggle *ngFor='let item of starFilters' [value]='item.value'>{{item.label}}</mat-button-toggle>
-            </mat-button-toggle-group>
-            <span class='flex-item-1-1-auto'></span>
-            <div id='search-btn-group'>
-                <mat-form-field>
-                    <mat-label>Search</mat-label>
-                    <input matInput [(ngModel)]="searchFilters.q">
-                    <button (click)='search()' color='primary' mat-flat-button matSuffix>
-                        <mat-icon>search</mat-icon>
-                    </button>
-                </mat-form-field>
-            </div>
-        </div>
-
-        <div class='list-box'>
-            <div class='list-header'>
-                <span>{{count}} items found</span>
-                <span class='flex-item-1-1-auto'></span>
-
-                <ng-container *ngFor='let filter of sortsFilters'>
-                    <div>
-                        <button mat-button [matMenuTriggerFor]='popMenu'>
-                            {{filter.label}}
-                            <mat-icon>expand_more</mat-icon>
-                        </button>
-                        <mat-menu #popMenu>
-                            <button class='pop-menu-group' mat-menu-item *ngFor='let item of filter.options' (click)='changeFilters(item.value, filter.value)'>
-                                <div>
-                                    <mat-icon *ngIf='item.checked'>check</mat-icon>
-                                </div>
-                                <div>{{item.label}}</div>
-                            </button>
-                        </mat-menu>
-                    </div>
-                </ng-container>
-            </div>
-
-            <ng-container *ngIf='template && list'>
-                <ng-container *ngFor='let item of list'>
-                    <div class='list-template-item'>
-                        <ng-container [ngTemplateOutlet]='template' [ngTemplateOutletContext]='{item: item}'></ng-container>
-                    </div>
-                </ng-container>
-            </ng-container>
-        </div>
-
-        <div class='flex-box-row-nowrap'>
-            <!-- <span class='flex-item-1-1-auto'></span> -->
-            <nz-pagination *ngIf='count> 25' [nzPageIndex]="searchFilters.pageNum" (nzPageIndexChange)='setPageNum($event)' nzShowSizeChanger
-                [nzPageSize]='searchFilters.pageSize' (nzPageSizeChange)='setPageSize($event)' [nzTotal]="count"></nz-pagination>
-            <!-- <span class='flex-item-1-1-auto'></span> -->
-        </div>
+<div id='container' class='ogms-responsive-div' *ngIf='list else listTemplate'>
+    <div id='nav-filter-group'>
+        <mat-button-toggle-group *ngIf='starFilters' [ngModel]='_ownerFilterV' (ngModelChange)='changeFilters($event, "owner")'>
+            <mat-button-toggle *ngFor='let item of starFilters' [value]='item.value'>{{item.label}}</mat-button-toggle>
+        </mat-button-toggle-group>
+        <mat-form-field id='search-btn-group'>
+            <mat-label>Search</mat-label>
+            <input matInput [(ngModel)]="searchFilters.q">
+            <button (click)='search()' color='primary' mat-flat-button matSuffix>
+                <mat-icon>search</mat-icon>
+            </button>
+        </mat-form-field>
     </div>
 
-    <ng-template #listTemplate>
-        <div style='width: 100%;'>
-            <nz-spin [nzSize]='"large"'></nz-spin>
+    <div class='list-box'>
+        <div class='list-header'>
+            <span>{{count}} items found</span>
+            <span class='flex-item-1-1-auto'></span>
+            <div *ngFor='let filter of sortsFilters'>
+                <button mat-button [matMenuTriggerFor]='popMenu'>
+                    {{filter.label}}
+                    <mat-icon>expand_more</mat-icon>
+                </button>
+                <mat-menu #popMenu>
+                    <button class='pop-menu-group' mat-menu-item *ngFor='let item of filter.options' (click)='changeFilters(item.value, filter.value)'>
+                        <div>
+                            <mat-icon *ngIf='item.checked'>check</mat-icon>
+                        </div>
+                        <div>{{item.label}}</div>
+                    </button>
+                </mat-menu>
+            </div>
         </div>
-    </ng-template>
+
+        <ng-container *ngIf='template && list'>
+            <ng-container *ngFor='let item of list'>
+                <div class='list-template-item'>
+                    <ng-container [ngTemplateOutlet]='template' [ngTemplateOutletContext]='{item: item}'></ng-container>
+                </div>
+            </ng-container>
+        </ng-container>
+    </div>
+
+    <div class='flex-box-row-nowrap'>
+        <!-- <span class='flex-item-1-1-auto'></span> -->
+        <nz-pagination *ngIf='count> 25' [nzPageIndex]="searchFilters.pageNum" (nzPageIndexChange)='setPageNum($event)' nzShowSizeChanger
+            [nzPageSize]='searchFilters.pageSize' (nzPageSizeChange)='setPageSize($event)' [nzTotal]="count"></nz-pagination>
+        <!-- <span class='flex-item-1-1-auto'></span> -->
+    </div>
+
+    <button id='create-btn' *ngIf='createBtn?.display' [routerLink]='createBtn.url' mat-fab color="primary">
+        <mat-icon>add</mat-icon>
+    </button>
 </div>
+
+<ng-template #listTemplate>
+    <div class='ogms-loading-container'>
+        <mat-spinner></mat-spinner>
+    </div>
+</ng-template>

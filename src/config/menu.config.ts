@@ -53,38 +53,38 @@ export const HEADER_MENUS: MenuClass[] = [
         }
     },
     {
-        path: 'comparison',
+        path: 'comparison/solutions',
         data: {
             menu: {
                 title: 'Comparison'
             }
         },
-        children: [
-            {
-                path: 'methods',
-                data: {
-                    menu: {
-                        title: 'Comparison methods'
-                    }
-                }
-            },
-            {
-                path: 'solutions',
-                data: {
-                    menu: {
-                        title: 'Comparison solutions'
-                    }
-                }
-            },
-            {
-                path: 'solutions/create',
-                data: {
-                    menu: {
-                        title: 'Create solutions'
-                    }
-                }
-            }
-        ]
+        // children: [
+        //     {
+        //         path: 'methods',
+        //         data: {
+        //             menu: {
+        //                 title: 'Comparison methods'
+        //             }
+        //         }
+        //     },
+        //     {
+        //         path: 'solutions',
+        //         data: {
+        //             menu: {
+        //                 title: 'Comparison solutions'
+        //             }
+        //         }
+        //     },
+        //     {
+        //         path: 'solutions/create',
+        //         data: {
+        //             menu: {
+        //                 title: 'Create solutions'
+        //             }
+        //         }
+        //     }
+        // ]
     },
     {
         path: 'results',

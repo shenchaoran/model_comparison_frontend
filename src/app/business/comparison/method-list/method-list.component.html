@@ -1,22 +1,19 @@
 <ng-template #template let-item='item'>
-    <section>
-        <div class='item-header flex-box-row-nowrap'>
-            <a [routerLink]='item._id'>
-                {{item.meta.name}}
-            </a>
-            <span class='flex-item-1-1-auto'></span>
-            <a [routerLink]='item._id'>
-                <i class="fa fa-info"></i>
-            </a>
-            <a [routerLink]='[item._id, "invoke"]'>
-                <i class="fa fa-share"></i>
-            </a>
-        </div>
-        <div class='item-body'>
-            <div class='desc'>{{item.meta.desc | stringLimit: 180 | description}}</div>
-        </div>
-        <div class='item-footer'>{{item.meta.time | date: 'yyyy-MM-dd'}}</div>
-    </section>
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>{{item.meta.name}}</mat-card-title>
+            <mat-card-subtitle>there is a subtitle</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            {{item.meta.desc | stringLimit: 180 | description}}
+        </mat-card-content>
+        <mat-card-actions>
+
+        </mat-card-actions>
+        <mat-card-footer>
+            {{item.meta.time | date: 'yyyy-MM-dd'}}
+        </mat-card-footer>
+    </mat-card>
 </ng-template>
 
-<ogms-list-template [template]='template' [service]='service'></ogms-list-template>
+<ogms-cards-template [template]='template' [service]='service'></ogms-cards-template>

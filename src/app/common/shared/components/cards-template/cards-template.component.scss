@@ -1,25 +1,33 @@
-.list-box {
-    margin: 20px 0;
-    .list-header {
-        padding: 13px 16px;
-        background-color: #f6f8fa;
-        border: 1px solid #e1e4e8;
-        border-radius: 3px 3px 0 0;
-        .dropdown-filter {
-            margin: 0 10px;
-            span {
-                cursor: pointer !important;
-            }
+.card-box {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    .card{
+        padding: 5px;
+        @media (max-width: 979px) {
+            flex:1 1 50%;
+        }
+        @media (min-width: 980px) {
+            flex:1 1 33%;
+        }
+        @media (min-width: 1200px) {
+            flex:1 1 33%;
+        }
+        @media (min-width: 1600px) {
+            flex:1 1 25%;
         }
     }
 }
 
-.checked-label {
-    width: 25px !important;
-    height: 10px;
-    float: left;
-}
+@media (max-width: 979px) {
 
-.filter-li {
-    padding-right: 18px;
+}
+@media (min-width: 980px) {
+
+}
+@media (min-width: 1200px) {
+
+}
+@media (min-width: 1600px) {
+
 }
