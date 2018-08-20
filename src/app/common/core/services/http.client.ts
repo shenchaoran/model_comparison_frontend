@@ -33,13 +33,15 @@ export class _HttpClient {
             let jwt = undefined;
             if(jwtStr) {
                 jwt = JSON.parse(jwtStr);
-            }
-
-            if(url.indexOf('?') === -1) {
-                url += `?Authorization=bearer ${jwt.token}`;
+                if(url.indexOf('?') === -1) {
+                    url += `?Authorization=bearer ${jwt.token}`;
+                }
+                else {
+                    url += `&Authorization=bearer ${jwt.token}`;
+                }
             }
             else {
-                url += `&Authorization=bearer ${jwt.token}`;
+                
             }
         }
         return url;

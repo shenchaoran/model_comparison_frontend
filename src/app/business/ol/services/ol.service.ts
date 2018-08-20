@@ -14,7 +14,18 @@ export class OlService {
     getFeatureInfo(url) {
         return Observable.create(observer => {
             fetch(url)
-                .then(res => res.json())
+                .then(res => {
+                    let parsed
+                    try{
+                        parsed = res.json()
+                    }
+                    catch(e) {
+                        parsed = null;
+                    }
+                    finally{
+                        return parsed;
+                    }
+                })
                 .then(response => {
                     observer.next(response)
                 })

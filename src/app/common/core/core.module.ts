@@ -16,14 +16,14 @@ import { NzNotificationService, NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';
 import { BACKEND } from '@config';
 
 import {
-    // AuthGuard,
+    AuthGuard,
     BaThemeSpinner,
     EchartAdapterService,
     TableAdapterService
 } from '@common/core/services';
 
 const CITYFUN_SERVICES = [
-    // AuthGuard,
+    AuthGuard,
 
     BaThemeSpinner,
     EchartAdapterService,

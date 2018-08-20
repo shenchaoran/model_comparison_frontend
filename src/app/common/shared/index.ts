@@ -7,7 +7,7 @@ import { BaThemeConfigProvider } from '@common/shared/theme.configProvider';
 import { BACKEND } from '@config';
 import { HEADER_MENUS, USER_MENUS } from '@config/menu.config';
 import { DisqusModule } from "ngx-disqus";
-import {MatSharedModule} from '@common/mat-shared';
+import { MatSharedModule } from '@common/mat-shared';
 // import { EmailValidator, EqualPasswordsValidator } from './validators';
 import { ListFilterService } from '@common/shared/components/list-template/list-filter.service';
 import { HeaderMenuService } from '@common/shared/components/header-menu/services/header-menu.service';
@@ -162,7 +162,7 @@ export * from '@common/shared/directives';
         RouterModule,
         NgxSharedModule,
         DisqusModule,
-        
+
     ]
 })
 export class SharedModule {

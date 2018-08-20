@@ -29,7 +29,6 @@ export class ListTemplateComponent extends OgmsBaseComponent implements OnInit, 
             pageNum: 1
         };
     @Input() public template: any;
-    @Input() public withCreateBtn: boolean = false;
     @Input() public starFilters: {
         label: string,
         value: string,
