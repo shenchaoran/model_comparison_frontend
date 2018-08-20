@@ -1,28 +1,24 @@
-<ng-container>
-    <ng-template #template let-msRecord='item'>
-        <section>
-            <div class='item-header flex-box-row-nowrap'>
-                <a [routerLink]='msRecord._id'>
-                    {{msRecord.auth.userName}}/{{msRecord.meta.name}}
-                </a>
-                <span class='flex-item-1-1-auto'></span>
-                <!-- <a [routerLink]='msRecord._id'><i class="fa fa-info"></i></a> -->
-            </div>
-            <div class='item-body'>
-                <div class='desc'>{{msRecord.meta.desc | stringLimit: 180 | description}}</div>
-                <div>
-                    <span class='topic' *ngIf='msRecord.topicId' [routerLink]='["../topics", msRecord.topicId]'>{{msRecord.topic}}</span>
-                    <span class='topic' *ngIf='msRecord.msId' [routerLink]='["../models/", msRecord.msId]'>{{msRecord.msName + "," + msRecord.msId}}</span>
-                </div>
-            </div>
-            <div class='item-footer'>{{msRecord.meta.time | date: 'yyyy-MM-dd hh:mm'}}</div>
-        </section>
-    </ng-template>
+<ng-template #template let-msRecord='item'>
+    <section class='list-item'>
+        <div class='detail-group'>
+            <h3>
+                <a [routerLink]='msRecord._id'>{{msRecord.auth.userName}}/{{msRecord.meta.name}}</a>
+            </h3>
+            <p>{{msRecord.meta.desc | stringLimit: 180 | description}}</p>
+            <mat-chip-list>
+                <mat-chip *ngIf='msRecord.topicId' [routerLink]='["../topics", msRecord.topicId]'>{{msRecord.topic}}</mat-chip>
+                <mat-chip *ngIf='msRecord.msId' [routerLink]='["../models/", msRecord.msId]'>{{msRecord.msName + "," + msRecord.msId}}</mat-chip>
+            </mat-chip-list>
+            <div>{{msRecord.meta.time | date: 'yyyy-MM-dd hh:mm'}}</div>
+        </div>
+        <div class='actions-group'>
+            <a>
+                <mat-icon>star</mat-icon>
+                <span>654</span>
+            </a>
+        </div>
+    </section>
+</ng-template>
 
-    <ogms-list-template 
-        [template]='template' 
-        [service]='service'>
-    </ogms-list-template>
-</ng-container>
-
-
+<ogms-list-template [template]='template' [service]='service'>
+</ogms-list-template>

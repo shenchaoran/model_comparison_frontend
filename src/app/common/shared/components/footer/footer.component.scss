@@ -41,10 +41,11 @@
 footer {
     background: #24292e;
     padding: 15px 0;
-    #footer-container {
-        display: flex;
-        flex-flow: row wrap;
-        justify-content: space-between;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    >a {
+        flex: 0 0 auto;
     }
     a {
         color: #fff !important;

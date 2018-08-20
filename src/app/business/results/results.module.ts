@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '@common/shared';
+import { MatSharedModule } from '@common/mat-shared';
 
 import { ResultsRoutingModule } from './results-routing.module';
 import { CalcuListComponent } from './calcu-list/calcu-list.component';
@@ -17,6 +18,7 @@ import { NzNotificationService, NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';
         SharedModule,
         ResultsRoutingModule,
         CmpSharedModule,
+        MatSharedModule,
     ],
     declarations: [
         CalcuListComponent,

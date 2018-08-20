@@ -64,10 +64,10 @@
 
 暂定分为四种分辨率
 ``` css
-@media max-width(979px) {}
-@media min-width(980px) {}
-@media min-width(1200px) {}
-@media min-width(1600px) {}
+@media (max-width:979px) {}
+@media (min-width:980px) {}
+@media (min-width:1200px) {}
+@media (min-width:1600px) {}
 ```
 
 ## Architecture

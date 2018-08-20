@@ -1,4 +1,4 @@
-<div id='container' class='ogms-responsive-div' *ngIf='list else listTemplate'>
+<div id='container' *ngIf='list else spinTemplate'>
     <div id='nav-filter-group'>
         <mat-button-toggle-group *ngIf='starFilters' [ngModel]='_ownerFilterV' (ngModelChange)='changeFilters($event, "owner")'>
             <mat-button-toggle *ngFor='let item of starFilters' [value]='item.value'>{{item.label}}</mat-button-toggle>
@@ -14,7 +14,7 @@
 
     <div class='list-box'>
         <div class='list-header'>
-            <span>{{count}} items found</span>
+            <span class='stat-span'>{{count}} items found</span>
             <span class='flex-item-1-1-auto'></span>
             <div *ngFor='let filter of sortsFilters'>
                 <button mat-button [matMenuTriggerFor]='popMenu'>
@@ -53,7 +53,7 @@
     </button>
 </div>
 
-<ng-template #listTemplate>
+<ng-template #spinTemplate>
     <div class='ogms-loading-container'>
         <mat-spinner></mat-spinner>
     </div>
