@@ -1,20 +1,7 @@
-.bg {
-    position: relative;
-    margin-bottom: -340px;
-    height: 420px;
-    background: url('/assets/img/article/bg-gradient.png') repeat-x;
-    div {
-        background: url('/assets/img/article/bg-main.png') no-repeat top center;
-        width: 100%;
-        height: 100%;
+.container {
+    background: radial-gradient(farthest-corner at 120px 420px, #fff, rgba(255, 255, 255, 0.01)), url(/assets/img/article/bg.svg) repeat-x;
+    background-size: auto 420px;
+    .content{
+        
     }
-}
-
-.content {
-    margin: 0 auto;
-    padding: 20px;
-    background: #fff;
-    // border: 1px solid #e5e5e5;
-    border-radius: 2px;
-    position: relative;
 }

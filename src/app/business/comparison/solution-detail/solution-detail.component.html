@@ -1,105 +1,104 @@
-
-    <div class='doc' *ngIf='sln'>
-        <div class='doc-title'>{{sln.meta.name}}</div>
-        <div class='doc-body row'>
-            <article class='main-content col-xs-9 col-sm-9 col-md-9 col-lg-9'>
-                <section>
-                    <div class='section-header flex-box-row-nowrap'>
-                        <span class='title'>Basic information</span>
-                        <span class='placeholder flex-item-1-1-auto'></span>
-                    </div>
-                    <div class='section-body'>
-                        <dl class='ogms-table-info'>
-                            <div nz-row>
-                                <dt nz-col nzSpan='4'>Author</dt>
-                                <dd nz-col nzSpan='8'>{{sln.auth.userName | undefined}}</dd>
-                                <dt nz-col nzSpan='4'>Authorization</dt>
-                                <dd nz-col nzSpan='8'>{{sln.auth.src | resourceSrc}}</dd>
-                                <dt nz-col nzSpan='4'>Create time</dt>
-                                <dd nz-col nzSpan='8'>{{sln.meta.time | date:'yyyy-MM-dd'}}</dd>
-                            </div>
-                        </dl>
-                        <div class='detail-desc'>
-                            {{sln.meta.desc}}
+<div class='doc' *ngIf='sln'>
+    <div class='doc-title'>{{sln.meta.name}}</div>
+    <div class='doc-body row'>
+        <article class='main-content col-xs-9 col-sm-9 col-md-9 col-lg-9'>
+            <section>
+                <div class='section-header flex-box-row-nowrap'>
+                    <span class='title'>Basic information</span>
+                    <span class='placeholder flex-item-1-1-auto'></span>
+                </div>
+                <div class='section-body'>
+                    <dl class='ogms-table-info'>
+                        <div nz-row>
+                            <dt nz-col nzSpan='4'>Author</dt>
+                            <dd nz-col nzSpan='8'>{{sln.auth.userName | undefined}}</dd>
+                            <dt nz-col nzSpan='4'>Authorization</dt>
+                            <dd nz-col nzSpan='8'>{{sln.auth.src | resourceSrc}}</dd>
+                            <dt nz-col nzSpan='4'>Create time</dt>
+                            <dd nz-col nzSpan='8'>{{sln.meta.time | date:'yyyy-MM-dd'}}</dd>
                         </div>
+                    </dl>
+                    <div class='detail-desc'>
+                        {{sln.meta.desc}}
                     </div>
-                </section>
-                <section>
-                    <div class="section-header flex-box-row-nowrap">
-                        <span class='title'>Comparison features</span>
-                        <span class='placeholder flex-item-1-1-auto'></span>
-                    </div>
-                    <div class="section-body">
-                        <div class='cmpObj' *ngFor='let cmpObj of sln.cmpObjs; let i= index'>
-                            <h3>{{i+1}}. {{cmpObj.name}}</h3>
-                            <section>
-                                <nz-tabset>
-                                    <nz-tab>
-                                        <ng-template #nzTabHeading>
-                                            Introduction
-                                        </ng-template>
-                                        <section>
-                                            <div class='desc detail-desc'>
-                                                <span>{{cmpObj.desc}}</span>
-                                            </div>
-                                            <div class='participants'>
-                                                <span *ngFor='let dataRefer of cmpObj.dataRefers' [routerLink]='["../../../models", dataRefer.msId]' class='topic model-topic'>{{dataRefer.msName}}</span>
-                                            </div>
+                </div>
+            </section>
+            <section>
+                <div class="section-header flex-box-row-nowrap">
+                    <span class='title'>Comparison features</span>
+                    <span class='placeholder flex-item-1-1-auto'></span>
+                </div>
+                <div class="section-body">
+                    <div class='cmpObj' *ngFor='let cmpObj of sln.cmpObjs; let i= index'>
+                        <h3>{{i+1}}. {{cmpObj.name}}</h3>
+                        <section>
+                            <nz-tabset>
+                                <nz-tab>
+                                    <ng-template #nzTabHeading>
+                                        Introduction
+                                    </ng-template>
+                                    <section>
+                                        <div class='desc detail-desc'>
+                                            <span>{{cmpObj.desc}}</span>
+                                        </div>
+                                        <div class='participants'>
+                                            <span *ngFor='let dataRefer of cmpObj.dataRefers' [routerLink]='["../../../models", dataRefer.msId]' class='topic model-topic'>{{dataRefer.msName}}</span>
+                                        </div>
+                                    </section>
+                                </nz-tab>
+                                <nz-tab>
+                                    <ng-template #nzTabHeading>
+                                        Configuration
+                                    </ng-template>
+                                    <section>
+                                        <section class='cmpObj-config'>
+                                            <h4>Basic Information</h4>
+                                            <dl class='ogms-table-info'>
+                                                <div nz-row>
+                                                    <dt nz-col nzSpan='10'>Comparison method</dt>
+                                                    <dd nz-col nzSpan='14'>
+                                                        <span *ngFor='let method of cmpObj.methods'>
+                                                            {{method}}
+                                                        </span>
+                                                    </dd>
+                                                </div>
+                                            </dl>
                                         </section>
-                                    </nz-tab>
-                                    <nz-tab>
-                                        <ng-template #nzTabHeading>
-                                            Configuration
-                                        </ng-template>
-                                        <section>
-                                            <section class='cmpObj-config'>
-                                                <h4>Basic Information</h4>
+                                        <section class='cmpObj-config'>
+                                            <h4>Data reference</h4>
+                                            <div>
                                                 <dl class='ogms-table-info'>
-                                                    <div nz-row>
-                                                        <dt nz-col nzSpan='10'>Comparison method</dt>
-                                                        <dd nz-col nzSpan='14'>
-                                                            <span *ngFor='let method of cmpObj.methods'>
-                                                                {{method}}
-                                                            </span>
-                                                        </dd>
+                                                    <div *ngFor='let dataRefer of cmpObj.dataRefers' nz-row>
+                                                        <dt nz-col nzSpan='10'>{{dataRefer.msName}}</dt>
+                                                        <dd nz-col nzSpan='14'>{{dataRefer.eventName}}</dd>
                                                     </div>
                                                 </dl>
-                                            </section>
-                                            <section class='cmpObj-config'>
-                                                <h4>Data reference</h4>
-                                                <div>
-                                                    <dl class='ogms-table-info'>
-                                                        <div *ngFor='let dataRefer of cmpObj.dataRefers' nz-row>
-                                                            <dt nz-col nzSpan='10'>{{dataRefer.msName}}</dt>
-                                                            <dd nz-col nzSpan='14'>{{dataRefer.eventName}}</dd>
-                                                        </div>
-                                                    </dl>
-                                                </div>
-                                            </section>
+                                            </div>
                                         </section>
-                                    </nz-tab>
-                                </nz-tabset>
-                            </section>
-                        </div>
+                                    </section>
+                                </nz-tab>
+                            </nz-tabset>
+                        </section>
                     </div>
-                </section>
-            </article>
+                </div>
+            </section>
+        </article>
 
-            <aside class='sider-content col-xs-3 col-sm-3 col-md-3 col-lg-3'>
-                <section class="sider-item">
-                    <div class="sider-item-title">
-                        <span>Tasks</span>
-                    </div>
-                    <div class="sider-item-body">
-                        <ul *ngIf='sln.tasks'>
-                            <li *ngFor='let task of sln.tasks'>
-                                <a [routerLink]='["../../tasks", task._id]'>{{task.meta.name}}</a>
-                                <div class='sider-desc'>{{task.meta.desc | stringLimit | description}}</div>
-                                <div>{{task.meta.time | date: 'yyyy-MM-dd'}}</div>
-                            </li>
-                        </ul>
-                    </div>
-                </section>
-            </aside>
-        </div>
+        <aside class='sider-content col-xs-3 col-sm-3 col-md-3 col-lg-3'>
+            <section class="sider-item">
+                <div class="sider-item-title">
+                    <span>Tasks</span>
+                </div>
+                <div class="sider-item-body">
+                    <ul *ngIf='sln.tasks'>
+                        <li *ngFor='let task of sln.tasks'>
+                            <a [routerLink]='["../../tasks", task._id]'>{{task.meta.name}}</a>
+                            <div class='sider-desc'>{{task.meta.desc | stringLimit | description}}</div>
+                            <div>{{task.meta.time | date: 'yyyy-MM-dd'}}</div>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+        </aside>
     </div>
+</div>

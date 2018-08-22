@@ -3,7 +3,7 @@
     .list-header {
         padding-bottom: 16px; 
         display: flex;
-        flex-flow: row nowrap;
+        flex-flow: row wrap;
         align-items: center;
         .stat-span {
             font-size: 20px;
@@ -20,6 +20,11 @@
                 float: left;
             }
             >div:nth-child(2) {}
+        }
+        @media (max-width: 768px) {
+            .stat-span {
+                flex:1 1 100%;
+            }
         }
     }
     .list-template-item {
@@ -86,7 +91,7 @@
 
 #nav-filter-group {
     display: flex;
-    flex-flow: row nowrap;
+    flex-flow: row wrap;
     justify-content: space-between;
     align-items: center;
     mat-button-toggle-group {
@@ -107,10 +112,17 @@
             width: 100%;
         }
     }
+
+    @media (max-width: 768px) {
+        >mat-form-field {
+            flex:1 1 100%;
+        }
+    }
 }
 
 #create-btn {
     position: absolute;
     right: 15px;
-    bottom: 15px;
+    top: -28px;
+    z-index: 100;
 }

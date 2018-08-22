@@ -17,7 +17,6 @@
     flex-flow: row nowrap;
 }
 
-.flex-item-auto-fill,
 .flex-item-1-1-auto {
     flex: 1 1 auto;
 }
@@ -40,4 +39,47 @@
 
 .flex-item-5 {
     flex: 5;
+}
+
+$paddingVertical: 24px;
+@media (max-width: 768px) {
+    $paddingWidth: 10px;
+    nav {
+        padding: 0 $paddingWidth;
+    }
+    .body-content {
+        padding: $paddingVertical $paddingWidth;
+    }
+    footer {
+        padding-left: $paddingWidth !important;
+        padding-right: $paddingWidth !important;
+    }
+}
+
+@media (min-width: 768px) {
+    $paddingWidth: 50px;
+    nav {
+        padding: 0 $paddingWidth;
+    }
+    .body-content {
+        padding: $paddingVertical $paddingWidth;
+    }
+    footer {
+        padding-left: $paddingWidth !important;
+        padding-right: $paddingWidth !important;
+    }
+}
+
+@media (min-width: 980px) {
+    $paddingWidth: 13%;
+    nav {
+        padding: 0 $paddingWidth;
+    }
+    .body-content {
+        padding: $paddingVertical $paddingWidth;
+    }
+    footer {
+        padding-left: $paddingWidth !important;
+        padding-right: $paddingWidth !important;
+    }
 }
