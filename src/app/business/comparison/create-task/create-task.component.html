@@ -16,7 +16,7 @@
                 </mat-form-field>
 
                 <mat-form-field class='form-item'>
-                    <textarea matInput placeholder='Task name' formControlName='desc' required></textarea>
+                    <textarea matInput placeholder='Task description' formControlName='desc' required></textarea>
                     <!-- <mat-hint>please input Task description</mat-hint> -->
                     <mat-error *ngIf='cmpTaskFG.get("desc").hasError("required")'>必填</mat-error>
                     <mat-error *ngIf='cmpTaskFG.get("desc").hasError("minLength")'>最小长度</mat-error>

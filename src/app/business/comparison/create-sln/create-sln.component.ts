@@ -53,9 +53,8 @@ export class CreateSlnComponent implements OnInit {
         });
         this.slnFG.statusChanges
             .subscribe(state => {
-                if (state === 'VALID') {
+                // if (state === 'VALID') {
                     let v = this.slnFG.value;
-
                     this.cmpSln.meta.name = v.name;
                     this.cmpSln.meta.desc = v.desc;
                     this.cmpSln.auth.src = v.auth;
@@ -67,15 +66,21 @@ export class CreateSlnComponent implements OnInit {
                                 return {
                                     msId: dataRefer.msId,
                                     msName: dataRefer.msName,
-                                    eventId: dataRefer.selected[1],
+                                    eventId: dataRefer.selected[1].id,
+                                    eventName: dataRefer.selected[1].name,
                                     field: dataRefer.selected[2]
                                 };
                             }),
-                            methods: _.map(cmpObj.methods, method => method._id)
+                            methods: _.map(cmpObj.methods, method => {
+                                return {
+                                    id: method._id,
+                                    name: method.meta.name
+                                }
+                            })
                         }
                     });
                     // console.log(JSON.stringify(this.cmpSln));
-                }
+                // }
             })
 
         this.fetchData();
@@ -133,12 +138,7 @@ export class CreateSlnComponent implements OnInit {
                                 });
                             }
                             else if(result === 'configure') {
-                                this.router.navigate(['../..', 'tasks', 'new'], {
-                                    relativeTo: this.route,
-                                    queryParams: {
-                                        slnId: this.cmpSln._id
-                                    }
-                                });
+                                this.router.navigate(['/comparison/solutions', this.cmpSln._id, 'invoke']);
                             }
                         });
                 }

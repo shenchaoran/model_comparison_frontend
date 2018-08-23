@@ -19,7 +19,7 @@
                             </mat-form-field>
 
                             <mat-form-field class='form-item'>
-                                <textarea matInput placeholder='Solution name' formControlName='desc' required></textarea>
+                                <textarea matInput placeholder='Solution description' formControlName='desc' required></textarea>
                                 <!-- <mat-hint>please input solution description</mat-hint> -->
                                 <mat-error *ngIf='slnFG.get("desc").hasError("required")'>必填</mat-error>
                                 <mat-error *ngIf='slnFG.get("desc").hasError("minLength")'>最小长度</mat-error>
@@ -100,11 +100,7 @@
                     <mat-step>
                         <ng-template matStepLabel>Preview outline</ng-template>
                         <div class='form-container'>
-                            <p>this is a outline</p>
-                            <p>this is a outline</p>
-                            <p>this is a outline</p>
-                            <p>this is a outline</p>
-                            <p>this is a outline</p>
+                            <ogms-cmp-sln-outline [cmpSln]='cmpSln'></ogms-cmp-sln-outline>
                         </div>
                         <div class='stepy-btn-group'>
                             <button mat-stroked-button matStepperPrevious color="primary">Back</button>

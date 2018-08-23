@@ -1,4 +1,6 @@
 import { NgModule } from '@angular/core';
+import { CdkTableModule } from '@angular/cdk/table';
+import { CdkTreeModule } from '@angular/cdk/tree';
 import {
     MatCommonModule,
     MatInputModule,
@@ -43,6 +45,8 @@ import {
 } from '@angular/material';
 
 const MAT_MODULES = [
+    CdkTableModule,
+    CdkTreeModule,
     MatCommonModule,
     MatInputModule,
     MatStepperModule,

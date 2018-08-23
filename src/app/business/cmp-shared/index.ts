@@ -10,6 +10,7 @@ import { CalcuResultComponent } from './calcu-result/calcu-result.component';
 import { StdDataBaseComponent } from './std-data-base/std-data-base.component';
 import { CmpMethodCfgComponent } from './cmp-method-cfg/cmp-method-cfg.component';
 import { OlModule } from '../ol/ol.module'
+import { CmpSlnOutlineComponent } from './cmp-sln-outline/cmp-sln-outline.component';
 //////////////////// service ////////////////////////
 import { LoginService } from '@common/feature/login/login.service';
 import { StdDataService } from '../services/std-data.service';
@@ -28,6 +29,7 @@ const COMPONENTS = [
     StdDataBaseComponent,
     CmpMethodCfgComponent,
     SiteDialog,
+    CmpSlnOutlineComponent,
 ];
 const SERVICES = [
     LoginService,
