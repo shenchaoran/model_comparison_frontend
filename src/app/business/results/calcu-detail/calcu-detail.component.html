@@ -20,7 +20,7 @@
                             <dd nz-col nzSpan='8'>
                                 <span>
                                     {{ msRecord.state === 'INIT'? 'To configured' : msRecord.state === 'RUNNING'? 'Running' : msRecord.state === 'COULD_START'?
-                                    'Could start' : msRecord.state === 'START_PENDING'? 'Starting' : msRecord.state === 'START_FAILED'?
+                                    'Ready to start' : msRecord.state === 'START_PENDING'? 'Starting' : msRecord.state === 'START_FAILED'?
                                     'Invoking failed' : msRecord.state === 'FINISHED_FAILED'? 'Run failed' : msRecord.state
                                     === 'FINISHED_SUCCEED'? 'Run succeed' : 'Unknown' }}
                                 </span>

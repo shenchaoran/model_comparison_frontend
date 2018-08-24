@@ -84,7 +84,7 @@ export class CalcuTask {
 
 export const CalcuTaskState = Enum(
     'INIT',
-    'PAUSE',
+    'COULD_START',
     'START_PENDING',
     'START_FAILED',
     'RUNNING',

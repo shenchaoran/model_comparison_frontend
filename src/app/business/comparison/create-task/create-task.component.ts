@@ -4,7 +4,7 @@ import { Router, ActivatedRoute, Params } from "@angular/router";
 import { DynamicTitleService } from "@common/core/services/dynamic-title.service";
 import { DocBaseComponent } from '@common/shared';
 import { FormBuilder, Validators, FormGroup, FormArray, FormControl } from '@angular/forms';
-import { CmpTask, CalcuTask,ResourceSrc, CmpState } from '@models';
+import { CmpTask, CalcuTask, ResourceSrc, CmpState, CalcuTaskState } from '@models';
 
 
 
@@ -86,6 +86,9 @@ export class CreateTaskComponent extends DocBaseComponent implements OnInit {
             });
 
             calcuTask.meta.name = this._tabLabelCfg[i].label;
+            if(type==='save') {
+                calcuTask.state = CalcuTaskState.COULD_START;
+            }
             this.calcuTasks.push(calcuTask);
         })
         this.cmpTaskService.insert({
