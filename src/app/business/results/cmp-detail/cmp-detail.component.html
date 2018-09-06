@@ -1,3 +1,70 @@
-<p>
-  cmp-detail works!
-</p>
+<div class='ogms-loading-container' *ngIf='!cmpTask else docTemp'>
+    <mat-spinner></mat-spinner>
+</div>
+<ng-template #docTemp>
+    <div class='container'>
+        <article>
+            <h2>{{cmpTask?.meta?.name}}</h2>
+            <section>
+                <h3>Description</h3>
+                <p>{{cmpTask?.meta.desc}}</p>
+            </section>
+            <section>
+                <h3>Participants</h3>
+                <div>
+                    <mat-chip-list>
+                        <mat-chip *ngFor='let ms of cmpTask?.participants' [routerLink]='["/models", ms._id]' class='topic model-topic'>{{ms.MDL.meta.name}}</mat-chip>
+                    </mat-chip-list>
+                </div>
+            </section>
+            <section>
+                <h3>Comparison features</h3>
+                <section *ngFor='let cmpObj of cmpTask?.cmpObjs; let i=index'>
+                    <h4>{{i+1}}. {{cmpObj.name}}</h4>
+                    <p>
+                        <i>Description:</i>
+                    </p>
+                    <p>{{cmpObj.desc}}</p>
+                    <p>
+                        <i>Data configuration:</i>
+                    </p>
+                    <nz-table #cmpObjTable [nzData]='cmpObj.dataRefers' nzShowPagination='false'>
+                        <thead>
+                            <tr>
+                                <th>Model Name</th>
+                                <th>Data Name</th>
+                                <th>Column Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor='let dataRefer of cmpObjTable.data'>
+                                <td>{{dataRefer.msName}}</td>
+                                <td>{{dataRefer.eventName}}</td>
+                                <td>{{dataRefer.field}}</td>
+                            </tr>
+                        </tbody>
+                    </nz-table>
+                    <p>
+                        <i>Comparison methods:</i>
+                    </p>
+                    <div *ngFor='let method of cmpObj.methods'>
+                        <!-- <mat-chip-list>
+                            <mat-chip class='topic method-topic' *ngFor='let method of cmpObj.methods'>{{method.name}}</mat-chip>
+                        </mat-chip-list> -->
+                        <p>{{method.name}}</p>
+                        <ng-container *ngIf='method.id === "5b713f39a4857f1ba4be23ff"'>
+                            <div #echartDOM class='echart-dom'></div>
+                        </ng-container>
+                    </div>
+                    <!-- <p>
+                        <i>Details:</i>
+                        <a [routerLink]='["../calculation/"]'></a>
+                    </p> -->
+                </section>
+            </section>
+
+        </article>
+
+        <aside></aside>
+    </div>
+</ng-template>

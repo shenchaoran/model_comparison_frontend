@@ -4,6 +4,7 @@
 import { ResourceSrc } from '@models/resource.enum';
 import { LoginService } from '@common/feature/login/login.service';
 import * as ObjectID from 'objectid';
+import { UDXSchema } from './UDX-schema.class';
 
 export class CmpSolution {
     _id?: any;
@@ -74,7 +75,11 @@ export class DataRefer {
     msId: string;
     msName: string;
     eventId: string;
+    eventName: string;
+    schemaId: string;
+    msrName?: string;
+    msrId?: string;
+    value?: string;
     field?: string;
-    dataId?: string;
     cmpResult?: any;
 }

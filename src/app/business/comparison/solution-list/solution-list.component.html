@@ -5,9 +5,11 @@
                 <a [routerLink]='sln._id'>{{sln.auth.userName}}/{{sln.meta.name}}</a>
             </h3>
             <p>{{sln.meta.desc | stringLimit: 180 | description}}</p>
-            <mat-chip-list>
-                <mat-chip *ngFor='let ms of sln.participants' [routerLink]='["/models", ms._id]' class='topic model-topic'>{{ms.MDL.meta.name}}</mat-chip>
-            </mat-chip-list>
+            <p>
+                <mat-chip-list>
+                    <mat-chip *ngFor='let ms of sln.participants' [routerLink]='["/models", ms._id]' class='topic model-topic'>{{ms.MDL.meta.name}}</mat-chip>
+                </mat-chip-list>
+            </p>
             <div>{{sln.meta.time | date: 'yyyy-MM-dd'}}</div>
         </div>
         <div class='actions-group'>

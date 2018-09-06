@@ -12,6 +12,7 @@ export enum SchemaName {
 };
 
 export class UDXSchema {
+    msId?: string;
     id: string;
     src: ResourceSrc;
     name?: string;

@@ -54,7 +54,7 @@
                                 <mat-icon (click)='delInstance(i)'>clear</mat-icon>
                             </ng-template>
                             <div class='calcu-cfg-container'>
-                                <ogms-calcu-cfg [formControlName]='i' (onValidChange)='onCalcuValidChange($event)'></ogms-calcu-cfg>
+                                <ogms-calcu-cfg [formControlName]='i' (onValidChange)='onCalcuValidChange($event)' (onSiteSelected)='onSiteSelected($event, i)'></ogms-calcu-cfg>
                             </div>
                         </mat-tab>
                     </mat-tab-group>

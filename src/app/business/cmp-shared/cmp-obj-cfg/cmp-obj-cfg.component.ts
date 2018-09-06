@@ -56,7 +56,7 @@ export class CmpObjCfgComponent implements ControlValueAccessor, OnInit {
     }
     @Input()
     set participants(v) {
-        this.participants$.next(v)
+        this.participants$.next(_.cloneDeep(v))
     }
     get methodsFG() {
         return this.cmpObjFG.get('methods');

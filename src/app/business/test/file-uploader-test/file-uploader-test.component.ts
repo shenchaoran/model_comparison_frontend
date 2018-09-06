@@ -369,6 +369,27 @@ export class FileUploaderTestComponent implements OnInit {
                     onEachFeature: onEachFeature
                 }).addTo(map);
             }
+
+            var myChart = echarts.init($('#echart-dom')[0]);
+            var option = {
+                title: {
+                    text: 'ECharts ????'
+                },
+                tooltip: {},
+                legend: {
+                    data: ['??']
+                },
+                xAxis: {
+                    data: ["??", "???", "???", "??", "???", "??"]
+                },
+                yAxis: {},
+                series: [{
+                    name: '??',
+                    type: 'bar',
+                    data: [5, 20, 36, 10, 10, 20]
+                }]
+            };
+            myChart.setOption(option);
         }, 0);
     }
 

@@ -5,10 +5,12 @@
                 <a [routerLink]='msRecord._id'>{{msRecord.auth.userName}}/{{msRecord.meta.name}}</a>
             </h3>
             <p>{{msRecord.meta.desc | stringLimit: 180 | description}}</p>
-            <mat-chip-list>
-                <mat-chip *ngIf='msRecord.topicId' [routerLink]='["../topics", msRecord.topicId]'>{{msRecord.topic}}</mat-chip>
-                <mat-chip *ngIf='msRecord.msId' [routerLink]='["../models/", msRecord.msId]'>{{msRecord.msName + "," + msRecord.msId}}</mat-chip>
-            </mat-chip-list>
+            <p>
+                <mat-chip-list>
+                    <mat-chip *ngIf='msRecord.topicId' [routerLink]='["../topics", msRecord.topicId]'>{{msRecord.topic}}</mat-chip>
+                    <mat-chip *ngIf='msRecord.msId' [routerLink]='["../models/", msRecord.msId]'>{{msRecord.msName + "," + msRecord.msId}}</mat-chip>
+                </mat-chip-list>
+            </p>
             <div>{{msRecord.meta.time | date: 'yyyy-MM-dd hh:mm'}}</div>
         </div>
         <div class='actions-group'>

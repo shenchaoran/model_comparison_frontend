@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from "@angular/core";
+import { Component, OnInit, HostListener, ViewChildren, QueryList, ElementRef, Renderer2 } from "@angular/core";
 import { CmpSlnService } from "../../comparison/comparison.module";
 import { CmpTaskService } from '../../services/cmp-task.service';
 import { MSService } from '../../models/models.module';
@@ -7,28 +7,76 @@ import { NzNotificationService, NzModalService } from "ng-zorro-antd";
 import { DynamicTitleService } from "@common/core/services/dynamic-title.service";
 import { ReactiveFormsModule } from "@angular/forms";
 import { DocBaseComponent } from '@common/shared';
+import { Observable, interval } from 'rxjs'
+import { map, switchMap, filter, tap, startWith } from 'rxjs/operators';
+import { CmpState } from '@models'
 
 @Component({
-  selector: 'ogms-cmp-detail',
-  templateUrl: './cmp-detail.component.html',
-  styleUrls: ['./cmp-detail.component.scss']
+    selector: 'ogms-cmp-detail',
+    templateUrl: './cmp-detail.component.html',
+    styleUrls: ['./cmp-detail.component.scss']
 })
 export class CmpDetailComponent extends DocBaseComponent implements OnInit {
-    task;
+    cmpTask;
+    @ViewChildren('echartDOM') echartDOM: QueryList<ElementRef>;
 
     constructor(
         public route: ActivatedRoute,
         public cmpSlnService: CmpTaskService,
-        public title: DynamicTitleService
-    ) { 
+        public title: DynamicTitleService,
+        public renderer2: Renderer2
+    ) {
         super(route, cmpSlnService, title);
     }
 
     ngOnInit() {
         super.ngOnInit();
         this._subscriptions.push(this.doc.subscribe(doc => {
-            this.task = doc;
+            this.cmpTask = doc;
+            this.fetchInterval();
         }));
     }
 
+    private fetchInterval() {
+        const record$ = interval(3000).pipe(
+            switchMap((v, i) => {
+                return this.cmpSlnService.findOne(this.cmpTask._id, false);
+            }),
+            map(response => {
+                if (!response.error) {
+                    return response.data;
+                }
+            })
+        )
+
+        const subscription = record$.subscribe(doc => {
+            this.cmpTask = doc;
+            if (this.cmpTask.state !== CmpState.RUNNING) {
+                subscription.unsubscribe();
+                if (this.cmpTask.state === CmpState.FINISHED_SUCCEED ||
+                    this.cmpTask.state === CmpState.FINISHED_FAILED)
+                    this.buildChart();
+            }
+        });
+        this._subscriptions.push(subscription)
+    }
+
+    private buildChart() {
+        let i = 0;
+        setTimeout(() => {
+            let $echartDOMs = $('.echart-dom')
+            this.cmpTask.cmpObjs.map(cmpObj => {
+                cmpObj.methods.map((method) => {
+                    if (method.id === '5b713f39a4857f1ba4be23ff') {
+                        if (method.result.state === CmpState.FINISHED_SUCCEED) {
+                            echarts
+                                .init($echartDOMs[i])
+                                .setOption(method.result);
+                        }
+                        i++;
+                    }
+                })
+            })
+        }, 10);
+    }
 }

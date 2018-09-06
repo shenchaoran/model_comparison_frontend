@@ -1,7 +1,9 @@
+import { UDXSchema } from '@models/UDX-schema.class';
 import { ResourceSrc } from './resource.enum';
 import { LoginService } from '@common/feature/login/login.service';
 import * as ObjectID from 'objectid';
 import { Enum } from 'typescript-string-enums/dist';
+import { DataRefer, CmpObj } from '.';
 
 export class CmpTask {
     _id?: any;
@@ -23,6 +25,8 @@ export class CmpTask {
         _id: string,
         progress: number
     }[];
+    cmpObjs: CmpObj[];
+    schemas: UDXSchema[];
 
     constructor() {
         this._id = ObjectID();
@@ -32,6 +36,8 @@ export class CmpTask {
             time: new Date().getTime()
         };
         this.calcuTaskIds = [];
+        this.cmpObjs = [];
+        this.schemas = [];
         
         const user = LoginService.getUser();
         if(user) {

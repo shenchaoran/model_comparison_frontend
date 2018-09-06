@@ -41,7 +41,8 @@
                             "node_modules/leaflet/dist/leaflet.js",
                             "node_modules/geojson-vt/geojson-vt-dev.js",
                             "node_modules/topojson/dist/topojson.min.js",
-                            "node_modules/showdown/dist/showdown.min.js"
+                            "node_modules/showdown/dist/showdown.min.js",
+                            "node_modules/echarts/dist/echarts.min.js"
                         ]
                     },
                     "configurations": {

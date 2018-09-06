@@ -50,7 +50,7 @@ export class InvokeComponent extends DocBaseComponent implements OnInit {
 
             this.msiForm = this.fb.group({
                 _id: this.msInstance._id,
-                name: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(25)]],
+                name: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
                 desc: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(140)]],
                 src: [ResourceSrc.PUBLIC, Validators.required],
                 msInstance: [null, Validators.required]
@@ -77,7 +77,7 @@ export class InvokeComponent extends DocBaseComponent implements OnInit {
             this.msInstance.state = CalcuTaskState.INIT;
         }
         else if (type === 'invoke') {
-            this.msInstance.state = CalcuTaskState.START_PENDING;
+            this.msInstance.state = CalcuTaskState.COULD_START;
         }
         this._subscriptions.push(this.cmpSlnService.invoke(this.msInstance)
             .subscribe(response => {

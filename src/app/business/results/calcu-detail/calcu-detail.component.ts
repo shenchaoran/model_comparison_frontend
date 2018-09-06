@@ -7,8 +7,8 @@ import { NzNotificationService, NzModalService } from "ng-zorro-antd";
 import { DynamicTitleService } from "@common/core/services/dynamic-title.service";
 import { ReactiveFormsModule } from "@angular/forms";
 import { DocBaseComponent } from '@common/shared';
-import { Observable, interval } from 'rxjs'
 import { CalcuTaskState } from '@models'
+import { Observable, interval } from 'rxjs'
 import { map, switchMap, filter, tap, startWith } from 'rxjs/operators';
 
 @Component({

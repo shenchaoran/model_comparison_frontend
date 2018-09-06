@@ -56,6 +56,7 @@ declare var postal: any;
 declare let Handsontable: any;
 declare let geojsonvt: any;
 declare let showdown: any;
+declare var echart: any;
 // declare let ol: any;
 // declare var proj4: any;
 

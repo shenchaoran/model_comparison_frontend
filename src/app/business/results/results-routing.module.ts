@@ -45,10 +45,16 @@ const routes: Routes = [
             },
             {
                 path: 'comparison/:id',
-                component: CmpDetailComponent,
-                data: {
-                    title: 'Results & Diagnostics'
-                }
+                component: DocDetailTemplateComponent,
+                children: [
+                    {
+                        path: '',
+                        component: CmpDetailComponent,
+                        data: {
+                            title: 'Results & Diagnostics'
+                        }
+                    }
+                ]
             }
         ]
     }

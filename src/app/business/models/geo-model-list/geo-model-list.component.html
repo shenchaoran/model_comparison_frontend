@@ -3,9 +3,11 @@
             <div class='detail-group'>
                 <h3><a [routerLink]='model._id'>{{model.auth.nodeName}}/{{model.MDL.meta.name}}</a></h3>
                 <p>{{model.MDL.meta.abstract | stringLimit: 180 | description}}</p>
-                <mat-chip-list>
-                    <mat-chip *ngIf='model.topic' class='topic'>{{model.topic}}</mat-chip>
-                </mat-chip-list>
+                <p>
+                    <mat-chip-list>
+                        <mat-chip *ngIf='model.topic' class='topic'>{{model.topic}}</mat-chip>
+                    </mat-chip-list>
+                </p>
                 <div>{{model.auth.nodeName}}</div>
             </div>
             <div class='actions-group'>

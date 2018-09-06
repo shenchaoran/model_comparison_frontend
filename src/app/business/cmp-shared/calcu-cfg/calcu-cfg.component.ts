@@ -56,6 +56,7 @@ export class CalcuCfgComponent implements OnInit, AfterViewInit {
     }
     @Input() width = '350px';
     @Output() onValidChange = new EventEmitter<boolean>();
+    @Output() onSiteSelected = new EventEmitter<boolean>();
 
     fileUploaderOptions: NgUploaderOptions;
 
@@ -233,6 +234,7 @@ export class CalcuCfgComponent implements OnInit, AfterViewInit {
                     tmpCtrl.updateValueAndValidity();
                     // 手动更新，否则 label 总是不显示值
                     this.cdRef.markForCheck();
+                    this.onSiteSelected.emit(site)
                 }
             });
     }
