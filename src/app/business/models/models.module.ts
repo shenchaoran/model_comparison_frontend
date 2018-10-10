@@ -1,3 +1,4 @@
+import { UserService } from './../user/user.service';
 import { MatSharedModule } from '@common/mat-shared';
 import { OlModule } from '../ol/ol.module';
 import { NgModule } from '@angular/core';
@@ -9,7 +10,6 @@ import { GeoModelDetailComponent } from './geo-model-detail/geo-model-detail.com
 import { GeoModelListComponent } from './geo-model-list/geo-model-list.component';
 import { InvokeComponent } from './invoke/invoke.component';
 import { CmpSharedModule } from '../cmp-shared';
-import { LoginService } from '@common/feature/login/login.service';
 import { NzNotificationService, NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';
 
 export * from '../services/geo-models.service';
@@ -29,7 +29,7 @@ export * from '../services/geo-models.service';
     ],
     providers: [
         MSService,
-        LoginService,
+        UserService,
         NzNotificationService
     ]
 })

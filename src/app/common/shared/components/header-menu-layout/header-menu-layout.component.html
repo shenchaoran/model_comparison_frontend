@@ -1,18 +1,16 @@
-<div class="header-menu-layout">
-    <nav>
-        <img id="logo" routerLink='/home' src="assets/img/app/logo_deep_whole.png" height="35" />
-        <form id='search' autocomplete="on">
-            <input type='input' name='q' spellcheck="false" [(ngModel)]='q' placeholder='Search' autocomplete="on">
-            <button hidden type='submit' (click)='search()'></button>
-        </form>
-        <div id="menu">
-            <ogms-header-menu [type]="'HEADER_MENUS'"></ogms-header-menu>
-        </div>
-        <ogms-header-pull-right id="login-menu"></ogms-header-pull-right>
-    </nav>
-    <section class='body'>
-        <router-outlet></router-outlet>
-    </section>
-    <nz-back-top></nz-back-top>
-    <ogms-footer></ogms-footer>
-</div>
+<nav>
+    <img id="logo" routerLink='/home' src="assets/img/app/logo-blue-white.png" height="35" />
+    <form id='search' autocomplete="on">
+        <input type='input' name='q' spellcheck="false" [(ngModel)]='q' placeholder='Search' autocomplete="on">
+        <button hidden type='submit' (click)='search()'></button>
+    </form>
+    <div id="menu">
+        <ogms-header-menu [type]="'HEADER_MENUS'"></ogms-header-menu>
+    </div>
+    <ogms-header-pull-right id="login-menu"></ogms-header-pull-right>
+</nav>
+<section class='body'>
+    <router-outlet></router-outlet>
+</section>
+<nz-back-top></nz-back-top>
+<ogms-footer></ogms-footer>

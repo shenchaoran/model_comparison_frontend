@@ -1,6 +1,6 @@
 // TODO divider
 import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
-import { LoginService } from '@common/feature/login/login.service';
+import { UserService } from '../../../../../business/user/user.service';
 
 @Component({
     selector: 'ogms-subMenu',
@@ -19,7 +19,7 @@ export class SubMenuComponent implements OnInit, AfterViewInit {
         return this._subMenu;
     }
     constructor(
-        private loginService: LoginService
+        private userService: UserService
     ) { }
 
     ngOnInit() {
@@ -30,7 +30,7 @@ export class SubMenuComponent implements OnInit, AfterViewInit {
     }
 
     signOut() {
-        this.loginService.loginOut();
+        this.userService.signOut();
         postal
             .channel('MENU')
             .publish('logout');

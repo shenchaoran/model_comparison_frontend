@@ -140,6 +140,8 @@ export class CmpObjCfgComponent implements ControlValueAccessor, OnInit {
 
     }
 
+    onSelected(e) {}
+
     private propagateChange = (e: any) => { };
 
     public writeValue(obj: any) {

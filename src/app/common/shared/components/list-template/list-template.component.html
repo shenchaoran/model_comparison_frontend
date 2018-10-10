@@ -1,4 +1,4 @@
-<div class='body-content' id='container' *ngIf='list else spinTemplate'>
+<div class='main-content' id='container' *ngIf='list else spinTemplate'>
     <div id='nav-filter-group'>
         <mat-button-toggle-group *ngIf='starFilters' [ngModel]='_ownerFilterV' (ngModelChange)='changeFilters($event, "owner")'>
             <mat-button-toggle *ngFor='let item of starFilters' [value]='item.value'>{{item.label}}</mat-button-toggle>

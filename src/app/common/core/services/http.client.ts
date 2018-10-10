@@ -17,7 +17,7 @@ export class _HttpClient {
         private http: HttpClient,
         @Inject('BACKEND') private backend,
         private loading: SlimLoadingBarService,
-//private _notice: NzNotificationService
+        //private _notice: NzNotificationService
     ) { }
 
     private appendDomain(url: string): string {
@@ -25,15 +25,15 @@ export class _HttpClient {
     }
 
     private appendJWT(url: string, appendJWT: boolean, withRequestProgress?: boolean): string {
-        if(withRequestProgress !== false)
+        if (withRequestProgress !== false)
             this.loading.start();
         url = this.appendDomain(url);
-        if(appendJWT !== false) {
+        if (appendJWT !== false) {
             const jwtStr = localStorage.getItem('jwt');
             let jwt = undefined;
-            if(jwtStr) {
+            if (jwtStr) {
                 jwt = JSON.parse(jwtStr);
-                if(url.indexOf('?') === -1) {
+                if (url.indexOf('?') === -1) {
                     url += `?Authorization=bearer ${jwt.token}`;
                 }
                 else {
@@ -41,7 +41,7 @@ export class _HttpClient {
                 }
             }
             else {
-                
+
             }
         }
         return url;
@@ -51,9 +51,9 @@ export class _HttpClient {
         return Observable.create(observer => {
             observable
                 .subscribe(response => {
-                    if(withRequestProgress !== false)
+                    if (withRequestProgress !== false)
                         this.loading.complete();
-                    if(parseRes !== false) {
+                    if (parseRes !== false) {
                         if (!response.error) {
                             observer.next({
                                 data: response.data
@@ -91,7 +91,7 @@ export class _HttpClient {
 
     post(
         url: string,
-        body: any|null,
+        body: any | null,
         options: any = {},
         appendJWT?: boolean,
         parseRes?: boolean,
@@ -112,13 +112,13 @@ export class _HttpClient {
     }
 
     put(
-      url: string,
-      body: any|null,
-      options: any = {},
-      appendJWT?: boolean,
-      parseRes?: boolean
-  ): Observable<any> {
-      url = this.appendJWT(url, appendJWT);
-      return this.resInterceptor(this.http.put(url, body, options), parseRes);
-  }
+        url: string,
+        body: any | null,
+        options: any = {},
+        appendJWT?: boolean,
+        parseRes?: boolean
+    ): Observable<any> {
+        url = this.appendJWT(url, appendJWT);
+        return this.resInterceptor(this.http.put(url, body, options), parseRes);
+    }
 }

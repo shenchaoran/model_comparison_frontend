@@ -5,7 +5,7 @@
 
 import { ResourceSrc } from '@models/resource.enum';
 import * as ObjectID from 'objectid';
-import { LoginService } from '@common/feature/login/login.service';
+import { UserService } from '../business/user/user.service';
 import { Enum } from 'typescript-string-enums/dist';
 
 
@@ -64,7 +64,7 @@ export class CalcuTask {
             time: new Date().getTime()
         };
         this.state = CalcuTaskState.INIT;
-        const user = LoginService.getUser();
+        const user = UserService.getUser();
         if(user) {
             this.auth = {
                 userId: user._id,

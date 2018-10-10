@@ -12,7 +12,7 @@ import { MatSharedModule } from '@common/mat-shared';
 import { ListFilterService } from '@common/shared/components/list-template/list-filter.service';
 import { HeaderMenuService } from '@common/shared/components/header-menu/services/header-menu.service';
 import { BaMenuService } from '@common/shared/components/header-menu/services/baMenu.service';
-import { LoginService } from '@common/feature/login/login.service';
+import { UserService } from '../../business/user/user.service';
 import { NzNotificationService, NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';
 
 import {
@@ -65,7 +65,7 @@ const SERVICES = [
     BaThemePreloader,
     BaThemeSpinner,
     ListFilterService,
-    LoginService,
+    UserService,
     BaMenuService,
     HeaderMenuService,
 ];

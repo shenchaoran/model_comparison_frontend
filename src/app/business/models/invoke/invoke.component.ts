@@ -3,7 +3,7 @@ import { MSService } from "../../services/geo-models.service";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { NzNotificationService, NzModalService } from "ng-zorro-antd";
 import { DynamicTitleService } from "@common/core/services/dynamic-title.service";
-import { LoginService } from '@common/feature/login/login.service';
+import { UserService } from '../../user/user.service';
 import { ResourceSrc, CalcuTaskState, CalcuTask } from '@models';
 import {
     AbstractControl,
@@ -32,12 +32,12 @@ export class InvokeComponent extends DocBaseComponent implements OnInit {
         public cmpSlnService: MSService,
         //private _notice: NzNotificationService,
         public title: DynamicTitleService,
-        public loginService: LoginService,
+        public userService: UserService,
         public fb: FormBuilder,
         public router: Router
     ) {
         super(route, cmpSlnService, title);
-        this.loginService.checkLogin();
+        this.userService.checkLogin();
     }
 
     ngOnInit() {

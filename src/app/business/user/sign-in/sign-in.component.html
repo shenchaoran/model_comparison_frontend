@@ -1,0 +1,33 @@
+<div>
+    <div class='logo'>
+        <img src='assets/img/app/logo-blue-gray.png' routerLink='/home' width='120'>
+        Sign in to OpenGMS
+    </div>
+    <form class='login-form' [formGroup]='signInFG'>
+        <mat-form-field>
+            <input matInput placeholder='Username' formControlName='username'>
+            <mat-error *ngIf=''>必填</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <input [type]='hide? "password": "text"' matInput placeholder="Password" formControlName='password'>
+            <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+            <mat-hint><a routerLink='../password-reset'>Forgot password?</a></mat-hint>
+            <mat-error *ngIf=''>必填</mat-error>
+        </mat-form-field>
+        <div class='remember-account'>
+            <mat-checkbox color='primary' formControlName='rememberAccount'>Remember the account</mat-checkbox>
+        </div>
+        <button mat-flat-button color="primary" [disabled]='!signInFG.valid' (click)='onSubmit()'>{{isPending? 'Signing in ...': 'Sign in'}}</button>
+    </form>
+    <div class='error-panel' [style.display]='errorInfo.show? "block": "none"'>
+        {{errorInfo.message}}
+    </div>
+    <p class='create-form'>
+        New to OpenGMS? <a routerLink='../sign-up'>Create an account</a>.
+    </p>
+    <div class='footer'>
+        <a routerLink='/home'>Home</a>
+        <a routerLink='http://opengmsteam.com/' target='_blank'>About</a>
+        <a>Contact OpenGMS</a>
+    </div>
+</div>

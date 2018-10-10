@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import { NgUploaderOptions } from 'ngx-uploader';
 import { ResourceSrc, CalcuTask, CmpSolution } from '@models';
-import { LoginService } from '@common/feature/login/login.service';
+import { UserService } from '../../user/user.service';
 import { StdDataService } from '../../services/std-data.service';
 import {
     AbstractControl,
@@ -62,14 +62,14 @@ export class CalcuCfgComponent implements OnInit, AfterViewInit {
 
     constructor(
         @Inject('BACKEND') private backend,
-        private loginService: LoginService,
+        private userService: UserService,
         private fb: FormBuilder,
         private stdService: StdDataService,
         public dialog: MatDialog,
         public cdRef: ChangeDetectorRef,
     ) {
-        const token = this.loginService.getToken();
-        const user = this.loginService.getUser();
+        const token = this.userService.token;
+        const user = this.userService.user;
 
         this.fileUploaderOptions = {
             url: '/data',

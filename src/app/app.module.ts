@@ -9,12 +9,12 @@ import { AppTranslationModule } from './app.translation.module';
 import { NgxSharedModule } from '@common/ngx-shared';
 import { SharedModule } from '@common/shared';
 import { CoreModule } from '@common/core/core.module';
-import { routing } from './app.routing';
+import { AppRoutingModule } from './app.routing';
 import { App } from './app.component';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { NzNotificationService, NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';
 import { DisqusModule } from "ngx-disqus";
-import { LoginService } from '@common/feature/login/login.service';
+import { UserService  } from './business/user/user.service';
 
 @NgModule({
     bootstrap: [App],
@@ -24,7 +24,7 @@ import { LoginService } from '@common/feature/login/login.service';
         BrowserAnimationsModule,
         NgZorroAntdModule,
         RouterModule,
-        routing,
+        AppRoutingModule,
 
         NgxSharedModule,
         AppTranslationModule,
@@ -40,7 +40,7 @@ import { LoginService } from '@common/feature/login/login.service';
             useValue: { nzDuration: 3000, nzTop: '60px' }
         },
         NzNotificationService,
-        LoginService,
+        UserService,
     ]
 })
 export class AppModule {}

@@ -61,13 +61,22 @@
 ```
 
 ### responsive
+- nav 和 footer 不用管，响应式是写好的
+- 中间的 main-content 部分的响应式，在需要应用布局时，给 div 添加 .main-content 类名即可
 
-暂定分为四种分辨率
 ``` css
-@media (max-width:979px) {}
-@media (min-width:980px) {}
-@media (min-width:1200px) {}
-@media (min-width:1600px) {}
+@mixin layout($paddingHorizontal) {
+    nav {
+        padding: 0 $paddingHorizontal;
+    }
+    .main-content {
+        padding: 24px $paddingHorizontal;
+    }
+    footer {
+        padding-left: $paddingHorizontal !important;
+        padding-right: $paddingHorizontal !important;
+    }
+}
 ```
 
 ## Architecture

@@ -1,8 +1,8 @@
+import { UserService } from './../business/user/user.service';
 /**
  * 比较方案只是比较对象的集合
  */
 import { ResourceSrc } from '@models/resource.enum';
-import { LoginService } from '@common/feature/login/login.service';
 import * as ObjectID from 'objectid';
 import { UDXSchema } from './UDX-schema.class';
 
@@ -31,7 +31,7 @@ export class CmpSolution {
             time: new Date().getTime()
         };
         this.cmpObjs = [];
-        const user = LoginService.getUser();
+        const user = UserService.getUser();
         if(user) {
             this.auth = {
                 userId: user._id,
