@@ -1,0 +1,61 @@
+form {
+    position: relative;
+
+    .form-container {
+        // padding-bottom: 20px;
+        margin: 0 30px;
+    }
+    
+    .form-container:last-child {
+        margin-bottom: 0;
+    }
+
+    .form-item {
+        margin-bottom: 20px;
+    }
+
+    .title {
+        font-size: 18px;
+        i {
+            padding: 5px;
+            background: #efefef;
+        }
+    }
+}
+
+.cmpObj-basic-info {
+    display: flex;
+    flex-flow: column nowrap;
+    mat-form-field {
+        width: 50%;
+    }
+}
+
+.method-select-group {
+    width: 80%;
+    #view-method-all {
+        margin-left: 10px;
+    }
+}
+
+mat-form-field {
+    display: inline-block;
+}
+
+.dataRefer-group {
+    margin: 20px 0;
+}
+
+.dataRefer-item {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    width: 80%;
+    label {
+        margin-right: 20px;
+        flex: 1 1 25%;
+    }
+    ogms-mat-cascader-select {
+        flex: 3 1 75%;
+    }
+}

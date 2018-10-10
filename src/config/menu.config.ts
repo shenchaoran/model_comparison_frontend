@@ -53,12 +53,38 @@ export const HEADER_MENUS: MenuClass[] = [
         }
     },
     {
-        path: 'comparison',
+        path: 'comparison/solutions',
         data: {
             menu: {
                 title: 'Comparison'
             }
-        }
+        },
+        // children: [
+        //     {
+        //         path: 'methods',
+        //         data: {
+        //             menu: {
+        //                 title: 'Comparison methods'
+        //             }
+        //         }
+        //     },
+        //     {
+        //         path: 'solutions',
+        //         data: {
+        //             menu: {
+        //                 title: 'Comparison solutions'
+        //             }
+        //         }
+        //     },
+        //     {
+        //         path: 'solutions/create',
+        //         data: {
+        //             menu: {
+        //                 title: 'Create solutions'
+        //             }
+        //         }
+        //     }
+        // ]
     },
     {
         path: 'results',
@@ -87,29 +113,15 @@ export const HEADER_MENUS: MenuClass[] = [
                 }
             }
         ]
+    },
+    {
+        path: 'test',
+        data: {
+            menu: {
+                title: 'Test'
+            }
+        }
     }
-    // ,
-    // {
-    //     path: 'test',
-    //     data: {
-    //         menu: {
-    //             title: 'Test'
-    //         }
-    //     }
-    // }
-    // {
-    //     path: 'help',
-    //     data: {
-    //         menu: {
-    //             title: 'Help',
-    //             id: 'help',
-    //             icon: 'question',
-    //             selected: true,
-    //             expanded: false,
-    //             order: 0
-    //         }
-    //     }
-    // }
 ];
 
 // 登录成功后的用户菜单

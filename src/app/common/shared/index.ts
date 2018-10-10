@@ -1,56 +1,53 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { NgxSharedModule } from '../ngx-shared';
+import { NgxSharedModule } from '@common/ngx-shared';
 import { NgUploaderModule } from 'ngx-uploader';
-import { BaThemeConfig } from './theme.config';
-import { BaThemeConfigProvider } from './theme.configProvider';
+import { BaThemeConfig } from '@common/shared/theme.config';
+import { BaThemeConfigProvider } from '@common/shared/theme.configProvider';
 import { BACKEND } from '@config';
 import { HEADER_MENUS, USER_MENUS } from '@config/menu.config';
 import { DisqusModule } from "ngx-disqus";
+import { MatSharedModule } from '@common/mat-shared';
 // import { EmailValidator, EqualPasswordsValidator } from './validators';
-import { ListFilterService } from './components/list-template/list-filter.service';
-import { HeaderMenuService } from './components/baHeaderMenu/services/baHeaderMenu.service';
-import { BaMenuService } from './components/baHeaderMenu/services/baMenu.service';
-import { LoginService } from '@feature/login/login.service';
+import { ListFilterService } from '@common/shared/components/list-template/list-filter.service';
+import { HeaderMenuService } from '@common/shared/components/header-menu/services/header-menu.service';
+import { BaMenuService } from '@common/shared/components/header-menu/services/baMenu.service';
+import { UserService } from '../../business/user/user.service';
 import { NzNotificationService, NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';
 
 import {
     FileUploader,
     ContextMenuComponent,
     HeaderPullRightComponent,
-    IssueCardComponent,
-    ModelCardComponent,
-    SolutionCardComponent,
-    TaskCardComponent,
     HeaderMenuLayoutComponent,
     ListTemplateComponent,
     FooterComponent,
     DocDetailTemplateComponent,
     TableFeatureComponent,
-    BaHeaderMenuComponent,
     SubMenuComponent,
-    TestRecurComponent,
     CmpTabsViewComponent,
     CmpDockingViewComponent,
     FileUploaderFormItemComponent,
     CheckBoxFormItemComponent,
-    ListBaseComponent,
     DocBaseComponent,
     OgmsBaseComponent,
     MapBaseComponent,
-} from './components';
+    CardsTemplateComponent,
+    HeaderMenuComponent,
+    MatCascaderSelectComponent,
+    CascaderSelectValidator,
+} from '@common/shared/components';
 
 import {
     BaScrollPosition,
     BaSlimScroll
-} from './directives';
+} from '@common/shared/directives';
 
 import {
     BaImageLoaderService,
     BaThemePreloader,
     BaThemeSpinner,
-    ListBaseService,
-} from './services';
+} from '@common/shared/services';
 
 import {
     BaImgPathPipe,
@@ -61,20 +58,20 @@ import {
     ArrayFilterPipe,
     DescriptionPipe,
     CoordinatePipe,
-} from './pipes';
+} from '@common/shared/pipes';
 
 const SERVICES = [
     BaImageLoaderService,
     BaThemePreloader,
     BaThemeSpinner,
     ListFilterService,
-    LoginService,
+    UserService,
     BaMenuService,
     HeaderMenuService,
-    ListBaseService,
 ];
 
 const VALIDATORS = [
+    // CascaderSelectValidator,
     // EmailValidator,
     // EqualPasswordsValidator
 ];
@@ -82,27 +79,23 @@ const VALIDATORS = [
 const COMPONENTS = [
     FileUploader,
     ContextMenuComponent,
-    BaHeaderMenuComponent,
+    HeaderMenuComponent,
     HeaderPullRightComponent,
-    ModelCardComponent,
-    SolutionCardComponent,
-    TaskCardComponent,
-    IssueCardComponent,
     HeaderMenuLayoutComponent,
     ListTemplateComponent,
     FooterComponent,
     DocDetailTemplateComponent,
     TableFeatureComponent,
     SubMenuComponent,
-    TestRecurComponent,
     CmpTabsViewComponent,
     CmpDockingViewComponent,
     FileUploaderFormItemComponent,
     CheckBoxFormItemComponent,
-    ListBaseComponent,
     DocBaseComponent,
     OgmsBaseComponent,
     MapBaseComponent,
+    CardsTemplateComponent,
+    MatCascaderSelectComponent,
 ];
 
 const DIRECTIVES = [
@@ -121,10 +114,10 @@ const PIPES = [
     CoordinatePipe,
 ];
 
-export * from './components';
-export * from './services';
-export * from './pipes';
-export * from './directives';
+export * from '@common/shared/components';
+export * from '@common/shared/services';
+export * from '@common/shared/pipes';
+export * from '@common/shared/directives';
 // export * from './validators';
 
 @NgModule({
@@ -138,7 +131,8 @@ export * from './directives';
         RouterModule,
         NgxSharedModule,
         NgUploaderModule,
-        DisqusModule.forRoot('shenchaoran')
+        DisqusModule.forRoot('shenchaoran'),
+        MatSharedModule,
     ],
     providers: [
         ...VALIDATORS,
@@ -147,7 +141,8 @@ export * from './directives';
             provide: 'BACKEND',
             useValue: {
                 host: BACKEND.host,
-                port: BACKEND.port
+                port: BACKEND.port,
+                API_prefix: BACKEND.API_prefix
             }
         },
         {
@@ -167,6 +162,7 @@ export * from './directives';
         RouterModule,
         NgxSharedModule,
         DisqusModule,
+
     ]
 })
 export class SharedModule {

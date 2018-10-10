@@ -14,46 +14,34 @@ import {
     NG_VALIDATORS,
     NG_VALUE_ACCESSOR
 } from '@angular/forms';
+import { BACKEND } from '@config';
 
 @Component({
     selector: 'ogms-calcu-result',
     templateUrl: './calcu-result.component.html',
-    styleUrls: ['./calcu-result.component.scss'],
-    providers: [
-        {
-            provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => CalcuResultComponent),
-            multi: true
-        }
-    ]
+    styleUrls: ['./calcu-result.component.scss']
 })
-export class CalcuResultComponent implements OnInit, ControlValueAccessor {
-    msInstance;
-    onMSInstanceChange = new EventEmitter<any>();
+export class CalcuResultComponent implements OnInit {
+    @Input() set msr(v) {
+        this.msrId = v._id
+        this.IO = v.IO
+        this.std = v.std
+    }
+
+    width = '350px';
+    IO
+    std
+    msrId
 
     constructor() { }
 
-    // 这里是做一个空函数体，真正使用的方法在 registerOnChange 中，即 (ngModelChange) 中绑定的函数
-    // 由框架注册，然后我们使用它把变化发回表单
-    // 注意，和 EventEmitter 尽管很像，但发送回的对象不同
-    private propagateChange = (e: any) => { };
-
     ngOnInit() {
+
     }
 
-    // 设置初始值
-    public writeValue(obj: any) {
-        if (obj) {
-            this.msInstance = obj;
-        }
+    download(event) {
+        let url = `http://${BACKEND.host}:${BACKEND.port}${BACKEND.API_prefix}/data/download?msrId=${this.msrId}&eventId=${event.id}`
+        window.open(url)
     }
-
-    // 当表单控件值改变时，函数 fn 会被调用
-    // 这也是我们把变化 emit 回表单的机制
-    public registerOnChange(fn: any) {
-        this.propagateChange = fn;
-    }
-
-    // 这里没有使用，用于注册 touched 状态
-    public registerOnTouched() { }
 }
+ 

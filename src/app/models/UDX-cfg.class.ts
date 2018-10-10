@@ -2,9 +2,9 @@
  * 
  */
 
-import { UDXSchema } from './UDX-schema.class';
+import { UDXSchema } from '@models/UDX-schema.class';
 
-import { ResourceSrc } from './resource.enum';
+import { ResourceSrc } from '@models/resource.enum';
 
 export class UDXCfg {
     entrance?: string;

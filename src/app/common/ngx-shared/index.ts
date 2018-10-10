@@ -9,15 +9,6 @@ import { QuillModule } from 'ngx-quill';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
 
-import {
-    PerfectScrollbarModule,
-    PERFECT_SCROLLBAR_CONFIG,
-    PerfectScrollbarConfigInterface
-} from 'ngx-perfect-scrollbar';
-const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
-    suppressScrollX: true
-};
-
 @NgModule({
   declarations: [
   ],
@@ -30,9 +21,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
     NgZorroAntdModule,
     QuillModule,
-    PerfectScrollbarModule,
     SlimLoadingBarModule.forRoot(),
-    // ClarityModule.forChild(),
   ],
   exports: [
     CommonModule,
@@ -42,15 +31,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     TranslateModule,
     NgZorroAntdModule,
     QuillModule,
-    PerfectScrollbarModule,
     SlimLoadingBarModule,
   ],
-  providers: [
-    {
-        provide: PERFECT_SCROLLBAR_CONFIG,
-        useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
-    }
-]
+  providers: []
 })
 export class NgxSharedModule {
   static forRoot(): ModuleWithProviders {

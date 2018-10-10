@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 import * as _ from "lodash";
 
-import { MockService } from "../../mock/mock.service";
-import { Issue } from "../../mock/issue.model";
+import { MockService } from "../mock/mock.service";
+import { Issue } from "../mock/issue.model";
 
 @Component({
   selector: 'ogms-home-issue',

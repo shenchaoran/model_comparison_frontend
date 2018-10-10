@@ -1,10 +1,10 @@
 import { Component, OnInit, HostListener, OnDestroy } from "@angular/core";
-import { CmpSlnService } from "../services/cmp-sln.service";
+import { CmpSlnService } from "../../services/cmp-sln.service";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { NzNotificationService, NzModalService } from "ng-zorro-antd";
-import { DynamicTitleService } from "@core/services/dynamic-title.service";
+import { DynamicTitleService } from "@common/core/services/dynamic-title.service";
 import { ReactiveFormsModule } from "@angular/forms";
-import { DocBaseComponent } from '@shared';
+import { DocBaseComponent } from '@common/shared';
 
 @Component({
     selector: 'ogms-solution-detail',
@@ -13,22 +13,19 @@ import { DocBaseComponent } from '@shared';
 })
 export class SolutionDetailComponent extends DocBaseComponent implements OnInit {
     sln;
-    geojson;
 
     constructor(
         public route: ActivatedRoute,
-        public service: CmpSlnService,
-//private _notice: NzNotificationService,
+        public cmpSlnService: CmpSlnService,
         public title: DynamicTitleService
     ) { 
-        super(route, service, title);
+        super(route, cmpSlnService, title);
     }
 
     ngOnInit() {
         super.ngOnInit();
         this._subscriptions.push(this.doc.subscribe(doc => {
             this.sln = doc;
-            this.geojson = _.get(this.sln, 'issue.spatial.geojson');
         }));
     }
 }

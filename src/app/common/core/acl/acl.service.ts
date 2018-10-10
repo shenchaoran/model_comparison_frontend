@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ACLType } from './acl.type';
+import { ACLType } from '@common/core/acl/acl.type';
 
 /**
  * 访问控制服务

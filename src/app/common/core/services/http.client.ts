@@ -1,7 +1,7 @@
 // tslint:disable:no-console class-name
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 import { NzNotificationService } from 'ng-zorro-antd';
 
@@ -17,40 +17,44 @@ export class _HttpClient {
         private http: HttpClient,
         @Inject('BACKEND') private backend,
         private loading: SlimLoadingBarService,
-//private _notice: NzNotificationService
+        //private _notice: NzNotificationService
     ) { }
 
     private appendDomain(url: string): string {
-        return `http://${this.backend.host}:${this.backend.port}${url}`;
+        return `http://${this.backend.host}:${this.backend.port}${this.backend.API_prefix}${url}`;
     }
 
-    private appendJWT(url: string, appendJWT: boolean): string {
-        this.loading.start();
+    private appendJWT(url: string, appendJWT: boolean, withRequestProgress?: boolean): string {
+        if (withRequestProgress !== false)
+            this.loading.start();
         url = this.appendDomain(url);
-        if(appendJWT) {
+        if (appendJWT !== false) {
             const jwtStr = localStorage.getItem('jwt');
             let jwt = undefined;
-            if(jwtStr) {
+            if (jwtStr) {
                 jwt = JSON.parse(jwtStr);
-            }
-
-            if(url.indexOf('?') === -1) {
-                url += `?Authorization=bearer ${jwt.token}`;
+                if (url.indexOf('?') === -1) {
+                    url += `?Authorization=bearer ${jwt.token}`;
+                }
+                else {
+                    url += `&Authorization=bearer ${jwt.token}`;
+                }
             }
             else {
-                url += `&Authorization=bearer ${jwt.token}`;
+
             }
         }
         return url;
     }
 
-    private resInterceptor(observable: Observable<any>, parseRes?: boolean): Observable<any> {
+    private resInterceptor(observable: Observable<any>, parseRes?: boolean, withRequestProgress?: boolean): Observable<any> {
         return Observable.create(observer => {
             observable
                 .subscribe(response => {
-                    this.loading.complete();
-                    if(parseRes === undefined || parseRes === true) {
-                        if (_.startsWith(_.get(response, 'status.code'), '200')) {
+                    if (withRequestProgress !== false)
+                        this.loading.complete();
+                    if (parseRes !== false) {
+                        if (!response.error) {
                             observer.next({
                                 data: response.data
                             });
@@ -58,9 +62,9 @@ export class _HttpClient {
                         }
                         else {
                             observer.next({
-                                error: response.status
+                                error: response.error
                             });
-                            console.log(response.status);
+                            console.log(response.error);
                             // this.notice.warning('Warning', 'Http request error!');
                             observer.complete();
                         }
@@ -78,21 +82,23 @@ export class _HttpClient {
         url: string,
         options: any = {},
         appendJWT?: boolean,
-        parseRes?: boolean
+        parseRes?: boolean,
+        withRequestProgress?: boolean
     ): Observable<any> {
-        url = this.appendJWT(url, appendJWT);
-        return this.resInterceptor(this.http.get(url, options), parseRes);
+        url = this.appendJWT(url, appendJWT, withRequestProgress);
+        return this.resInterceptor(this.http.get(url, options), parseRes, withRequestProgress);
     }
 
     post(
         url: string,
-        body: any|null,
+        body: any | null,
         options: any = {},
         appendJWT?: boolean,
-        parseRes?: boolean
+        parseRes?: boolean,
+        withRequestProgress?: boolean
     ): Observable<any> {
-        url = this.appendJWT(url, appendJWT);
-        return this.resInterceptor(this.http.post(url, body, options), parseRes);
+        url = this.appendJWT(url, appendJWT, withRequestProgress);
+        return this.resInterceptor(this.http.post(url, body, options), parseRes, withRequestProgress);
     }
 
     delete(
@@ -106,13 +112,13 @@ export class _HttpClient {
     }
 
     put(
-      url: string,
-      body: any|null,
-      options: any = {},
-      appendJWT?: boolean,
-      parseRes?: boolean
-  ): Observable<any> {
-      url = this.appendJWT(url, appendJWT);
-      return this.resInterceptor(this.http.put(url, body, options), parseRes);
-  }
+        url: string,
+        body: any | null,
+        options: any = {},
+        appendJWT?: boolean,
+        parseRes?: boolean
+    ): Observable<any> {
+        url = this.appendJWT(url, appendJWT);
+        return this.resInterceptor(this.http.put(url, body, options), parseRes);
+    }
 }

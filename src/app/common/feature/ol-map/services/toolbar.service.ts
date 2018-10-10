@@ -1,8 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
 
-import { MAP_MODULES_CONFIG, MAP_TOOLBAR_CONFIG } from '@config/map.config';
-import { MapToolBarItemType, MapToolbarItemCfg } from '../models';
-import { OlMapService } from '../services/ol-map.service';
+import { MapToolBarItemType, MapToolbarItemCfg } from '@common/feature/ol-map/models';
+import { OlMapService } from '@common/feature/ol-map/services/ol-map.service';
 import { Observable } from 'rxjs';
 import * as proj4x from 'proj4';
 const proj4 = (proj4x as any).default;

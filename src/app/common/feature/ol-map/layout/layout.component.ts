@@ -1,7 +1,7 @@
 // 组合了工具条、图例、数据源的布局
 import { Component, OnInit, Inject, Input } from '@angular/core';
 
-import { MAP_TYPE } from '../models';
+import { MAP_TYPE } from '@common/feature/ol-map/models';
 
 @Component({
     selector: 'ogms-layout',

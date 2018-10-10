@@ -1,15 +1,28 @@
 <div *ngIf="hasLogin else gotoLogin">
-    <ogms-baHeaderMenu [type]="'USER_MENUS'"></ogms-baHeaderMenu>
+    <ogms-header-menu [type]="'USER_MENUS'"></ogms-header-menu>
 </div>
 
 <ng-template #gotoLogin>
-    <div>
-        <a class='ogms-menu-link' (click)='login()'>
-            Sign in
-        </a> &nbsp;
+    <div id='sign-in-group'>
+        <ul [nzMode]="'horizontal'" nz-menu>
+            <li nz-submenu>
+                <span title>
+                    <a class='ogms-menu-link' (click)='login()'>
+                        Sign in
+                    </a>
+                </span>
+            </li>
+        </ul>
+        &nbsp;
         <span style='color: #586069 !important;'>or</span> &nbsp;
-        <a class='ogms-menu-link' (click)='register()'>
-            Sign up
-        </a>
+        <ul [nzMode]="'horizontal'" nz-menu>
+            <li nz-submenu>
+                <span title>
+                    <a class='ogms-menu-link' (click)='register()'>
+                        Sign up
+                    </a>
+                </span>
+            </li>
+        </ul>
     </div>
 </ng-template>

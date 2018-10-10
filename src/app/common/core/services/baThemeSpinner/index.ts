@@ -1,1 +1,1 @@
-export * from './baThemeSpinner.service';
+export * from '@common/core/services/baThemeSpinner/baThemeSpinner.service';

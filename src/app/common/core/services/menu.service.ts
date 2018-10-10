@@ -1,6 +1,6 @@
-import { ACLService } from './../acl/acl.service';
+import { ACLService } from '@common/core/acl/acl.service';
 import { Injectable } from '@angular/core';
-import { ACLType } from '../acl/acl.type';
+import { ACLType } from '@common/core/acl/acl.type';
 
 export interface Menu {
     /** 文本 */

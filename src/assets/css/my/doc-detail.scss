@@ -24,9 +24,9 @@
     padding: 0 15px;
     .doc-title {
         background: #ffffff;
-        padding: 15px 29px;
-        margin-top: 20px;
-        margin-bottom: 10px;
+        padding: 25px 29px 15px;
+        // margin-top: 20px;
+        // margin-bottom: 10px;
         font-weight: 500;
         line-height: 1.1;
         font-size: 30px;
@@ -35,7 +35,7 @@
         font-family: Verdana, Arial, Helvetica, Sans-Serif;
     }
     .doc-body {
-        .main-content {
+        .article {
             // flex: 1;
             padding: 0 29px 29px 0;
             background: #fff;
@@ -110,7 +110,7 @@
 
 section {
     .section-header {
-        margin: 15px 0;
+        margin: 24px 0;
         .title {
             padding: 0 8px 0 18px;
             background: #fff;
@@ -119,17 +119,17 @@ section {
             line-height: 24px;
         }
         .placeholder {
-            border-top: 1px solid #777;
+            // border-top: 1px solid #777;
             margin: 12px 0;
         }
     }
     .detail-desc {
-        margin: 10px 0;
+        margin: 15px 0;
         // padding: 15px 5px 0 12px;
         line-height: 26px;
         // word-break: break-all;
         word-wrap: break-word;
-        font-size: 16px;
+        font-size: 18px;
         * {
             font-size: 16px;
         }

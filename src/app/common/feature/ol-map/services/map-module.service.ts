@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
-import { MAP_MODULES_CONFIG, MAP_TOOLBAR_CONFIG } from '@config/map.config';
 
+@Injectable()
 @Injectable()
 export class MapModuleService {
     private moduleCfg;

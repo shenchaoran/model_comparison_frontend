@@ -1,22 +1,25 @@
 <ng-template #slnTemplate let-sln='item'>
-    <section>
-        <div class='item-header'>
-            <a [routerLink]='sln._id'>
-                {{sln.auth.userName}}/{{sln.meta.name}}
+    <section class='list-item'>
+        <div class='detail-group'>
+            <h3>
+                <a [routerLink]='sln._id'>{{sln.auth.userName}}/{{sln.meta.name}}</a>
+            </h3>
+            <p>{{sln.meta.desc | stringLimit: 180 | description}}</p>
+            <p>
+                <mat-chip-list>
+                    <mat-chip *ngFor='let ms of sln.participants' [routerLink]='["/geo-models", ms._id]' class='topic model-topic'>{{ms.msName}}</mat-chip>
+                </mat-chip-list>
+            </p>
+            <div>{{sln.meta.time | date: 'yyyy-MM-dd hh:mm'}}</div>
+        </div>
+        <div class='actions-group'>
+            <a>
+                <mat-icon>star</mat-icon>
+                <span>654</span>
             </a>
         </div>
-        <div class='item-body'>
-            <div class='desc'>{{sln.meta.desc | stringLimit: 180 | description}}</div>
-            <div>
-                <span *ngFor='let ms of sln.cmpCfg.ms' [routerLink]='["../resources/geo-models", ms.msId]' class='topic model-topic'>{{ms.msName}}</span>
-            </div>
-        </div>
-        <div class='item-footer'>{{sln.meta.time | date: 'yyyy-MM-dd'}}</div>
     </section>
 </ng-template>
 
-<ogms-list-template [count]='count' [template]='slnTemplate' [list]='list' [withCreateBtn]='withCreateBtn' [ownerFilter]='ownerFilter'
-    [otherFilters]='otherFilters' (onFiltersChange)='search($event)'>
+<ogms-list-template [template]='slnTemplate' [service]='service'>
 </ogms-list-template>
-
-<ogms-footer></ogms-footer>

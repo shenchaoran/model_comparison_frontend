@@ -1,243 +1,110 @@
-<!-- <div *ngIf='v'> -->
-<ng-container *ngIf='mode === "read"'>
-    <nz-collapse [nzBordered]="true">
-        <!-- 输入数据配置 -->
-        <nz-collapse-panel *ngIf='_v.std.length || _v.inputs.length' [nzHeader]="'Inputs'" nzActive='true'>
-            <div class='ogms-form-item' nz-row>
-                <span nz-col nzSpan='6'>Data source</span>
-                <div nz-col nzSpan='18'>{{_v.dataSrc==='STD'?"Use standard input data":"Use your personal data"}}</div>
-            </div>
-
-            <ng-container *ngIf='_v.dataSrc === "STD"'>
-                <ng-container *ngFor='let item of _v.std;let i=index;'>
-                    <div class='ogms-form-item' nz-row>
-                        <span nz-col nzSpan='6'>{{item.name}}</span>
-                        <div nz-col nzSpan='18'>
-                            <ng-container *ngIf='item.schema?.structure?.type === "date"'>
-                                <span [style.width]='width'>{{item.value}}</span>
-                            </ng-container>
-                            <ng-container *ngIf='item.schema?.structure?.type === "coordinate"'>
-                                <!-- TODO format -->
-                                <span [style.width]='width'>{{item.value}}</span>
-                                &nbsp;&nbsp;
-                                <button nz-button (click)='buildMap()'>
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </ng-container>
-                        </div>
-                    </div>
-                </ng-container>
-                <!-- TODO preview -->
-                <div class='ogms-form-item' nz-row>
-                    <span nz-col nzSpan='6' class='ogms-clear-after'>
-                        <button nz-button [nzType]='"default"'>
-                            Preview
-                        </button>
-                    </span>
-                    <div nz-col nzSpan='18'>
-                        <button nz-button [nzType]='"default"' (click)='download("STD")'>
-                            Download
-                        </button>
-                    </div>
+<form *ngIf='IOForm' [formGroup]='IOForm'>
+    <mat-accordion multi displayMode='flat'>
+        <mat-expansion-panel *ngIf='IOForm.controls["std"].controls.length || IOForm.controls["inputs"].controls.length' expanded>
+            <mat-expansion-panel-header>
+                <mat-panel-title>Inputs</mat-panel-title>
+                <mat-panel-description>configure the input data</mat-panel-description>
+            </mat-expansion-panel-header>
+            <section>
+                <div class='form-item data-src-group'>
+                    <mat-button-toggle-group formControlName='dataSrc' (ngModelChange)='changeValidate($event)'>
+                        <mat-button-toggle value='STD'>Use standard input data</mat-button-toggle>
+                        <mat-button-toggle value='UPLOAD'>Use your personal data</mat-button-toggle>
+                    </mat-button-toggle-group>
                 </div>
-            </ng-container>
-            <ng-container *ngIf='_v.dataSrc === "UPLOAD"'>
-                <ng-container *ngFor='let item of _v.inputs;let i=index;'>
-                    <div class='ogms-form-item' nz-row>
-                        <span nz-col nzSpan='6'>{{item.name}}</span>
-                        <div nz-col nzSpan='18'>
-                            <span [style.width]='width'><a (click)='download(item.url)'>{{item.fname}}</a></span>
-                        </div>
-                    </div>
-                </ng-container>
-            </ng-container>
-        </nz-collapse-panel>
 
-        <!-- 参数配置 -->
-        <nz-collapse-panel *ngIf='_v.parameters.length' [nzHeader]="'Parameters'" nzActive='true'>
-            <ng-container *ngFor='let item of _v.parameters;let i=index;'>
-                <ng-container *ngIf='item.schema.structure.type === "radio"'>
-                    <div class='ogms-form-item' nz-row>
-                        <span nz-col nzSpan='6'>{{item.name}}</span>
-                        <div nz-col nzSpan='18'>
-                            <span>{{item.value}}</span>
-                        </div>
-                    </div>
-                </ng-container>
-                <ng-container *ngIf='item.schema.structure.type === "checkbox"'>
-                    <div class='ogms-form-item' nz-row>
-                        <span nz-col nzSpan='6'>{{item.name}}</span>
-                        <div nz-col nzSpan='18'>
-                            <span *ngFor='let opt of item.value'>{{opt}}</span>
-                        </div>
-                    </div>
-                </ng-container>
-                <ng-container *ngIf='item.schema.structure.type === "value"'>
-                    <div class='ogms-form-item' nz-row>
-                        <span nz-col nzSpan='6'>{{item.name}}</span>
-                        <div nz-col nzSpan='18'>
-                            <span>{{item.value}}</span>
-                        </div>
-                    </div>
-                </ng-container>
-            </ng-container>
-        </nz-collapse-panel>
-        <!-- 输出配置 -->
-        <nz-collapse-panel *ngIf='_v.outputs.length' [nzHeader]="'Outputs'" nzActive='true'>
-            <ng-container *ngFor='let item of _v.outputs;let i=index;'>
-                <div class='ogms-form-item' nz-row>
-                    <span nz-col nzSpan='6'>{{item.name}}</span>
-                    <div nz-col nzSpan='18'>
-                        <span><a (click)='download(item.url)'>{{item.fname}}</a></span>
-                        <!-- &nbsp;&nbsp;
-                        <button nz-button [nzType]='"default"'>
-                            Preview
-                        </button> -->
-                        <!-- &nbsp;&nbsp; -->
-                        <!-- <button nz-button (click)='download(item.url)' [nzType]='"default"'>
-                            Download
-                        </button> -->
-                    </div>
-                </div>
-            </ng-container>
-        </nz-collapse-panel>
-    </nz-collapse>
-</ng-container>
+                <ng-container *ngIf='IOForm.controls["dataSrc"].value === "STD" else uploadTemplate'>
+                    <mat-form-field class='form-item std-src-group'>
+                        <mat-select placeholder='Select standard data source' formControlName='STD' #dataSrc>
+                            <mat-option *ngFor='let item of stds' [value]='item'>{{item.meta.name}}</mat-option>
+                        </mat-select>
+                        <button id='preview-btn' (click)='onSuffixClick($event)' mat-button matSuffix mat-icon-button *ngIf="IOForm.controls['STD'].value" target='_blank' [routerLink]='["../../../datasets", IOForm.controls["STD"].value._id]'>
+                            <mat-icon>call_made</mat-icon>
+                        </button>
+                    </mat-form-field>
 
-<ng-container *ngIf='mode === "write"'>
-    <form *ngIf='IOForm' [formGroup]='IOForm'>
-        <nz-collapse [nzBordered]="true">
-            <!-- 输入数据配置 -->
-            <nz-collapse-panel *ngIf='IOForm.controls["std"].controls.length || IOForm.controls["inputs"].controls.length' [nzHeader]="'Inputs'"
-                nzActive='true'>
-                <nz-form-item>
-                    <nz-form-label nzSpan='6' nzRequired>Select data source</nz-form-label>
-                    <nz-form-control nzSpan='18'>
-                        <nz-radio-group formControlName='dataSrc' (ngModelChange)='changeValidate($event)'>
-                            <label nz-radio-button [nzValue]="'STD'">Use standard input data</label>
-                            <label nz-radio-button [nzValue]="'UPLOAD'">Use your personal data</label>
-                        </nz-radio-group>
-                    </nz-form-control>
-                </nz-form-item>
-
-                <ng-container *ngIf='IOForm.controls["dataSrc"].value === "STD"'>
-                    <div formArrayName='std'>
+                    <div formArrayName='std' *ngIf='IOForm.get("STD").value'>
                         <ng-container *ngFor='let item of IOForm.controls["std"].controls;let i=index;'>
                             <div [formGroupName]='i'>
-                                <nz-form-item>
-                                    <nz-form-label nzSpan='6' nzRequired>
-                                        <span [nz-tooltip]='item.value.description'>{{item.value.name}}</span>
-                                    </nz-form-label>
-                                    <nz-form-control nzSpan='18' nzHasFeedback>
-                                        <ng-container *ngIf='item.value?.schema?.structure?.type === "date"'>
-                                            <!-- <nz-datepicker style='width: 330px;' [ngModel]='event.value' (ngModelChange)='onDateChange(event, $event)' [nzFormat]='"YYYY-MM-DD"'></nz-datepicker> -->
-                                            <input nz-input [style.width]='width' formControlName='value'>
-                                        </ng-container>
-                                        <ng-container *ngIf='item.value?.schema?.structure?.type === "coordinate"'>
-                                            <!-- TODO format -->
-                                            <input nz-input [style.width]='width' formControlName='value'>
-                                        </ng-container>
-                                    </nz-form-control>
-                                </nz-form-item>
+                                <div *ngIf='item.value?.schema?.structure?.type === "coordinate-index"' class='form-item select-pt-group'>
+                                    <button mat-button color='primary' (click)='showSiteDialog()'>
+                                        <mat-icon>location_on</mat-icon>Select simulation point
+                                    </button>
+                                    <mat-form-field>
+                                        <input matInput [value]='item.value.temp?.coor' placeholder='Coordinate' disabled>
+                                        <!-- <mat-error *ngIf='item.get("value").hasError("required")'>please select point</mat-error> -->
+                                    </mat-form-field>
+                                </div>
                             </div>
                         </ng-container>
                     </div>
-                    <!-- TODO preview -->
-                    <div class='ogms-form-item'>
-                        <button nz-button [nzType]='"default"'>
-                            Preview
-                        </button>
-                    </div>
                 </ng-container>
-                <ng-container *ngIf='IOForm.controls["dataSrc"].value === "UPLOAD"'>
+
+                <ng-template #uploadTemplate>
                     <div formArrayName='inputs'>
                         <ng-container *ngFor='let item of IOForm.controls["inputs"].controls;let i=index;'>
-                            <div [formGroupName]='i'>
-                                <nz-form-item>
-                                    <nz-form-label nzSpan='6' nzRequired>
-                                        <span [nz-tooltip]='item.value.description'>{{item.value.name}}</span>
-                                    </nz-form-label>
-                                    <nz-form-control nzSpan='18' nzHasFeedback>
-                                        <ogms-file-uploader-form-item formControlName='file' [width]='width' [fileUploaderOptions]="fileUploaderOptions"></ogms-file-uploader-form-item>
-                                    </nz-form-control>
-                                </nz-form-item>
+                            <div [formGroupName]='i' class='form-item file-uploader-group'>
+                                <label>{{item.value.name}}</label>
+                                <ogms-file-uploader-form-item formControlName='file' [width]='width' [fileUploaderOptions]="fileUploaderOptions"></ogms-file-uploader-form-item>
                             </div>
                         </ng-container>
                     </div>
+                </ng-template>
+            </section>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel *ngIf='IOForm.controls["parameters"].controls.length' expanded>
+            <mat-expansion-panel-header>
+                <mat-panel-title>Parameters</mat-panel-title>
+                <mat-panel-description>configure the invoke parameters</mat-panel-description>
+            </mat-expansion-panel-header>
+            <section formArrayName='parameters'>
+                <ng-container *ngFor='let item of IOForm.controls["parameters"].controls;let i=index;'>
+                    <div [formGroupName]='i' class='form-item output-group'>
+                        <label>{{item.value.name}}</label>
+                        <ng-container *ngIf='item.value.schema.structure.type === "radio"'>
+                            <mat-form-field class='form-item'>
+                                <mat-select placeholder='' formControlName='value'>
+                                    <mat-option *ngFor='let opt of item.value.schema.structure.options' [value]="opt">{{opt}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </ng-container>
+                        <ng-container *ngIf='item.value.schema.structure.type === "checkbox"'>
+                            <ogms-check-box-form-item formControlName='value' [checkOpts]='item.value.schema.structure.options' [width]='width'></ogms-check-box-form-item>
+                        </ng-container>
+                        <ng-container *ngIf='item.value.schema.structure.type === "value"'>
+                            <input matInput formControlName='value'>
+                        </ng-container>
+                    </div>
                 </ng-container>
-            </nz-collapse-panel>
+            </section>
+        </mat-expansion-panel>
 
-            <!-- 参数配置 -->
-            <nz-collapse-panel *ngIf='IOForm.controls["parameters"].controls.length' [nzHeader]="'Parameters'" nzActive='true'>
-                <div formArrayName='parameters'>
-                    <ng-container *ngFor='let item of IOForm.controls["parameters"].controls;let i=index;'>
-                        <div [formGroupName]='i'>
-                            <nz-form-item>
-                                <nz-form-label nzSpan='6' nzRequired>
-                                    <span [nz-tooltip]='item.value.description'>{{item.value.name}}</span>
-                                </nz-form-label>
-                                <nz-form-control nzSpan='18' nzHasFeedback>
-                                    <ng-container *ngIf='item.value.schema.structure.type === "radio"'>
-                                        <nz-radio-group formControlName='value' [style.width]='width'>
-                                            <label nz-radio-button *ngFor='let opt of item.value.schema.structure.options' [nzValue]="opt">{{opt}}</label>
-                                        </nz-radio-group>
-                                    </ng-container>
-                                    <ng-container *ngIf='item.value.schema.structure.type === "checkbox"'>
-                                        <ogms-check-box-form-item formControlName='value' [checkOpts]='item.value.schema.structure.options' [width]='width'></ogms-check-box-form-item>
-                                    </ng-container>
-                                    <ng-container *ngIf='item.value.schema.structure.type === "value"'>
-                                        <input nz-input [style.width]='width' formControlName='value'>
-                                    </ng-container>
-                                </nz-form-control>
-                            </nz-form-item>
-                        </div>
-                    </ng-container>
-                </div>
-            </nz-collapse-panel>
-            <!-- 输出配置 -->
-            <nz-collapse-panel *ngIf='IOForm.controls["outputs"].controls.length' [nzHeader]="'Outputs'" nzActive='true'>
-                <div formArrayName='outputs'>
-                    <ng-container *ngFor='let item of IOForm.controls["outputs"].controls;let i=index;'>
-                        <div [formGroupName]='i'>
-                            <nz-form-item>
-                                <nz-form-label nzSpan='6' nzRequired>
-                                    <span [nz-tooltip]='item.value.description'>{{item.value.name}}</span>
-                                </nz-form-label>
-                                <nz-form-control nzSpan='18' nzHasFeedback>
-                                    <ng-container *ngIf='item.value.optional'>
-                                        <!-- <nz-select formControlName='value' [style.width]="width" nzAllowClear [nzPlaceHolder]='""'>
-                                                        <nz-option [nzLabel]='"off"' [nzValue]='"off"'></nz-option>
-                                                        <nz-option [nzLabel]="item.value.value" [nzValue]="item.value.value"></nz-option>
-                                                    </nz-select> -->
-                                        <nz-radio-group formControlName='value' [style.width]='width'>
-                                            <label nz-radio-button [nzValue]="'off'">off</label>
-                                            <label nz-radio-button [nzValue]="item.value.temp">{{item.value.temp}}</label>
-                                        </nz-radio-group>
-                                    </ng-container>
-                                    <ng-container *ngIf='!item.value.optional'>
-                                        <input formControlName='value' nz-input [style.width]='width'>
-                                    </ng-container>
-                                </nz-form-control>
-                            </nz-form-item>
-                        </div>
-                    </ng-container>
-                </div>
-            </nz-collapse-panel>
-        </nz-collapse>
-    </form>
-</ng-container>
-<!-- </div> -->
-
-<nz-modal [(nzVisible)]="_isVisible" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="modalFooter" (nzOnCancel)="modalCancel()" [nzWidth]='670'>
-    <ng-template #modalTitle>
-        Site Position
-    </ng-template>
-
-    <ng-template #modalContent>
-        <div id='{{mapDivID}}' [style.width]='"650px"' [style.height]='"350px"' (mousewheel)='onMouseWheel($event)'></div>
-    </ng-template>
-
-    <ng-template #modalFooter>
-        <button nz-button nzType="primary" (click)="modalOk()">OK</button>
-    </ng-template>
-</nz-modal>
+        <mat-expansion-panel *ngIf='IOForm.controls["outputs"].controls.length' expanded>
+            <mat-expansion-panel-header>
+                <mat-panel-title>Outputs</mat-panel-title>
+                <mat-panel-description>configure the output data</mat-panel-description>
+            </mat-expansion-panel-header>
+            <section formArrayName='outputs'>
+                <ng-container *ngFor='let item of IOForm.controls["outputs"].controls;let i=index;'>
+                    <div [formGroupName]='i' class='form-item'>
+                        <label>{{item.value.name}}</label>
+                        <ng-container *ngIf='item.value.optional else inputTemplate'>
+                            <mat-form-field>
+                                <mat-select placeholder='' formControlName='value'>
+                                    <mat-option value='off'>off</mat-option>
+                                    <mat-option [value]='item.value.value'>{{item.value.value}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </ng-container>
+                        <ng-template #inputTemplate>
+                            <mat-form-field>
+                                <input matInput formControlName='fname' placeholder="output file name">
+                            </mat-form-field>
+                        </ng-template>
+                    </div>
+                </ng-container>
+            </section>
+        </mat-expansion-panel>
+    </mat-accordion>
+</form>

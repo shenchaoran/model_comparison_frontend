@@ -1,5 +1,5 @@
-import { TokenData } from './token.type';
-import { TokenService } from './token.service';
+import { TokenData } from '@common/core/net/token/token.type';
+import { TokenService } from '@common/core/net/token/token.service';
 import * as moment from 'moment';
 
 describe('Service: token', () => {

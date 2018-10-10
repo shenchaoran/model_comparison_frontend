@@ -1,0 +1,33 @@
+.card-box {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    .card{
+        padding: 5px;
+        @media (max-width: 979px) {
+            flex:1 1 50%;
+        }
+        @media (min-width: 980px) {
+            flex:1 1 33%;
+        }
+        @media (min-width: 1200px) {
+            flex:1 1 33%;
+        }
+        @media (min-width: 1600px) {
+            flex:1 1 25%;
+        }
+    }
+}
+
+@media (max-width: 979px) {
+
+}
+@media (min-width: 980px) {
+
+}
+@media (min-width: 1200px) {
+
+}
+@media (min-width: 1600px) {
+
+}

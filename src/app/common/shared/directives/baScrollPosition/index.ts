@@ -1,1 +1,1 @@
-export * from './baScrollPosition.directive';
+export * from '@common/shared/directives/baScrollPosition/baScrollPosition.directive';

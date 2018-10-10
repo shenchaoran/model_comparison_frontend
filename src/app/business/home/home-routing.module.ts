@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import {
     HeaderMenuLayoutComponent
-} from '@shared';
+} from '@common/shared';
 
 import { HomeComponent } from './home.component';
 

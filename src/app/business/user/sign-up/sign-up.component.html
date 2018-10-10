@@ -1,0 +1,65 @@
+<div class='main-content'>
+    <h1>Join OpenGMS</h1>
+    <p class='lead'>The best way to calculate, applicate and compare model.</p>
+    <h2 class='f2-light mb-1'>Create your personal account</h2>
+    <form [formGroup]='signUpFG'>
+        <mat-form-field>
+            <input matInput placeholder='Username' formControlName='username'>
+            <mat-error *ngIf='"required"'>必填</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Email" formControlName='email'>
+            <mat-error *ngIf='"required"'>必填</mat-error>
+            <mat-error *ngIf='"email"'>邮件格式不对</mat-error>
+        </mat-form-field>
+        <ng-container formGroupName='password'>
+            <mat-form-field>
+                <input [type]='hide? "password": "text"' matInput placeholder="Password" formControlName='value'>
+                <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+                <mat-error *ngIf='"required"'>必填</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <input [type]='hideRepeat? "password": "text"' matInput placeholder="Password repeat" formControlName='repeat'>
+                <mat-icon matSuffix (click)="hideRepeat = !hideRepeat">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+                <mat-error *ngIf='"required"'>必填</mat-error>
+                <mat-error *ngIf='"passwordEqual"'>密码不匹配</mat-error>
+            </mat-form-field>
+        </ng-container>
+        <div class='error-panel' [style.display]='errorInfo.show? "block": "none"'>
+            {{errorInfo.message}}
+        </div>
+        <button mat-flat-button color="primary" [disabled]='!signUpFG.valid' (click)='onSubmit()'>Create an account</button>
+    </form>
+</div>
+<div class='main-content footer'>
+    <div class='left'>
+        <h1>OpenGMS</h1>
+    </div>
+    <div class='right'>
+        <div>
+            <h4>Product</h4>
+            <ul>
+                <li>Portal</li>
+                <li>Portal</li>
+            </ul>
+        </div>
+        <div>
+            <h4>Platform</h4>
+            <ul>
+                <li>Developer API</li>
+                <li>Service Integration</li>
+                <li>Data Service Container</li>
+                <li>Model Service Container</li>
+            </ul>
+        </div>
+        <div>
+            <h4>Support</h4>
+            <ul>
+                <li>Help</li>
+                <li>Training</li>
+                <li>Community Forum</li>
+                <li>Contact OpenGMS</li>
+            </ul>
+        </div>
+    </div>
+</div>

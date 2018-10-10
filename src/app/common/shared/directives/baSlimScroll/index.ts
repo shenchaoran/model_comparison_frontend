@@ -1,1 +1,1 @@
-export * from './baSlimScroll.directive';
+export * from '@common/shared/directives/baSlimScroll/baSlimScroll.directive';

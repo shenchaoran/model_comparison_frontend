@@ -1,31 +1,16 @@
-<div class="header-menu-layout">
-    <!-- <perfect-scrollbar [config]='scrollbarCfg'> -->
-    <header class="nav">
-        <nav class='nav-body ogms-responsive-div'>
-            <div id="logo">
-                <img routerLink='/home' src="assets/img/app/logo-deep.png" height="35" />
-            </div>
-            <!-- <span style='width: 100px;'></span> -->
-            <div id='search'>
-                <form autocomplete="on">
-                    <input type='input' name='q' spellcheck="false" [(ngModel)]='q' placeholder='Search' autocomplete="on">
-                    <button hidden type='submit' (click)='search()'></button>
-                </form>
-            </div>
-            <div id="menu">
-                <ogms-baHeaderMenu [type]="'HEADER_MENUS'"></ogms-baHeaderMenu>
-            </div>
-            <span class='flex-item-1-1-auto'></span>
-            <div id="login-menu">
-                <ogms-header-pull-right></ogms-header-pull-right>
-            </div>
-        </nav>
-    </header>
-    <div class='body'>
-        <div class='content'>
-            <router-outlet></router-outlet>
-        </div>
+<nav>
+    <img id="logo" routerLink='/home' src="assets/img/app/logo-blue-white.png" height="35" />
+    <form id='search' autocomplete="on">
+        <input type='input' name='q' spellcheck="false" [(ngModel)]='q' placeholder='Search' autocomplete="on">
+        <button hidden type='submit' (click)='search()'></button>
+    </form>
+    <div id="menu">
+        <ogms-header-menu [type]="'HEADER_MENUS'"></ogms-header-menu>
     </div>
-    <!-- </perfect-scrollbar> -->
-    <nz-back-top></nz-back-top>
-</div>
+    <ogms-header-pull-right id="login-menu"></ogms-header-pull-right>
+</nav>
+<section class='body'>
+    <router-outlet></router-outlet>
+</section>
+<nz-back-top></nz-back-top>
+<ogms-footer></ogms-footer>

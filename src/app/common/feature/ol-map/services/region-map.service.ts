@@ -1,7 +1,7 @@
 import { Inject, Optional } from '@angular/core';
 import { Observable } from 'rxjs';
-import { OlMapService } from './ol-map.service';
-import { ToolbarService } from './toolbar.service';
+import { OlMapService } from '@common/feature/ol-map/services/ol-map.service';
+import { ToolbarService } from '@common/feature/ol-map/services/toolbar.service';
 
 export class RegionMapService {
     olMapService;

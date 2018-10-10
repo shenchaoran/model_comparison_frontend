@@ -7,7 +7,7 @@ import {
   Input,
   EventEmitter
 } from '@angular/core';
-import { OlMapService, ToolbarService } from './services';
+import { OlMapService, ToolbarService } from '@common/feature/ol-map/services';
 import * as uuidv1 from 'uuid/v1';
 
 @Component({

@@ -3,9 +3,10 @@
  * 这个表算是一个中间产物，其实存在cmp-task的calcuTasks中也行，但是多表查询很麻烦
  */
 
-import { ResourceSrc } from './resource.enum';
+import { ResourceSrc } from '@models/resource.enum';
 import * as ObjectID from 'objectid';
-import { LoginService } from '@feature/login/login.service';
+import { UserService } from '../business/user/user.service';
+import { Enum } from 'typescript-string-enums/dist';
 
 
 export class CalcuTask {
@@ -20,33 +21,50 @@ export class CalcuTask {
         userName: string,
         src: ResourceSrc
     };
-    msId: string;
-    msName: string;
+    ms: any;
     topic: string;
-    topicId: string;
     cmpTaskId: string;
-    nodeName: string;
+    node: any;
     IO: {
         dataSrc: 'STD' | 'UPLOAD',
         schemas: any[],
         data: any[],
         std: any[]
     };
-    stdInputId: string;
-    stdOutputId: string;
+    std: any;
     state: CalcuTaskState;
     progress: number;
-    [key: string]: any;
+    // [key: string]: any;
 
-    constructor() {
+    constructor(ms?) {
+        if (ms) {
+            this.ms = ms;
+            this.topic = ms.topic;
+            this.IO = _.cloneDeep(ms.MDL.IO);
+            this.IO.dataSrc = 'STD';
+            let appendSchema = (type, schema) => {
+                _.map(this.IO[type], event => {
+                    if (event.schemaId === schema.id) {
+                        event.schema = schema;
+                    }
+                });
+            }
+            _.map(this.IO.schemas, schema => {
+                appendSchema('inputs', schema);
+                appendSchema('std', schema);
+                appendSchema('parameters', schema);
+                appendSchema('outputs', schema);
+            });
+        }
+        
+        this._id = ObjectID();
         this.meta = {
             name: undefined,
             desc: undefined,
             time: new Date().getTime()
         };
-        this._id = ObjectID();
         this.state = CalcuTaskState.INIT;
-        const user = LoginService.getUser();
+        const user = UserService.getUser();
         if(user) {
             this.auth = {
                 userId: user._id,
@@ -64,12 +82,13 @@ export class CalcuTask {
     }
 }
 
-export enum CalcuTaskState {
-    INIT = 0,
-    PAUSE,
-    START_PENDING,
-    START_FAILED,
-    RUNNING,
-    FINISHED_FAILED,
-    FINISHED_SUCCEED
-}
+export const CalcuTaskState = Enum(
+    'INIT',
+    'COULD_START',
+    'START_PENDING',
+    'START_FAILED',
+    'RUNNING',
+    'FINISHED_FAILED',
+    'FINISHED_SUCCEED'
+);
+export type CalcuTaskState = Enum<typeof CalcuTaskState>;

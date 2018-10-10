@@ -1,32 +1,29 @@
 import { NgModule } from '@angular/core';
-import { SharedModule } from '@shared';
-import { VisualizationModule } from '../visualization/visualization.module';
+import { SharedModule } from '@common/shared';
 
 import { NzNotificationService, NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';
 import { DatasetsRoutingModule } from './datasets-routing.module';
-import { GeoDataComponent } from './geo-data/geo-data.component';
 import { DatasetsComponent } from './datasets/datasets.component';
-import { IbisStdDataComponent } from './ibis-std-data/ibis-std-data.component';
-import { BiomeStdDataComponent } from './biome-std-data/biome-std-data.component';
-import { MetDataService } from './services/met-data.service';
-import { StdDataService } from './services/std-data.service';
-import { DataService } from './services/data.service';
+import { StdDataService } from '../services/std-data.service';
+import { DataService } from '../services/data.service';
+import { OlModule } from '../ol/ol.module';
+import { SiteDataComponent } from './site-data/site-data.component'
 
 @NgModule({
     imports: [
         SharedModule,
-        VisualizationModule,
-        DatasetsRoutingModule
+        DatasetsRoutingModule,
+        OlModule,
+
     ],
     declarations: [
-        GeoDataComponent,
+        // GeoDataComponent,
         DatasetsComponent,
-        IbisStdDataComponent,
-        BiomeStdDataComponent,
+        // IbisStdDataComponent,
+        SiteDataComponent,
     ],
     providers: [
         StdDataService,
-        MetDataService,
         DataService,
         NzNotificationService,
     ]

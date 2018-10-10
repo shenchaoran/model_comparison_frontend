@@ -1,38 +1,62 @@
-<!-- select dataRefer -->
-<ng-template #dataReferTemplate let-msInstance='msInstance' let-dataRefer='dataRefer'>
-    <div class='ogms-form-item' nz-row>
-        <span nz-col nzSpan='6'>DataRefer</span>
-        <div nz-col nzSpan='18'>
-            <nz-cascader style='width: 530px;' [nzSize]='"large"' [nzOptions]='msInstance.options' [ngModel]='msInstance.dataRefer' (ngModelChange)='onDataReferChange($event, msInstance, dataRefer)'></nz-cascader>
-        </div>
-    </div>
-</ng-template>
-
-<!-- layout -->
-<div style='margin-bottom: 15px;'>
-    <nz-tabset [nzType]="'card'">
-        <nz-tab *ngFor="let msInstance of _msInstances; let i=index;">
-            <ng-template #nzTabHeading>
-                {{msInstance.meta.name}}
-            </ng-template>
-            <div>
-                <ng-template [ngTemplateOutlet]='dataReferTemplate' [ngTemplateOutletContext]='{msInstance: msInstance, dataRefer: dataRefers[i]}'></ng-template>
-            </div>
-        </nz-tab>
-    </nz-tabset>
-</div>
-
-<ng-container *ngIf='!validSchema'>
-    <div class='ogms-form-item'>
-        Please select the data that has same reference schema.
-    </div>
+<ng-container *ngIf='_formLoading else formTemplate'>
+    <mat-spinner [diameter]='"40px"'></mat-spinner>
 </ng-container>
 
-<div *ngIf='cmpObj.schemaId && validSchema' class='ogms-form-item' nz-row>
-    <span nz-col nzSpan='6'>Select comparison methods</span>
-    <div nz-col nzSpan='18'>
-        <label *ngFor='let method of methods' nz-checkbox [(ngModel)]="method.checked" (ngModelChange)="onMethodChange()">
-            <span>{{method.label}}</span>
-        </label>
-    </div>
-</div>
+<ng-template #formTemplate>
+    <form [formGroup]='cmpObjFG'>
+        <p class='title'><i>Basic Information</i><p>
+        <div class='form-container cmpObj-basic-info'>
+            <mat-form-field class='form-item'>
+                <input matInput placeholder='Comparison feature name' formControlName='name' required>
+                <!-- <mat-hint>please input solution name</mat-hint> -->
+                <mat-error *ngIf='cmpObjFG.get("name").hasError("required")'>必填</mat-error>
+                <mat-error *ngIf='cmpObjFG.get("name").hasError("minLength")'>最小长度</mat-error>
+                <mat-error *ngIf='cmpObjFG.get("name").hasError("maxLength")'>最大长度</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class='form-item'>
+                <textarea matInput placeholder='Comparison feature description' formControlName='desc' required></textarea>
+                <!-- <mat-hint>please input solution description</mat-hint> -->
+                <mat-error *ngIf='cmpObjFG.get("desc").hasError("required")'>必填</mat-error>
+                <mat-error *ngIf='cmpObjFG.get("desc").hasError("minLength")'>最小长度</mat-error>
+                <mat-error *ngIf='cmpObjFG.get("desc").hasError("maxLength")'>最大长度</mat-error>
+            </mat-form-field>
+        </div>
+
+        <p class='title'><i>Data References</i><p>
+        <div formArrayName='dataRefers' class='form-container dataRefer-group'>
+            <div class='dataRefer-item form-item' *ngFor='let ms of _participants; let i=index;' [formGroupName]='i'>
+                <label>{{ms.MDL.meta.name}}</label>
+                <ogms-mat-cascader-select formControlName='selected' [source]='_dataReferCfgs[i]' (ngModelChange)='onSelected($event)'></ogms-mat-cascader-select>
+            </div>
+        </div>
+
+        <p class='title'><i>Comparison Method</i><p>
+        <div class='form-container'>
+            <br>
+            <mat-form-field class='form-item method-select-group'>
+                <mat-select placeholder='Comparison methods' formControlName='methods' multiple>
+                    <mat-select-trigger>
+                        {{methodsFG.value ? methodsFG.value[0].meta.name : ''}}
+                        <span *ngIf="methodsFG.value?.length > 1" class="example-additional-selection">
+                            (+{{methodsFG.value.length - 1}} {{methodsFG.value?.length === 2 ? 'other' : 'others'}})
+                        </span>
+                    </mat-select-trigger>
+                    <mat-option *ngFor="let method of _cmpMethods" [value]='method'>
+                        {{method.meta.name}}
+                    </mat-option>
+                </mat-select>
+                <button id='view-method-all' mat-button matSuffix mat-icon-button target='_blank' routerLink='/comparison/methods'>
+                    <mat-icon>call_made</mat-icon>
+                </button>
+            </mat-form-field>
+            
+            <!-- <p>Comparison methods: </p>
+            <div class='form-item auth-group'>
+                <mat-button-toggle-group formControlName='methods' required multiple>
+                    <mat-button-toggle *ngFor='let method of _cmpMethods' [value]='method'>{{method.meta.name}}</mat-button-toggle>
+                </mat-button-toggle-group>
+            </div> -->
+        </div>
+    </form>
+</ng-template>

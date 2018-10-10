@@ -1,0 +1,7 @@
+.mat-cascader-select {
+    display: flex;
+    flex-flow: row nowrap;
+    mat-form-field:not(:last-child) {
+        margin-right: 20px;
+    }
+}

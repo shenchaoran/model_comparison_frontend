@@ -2,7 +2,7 @@
  * TODO 加上schema的详细结构
  */
 
-import { ResourceSrc } from './resource.enum';
+import { ResourceSrc } from '@models/resource.enum';
 
 export enum SchemaName {
     TABLE_RAW = 0,
@@ -12,9 +12,10 @@ export enum SchemaName {
 };
 
 export class UDXSchema {
+    msId?: string;
     id: string;
     src: ResourceSrc;
-    schemaName?: string;
+    name?: string;
     description?: string;
     structure: any[];
     semantic?: {

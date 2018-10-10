@@ -1,6 +1,6 @@
 
-import { ResourceSrc } from './resource.enum';
-import { UDXCfg } from './UDX-cfg.class';
+import { ResourceSrc } from '@models/resource.enum';
+import { UDXCfg } from '@models/UDX-cfg.class';
 
 export class GeoDataClass {
     _id: string;

@@ -1,0 +1,69 @@
+<div class='ogms-loading-container' *ngIf='!sln else docTemp'>
+    <mat-spinner></mat-spinner>
+</div>
+<ng-template #docTemp>
+    <h1>Create Comparison Task</h1>
+    <article>
+        <form [formGroup]='cmpTaskFG'>
+            <h3>Basic Information</h3>
+            <div class='form-container basic-form-group'>
+                <mat-form-field class='form-item'>
+                    <input matInput placeholder='Task name' formControlName='name' required>
+                    <!-- <mat-hint>please input Task name</mat-hint> -->
+                    <mat-error *ngIf='cmpTaskFG.get("name").hasError("required")'>必填</mat-error>
+                    <mat-error *ngIf='cmpTaskFG.get("name").hasError("minLength")'>最小长度</mat-error>
+                    <mat-error *ngIf='cmpTaskFG.get("name").hasError("maxLength")'>最大长度</mat-error>
+                </mat-form-field>
+
+                <mat-form-field class='form-item'>
+                    <textarea matInput placeholder='Task description' formControlName='desc' required></textarea>
+                    <!-- <mat-hint>please input Task description</mat-hint> -->
+                    <mat-error *ngIf='cmpTaskFG.get("desc").hasError("required")'>必填</mat-error>
+                    <mat-error *ngIf='cmpTaskFG.get("desc").hasError("minLength")'>最小长度</mat-error>
+                    <mat-error *ngIf='cmpTaskFG.get("desc").hasError("maxLength")'>最大长度</mat-error>
+                </mat-form-field>
+
+                <div class='form-item auth-group'>
+                    <label>Authorition: </label>
+                    <mat-button-toggle-group formControlName='auth'>
+                        <mat-button-toggle value='PRIVATE'>Private</mat-button-toggle>
+                        <mat-button-toggle value='PUBLIC'>Public</mat-button-toggle>
+                    </mat-button-toggle-group>
+                </div>
+            </div>
+
+            <h3>Add Calculation Instances</h3>
+            <div class='form-container'>
+                <div *ngIf='!calTasksCtrl?.controls?.length'>
+                    <p>
+                        <i>No calculation instance, please add one!</i>
+                    </p>
+                </div>
+                <div class='ms-chip-list'>
+                    <p>Please select the following tag to create calculation instance.</p>
+                    <mat-chip-list class='form-item'>
+                        <mat-chip *ngFor='let ms of sln.participants' color="primary" selected (click)='addInstance(ms)'>{{ms.MDL.meta.name}}</mat-chip>
+                    </mat-chip-list>
+                </div>
+                <div *ngIf='calTasksCtrl?.controls?.length'>
+                    <mat-tab-group class='form-item calcu-instance-group' [selectedIndex]='_selectedTabIndex' formArrayName='calcuTasks'>
+                        <mat-tab *ngFor='let calcuTask of calTasksCtrl.controls; let i=index'>
+                            <ng-template mat-tab-label>
+                                <input matInput placeholder='Instance name' [(ngModel)]='_tabLabelCfg[i].label' (ngModelChange)='changeTabName($event, i)'
+                                    [ngModelOptions]="{standalone: true}">
+                                <mat-icon (click)='delInstance(i)'>clear</mat-icon>
+                            </ng-template>
+                            <div class='calcu-cfg-container'>
+                                <ogms-calcu-cfg [formControlName]='i' (onValidChange)='onCalcuValidChange($event)' (onSiteSelected)='onSiteSelected($event, i)'></ogms-calcu-cfg>
+                            </div>
+                        </mat-tab>
+                    </mat-tab-group>
+                </div>
+            </div>
+        </form>
+        <div class='submit-action-group'>
+            <button mat-stroked-button color='primary' (click)='submitTask("save")'>Save</button>
+            <button mat-stroked-button color='primary' (click)='submitTask("run")' [disabled]="!cmpTaskFG.valid">Start Comparison</button>
+        </div>
+    </article>
+</ng-template>

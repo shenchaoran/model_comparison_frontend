@@ -17,7 +17,6 @@
     flex-flow: row nowrap;
 }
 
-.flex-item-auto-fill,
 .flex-item-1-1-auto {
     flex: 1 1 auto;
 }
@@ -34,10 +33,27 @@
     flex: 3;
 }
 
-.flex-item-4 {
-    flex: 4;
+@mixin layout($paddingHorizontal) {
+    nav {
+        padding: 0 $paddingHorizontal;
+    }
+    .main-content {
+        padding: 24px $paddingHorizontal;
+    }
+    footer {
+        padding-left: $paddingHorizontal !important;
+        padding-right: $paddingHorizontal !important;
+    }
 }
 
-.flex-item-5 {
-    flex: 5;
+@media (max-width: 768px) {
+    @include layout(10px);
+}
+
+@media (min-width: 768px) {
+    @include layout(50px);
+}
+
+@media (min-width: 980px) {
+    @include layout(10%);
 }

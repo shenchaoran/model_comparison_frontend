@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginService } from '@feature/login/login.service';
+import { UserService } from '../../../../business/user/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -11,7 +11,7 @@ export class HeaderPullRightComponent implements OnInit {
     hasLogin: boolean;
     
     constructor(
-        private loginService: LoginService,
+        private userService: UserService,
         private router: Router,
         private route: ActivatedRoute
     ) {
@@ -19,17 +19,16 @@ export class HeaderPullRightComponent implements OnInit {
     }
 
     ngOnInit() {
-        
         postal.channel('MENU')
             .subscribe('logout', () => {
                 this.hasLogin = false;
             });
 
-        this.hasLogin = this.loginService.hasLogin();
+        this.hasLogin = this.userService.hadLogin();
     }
 
     login() {
-        this.router.navigate(['/login'], {
+        this.router.navigate(['/user/sign-in'], {
             queryParams: {
                 redirect: (window as any).location.hash
             }
@@ -37,7 +36,7 @@ export class HeaderPullRightComponent implements OnInit {
     }
 
     register() {
-        this.router.navigate(['/join'], {
+        this.router.navigate(['/user/sign-up'], {
             queryParams: {
                 redirect: (window as any).location.hash
             }

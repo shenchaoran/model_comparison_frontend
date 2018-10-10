@@ -22,7 +22,7 @@
             <li *ngFor='let item of child.values' (click)='changeFilter(child.key, item)'>
                 <a class='flex-box-row-nowrap' [class.selected]='options[child.key] === item.name'>
                     <span>{{item.name}}</span>
-                    <span class='flex-item-auto-fill'></span>
+                    <span class='flex-item-1-1-auto'></span>
                     <span *ngIf='options[child.key] === item.name'>
                         <i class="fa fa-times"></i>
                     </span>
