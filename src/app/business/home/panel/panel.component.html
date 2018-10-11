@@ -1,12 +1,12 @@
-<div class='panel-title'>
-    <a [routerLink]='title.url'>{{title.label}}</a>
-</div>
-<div class='panel-body'>
-    <ng-container *ngIf='template && list'>
-        <ng-container *ngFor='let item of list'>
-            <div class='list-item' [style]='listItemStyle'>
+<div class='container'>
+    <div class='panel-title'>
+        <a [routerLink]='title.url'>{{title.label}}</a>
+    </div>
+    <div class='panel-body'>
+        <ng-container *ngIf='template && list'>
+            <ng-container *ngFor='let item of list.docs'>
                 <ng-container [ngTemplateOutlet]='template' [ngTemplateOutletContext]='{item: item}'></ng-container>
-            </div>
+            </ng-container>
         </ng-container>
-    </ng-container>
+    </div>
 </div>

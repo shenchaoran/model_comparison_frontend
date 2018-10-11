@@ -20,7 +20,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     issueList;
     
     slnTitle = {
-        label: 'Comparating solutions',
+        label: 'Comparison solutions',
         url: '/comparison'
     };
     slnList;
@@ -52,11 +52,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
     ) { }
 
     ngOnInit() {
-        this.modelList = this.msService.getTopK(6);
-        this.dataList = this.datasetService.getTopK(6);
-        this.slnList = this.slnService.getTopK(6);
-        this.issueList = this.msService.getTopK(6);
-        this.taskList = this.taskService.getTopK(6);
+        this.modelList = this.msService.getTopK(3);
+        this.dataList = this.datasetService.getTopK(3);
+        this.slnList = this.slnService.getTopK(3);
+        this.issueList = this.msService.getTopK(3);
+        this.taskList = this.taskService.getTopK(3);
     }
 
     ngAfterViewInit() {

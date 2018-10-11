@@ -11,11 +11,16 @@ export class PanelComponent implements OnInit {
         url: string
     }
     @Input() template: any;
-    @Input() list: any;
+    @Input() list: {
+        count: number,
+        docs: any[]
+    };
     @Input() set gutter(v: number) {
         this.listItemStyle.padding = `0 ${v/2}px`;
     };
-    listItemStyle: any = {};
+    listItemStyle: any = {
+        padding: '0 15px'
+    };
 
     constructor() { }
 

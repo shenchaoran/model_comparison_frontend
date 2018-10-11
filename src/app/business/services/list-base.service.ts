@@ -34,7 +34,12 @@ export class ListBaseService {
         })
             .pipe(
                 map(res => {
-                    return res;
+                    if(res.error) {
+                        
+                    }
+                    else {
+                        return res.data;
+                    }
                 })
             )
     }

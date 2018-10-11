@@ -1,28 +1,96 @@
 <ogms-home-banner></ogms-home-banner>
 <div class="home-content">
-    <ogms-panel [template]='issueTemplate' [list]='issueList | async' [title]='issueTitle'></ogms-panel>
+    <!-- <ogms-panel [template]='issueTemplate' [list]='issueList | async' [title]='issueTitle'></ogms-panel> -->
     <ogms-panel [template]='slnTemplate' [list]='slnList | async' [title]='slnTitle'></ogms-panel>
     <ogms-panel [template]='taskTemplate' [list]='taskList | async' [title]='taskTitle'></ogms-panel>
     <ogms-panel [template]='modelTemplate' [list]='modelList | async' [title]='modelTitle'></ogms-panel>
     <ogms-panel [template]='dataTemplate' [list]='dataList | async' [title]='dataTitle'></ogms-panel>
-
-    <ng-template #issueTemplate>
-
-    </ng-template>
-
-    <ng-template #slnTemplate>
-
-    </ng-template>
-
-    <ng-template #taskTemplate>
-
-    </ng-template>
-
-    <ng-template #modelTemplate>
-
-    </ng-template>
-
-    <ng-template #dataTemplate>
-
-    </ng-template>
 </div>
+
+<ng-template #issueTemplate let-item='item'>
+    {{item._id}}
+</ng-template>
+
+<ng-template #slnTemplate let-item='item'>
+    <div class='list-item'>
+        <a class='panel-item-header' [routerLink]='"/comparison/solutions/" + item._id'>
+            {{item.meta.name}}
+        </a>
+        <div class='panel-item-body'>
+            <p>{{item.meta.desc | stringLimit: 180 | description}}</p>
+        </div>
+        <div class='panel-item-footer'>
+            <span>
+                <mat-icon>person</mat-icon>
+                <span>{{item.auth.userName}}</span>
+            </span>
+            <span>
+                <mat-icon>star</mat-icon>
+                <span>654</span>
+            </span>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #taskTemplate let-item='item'>
+    <div class='list-item'>
+        <a class='panel-item-header' [routerLink]='"/results/comparison/" + item._id'>
+            {{item.meta.name}}
+        </a>
+        <div class='panel-item-body'>
+            <p>{{item.meta.desc | stringLimit: 180 | description}}</p>
+        </div>
+        <div class='panel-item-footer'>
+            <span>
+                <mat-icon>person</mat-icon>
+                <span>{{item.auth.userName}}</span>
+            </span>
+            <span>
+                <mat-icon>star</mat-icon>
+                <span>654</span>
+            </span>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #modelTemplate let-item='item'>
+    <div class='list-item'>
+        <a class='panel-item-header' [routerLink]='"/models/" + item._id'>
+            {{item.MDL.meta.name}}
+        </a>
+        <div class='panel-item-body'>
+            <p>{{item.MDL.meta.abstract | stringLimit: 180 | description}}</p>
+        </div>
+        <div class='panel-item-footer'>
+            <span>
+                <mat-icon>person</mat-icon>
+                <span>{{item.auth.nodeName}}</span>
+            </span>
+            <span>
+                <mat-icon>star</mat-icon>
+                <span>654</span>
+            </span>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #dataTemplate let-item='item'>
+    <div class='list-item'>
+        <a class='panel-item-header' [routerLink]='"/datasets/" + item._id'>
+            {{item.meta.name}}
+        </a>
+        <div class='panel-item-body'>
+            <p>{{item.meta.desc | stringLimit: 180 | description}}</p>
+        </div>
+        <!-- <div class='panel-item-footer'>
+            <span>
+                <mat-icon>person</mat-icon>
+                <span>{{item.auth.userName}}</span>
+            </span>
+            <span>
+                <mat-icon>star</mat-icon>
+                <span>654</span>
+            </span>
+        </div> -->
+    </div>
+</ng-template>
