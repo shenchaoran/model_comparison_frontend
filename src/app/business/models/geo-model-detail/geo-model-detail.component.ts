@@ -1,5 +1,5 @@
 import { Component, OnInit, HostListener } from "@angular/core";
-import { MSService } from "../../services/geo-models.service";
+import { MSService } from "../../services/ms.service";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { NzNotificationService, NzModalService } from "ng-zorro-antd";
 import { DynamicTitleService } from "@common/core/services/dynamic-title.service";
@@ -28,11 +28,11 @@ export class GeoModelDetailComponent extends DocBaseComponent implements OnInit 
 
     constructor(
         public route: ActivatedRoute,
-        public cmpSlnService: MSService,
+        public slnService: MSService,
 //private _notice: NzNotificationService,
         public title: DynamicTitleService
     ) {
-        super(route, cmpSlnService, title);
+        super(route, slnService, title);
     }
 
     ngOnInit() {

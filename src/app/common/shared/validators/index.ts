@@ -1,2 +1,2 @@
-export * from '@common/shared/validators/email.validator';
-export * from '@common/shared/validators/equalPasswords.validator';
+export * from './email.validator';
+export * from './equalPasswords.validator';

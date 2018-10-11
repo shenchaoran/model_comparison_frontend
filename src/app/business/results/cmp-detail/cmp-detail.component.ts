@@ -1,6 +1,6 @@
 import { Component, OnInit, HostListener, ViewChildren, QueryList, ElementRef, Renderer2 } from "@angular/core";
-import { CmpSlnService } from "../../comparison/comparison.module";
-import { CmpTaskService } from '../../services/cmp-task.service';
+import { SlnService } from "../../comparison/comparison.module";
+import { TaskService } from '../../services/task.service';
 import { MSService } from '../../models/models.module';
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { NzNotificationService, NzModalService } from "ng-zorro-antd";
@@ -22,11 +22,11 @@ export class CmpDetailComponent extends DocBaseComponent implements OnInit {
 
     constructor(
         public route: ActivatedRoute,
-        public cmpSlnService: CmpTaskService,
+        public slnService: TaskService,
         public title: DynamicTitleService,
         public renderer2: Renderer2
     ) {
-        super(route, cmpSlnService, title);
+        super(route, slnService, title);
     }
 
     ngOnInit() {
@@ -40,7 +40,7 @@ export class CmpDetailComponent extends DocBaseComponent implements OnInit {
     private fetchInterval() {
         const record$ = interval(3000).pipe(
             switchMap((v, i) => {
-                return this.cmpSlnService.findOne(this.cmpTask._id, false);
+                return this.slnService.findOne(this.cmpTask._id, false);
             }),
             map(response => {
                 if (!response.error) {

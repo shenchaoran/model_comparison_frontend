@@ -6,7 +6,7 @@ import { _HttpClient } from '@common/core/services/http.client';
 import { ListBaseService } from './list-base.service';
 
 @Injectable()
-export class CmpTaskService extends ListBaseService {
+export class TaskService extends ListBaseService {
     protected baseUrl = 'comparison/tasks';
 
     constructor(

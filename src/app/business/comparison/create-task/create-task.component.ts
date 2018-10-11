@@ -1,5 +1,5 @@
 import { Component, OnInit, HostListener } from "@angular/core";
-import { CmpSlnService, CmpTaskService } from "../../services";
+import { SlnService, TaskService } from "../../services";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { DynamicTitleService } from "@common/core/services/dynamic-title.service";
 import { DocBaseComponent } from '@common/shared';
@@ -35,13 +35,13 @@ export class CreateTaskComponent extends DocBaseComponent implements OnInit {
     constructor(
         public route: ActivatedRoute,
         public router: Router,
-        public cmpSlnService: CmpSlnService,
+        public slnService: SlnService,
         public title: DynamicTitleService,
         private fb: FormBuilder,
-        public cmpTaskService: CmpTaskService,
+        public taskService: TaskService,
         public snackBar: MatSnackBar,
     ) {
-        super(route, cmpSlnService, title);
+        super(route, slnService, title);
         this.cmpTask = new CmpTask();
 
         this.cmpTaskFG = this.fb.group({
@@ -116,7 +116,7 @@ export class CreateTaskComponent extends DocBaseComponent implements OnInit {
             //     dataRefer.msrName = this.calcuTasks[i].meta.name;
             // })
         });
-        this.cmpTaskService.insert({
+        this.taskService.insert({
             cmpTask: this.cmpTask,
             calcuTasks: this.calcuTasks
         })

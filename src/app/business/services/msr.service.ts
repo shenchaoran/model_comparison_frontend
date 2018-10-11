@@ -6,12 +6,12 @@ import { _HttpClient } from '@common/core/services/http.client';
 import { ListBaseService } from './list-base.service';
 
 @Injectable()
-export class CmpSlnService extends ListBaseService {
-    protected baseUrl = 'comparison/solutions';
+export class MSRService extends ListBaseService {
+    protected baseUrl = 'calculation';
 
     constructor(
         protected http: _HttpClient
-    ) { 
+    ) {
         super(http);
     }
 }

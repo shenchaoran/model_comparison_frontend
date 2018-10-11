@@ -6,17 +6,14 @@ import { CmpSharedModule } from '../cmp-shared';
 import { ComparisonRoutingModule } from './comparison-routing.module';
 import { SolutionListComponent } from './solution-list/solution-list.component';
 import { SolutionDetailComponent } from './solution-detail/solution-detail.component';
-import { CmpSlnService } from '../services/cmp-sln.service';
-import { CmpMethodService } from '../services/cmp-method.service';
 import { NzNotificationService, NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';
 import { MethodDetailComponent } from './method-detail/method-detail.component';
 import { MethodListComponent } from './method-list/method-list.component';
 import { CreateSlnComponent, SlnConfirmDialog } from './create-sln/create-sln.component';
-import { MSService } from '../services/geo-models.service';
 import { CreateTaskComponent } from './create-task/create-task.component';
-import { CmpTaskService } from '../services/cmp-task.service';
+import { TaskService, MSService, CmpMethodService, SlnService } from '@services';
 
-export * from '../services/cmp-sln.service';
+export * from '../services/sln.service';
 
 @NgModule({
     imports: [
@@ -38,8 +35,8 @@ export * from '../services/cmp-sln.service';
         SlnConfirmDialog
     ],
     providers: [
-        CmpSlnService,
-        CmpTaskService,
+        SlnService,
+        TaskService,
         CmpMethodService,
         NzNotificationService,
         MSService,

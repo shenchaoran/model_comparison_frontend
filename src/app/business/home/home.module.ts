@@ -12,6 +12,15 @@ import { HomeStatisticsComponent } from './home-statistics/home-statistics.compo
 import { HomeModelComponent } from './home-model/home-model.component';
 import { HomeSolutionComponent } from './home-solution/home-solution.component';
 import { HomeIssueComponent } from './home-issue/home-issue.component';
+import { PanelComponent } from './panel/panel.component';
+
+import {
+    MSRService,
+    SlnService,
+    TaskService,
+    DatasetService,
+    MSService,
+} from '../services';
 
 @NgModule({
   imports: [
@@ -19,9 +28,14 @@ import { HomeIssueComponent } from './home-issue/home-issue.component';
     SharedModule,
     FeatureRoutingModule,
   ],
-  declarations: [HomeComponent, HomeBannerComponent, HomeTaskComponent, HomeStatisticsComponent, HomeModelComponent, HomeSolutionComponent, HomeIssueComponent],
+  declarations: [HomeComponent, HomeBannerComponent, HomeTaskComponent, HomeStatisticsComponent, HomeModelComponent, HomeSolutionComponent, HomeIssueComponent, PanelComponent],
   providers: [
-    MockService
+    MockService,
+    MSRService,
+    MSService,
+    DatasetService,
+    TaskService,
+    SlnService,
   ]
 })
 export class HomeModule { }

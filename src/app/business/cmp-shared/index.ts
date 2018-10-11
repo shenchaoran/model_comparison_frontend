@@ -12,8 +12,7 @@ import { CmpMethodCfgComponent } from './cmp-method-cfg/cmp-method-cfg.component
 import { OlModule } from '../ol/ol.module'
 import { CmpSlnOutlineComponent } from './cmp-sln-outline/cmp-sln-outline.component';
 //////////////////// service ////////////////////////
-import { UserService } from '../user/user.service';
-import { StdDataService } from '../services/std-data.service';
+import { DatasetService, UserService } from '../services';
 import { NzNotificationService, NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';
 ////////////////////// export //////////////////////
 export { CalcuCfgComponent } from './calcu-cfg/calcu-cfg.component';
@@ -34,7 +33,7 @@ const COMPONENTS = [
 const SERVICES = [
     UserService,
     NzNotificationService,
-    StdDataService,
+    DatasetService,
 ]
 ////////////////////////////////////////////
 

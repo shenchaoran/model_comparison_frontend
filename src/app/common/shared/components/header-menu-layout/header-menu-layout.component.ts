@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
 import { HeaderMenuService } from '../header-menu/services/header-menu.service';
-import { UserService } from '../../../../business/user/user.service';
+import { UserService } from '../../../../business/services';
 
 @Component({
     selector: 'header-menu-layout',

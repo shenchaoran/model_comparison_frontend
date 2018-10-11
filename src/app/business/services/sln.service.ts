@@ -6,12 +6,12 @@ import { _HttpClient } from '@common/core/services/http.client';
 import { ListBaseService } from './list-base.service';
 
 @Injectable()
-export class CalcuTaskService extends ListBaseService {
-    protected baseUrl = 'calculation';
+export class SlnService extends ListBaseService {
+    protected baseUrl = 'comparison/solutions';
 
     constructor(
         protected http: _HttpClient
-    ) {
+    ) { 
         super(http);
     }
 }

@@ -10,7 +10,7 @@ import {
     NG_VALIDATORS,
     NG_VALUE_ACCESSOR
 } from '@angular/forms';
-import { UserService } from '../user.service';
+import { UserService } from '../../services';
 
 @Component({
     selector: 'ogms-sign-in',

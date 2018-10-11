@@ -1,18 +1,18 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { NgxSharedModule } from '@common/ngx-shared';
+import { NgxSharedModule } from '../ngx-shared';
 import { NgUploaderModule } from 'ngx-uploader';
-import { BaThemeConfig } from '@common/shared/theme.config';
-import { BaThemeConfigProvider } from '@common/shared/theme.configProvider';
+import { BaThemeConfig } from './theme.config';
+import { BaThemeConfigProvider } from './theme.configProvider';
 import { BACKEND } from '@config';
-import { HEADER_MENUS, USER_MENUS, LOGIN_MENUS } from '@config/menu.config';
+import { HEADER_MENUS, USER_MENUS, LOGIN_MENUS } from '@config';
 import { DisqusModule } from "ngx-disqus";
-import { MatSharedModule } from '@common/mat-shared';
+import { MatSharedModule } from '../mat-shared';
 // import { EmailValidator, EqualPasswordsValidator } from './validators';
-import { ListFilterService } from '@common/shared/components/list-template/list-filter.service';
-import { HeaderMenuService } from '@common/shared/components/header-menu/services/header-menu.service';
-import { BaMenuService } from '@common/shared/components/header-menu/services/baMenu.service';
-import { UserService } from '../../business/user/user.service';
+import { ListFilterService } from './components/list-template/list-filter.service';
+import { HeaderMenuService } from './components/header-menu/services/header-menu.service';
+import { BaMenuService } from './components/header-menu/services/baMenu.service';
+import { UserService } from '../../business/services';
 import { NzNotificationService, NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';
 
 import {
@@ -35,18 +35,18 @@ import {
     HeaderMenuComponent,
     MatCascaderSelectComponent,
     CascaderSelectValidator,
-} from '@common/shared/components';
+} from './components';
 
 import {
     BaScrollPosition,
     BaSlimScroll
-} from '@common/shared/directives';
+} from './directives';
 
 import {
     BaImageLoaderService,
     BaThemePreloader,
     BaThemeSpinner,
-} from '@common/shared/services';
+} from './services';
 
 import {
     BaImgPathPipe,
@@ -57,7 +57,7 @@ import {
     ArrayFilterPipe,
     DescriptionPipe,
     CoordinatePipe,
-} from '@common/shared/pipes';
+} from './pipes';
 
 const SERVICES = [
     BaImageLoaderService,

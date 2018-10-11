@@ -1,5 +1,17 @@
 
-
-.home-body {
-    margin: auto;
+.home-content {
+    @media (max-width: 768px) {
+        padding: 0 10px;
+    }
+    
+    @media (min-width: 768px) {
+        padding: 0 50px;
+    }
+    
+    @media (min-width: 980px) {
+        padding: 0 10%;
+    }
+    ogms-panel {
+        margin: 24px 0;
+    }
 }

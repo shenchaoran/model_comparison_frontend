@@ -1,8 +1,8 @@
 import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy, Inject } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, FormArray, FormControl } from '@angular/forms';
 import { CmpSolution, ResourceSrc } from '@models';
-import { CmpSlnService } from '../../services/cmp-sln.service';
-import { MSService } from '../../services/geo-models.service';
+import { SlnService } from '../../services/sln.service';
+import { MSService } from '../../services/ms.service';
 import { NzNotificationService, NzModalService } from 'ng-zorro-antd';
 import { Router, ActivatedRoute } from '@angular/router';
 import * as uuidv1 from 'uuid/v1';
@@ -34,7 +34,7 @@ export class CreateSlnComponent implements OnInit {
     constructor(
         private fb: FormBuilder,
         private cdRef: ChangeDetectorRef,
-        private service: CmpSlnService,
+        private service: SlnService,
         private msService: MSService,
         private _notice: NzNotificationService,
         private router: Router,

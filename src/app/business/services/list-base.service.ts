@@ -1,7 +1,6 @@
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { HttpHeaders, HttpParams } from '@angular/common/http';
-import { Resolve } from '@angular/router';
 import { _HttpClient } from '@common/core/services/http.client';
 
 @Injectable()
@@ -12,7 +11,7 @@ export class ListBaseService {
         protected http: _HttpClient
     ) { }
 
-    findAll(query): Observable<any> {
+    findAll(query?: any): Observable<any> {
         return this.http.get(`/${this.baseUrl}`, {
             params: query
         });
@@ -24,5 +23,19 @@ export class ListBaseService {
 
     findOne(id, withRequestProgress?): Observable<any> {
         return this.http.get(`/${this.baseUrl}/${id}`, undefined, undefined, undefined, withRequestProgress);
+    }
+
+    getTopK(k) {
+        return this.http.get(`/${this.baseUrl}`, {
+            params: {
+                pageSize: k,
+                pageNum: 1
+            }
+        })
+            .pipe(
+                map(res => {
+                    return res;
+                })
+            )
     }
 }

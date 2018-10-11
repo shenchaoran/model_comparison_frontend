@@ -1,12 +1,12 @@
 import { Component, OnInit, HostListener } from "@angular/core";
-import { CmpSlnService } from "../../comparison/comparison.module";
+import { SlnService } from "../../comparison/comparison.module";
 import { MSService } from '../../models/models.module';
-import { CalcuTaskService } from '../../services/calcu-task.service';
+import { MSRService } from '../../services/msr.service';
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { NzNotificationService, NzModalService } from "ng-zorro-antd";
 import { DynamicTitleService } from "@common/core/services/dynamic-title.service";
 import { ReactiveFormsModule } from "@angular/forms";
-import { DocBaseComponent } from '@common/shared';
+import { DocBaseComponent } from '@shared';
 import { CalcuTaskState } from '@models'
 import { Observable, interval } from 'rxjs'
 import { map, switchMap, filter, tap, startWith } from 'rxjs/operators';
@@ -22,10 +22,10 @@ export class CalcuDetailComponent extends DocBaseComponent implements OnInit {
 
     constructor(
         public route: ActivatedRoute,
-        public cmpSlnService: CalcuTaskService,
+        public slnService: MSRService,
         public title: DynamicTitleService
     ) { 
-        super(route, cmpSlnService, title);
+        super(route, slnService, title);
     }
 
     ngOnInit() {
@@ -39,7 +39,7 @@ export class CalcuDetailComponent extends DocBaseComponent implements OnInit {
     private fetchInterval() {
         const record$ = interval(3000).pipe(
             switchMap((v, i) => {
-                return this.cmpSlnService.findOne(this.msRecord._id, false);
+                return this.slnService.findOne(this.msRecord._id, false);
             }),
             map(response => {
                 if(!response.error) {

@@ -1,2 +1,2 @@
-export * from '@common/shared/directives/baScrollPosition';
-export * from '@common/shared/directives/baSlimScroll';
+export * from './baScrollPosition';
+export * from './baSlimScroll';

@@ -1,9 +1,8 @@
 import { Component, OnInit, OnDestroy, HostListener } from "@angular/core";
-import { MSService } from "../../services/geo-models.service";
+import { MSService, UserService } from "../../services";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { NzNotificationService, NzModalService } from "ng-zorro-antd";
 import { DynamicTitleService } from "@common/core/services/dynamic-title.service";
-import { UserService } from '../../user/user.service';
 import { ResourceSrc, CalcuTaskState, CalcuTask } from '@models';
 import {
     AbstractControl,
@@ -29,14 +28,14 @@ export class InvokeComponent extends DocBaseComponent implements OnInit {
 
     constructor(
         public route: ActivatedRoute,
-        public cmpSlnService: MSService,
+        public slnService: MSService,
         //private _notice: NzNotificationService,
         public title: DynamicTitleService,
         public userService: UserService,
         public fb: FormBuilder,
         public router: Router
     ) {
-        super(route, cmpSlnService, title);
+        super(route, slnService, title);
         this.userService.checkLogin();
     }
 
@@ -79,7 +78,7 @@ export class InvokeComponent extends DocBaseComponent implements OnInit {
         else if (type === 'invoke') {
             this.msInstance.state = CalcuTaskState.COULD_START;
         }
-        this._subscriptions.push(this.cmpSlnService.invoke(this.msInstance)
+        this._subscriptions.push(this.slnService.invoke(this.msInstance)
             .subscribe(response => {
                 if (!response.error) {
                     let res = response.data;

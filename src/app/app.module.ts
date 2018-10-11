@@ -14,7 +14,7 @@ import { App } from './app.component';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { NzNotificationService, NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';
 import { DisqusModule } from "ngx-disqus";
-import { UserService  } from './business/user/user.service';
+import { UserService  } from '@services';
 
 @NgModule({
     bootstrap: [App],

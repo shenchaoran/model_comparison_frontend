@@ -1,0 +1,42 @@
+:host {
+    border-radius: 5px;
+    border: 1px solid #eee;
+}
+
+.panel-title {
+    background: #eee;
+    padding: 10px;
+}
+
+.panel-body {
+    display: flex;
+    flex-flow: row wrap;
+
+    .list-item {
+        box-sizing: border-box;
+
+        @mixin responsive($columnNum) {
+            flex: 1 1 calc(100%/#{$columnNum});
+        }
+
+        @media (max-width: 479px) {
+            @include responsive(1);
+        }
+
+        @media (min-width: 480px) {
+            @include responsive(2);
+        }
+
+        @media (min-width: 768px) {
+            @include responsive(2);
+        }
+
+        @media (min-width: 992px) {
+            @include responsive(3);
+        }
+
+        @media (min-width: 1200px) {
+            @include responsive(3);
+        }
+    }
+}

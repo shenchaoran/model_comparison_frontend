@@ -1,5 +1,5 @@
-import { UserService } from './../business/user/user.service';
-import { UDXSchema } from '@models/UDX-schema.class';
+import { UserService } from '../business/services';
+import { UDXSchema } from './UDX-schema.class';
 import { ResourceSrc } from './resource.enum';
 import * as ObjectID from 'objectid';
 import { Enum } from 'typescript-string-enums/dist';

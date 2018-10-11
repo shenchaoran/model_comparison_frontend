@@ -3,9 +3,9 @@
  * 这个表算是一个中间产物，其实存在cmp-task的calcuTasks中也行，但是多表查询很麻烦
  */
 
-import { ResourceSrc } from '@models/resource.enum';
+import { ResourceSrc } from './resource.enum';
 import * as ObjectID from 'objectid';
-import { UserService } from '../business/user/user.service';
+import { UserService } from '../business/services';
 import { Enum } from 'typescript-string-enums/dist';
 
 

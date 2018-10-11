@@ -1,8 +1,8 @@
-import { UserService } from './../business/user/user.service';
+import { UserService } from '../business/services';
 /**
  * 比较方案只是比较对象的集合
  */
-import { ResourceSrc } from '@models/resource.enum';
+import { ResourceSrc } from './resource.enum';
 import * as ObjectID from 'objectid';
 import { UDXSchema } from './UDX-schema.class';
 

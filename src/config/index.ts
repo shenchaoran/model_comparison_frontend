@@ -1,3 +1,3 @@
-export * from '@config/api.config';
-export * from '@config/map.config';
-export * from '@config/menu.config';
+export * from './api.config';
+export * from './map.config';
+export * from './menu.config';

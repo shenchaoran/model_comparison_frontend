@@ -1,6 +1,6 @@
 // TODO divider
 import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
-import { UserService } from '../../../../../business/user/user.service';
+import { UserService } from '../../../../../business/services';
 
 @Component({
     selector: 'ogms-subMenu',

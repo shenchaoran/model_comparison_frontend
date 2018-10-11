@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DataService } from '../../services/data.service';
+import { DatasetService } from '../../services/dataset.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -16,7 +16,7 @@ export class DatasetsComponent implements OnInit {
     selectedEvent: any;
 
     constructor(
-        private service: DataService,
+        private service: DatasetService,
         private router: Router,
     ) { }
 

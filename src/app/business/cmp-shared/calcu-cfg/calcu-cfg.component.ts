@@ -11,8 +11,7 @@ import {
 } from '@angular/core';
 import { NgUploaderOptions } from 'ngx-uploader';
 import { ResourceSrc, CalcuTask, CmpSolution } from '@models';
-import { UserService } from '../../user/user.service';
-import { StdDataService } from '../../services/std-data.service';
+import { DatasetService, UserService } from '@services';
 import {
     AbstractControl,
     FormBuilder,
@@ -64,7 +63,7 @@ export class CalcuCfgComponent implements OnInit, AfterViewInit {
         @Inject('BACKEND') private backend,
         private userService: UserService,
         private fb: FormBuilder,
-        private stdService: StdDataService,
+        private datasetService: DatasetService,
         public dialog: MatDialog,
         public cdRef: ChangeDetectorRef,
     ) {
@@ -96,7 +95,7 @@ export class CalcuCfgComponent implements OnInit, AfterViewInit {
     }
 
     fetchStds(stdIds) {
-        this.stdService.fetchDbEntries(stdIds)
+        this.datasetService.fetchDbEntries(stdIds)
             .subscribe(response => {
                 if (!response.error) {
                     this.stds = response.data;
