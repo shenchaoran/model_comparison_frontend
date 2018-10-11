@@ -1,5 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Location } from '@angular/common';
+import { HeaderMenuService } from '../header-menu/services/header-menu.service';
+import { UserService } from '../../../../business/user/user.service';
 
 @Component({
     selector: 'header-menu-layout',
@@ -7,32 +10,70 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
     styleUrls: ['./header-menu-layout.component.scss']
 })
 export class HeaderMenuLayoutComponent implements OnInit, OnDestroy {
+    hasLogin: boolean = false;
     scrollbarCfg = {
         wheelSpeed: 1,
         swipeEasing: false
     };
     // TODO optional show menu header
     showMenu: boolean = true;
+    navMenu: any[];
+    userMenu: any[];
+    signInMenu: any[] = [{
+        data: {
+            menu: {
+                title: 'Sign in'
+            }
+        }
+    }];
+    signUpMenu: any[] = [{
+        data: {
+            menu: {
+                title: 'Sign up'
+            }
+        }
+    }];
 
     q: string;
 
+    get redirect() {
+        var url = this.location.path();
+        var index = url.indexOf('?');
+        if(index !== -1)
+            url = url.substring(0, index);
+        return (url === '/user/sign-in' || url === '/user/sign-up') ? '': url;
+    }
+
     constructor(
         private route: ActivatedRoute,
-        private router: Router
+        private router: Router,
+        private location: Location,
+        private userService: UserService,
+        private menuService: HeaderMenuService
     ) {
         this.showMenu = true;
     }
 
-    ngOnDestroy() {}
+    ngOnDestroy() { }
 
     ngOnInit() {
+        this.navMenu = this.menuService.getMenus('HEADER_MENUS');
+        this.userMenu = this.menuService.getMenus('USER_MENUS');
+
         postal.channel('MENU_CHANNEL').publish('menu.update');
         this.route.queryParams
             .subscribe((params: Params) => {
-                if(params['q']) {
+                if (params['q']) {
                     this.q = params['q'];
                 }
-            })
+            });
+
+        postal.channel('MENU')
+            .subscribe('logout', () => {
+                this.hasLogin = false;
+            });
+
+        this.hasLogin = this.userService.hadLogin();
     }
 
     search() {
@@ -40,6 +81,22 @@ export class HeaderMenuLayoutComponent implements OnInit, OnDestroy {
         this.router.navigate(['/search'], {
             queryParams: {
                 q: this.q
+            }
+        });
+    }
+
+    login() {
+        this.router.navigate(['/user/sign-in'], {
+            queryParams: {
+                redirect: this.redirect
+            }
+        });
+    }
+
+    register() {
+        this.router.navigate(['/user/sign-up'], {
+            queryParams: {
+                redirect: this.redirect
             }
         });
     }

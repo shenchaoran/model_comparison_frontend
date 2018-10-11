@@ -166,3 +166,22 @@ export const USER_MENUS: MenuClass[] = [
         ]
     }
 ];
+
+export const LOGIN_MENUS: MenuClass[] = [
+    {
+        path: 'user/sign-in',
+        data: {
+            menu: {
+                title: 'Sign in'
+            }
+        }
+    },
+    {
+        path: 'user/sign-up',
+        data: {
+            menu: {
+                title: 'Sign up'
+            }
+        }
+    }
+];

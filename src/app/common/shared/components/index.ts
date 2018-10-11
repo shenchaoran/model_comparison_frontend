@@ -1,5 +1,4 @@
 export * from '@common/shared/components/context-menu/context-menu.component';
-export * from '@common/shared/components/header-pull-right/header-pull-right.component';
 export * from '@common/shared/components/file-uploader/file-uploader.component';
 export * from '@common/shared/components/header-menu-layout/header-menu-layout.component';
 export * from '@common/shared/components/list-template/list-template.component';

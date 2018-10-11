@@ -5,7 +5,7 @@ import { NgUploaderModule } from 'ngx-uploader';
 import { BaThemeConfig } from '@common/shared/theme.config';
 import { BaThemeConfigProvider } from '@common/shared/theme.configProvider';
 import { BACKEND } from '@config';
-import { HEADER_MENUS, USER_MENUS } from '@config/menu.config';
+import { HEADER_MENUS, USER_MENUS, LOGIN_MENUS } from '@config/menu.config';
 import { DisqusModule } from "ngx-disqus";
 import { MatSharedModule } from '@common/mat-shared';
 // import { EmailValidator, EqualPasswordsValidator } from './validators';
@@ -18,7 +18,6 @@ import { NzNotificationService, NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';
 import {
     FileUploader,
     ContextMenuComponent,
-    HeaderPullRightComponent,
     HeaderMenuLayoutComponent,
     ListTemplateComponent,
     FooterComponent,
@@ -80,7 +79,6 @@ const COMPONENTS = [
     FileUploader,
     ContextMenuComponent,
     HeaderMenuComponent,
-    HeaderPullRightComponent,
     HeaderMenuLayoutComponent,
     ListTemplateComponent,
     FooterComponent,
@@ -152,6 +150,10 @@ export * from '@common/shared/directives';
         {
             provide: 'USER_MENUS',
             useValue: USER_MENUS
+        },
+        {
+            provide: 'LOGIN_MENUS',
+            useValue: LOGIN_MENUS
         },
         NzNotificationService
     ],

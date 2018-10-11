@@ -4,18 +4,24 @@
             <!-- <i *ngIf="subMenu.data && subMenu.data.menu && subMenu.data.menu.icon" class="anticon anticon-{{subMenu.data.menu.icon}}"></i>  -->
             {{subMenu.data.menu.title}}
         </span>
-        <a class='ogms-menu-link' *ngIf='subMenu.path.indexOf("sign-out") !== -1' (click)='signOut()'>
+        <a class='ogms-menu-link' *ngIf='!subMenu.path else menuTemplate'>
             {{subMenu.data.menu.title}}
         </a>
-        <a class='ogms-menu-link' *ngIf='subMenu.path.indexOf("sign-out") === -1' routerLink="/{{subMenu.path}}" [routerLinkActive]="isRoot? 'actived-menu': ''">
-            <!-- <i *ngIf="subMenu.data && subMenu.data.menu && subMenu.data.menu.icon" class="anticon anticon-{{subMenu.data.menu.icon}}"></i>  -->
-            {{subMenu.data.menu.title}}
-        </a>
+        <ng-template #menuTemplate>
+            <a class='ogms-menu-link' *ngIf='subMenu.path.indexOf("sign-out") !== -1' (click)='signOut()'>
+                {{subMenu.data.menu.title}}
+            </a>
+            <a class='ogms-menu-link' *ngIf='subMenu.path.indexOf("sign-out") === -1' [routerLink]="'/'+subMenu.path" [routerLinkActive]="isRoot? 'actived-level-1-menu': 'actived-level-2-menu'">
+                <!-- <i *ngIf="subMenu.data && subMenu.data.menu && subMenu.data.menu.icon" class="anticon anticon-{{subMenu.data.menu.icon}}"></i>  -->
+                {{subMenu.data.menu.title}}
+            </a>
+        </ng-template>
     </span>
 
-    <!-- 子菜单 -->
+    <!-- 孝蝜坕 -->
     <ul class='ogms-sub-menu' *ngIf="subMenu.children">
-        <ogms-subMenu *ngFor="let subMenu of subMenu.children" class="ant-menu-submenu ant-menu-submenu-horizontal" [subMenu]="subMenu"></ogms-subMenu>
+        <ogms-subMenu *ngFor="let subMenu of subMenu.children" class="ant-menu-submenu ant-menu-submenu-horizontal"
+            [subMenu]="subMenu"></ogms-subMenu>
     </ul>
 </li>
 

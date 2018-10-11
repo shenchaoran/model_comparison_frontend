@@ -1,11 +1,13 @@
 import { Injectable, Inject } from '@angular/core';
 import { Router, Routes } from '@angular/router';
 
-import { HEADER_MENUS, USER_MENUS } from '@config/menu.config';
-
 @Injectable()
 export class HeaderMenuService {
-    constructor(@Inject('HEADER_MENUS') private header_menus, @Inject('USER_MENUS') private user_menus) {}
+    constructor(
+        @Inject('HEADER_MENUS') private header_menus, 
+        @Inject('USER_MENUS') private user_menus,
+        @Inject('LOGIN_MENUS') private login_menus
+    ) {}
 
     getMenus(type: string) {
         let routes: Routes = undefined;
@@ -15,6 +17,10 @@ export class HeaderMenuService {
         else if(type === 'USER_MENUS') {
             routes = <Routes>_.cloneDeep(this.user_menus);
         }
+        else if(type === 'LOGIN_MENUS') {
+            routes = <Routes>_.cloneDeep(this.login_menus);
+        }
+        
         if(routes === undefined) {
             return [];
         }

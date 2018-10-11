@@ -24,13 +24,15 @@ export class UserService {
 
     set jwt(jwt) {
         this._jwt = jwt;
-        localStorage.setItem('jwt', JSON.stringify(jwt));
-        let url = this.route.snapshot.queryParams['redirect'];
-        if (!url || url.indexOf('#/user/sign') !== -1) {
-            this.router.navigate(['/home']);
-        }
-        else {
-            this.router.navigate([url]);
+        if(jwt) {
+            localStorage.setItem('jwt', JSON.stringify(jwt));
+            let url = this.route.snapshot.queryParams['redirect'];
+            if (!url || url.indexOf('#/user/sign') !== -1) {
+                this.router.navigate(['/home']);
+            }
+            else {
+                this.router.navigate([url]);
+            }
         }
     }
 
@@ -58,6 +60,7 @@ export class UserService {
 
     signOut() {
         localStorage.removeItem('jwt');
+        this.jwt = null;
     }
 
     signUp(user): Observable<any> {

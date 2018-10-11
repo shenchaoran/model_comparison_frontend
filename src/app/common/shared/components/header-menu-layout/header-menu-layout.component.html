@@ -4,10 +4,43 @@
         <input type='input' name='q' spellcheck="false" [(ngModel)]='q' placeholder='Search' autocomplete="on">
         <button hidden type='submit' (click)='search()'></button>
     </form>
-    <div id="menu">
-        <ogms-header-menu [type]="'HEADER_MENUS'"></ogms-header-menu>
+    <div id="nav-menu">
+        <ogms-header-menu [menuItems]='navMenu'></ogms-header-menu>
     </div>
-    <ogms-header-pull-right id="login-menu"></ogms-header-pull-right>
+    <div id="login-menu">
+        <div *ngIf="hasLogin else gotoLogin">
+            <ogms-header-menu [menuItems]='userMenu'></ogms-header-menu>
+        </div>
+
+        <ng-template #gotoLogin>
+            <!-- <ogms-header-menu [menuItems]='loginMenu'></ogms-header-menu> -->
+            <div id='sign-in-group'>
+                <!-- <ul [nzMode]="'horizontal'" nz-menu>
+                    <li nz-submenu>
+                        <span title>
+                            <a class='ogms-menu-link' (click)='login()'>
+                                Sign in
+                            </a>
+                        </span>
+                    </li>
+                </ul> -->
+                <ogms-header-menu [menuItems]='signInMenu' (click)='login()'></ogms-header-menu>
+                &nbsp;
+                <span style='color: #586069 !important;'>or</span>
+                &nbsp;
+                <ogms-header-menu [menuItems]='signUpMenu' (click)='register()'></ogms-header-menu>
+                <!-- <ul [nzMode]="'horizontal'" nz-menu>
+                    <li nz-submenu>
+                        <span title>
+                            <a class='ogms-menu-link' (click)='register()'>
+                                Sign up
+                            </a>
+                        </span>
+                    </li>
+                </ul> -->
+            </div>
+        </ng-template>
+    </div>
 </nav>
 <section class='body'>
     <router-outlet></router-outlet>

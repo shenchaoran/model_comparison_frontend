@@ -8,12 +8,8 @@ import { HeaderMenuService } from '@common/shared/components/header-menu/service
   styleUrls: ['./header-menu.component.scss']
 })
 export class HeaderMenuComponent implements OnInit {
-    @Input() 
-    set type(v) {
-        this.menuItems = <Routes>(this.service.getMenus(v));
-    };
+    @Input() menuItems: Array<any>;
     subscriptions: Array<any> = new Array();
-    menuItems: Array<any>;
     constructor(private service: HeaderMenuService) {}
 
     ngOnInit() {
