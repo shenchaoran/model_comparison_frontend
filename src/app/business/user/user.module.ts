@@ -8,6 +8,7 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { PswResetComponent } from './psw-reset/psw-reset.component';
 
 import { UserService } from './user.service';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
     imports: [
@@ -15,7 +16,7 @@ import { UserService } from './user.service';
         SharedModule,
         MatSharedModule,
     ],
-    declarations: [SignInComponent, SignUpComponent, PswResetComponent],
+    declarations: [SignInComponent, SignUpComponent, PswResetComponent, ProfileComponent],
     providers: [
         UserService
     ]

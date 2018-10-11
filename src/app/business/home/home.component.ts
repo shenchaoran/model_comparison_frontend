@@ -1,16 +1,16 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 
 @Component({
-  selector: 'ogms-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+    selector: 'ogms-home',
+    templateUrl: './home.component.html',
+    styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit, AfterViewInit {
     b = true;
-    constructor() {}
+    constructor() { }
 
-  ngOnInit() {}
+    ngOnInit() { }
 
-  ngAfterViewInit() {
-  }
+    ngAfterViewInit() {
+    }
 }
