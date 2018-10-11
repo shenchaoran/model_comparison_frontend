@@ -7,6 +7,7 @@ import {
     MSService,
 } from '../services';
 
+// TODO universal
 @Component({
     selector: 'ogms-home',
     templateUrl: './home.component.html',
