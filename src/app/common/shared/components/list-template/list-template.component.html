@@ -43,8 +43,13 @@
 
     <div class='flex-box-row-nowrap'>
         <!-- <span class='flex-item-1-1-auto'></span> -->
-        <nz-pagination *ngIf='count> 25' [nzPageIndex]="searchFilters.pageNum" (nzPageIndexChange)='setPageNum($event)' nzShowSizeChanger
-            [nzPageSize]='searchFilters.pageSize' (nzPageSizeChange)='setPageSize($event)' [nzTotal]="count"></nz-pagination>
+        <mat-paginator 
+            *ngIf='count> 25' 
+            [length]="count" 
+            [pageIndex]='searchFilters.pageNum'
+            [pageSize]="searchFilters.pageSize" 
+            [pageSizeOptions]="[10,20,30]"
+            (page)='onPageChange($event)'></mat-paginator>
         <!-- <span class='flex-item-1-1-auto'></span> -->
     </div>
 

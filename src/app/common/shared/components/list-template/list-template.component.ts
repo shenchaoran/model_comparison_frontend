@@ -150,14 +150,9 @@ export class ListTemplateComponent extends OgmsBaseComponent implements OnInit, 
         this.search();
     }
 
-    setPageNum(pageNum) {
-        this.searchFilters.pageNum = pageNum;
+    onPageChange(pageEvent) {
+        this.searchFilters.pageNum = pageEvent.pageIndex;
+        this.searchFilters.pageSize = pageEvent.pageSize;
         this.search();
     }
-
-    setPageSize(pageSize) {
-        this.searchFilters.pageSize = pageSize;
-        this.search();
-    }
-
 }

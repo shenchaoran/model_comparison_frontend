@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     
     slnTitle = {
         label: 'Comparison solutions',
-        url: '/comparison'
+        url: '/comparison/solutions'
     };
     slnList;
     
