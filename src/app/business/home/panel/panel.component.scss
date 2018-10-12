@@ -5,6 +5,7 @@
 .panel-title {
     background: #e3e3e3;
     padding: 10px 20px;
+    margin-right: -1px;
     transform: translateX(-1px);
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
@@ -21,7 +22,7 @@
     display: flex;
     flex-flow: row wrap;
 
-    /deep/ >* {
+    ::ng-deep >* {
         box-sizing: border-box;
 
         @mixin responsive($columnNum) {
