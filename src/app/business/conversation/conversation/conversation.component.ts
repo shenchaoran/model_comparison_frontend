@@ -1,6 +1,9 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { fromJS } from 'immutable';
-import { Conversation } from '@models';
+import { 
+    Conversation, 
+    Comment
+} from '@models';
 import {
     ConversationService,
     UserService
@@ -10,7 +13,10 @@ import {
     selector: 'ogms-conversation',
     templateUrl: './conversation.component.html',
     styleUrls: ['./conversation.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [
+        // ConversationService
+    ]
 })
 export class ConversationComponent implements OnInit {
     conversation: Conversation;

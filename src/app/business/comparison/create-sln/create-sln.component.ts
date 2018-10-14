@@ -1,13 +1,16 @@
 import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy, Inject } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, FormArray, FormControl } from '@angular/forms';
-import { CmpSolution, ResourceSrc } from '@models';
-import { SlnService } from '../../services/sln.service';
-import { MSService } from '../../services/ms.service';
+import { Solution, ResourceSrc } from '@models';
+import {
+    SlnService,
+    UserService,
+    MSService,
+} from '../../services';
 import { NzNotificationService, NzModalService } from 'ng-zorro-antd';
 import { Router, ActivatedRoute } from '@angular/router';
 import * as uuidv1 from 'uuid/v1';
 import { CmpMethodService } from '../../services/cmp-method.service';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
     selector: 'ogms-create-sln',
@@ -15,11 +18,10 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
     styleUrls: ['./create-sln.component.scss']
 })
 export class CreateSlnComponent implements OnInit {
-
     cmpMethods;
     slnFG: FormGroup;
     msList: any[];
-    cmpSln: CmpSolution = new CmpSolution();
+    cmpSln: Solution;
     get cmpObjs() {
         return this.slnFG.get('cmpObjs') as FormArray;
     }
@@ -40,8 +42,11 @@ export class CreateSlnComponent implements OnInit {
         private router: Router,
         private route: ActivatedRoute,
         private cmpMethodService: CmpMethodService,
-        public dialog: MatDialog
-    ) { }
+        public dialog: MatDialog,
+        private userService: UserService,
+    ) { 
+        this.cmpSln = new Solution(this.userService);
+    }
 
     ngOnInit() {
         this.slnFG = this.fb.group({
@@ -54,33 +59,33 @@ export class CreateSlnComponent implements OnInit {
         this.slnFG.statusChanges
             .subscribe(state => {
                 // if (state === 'VALID') {
-                    let v = this.slnFG.value;
-                    this.cmpSln.meta.name = v.name;
-                    this.cmpSln.meta.desc = v.desc;
-                    this.cmpSln.auth.src = v.auth;
-                    this.cmpSln.participants = v.participants;
-                    this.cmpSln.cmpObjs = _.map(v.cmpObjs, cmpObj => {
-                        return {
-                            ...cmpObj,
-                            dataRefers: _.map(cmpObj.dataRefers, dataRefer => {
-                                return {
-                                    msId: dataRefer.msId,
-                                    msName: dataRefer.msName,
-                                    eventId: dataRefer.selected[1].id,
-                                    eventName: dataRefer.selected[1].name,
-                                    schemaId: dataRefer.selected[1].schemaId,
-                                    field: dataRefer.selected[2]
-                                };
-                            }),
-                            methods: _.map(cmpObj.methods, method => {
-                                return {
-                                    id: method._id,
-                                    name: method.meta.name
-                                }
-                            })
-                        }
-                    });
-                    // console.log(JSON.stringify(this.cmpSln));
+                let v = this.slnFG.value;
+                this.cmpSln.meta.name = v.name;
+                this.cmpSln.meta.desc = v.desc;
+                this.cmpSln.auth.src = v.auth;
+                this.cmpSln.participants = v.participants;
+                this.cmpSln.cmpObjs = _.map(v.cmpObjs, cmpObj => {
+                    return {
+                        ...cmpObj,
+                        dataRefers: _.map(cmpObj.dataRefers, dataRefer => {
+                            return {
+                                msId: dataRefer.msId,
+                                msName: dataRefer.msName,
+                                eventId: dataRefer.selected[1].id,
+                                eventName: dataRefer.selected[1].name,
+                                schemaId: dataRefer.selected[1].schemaId,
+                                field: dataRefer.selected[2]
+                            };
+                        }),
+                        methods: _.map(cmpObj.methods, method => {
+                            return {
+                                id: method._id,
+                                name: method.meta.name
+                            }
+                        })
+                    }
+                });
+                // console.log(JSON.stringify(this.cmpSln));
                 // }
             })
 
@@ -129,16 +134,16 @@ export class CreateSlnComponent implements OnInit {
                 if (!response.error) {
                     this._notice.success('Success', 'create comparison solution succeed!');
                     this.cmpSln._id = response.data._id;
-                    
+
                     this.dialog.open(SlnConfirmDialog)
                         .afterClosed()
                         .subscribe(result => {
-                            if(result === 'outline') {
+                            if (result === 'outline') {
                                 this.router.navigate(['..', this.cmpSln._id,], {
                                     relativeTo: this.route
                                 });
                             }
-                            else if(result === 'configure') {
+                            else if (result === 'configure') {
                                 this.router.navigate(['/comparison/solutions', this.cmpSln._id, 'invoke']);
                             }
                         });
@@ -160,4 +165,4 @@ export class CreateSlnComponent implements OnInit {
         </mat-dialog-actions>
     `
 })
-export class SlnConfirmDialog {}
+export class SlnConfirmDialog { }

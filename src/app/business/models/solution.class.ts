@@ -1,12 +1,12 @@
-import { UserService } from '../business/services';
 /**
  * 比较方案只是比较对象的集合
  */
-import { ResourceSrc } from './resource.enum';
+import { UserService } from '@services/user.service';
+import { ResourceSrc } from '@models/resource.enum';
 import * as ObjectID from 'objectid';
-import { UDXSchema } from './UDX-schema.class';
+import { UDXSchema } from '@models/UDX-schema.class';
 
-export class CmpSolution {
+export class Solution {
     _id?: any;
     meta: {
         name: string,
@@ -22,8 +22,9 @@ export class CmpSolution {
     participants: any[];
     cmpObjs: CmpObj[];
     [key: string]: any;
+    cid: string;
 
-    constructor() {
+    constructor(userService: UserService) {
         this._id = ObjectID();
         this.meta = {
             name: '',
@@ -31,7 +32,7 @@ export class CmpSolution {
             time: new Date().getTime()
         };
         this.cmpObjs = [];
-        const user = UserService.getUser();
+        const user = userService.user;
         if(user) {
             this.auth = {
                 userId: user._id,

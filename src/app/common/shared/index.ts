@@ -12,7 +12,6 @@ import { MatSharedModule } from '../mat-shared';
 import { ListFilterService } from './components/list-template/list-filter.service';
 import { HeaderMenuService } from './components/header-menu/services/header-menu.service';
 import { BaMenuService } from './components/header-menu/services/baMenu.service';
-import { UserService } from '../../business/services';
 import { NzNotificationService, NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';
 
 import {
@@ -64,7 +63,6 @@ const SERVICES = [
     BaThemePreloader,
     BaThemeSpinner,
     ListFilterService,
-    UserService,
     BaMenuService,
     HeaderMenuService,
 ];
@@ -164,7 +162,6 @@ export * from '@common/shared/directives';
         RouterModule,
         NgxSharedModule,
         DisqusModule,
-
     ]
 })
 export class SharedModule {

@@ -29,7 +29,7 @@ export class ListBaseService {
         return this.http.get(`/${this.baseUrl}`, {
             params: {
                 pageSize: k,
-                pageNum: 1
+                pageIndex: 1
             }
         })
             .pipe(

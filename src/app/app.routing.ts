@@ -21,7 +21,7 @@ export const routes: Routes = [
     },
     {
         path: 'models',
-        loadChildren: './business/models/index#ModelsModule'
+        loadChildren: './business/ms/index#ModelsModule'
     },
     {
         path: 'comparison',

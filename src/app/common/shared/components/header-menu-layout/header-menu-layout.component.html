@@ -9,7 +9,7 @@
     </div>
     <span class='flex-item-1-1-auto'></span>
     <div id="login-menu">
-        <div *ngIf="hasLogin else gotoLogin">
+        <div *ngIf="logined else gotoLogin">
             <ogms-header-menu [menuItems]='userMenu'></ogms-header-menu>
         </div>
 

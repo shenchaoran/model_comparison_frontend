@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '@shared';
 import {
-    UserService,
     ConversationService,
 } from '@services';
 
@@ -17,7 +16,6 @@ import { CommentComponent } from './comment/comment.component';
         CommentComponent
     ],
     providers: [
-        UserService,
         ConversationService,
     ],
     exports: [

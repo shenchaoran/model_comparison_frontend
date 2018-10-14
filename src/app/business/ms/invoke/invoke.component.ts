@@ -36,7 +36,7 @@ export class InvokeComponent extends DocBaseComponent implements OnInit {
         public router: Router
     ) {
         super(route, slnService, title);
-        this.userService.checkLogin();
+        this.userService.redirectIfNotLogined();
     }
 
     ngOnInit() {
@@ -44,7 +44,7 @@ export class InvokeComponent extends DocBaseComponent implements OnInit {
         this._subscriptions.push(this.doc.subscribe(doc => {
             this.model = doc;
             // this.title.setTitle(this.model.MDL.meta.name);
-            this.msInstance = new CalcuTask(this.model);
+            this.msInstance = new CalcuTask(this.userService, this.model);
             this.msInstance.cmpTaskId = undefined;
 
             this.msiForm = this.fb.group({

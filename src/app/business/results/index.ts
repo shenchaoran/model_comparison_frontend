@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from '@common/shared';
 import { MatSharedModule } from '@common/mat-shared';
 
-import { ResultsRoutingModule } from './results-routing.module';
+import { ResultsRoutingModule } from './index-routing.module';
 import { CalcuListComponent } from './calcu-list/calcu-list.component';
 import { CmpListComponent } from './cmp-list/cmp-list.component';
 import { CalcuDetailComponent } from './calcu-detail/calcu-detail.component';

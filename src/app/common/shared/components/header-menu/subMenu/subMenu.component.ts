@@ -31,9 +31,6 @@ export class SubMenuComponent implements OnInit, AfterViewInit {
 
     signOut() {
         this.userService.signOut();
-        postal
-            .channel('MENU')
-            .publish('logout');
     }
 }
 

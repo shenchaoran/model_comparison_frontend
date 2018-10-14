@@ -10,7 +10,7 @@ import { UserService } from '../../../../business/services';
     styleUrls: ['./header-menu-layout.component.scss']
 })
 export class HeaderMenuLayoutComponent implements OnInit, OnDestroy {
-    hasLogin: boolean = false;
+    logined: boolean = false;
     scrollbarCfg = {
         wheelSpeed: 1,
         swipeEasing: false
@@ -68,12 +68,10 @@ export class HeaderMenuLayoutComponent implements OnInit, OnDestroy {
                 }
             });
 
-        postal.channel('MENU')
-            .subscribe('logout', () => {
-                this.hasLogin = false;
-            });
-
-        this.hasLogin = this.userService.hadLogin();
+        this.logined = this.userService.isLogined;
+        this.userService.logined.subscribe(logined => {
+            this.logined = logined;
+        });
     }
 
     search() {

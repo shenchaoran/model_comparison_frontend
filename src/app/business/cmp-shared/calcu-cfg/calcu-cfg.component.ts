@@ -10,7 +10,7 @@ import {
     ChangeDetectorRef,
 } from '@angular/core';
 import { NgUploaderOptions } from 'ngx-uploader';
-import { ResourceSrc, CalcuTask, CmpSolution } from '@models';
+import { ResourceSrc, CalcuTask, Solution } from '@models';
 import { DatasetService, UserService } from '@services';
 import {
     AbstractControl,

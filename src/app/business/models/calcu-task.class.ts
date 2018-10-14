@@ -5,8 +5,7 @@
 
 import { ResourceSrc } from './resource.enum';
 import * as ObjectID from 'objectid';
-import { UserService } from '../business/services';
-import { Enum } from 'typescript-string-enums/dist';
+import { UserService } from '../services/user.service';
 
 
 export class CalcuTask {
@@ -36,7 +35,7 @@ export class CalcuTask {
     progress: number;
     // [key: string]: any;
 
-    constructor(ms?) {
+    constructor(userService: UserService, ms?) {
         if (ms) {
             this.ms = ms;
             this.topic = ms.topic;
@@ -64,7 +63,7 @@ export class CalcuTask {
             time: new Date().getTime()
         };
         this.state = CalcuTaskState.INIT;
-        const user = UserService.getUser();
+        const user = userService.user;
         if(user) {
             this.auth = {
                 userId: user._id,
@@ -82,13 +81,12 @@ export class CalcuTask {
     }
 }
 
-export const CalcuTaskState = Enum(
-    'INIT',
-    'COULD_START',
-    'START_PENDING',
-    'START_FAILED',
-    'RUNNING',
-    'FINISHED_FAILED',
-    'FINISHED_SUCCEED'
-);
-export type CalcuTaskState = Enum<typeof CalcuTaskState>;
+export enum CalcuTaskState {
+    INIT = 'INIT',
+    COULD_START = 'COULD_START',
+    START_PENDING = 'START_PENDING',
+    START_FAILED = 'START_FAILED',
+    RUNNING = 'RUNNING',
+    FINISHED_FAILED = 'FINISHED_FAILED',
+    FINISHED_SUCCEED = 'FINISHED_SUCCEED'
+};

@@ -1,11 +1,10 @@
-import { UserService } from '../business/services';
-import { UDXSchema } from './UDX-schema.class';
-import { ResourceSrc } from './resource.enum';
+import { UserService } from '@services/user.service';
+import { UDXSchema } from '@models/UDX-schema.class';
+import { ResourceSrc } from '@models/resource.enum';
 import * as ObjectID from 'objectid';
-import { Enum } from 'typescript-string-enums/dist';
-import { DataRefer, CmpObj } from '.';
+import { DataRefer, CmpObj } from '@models/solution.class';
 
-export class CmpTask {
+export class Task {
     _id?: any;
     meta: {
         name: string,
@@ -17,7 +16,7 @@ export class CmpTask {
         userId: string,
         userName: string
     };
-    state: string;
+    state: CmpState;
     progress: number;
     solutionId?: string;
     issueId?: string;
@@ -25,10 +24,11 @@ export class CmpTask {
         _id: string,
         progress: number
     }[];
-    cmpObjs: CmpObj[];
+    cmpObjs: Array<CmpObj>;
     schemas: UDXSchema[];
+    cid: string;
 
-    constructor() {
+    constructor(userService: UserService) {
         this._id = ObjectID();
         this.meta = {
             name: null,
@@ -39,7 +39,7 @@ export class CmpTask {
         this.cmpObjs = [];
         this.schemas = [];
         
-        const user = UserService.getUser();
+        const user = userService.user;
         if(user) {
             this.auth = {
                 userId: user._id,
@@ -57,14 +57,13 @@ export class CmpTask {
     }
 }
 
-export const CmpState = Enum(
-    'INIT',
-    'COULD_START',
-    'RUNNING',
-    'FINISHED_SUCCEED',
-    'FINISHED_FAILED'
-)
-export type CmpState = Enum<typeof CmpState>
+export enum CmpState {
+    INIT = 'INIT',
+    COULD_START = 'COULD_START',
+    RUNNING = 'RUNNING',
+    FINISHED_SUCCEED = 'FINISHED_SUCCEED',
+    FINISHED_FAILED = 'FINISHED_FAILED'
+};
 
 export class CmpResult {
     image?: [{

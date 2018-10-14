@@ -1,4 +1,4 @@
-import { ConversationComponent } from './../conversation/conversation/conversation.component';
+import { ConversationComponent } from '../conversation/conversation/conversation.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { SiderNavComponent } from './sider-nav/sider-nav.component';

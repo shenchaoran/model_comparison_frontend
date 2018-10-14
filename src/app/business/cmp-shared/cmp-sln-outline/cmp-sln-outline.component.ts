@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChildren, ElementRef, QueryList } from '@angular/core';
-import { CmpSolution } from '@models';
+import { Solution } from '@models';
 import { MatTable } from '@angular/material';
 
 @Component({
@@ -12,7 +12,7 @@ export class CmpSlnOutlineComponent implements OnInit {
     _cmpSln;
     @ViewChildren(MatTable) tableComponents: QueryList<MatTable<any>>;
     @Input() 
-    set cmpSln(v: CmpSolution) {
+    set cmpSln(v: Solution) {
         this._cmpSln = v;
     }
     get cmpSln() {

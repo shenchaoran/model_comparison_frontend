@@ -3,7 +3,7 @@ import { SharedModule } from '@common/shared';
 import { MatSharedModule } from '@common/mat-shared';
 
 import { CmpSharedModule } from '../cmp-shared';
-import { ComparisonRoutingModule } from './comparison-routing.module';
+import { ComparisonRoutingModule } from './index-routing.module';
 import { SolutionListComponent } from './solution-list/solution-list.component';
 import { SolutionDetailComponent } from './solution-detail/solution-detail.component';
 import { NzNotificationService, NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';

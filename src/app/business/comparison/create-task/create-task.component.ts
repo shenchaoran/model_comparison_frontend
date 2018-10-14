@@ -1,12 +1,15 @@
 import { Component, OnInit, HostListener } from "@angular/core";
-import { SlnService, TaskService } from "../../services";
+import { 
+    SlnService, 
+    TaskService,
+    UserService
+ } from "../../services";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { DynamicTitleService } from "@common/core/services/dynamic-title.service";
 import { DocBaseComponent } from '@common/shared';
 import { FormBuilder, Validators, FormGroup, FormArray, FormControl } from '@angular/forms';
-import { CmpTask, CalcuTask, ResourceSrc, CmpState, CalcuTaskState } from '@models';
+import { Task, CalcuTask, ResourceSrc, CmpState, CalcuTaskState } from '@models';
 import { MatSnackBar } from '@angular/material';
-
 
 @Component({
     selector: 'ogms-create-task',
@@ -40,9 +43,10 @@ export class CreateTaskComponent extends DocBaseComponent implements OnInit {
         private fb: FormBuilder,
         public taskService: TaskService,
         public snackBar: MatSnackBar,
+        private userService: UserService,
     ) {
         super(route, slnService, title);
-        this.cmpTask = new CmpTask();
+        this.cmpTask = new Task(this.userService);
 
         this.cmpTaskFG = this.fb.group({
             name: [null, [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
@@ -136,7 +140,7 @@ export class CreateTaskComponent extends DocBaseComponent implements OnInit {
     }
 
     addInstance(ms) {
-        let newCalTask = new CalcuTask(ms);
+        let newCalTask = new CalcuTask(this.userService, ms);
         this.calTasksCtrl.push(new FormControl(newCalTask, Validators.required))
         this.calTasksCtrl.updateValueAndValidity();
 

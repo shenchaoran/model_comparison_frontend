@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { TestRoutingModule } from './test-routing.module';
+import { TestRoutingModule } from './index-routing.module';
 import { SiderNavComponent } from './sider-nav/sider-nav.component';
 import { SharedModule } from '@common/shared';
 import { TestComponent } from './test.component';

@@ -19,14 +19,14 @@ export class CardsTemplateComponent extends OgmsBaseComponent implements OnInit 
     @Input() public searchFilters: {
         q?: string,
         pageSize?: number,
-        pageNum?: number,
+        pageIndex?: number,
         owner?: string,
         organization?: string,
         sort?: string,
         [key: string]: any
     } = {
             pageSize: 15,
-            pageNum: 1
+            pageIndex: 1
         };
     @Input() public template: any;
     @Input() public withCreateBtn: boolean = false;
@@ -147,8 +147,8 @@ export class CardsTemplateComponent extends OgmsBaseComponent implements OnInit 
         this.search();
     }
 
-    setPageNum(pageNum) {
-        this.searchFilters.pageNum = pageNum;
+    setPageNum(pageIndex) {
+        this.searchFilters.pageIndex = pageIndex;
         this.search();
     }
 

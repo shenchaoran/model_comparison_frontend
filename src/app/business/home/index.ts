@@ -3,7 +3,7 @@ import { SharedModule } from '@common/shared';
 import { MatSharedModule } from '@common/mat-shared';
 
 import { HomeComponent } from './home.component';
-import { HomeRoutingModule } from './home-routing.module';
+import { HomeRoutingModule } from './index-routing.module';
 import { HomeBannerComponent } from './home-banner/home-banner.component';
 import { PanelComponent } from './panel/panel.component';
 

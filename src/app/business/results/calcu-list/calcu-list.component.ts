@@ -3,7 +3,7 @@ import { ActivatedRoute } from "@angular/router";
 import { SlnService } from "../../comparison";
 import { TaskService } from '../../services/task.service';
 import { MSRService } from '../../services/msr.service';
-import { MSService } from '../../models';
+import { MSService } from '../../services';
 import { NzNotificationService, NzModalService } from "ng-zorro-antd";
 import { DynamicTitleService } from '@common/core/services/dynamic-title.service';
 

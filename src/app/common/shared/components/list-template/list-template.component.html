@@ -46,7 +46,7 @@
         <mat-paginator 
             *ngIf='count> 25' 
             [length]="count" 
-            [pageIndex]='searchFilters.pageNum'
+            [pageIndex]='searchFilters.pageIndex'
             [pageSize]="searchFilters.pageSize" 
             [pageSizeOptions]="[10,20,30]"
             (page)='onPageChange($event)'></mat-paginator>
