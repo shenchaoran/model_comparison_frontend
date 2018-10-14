@@ -6,9 +6,8 @@ import { _HttpClient } from '@common/core/services/http.client';
 import { GlobalState } from './global.state';
 
 import { AppTranslationModule } from './app.translation.module';
-import { NgxSharedModule } from '@common/ngx-shared';
 import { SharedModule } from '@common/shared';
-import { CoreModule } from '@common/core/core.module';
+import { CoreModule } from '@core';
 import { AppRoutingModule } from './app.routing';
 import { App } from './app.component';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
@@ -26,7 +25,6 @@ import { UserService  } from '@services';
         RouterModule,
         AppRoutingModule,
 
-        NgxSharedModule,
         AppTranslationModule,
         SharedModule.forRoot(),
         CoreModule,

@@ -9,7 +9,7 @@ import { CmpObjCfgComponent } from './cmp-obj-cfg/cmp-obj-cfg.component';
 import { CalcuResultComponent } from './calcu-result/calcu-result.component';
 import { StdDataBaseComponent } from './std-data-base/std-data-base.component';
 import { CmpMethodCfgComponent } from './cmp-method-cfg/cmp-method-cfg.component';
-import { OlModule } from '../ol/ol.module'
+import { OlModule } from '../ol'
 import { CmpSlnOutlineComponent } from './cmp-sln-outline/cmp-sln-outline.component';
 //////////////////// service ////////////////////////
 import { DatasetService, UserService } from '../services';

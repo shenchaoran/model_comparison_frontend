@@ -4,8 +4,8 @@ import { SharedModule } from '@common/shared';
 import { NzNotificationService, NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';
 import { DatasetsRoutingModule } from './datasets-routing.module';
 import { DatasetsComponent } from './datasets/datasets.component';
-import { DatasetService } from '../services/dataset.service';
-import { OlModule } from '../ol/ol.module';
+import { DatasetService } from '@services/dataset.service';
+import { OlModule } from '../ol';
 import { SiteDataComponent } from './site-data/site-data.component'
 
 @NgModule({

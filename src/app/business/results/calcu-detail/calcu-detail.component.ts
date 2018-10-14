@@ -1,6 +1,6 @@
 import { Component, OnInit, HostListener } from "@angular/core";
-import { SlnService } from "../../comparison/comparison.module";
-import { MSService } from '../../models/models.module';
+import { SlnService } from "../../comparison";
+import { MSService } from '../../models';
 import { MSRService } from '../../services/msr.service';
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { NzNotificationService, NzModalService } from "ng-zorro-antd";

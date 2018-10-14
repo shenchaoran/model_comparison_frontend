@@ -8,3 +8,4 @@ export * from './UDX-type.class';
 export * from './user.class';
 export * from './calcu-task.class';
 export * from './cmp-task.class';
+export * from './conversation.class';

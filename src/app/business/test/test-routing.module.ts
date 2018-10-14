@@ -1,3 +1,4 @@
+import { ConversationComponent } from './../conversation/conversation/conversation.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { SiderNavComponent } from './sider-nav/sider-nav.component';
@@ -20,7 +21,7 @@ const routes: Routes = [
                     {
                         path: 'sider-nav',
                         component: SiderNavComponent
-                    }, 
+                    },
                     {
                         path: 'reactive-form',
                         component: ReactiveFormComponent
@@ -36,6 +37,10 @@ const routes: Routes = [
                     {
                         path: 'site-map',
                         component: GlobalSiteComponent
+                    },
+                    {
+                        path: 'conversation',
+                        component: ConversationComponent
                     }
                 ]
             }
@@ -47,4 +52,4 @@ const routes: Routes = [
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule]
 })
-export class TestRoutingModule {}
+export class TestRoutingModule { }

@@ -7,7 +7,7 @@ import { SignInComponent } from './sign-in/sign-in.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { PswResetComponent } from './psw-reset/psw-reset.component';
 
-import { UserService } from '../services';
+import { UserService } from '@services';
 import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({

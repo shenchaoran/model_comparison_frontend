@@ -1,6 +1,4 @@
 import { NgModule } from '@angular/core';
-import { NgxSharedModule } from '@common/ngx-shared';
-import { CommonModule } from '@angular/common';
 import { TestRoutingModule } from './test-routing.module';
 import { SiderNavComponent } from './sider-nav/sider-nav.component';
 import { SharedModule } from '@common/shared';
@@ -10,7 +8,9 @@ import { FileUploaderTestComponent } from './file-uploader-test/file-uploader-te
 import { NzNotificationService, NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';
 import { LeafletTestComponent } from './leaflet-test/leaflet-test.component';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
-import { OlModule } from '../ol/ol.module'
+import { OlModule } from '../ol';
+import { ConversationModule } from '../conversation';
+import { ConversationService } from '@services'
 
 @NgModule({
     imports: [
@@ -18,6 +18,7 @@ import { OlModule } from '../ol/ol.module'
         SharedModule,
         LeafletModule,
         OlModule,
+        ConversationModule,
     ],
     declarations: [
         SiderNavComponent,

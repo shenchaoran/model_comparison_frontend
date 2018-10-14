@@ -6,7 +6,9 @@ import { _HttpClient } from '@common/core/services/http.client';
 import { MS, Event, CalcuTask } from '@models';
 import { ListBaseService } from './list-base.service';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class MSService extends ListBaseService {
     protected baseUrl = 'model-tools';
     

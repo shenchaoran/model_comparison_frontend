@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
-import { SlnService } from "../../comparison/comparison.module";
+import { SlnService } from "../../comparison";
 import { TaskService } from '../../services/task.service';
-import { MSService } from '../../models/models.module';
+import { MSService } from '../../models';
 import { NzNotificationService, NzModalService } from "ng-zorro-antd";
 import { DynamicTitleService } from '@common/core/services/dynamic-title.service';
 

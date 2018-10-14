@@ -13,7 +13,7 @@ import { CreateSlnComponent, SlnConfirmDialog } from './create-sln/create-sln.co
 import { CreateTaskComponent } from './create-task/create-task.component';
 import { TaskService, MSService, CmpMethodService, SlnService } from '@services';
 
-export * from '../services/sln.service';
+export * from '@services/sln.service';
 
 @NgModule({
     imports: [

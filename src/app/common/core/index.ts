@@ -22,6 +22,8 @@ import {
     TableAdapterService
 } from '@common/core/services';
 
+export * from './services';
+
 const CITYFUN_SERVICES = [
     AuthGuard,
 

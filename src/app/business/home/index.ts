@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
-import { NgxSharedModule } from '@common/ngx-shared';
 import { SharedModule } from '@common/shared';
-import { MatSharedModule } from '../../common/mat-shared';
+import { MatSharedModule } from '@common/mat-shared';
 
 import { HomeComponent } from './home.component';
 import { HomeRoutingModule } from './home-routing.module';
@@ -14,11 +13,10 @@ import {
     TaskService,
     DatasetService,
     MSService,
-} from '../services';
+} from '@services';
 
 @NgModule({
     imports: [
-        NgxSharedModule,
         SharedModule,
         HomeRoutingModule,
         MatSharedModule,

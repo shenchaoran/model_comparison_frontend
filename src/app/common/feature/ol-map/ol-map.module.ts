@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { NgxSharedModule } from '@common/ngx-shared';
 import { SharedModule } from '@common/shared';
 import { MAP_TOOLBAR_CONFIG } from '@config/map.config';
 
@@ -47,7 +46,7 @@ export {
 ///////////////////////////////
 
 @NgModule({
-    imports: [NgxSharedModule, SharedModule],
+    imports: [SharedModule],
     declarations: [
         LayoutComponent,
         OlMapComponent,

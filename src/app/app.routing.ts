@@ -9,35 +9,35 @@ export const routes: Routes = [
     },
     {
         path: 'user',
-        loadChildren: './business/user/user.module#UserModule'
+        loadChildren: './business/user/index#UserModule'
     },
     {
         path: 'home',
-        loadChildren: './business/home/home.module#HomeModule'
+        loadChildren: './business/home/index#HomeModule'
     },
     {
         path: 'datasets',
-        loadChildren: './business/datasets/datasets.module#DatasetsModule'
+        loadChildren: './business/datasets/index#DatasetsModule'
     },
     {
         path: 'models',
-        loadChildren: './business/models/models.module#ModelsModule'
+        loadChildren: './business/models/index#ModelsModule'
     },
     {
         path: 'comparison',
-        loadChildren: './business/comparison/comparison.module#ComparisonModule'
+        loadChildren: './business/comparison/index#ComparisonModule'
     },
     {
         path: 'results',
-        loadChildren: './business/results/results.module#ResultsModule'
+        loadChildren: './business/results/index#ResultsModule'
     },
     {
         path: 'search',
-        loadChildren: './business/search/search.module#SearchModule'
+        loadChildren: './business/search/index#SearchModule'
     },
     {
         path: 'test',
-        loadChildren: './business/test/test.module#TestModule'
+        loadChildren: './business/test/index#TestModule'
     },
     {
         path: '**',

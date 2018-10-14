@@ -3,7 +3,9 @@ import { Injectable } from '@angular/core';
 import { _HttpClient } from '@common/core/services/http.client';
 import { ListBaseService } from './list-base.service';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class DatasetService extends ListBaseService {
     protected baseUrl = 'std-data';
     constructor(
