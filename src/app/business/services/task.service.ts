@@ -9,7 +9,7 @@ import { ListBaseService } from './list-base.service';
     providedIn: 'root'
 })
 export class TaskService extends ListBaseService {
-    protected baseUrl = 'comparison/tasks';
+    protected baseUrl = '/comparison/tasks';
 
     constructor(
         protected http: _HttpClient
@@ -19,7 +19,7 @@ export class TaskService extends ListBaseService {
 
     invoke(id: string): Observable<any> {
         if (id) {
-            return this.http.post(`/${this.baseUrl}/${id}/invoke`, undefined);
+            return this.http.post(`${this.baseUrl}/${id}/invoke`, undefined);
         } else {
             return undefined;
         }
@@ -29,6 +29,6 @@ export class TaskService extends ListBaseService {
         cmpTask: any,
         calcuTasks: any[]
     }): Observable<any> {
-        return this.http.post(`/${this.baseUrl}`, obj);
+        return this.http.post(`${this.baseUrl}`, obj);
     }
 }

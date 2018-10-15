@@ -11,7 +11,7 @@ import { map } from 'rxjs/operators';
     providedIn: 'root'
 })
 export class ConversationService extends ListBaseService {
-    protected baseUrl = 'conversations';
+    protected baseUrl = '/conversations';
     public pageIndex: number = 1;
     public pageSize: number = 20;
     public commentCount: number;
@@ -22,6 +22,7 @@ export class ConversationService extends ListBaseService {
     constructor(
         protected http: _HttpClient,
         private userService: UserService,
+        conversation?: Conversation
     ) {
         super(http);
         this.users = [];
@@ -31,7 +32,7 @@ export class ConversationService extends ListBaseService {
     }
 
     create() {
-        this.conversation = new Conversation(this.userService);
+        this.conversation = new Conversation(this.userService.user);
         this.commentCount = 1;
         this.users.push(this.userService.user);
     }
@@ -57,7 +58,7 @@ export class ConversationService extends ListBaseService {
     getCommentsByPage(pageIndex: number, pageSize: number) {
         this.pageIndex = pageIndex;
         this.pageSize = pageSize;
-        this.http.get(`/${this.baseUrl}/${this.conversation._id}/comments`, {
+        this.http.get(`${this.baseUrl}/${this.conversation._id}/comments`, {
             params: {
                 pageIndex,
                 pageSize
@@ -79,7 +80,7 @@ export class ConversationService extends ListBaseService {
 
     addComment(comment: Comment) {
         comment._id = null;
-        return this.http.post(`/${this.baseUrl}/:id/comments`, comment)
+        return this.http.post(`${this.baseUrl}/:id/comments`, comment)
             .pipe(
                 map(res => {
                     if(res.error) {

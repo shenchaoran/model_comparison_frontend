@@ -7,7 +7,7 @@ import { ListBaseService } from './list-base.service';
     providedIn: 'root'
 })
 export class DatasetService extends ListBaseService {
-    protected baseUrl = 'std-data';
+    protected baseUrl = '/std-data';
     constructor(
         protected http: _HttpClient
     ) {

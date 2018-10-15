@@ -40,6 +40,10 @@ export const routes: Routes = [
         loadChildren: './business/test/index#TestModule'
     },
     {
+        path: 'issues',
+        loadChildren: './business/issue/index#IssueModule'
+    },
+    {
         path: '**',
         redirectTo: 'home',
         pathMatch: 'full'

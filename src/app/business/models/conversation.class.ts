@@ -13,7 +13,7 @@ export class Conversation {
     comments: (string | Comment)[];
     participants: string[];
     
-    constructor(userService) {
+    constructor(user: User) {
         this._id = ObjectID();
         this.like_uids = [];
         this.love_uids = [];
@@ -21,10 +21,9 @@ export class Conversation {
         this.participants = [];
         this.comments = [];
 
-        var user = userService.user;
         if(user) {
             this.participants.push(user._id);
-            this.comments.push(new Comment(userService, this._id, CommentType.MAIN));
+            this.comments.push(new Comment(user, this._id, CommentType.MAIN));
         }
     }
 }
@@ -51,14 +50,13 @@ export class Comment {
         count: number
     }[];
 
-    constructor(userService, cid: string, type: CommentType) {
+    constructor(user: User, cid: string, type: CommentType) {
         this._id = ObjectID();
         this.content = [{
             time: new Date().getTime(),
             value: ''
         }];
-        this.reactions = []
-        var user = userService.user;
+        this.reactions = [];
         if(user) {
             this.from_uid = user._id;
             this.anonymous = false;

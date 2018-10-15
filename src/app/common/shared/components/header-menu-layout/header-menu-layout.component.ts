@@ -68,8 +68,7 @@ export class HeaderMenuLayoutComponent implements OnInit, OnDestroy {
                 }
             });
 
-        this.logined = this.userService.isLogined;
-        this.userService.logined.subscribe(logined => {
+        this.userService.logined$.subscribe(logined => {
             this.logined = logined;
         });
     }

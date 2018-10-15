@@ -13,7 +13,7 @@ import { map } from 'rxjs/operators';
 export class UserService {
     private _jwt;
     // TODO 改成一旦有订阅，立即发布当前状态
-    public logined: BehaviorSubject<boolean>;
+    public logined$: BehaviorSubject<boolean>;
 
     constructor(
         private http?: _HttpClient,
@@ -23,23 +23,23 @@ export class UserService {
     ) {
         // console.log('********* ', counter++, '  UserService constructor')
         var jwt = localStorage.getItem('jwt');
-        if (jwt) {
-            this.logined = new BehaviorSubject<boolean>(true);
+        if (this.isLogined) {
+            this.logined$ = new BehaviorSubject<boolean>(true);
             jwt = JSON.parse(jwt);
             this._jwt = jwt;
         }
         else {
-            this.logined = new BehaviorSubject<boolean>(false);
+            this.logined$ = new BehaviorSubject<boolean>(false);
         }
     }
 
-    set jwt(jwt) {
+    public set jwt(jwt) {
         this._jwt = jwt;
-        console.log('current login state: ' + this.logined.value);
+        console.log('current login state: ' + this.logined$.value);
         if (jwt) {
             localStorage.setItem('jwt', JSON.stringify(jwt));
             let url = this.route.snapshot.queryParams['redirect'];
-            this.logined.next(true);
+            this.logined$.next(true);
             if (!url || url.indexOf('#/user/sign') !== -1) {
                 this.router.navigate(['/home']);
             }
@@ -49,15 +49,15 @@ export class UserService {
         }
         else {
             localStorage.removeItem('jwt');
-            this.logined.next(false);
+            this.logined$.next(false);
         }
     }
 
-    get jwt() {
+    public get jwt() {
         return this._jwt;
     }
 
-    get user() {
+    public get user() {
         if (this.isLogined) {
             return this.jwt.user;
         }
@@ -66,7 +66,7 @@ export class UserService {
         }
     }
 
-    get token() {
+    public get token() {
         if (this.isLogined) {
             return this.jwt.token;
         }
@@ -75,7 +75,7 @@ export class UserService {
         }
     }
 
-    get redirect() {
+    public get redirect() {
         var url = this.location.path();
         var index = url.indexOf('?');
         if (index !== -1)
@@ -83,7 +83,7 @@ export class UserService {
         return (url === '/user/sign-in' || url === '/user/sign-up') ? '' : url;
     }
 
-    get isLogined(): boolean {
+    private get isLogined(): boolean {
         return this.jwt && this.jwt.expires > Date.now();
     }
 

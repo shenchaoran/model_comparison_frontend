@@ -46,7 +46,7 @@ export class CreateTaskComponent extends DocBaseComponent implements OnInit {
         private userService: UserService,
     ) {
         super(route, slnService, title);
-        this.cmpTask = new Task(this.userService);
+        this.cmpTask = new Task(this.userService.user);
 
         this.cmpTaskFG = this.fb.group({
             name: [null, [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
@@ -140,7 +140,7 @@ export class CreateTaskComponent extends DocBaseComponent implements OnInit {
     }
 
     addInstance(ms) {
-        let newCalTask = new CalcuTask(this.userService, ms);
+        let newCalTask = new CalcuTask(this.userService.user, ms);
         this.calTasksCtrl.push(new FormControl(newCalTask, Validators.required))
         this.calTasksCtrl.updateValueAndValidity();
 

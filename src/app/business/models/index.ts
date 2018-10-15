@@ -9,3 +9,4 @@ export * from './user.class';
 export * from './calcu-task.class';
 export * from './task.class';
 export * from './conversation.class';
+export * from './issue.class';

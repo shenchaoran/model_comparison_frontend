@@ -1,3 +1,4 @@
+import { User } from './user.class';
 /**
  * 比较方案只是比较对象的集合
  */
@@ -24,7 +25,7 @@ export class Solution {
     [key: string]: any;
     cid: string;
 
-    constructor(userService: UserService) {
+    constructor(user: User) {
         this._id = ObjectID();
         this.meta = {
             name: '',
@@ -32,7 +33,6 @@ export class Solution {
             time: new Date().getTime()
         };
         this.cmpObjs = [];
-        const user = userService.user;
         if(user) {
             this.auth = {
                 userId: user._id,

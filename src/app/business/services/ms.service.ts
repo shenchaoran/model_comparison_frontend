@@ -7,7 +7,7 @@ import { ListBaseService } from './list-base.service';
     providedIn: 'root'
 })
 export class MSService extends ListBaseService {
-    protected baseUrl = 'model-service';
+    protected baseUrl = '/model-service';
     
     constructor(
         protected http: _HttpClient

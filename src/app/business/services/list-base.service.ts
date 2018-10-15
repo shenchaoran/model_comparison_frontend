@@ -12,21 +12,21 @@ export class ListBaseService {
     ) { }
 
     findAll(query?: any): Observable<any> {
-        return this.http.get(`/${this.baseUrl}`, {
+        return this.http.get(`${this.baseUrl}`, {
             params: query
         });
     }
 
     insert(doc: any): Observable<any> {
-        return this.http.post(`/${this.baseUrl}`, {doc: doc});
+        return this.http.post(`${this.baseUrl}`, {doc: doc});
     }
 
     findOne(id, withRequestProgress?): Observable<any> {
-        return this.http.get(`/${this.baseUrl}/${id}`, undefined, undefined, undefined, withRequestProgress);
+        return this.http.get(`${this.baseUrl}/${id}`, undefined, undefined, undefined, withRequestProgress);
     }
 
     getTopK(k) {
-        return this.http.get(`/${this.baseUrl}`, {
+        return this.http.get(`${this.baseUrl}`, {
             params: {
                 pageSize: k,
                 pageIndex: 1

@@ -1,3 +1,4 @@
+import { User } from './user.class';
 /**
  * 计算任务
  * 这个表算是一个中间产物，其实存在cmp-task的calcuTasks中也行，但是多表查询很麻烦
@@ -35,7 +36,7 @@ export class CalcuTask {
     progress: number;
     // [key: string]: any;
 
-    constructor(userService: UserService, ms?) {
+    constructor(user: User, ms?) {
         if (ms) {
             this.ms = ms;
             this.topic = ms.topic;
@@ -63,7 +64,6 @@ export class CalcuTask {
             time: new Date().getTime()
         };
         this.state = CalcuTaskState.INIT;
-        const user = userService.user;
         if(user) {
             this.auth = {
                 userId: user._id,

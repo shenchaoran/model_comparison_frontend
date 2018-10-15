@@ -1,3 +1,4 @@
+import { User } from './../../common/core/services/settings.service';
 import { UserService } from '@services/user.service';
 import { UDXSchema } from '@models/UDX-schema.class';
 import { ResourceSrc } from '@models/resource.enum';
@@ -28,7 +29,7 @@ export class Task {
     schemas: UDXSchema[];
     cid: string;
 
-    constructor(userService: UserService) {
+    constructor(user: User) {
         this._id = ObjectID();
         this.meta = {
             name: null,
@@ -39,7 +40,6 @@ export class Task {
         this.cmpObjs = [];
         this.schemas = [];
         
-        const user = userService.user;
         if(user) {
             this.auth = {
                 userId: user._id,

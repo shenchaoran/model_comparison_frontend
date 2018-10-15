@@ -9,7 +9,7 @@ import { ListBaseService } from './list-base.service';
     providedIn: 'root'
 })
 export class SlnService extends ListBaseService {
-    protected baseUrl = 'comparison/solutions';
+    protected baseUrl = '/comparison/solutions';
 
     constructor(
         protected http: _HttpClient

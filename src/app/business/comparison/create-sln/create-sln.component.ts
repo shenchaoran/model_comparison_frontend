@@ -45,7 +45,7 @@ export class CreateSlnComponent implements OnInit {
         public dialog: MatDialog,
         private userService: UserService,
     ) { 
-        this.cmpSln = new Solution(this.userService);
+        this.cmpSln = new Solution(this.userService.user);
     }
 
     ngOnInit() {
