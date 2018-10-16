@@ -7,30 +7,24 @@ import { CalcuListComponent } from './calcu-list/calcu-list.component';
 import { CmpListComponent } from './cmp-list/cmp-list.component';
 import { CalcuDetailComponent } from './calcu-detail/calcu-detail.component';
 import { CmpDetailComponent } from './cmp-detail/cmp-detail.component';
-import { TaskService } from '@services/task.service';
-import { MSRService } from '@services/msr.service';
-import { SlnService } from '../comparison';
 import { CmpSharedModule } from '../cmp-shared';
-import { NzNotificationService, NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';
 
+const modules = [
+    SharedModule,
+    ResultsRoutingModule,
+    CmpSharedModule,
+    MatSharedModule,
+];
+const components = [
+    CalcuListComponent,
+    CmpListComponent,
+    CalcuDetailComponent,
+    CmpDetailComponent,
+];
+const services = [];
 @NgModule({
-    imports: [
-        SharedModule,
-        ResultsRoutingModule,
-        CmpSharedModule,
-        MatSharedModule,
-    ],
-    declarations: [
-        CalcuListComponent,
-        CmpListComponent,
-        CalcuDetailComponent,
-        CmpDetailComponent,
-    ],
-    providers: [
-        SlnService,
-        TaskService,
-        MSRService,
-        NzNotificationService,
-    ]
+    imports: [...modules],
+    declarations: [...components],
+    providers: [...services]
 })
 export class ResultsModule { }

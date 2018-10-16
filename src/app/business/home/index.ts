@@ -7,31 +7,22 @@ import { HomeRoutingModule } from './index-routing.module';
 import { HomeBannerComponent } from './home-banner/home-banner.component';
 import { PanelComponent } from './panel/panel.component';
 
-import {
-    MSRService,
-    SlnService,
-    TaskService,
-    DatasetService,
-    MSService,
-} from '@services';
-
+const modules = [
+    SharedModule,
+    HomeRoutingModule,
+    MatSharedModule,
+];
+const components = [
+    HomeComponent,
+    HomeBannerComponent,
+    PanelComponent
+];
+const services = [];
+var exportComponents = [];
 @NgModule({
-    imports: [
-        SharedModule,
-        HomeRoutingModule,
-        MatSharedModule,
-    ],
-    declarations: [
-        HomeComponent,
-        HomeBannerComponent,
-        PanelComponent
-    ],
-    providers: [
-        MSRService,
-        MSService,
-        DatasetService,
-        TaskService,
-        SlnService,
-    ]
+    imports: [...modules],
+    declarations: [...components],
+    providers: [...services],
+    exports: [...exportComponents]
 })
 export class HomeModule { }

@@ -5,33 +5,27 @@ import { ConversationModule } from '../conversation';
 import { IssueRoutingModule } from './index-routing.module';
 import { IssueListComponent } from './issue-list/issue-list.component';
 import { IssueDetailComponent } from './issue-detail/issue-detail.component';
+import { CreateIssueComponent } from './create-issue/create-issue.component';
 
-import { 
-    ConversationService,
-} from '../services';
-
-let imports = [
+const modules = [
     SharedModule,
     ConversationModule,
     IssueRoutingModule
 ];
-let components = [
+const components = [
     IssueDetailComponent,
     IssueListComponent,
+    CreateIssueComponent,
 ];
-let services = [
-    ConversationService,
-];
-let pipes = [
-
-];
-let directives = [];
+const services = [];
+const pipes = [];
+const directives = [];
 
 /**************************************************************/
 /**************************************************************/
 
 @NgModule({
-    imports: [...imports],
+    imports: [...modules],
     declarations: [
         ...components,
         ...pipes,

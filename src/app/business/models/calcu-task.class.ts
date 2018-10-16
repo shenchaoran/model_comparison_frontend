@@ -57,7 +57,7 @@ export class CalcuTask {
             });
         }
         
-        this._id = ObjectID();
+        this._id = ObjectID().toString();
         this.meta = {
             name: undefined,
             desc: undefined,

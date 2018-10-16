@@ -5,8 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-// var counter = 1;
-
+var counter = 1;
 @Injectable({
     providedIn: 'root'
 })
@@ -21,16 +20,18 @@ export class UserService {
         private router?: Router,
         private location?: Location,
     ) {
-        // console.log('********* ', counter++, '  UserService constructor')
+        console.log('\n******** UserService constructor', counter++)
         var jwt = localStorage.getItem('jwt');
-        if (this.isLogined) {
-            this.logined$ = new BehaviorSubject<boolean>(true);
+        if (jwt) {
             jwt = JSON.parse(jwt);
             this._jwt = jwt;
+            if(this.isLogined){
+                this.logined$ = new BehaviorSubject<boolean>(true);
+                return;
+            }
+
         }
-        else {
-            this.logined$ = new BehaviorSubject<boolean>(false);
-        }
+        this.logined$ = new BehaviorSubject<boolean>(false);
     }
 
     public set jwt(jwt) {

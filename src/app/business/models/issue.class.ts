@@ -27,11 +27,17 @@ export class Issue {
     cid: string[];
 
     constructor(user: User) {
-        this._id = ObjectID();
+        this._id = ObjectID().toString();
         this.meta = {
             name: '',
             desc: '',
             time: new Date().getTime()
         };
+        this.auth = {
+            src: ResourceSrc.PUBLIC,
+            userId: user._id,
+            userName: user.username
+        };
+        this.solutionIds = [];
     }
 }

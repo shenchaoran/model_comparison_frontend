@@ -6,22 +6,21 @@ import { SharedModule } from '@common/shared';
 import { FiltersComponent } from './filters/filters.component';
 import { SearchRoutingModule } from './index-routing.module';
 import { ResultsComponent } from './results/results.component';
-import { SearchService } from './services';
-import { NzNotificationService, NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';
 
-@NgModule({
-  imports: [
+const modules = [
     SharedModule,
-    SearchRoutingModule
-  ],
-  declarations: [
+    SearchRoutingModule,
+];
+const components = [
     SearchComponent,
     FiltersComponent,
-    ResultsComponent
-  ],
-  providers: [
-    SearchService,
-    NzNotificationService
-  ]
+    ResultsComponent,
+];
+const services = [];
+
+@NgModule({
+  imports: [...modules],
+  declarations: [...components],
+  providers: [...services]
 })
 export class SearchModule { }

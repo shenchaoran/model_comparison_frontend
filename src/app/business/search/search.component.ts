@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SearchService } from './services';
+import { SearchService } from '@services';
 import { NzNotificationService, NzModalService } from 'ng-zorro-antd';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 

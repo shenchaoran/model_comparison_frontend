@@ -9,11 +9,8 @@ import { CmpObjCfgComponent } from './cmp-obj-cfg/cmp-obj-cfg.component';
 import { CalcuResultComponent } from './calcu-result/calcu-result.component';
 import { StdDataBaseComponent } from './std-data-base/std-data-base.component';
 import { CmpMethodCfgComponent } from './cmp-method-cfg/cmp-method-cfg.component';
-import { OlModule } from '../ol'
+import { OlModule } from '../ol';
 import { CmpSlnOutlineComponent } from './cmp-sln-outline/cmp-sln-outline.component';
-//////////////////// service ////////////////////////
-import { DatasetService } from '../services';
-import { NzNotificationService, NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';
 ////////////////////// export //////////////////////
 export { CalcuCfgComponent } from './calcu-cfg/calcu-cfg.component';
 export { CmpObjCfgComponent } from './cmp-obj-cfg/cmp-obj-cfg.component';
@@ -21,7 +18,14 @@ export { CalcuResultComponent } from './calcu-result/calcu-result.component';
 export { StdDataBaseComponent } from './std-data-base/std-data-base.component';
 export { CmpMethodCfgComponent } from './cmp-method-cfg/cmp-method-cfg.component';
 ////////////////////////////////////////////
-const COMPONENTS = [
+
+const modules = [
+    SharedModule,
+    RouterModule,
+    OlModule,
+    MatSharedModule,
+];
+const components = [
     CalcuCfgComponent,
     CmpObjCfgComponent,
     CalcuResultComponent,
@@ -30,30 +34,16 @@ const COMPONENTS = [
     SiteDialog,
     CmpSlnOutlineComponent,
 ];
-const SERVICES = [
-    NzNotificationService,
-    DatasetService,
-]
-////////////////////////////////////////////
-
+var entryComponents = [
+    SiteDialog,
+];
+const services = [];
+var exportComponents = components;
 @NgModule({
-    imports: [
-        SharedModule,
-        RouterModule,
-        OlModule,
-        MatSharedModule,
-    ],
-    declarations: [
-        ...COMPONENTS
-    ],
-    entryComponents: [
-        SiteDialog,
-    ],
-    exports: [
-        ...COMPONENTS
-    ],
-    providers: [
-        ...SERVICES
-    ]
+    imports: [...modules],
+    declarations: [...components],
+    entryComponents: [...entryComponents],
+    providers: [...services],
+    exports: [...exportComponents]
 })
 export class CmpSharedModule { }

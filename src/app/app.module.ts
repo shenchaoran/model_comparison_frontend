@@ -8,12 +8,13 @@ import { GlobalState } from './global.state';
 import { AppTranslationModule } from './app.translation.module';
 import { SharedModule } from '@common/shared';
 import { CoreModule } from '@core';
-import { AppRoutingModule } from './app.routing';
+import { AppRoutingModule } from './app-routing';
 import { App } from './app.component';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { NzNotificationService, NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';
 import { DisqusModule } from "ngx-disqus";
-import { UserService  } from '@services';
+
+// TODO 把所有加载一次的服务放在core模块中
 
 @NgModule({
     bootstrap: [App],
@@ -27,18 +28,10 @@ import { UserService  } from '@services';
 
         AppTranslationModule,
         SharedModule.forRoot(),
-        CoreModule,
+        CoreModule.forRoot(),
     ],
     providers: [
-        _HttpClient,
         GlobalState,
-
-        {
-            provide: NZ_NOTIFICATION_CONFIG,
-            useValue: { nzDuration: 3000, nzTop: '60px' }
-        },
-        NzNotificationService,
-        UserService,
     ]
 })
 export class AppModule {}

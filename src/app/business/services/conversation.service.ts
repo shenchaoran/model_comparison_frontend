@@ -1,12 +1,16 @@
 import { Injectable } from '@angular/core';
 import { ListBaseService } from './list-base.service';
 import { UserService } from './user.service';
-import { _HttpClient } from '@core';
-import { Conversation } from '@models/conversation.class';
-import { Comment } from '../models/conversation.class';
+import { _HttpClient } from '../../common/core/services';
+import {
+    Conversation,
+    CommentType,
+    Comment
+} from '@models/conversation.class';
 import { User } from '../models/user.class';
 import { map } from 'rxjs/operators';
 
+var counter = 1;
 @Injectable({
     providedIn: 'root'
 })
@@ -22,26 +26,33 @@ export class ConversationService extends ListBaseService {
     constructor(
         protected http: _HttpClient,
         private userService: UserService,
-        conversation?: Conversation
+        // conversation?: Conversation
     ) {
         super(http);
+        console.log('\n******** ConversationService constructor ', counter++);
         this.users = [];
         this.comments = [];
         this.commentCount = 0;
         this.conversation = null;
     }
 
-    create() {
+    createConversation() {
         this.conversation = new Conversation(this.userService.user);
         this.commentCount = 1;
         this.users.push(this.userService.user);
+        return this.conversation;
+    }
+
+    createComment(type) {
+        let comment = new Comment(this.userService.user, this.conversation._id, type);
+
     }
 
     findOne(id, withRequestProgress?) {
         return super.findOne(id, withRequestProgress)
             .pipe(
                 map(res => {
-                    if(res.error) {
+                    if (res.error) {
                         // TODO
                     }
                     else {
@@ -66,7 +77,7 @@ export class ConversationService extends ListBaseService {
         })
             .pipe(
                 map(res => {
-                    if(res.error) {
+                    if (res.error) {
 
                     }
                     else {
@@ -83,7 +94,7 @@ export class ConversationService extends ListBaseService {
         return this.http.post(`${this.baseUrl}/:id/comments`, comment)
             .pipe(
                 map(res => {
-                    if(res.error) {
+                    if (res.error) {
 
                     }
                     else {

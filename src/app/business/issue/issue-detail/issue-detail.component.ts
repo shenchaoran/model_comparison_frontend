@@ -9,7 +9,7 @@ import {
     templateUrl: './issue-detail.component.html',
     styleUrls: ['./issue-detail.component.scss'],
     providers: [
-        ConversationService
+        // ConversationService
     ]
 })
 export class IssueDetailComponent implements OnInit {

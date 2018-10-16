@@ -12,8 +12,22 @@ import { TokenInterceptor } from '@common/core/net/token/token.interceptor';
 import { ResParserInterceptor } from '@common/core/net/res-parser/res-parser.interceptor';
 import { DynamicTitleService } from '@common/core/services';
 import { NzNotificationService, NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';
+import { _HttpClient } from '@common/core/services/http.client';
 // import { TokenService } from './net/token/token.service';
 import { BACKEND } from '@config';
+import {
+    UserService,
+    SlnService,
+    TaskService,
+    IssueService,
+    CmpMethodService,
+    ConversationService,
+    DatasetService,
+    ListBaseService,
+    MSService,
+    MSRService,
+    SearchService,
+ } from '@services';
 
 import {
     AuthGuard,
@@ -24,39 +38,50 @@ import {
 
 export * from './services';
 
-const CITYFUN_SERVICES = [
+const services = [
     AuthGuard,
-
     BaThemeSpinner,
     EchartAdapterService,
     TableAdapterService,
-    NzNotificationService
+    NzNotificationService,
+    TranslatorService,
+    DynamicTitleService,
+    _HttpClient,
+    {
+        provide: NZ_NOTIFICATION_CONFIG,
+        useValue: { nzDuration: 3000, nzTop: '60px' }
+    },
+    {
+        provide: 'BACKEND',
+        useValue: {
+            host: BACKEND.host,
+            port: BACKEND.port,
+            API_prefix: BACKEND.API_prefix
+        }
+    },
+    {
+        provide: HTTP_INTERCEPTORS,
+        useClass: ResParserInterceptor,
+        multi: true
+    },
+    // { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+    UserService,
+    SlnService,
+    TaskService,
+    IssueService,
+    CmpMethodService,
+    ConversationService,
+    DatasetService,
+    ListBaseService,
+    MSService,
+    MSRService,
+    SearchService,
 ];
 
 @NgModule({
     declarations: [],
-    imports: [
-        
-    ],
-    providers: [
-        TranslatorService,
-        ...CITYFUN_SERVICES,
-        {
-            provide: 'BACKEND',
-            useValue: {
-                host: BACKEND.host,
-                port: BACKEND.port,
-                API_prefix: BACKEND.API_prefix
-            }
-        },
-        {
-            provide: HTTP_INTERCEPTORS,
-            useClass: ResParserInterceptor,
-            multi: true
-        },
-        // { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
-        DynamicTitleService,
-    ]
+    imports: [],
+    providers: [...services]
 })
 export class CoreModule {
     constructor(
@@ -64,18 +89,16 @@ export class CoreModule {
         @SkipSelf()
         parentModule: CoreModule
     ) {
-        throwIfAlreadyLoaded(parentModule, 'CoreModule');
+        // throwIfAlreadyLoaded(parentModule, 'CoreModule');
+        if(parentModule) {
+            throw new Error('CoreModule is already loaded. Import it in the AppModule only');
+        }
     }
 
-    // static forRoot(): ModuleWithProviders {
-    // 	return <ModuleWithProviders>{
-    // 		ngModule: CoreModule,
-    // 		providers: [
-    // 			// BaThemeConfigProvider,
-    // 			// BaThemeConfig,
-    // 			...CITYFUN_VALIDATORS,
-    // 			...CITYFUN_SERVICES,
-    // 		],
-    // 	};
-    // }
+    static forRoot(): ModuleWithProviders {
+    	return {
+    		ngModule: CoreModule,
+    		providers: [...services],
+    	};
+    }
 }

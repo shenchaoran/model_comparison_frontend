@@ -14,7 +14,7 @@ export class Conversation {
     participants: string[];
     
     constructor(user: User) {
-        this._id = ObjectID();
+        this._id = ObjectID().toString();
         this.like_uids = [];
         this.love_uids = [];
         this.tags = [];
@@ -51,7 +51,7 @@ export class Comment {
     }[];
 
     constructor(user: User, cid: string, type: CommentType) {
-        this._id = ObjectID();
+        this._id = ObjectID().toString();
         this.content = [{
             time: new Date().getTime(),
             value: ''

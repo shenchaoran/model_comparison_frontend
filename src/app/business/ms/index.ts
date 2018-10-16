@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from '@common/shared';
 
 import { ModelsRoutingModule } from './index-routing.module';
-import { MSService, UserService } from '@services';
+import { MSService } from '@services';
 import { GeoModelDetailComponent } from './geo-model-detail/geo-model-detail.component';
 import { GeoModelListComponent } from './geo-model-list/geo-model-list.component';
 import { InvokeComponent } from './invoke/invoke.component';
@@ -13,23 +13,23 @@ import { NzNotificationService, NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';
 
 export * from '@services';
 
+const services = [];
+const modules = [
+    SharedModule,
+    ModelsRoutingModule,
+    CmpSharedModule,
+    OlModule,
+    MatSharedModule,
+];
+const components = [
+    GeoModelDetailComponent,
+    GeoModelListComponent,
+    InvokeComponent,
+];
+
 @NgModule({
-    imports: [
-        SharedModule,
-        ModelsRoutingModule,
-        CmpSharedModule,
-        OlModule,
-        MatSharedModule,
-    ],
-    declarations: [
-        GeoModelDetailComponent,
-        GeoModelListComponent,
-        InvokeComponent,
-    ],
-    providers: [
-        MSService,
-        UserService,
-        NzNotificationService
-    ]
+    imports: [...modules],
+    declarations: [...components],
+    providers: [...services]
 })
 export class ModelsModule { }

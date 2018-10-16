@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
-import { SearchService } from '../services';
+import { SearchService } from '@services';
 
 @Component({
     selector: 'ogms-filters',
