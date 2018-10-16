@@ -46,6 +46,7 @@ export class CreateTaskComponent extends DocBaseComponent implements OnInit {
         private userService: UserService,
     ) {
         super(route, slnService, title);
+        this.userService.redirectIfNotLogined();
         this.cmpTask = new Task(this.userService.user);
 
         this.cmpTaskFG = this.fb.group({

@@ -37,8 +37,10 @@ import {
 } from './components';
 
 import {
-    BaScrollPosition,
-    BaSlimScroll
+    RxBoxDirective,
+    Flex10Directive,
+    AsideDirective,
+    LoadingDirective,
 } from './directives';
 
 import {
@@ -58,7 +60,7 @@ import {
     CoordinatePipe,
 } from './pipes';
 
-const SERVICES = [
+const services = [
     BaImageLoaderService,
     BaThemePreloader,
     BaThemeSpinner,
@@ -67,13 +69,13 @@ const SERVICES = [
     HeaderMenuService,
 ];
 
-const VALIDATORS = [
+const validators = [
     // CascaderSelectValidator,
     // EmailValidator,
     // EqualPasswordsValidator
 ];
 
-const COMPONENTS = [
+const components = [
     FileUploader,
     ContextMenuComponent,
     HeaderMenuComponent,
@@ -94,12 +96,14 @@ const COMPONENTS = [
     MatCascaderSelectComponent,
 ];
 
-const DIRECTIVES = [
-    BaScrollPosition,
-    BaSlimScroll
+const directives = [
+    RxBoxDirective,
+    Flex10Directive,
+    AsideDirective,
+    LoadingDirective,
 ];
 
-const PIPES = [
+const pipes = [
     BaImgPathPipe,
     MomentDatePipe,
     ResourceSrcPipe,
@@ -118,10 +122,10 @@ export * from '@common/shared/directives';
 
 @NgModule({
     declarations: [
-        ...COMPONENTS,
-        ...DIRECTIVES,
-        ...PIPES,
-        ...VALIDATORS
+        ...components,
+        ...directives,
+        ...pipes,
+        ...validators
     ],
     imports: [
         RouterModule,
@@ -131,8 +135,8 @@ export * from '@common/shared/directives';
         MatSharedModule,
     ],
     providers: [
-        ...VALIDATORS,
-        ...SERVICES,
+        ...validators,
+        ...services,
         {
             provide: 'BACKEND',
             useValue: {
@@ -156,9 +160,9 @@ export * from '@common/shared/directives';
         NzNotificationService
     ],
     exports: [
-        ...COMPONENTS,
-        ...DIRECTIVES,
-        ...PIPES,
+        ...components,
+        ...directives,
+        ...pipes,
         RouterModule,
         NgxSharedModule,
         DisqusModule,
@@ -171,7 +175,7 @@ export class SharedModule {
             providers: [
                 BaThemeConfigProvider,
                 BaThemeConfig,
-                ...SERVICES
+                ...services
             ]
         };
     }

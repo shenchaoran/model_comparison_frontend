@@ -1,3 +1,20 @@
-<p>
-  create-issue works!
-</p>
+<div ogms-rx-box ogms-flex-1-0>
+    <article>
+        <mat-tab-group selectedIndex='1'>
+            <mat-tab label='Issue'>
+                issue cfg
+            </mat-tab>
+            <mat-tab label='Conversation'>
+                <ng-container *ngIf='conversation'>
+                    <ogms-conversation [ngModel]='conversation'></ogms-conversation>
+                </ng-container>
+            </mat-tab>
+        </mat-tab-group>
+    </article>
+    <aside ogms-aside>
+        <div>
+            1
+        </div>
+        <div>2</div>
+    </aside>
+</div>

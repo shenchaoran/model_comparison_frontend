@@ -62,14 +62,14 @@
 
 ### responsive
 - nav 和 footer 不用管，响应式是写好的
-- 中间的 main-content 部分的响应式，在需要应用布局时，给 div 添加 .main-content 类名即可
+- 中间的 rx-box 部分的响应式，在需要应用布局时，给 div 添加 .rx-box 类名即可
 
 ``` css
 @mixin layout($paddingHorizontal) {
     nav {
         padding: 0 $paddingHorizontal;
     }
-    .main-content {
+    .rx-box {
         padding: 24px $paddingHorizontal;
     }
     footer {

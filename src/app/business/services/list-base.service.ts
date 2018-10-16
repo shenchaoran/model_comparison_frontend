@@ -3,7 +3,9 @@ import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { _HttpClient } from '@common/core/services/http.client';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class ListBaseService {
     protected baseUrl: string;
 

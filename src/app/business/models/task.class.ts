@@ -30,7 +30,7 @@ export class Task {
     cid: string;
 
     constructor(user: User) {
-        this._id = ObjectID();
+        this._id = ObjectID().toString();
         this.meta = {
             name: null,
             desc: null,

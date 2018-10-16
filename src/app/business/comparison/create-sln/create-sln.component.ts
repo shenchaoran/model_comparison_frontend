@@ -45,6 +45,7 @@ export class CreateSlnComponent implements OnInit {
         public dialog: MatDialog,
         private userService: UserService,
     ) { 
+        this.userService.redirectIfNotLogined();
         this.cmpSln = new Solution(this.userService.user);
     }
 

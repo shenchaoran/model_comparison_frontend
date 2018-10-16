@@ -1,4 +1,5 @@
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Resolve } from '@angular/router';
@@ -16,7 +17,9 @@ var counter = 1;
 export class IssueService extends ListBaseService {
     protected baseUrl = '/comparison/issues';
     public issue: Issue;
-    public conversation: Conversation;
+    public get conversation(): Conversation {
+        return this.conversationService.conversation
+    }
 
     constructor(
         protected http: _HttpClient,
@@ -27,13 +30,21 @@ export class IssueService extends ListBaseService {
         console.log('\n******** IssueService constructor ', counter++);
     }
 
-    createIssue() {
-        this.issue = new Issue(this.userService.user);
-        return this.issue;
+    public findOne(id, withRequestProgress?) {
+        return super.findOne(id, withRequestProgress)
+            .pipe(
+                map(res => {
+                    if(!res.error){
+                        this.issue = res.data.issue;
+                        // this.conversation = res.data.conversation;
+                    }
+                })
+            )
     }
 
-    createConversation() {
-        this.conversation = this.conversationService.createConversation();
-        return this.conversation;
+    public createIssue() {
+        this.issue = new Issue(this.userService.user);
+        this.issue.cid = this.conversationService.createConversation(this.issue._id)._id;
+        return this.issue;
     }
 }

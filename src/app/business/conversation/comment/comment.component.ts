@@ -37,7 +37,7 @@ import {
     ],
 })
 export class CommentComponent implements ControlValueAccessor, OnInit {
-    _comment: Comment;
+    comment: Comment;
 
     constructor(
         private service: ConversationService,
@@ -47,10 +47,9 @@ export class CommentComponent implements ControlValueAccessor, OnInit {
     ngOnInit() {
     }
 
-    
     public writeValue(obj: any) {
         if(obj) {
-            this._comment = obj;
+            this.comment = obj;
         }
     }
     

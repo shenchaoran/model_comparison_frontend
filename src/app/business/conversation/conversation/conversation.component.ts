@@ -1,45 +1,102 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
-import { fromJS } from 'immutable';
+import { 
+    Component, 
+    OnInit, 
+    Input, 
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Output,
+    EventEmitter,
+    forwardRef,
+    ViewChild,
+} from '@angular/core';
+import {
+    ControlValueAccessor,
+    FormBuilder,
+    FormGroup,
+    FormControl,
+    NG_VALIDATORS,
+    NG_VALUE_ACCESSOR
+} from '@angular/forms';
+import { 
+    fromJS,
+} from 'immutable';
+import {
+    Observable,
+    Subject,
+    combineLatest
+} from 'rxjs';
+
 import { 
     Conversation, 
+    CommentType,
     Comment
 } from '@models';
 import {
     ConversationService,
-    UserService
-} from '../../services';
+    UserService,
+    IssueService,
+} from '@services';
 
+// 二选一，根据 _id 或者 ngModel 初始化该组件
 @Component({
     selector: 'ogms-conversation',
     templateUrl: './conversation.component.html',
     styleUrls: ['./conversation.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [
-        // ConversationService
-    ]
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => ConversationComponent),
+            multi: true
+        }
+    ],
 })
-export class ConversationComponent implements OnInit {
+export class ConversationComponent implements ControlValueAccessor, OnInit {
     conversation: Conversation;
+    conversation$: Subject<any> = new Subject();
     _loading: boolean = true;
+    
     @Input() set _id(v: string) {
-        this.service.findOne(v)
+        this.conversationService.findOne(v)
             .subscribe(res => {
-                this._loading = false;
                 if(res.error) {
 
                 }
                 else {
-                    this.conversation = res.data;
+                    this.conversation$.next(res.data);
                 }
             });
     }
 
     constructor(
-        private service: ConversationService,
-        private userService: UserService
-    ) { }
+        private conversationService: ConversationService,
+        private issueService: IssueService,
+        private userService: UserService,
+        private cdRef: ChangeDetectorRef,
+    ) {
+        this.conversation$.subscribe(v => {
+            this.conversation = v;
+            this._loading = false;
+            this.cdRef.markForCheck();
+        })
+    }
+
+
 
     ngOnInit() {
     }
 
+    public writeValue(obj: any) {
+        if(obj) {
+            this.conversation$.next(obj);
+        }
+    }
+    
+    private propagateChange = (e: any) => {};
+    
+    public registerOnChange(fn: any) {
+        this.propagateChange = fn;
+    }
+
+    public registerOnTouched() {}
 }

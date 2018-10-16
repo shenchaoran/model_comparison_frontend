@@ -8,16 +8,13 @@ import {
     Issue,
     Conversation,
     Comment,
+    CommentType,
 } from '@models';
 
 @Component({
     selector: 'ogms-create-issue',
     templateUrl: './create-issue.component.html',
-    styleUrls: ['./create-issue.component.scss'],
-    providers: [
-        // IssueService,
-        // ConversationService
-    ]
+    styleUrls: ['./create-issue.component.scss']
 })
 export class CreateIssueComponent implements OnInit {
     issue: Issue;
@@ -32,8 +29,9 @@ export class CreateIssueComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.issueService.createIssue();
-        this.conversation
+        this.issue = this.issueService.createIssue();
+        this.conversation = this.conversationService.conversation;
+
     }
 
 }

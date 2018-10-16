@@ -7,10 +7,7 @@ import {
 @Component({
     selector: 'ogms-issue-detail',
     templateUrl: './issue-detail.component.html',
-    styleUrls: ['./issue-detail.component.scss'],
-    providers: [
-        // ConversationService
-    ]
+    styleUrls: ['./issue-detail.component.scss']
 })
 export class IssueDetailComponent implements OnInit {
 

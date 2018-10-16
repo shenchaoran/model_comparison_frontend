@@ -5,6 +5,7 @@ import { ConversationService } from '../services/conversation.service';
 
 export class Conversation {
     _id?: any;
+    pid: string;
     // 点赞
     like_uids: string[];
     // 收藏
@@ -13,18 +14,19 @@ export class Conversation {
     comments: (string | Comment)[];
     participants: string[];
     
-    constructor(user: User) {
+    constructor(user: User, pid: string) {
         this._id = ObjectID().toString();
+        this.pid = pid;
         this.like_uids = [];
         this.love_uids = [];
         this.tags = [];
         this.participants = [];
         this.comments = [];
 
-        if(user) {
-            this.participants.push(user._id);
-            this.comments.push(new Comment(user, this._id, CommentType.MAIN));
-        }
+        // if(user) {
+        //     this.participants.push(user._id);
+        //     this.comments.push(new Comment(user, this._id, CommentType.MAIN));
+        // }
     }
 }
 
@@ -50,13 +52,14 @@ export class Comment {
         count: number
     }[];
 
-    constructor(user: User, cid: string, type: CommentType) {
+    constructor(user: User, cid: string, type: CommentType, to_uid?: string) {
         this._id = ObjectID().toString();
         this.content = [{
             time: new Date().getTime(),
             value: ''
         }];
         this.reactions = [];
+        this.to_uid = to_uid;
         if(user) {
             this.from_uid = user._id;
             this.anonymous = false;

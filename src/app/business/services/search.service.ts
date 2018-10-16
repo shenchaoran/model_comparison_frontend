@@ -4,7 +4,9 @@ import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Resolve } from '@angular/router';
 import { _HttpClient } from '@common/core/services/http.client';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class SearchService {
 
     constructor(private http: _HttpClient) { }

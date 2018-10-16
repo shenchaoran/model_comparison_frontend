@@ -65,7 +65,7 @@ export class CmpObj {
     progress?: number;
 
     constructor() {
-        this.id = ObjectID();
+        this.id = ObjectID().toString();
         this.methods = [];
         this.dataRefers = [];
         this.progress = 0;
