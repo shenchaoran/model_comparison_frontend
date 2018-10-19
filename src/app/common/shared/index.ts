@@ -70,7 +70,7 @@ const services = [
 ];
 
 const validators = [
-    // CascaderSelectValidator,
+    CascaderSelectValidator,
     // EmailValidator,
     // EqualPasswordsValidator
 ];
