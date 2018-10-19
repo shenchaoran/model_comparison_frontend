@@ -60,7 +60,7 @@
 
 .flex-1-0 {
     display: flex;
-    flex-flow: row wrap;
+    flex-flow: row nowrap;
     >:first-child {
         flex: 1 1 auto;
         margin-right: 15px;

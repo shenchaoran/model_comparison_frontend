@@ -5,7 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 // import { ClarityModule } from "clarity-angular";
 // import { map, filter, scan, take, toArray } from 'rxjs/operators';
 import { TranslateModule } from '@ngx-translate/core';
-import { QuillModule } from 'ngx-quill';
+// import { QuillModule } from 'ngx-quill';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
 
@@ -16,21 +16,18 @@ import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-
     HttpClientModule,
-
     NgZorroAntdModule,
-    QuillModule,
+    // QuillModule,
     SlimLoadingBarModule.forRoot(),
   ],
   exports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-
     TranslateModule,
     NgZorroAntdModule,
-    QuillModule,
+    // QuillModule,
     SlimLoadingBarModule,
   ],
   providers: []

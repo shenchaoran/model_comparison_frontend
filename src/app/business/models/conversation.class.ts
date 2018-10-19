@@ -35,8 +35,11 @@ export class Comment {
     // 编辑的历史
     content: {
         time: number,
-        value: string
+        value: string,
+        state: CommentState
     }[];
+    // 版本号
+    svid: number;
     from_uid: string;
     anonymous: boolean;
     // 可以为空，表示不是回复评论
@@ -52,12 +55,14 @@ export class Comment {
         count: number
     }[];
 
-    constructor(user: User, cid: string, type: CommentType, to_uid?: string) {
+    constructor(user: User, cid: string, type: CommentType, to_uid?: string, state: CommentState = CommentState.WRITE) {
         this._id = ObjectID().toString();
         this.content = [{
             time: new Date().getTime(),
-            value: ''
+            value: '',
+            state: state
         }];
+        this.svid = 0;
         this.reactions = [];
         this.to_uid = to_uid;
         if(user) {
@@ -74,3 +79,8 @@ export enum CommentType {
     REPLY = 'REPLY',
     HIDE = 'HIDE'
 };
+
+export enum CommentState {
+    WRITE = 'WRITE',
+    READ = 'READ'
+}

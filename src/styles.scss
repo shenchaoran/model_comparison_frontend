@@ -1,27 +1,20 @@
-/* You can add global styles to this file; and also import other style files */
-
-// add by SCR
-// @import "../node_modules/clarity-icons/clarity-icons.min.css";
-// @import "../node_modules/clarity-ui/clarity-ui.min.css";
-
 // @import "~roboto-fontface/css/roboto/roboto-fontface.css";
 @import "~normalize.css/normalize.css";
-@import '~font-awesome/css/font-awesome.min.css';
+$fa-font-path: '../node_modules/font-awesome/fonts';
+@import '~font-awesome/scss/font-awesome.scss';
 @import "~ionicons/css/ionicons.min.css";
 @import "~ng2-slim-loading-bar/style.css";
 @import "~openlayers/dist/ol.css";
 @import "~prismjs/themes/prism-coy.css";
 @import "~prismjs/plugins/line-numbers/prism-line-numbers.css";
 @import "~primer-utilities/index.scss";
-// @import "~@angular/material/prebuilt-themes/indigo-pink.css";
-// @import '~quill/dist/quill.bubble';
-// @import '~quill/dist/quill.snow';
+@import "~golden-layout/src/css/goldenlayout-base.css";
+@import "~golden-layout/src/css/goldenlayout-translucent-theme.css";
+// @import "~editor.md/scss/editormd.scss";
 // @import '~angular-tree-component/dist/angular-tree-component.css';
 // @import '~ol3-layerswitcher/src/ol3-layerswitcher.css';
 // @import '~handsontable/dist/handsontable.full.css';
 // @import '~bootstrap/dist/css/bootstrap.min.css';
-@import "~golden-layout/src/css/goldenlayout-base.css";
-@import "~golden-layout/src/css/goldenlayout-translucent-theme.css";
 // @import "~handsontable/dist/handsontable.full.min.css";
 // @import "~leaflet/dist/leaflet.css";
 // @import "~ng-zorro-antd/src/components.less";
@@ -40,6 +33,7 @@
 @import "assets/css/my/doc-list.scss";
 @import "assets/css/my/form.scss";
 @import "assets/css/my/material-theme.scss";
+@import "assets/css/my/editor.md.scss";
 // @import "assets/css/my/golden-layout.scss";
 // TODO relative path problems
 // @import 'assets/css/ol3-ext/ol3-ext.css';

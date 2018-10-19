@@ -81,7 +81,9 @@ export class ConversationComponent implements ControlValueAccessor, OnInit {
         })
     }
 
+    onCommentChange(comment) {
 
+    }
 
     ngOnInit() {
     }

@@ -1,3 +1,84 @@
-<p>
-  comment works!
-</p>
+<div class='avatar'>
+    <img *ngIf='author else defaultTemp' [attr.src]='"data:image/png;base64," + author.avator'>
+    <ng-template #defaultTemp>
+        <img attr.src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAMAAADzN3VRAAADAFBMVEXw8PAmbNgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACzX7JAAABAHRSTlP//wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKmfXxgAAApVJREFUeNoBigJ1/QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEBAQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQEBAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAQEBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEBAQEAAAAAAAAAAAAAAAAAAAAAAAABAQEBAQEBAQEBAQEAAAAAAAAAAAAAAAAAAAEBAQEBAQEBAQEBAQAAAAAAAAAAAAAAAAAAAQEBAQEBAQEBAQEBAAAAAAAAAAAAAAAAAAABAQEBAQEBAQEBAQEAAAAAAAAAAAAAAQEBAQAAAAAAAAAAAAAAAAEBAQEAAAAAAAABAQEBAAAAAAAAAAAAAAAAAQEBAQAAAAAAAAEBAQEAAAAAAAAAAAAAAAABAQEBAAAAAAAAAQEBAQAAAAAAAAAAAAAAAAEBAQEAAAAAAAABAQEBAQEBAQAAAAABAQEBAQEBAQAAAAAAAAEBAQEBAQEBAAAAAAEBAQEBAQEBAAAAAAAAAQEBAQEBAQEAAAAAAQEBAQEBAQEAAAAAAAABAQEBAQEBAQAAAAABAQEBAQEBAQAAAAAAAAEBAQEAAAAAAAAAAAAAAAABAQEBAAAAAAAAAQEBAQAAAAAAAAAAAAAAAAEBAQEAAAAAAAABAQEBAAAAAAAAAAAAAAAAAQEBAQAAAAAAAAEBAQEAAAAAAAAAAAAAAAABAQEBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7OoAwQx0tzMAAAAASUVORK5CYII='>
+    </ng-template>
+</div>
+<div 
+    class='comment-container' 
+    [class.current-user]='author._id === user._id' 
+    [class.write]='comment.content[comment.svid].state === "WRITE"'
+    [class.read]='comment.content[comment.svid].state === "READ"'>
+    <ng-container *ngIf='comment.content[comment.svid].state === "WRITE" else readTemplate'>
+        <div class='body' [style.height]='"200px"'>
+            <div #editorDOM></div>
+        </div>
+        <div class='footer'>
+            <button mat-flat-button color='warn'>Cancel</button>
+            <button mat-flat-button color='primary' (click)='onSubmit()'>Submit</button>
+        </div>
+    </ng-container>
+    <ng-template #readTemplate>
+        <div class='header'>
+            <span><a [routerLink]='["/author", author.username]'>{{author.username}}</a> commented at
+                {{comment.content[comment.svid].time | date: 'yyyy-MM-dd'}}</span>
+            <span class='space-holder'></span>
+            <span>
+                <button mat-menu-item [matMenuTriggerFor]='emojiMenu'>
+                    <mat-icon>sentiment_very_satisfied</mat-icon>
+                </button>
+
+                <mat-menu #emojiMenu='matMenu'>
+                    <button mat-menu-item>
+                        <mat-icon>thumb_up_alt</mat-icon>
+                        <span></span>
+                    </button>
+                    <button mat-menu-item>
+                        <mat-icon>thumb_down_alt</mat-icon>
+                        <span></span>
+                    </button>
+                    <button mat-menu-item>
+                        <mat-icon>sentiment_very_satisfied</mat-icon>
+                        <span></span>
+                    </button>
+                    <button mat-menu-item>
+                        <mat-icon>sentiment_dissatisfied</mat-icon>
+                        <span></span>
+                    </button>
+                    <button mat-menu-item>
+                        <mat-icon>favorite</mat-icon>
+                        <span></span>
+                    </button>
+                </mat-menu>
+            </span>
+            <span>
+                <button mat-icon-button [matMenuTriggerFor]="moreMenu">
+                    <mat-icon>more_horiz</mat-icon>
+                </button>
+                <mat-menu #moreMenu="matMenu">
+                    <button mat-menu-item>
+                        <span>Quote reply</span>
+                    </button>
+                    <!-- 版主 有隐藏的权限 -->
+                    <ng-container>
+                        <button mat-menu-item>
+                            <span>Hide</span>
+                        </button>
+                    </ng-container>
+                    <!-- 评论者 有编辑和删除的权限 -->
+                    <ng-container *ngIf='author._id === comment.from_uid'>
+                        <button mat-menu-item>
+                            <span>Edit</span>
+                        </button>
+                        <button color='"warn"' mat-menu-item>
+                            <span>Delete</span>
+                        </button>
+                    </ng-container>
+                </mat-menu>
+            </span>
+        </div>
+        <div class="body">
+            <div [innerHTML]='comment.content[comment.svid].value'></div>
+        </div>
+    </ng-template>
+</div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import {
     ConversationService,
     IssueService,
@@ -16,7 +16,7 @@ import {
     templateUrl: './create-issue.component.html',
     styleUrls: ['./create-issue.component.scss']
 })
-export class CreateIssueComponent implements OnInit {
+export class CreateIssueComponent implements OnInit, OnDestroy {
     issue: Issue;
     conversation: Conversation;
 
@@ -34,4 +34,7 @@ export class CreateIssueComponent implements OnInit {
 
     }
 
+    ngOnDestroy() {
+        this.conversationService.clear();
+    }
 }

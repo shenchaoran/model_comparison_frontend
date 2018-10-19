@@ -112,4 +112,14 @@ export class ConversationService extends ListBaseService {
                 })
             )
     }
+
+    public getUserOfComment(from_uid: string) {
+        return this.users.find(user => user._id === from_uid);
+    }
+
+    public clear() {
+        this.conversation = null;
+        this.commentCount = 0;
+        this.users = [];
+    }
 }
