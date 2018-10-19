@@ -99,30 +99,9 @@
                         "polyfills": "src/polyfills.ts",
                         "tsConfig": "src/tsconfig.spec.json",
                         "scripts": [
-                            "node_modules/jquery/dist/jquery.min.js",
-                            "node_modules/chroma-js/chroma.min.js",
-                            "node_modules/lodash/lodash.min.js",
-                            "node_modules/postal/lib/postal.min.js",
-                            "node_modules/openlayers/dist/ol.js",
-                            "node_modules/ol3-ext/dist/ol3-ext.min.js",
-                            "node_modules/ol3-layerswitcher/src/ol3-layerswitcher.js",
-                            "node_modules/quill/dist/quill.min.js",
-                            "node_modules/prismjs/prism.js",
-                            "node_modules/prismjs/plugins/line-numbers/prism-line-numbers.min.js",
-                            "node_modules/leaflet/dist/leaflet.js",
-                            "node_modules/geojson-vt/geojson-vt-dev.js",
-                            "node_modules/topojson/dist/topojson.min.js"
                         ],
-                        "styles": [
-                            "src/styles.scss",
-                            "src/styles.less"
-                        ],
-                        "assets": [
-                            "src/assets",
-                            "src/config",
-                            "src/browser-download.html",
-                            "src/favicon.ico"
-                        ]
+                        "styles": [],
+                        "assets": []
                     }
                 },
                 "lint": {
