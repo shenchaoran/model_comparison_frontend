@@ -1,7 +1,7 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { NgxSharedModule } from '../ngx-shared';
-import { NgUploaderModule } from 'ngx-uploader';
+import { NgxUploaderModule } from 'ngx-uploader';
 import { BaThemeConfig } from './theme.config';
 import { BaThemeConfigProvider } from './theme.configProvider';
 import { BACKEND } from '@config';
@@ -130,7 +130,7 @@ export * from '@common/shared/directives';
     imports: [
         RouterModule,
         NgxSharedModule,
-        NgUploaderModule,
+        NgxUploaderModule,
         DisqusModule.forRoot('shenchaoran'),
         MatSharedModule,
     ],

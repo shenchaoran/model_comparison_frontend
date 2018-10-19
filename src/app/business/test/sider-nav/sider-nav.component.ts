@@ -9,9 +9,9 @@ export class SiderNavComponent implements OnInit {
     constructor(private _renderer: Renderer2) {}
 
     ngOnInit() {
-        this._renderer.listen('window', 'scroll', () => {
-            console.log('scroll');
-        });
+        // this._renderer.listen('window', 'scroll', () => {
+        //     console.log('scroll');
+        // });
     }
 
 

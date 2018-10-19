@@ -36,7 +36,6 @@
                             "node_modules/ol3-layerswitcher/src/ol3-layerswitcher.js",
                             "node_modules/prismjs/prism.js",
                             "node_modules/prismjs/plugins/line-numbers/prism-line-numbers.min.js",
-                            "node_modules/handsontable/dist/handsontable.full.min.js",
                             "node_modules/leaflet/dist/leaflet.js",
                             "node_modules/geojson-vt/geojson-vt-dev.js",
                             "node_modules/topojson/dist/topojson.min.js",
@@ -80,6 +79,9 @@
                         },
                         "production": {
                             "browserTarget": "web-njgis:build:production"
+                        },
+                        "hmr": {
+                            "hmr": true
                         }
                     }
                 },
@@ -107,7 +109,6 @@
                             "node_modules/quill/dist/quill.min.js",
                             "node_modules/prismjs/prism.js",
                             "node_modules/prismjs/plugins/line-numbers/prism-line-numbers.min.js",
-                            "node_modules/handsontable/dist/handsontable.full.min.js",
                             "node_modules/leaflet/dist/leaflet.js",
                             "node_modules/geojson-vt/geojson-vt-dev.js",
                             "node_modules/topojson/dist/topojson.min.js"

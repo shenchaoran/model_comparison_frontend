@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgUploaderOptions } from 'ngx-uploader';
+import { UploadInput } from 'ngx-uploader';
 import { ResourceSrc } from '@models';
 
 @Component({
@@ -9,7 +9,7 @@ import { ResourceSrc } from '@models';
 })
 export class FileUploaderTestComponent implements OnInit {
 
-    fileUploaderOptions: NgUploaderOptions;
+    uploadInput: UploadInput;
     fileId;
 
     checkOptionsOne = [
@@ -22,18 +22,17 @@ export class FileUploaderTestComponent implements OnInit {
     selectData;
 
     constructor() {
-        this.fileUploaderOptions = {
+        this.uploadInput = {
+            type: 'uploadAll',
             url: '/data',
+            method: 'POST',
             data: {
                 desc: '',
                 src: ResourceSrc.EXTERNAL
-                // userId: JSON.parse(localStorage.getItem('jwt')).user._id
             },
-            multiple: true,
             fieldName: 'geo-data',
-            customHeaders: {
-                // Authorization:
-                // 'bearer ' + JSON.parse(localStorage.getItem('jwt')).token
+            headers: {
+                Authorization: 'bearer ' + JSON.parse(localStorage.getItem('jwt')).token
             }
         };
     }

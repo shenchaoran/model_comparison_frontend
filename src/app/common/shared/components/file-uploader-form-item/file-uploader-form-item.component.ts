@@ -45,7 +45,7 @@ export class FileUploaderFormItemComponent implements OnInit {
 
     @Input() width;
     @Input() label;
-    @Input() fileUploaderOptions;
+    @Input() uploadInput;
     // @Output() onFileUploadCompleted = new EventEmitter<any>();
     // @Output() onClear = new EventEmitter<any>();
 

@@ -45,7 +45,7 @@
                         <ng-container *ngFor='let item of IOForm.controls["inputs"].controls;let i=index;'>
                             <div [formGroupName]='i' class='form-item file-uploader-group'>
                                 <label>{{item.value.name}}</label>
-                                <ogms-file-uploader-form-item formControlName='file' [width]='width' [fileUploaderOptions]="fileUploaderOptions"></ogms-file-uploader-form-item>
+                                <ogms-file-uploader-form-item formControlName='file' [width]='width' [uploadInput]="uploadInput"></ogms-file-uploader-form-item>
                             </div>
                         </ng-container>
                     </div>
