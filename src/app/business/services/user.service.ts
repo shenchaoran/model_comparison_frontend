@@ -1,15 +1,17 @@
+import { getFakeList } from './../test/data/mock-user-issues';
 import { Injectable } from '@angular/core';
 import { _HttpClient } from '@common/core/services/http.client';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+import { USER } from "../test/data/mock-user";
+
 @Injectable({
     providedIn: 'root'
 })
 export class UserService {
     _jwt;
-
     constructor(
         private http: _HttpClient,
         private route: ActivatedRoute,
@@ -128,5 +130,16 @@ export class UserService {
             }
         }
         return null;
+    }
+
+    //* 获取模拟的用户信息
+    getMockuser(){
+        return USER;
+    }
+
+    //* 获取用户相关issues
+    getMockUserIssues(){
+        console.log(getFakeList());
+        return getFakeList();
     }
 }

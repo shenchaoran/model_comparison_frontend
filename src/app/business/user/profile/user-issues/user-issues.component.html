@@ -1,0 +1,24 @@
+<nz-list nzItemLayout="vertical" [nzLoading]="!list">
+    <nz-list-item *ngFor="let item of list" [nzContent]="nzContent" [nzActions]="[op1,op2]">
+        <ng-template #op1>
+            <i class="anticon anticon-star-o mr-sm"></i>{{item.star}}
+        </ng-template>
+        <ng-template #op2>
+            <i class="anticon anticon-message mr-sm"></i>{{item.message}}
+        </ng-template>
+        <nz-list-item-meta [nzTitle]="nzTitle" >
+          <ng-template #nzTitle>
+            <a href="" >{{item.title}}</a>
+          </ng-template>
+        </nz-list-item-meta>
+        <ng-template #nzContent>
+          <p>{{item.description}}</p>
+          <div class="">
+            <nz-avatar [nzSrc]="item.avatar" [nzSize]="'small'" class="mr-sm" ></nz-avatar>
+            <a href="" style="margin-right:5px;margin-left: 5px">{{item.sponsor}}</a>
+            <span class="gray_font" >Sponsored At: </span>
+            <span class="gray_font" title="{{item.createdAt}}">{{ item.createdAt | date:'yyyy-MM-dd' }}</span>
+          </div>
+        </ng-template>
+    </nz-list-item>
+</nz-list>

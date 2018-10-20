@@ -1,0 +1,30 @@
+<div>
+
+  <!-- Popular Topics -->
+  <div>
+      <h2 class="f4 mb-2 text-normal">Popular Topics</h2>
+      <ol class="topic-list">
+          <li *ngFor="let topic of user_topics" class="topic-item">
+              <a class="topic-item-content" routerLink="">
+                  <span class="d-block">
+                      <p class="title-p text-gray">{{topic.title}}</p>
+                  </span>
+                  <div class="sponsor">
+                      <div class="text-gray text-small float_right">
+                          Created By:
+                          <a routerLink="">{{topic.sponsor}}</a>
+                      </div>
+                  </div>
+              </a>
+          </li>
+      </ol>
+  </div>
+
+  <!-- Popular Solutions -->
+  <div>
+      <h2 class="f4 mb-2 text-normal">Popular Solutions</h2>
+      
+
+  </div>
+    
+</div>

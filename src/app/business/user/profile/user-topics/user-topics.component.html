@@ -1,0 +1,49 @@
+<!-- <ol class="topic-list">
+  <li *ngFor="let topic of user_topics" class="topic-item">
+    <span class="topic-item-content">
+      <span class="d-block">
+        <a routerLink="">
+          <span>{{topic.title}}</span>
+        </a>
+      </span>
+      <p class="text-gray text-small mb-2">
+        Sponsor: 
+        <a routerLink="">{{topic.sponsor}}</a>
+      </p>
+      <p class="topic-desc text-gray text-small">
+        {{topic.description}}
+      </p>
+    </span>
+
+  </li>
+</ol> -->
+
+<div class="topic-list">
+    <mat-card *ngFor="let topic of user_topics" class="topic-item">
+        <mat-card-header>
+            <mat-card-title>
+                <a routerLink="">
+                    <span>{{topic.title}}</span>
+                </a>
+            </mat-card-title>
+            <mat-card-subtitle>
+                Created By:
+                <a routerLink="">{{topic.sponsor}}</a>
+            </mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+            <p>
+                &emsp;{{topic.description}}
+            </p>
+        </mat-card-content>
+        <mat-card-footer>
+          <div style="float: right;padding-right:20px;">
+              <div row width="200px">
+                  <mat-icon class="anticon anticon-star-o mr-sm" style="margin-right:5px"></mat-icon> <span style="margin-right:30px">{{topic.star}}</span>
+                  <mat-icon class="anticon anticon-message mr-sm" style="margin-right:5px"></mat-icon>{{topic.message}}
+              </div>
+          </div>
+        </mat-card-footer>
+    </mat-card>
+</div>
