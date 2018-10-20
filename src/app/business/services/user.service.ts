@@ -6,24 +6,17 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-<<<<<<< HEAD
 import { USER } from "../test/data/mock-user";
 
-=======
 var counter = 1;
->>>>>>> master
 @Injectable({
     providedIn: 'root'
 })
 export class UserService {
-<<<<<<< HEAD
-    _jwt;
-=======
     private _jwt;
     // TODO 改成一旦有订阅，立即发布当前状态
     public logined$: BehaviorSubject<boolean>;
 
->>>>>>> master
     constructor(
         private http?: _HttpClient,
         private route?: ActivatedRoute,

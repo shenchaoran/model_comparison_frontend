@@ -27,21 +27,8 @@ const components = [
 const services = [];
 
 @NgModule({
-<<<<<<< HEAD:src/app/business/user/user.module.ts
-    imports: [
-        UserRoutingModule,
-        SharedModule,
-        MatSharedModule,
-        NgZorroAntdModule,
-    ],
-    declarations: [SignInComponent, SignUpComponent, PswResetComponent, ProfileComponent, UserIssuesComponent, UserSolutionsComponent, UserOverviewComponent, UserTopicsComponent],
-    providers: [
-        UserService
-    ]
-=======
     imports: [...modules],
     declarations: [...components],
     providers: [...services]
->>>>>>> master:src/app/business/user/index.ts
 })
 export class UserModule { }
