@@ -1,13 +1,14 @@
-var webpack = require('webpack');
+const webpack = require('webpack');
+
 
 module.exports = {
-    // module: {
-    //     rules: [{
-    //         test: /\.cool$/,
-    //         use: 'cool-loader'
-    //     }]
-    // },
+    module: {
+        // rules: [{
+        //     test: /\.scss$/,
+        //     use: ['css-loader', 'resolve-url-loader', 'sass-loader']
+        // }]
+    },
     plugins: [
-        new webpack.BannerPlugin('created by scr-scr-scr.')
+        new webpack.BannerPlugin('created by scr.')
     ]
 };

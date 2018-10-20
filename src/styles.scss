@@ -1,6 +1,6 @@
 // @import "~roboto-fontface/css/roboto/roboto-fontface.css";
 @import "~normalize.css/normalize.css";
-$fa-font-path: '../node_modules/font-awesome/fonts';
+$fa-font-path: '~font-awesome/fonts';
 @import '~font-awesome/scss/font-awesome.scss';
 @import "~ionicons/css/ionicons.min.css";
 @import "~ng2-slim-loading-bar/style.css";
@@ -33,7 +33,7 @@ $fa-font-path: '../node_modules/font-awesome/fonts';
 @import "assets/css/my/doc-list.scss";
 @import "assets/css/my/form.scss";
 @import "assets/css/my/material-theme.scss";
-// @import "assets/css/my/editor.md.scss";
+@import "assets/css/my/editor.md.scss";
 // @import "assets/css/my/golden-layout.scss";
 // TODO relative path problems
 // @import 'assets/css/ol3-ext/ol3-ext.css';
