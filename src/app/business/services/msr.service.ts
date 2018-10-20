@@ -5,9 +5,11 @@ import { Resolve } from '@angular/router';
 import { _HttpClient } from '@common/core/services/http.client';
 import { ListBaseService } from './list-base.service';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class MSRService extends ListBaseService {
-    protected baseUrl = 'calculation';
+    protected baseUrl = '/calculation';
 
     constructor(
         protected http: _HttpClient

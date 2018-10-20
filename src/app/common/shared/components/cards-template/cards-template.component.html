@@ -7,13 +7,13 @@
         </div>
 
         <div class='flex-box-row-nowrap'>
-            <nz-pagination *ngIf='count> 25' [nzPageIndex]="searchFilters.pageNum" (nzPageIndexChange)='setPageNum($event)' nzShowSizeChanger
+            <nz-pagination *ngIf='count> 25' [nzPageIndex]="searchFilters.pageIndex" (nzPageIndexChange)='setPageNum($event)' nzShowSizeChanger
                 [nzPageSize]='searchFilters.pageSize' (nzPageSizeChange)='setPageSize($event)' [nzTotal]="count"></nz-pagination>
         </div>
     </div>
 
     <ng-template #listTemplate>
-        <div class='ogms-loading-container'>
+        <div ogms-loading>
             <mat-spinner></mat-spinner>
         </div>
     </ng-template>

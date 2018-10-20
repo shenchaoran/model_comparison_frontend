@@ -23,14 +23,14 @@ export class ListTemplateComponent extends OgmsBaseComponent implements OnInit, 
     @Input() public searchFilters: {
         q?: string,
         pageSize?: number,
-        pageNum?: number,
+        pageIndex?: number,
         owner?: string,
         organization?: string,
         sort?: string,
         [key: string]: any
     } = {
             pageSize: 15,
-            pageNum: 1
+            pageIndex: 1
         };
     @Input() public template: any;
     @Input() public starFilters: {
@@ -151,7 +151,7 @@ export class ListTemplateComponent extends OgmsBaseComponent implements OnInit, 
     }
 
     onPageChange(pageEvent) {
-        this.searchFilters.pageNum = pageEvent.pageIndex;
+        this.searchFilters.pageIndex = pageEvent.pageIndex;
         this.searchFilters.pageSize = pageEvent.pageSize;
         this.search();
     }

@@ -1,7 +1,7 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { NgxSharedModule } from '../ngx-shared';
-import { NgUploaderModule } from 'ngx-uploader';
+import { NgxUploaderModule } from 'ngx-uploader';
 import { BaThemeConfig } from './theme.config';
 import { BaThemeConfigProvider } from './theme.configProvider';
 import { BACKEND } from '@config';
@@ -12,7 +12,6 @@ import { MatSharedModule } from '../mat-shared';
 import { ListFilterService } from './components/list-template/list-filter.service';
 import { HeaderMenuService } from './components/header-menu/services/header-menu.service';
 import { BaMenuService } from './components/header-menu/services/baMenu.service';
-import { UserService } from '../../business/services';
 import { NzNotificationService, NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';
 
 import {
@@ -38,8 +37,10 @@ import {
 } from './components';
 
 import {
-    BaScrollPosition,
-    BaSlimScroll
+    RxBoxDirective,
+    Flex10Directive,
+    AsideDirective,
+    LoadingDirective,
 } from './directives';
 
 import {
@@ -59,23 +60,22 @@ import {
     CoordinatePipe,
 } from './pipes';
 
-const SERVICES = [
+const services = [
     BaImageLoaderService,
     BaThemePreloader,
     BaThemeSpinner,
     ListFilterService,
-    UserService,
     BaMenuService,
     HeaderMenuService,
 ];
 
-const VALIDATORS = [
-    // CascaderSelectValidator,
+const validators = [
+    CascaderSelectValidator,
     // EmailValidator,
     // EqualPasswordsValidator
 ];
 
-const COMPONENTS = [
+const components = [
     FileUploader,
     ContextMenuComponent,
     HeaderMenuComponent,
@@ -96,12 +96,14 @@ const COMPONENTS = [
     MatCascaderSelectComponent,
 ];
 
-const DIRECTIVES = [
-    BaScrollPosition,
-    BaSlimScroll
+const directives = [
+    RxBoxDirective,
+    Flex10Directive,
+    AsideDirective,
+    LoadingDirective,
 ];
 
-const PIPES = [
+const pipes = [
     BaImgPathPipe,
     MomentDatePipe,
     ResourceSrcPipe,
@@ -120,21 +122,21 @@ export * from '@common/shared/directives';
 
 @NgModule({
     declarations: [
-        ...COMPONENTS,
-        ...DIRECTIVES,
-        ...PIPES,
-        ...VALIDATORS
+        ...components,
+        ...directives,
+        ...pipes,
+        ...validators
     ],
     imports: [
         RouterModule,
         NgxSharedModule,
-        NgUploaderModule,
+        NgxUploaderModule,
         DisqusModule.forRoot('shenchaoran'),
         MatSharedModule,
     ],
     providers: [
-        ...VALIDATORS,
-        ...SERVICES,
+        ...validators,
+        ...services,
         {
             provide: 'BACKEND',
             useValue: {
@@ -158,13 +160,12 @@ export * from '@common/shared/directives';
         NzNotificationService
     ],
     exports: [
-        ...COMPONENTS,
-        ...DIRECTIVES,
-        ...PIPES,
+        ...components,
+        ...directives,
+        ...pipes,
         RouterModule,
         NgxSharedModule,
         DisqusModule,
-
     ]
 })
 export class SharedModule {
@@ -174,7 +175,7 @@ export class SharedModule {
             providers: [
                 BaThemeConfigProvider,
                 BaThemeConfig,
-                ...SERVICES
+                ...services
             ]
         };
     }

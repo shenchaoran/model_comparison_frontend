@@ -72,10 +72,10 @@
                 "app/common/utils/*"
             ],
             "@models": [
-                "app/models"
+                "app/business/models"
             ],
             "@models/*": [
-                "app/models/*"
+                "app/business/models/*"
             ],
             "@services": [
                 "app/business/services"

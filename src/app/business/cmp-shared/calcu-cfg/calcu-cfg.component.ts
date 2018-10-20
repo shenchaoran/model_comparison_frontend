@@ -9,8 +9,8 @@ import {
     Inject,
     ChangeDetectorRef,
 } from '@angular/core';
-import { NgUploaderOptions } from 'ngx-uploader';
-import { ResourceSrc, CalcuTask, CmpSolution } from '@models';
+import { UploadCfg } from '@shared';
+import { ResourceSrc, CalcuTask, Solution } from '@models';
 import { DatasetService, UserService } from '@services';
 import {
     AbstractControl,
@@ -25,6 +25,7 @@ import {
 import { timer } from 'rxjs';
 import { debounce } from 'rxjs/operators';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { UploadInput } from 'ngx-uploader';
 
 @Component({
     selector: 'ogms-calcu-cfg',
@@ -56,8 +57,7 @@ export class CalcuCfgComponent implements OnInit, AfterViewInit {
     @Input() width = '350px';
     @Output() onValidChange = new EventEmitter<boolean>();
     @Output() onSiteSelected = new EventEmitter<boolean>();
-
-    fileUploaderOptions: NgUploaderOptions;
+    uploadInput: UploadInput;
 
     constructor(
         @Inject('BACKEND') private backend,
@@ -70,18 +70,18 @@ export class CalcuCfgComponent implements OnInit, AfterViewInit {
         const token = this.userService.token;
         const user = this.userService.user;
 
-        this.fileUploaderOptions = {
+        this.uploadInput = {
+            type: 'uploadAll',
             url: '/data',
+            method: 'POST',
             data: {
                 desc: '',
                 src: ResourceSrc.EXTERNAL,
                 userId: user._id
             },
-            multiple: true,
             fieldName: 'geo-data',
-            customHeaders: {
-                Authorization:
-                    'bearer ' + token
+            headers: {
+                Authorization: 'bearer ' + token
             }
         };
     }

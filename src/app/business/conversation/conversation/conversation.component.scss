@@ -1,0 +1,6 @@
+.comment {
+    padding: 15px;
+}
+.comment:not(:last-child) {
+    margin-bottom: 1px solid #E0E0E0;
+}

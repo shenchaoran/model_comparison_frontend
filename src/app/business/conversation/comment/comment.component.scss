@@ -1,0 +1,107 @@
+$yourCommentBorderColor: #c0d3eb;
+$defaultCommentBorderColor: #D1D5D9;
+$yourcommentHeaderBg: #f1f8ff;
+$defaultCommentHeaderBg: #f6f8fa;
+
+:host {
+    display: flex;
+    flex-flow: row nowrap;
+
+    .avatar {
+        flex: 0 0 70px;
+
+        img {
+            border-radius: 3px;
+            width: 44px;
+            height: 44px;
+        }
+    }
+
+    .comment-container {
+        flex: 1 1 auto;
+        position: relative;
+        border: 1px solid $defaultCommentBorderColor;
+        border-radius: 3px;
+        &.write{
+            .body {
+                padding: 8px;
+                display: flex;
+                flex-flow: column nowrap;
+                border-radius: 5px;
+            }
+            .footer {
+                padding: 8px;
+                display: flex;
+                flex-flow: row nowrap;
+                justify-content: flex-end;
+                button:not(:last-child) {
+                    margin-right: 10px;
+                }
+            }
+        }
+        &.read{
+            .header {
+                padding: 0 8px;
+                background: $defaultCommentHeaderBg;
+                display: flex;
+                flex-flow: row nowrap;
+                justify-content: space-between;
+                align-items: center;
+                border-bottom: 1px solid $defaultCommentBorderColor;
+                border-top-left-radius: 3px;
+                border-top-right-radius: 3px;
+                .space-holder {
+                    flex: 1;
+                }
+            }
+            .body {
+                // >* {
+                //     padding: 0 15px;
+                // }
+                padding: 0 8px;
+            }
+        }
+        &.current-user {
+            border-color: $yourCommentBorderColor;
+            &.read {
+                .header {
+                    background: $yourcommentHeaderBg;
+                    border-bottom-color: $yourCommentBorderColor;
+                }
+            }
+        }
+
+        &:before,
+        &:after {
+            content: '';
+            width: 0;
+            height: 0;
+            position: absolute;
+            top: 12px;
+            left: -16px;
+            border-color: transparent;
+            border-width: 7px;
+            border-style: solid solid solid;
+            z-index: 1;
+        }
+
+        &:before {
+            border-width: 8px;
+            border-right-color: $defaultCommentBorderColor;
+        }
+        &.current-user:before {
+            border-right-color: $yourCommentBorderColor;
+        }
+
+        &:after {
+            margin-top: 1px;
+            margin-left: 2px;
+            // border-width: 7px;
+            border-right-color: $defaultCommentHeaderBg;
+        }
+        &.current-user:after {
+            border-right-color: $yourcommentHeaderBg;
+        }
+    }
+
+}

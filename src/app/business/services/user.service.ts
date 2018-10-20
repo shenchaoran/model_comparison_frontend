@@ -1,34 +1,56 @@
 import { getFakeList } from './../test/data/mock-user-issues';
 import { Injectable } from '@angular/core';
+import { Location } from '@angular/common';
 import { _HttpClient } from '@common/core/services/http.client';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+<<<<<<< HEAD
 import { USER } from "../test/data/mock-user";
 
+=======
+var counter = 1;
+>>>>>>> master
 @Injectable({
     providedIn: 'root'
 })
 export class UserService {
+<<<<<<< HEAD
     _jwt;
+=======
+    private _jwt;
+    // TODO 改成一旦有订阅，立即发布当前状态
+    public logined$: BehaviorSubject<boolean>;
+
+>>>>>>> master
     constructor(
-        private http: _HttpClient,
-        private route: ActivatedRoute,
-        private router: Router
+        private http?: _HttpClient,
+        private route?: ActivatedRoute,
+        private router?: Router,
+        private location?: Location,
     ) {
-        var jwt = localStorage.getItem('jwt')
-        if(jwt) {
-            jwt = JSON.parse(jwt)
+        console.log('\n******** UserService constructor', counter++)
+        var jwt = localStorage.getItem('jwt');
+        if (jwt) {
+            jwt = JSON.parse(jwt);
             this._jwt = jwt;
+            if(this.isLogined){
+                this.logined$ = new BehaviorSubject<boolean>(true);
+                return;
+            }
+
         }
+        this.logined$ = new BehaviorSubject<boolean>(false);
     }
 
-    set jwt(jwt) {
+    public set jwt(jwt) {
         this._jwt = jwt;
-        if(jwt) {
+        console.log('current login state: ' + this.logined$.value);
+        if (jwt) {
             localStorage.setItem('jwt', JSON.stringify(jwt));
             let url = this.route.snapshot.queryParams['redirect'];
+            this.logined$.next(true);
             if (!url || url.indexOf('#/user/sign') !== -1) {
                 this.router.navigate(['/home']);
             }
@@ -36,14 +58,47 @@ export class UserService {
                 this.router.navigate([url]);
             }
         }
+        else {
+            localStorage.removeItem('jwt');
+            this.logined$.next(false);
+        }
     }
 
-    get jwt() { 
+    public get jwt() {
         return this._jwt;
     }
 
+    public get user() {
+        if (this.isLogined) {
+            return this.jwt.user;
+        }
+        else {
+            return null;
+        }
+    }
+
+    public get token() {
+        if (this.isLogined) {
+            return this.jwt.token;
+        }
+        else {
+            return null;
+        }
+    }
+
+    public get redirect() {
+        var url = this.location.path();
+        var index = url.indexOf('?');
+        if (index !== -1)
+            url = url.substring(0, index);
+        return (url === '/user/sign-in' || url === '/user/sign-up') ? '' : url;
+    }
+
+    private get isLogined(): boolean {
+        return this.jwt && this.jwt.expires > Date.now();
+    }
+
     signIn(user): Observable<any> {
-        var self = this;
         return this.http.post('/user/sign-in', user)
             .pipe(
                 map(res => {
@@ -53,7 +108,7 @@ export class UserService {
                     }
                     else {
                         res.data.user.rememberAccount = user.rememberAccount;
-                        self.jwt = res.data;
+                        this.jwt = res.data;
                         return res;
                     }
                 })
@@ -61,12 +116,10 @@ export class UserService {
     }
 
     signOut() {
-        localStorage.removeItem('jwt');
         this.jwt = null;
     }
 
     signUp(user): Observable<any> {
-        var self = this;
         return this.http.post('/user/sign-up', user)
             .pipe(
                 map(res => {
@@ -76,7 +129,7 @@ export class UserService {
                     }
                     else {
                         res.data.user.rememberAccount = user.rememberAccount;
-                        self.jwt = res.data;
+                        this.jwt = res.data;
                         return res;
                     }
                 })
@@ -87,49 +140,20 @@ export class UserService {
         return this.http.post('user/password-reset', user);
     }
 
-    hadLogin(): boolean {
-        return this.jwt && this.jwt.expires > Date.now()
-    }
-
-    get user() {
-        if (this.hadLogin()) {
-            return this.jwt.user;
-        }
-        else {
-            return null;
-        }
-    }
-
-    get token() {
-        if (this.hadLogin()) {
-            return this.jwt.token;
-        }
-        else {
-            return null;
-        }
-    }
-
-    checkLogin() {
-        if (!this.hadLogin()) {
+    /**
+     * 检查是否登录，如果没有登录，则先重定向到登录页面
+     */
+    redirectIfNotLogined() {
+        if (!this.isLogined) {
             this.router.navigate(['../..', 'login'], {
                 relativeTo: this.route,
                 queryParams: {
-                    redirect: (window as any).location.hash
+                    redirect: this.redirect
                 }
             });
+            return false;
         }
-        return this.hadLogin();
-    }
-
-    static getUser() {
-        var jwt = localStorage.getItem('jwt')
-        if(jwt) {
-            jwt = JSON.parse(jwt)
-            if(jwt && (jwt as any).expires > Date.now()) {
-                return (jwt as any).user;
-            }
-        }
-        return null;
+        return true;
     }
 
     //* 获取模拟的用户信息

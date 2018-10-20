@@ -1,1 +1,1 @@
-export * from './search.service';
+export * from '@services/search.service';
