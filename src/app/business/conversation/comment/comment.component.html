@@ -7,21 +7,21 @@
 <div 
     class='comment-container' 
     [class.current-user]='author._id === user._id' 
-    [class.write]='comment.content[comment.svid].state === "WRITE"'
-    [class.read]='comment.content[comment.svid].state === "READ"'>
-    <ng-container *ngIf='comment.content[comment.svid].state === "WRITE" else readTemplate'>
-        <div class='body' [style.height]='"200px"'>
-            <div #editorDOM></div>
+    [class.write]='currentComment.state === "WRITE"'
+    [class.read]='currentComment.state === "READ"'>
+    <ng-container *ngIf='currentComment.state === "WRITE" else readTemplate'>
+        <div class='body'>
+            <simplemde #simpleMDE [(ngModel)]='currentComment.md' [options]='editorConfig' [codemirror]='{lineNumbers: false}'></simplemde>
         </div>
         <div class='footer'>
-            <button mat-flat-button color='warn'>Cancel</button>
+            <button mat-flat-button color='warn' (click)='onCancel()'>Cancel</button>
             <button mat-flat-button color='primary' (click)='onSubmit()'>Submit</button>
         </div>
     </ng-container>
     <ng-template #readTemplate>
         <div class='header'>
             <span><a [routerLink]='["/author", author.username]'>{{author.username}}</a> commented at
-                {{comment.content[comment.svid].time | date: 'yyyy-MM-dd'}}</span>
+                {{currentComment.time | date: 'yyyy-MM-dd'}}</span>
             <span class='space-holder'></span>
             <span>
                 <button mat-menu-item [matMenuTriggerFor]='emojiMenu'>
@@ -67,7 +67,7 @@
                     </ng-container>
                     <!-- 评论者 有编辑和删除的权限 -->
                     <ng-container *ngIf='author._id === comment.from_uid'>
-                        <button mat-menu-item>
+                        <button mat-menu-item (click)='onEdit()'>
                             <span>Edit</span>
                         </button>
                         <button color='"warn"' mat-menu-item>
@@ -78,7 +78,7 @@
             </span>
         </div>
         <div class="body">
-            <div [innerHTML]='comment.content[comment.svid].value'></div>
+            <div [innerHTML]='currentComment.html'></div>
         </div>
     </ng-template>
 </div>

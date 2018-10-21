@@ -1,4 +1,3 @@
-// @import "~roboto-fontface/css/roboto/roboto-fontface.css";
 @import "~normalize.css/normalize.css";
 $fa-font-path: '~font-awesome/fonts';
 @import '~font-awesome/scss/font-awesome.scss';
@@ -8,24 +7,13 @@ $fa-font-path: '~font-awesome/fonts';
 @import "~prismjs/themes/prism-coy.css";
 @import "~prismjs/plugins/line-numbers/prism-line-numbers.css";
 @import "~primer-utilities/index.scss";
-@import "~golden-layout/src/css/goldenlayout-base.css";
-@import "~golden-layout/src/css/goldenlayout-translucent-theme.css";
-// @import "~editor.md/scss/editormd.scss";
-// @import '~angular-tree-component/dist/angular-tree-component.css';
+// @import "~golden-layout/src/css/goldenlayout-base.css";
+// @import "~golden-layout/src/css/goldenlayout-translucent-theme.css";
 // @import '~ol3-layerswitcher/src/ol3-layerswitcher.css';
 // @import '~handsontable/dist/handsontable.full.css';
 // @import '~bootstrap/dist/css/bootstrap.min.css';
 // @import "~handsontable/dist/handsontable.full.min.css";
 // @import "~leaflet/dist/leaflet.css";
-// @import "~ng-zorro-antd/src/components.less";
-// @import "~ng-zorro-antd/src/style/index.less";
-// @import '~ol3-ext/dist/ol3-ext.css';
-// theme
-// @import "app/common/shared/theme.scss";
-// add by SCR
-// @import "assets/css/my/custom-esri.css";
-// @import "assets/css/my/custom-openlayers.css";
-// @import "assets/css/my/ng2-tree-styles.css";
 @import "assets/css/my/global.scss";
 @import "assets/css/my/scrollbar.scss";
 @import "assets/css/my/layout.scss";
@@ -33,7 +21,7 @@ $fa-font-path: '~font-awesome/fonts';
 @import "assets/css/my/doc-list.scss";
 @import "assets/css/my/form.scss";
 @import "assets/css/my/material-theme.scss";
-@import "assets/css/my/editor.md.scss";
+@import "assets/css/my/simplemde.scss";
 // @import "assets/css/my/golden-layout.scss";
 // TODO relative path problems
 // @import 'assets/css/ol3-ext/ol3-ext.css';

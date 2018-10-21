@@ -118,7 +118,8 @@ export * from '@common/shared/components';
 export * from '@common/shared/services';
 export * from '@common/shared/pipes';
 export * from '@common/shared/directives';
-// export * from './validators';
+export * from './classes';
+export * from './validators';
 
 @NgModule({
     declarations: [

@@ -1,0 +1,44 @@
+@import "./varyable";
+@import "~simplemde/dist/simplemde.min.css";
+
+simplemde {
+    .editor-toolbar {
+        opacity: 1;
+        background: $defaultCommentHeaderBg;
+        border-bottom: 1px solid #bbb;
+        border-top: none;
+        border-left: none;
+        border-right: none;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        &:hover{
+            opacity: 1;
+        }
+    }
+
+    .CodeMirror {
+        min-height: auto;
+        margin: 8px;
+        border-radius: 4px;
+    }
+
+    .CodeMirror-focused {
+        border-color: #2188ff;
+        outline: none;
+        box-shadow: inset 0 1px 2px rgba(27, 31, 35, 0.075), 0 0 0 0.2em rgba(3, 102, 214, 0.3);
+    }
+
+    .CodeMirror-scroll {
+        height: 130px;
+        width: 100%;
+        min-height: auto;
+    }
+
+}
+
+
+.current-user{
+    .editor-toolbar {
+        background: $yourcommentHeaderBg;
+    }
+}

@@ -16,12 +16,14 @@ var counter = 1;
 })
 export class ConversationService extends ListBaseService {
     protected baseUrl = '/conversations';
+
+    private hadSavedConversation: boolean = false;
     public pageIndex: number = 1;
     public pageSize: number = 20;
     public commentCount: number;
     public conversation: Conversation;             // 一个服务实例围绕着 conversation 对象做一系列处理
-    // public comments: Comment[];
     public users: User[];                          // 和 conversation 相关的用户信息，每次查找用户时，从这里查，避免从数据库重复获取
+    public emptyComment: Comment;
 
     constructor(
         protected http: _HttpClient,
@@ -29,29 +31,26 @@ export class ConversationService extends ListBaseService {
     ) {
         super(http);
         console.log('\n******** ConversationService constructor ', counter++);
-        this.users = [];
-        // this.comments = [];
+        this.users = [this.userService.user];
         this.commentCount = 0;
         this.conversation = null;
+        this.emptyComment = new Comment(this.userService.user, true, CommentType.MAIN);
     }
 
     public init(conversation: Conversation) {
         this.conversation = conversation;
+        this.hadSavedConversation = true;
     }
 
     public createConversation(pid: string) {
         this.conversation = new Conversation(this.userService.user, pid);
-        var comment = new Comment(this.userService.user, this.conversation._id, CommentType.MAIN);
+        // var comment = new Comment(this.userService.user, this.conversation._id, CommentType.MAIN);
         // this.comments.push(comment);
-        this.conversation.comments = [comment];
-        this.commentCount = 1;
-        this.users.push(this.userService.user);
+        this.conversation.comments = [];
+        this.commentCount = 0;
+        this.hadSavedConversation = false;
+        // this.users.push(this.userService.user);
         return this.conversation;
-    }
-
-    public createComment(type: CommentType, to_uid?: string) {
-        let comment = new Comment(this.userService.user, this.conversation._id, type, to_uid);
-
     }
 
     public findOne(id, withRequestProgress?) {
@@ -96,24 +95,62 @@ export class ConversationService extends ListBaseService {
             )
     }
 
-    public postComment(comment: Comment) {
-        comment._id = null;
-        return this.http.post(`${this.baseUrl}/:id/comments`, comment)
+    public postComment() {
+        this.emptyComment.isEmpty = false;
+        return this.http.post(`${this.baseUrl}/${this.conversation._id}/comments`, {
+            comment: this.emptyComment,
+            conversation: this.hadSavedConversation? null: this.conversation
+        })
             .pipe(
                 map(res => {
-                    if (res.error) {
-
-                    }
-                    else {
-                        comment._id = res.data;
-                        this.conversation.comments.push(comment);
+                    if (!res.error && res.data === true) {
+                        this.conversation.comments.push(this.emptyComment);
                         this.commentCount++;
+                        this.emptyComment = new Comment(this.userService.user, true, CommentType.MAIN);
+                        if(!this.hadSavedConversation)
+                            this.hadSavedConversation = true;
+                        return res;
                     }
+                    return res;
                 })
             )
     }
 
-    public getUserOfComment(from_uid: string) {
+    /**
+     * 
+     */
+    public updateComment(comment: Comment) {
+        return this.http.patch(`${this.baseUrl}/${this.conversation._id}/comments/${comment._id}`, comment)
+            .pipe(
+                map(res => {
+                    if(!res.error) {
+                        let index = this.conversation.comments.findIndex(v => v._id === comment._id);
+                        this.conversation.comments[index] = comment;
+                    }
+                    return res;
+                })
+            )
+    }
+
+    public deleteComment(commentId: String) {
+        let commentIndex = this.conversation.comments.findIndex(v => v._id === commentId);
+        return this.http.delete(`${this.baseUrl}/${this.conversation._id}/comments/${this.conversation.comments[commentIndex]._id}`)
+            .pipe(
+                map(res => {
+                    if(!res.error) {
+                        if(res.data === true) {
+                            this.conversation.comments.splice(commentIndex, 1);
+                            this.commentCount--;
+                            return res;
+                        }
+                    }
+                    return res;
+                })
+            )
+    }
+
+
+    public getAuthorOfComment(from_uid: string) {
         return this.users.find(user => user._id === from_uid);
     }
 

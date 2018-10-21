@@ -31,7 +31,6 @@ export class CreateIssueComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.issue = this.issueService.createIssue();
         this.conversation = this.conversationService.conversation;
-
     }
 
     ngOnDestroy() {
