@@ -22,7 +22,11 @@ const components = [
     SignInComponent, 
     SignUpComponent, 
     PswResetComponent, 
-    ProfileComponent
+    ProfileComponent,
+    UserOverviewComponent,
+    UserSolutionsComponent,
+    UserIssuesComponent,
+    UserTopicsComponent,
 ];
 const services = [];
 
