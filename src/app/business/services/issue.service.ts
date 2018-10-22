@@ -18,7 +18,7 @@ export class IssueService extends ListBaseService {
     protected baseUrl = '/comparison/issues';
     public issue: Issue;
     public get conversation(): Conversation {
-        return this.conversationService.conversation
+        return this.conversationService.conversation;
     }
 
     constructor(
@@ -28,6 +28,13 @@ export class IssueService extends ListBaseService {
     ) {
         super(http);
         console.log('\n******** IssueService constructor ', counter++);
+    }
+
+    public createIssue() {
+        this.issue = new Issue(this.userService.user);
+        let cid = this.conversationService.createConversation(this.issue._id)._id;
+        this.issue.cid = cid;
+        return this.issue;
     }
 
     public findOne(id, withRequestProgress?) {
@@ -42,9 +49,31 @@ export class IssueService extends ListBaseService {
             )
     }
 
-    public createIssue() {
-        this.issue = new Issue(this.userService.user);
-        this.issue.cid = this.conversationService.createConversation(this.issue._id)._id;
-        return this.issue;
+    public postIssue() {
+        return this.http.post(`${this.baseUrl}`, {
+            issue: this.issue,
+            conversation: this.conversation
+        })
+        .pipe(
+            map(res => {
+                if(!res.error) {
+                    
+                }
+                return res;
+            })
+        );
+    }
+
+    public patchIssue() {
+
+    }
+
+    public deleteIssue() {
+
+    }
+
+    public clear() {
+        this.conversationService.clear();
+        this.issue = null;
     }
 }

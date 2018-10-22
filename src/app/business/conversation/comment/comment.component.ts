@@ -37,7 +37,7 @@ import { Simplemde } from 'ng2-simplemde';
     selector: 'ogms-comment',
     templateUrl: './comment.component.html',
     styleUrls: ['./comment.component.scss'],
-    // changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,
@@ -52,7 +52,8 @@ export class CommentComponent implements ControlValueAccessor, OnInit, AfterView
     user: User;
 
     get currentComment() {
-        return this.comment.content[this.comment.svid];
+        let i = _.get(this, 'comment.svid');
+        return _.get(this, `comment.content[${i}]`);
     }
     editorConfig: SimpleMDE.Options;
     @ViewChild(Simplemde) simpleMDE: any;
@@ -63,44 +64,10 @@ export class CommentComponent implements ControlValueAccessor, OnInit, AfterView
         private cdRef: ChangeDetectorRef,
         @Inject('BACKEND') private backend,
     ) {
-        this.editorConfig = {
-            indentWithTabs: true,
-            placeholder: 'some text',
-            toolbar: [
-                'bold',
-                'italic',
-                'heading',
-                '|',
-                'quote',
-                'code',
-                'unordered-list',
-                'ordered-list',
-                '|',
-                'link',
-                'image',
-                '|',
-                'preview',
-                'side-by-side',
-                'fullscreen',
-                '|',
-                'guide',
-            ],
-            toolbarTips: true,
-            status: [
-                'lines',
-                'words',
-                // 'cursor'
-            ],
-            styleSelectedText: true,
-            spellChecker: false,
-            tabSize: 4,
-
-        };
-    }
-
-    ngOnInit() {
         this.user = this.userService.user;
     }
+
+    ngOnInit() {}
 
     ngAfterViewInit() {}
 
@@ -139,7 +106,7 @@ export class CommentComponent implements ControlValueAccessor, OnInit, AfterView
         if (obj) {
             this.comment = obj;
             this.author = this.conversationService.getAuthorOfComment(this.comment.from_uid);
-            // this.cdRef.markForCheck();
+            this.cdRef.markForCheck();
         }
     }
 

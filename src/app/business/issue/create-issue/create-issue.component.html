@@ -1,8 +1,18 @@
 <div ogms-rx-box ogms-flex-1-0>
     <article>
-        <mat-tab-group selectedIndex='1'>
-            <mat-tab label='Issue'>
-                issue cfg
+        <mat-tab-group selectedIndex='0'>
+            <mat-tab label='Issue' >
+                <form class='issue-form' [formGroup]='issueFG'>
+                    <mat-form-field id='issue-name'>
+                        <input matInput placeholder='Issue Name' formControlName='name'>
+                        <mat-error *ngIf='"required"'>必填</mat-error>
+                        <mat-error *ngIf='"minlength"'>长度不够</mat-error>
+                    </mat-form-field>
+                    <simplemde formControlName='desc' [options]='mdeOpt'></simplemde>
+                </form>
+                <div class='submit-form'>
+                    <button mat-flat-button color='primary' [disabled]='!issueFG.valid' (click)='onSubmit()'>Submit</button>
+                </div>
             </mat-tab>
             <mat-tab label='Conversation'>
                 <ng-container *ngIf='conversation'>

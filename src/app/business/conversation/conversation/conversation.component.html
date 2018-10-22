@@ -5,7 +5,7 @@
     <div class='comment' *ngFor='let item of conversation.comments'>
         <ogms-comment [ngModel]='item' (ngModelChange)='onCommentChange($event)'></ogms-comment>
     </div>
-    <div class='comment'>
-        <ogms-comment [ngModel]='conversationService.emptyComment'></ogms-comment>
+    <div class='comment' *ngIf='emptyComment'>
+        <ogms-comment [ngModel]='emptyComment'></ogms-comment>
     </div>
 </ng-template>
