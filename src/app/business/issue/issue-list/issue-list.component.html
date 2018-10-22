@@ -1,3 +1,24 @@
-<p>
-  issue-list works!
-</p>
+<ng-template #template let-item='item'>
+    <div class='list-item'>
+        <span class='panel-item-header'>
+            <a [routerLink]='"/issues/" + item._id'>{{item.meta.name}}</a>
+        </span>
+        <div class='panel-item-body'>
+            <p>{{item.meta.desc | stringLimit: 180 | description}}</p>
+        </div>
+        <div class='panel-item-footer'>
+            <span>
+                <mat-icon>person</mat-icon>
+                <span>{{item.auth.userName}}</span>
+            </span>
+            <span>
+                <mat-icon>star</mat-icon>
+                <span>654</span>
+            </span>
+        </div>
+    </div>
+</ng-template>
+
+<div ogms-rx-box>
+    <ogms-cards-template [template]='template' [list]='issueList' [count]='issueCount' (onPageChange)='onPageChange($event)'></ogms-cards-template>
+</div>

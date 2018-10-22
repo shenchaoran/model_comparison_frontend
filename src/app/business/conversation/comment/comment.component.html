@@ -5,13 +5,14 @@
     </ng-template>
 </div>
 <div 
+    *ngIf='comment'
     class='comment-container' 
     [class.current-user]='author._id === user._id' 
     [class.write]='currentComment.state === "WRITE"'
     [class.read]='currentComment.state === "READ"'>
     <ng-container *ngIf='currentComment.state === "WRITE" else readTemplate'>
         <div class='body'>
-            <simplemde #simpleMDE [(ngModel)]='currentComment.md' [options]='editorConfig' [codemirror]='{lineNumbers: false}'></simplemde>
+            <simplemde #simpleMDE [(ngModel)]='currentComment.md'></simplemde>
         </div>
         <div class='footer'>
             <button mat-flat-button color='warn' (click)='onCancel()'>Cancel</button>
@@ -20,7 +21,7 @@
     </ng-container>
     <ng-template #readTemplate>
         <div class='header'>
-            <span><a [routerLink]='["/author", author.username]'>{{author.username}}</a> commented at
+            <span><a [routerLink]='["/user", author.username]'>{{author.username}}</a> commented at
                 {{currentComment.time | date: 'yyyy-MM-dd'}}</span>
             <span class='space-holder'></span>
             <span>

@@ -84,3 +84,36 @@
     z-index: 100;
     transform: translateY(-50%);
 }
+
+.ogms-rx-card-container {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    >div {
+        padding: 8px;
+
+        @mixin responsive($columnNum) {
+            flex: 0 1 calc(100%/#{$columnNum});
+        }
+
+        @media (max-width: 479px) {
+            @include responsive(1);
+        }
+
+        @media (min-width: 480px) {
+            @include responsive(2);
+        }
+
+        @media (min-width: 768px) {
+            @include responsive(2);
+        }
+
+        @media (min-width: 992px) {
+            @include responsive(3);
+        }
+
+        @media (min-width: 1200px) {
+            @include responsive(3);
+        }
+    }
+}
