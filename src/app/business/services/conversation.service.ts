@@ -57,22 +57,17 @@ export class ConversationService extends ListBaseService {
     }
 
     public findOne(id, withRequestProgress?) {
-        return super.findOne(id, withRequestProgress)
-            .pipe(
-                map(res => {
-                    if (res.error) {
-                        // TODO
-                    }
-                    else {
-                        this.commentCount = res.data.commentCount;
-                        this.conversation = res.data.conversation;
-                        this.conversation.comments = res.data.comments;
-                        // this.comments = res.data.comments;
-                        this.users = res.data.users;
-                        return res;
-                    }
-                })
-            );
+        return super.findOne(id, withRequestProgress).pipe(map(res => {
+            if (!res.error) {
+                this.commentCount = res.data.commentCount;
+                this.conversation = res.data.conversation;
+                this.conversation.comments = res.data.comments;
+                // this.comments = res.data.comments;
+                this.users = res.data.users;
+                return res;
+            }
+            return res;
+        }));
     }
 
     public getCommentsByPage(pageIndex: number, pageSize: number) {
@@ -83,19 +78,16 @@ export class ConversationService extends ListBaseService {
                 pageIndex,
                 pageSize
             }
-        })
-            .pipe(
-                map(res => {
-                    if (res.error) {
+        }).pipe(map(res => {
+            if (res.error) {
 
-                    }
-                    else {
-                        this.commentCount = res.data.count;
-                        this.conversation.comments = res.data.docs;
-                        return res;
-                    }
-                })
-            )
+            }
+            else {
+                this.commentCount = res.data.count;
+                this.conversation.comments = res.data.docs;
+                return res;
+            }
+        }))
     }
 
     public postComment() {
@@ -103,55 +95,46 @@ export class ConversationService extends ListBaseService {
         return this.http.post(`${this.baseUrl}/${this.conversation._id}/comments`, {
             comment: this.emptyComment$.value,
             conversation: this.hadSavedConversation ? null : this.conversation
-        })
-            .pipe(
-                map(res => {
-                    if (!res.error && res.data === true) {
-                        this.conversation.comments.push(this.emptyComment$.value);
-                        this.commentCount++;
-                        this.newEmptyComment();
-                        // if(!this.users.find(v => v._id === this.userService.user._id)) 
-                        //     this.users.push(this.userService.user);
-                        if (!this.hadSavedConversation)
-                            this.hadSavedConversation = true;
-                        return res;
-                    }
-                    return res;
-                })
-            )
+        }).pipe(map(res => {
+            if (!res.error && res.data === true) {
+                this.conversation.comments.push(this.emptyComment$.value);
+                this.commentCount++;
+                this.newEmptyComment();
+                // if(!this.users.find(v => v._id === this.userService.user._id)) 
+                //     this.users.push(this.userService.user);
+                if (!this.hadSavedConversation)
+                    this.hadSavedConversation = true;
+                return res;
+            }
+            return res;
+        }))
     }
 
     /**
      * 
      */
     public updateComment(comment: Comment) {
-        return this.http.patch(`${this.baseUrl}/${this.conversation._id}/comments/${comment._id}`, comment)
-            .pipe(
-                map(res => {
-                    if (!res.error) {
-                        let index = this.conversation.comments.findIndex(v => v._id === comment._id);
-                        this.conversation.comments[index] = comment;
-                    }
-                    return res;
-                })
-            )
+        return this.http.patch(`${this.baseUrl}/${this.conversation._id}/comments/${comment._id}`, comment).pipe(map(res => {
+            if (!res.error) {
+                let index = this.conversation.comments.findIndex(v => v._id === comment._id);
+                this.conversation.comments[index] = comment;
+            }
+            return res;
+        }))
     }
 
     public deleteComment(commentId: String) {
         let commentIndex = this.conversation.comments.findIndex(v => v._id === commentId);
-        return this.http.delete(`${this.baseUrl}/${this.conversation._id}/comments/${this.conversation.comments[commentIndex]._id}`)
-            .pipe(
-                map(res => {
-                    if (!res.error) {
-                        if (res.data === true) {
-                            this.conversation.comments.splice(commentIndex, 1);
-                            this.commentCount--;
-                            return res;
-                        }
-                    }
+        return this.http.delete(`${this.baseUrl}/${this.conversation._id}/comments/${this.conversation.comments[commentIndex]._id}`).pipe(map(res => {
+            if (!res.error) {
+                if (res.data === true) {
+                    this.conversation.comments.splice(commentIndex, 1);
+                    this.commentCount--;
                     return res;
-                })
-            )
+                }
+            }
+            return res;
+        }));
     }
 
     public getAuthorOfComment(from_uid: string) {

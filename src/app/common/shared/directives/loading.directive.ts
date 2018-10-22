@@ -5,7 +5,7 @@ import {
 } from '@angular/core';
 
 @Directive({
-  selector: '[ogmsLoading]'
+  selector: '[ogms-loading]'
 })
 export class LoadingDirective {
     constructor(

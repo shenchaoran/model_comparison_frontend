@@ -17,6 +17,8 @@ var counter = 1;
 export class IssueService extends ListBaseService {
     protected baseUrl = '/comparison/issues';
     public issue: Issue;
+    public issueList: Issue[];
+    public issueCount: Number;
     public get conversation(): Conversation {
         return this.conversationService.conversation;
     }
@@ -49,6 +51,19 @@ export class IssueService extends ListBaseService {
             )
     }
 
+    public findAll() {
+        return this.http.get(`${this.baseUrl}`, {
+            pageIndex: 1,
+            pageSize: 50
+        }).pipe(map(res => {
+            if(!res.error) {
+                this.issueList = res.data.docs;
+                this.issueCount = res.data.count;
+            }
+            return res;
+        }));
+    }
+
     public postIssue() {
         return this.http.post(`${this.baseUrl}`, {
             issue: this.issue,
@@ -56,24 +71,34 @@ export class IssueService extends ListBaseService {
         })
         .pipe(
             map(res => {
-                if(!res.error) {
-                    
-                }
+                if(!res.error) {}
                 return res;
             })
         );
     }
 
     public patchIssue() {
+        return this.http.patch(`${this.baseUrl}/${this.issue._id}`, this.issue).pipe(map(res => {
+            if(!res.error) {
 
+            }
+            return res;
+        }))
     }
 
     public deleteIssue() {
+        return this.http.delete(`${this.baseUrl}/${this.issue._id}`).pipe(map(res => {
+            if(!res.error) {
 
+            }
+            return res;
+        }))
     }
 
     public clear() {
         this.conversationService.clear();
         this.issue = null;
+        this.issueCount = 0;
+        this.issueList = null;
     }
 }

@@ -1,5 +1,5 @@
 <div style='margin-top: 24px !important'>
-    <div *ngIf='list else listTemplate'>
+    <div *ngIf='list else loadingTemplate'>
         <div class='card-box' *ngIf='template && list'>
             <div class='card' *ngFor='let item of list'>
                 <ng-template [ngTemplateOutlet]='template' [ngTemplateOutletContext]='{item: item}'></ng-template>
@@ -7,12 +7,17 @@
         </div>
 
         <div class='flex-box-row-nowrap'>
-            <nz-pagination *ngIf='count> 25' [nzPageIndex]="searchFilters.pageIndex" (nzPageIndexChange)='setPageNum($event)' nzShowSizeChanger
-                [nzPageSize]='searchFilters.pageSize' (nzPageSizeChange)='setPageSize($event)' [nzTotal]="count"></nz-pagination>
+            <mat-paginator 
+                *ngIf='count> 25' 
+                [length]="count" 
+                [pageIndex]='pageIndex' 
+                [pageSize]="pageSize"
+                [pageSizeOptions]="[10,20,30]" 
+                (page)='onPageChange.emit($event)'></mat-paginator>
         </div>
     </div>
 
-    <ng-template #listTemplate>
+    <ng-template #loadingTemplate>
         <div ogms-loading>
             <mat-spinner></mat-spinner>
         </div>
