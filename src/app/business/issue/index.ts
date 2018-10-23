@@ -7,7 +7,6 @@ import { SimplemdeModule, SIMPLEMDE_CONFIG } from 'ng2-simplemde';
 import { IssueRoutingModule } from './index-routing.module';
 import { IssueListComponent } from './issue-list/issue-list.component';
 import { IssueDetailComponent } from './issue-detail/issue-detail.component';
-import { CreateIssueComponent } from './create-issue/create-issue.component';
 
 const modules = [
     SharedModule,
@@ -19,7 +18,6 @@ const modules = [
 const components = [
     IssueDetailComponent,
     IssueListComponent,
-    CreateIssueComponent,
 ];
 const services = [];
 const pipes = [];

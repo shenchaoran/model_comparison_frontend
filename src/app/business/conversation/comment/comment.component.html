@@ -7,12 +7,12 @@
 <div 
     *ngIf='comment'
     class='comment-container' 
-    [class.current-user]='author._id === user._id' 
+    [class.current-user]='author && user && author._id === user._id' 
     [class.write]='currentComment.state === "WRITE"'
     [class.read]='currentComment.state === "READ"'>
     <ng-container *ngIf='currentComment.state === "WRITE" else readTemplate'>
         <div class='body'>
-            <simplemde #simpleMDE [(ngModel)]='currentComment.md'></simplemde>
+            <simplemde [(ngModel)]='currentComment.md'></simplemde>
         </div>
         <div class='footer'>
             <button mat-flat-button color='warn' (click)='onCancel()'>Cancel</button>

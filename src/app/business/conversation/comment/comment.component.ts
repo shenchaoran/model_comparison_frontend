@@ -49,7 +49,7 @@ import { Simplemde } from 'ng2-simplemde';
 export class CommentComponent implements ControlValueAccessor, OnInit, AfterViewInit {
     comment: Comment;
     author: User;
-    user: User;
+    get user(): User { return this.userService.user; }
 
     get currentComment() {
         let i = _.get(this, 'comment.svid');
@@ -63,35 +63,19 @@ export class CommentComponent implements ControlValueAccessor, OnInit, AfterView
         private userService: UserService,
         private cdRef: ChangeDetectorRef,
         @Inject('BACKEND') private backend,
-    ) {
-        this.user = this.userService.user;
-    }
+    ) { }
 
-    ngOnInit() {}
+    ngOnInit() { }
 
-    ngAfterViewInit() {}
+    ngAfterViewInit() { }
 
     onSubmit() {
         this.currentComment.html = this.simpleMDE.simplemde.markdown(this.currentComment.md);
         this.currentComment.state = CommentState.READ;
-        let observer = {
-            next: res => {
-                if(!res) {
-
-                }
-                else {
-
-                }
+        this.conversationService.upsertComment(this.comment).subscribe(res => {
+            if (!res.error) {
             }
-        };
-        if(this.comment.isEmpty) {
-            this.conversationService.postComment()
-                .subscribe(observer)
-        }
-        else {
-            this.conversationService.updateComment(this.comment)
-                .subscribe(observer)
-        }
+        })
     }
 
     onEdit() {

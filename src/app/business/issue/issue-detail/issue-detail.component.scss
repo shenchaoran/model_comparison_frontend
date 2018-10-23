@@ -1,0 +1,22 @@
+.issue-form {
+    margin-top: 35px;
+    width: 100%;
+    #issue-name {
+        // width: 400px;
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    simplemde {}
+
+    submit-form {
+
+    }
+}
+
+.doc-title {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+}

@@ -21,4 +21,13 @@
 
 <div ogms-rx-box>
     <ogms-cards-template [template]='template' [list]='issueList' [count]='issueCount' (onPageChange)='onPageChange($event)'></ogms-cards-template>
+    <button id='create-btn' [routerLink]='"./create"' mat-fab color="primary">
+        <mat-icon>add</mat-icon>
+    </button>
 </div>
+
+<ng-container *ngIf='!issueList'>
+    <div ogms-loading>
+        <mat-spinner></mat-spinner>
+    </div>
+</ng-container>

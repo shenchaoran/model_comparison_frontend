@@ -22,13 +22,17 @@ var counter = 1;
 export class ConversationService extends ListBaseService {
     protected baseUrl = '/conversations';
 
-    private hadSavedConversation: boolean = false;
     public pageIndex: number = 1;
     public pageSize: number = 20;
+
+    // 以下变量需要随时维护
+    public emptyComment$: BehaviorSubject<Comment>;
+    private hadSavedConversation: boolean = false;
     public commentCount: number;
     public conversation: Conversation;             // 一个服务实例围绕着 conversation 对象做一系列处理
-    public users: User[];                          // 和 conversation 相关的用户信息，每次查找用户时，从这里查，避免从数据库重复获取
-    public emptyComment$: BehaviorSubject<Comment>;
+    public users: User[];                          // 只保存其他用户（不包括当前登录用户），和 conversation 相关的用户信息，每次查找用户时，从这里查，避免从数据库重复获取
+    
+    get user() { return this.userService.user; }
 
     constructor(
         protected http: _HttpClient,
@@ -37,22 +41,25 @@ export class ConversationService extends ListBaseService {
     ) {
         super(http);
         console.log('\n******** ConversationService constructor ', counter++);
-        this.users = [this.userService.user];
+        this.users = [];
         this.commentCount = 0;
         this.conversation = null;
         this.newEmptyComment();
     }
 
+    /**
+     * TODO
+     */
     public init(conversation: Conversation) {
         this.conversation = conversation;
         this.hadSavedConversation = true;
     }
 
     public createConversation(pid: string) {
-        this.conversation = new Conversation(this.userService.user, pid);
-        this.conversation.comments = [];
+        this.conversation = new Conversation(this.user, pid);
         this.commentCount = 0;
         this.hadSavedConversation = false;
+        this.users = [];
         return this.conversation;
     }
 
@@ -61,9 +68,8 @@ export class ConversationService extends ListBaseService {
             if (!res.error) {
                 this.commentCount = res.data.commentCount;
                 this.conversation = res.data.conversation;
-                this.conversation.comments = res.data.comments;
-                // this.comments = res.data.comments;
                 this.users = res.data.users;
+                this.hadSavedConversation = true;
                 return res;
             }
             return res;
@@ -90,34 +96,32 @@ export class ConversationService extends ListBaseService {
         }))
     }
 
-    public postComment() {
-        this.emptyComment$.value.isEmpty = false;
-        return this.http.post(`${this.baseUrl}/${this.conversation._id}/comments`, {
-            comment: this.emptyComment$.value,
-            conversation: this.hadSavedConversation ? null : this.conversation
-        }).pipe(map(res => {
-            if (!res.error && res.data === true) {
-                this.conversation.comments.push(this.emptyComment$.value);
-                this.commentCount++;
-                this.newEmptyComment();
-                // if(!this.users.find(v => v._id === this.userService.user._id)) 
-                //     this.users.push(this.userService.user);
-                if (!this.hadSavedConversation)
-                    this.hadSavedConversation = true;
-                return res;
-            }
-            return res;
-        }))
-    }
+    public upsertComment(comment: Comment) {
+        let tmp = comment.hadSaved;
+        let fn = tmp ?
+            () => this.http.patch(`${this.baseUrl}/${this.conversation._id}/comments/${this.emptyComment$.value._id}`, {
+                comment: comment
+            }):    
+            () => this.http.post(`${this.baseUrl}/${this.conversation._id}/comments`, {
+                comment: comment,
+                conversation: this.hadSavedConversation ? null : this.conversation
+            });
 
-    /**
-     * 
-     */
-    public updateComment(comment: Comment) {
-        return this.http.patch(`${this.baseUrl}/${this.conversation._id}/comments/${comment._id}`, comment).pipe(map(res => {
-            if (!res.error) {
-                let index = this.conversation.comments.findIndex(v => v._id === comment._id);
-                this.conversation.comments[index] = comment;
+        comment.hadSaved = true;
+        return fn().pipe(map(res => {
+            if (!res.error && res.data === true) {
+                if(!tmp) {
+                    // post comment
+                    if(!this.hadSavedConversation) {
+                        this.hadSavedConversation = true;
+                    }
+                    this.conversation.comments.push(comment);
+                    this.commentCount++;
+                }
+                this.newEmptyComment();
+            }
+            else {
+                comment.hadSaved = tmp;
             }
             return res;
         }))
@@ -138,11 +142,13 @@ export class ConversationService extends ListBaseService {
     }
 
     public getAuthorOfComment(from_uid: string) {
+        if(from_uid === this.user._id)
+            return this.user;
         return this.users.find(user => user._id === from_uid);
     }
 
     public newEmptyComment() {
-        let comment = new Comment(this.userService.user, true, CommentType.MAIN);
+        let comment = new Comment(this.user, false, CommentType.MAIN);
         if (!this.emptyComment$) {
             this.emptyComment$ = new BehaviorSubject<Comment>(comment);
         }
@@ -155,6 +161,7 @@ export class ConversationService extends ListBaseService {
         this.users = [];
         this.commentCount = 0;
         this.conversation = null;
-        this.emptyComment$.next(new Comment(this.userService.user, true, CommentType.MAIN));
+        this.hadSavedConversation = null;
+        this.emptyComment$.next(new Comment(this.user, true, CommentType.MAIN));
     }
 }

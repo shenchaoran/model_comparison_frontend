@@ -19,6 +19,7 @@ export class IssueService extends ListBaseService {
     public issue: Issue;
     public issueList: Issue[];
     public issueCount: Number;
+    public hadSaved: boolean;
     public get conversation(): Conversation {
         return this.conversationService.conversation;
     }
@@ -36,6 +37,7 @@ export class IssueService extends ListBaseService {
         this.issue = new Issue(this.userService.user);
         let cid = this.conversationService.createConversation(this.issue._id)._id;
         this.issue.cid = cid;
+        this.hadSaved = false;
         return this.issue;
     }
 
@@ -45,6 +47,7 @@ export class IssueService extends ListBaseService {
                 map(res => {
                     if(!res.error){
                         this.issue = res.data.issue;
+                        this.hadSaved = true;
                         // this.conversation = res.data.conversation;
                     }
                 })
@@ -64,26 +67,20 @@ export class IssueService extends ListBaseService {
         }));
     }
 
-    public postIssue() {
-        return this.http.post(`${this.baseUrl}`, {
-            issue: this.issue,
-            conversation: this.conversation
-        })
-        .pipe(
+    public upsertIssue() {
+        let fn = this.hadSaved? 
+            () => this.http.patch(`${this.baseUrl}/${this.issue._id}`, {issue: this.issue}) :
+            () => this.http.post(`${this.baseUrl}`, {
+                issue: this.issue,
+                conversation: this.conversation
+            });
+
+        return fn().pipe(
             map(res => {
                 if(!res.error) {}
                 return res;
             })
         );
-    }
-
-    public patchIssue() {
-        return this.http.patch(`${this.baseUrl}/${this.issue._id}`, this.issue).pipe(map(res => {
-            if(!res.error) {
-
-            }
-            return res;
-        }))
     }
 
     public deleteIssue() {
@@ -100,5 +97,6 @@ export class IssueService extends ListBaseService {
         this.issue = null;
         this.issueCount = 0;
         this.issueList = null;
+        this.hadSaved = null;
     }
 }

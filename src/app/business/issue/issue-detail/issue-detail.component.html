@@ -1,3 +1,49 @@
-<p>
-  issue-detail works!
-</p>
+<div ogms-rx-box ogms-flex-1-0>
+    <article>
+        <mat-tab-group selectedIndex='0' (selectedIndexChange)='onSelectedIndexChange($event)'>
+            <mat-tab label='Issue'>
+                <ng-container [ngSwitch]='mode'>
+                    <ng-container *ngSwitchCase='"WRITE"'>
+                        <form class='issue-form' [formGroup]='issueFG'>
+                            <mat-form-field id='issue-name'>
+                                <input matInput placeholder='Issue Name' formControlName='name'>
+                                <mat-error *ngIf='"required"'>必填</mat-error>
+                                <mat-error *ngIf='"minlength"'>长度不够</mat-error>
+                            </mat-form-field>
+                            <simplemde formControlName='descMD' [options]='mdeOption'></simplemde>
+                        </form>
+                        <div class='submit-form'>
+                            <button mat-flat-button color='primary' [disabled]='!issueFG.valid' (click)='onSubmit()'>Submit</button>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngSwitchCase='"READ"'>
+                        <ng-container *ngIf='issue else issueLoading'>
+                            <div class='doc-title'>
+                                <h2>{{issue.meta.name}}</h2>
+                                <button mat-button color='primary' *ngIf='couldEdit' (click)='onEditClick()'>Edit</button>
+                            </div>
+                            <div [innerHTML]='issue.meta.descHTML'></div>
+                        </ng-container>
+                        <ng-template #issueLoading>
+                            <div ogms-loading><mat-spinner></mat-spinner></div>
+                        </ng-template>
+                    </ng-container>
+                </ng-container>
+            </mat-tab>
+            <mat-tab label='Conversation'>
+                <ng-container *ngIf='conversation else conLoading'>
+                    <ogms-conversation [ngModel]='conversation'></ogms-conversation>
+                </ng-container>
+                <ng-template #conLoading>
+                    <mat-spinner></mat-spinner>
+                </ng-template>
+            </mat-tab>
+        </mat-tab-group>
+    </article>
+    <aside ogms-aside>
+        <!-- <div>
+            1
+        </div>
+        <div>2</div> -->
+    </aside>
+</div>

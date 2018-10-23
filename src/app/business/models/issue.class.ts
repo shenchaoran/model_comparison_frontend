@@ -6,7 +6,8 @@ export class Issue {
     _id?: any;
     meta: {
         name: string,
-        desc: string,
+        descHTML: string,
+        descMD: string
         time: number
     };
     auth: {
@@ -30,7 +31,8 @@ export class Issue {
         this._id = ObjectID().toString();
         this.meta = {
             name: '',
-            desc: '',
+            descMD: '',
+            descHTML: '',
             time: new Date().getTime()
         };
         this.auth = {
