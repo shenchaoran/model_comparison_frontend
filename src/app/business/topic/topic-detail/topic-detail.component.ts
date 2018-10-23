@@ -21,10 +21,13 @@ import { Simplemde } from 'ng2-simplemde';
 })
 export class TopicDetailComponent extends DefaultLifeHook implements OnInit {
     mode: 'READ' | 'WRITE';
+    titleMode: 'READ' | 'WRITE';
+    descMode: 'READ' | 'WRITE';
+    _originTitle: string;
+    _originDesc: string;
+
     topicFG: FormGroup;
     mdeOption = { placeholder: 'Topic description...'};
-    conversationLoading: boolean = true;
-    topicLoading: boolean = true;
     @ViewChild(Simplemde) simpleMDE: any;
 
     get couldEdit(): boolean {
@@ -60,51 +63,53 @@ export class TopicDetailComponent extends DefaultLifeHook implements OnInit {
             if(topicId === 'create') {
                 this.userService.redirectIfNotLogined();
                 this.topicService.createTopic();
-                this.mode = 'WRITE';
-                this.topicFG = this.fb.group({
-                    name: ['', [Validators.required, Validators.minLength(3)]],
-                    descMD: ['', [Validators.required, Validators.minLength(6)]],
-                });
-                this.conversationLoading = false;
-
+                this.descMode = 'WRITE';
+                this.titleMode = 'WRITE';
             }
             else {
-                this.mode = 'READ';
-                this.topicService.findOne(topicId).subscribe(res => {
-                    this.topicLoading = false;
-                });
+                this.descMode = 'READ';
+                this.titleMode = 'READ';
+                this.topicService.findOne(topicId).subscribe(res => {});
             }
         });
     }
 
-    onSubmit() {
-        this.topic.meta.name = this.topicFG.value.name;
-        this.topic.meta.descMD = this.topicFG.value.descMD;
-        this.topic.meta.descHTML = this.simpleMDE.simplemde.markdown(this.topicFG.value.descMD);
-        let _id = this.topic._id;
+    onTitleEditSave() {
         this.topicService.upsertTopic().subscribe(res => {
-            if(!res.error) {
-                this.mode = 'READ';
-                // this.router.navigate(['/topics', _id]);
-            }
+            this.titleMode = 'READ';
         });
     }
 
-    onEditClick() {
-        this.mode = "WRITE";
-        if(!this.topicFG) {
-            this.topicFG = this.fb.group({
-                name: [this.topic.meta.name, [Validators.required, Validators.minLength(3)]],
-                descMD: [this.topic.meta.descMD, [Validators.required, Validators.minLength(6)]],
-            });
-        }
+    onTitleEditCancel() {
+        this.topic.meta.name = this._originTitle;
+        this.titleMode = 'READ';
+    }
+
+    onTitleEditClick() {
+        this.titleMode = "WRITE";
+        this._originTitle = this.topic.meta.name;
+    }
+
+    onDescEditCancel() {
+        this.descMode = 'READ';
+        this.topic.meta.descMD = this._originDesc;
+    }
+
+    onDescEditSave() {
+        this.topic.meta.descHTML = this.simpleMDE.simplemde.markdown(this.topic.meta.descMD);
+        this.topicService.upsertTopic().subscribe(res => {
+            this.descMode = 'READ';
+        });
+    }
+    
+    onDescEditClick() {
+        this.descMode = "WRITE";
+        this._originDesc = this.topic.meta.descMD;
     }
 
     onSelectedIndexChange(index) {
         if(index === 1 && this.topic && !this.conversationService.conversation) {
-            this.conversationService.findOne(this.topic.cid).subscribe(res => {
-                this.conversationLoading = false;
-            });
+            this.conversationService.findOne(this.topic.cid).subscribe(res => {});
         }
     }
 

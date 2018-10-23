@@ -1,17 +1,8 @@
-.topic-form {
-    margin-top: 35px;
-    width: 100%;
-    #topic-name {
-        // width: 400px;
-        width: 100%;
-        margin-bottom: 20px;
-    }
-
-    simplemde {}
-
-    submit-form {
-
-    }
+#create-btn {
+    position: absolute;
+    right: 30px;
+    top: -28px;
+    z-index: 100;
 }
 
 .doc-title {
@@ -19,4 +10,39 @@
     flex-flow: row nowrap;
     justify-content: space-between;
     align-items: center;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 20px;
+
+    .topic-name {
+        flex: 1 1 auto;
+        margin-right: 15px;
+        mat-form-field {
+            width: 100%;
+        }
+    }
+
+    .title-btn-group {
+        flex: 0 1 300px;
+        >button {
+            float: right;
+        }
+        >button:not(:last-child) {
+            margin-right: 20px;
+        }
+    }
+}
+
+.doc-desc {
+    position: relative;
+    margin-top: 15px;
+
+    .desc-btn-group {
+        position: absolute;
+        right: 7px;
+        top: 7px;
+    }
+}
+
+aside {
+    margin-top: 48px;
 }
