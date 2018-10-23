@@ -72,8 +72,11 @@
 }
 
 .ogms-aside {
-    >*:not(:last-child) {
-        margin-bottom: 8px;
+    >* {
+        padding: 10px 0;
+        &:not(:last-child) {
+            border-bottom: 1px solid #eee;
+        }
     }
 }
 

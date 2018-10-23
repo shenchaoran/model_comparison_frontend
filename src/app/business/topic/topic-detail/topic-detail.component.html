@@ -62,29 +62,38 @@
                 </mat-tab-group>
             </article>
             <aside ogms-aside>
-                <ng-template [ngTemplateOutlet]='slnTempCard' [ngTemplateOutletContext]='{item: 1}'></ng-template>
-                <ng-template [ngTemplateOutlet]='slnTempCard' [ngTemplateOutletContext]='{item: 2}'></ng-template>
-                <div class='aside-card'>
-                    <div class='title menu'>
-                        <span>Solutions</span>
-                        <mat-icon></mat-icon>
-                        <div class='sub-menu'>
+                <!-- <ng-template [ngTemplateOutlet]='slnTempCard' [ngTemplateOutletContext]='{item: 1}'></ng-template>
+                <ng-template [ngTemplateOutlet]='slnTempCard' [ngTemplateOutletContext]='{item: 2}'></ng-template> -->
+                <div>
+                    <ogms-sidebar-section>
+                        <div class='header'>
+                            Solutions
+                            <mat-icon inline>settings</mat-icon>
+                        </div>
+                        <div class='menu' #menu>
+                            <ul>
+                                <li>1</li>
+                                <li>1</li>
+                                <li>1</li>
+                            </ul>
+                        </div>
+                        <div class='body'>
 
                         </div>
-                    </div>
-                    <div class='body'>
-
-                    </div>
+                    </ogms-sidebar-section>
                 </div>
-                <div class='aside-card participants'>
-                    <div class='title'>
-                        Participants
-                    </div>
-                    <div class='body'>
-                        <ng-container *ngFor='let user of users'>
-                            <img [attr.src]='"data:image/png;base64," + user.avator'>
-                        </ng-container>
-                    </div>
+
+                <div>
+                    <ogms-sidebar-section>
+                        <div class='header'>
+                            Participants
+                        </div>
+                        <div class='body participants'>
+                            <ng-container *ngFor='let user of users'>
+                                <img [attr.src]='"data:image/png;base64," + user.avator'>
+                            </ng-container>
+                        </div>
+                    </ogms-sidebar-section>
                 </div>
             </aside>
         </div>
@@ -92,8 +101,8 @@
 </div>
 
 
-<ng-template #slnTempCard let-item='item'>
+<!-- <ng-template #slnTempCard let-item='item'>
     <div class='aside-card'>
         {{item}}
     </div>
-</ng-template>
+</ng-template> -->

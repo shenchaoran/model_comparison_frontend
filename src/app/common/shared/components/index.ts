@@ -17,3 +17,4 @@ export * from './map-base/map-base.component';
 export * from './cards-template/cards-template.component';
 export * from './mat-cascader-select/mat-cascader-select.component';
 export * from './mat-cascader-select/cascader-select.validator';
+export * from './sidebar-section/sidebar-section.component';

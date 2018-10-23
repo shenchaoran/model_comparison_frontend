@@ -16,9 +16,11 @@
     &.read {
         margin: 9px 0 29px;
     }
+
     .topic-name {
         flex: 1 1 auto;
         margin-right: 25px;
+
         mat-form-field {
             width: 100%;
         }
@@ -26,9 +28,11 @@
 
     .title-btn-group {
         flex: 0 1 300px;
+
         >button {
             float: right;
         }
+
         >button:not(:last-child) {
             margin-right: 20px;
         }
@@ -52,48 +56,25 @@ article {
 
 aside {
     margin-top: 48px;
-    .aside-card {
-        .title {
-            margin-bottom: 10px;
-            &.menu {
-                position: relative;
-                cursor: pointer;
-                &:hover {
-                    color: blue;
-                }
-                .sub-menu {
-                    position: absolute;
-                    right: 0;
-                    height: 100px;
-                    width: 100px;
-                    border-radius: 5px;
-                    border: 1px solid #eee;
-                }
-            }
-        }
-        .body {
+}
 
-        }
-        &.participants {
-            .body {
-                display: flex;
-                flex-flow: row wrap;
-                >img {
-                    border-radius: 3px;
-                    width: 26px;
-                    height: 26px;
-                    margin-top: 5px;
-                    margin-left: 5px;
-                }
-            }
+ogms-sidebar-section {
+    .header {
+        mat-icon {
+            float: right;
         }
     }
-    .aside-card:first-child {
-        margin-top: 10px;
-    }
-    .aside-card:not(:last-child) {
-        margin-bottom: 12px;
-        padding-bottom: 12px;
-        border-bottom: 1px solid #eee;
+
+    .participants {
+        display: flex;
+        flex-flow: row wrap;
+
+        >img {
+            border-radius: 3px;
+            width: 26px;
+            height: 26px;
+            margin-top: 5px;
+            margin-left: 5px;
+        }
     }
 }

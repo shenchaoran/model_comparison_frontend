@@ -1,3 +1,14 @@
-<p>
-  sidebar-section works!
-</p>
+<div>
+    <div class='header' [class.has-menu]='!!menuRef'>
+        <div class='title' (click)='onHeaderClick()'>
+            <ng-content select='.header'></ng-content>
+        </div>
+        <div class='menu' [style.display]='showMenu? "block": "none"'>
+            <ng-content select='.menu'></ng-content>
+        </div>
+    </div>
+
+    <div class='body'>
+        <ng-content select='.body'></ng-content>
+    </div>
+</div>
