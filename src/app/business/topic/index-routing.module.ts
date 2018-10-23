@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { HeaderMenuLayoutComponent } from '@shared/components/header-menu-layout/header-menu-layout.component';
-import { IssueListComponent } from './issue-list/issue-list.component';
-import { IssueDetailComponent } from './issue-detail/issue-detail.component';
+import { TopicListComponent } from './topic-list/topic-list.component';
+import { TopicDetailComponent } from './topic-detail/topic-detail.component';
 
 const routes: Routes = [
     {
@@ -12,11 +12,11 @@ const routes: Routes = [
         children: [
             {
                 path: '',
-                component: IssueListComponent
+                component: TopicListComponent
             },
             {
                 path: ':id',
-                component: IssueDetailComponent
+                component: TopicDetailComponent
             }
         ]
     }
@@ -26,4 +26,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class IssueRoutingModule { }
+export class TopicRoutingModule { }

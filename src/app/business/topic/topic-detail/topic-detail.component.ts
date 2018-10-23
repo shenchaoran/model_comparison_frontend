@@ -2,12 +2,12 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, Route, ActivatedRoute, Params } from '@angular/router';
 import { FormGroup, FormControl, FormArray, FormBuilder, Validators } from '@angular/forms';
 import {
-    IssueService,
+    TopicService,
     ConversationService,
     UserService
 } from '../../services';
 import {
-    Issue,
+    Topic,
     Conversation,
     Comment,
 } from '../../models';
@@ -15,28 +15,28 @@ import { DefaultLifeHook } from '../../../common/shared/classes/default-life-hoo
 import { Simplemde } from 'ng2-simplemde';
 
 @Component({
-    selector: 'ogms-issue-detail',
-    templateUrl: './issue-detail.component.html',
-    styleUrls: ['./issue-detail.component.scss']
+    selector: 'ogms-topic-detail',
+    templateUrl: './topic-detail.component.html',
+    styleUrls: ['./topic-detail.component.scss']
 })
-export class IssueDetailComponent extends DefaultLifeHook implements OnInit {
+export class TopicDetailComponent extends DefaultLifeHook implements OnInit {
     mode: 'READ' | 'WRITE';
-    issueFG: FormGroup;
-    mdeOption = { placeholder: 'Issue description...'};
+    topicFG: FormGroup;
+    mdeOption = { placeholder: 'Topic description...'};
     conversationLoading: boolean = true;
-    issueLoading: boolean = true;
+    topicLoading: boolean = true;
     @ViewChild(Simplemde) simpleMDE: any;
 
     get couldEdit(): boolean {
-        return this.user && this.issue && this.issue.auth.userId === this.user._id;
+        return this.user && this.topic && this.topic.auth.userId === this.user._id;
     }
 
     get user() {
         return this.userService.user;
     }
 
-    get issue(): Issue {
-        return this.issueService.issue;
+    get topic(): Topic {
+        return this.topicService.topic;
     }
 
     get conversation(): Conversation {
@@ -44,24 +44,24 @@ export class IssueDetailComponent extends DefaultLifeHook implements OnInit {
     }
 
     constructor(
-        private issueService: IssueService,
+        private topicService: TopicService,
         private conversationService: ConversationService,
         private userService: UserService,
         private route: ActivatedRoute,
         private router: Router,
         private fb: FormBuilder,
     ) {
-        super(issueService);
+        super(topicService);
     }
 
     ngOnInit() {
         this.route.params.subscribe((params: Params) => {
-            const issueId = params['id'];
-            if(issueId === 'create') {
+            const topicId = params['id'];
+            if(topicId === 'create') {
                 this.userService.redirectIfNotLogined();
-                this.issueService.createIssue();
+                this.topicService.createTopic();
                 this.mode = 'WRITE';
-                this.issueFG = this.fb.group({
+                this.topicFG = this.fb.group({
                     name: ['', [Validators.required, Validators.minLength(3)]],
                     descMD: ['', [Validators.required, Validators.minLength(6)]],
                 });
@@ -70,39 +70,39 @@ export class IssueDetailComponent extends DefaultLifeHook implements OnInit {
             }
             else {
                 this.mode = 'READ';
-                this.issueService.findOne(issueId).subscribe(res => {
-                    this.issueLoading = false;
+                this.topicService.findOne(topicId).subscribe(res => {
+                    this.topicLoading = false;
                 });
             }
         });
     }
 
     onSubmit() {
-        this.issue.meta.name = this.issueFG.value.name;
-        this.issue.meta.descMD = this.issueFG.value.descMD;
-        this.issue.meta.descHTML = this.simpleMDE.simplemde.markdown(this.issueFG.value.descMD);
-        let _id = this.issue._id;
-        this.issueService.upsertIssue().subscribe(res => {
+        this.topic.meta.name = this.topicFG.value.name;
+        this.topic.meta.descMD = this.topicFG.value.descMD;
+        this.topic.meta.descHTML = this.simpleMDE.simplemde.markdown(this.topicFG.value.descMD);
+        let _id = this.topic._id;
+        this.topicService.upsertTopic().subscribe(res => {
             if(!res.error) {
                 this.mode = 'READ';
-                // this.router.navigate(['/issues', _id]);
+                // this.router.navigate(['/topics', _id]);
             }
         });
     }
 
     onEditClick() {
         this.mode = "WRITE";
-        if(!this.issueFG) {
-            this.issueFG = this.fb.group({
-                name: [this.issue.meta.name, [Validators.required, Validators.minLength(3)]],
-                descMD: [this.issue.meta.descMD, [Validators.required, Validators.minLength(6)]],
+        if(!this.topicFG) {
+            this.topicFG = this.fb.group({
+                name: [this.topic.meta.name, [Validators.required, Validators.minLength(3)]],
+                descMD: [this.topic.meta.descMD, [Validators.required, Validators.minLength(6)]],
             });
         }
     }
 
     onSelectedIndexChange(index) {
-        if(index === 1 && this.issue && !this.conversationService.conversation) {
-            this.conversationService.findOne(this.issue.cid).subscribe(res => {
+        if(index === 1 && this.topic && !this.conversationService.conversation) {
+            this.conversationService.findOne(this.topic.cid).subscribe(res => {
                 this.conversationLoading = false;
             });
         }

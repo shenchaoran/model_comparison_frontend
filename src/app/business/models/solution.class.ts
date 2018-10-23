@@ -19,7 +19,7 @@ export class Solution {
         userName: string,
         src: ResourceSrc
     };
-    issueId: string;
+    topicId: string;
     participants: any[];
     cmpObjs: CmpObj[];
     [key: string]: any;

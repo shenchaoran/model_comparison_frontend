@@ -35,8 +35,8 @@ export class SearchComponent implements OnInit {
             .subscribe((params: Params) => {
                 this.options.q = params['q'];
                 if(this.options.type === '') {
-                    // 第一次默认搜索 Issues
-                    this.options.type = 'Issues';
+                    // 第一次默认搜索 Topics
+                    this.options.type = 'Topics';
                 }
                 this.service.search(this.options)
                     .subscribe(response => {

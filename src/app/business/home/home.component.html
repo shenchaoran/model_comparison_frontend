@@ -1,16 +1,16 @@
 <ogms-home-banner></ogms-home-banner>
 <div class="home-content">
-    <ogms-panel [template]='issueTemplate' [list]='issueList | async' [title]='issueTitle'></ogms-panel>
+    <ogms-panel [template]='topicTemplate' [list]='topicList | async' [title]='topicTitle'></ogms-panel>
     <ogms-panel [template]='slnTemplate' [list]='slnList | async' [title]='slnTitle'></ogms-panel>
     <ogms-panel [template]='taskTemplate' [list]='taskList | async' [title]='taskTitle'></ogms-panel>
     <ogms-panel [template]='modelTemplate' [list]='modelList | async' [title]='modelTitle'></ogms-panel>
     <ogms-panel [template]='dataTemplate' [list]='dataList | async' [title]='dataTitle'></ogms-panel>
 </div>
 
-<ng-template #issueTemplate let-item='item'>
+<ng-template #topicTemplate let-item='item'>
     <div class='list-item'>
         <span class='panel-item-header'>
-            <a [routerLink]='"/issues/" + item._id'>{{item.meta.name}}</a>
+            <a [routerLink]='"/topics/" + item._id'>{{item.meta.name}}</a>
         </span>
         <div class='panel-item-body'>
             <p>{{item.meta.desc | stringLimit: 180 | description}}</p>

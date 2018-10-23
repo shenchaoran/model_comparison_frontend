@@ -14,7 +14,7 @@ export class ListFilterService {
         if(this.type === undefined) {
             // return undefined;
         }
-        if(this.type === 'issues') {
+        if(this.type === 'topics') {
             
         }
         else if (this.type === 'solutions') {
@@ -41,7 +41,7 @@ export class ListFilterService {
         if(this.type === undefined) {
             return undefined;
         }
-        if(this.type === 'issues') {
+        if(this.type === 'topics') {
 
         }
         else if (this.type === 'solutions') {
@@ -68,7 +68,7 @@ export class ListFilterService {
         if(this.type === undefined) {
             return undefined;
         }
-        if(this.type === 'issues') {
+        if(this.type === 'topics') {
 
         }
         else if (this.type === 'solutions') {

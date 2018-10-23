@@ -83,7 +83,7 @@ export class CreateTaskComponent extends DocBaseComponent implements OnInit {
         this.cmpTask.meta.desc = this.cmpTaskFG.value.desc;
         this.cmpTask.auth.src = this.cmpTaskFG.value.auth;
         this.cmpTask.solutionId = this.sln._id;
-        this.cmpTask.issueId = this.sln.issueId;
+        this.cmpTask.topicId = this.sln.topicId;
         this.cmpTask.calcuTaskIds = [];
         this.cmpTask.schemas = [];
         this.sln.participants.map(ms => ms.MDL.IO.schemas.map(schema => {

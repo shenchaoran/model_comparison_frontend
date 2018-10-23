@@ -2,7 +2,7 @@ import { ResourceSrc } from './resource.enum';
 import { User } from './user.class';
 import * as ObjectID from 'objectid';
 
-export class Issue {
+export class Topic {
     _id?: any;
     meta: {
         name: string,

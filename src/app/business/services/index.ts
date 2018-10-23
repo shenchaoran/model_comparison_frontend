@@ -7,5 +7,5 @@ export * from './ms.service';
 export * from './user.service';
 export * from './list-base.service';
 export * from './conversation.service';
-export * from './issue.service';
+export * from './topic.service';
 export * from './search.service';

@@ -1,30 +1,30 @@
 <div ogms-rx-box ogms-flex-1-0>
     <article>
         <mat-tab-group selectedIndex='0' (selectedIndexChange)='onSelectedIndexChange($event)'>
-            <mat-tab label='Issue'>
+            <mat-tab label='Topic'>
                 <ng-container [ngSwitch]='mode'>
                     <ng-container *ngSwitchCase='"WRITE"'>
-                        <form class='issue-form' [formGroup]='issueFG'>
-                            <mat-form-field id='issue-name'>
-                                <input matInput placeholder='Issue Name' formControlName='name'>
+                        <form class='topic-form' [formGroup]='topicFG'>
+                            <mat-form-field id='topic-name'>
+                                <input matInput placeholder='Topic Name' formControlName='name'>
                                 <mat-error *ngIf='"required"'>必填</mat-error>
                                 <mat-error *ngIf='"minlength"'>长度不够</mat-error>
                             </mat-form-field>
                             <simplemde formControlName='descMD' [options]='mdeOption'></simplemde>
                         </form>
                         <div class='submit-form'>
-                            <button mat-flat-button color='primary' [disabled]='!issueFG.valid' (click)='onSubmit()'>Submit</button>
+                            <button mat-flat-button color='primary' [disabled]='!topicFG.valid' (click)='onSubmit()'>Submit</button>
                         </div>
                     </ng-container>
                     <ng-container *ngSwitchCase='"READ"'>
-                        <ng-container *ngIf='issue else issueLoading'>
+                        <ng-container *ngIf='topic else topicLoading'>
                             <div class='doc-title'>
-                                <h2>{{issue.meta.name}}</h2>
+                                <h2>{{topic.meta.name}}</h2>
                                 <button mat-button color='primary' *ngIf='couldEdit' (click)='onEditClick()'>Edit</button>
                             </div>
-                            <div [innerHTML]='issue.meta.descHTML'></div>
+                            <div [innerHTML]='topic.meta.descHTML'></div>
                         </ng-container>
-                        <ng-template #issueLoading>
+                        <ng-template #topicLoading>
                             <div ogms-loading><mat-spinner></mat-spinner></div>
                         </ng-template>
                     </ng-container>

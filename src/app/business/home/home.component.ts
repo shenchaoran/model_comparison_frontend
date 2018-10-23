@@ -5,7 +5,7 @@ import {
     TaskService,
     DatasetService,
     MSService,
-    IssueService,
+    TopicService,
 } from '../services';
 
 // TODO universal
@@ -15,11 +15,11 @@ import {
     styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit, AfterViewInit {
-    issueTitle = {
-        label: 'Issues',
-        url: '/issues'
+    topicTitle = {
+        label: 'Topics',
+        url: '/topics'
     };
-    issueList;
+    topicList;
     
     slnTitle = {
         label: 'Comparison solutions',
@@ -47,7 +47,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
     constructor(
         private msrService: MSRService,
-        private issueService: IssueService,
+        private topicService: TopicService,
         private slnService: SlnService,
         private taskService: TaskService,
         private datasetService: DatasetService,
@@ -58,7 +58,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
         this.modelList = this.msService.getTopK(3);
         this.dataList = this.datasetService.getTopK(3);
         this.slnList = this.slnService.getTopK(3);
-        this.issueList = this.issueService.getTopK(3);
+        this.topicList = this.topicService.getTopK(3);
         this.taskList = this.taskService.getTopK(3);
     }
 
