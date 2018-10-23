@@ -13,9 +13,12 @@
     border-bottom: 1px solid #eee;
     margin-bottom: 20px;
 
+    &.read {
+        margin: 9px 0 29px;
+    }
     .topic-name {
         flex: 1 1 auto;
-        margin-right: 15px;
+        margin-right: 25px;
         mat-form-field {
             width: 100%;
         }
@@ -43,6 +46,54 @@
     }
 }
 
+article {
+    overflow: hidden;
+}
+
 aside {
     margin-top: 48px;
+    .aside-card {
+        .title {
+            margin-bottom: 10px;
+            &.menu {
+                position: relative;
+                cursor: pointer;
+                &:hover {
+                    color: blue;
+                }
+                .sub-menu {
+                    position: absolute;
+                    right: 0;
+                    height: 100px;
+                    width: 100px;
+                    border-radius: 5px;
+                    border: 1px solid #eee;
+                }
+            }
+        }
+        .body {
+
+        }
+        &.participants {
+            .body {
+                display: flex;
+                flex-flow: row wrap;
+                >img {
+                    border-radius: 3px;
+                    width: 26px;
+                    height: 26px;
+                    margin-top: 5px;
+                    margin-left: 5px;
+                }
+            }
+        }
+    }
+    .aside-card:first-child {
+        margin-top: 10px;
+    }
+    .aside-card:not(:last-child) {
+        margin-bottom: 12px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid #eee;
+    }
 }

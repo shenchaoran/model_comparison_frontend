@@ -26,6 +26,7 @@ export class ConversationService extends ListBaseService {
     public pageSize: number = 20;
 
     // 以下变量需要随时维护
+    public authorId: string;
     public emptyComment$: BehaviorSubject<Comment>;
     private hadSavedConversation: boolean = false;
     public commentCount: number;
@@ -37,33 +38,26 @@ export class ConversationService extends ListBaseService {
     constructor(
         protected http: _HttpClient,
         private userService: UserService,
-        private router: Router,
     ) {
         super(http);
         console.log('\n******** ConversationService constructor ', counter++);
-        this.users = [];
-        this.commentCount = 0;
-        this.conversation = null;
-        this.newEmptyComment();
+        this.clear();
     }
 
     /**
-     * TODO
+     * inlet
      */
-    public init(conversation: Conversation) {
-        this.conversation = conversation;
-        this.hadSavedConversation = true;
-    }
-
     public createConversation(pid: string) {
+        this.clear();
         this.conversation = new Conversation(this.user, pid);
-        this.commentCount = 0;
-        this.hadSavedConversation = false;
-        this.users = [];
         return this.conversation;
     }
 
+    /**
+     * inlet
+     */
     public findOne(id, withRequestProgress?) {
+        this.clear();
         return super.findOne(id, withRequestProgress).pipe(map(res => {
             if (!res.error) {
                 this.commentCount = res.data.commentCount;
@@ -118,6 +112,8 @@ export class ConversationService extends ListBaseService {
                     this.conversation.comments.push(comment);
                     this.commentCount++;
                 }
+                if(!this.users.find(v => v._id === this.user._id))
+                    this.users.push(this.user);
                 this.newEmptyComment();
             }
             else {
@@ -129,25 +125,30 @@ export class ConversationService extends ListBaseService {
 
     public deleteComment(commentId: String) {
         let commentIndex = this.conversation.comments.findIndex(v => v._id === commentId);
-        return this.http.delete(`${this.baseUrl}/${this.conversation._id}/comments/${this.conversation.comments[commentIndex]._id}`).pipe(map(res => {
-            if (!res.error) {
-                if (res.data === true) {
-                    this.conversation.comments.splice(commentIndex, 1);
-                    this.commentCount--;
-                    return res;
+        if(commentIndex !== -1) {
+            return this.http.delete(`${this.baseUrl}/${this.conversation._id}/comments/${this.conversation.comments[commentIndex]._id}`).pipe(map(res => {
+                if (!res.error) {
+                    if (res.data === true) {
+                        this.conversation.comments.splice(commentIndex, 1);
+                        this.commentCount--;
+                        if(!this.conversation.comments.find(v => v.from_uid === this.user._id)) {
+                            let i = this.users.findIndex(v => v._id === this.user._id);
+                            if(i !== -1)
+                                this.users.splice(i, 1);
+                        }
+                        return res;
+                    }
                 }
-            }
-            return res;
-        }));
+                return res;
+            }));
+        }
     }
 
     public getAuthorOfComment(from_uid: string) {
-        if(from_uid === this.user._id)
-            return this.user;
         return this.users.find(user => user._id === from_uid);
     }
 
-    public newEmptyComment() {
+    private newEmptyComment() {
         let comment = new Comment(this.user, false, CommentType.MAIN);
         if (!this.emptyComment$) {
             this.emptyComment$ = new BehaviorSubject<Comment>(comment);
@@ -157,11 +158,18 @@ export class ConversationService extends ListBaseService {
         }
     }
 
+    public quoteReplyComment(comment: Comment) {
+        let quote = comment.content[comment.svid].md;
+        quote = quote.split('\n').map(v => '> ' + v).join('\n');
+        let empC = this.emptyComment$.value;
+        empC.content[empC.svid].md = quote;
+    }
+
     public clear() {
         this.users = [];
         this.commentCount = 0;
         this.conversation = null;
         this.hadSavedConversation = null;
-        this.emptyComment$.next(new Comment(this.user, true, CommentType.MAIN));
+        this.newEmptyComment();
     }
 }

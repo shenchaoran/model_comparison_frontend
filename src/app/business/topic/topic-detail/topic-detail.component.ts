@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router, Route, ActivatedRoute, Params } from '@angular/router';
-import { FormGroup, FormControl, FormArray, FormBuilder, Validators } from '@angular/forms';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import {
     TopicService,
     ConversationService,
@@ -20,13 +19,11 @@ import { Simplemde } from 'ng2-simplemde';
     styleUrls: ['./topic-detail.component.scss']
 })
 export class TopicDetailComponent extends DefaultLifeHook implements OnInit {
-    mode: 'READ' | 'WRITE';
     titleMode: 'READ' | 'WRITE';
     descMode: 'READ' | 'WRITE';
     _originTitle: string;
     _originDesc: string;
 
-    topicFG: FormGroup;
     mdeOption = { placeholder: 'Topic description...'};
     @ViewChild(Simplemde) simpleMDE: any;
 
@@ -36,6 +33,10 @@ export class TopicDetailComponent extends DefaultLifeHook implements OnInit {
 
     get user() {
         return this.userService.user;
+    }
+
+    get users() {
+        return this.conversationService.users;
     }
 
     get topic(): Topic {
@@ -52,7 +53,6 @@ export class TopicDetailComponent extends DefaultLifeHook implements OnInit {
         private userService: UserService,
         private route: ActivatedRoute,
         private router: Router,
-        private fb: FormBuilder,
     ) {
         super(topicService);
     }
@@ -65,6 +65,8 @@ export class TopicDetailComponent extends DefaultLifeHook implements OnInit {
                 this.topicService.createTopic();
                 this.descMode = 'WRITE';
                 this.titleMode = 'WRITE';
+                this._originDesc = null;
+                this._originTitle = null;
             }
             else {
                 this.descMode = 'READ';

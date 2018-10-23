@@ -9,7 +9,7 @@
     </ng-template>
 
     <ng-container *ngIf='topic else topicLoading'>
-        <div class='doc-title'>
+        <div class='doc-title' [class.read]='titleMode === "READ"'>
             <ng-container *ngIf='titleMode === "WRITE" else readTemp'>
                 <span class='topic-name'>
                     <mat-form-field>
@@ -46,7 +46,7 @@
                         <div class='doc-desc' *ngIf='descMode === "READ"'>
                             <div [innerHTML]='topic.meta.descHTML'></div>
                             <div class='desc-btn-group'>
-                                <button mat-button color='primary' (click)='onDescEditClick()'>Edit</button>
+                                <button mat-button color='primary' *ngIf='couldEdit' (click)='onDescEditClick()'>Edit</button>
                             </div>
                         </div>
                     </mat-tab>
@@ -62,10 +62,38 @@
                 </mat-tab-group>
             </article>
             <aside ogms-aside>
-                <div>
-                    1
+                <ng-template [ngTemplateOutlet]='slnTempCard' [ngTemplateOutletContext]='{item: 1}'></ng-template>
+                <ng-template [ngTemplateOutlet]='slnTempCard' [ngTemplateOutletContext]='{item: 2}'></ng-template>
+                <div class='aside-card'>
+                    <div class='title menu'>
+                        <span>Solutions</span>
+                        <mat-icon></mat-icon>
+                        <div class='sub-menu'>
+
+                        </div>
+                    </div>
+                    <div class='body'>
+
+                    </div>
+                </div>
+                <div class='aside-card participants'>
+                    <div class='title'>
+                        Participants
+                    </div>
+                    <div class='body'>
+                        <ng-container *ngFor='let user of users'>
+                            <img [attr.src]='"data:image/png;base64," + user.avator'>
+                        </ng-container>
+                    </div>
                 </div>
             </aside>
         </div>
     </ng-container>
 </div>
+
+
+<ng-template #slnTempCard let-item='item'>
+    <div class='aside-card'>
+        {{item}}
+    </div>
+</ng-template>

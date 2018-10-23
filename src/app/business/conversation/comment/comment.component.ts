@@ -1,3 +1,5 @@
+import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 import {
     Component,
     OnInit,
@@ -26,18 +28,28 @@ import {
     NG_VALUE_ACCESSOR,
 } from '@angular/forms';
 import { Observable } from 'rxjs';
-import {
-    ConversationService,
-    UserService
-} from '../../services';
 import * as SimpleMDE from 'simplemde';
 import { Simplemde } from 'ng2-simplemde';
+import {
+    ConversationService,
+    UserService,
+    TopicService,
+    SlnService,
+    TaskService,
+    MSRService,
+} from '../../services';
+import {
+    Solution,
+    Task,
+    Topic,
+    CalcuTask,
+} from '../../models';
 
 @Component({
     selector: 'ogms-comment',
     templateUrl: './comment.component.html',
     styleUrls: ['./comment.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    // changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,
@@ -49,6 +61,11 @@ import { Simplemde } from 'ng2-simplemde';
 export class CommentComponent implements ControlValueAccessor, OnInit, AfterViewInit {
     comment: Comment;
     author: User;
+    doc: Solution | Task | Topic | CalcuTask;
+    _originMD: string;
+
+    get authorId() { return this.conversationService.authorId; }
+
     get user(): User { return this.userService.user; }
 
     get currentComment() {
@@ -59,13 +76,19 @@ export class CommentComponent implements ControlValueAccessor, OnInit, AfterView
     @ViewChild(Simplemde) simpleMDE: any;
 
     constructor(
+        // private topicService: TopicService,
+        // private slnService: SlnService,
+        // private taskService: TaskService,
+        // private msrService: MSRService,
         private conversationService: ConversationService,
         private userService: UserService,
         private cdRef: ChangeDetectorRef,
+        // private route: ActivatedRoute,
+        // private location: Location,
         @Inject('BACKEND') private backend,
-    ) { }
+    ) {}
 
-    ngOnInit() { }
+    ngOnInit() {}
 
     ngAfterViewInit() { }
 
@@ -79,17 +102,36 @@ export class CommentComponent implements ControlValueAccessor, OnInit, AfterView
     }
 
     onEdit() {
+        this._originMD = this.currentComment.md;
         this.currentComment.state = CommentState.WRITE;
     }
 
     onCancel() {
-        this.currentComment.state = CommentState.READ;
+        this.currentComment.md = this._originMD;
+        this._originMD = '';
+        if(this.comment !== this.conversationService.emptyComment$.value)
+            this.currentComment.state = CommentState.READ;
+    }
+
+    onDelete() {
+        this.conversationService.deleteComment(this.comment._id).subscribe(res => {
+
+        });
+    }
+
+    onQuoteReply() {
+        this.conversationService.quoteReplyComment(this.comment);
     }
 
     public writeValue(obj: any) {
         if (obj) {
             this.comment = obj;
-            this.author = this.conversationService.getAuthorOfComment(this.comment.from_uid);
+            if(this.comment === this.conversationService.emptyComment$.value) {
+                this.author = this.user;
+            }
+            else {
+                this.author = this.conversationService.getAuthorOfComment(this.comment.from_uid);
+            }
             this.cdRef.markForCheck();
         }
     }

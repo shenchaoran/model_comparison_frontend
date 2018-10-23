@@ -31,9 +31,11 @@ export class TopicService extends ListBaseService {
     ) {
         super(http);
         console.log('\n******** TopicService constructor ', counter++);
+        this.clear();
     }
 
     public createTopic() {
+        this.clear();
         this.topic = new Topic(this.userService.user);
         let cid = this.conversationService.createConversation(this.topic._id)._id;
         this.topic.cid = cid;
@@ -42,12 +44,16 @@ export class TopicService extends ListBaseService {
     }
 
     public findOne(id, withRequestProgress?) {
+        this.clear();
+
         return super.findOne(id, withRequestProgress)
             .pipe(
                 map(res => {
                     if(!res.error){
                         this.topic = res.data.topic;
                         this.hadSaved = true;
+                        this.conversationService.users = res.data.users;
+                        this.conversationService.authorId = this.topic.auth.userId;
                         // this.conversation = res.data.conversation;
                     }
                 })
@@ -96,7 +102,7 @@ export class TopicService extends ListBaseService {
         this.conversationService.clear();
         this.topic = null;
         this.topicCount = 0;
-        this.topicList = null;
+        this.topicList = [];
         this.hadSaved = null;
     }
 }
