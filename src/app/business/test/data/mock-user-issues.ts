@@ -47,7 +47,7 @@ const titles = [
   ];
   
 
-export function getFakeList(count: number = 5): any[] {
+export function getFakeList(count: number = 4): any[] {
     const list = [];
     for (let i = 0; i < count; i += 1) {
       list.push({

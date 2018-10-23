@@ -1,0 +1,45 @@
+mat-button-toggle-group{
+    margin-bottom: 10px;
+}
+
+.list-item{
+    display: flex;
+    flex-flow:row wrap;
+    align-content:flex-start;
+    justify-content:flex-start;
+    border-bottom:1px dashed #000;
+    margin-bottom: 20px;
+    &>div{
+        padding-right:16px;
+    }
+    .detail-group{
+        @media(max-width:539px){
+            flex: 1 1 100%;
+        }
+        @media(min-width:540px){
+            flex:1 1 67%;
+        }
+    }
+    .actions-group{
+        display:flex;
+        flex-flow:row wrap;
+        justify-content:flex-end;
+        align-items:flex-start;
+        >*{
+            display: flex;
+            justify-content:flex-end;
+            cursor:pointer;
+            &:not(:last-child){
+                margin-right:50px;
+            }
+        }
+        @media(max-width:539px){
+            flex: 1 1 100%;
+            justify-content:flex-start;
+            margin-top:1em;
+        }
+        @media(min-width:540px){
+            flex:1 1 33%;
+        }
+    }
+}

@@ -1,4 +1,4 @@
-.topic-list{
+.card-list{
     display: flex;
     list-style: none;
     flex-wrap: wrap;
@@ -7,7 +7,7 @@
     padding-left: 0px;
 }
 
-.topic-item{
+.card-item{
     display: flex;
     width:345px;
     padding:16px;
@@ -17,7 +17,7 @@
     border-radius:3px;
 }
 
-.topic-item-content{
+.card-item-content{
     display: flex;
     width:100%;
     flex-direction: column;
@@ -28,7 +28,7 @@
     padding-bottom: 10px;
 }
 
-.topic-desc{
+.card-desc{
     flex:1 0 auto;
 }
 
@@ -41,4 +41,13 @@
 
 .float_right{
     float: right;
+}
+
+.description{
+    font-size:14px;
+    margin:10px 0;
+
+    p{
+        text-indent:1em;
+    }
 }
