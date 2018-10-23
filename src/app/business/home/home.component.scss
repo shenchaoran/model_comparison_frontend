@@ -1,3 +1,5 @@
+@import '../../../assets/css/my/varyable';
+
 .home-content {
     @media (max-width: 768px) {
         padding: 0 10px;
@@ -16,7 +18,7 @@
     }
 
     .list-item {
-        border: 1px solid #e3e3e3;
+        border: 1px solid $cardBorderColor;
         padding: 20px;
         margin: -1px 0 0 -1px;
         display: flex;
@@ -40,7 +42,7 @@
         }
     }
     .list-item:hover {
-        border: 1px solid #bdbdbd;
+        border: 1px solid $cardHoverBorderColor;
         z-index: 1;
     }
 }

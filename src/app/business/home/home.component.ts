@@ -5,6 +5,7 @@ import {
     TaskService,
     DatasetService,
     MSService,
+    IssueService,
 } from '../services';
 
 // TODO universal
@@ -46,6 +47,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
     constructor(
         private msrService: MSRService,
+        private issueService: IssueService,
         private slnService: SlnService,
         private taskService: TaskService,
         private datasetService: DatasetService,
@@ -56,7 +58,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
         this.modelList = this.msService.getTopK(3);
         this.dataList = this.datasetService.getTopK(3);
         this.slnList = this.slnService.getTopK(3);
-        this.issueList = this.msService.getTopK(3);
+        this.issueList = this.issueService.getTopK(3);
         this.taskList = this.taskService.getTopK(3);
     }
 

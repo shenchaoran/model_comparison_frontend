@@ -10,6 +10,7 @@ import {
     ViewChild,
     ChangeDetectorRef,
     ElementRef,
+    Inject,
 } from '@angular/core';
 import {
     Comment,
@@ -29,7 +30,8 @@ import {
     ConversationService,
     UserService
 } from '../../services';
-declare let Quill: any;
+import * as SimpleMDE from 'simplemde';
+import { Simplemde } from 'ng2-simplemde';
 
 @Component({
     selector: 'ogms-comment',
@@ -48,39 +50,62 @@ export class CommentComponent implements ControlValueAccessor, OnInit, AfterView
     comment: Comment;
     author: User;
     user: User;
-    editor;
-    @ViewChild('editorDOM') editorDOM: ElementRef;
+
+    get currentComment() {
+        let i = _.get(this, 'comment.svid');
+        return _.get(this, `comment.content[${i}]`);
+    }
+    editorConfig: SimpleMDE.Options;
+    @ViewChild(Simplemde) simpleMDE: any;
 
     constructor(
         private conversationService: ConversationService,
         private userService: UserService,
-        private cdRef: ChangeDetectorRef
-    ) { }
-
-    ngOnInit() {
+        private cdRef: ChangeDetectorRef,
+        @Inject('BACKEND') private backend,
+    ) {
         this.user = this.userService.user;
     }
 
-    ngAfterViewInit() {
-        this.editor = new Quill(this.editorDOM.nativeElement, {
-            modules: {
-                toolbar: true
-            },
-            placeholder: 'Compose an epic...',
-            theme: 'snow'
-        })
-    }
+    ngOnInit() {}
+
+    ngAfterViewInit() {}
 
     onSubmit() {
-        // var v = this.editor.getContents();
-        this.comment.content[this.comment.svid].value = this.editor.container.firstChild.innerHTML;
-        this.comment.content[this.comment.svid].state = CommentState.READ;
+        this.currentComment.html = this.simpleMDE.simplemde.markdown(this.currentComment.md);
+        this.currentComment.state = CommentState.READ;
+        let observer = {
+            next: res => {
+                if(!res) {
+
+                }
+                else {
+
+                }
+            }
+        };
+        if(this.comment.isEmpty) {
+            this.conversationService.postComment()
+                .subscribe(observer)
+        }
+        else {
+            this.conversationService.updateComment(this.comment)
+                .subscribe(observer)
+        }
+    }
+
+    onEdit() {
+        this.currentComment.state = CommentState.WRITE;
+    }
+
+    onCancel() {
+        this.currentComment.state = CommentState.READ;
     }
 
     public writeValue(obj: any) {
         if (obj) {
             this.comment = obj;
-            this.author = this.conversationService.getUserOfComment(this.comment.from_uid);
+            this.author = this.conversationService.getAuthorOfComment(this.comment.from_uid);
             this.cdRef.markForCheck();
         }
     }

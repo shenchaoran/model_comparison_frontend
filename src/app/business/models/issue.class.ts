@@ -24,9 +24,9 @@ export class Issue {
         scale: 'YEAR' | 'DAY';
     };
     solutionIds: string[];
-    cid: string[];
+    cid: string;
 
-    constructor(user: User) {
+    constructor(user: User, cid?: string) {
         this._id = ObjectID().toString();
         this.meta = {
             name: '',
@@ -39,5 +39,6 @@ export class Issue {
             userName: user.username
         };
         this.solutionIds = [];
+        this.cid = cid;
     }
 }

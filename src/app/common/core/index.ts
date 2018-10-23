@@ -64,6 +64,42 @@ const services = [
         useClass: ResParserInterceptor,
         multi: true
     },
+    {
+        provide: 'SIMPLEMDE_CONFIG',
+        useValue: {
+            indentWithTabs: true,
+            placeholder: 'some text',
+            toolbar: [
+                'bold',
+                'italic',
+                'heading',
+                '|',
+                'quote',
+                'code',
+                'unordered-list',
+                'ordered-list',
+                '|',
+                'link',
+                'image',
+                '|',
+                'preview',
+                'side-by-side',
+                'fullscreen',
+                '|',
+                'guide',
+            ],
+            toolbarTips: true,
+            status: [
+                'lines',
+                'words',
+                // 'cursor'
+            ],
+            styleSelectedText: true,
+            spellChecker: false,
+            tabSize: 4,
+
+        }
+    },
     // { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
     UserService,
     SlnService,

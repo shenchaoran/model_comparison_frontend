@@ -1,20 +1,23 @@
 .card-box {
     display: flex;
     flex-flow: row wrap;
-    justify-content: center;
+    justify-content: flex-start;
     .card{
         padding: 5px;
+        @mixin reactive($columnNum) {
+            flex: 0 0 calc(100%/#{$columnNum});
+        }
         @media (max-width: 979px) {
-            flex:1 1 50%;
+            @include reactive(2)
         }
         @media (min-width: 980px) {
-            flex:1 1 33%;
+            @include reactive(3)
         }
         @media (min-width: 1200px) {
-            flex:1 1 33%;
+            @include reactive(3)
         }
         @media (min-width: 1600px) {
-            flex:1 1 25%;
+            @include reactive(4)
         }
     }
 }

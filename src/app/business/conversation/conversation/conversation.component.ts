@@ -53,6 +53,7 @@ import {
 })
 export class ConversationComponent implements ControlValueAccessor, OnInit {
     conversation: Conversation;
+    emptyComment: Comment;
     conversation$: Subject<any> = new Subject();
     _loading: boolean = true;
     
@@ -69,11 +70,15 @@ export class ConversationComponent implements ControlValueAccessor, OnInit {
     }
 
     constructor(
-        private conversationService: ConversationService,
+        public conversationService: ConversationService,
         private issueService: IssueService,
         private userService: UserService,
         private cdRef: ChangeDetectorRef,
     ) {
+        this.conversationService.emptyComment$.subscribe(v => {
+            this.emptyComment = v;
+            this.cdRef.markForCheck();
+        });
         this.conversation$.subscribe(v => {
             this.conversation = v;
             this._loading = false;

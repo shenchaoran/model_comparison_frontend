@@ -10,6 +10,10 @@
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     font-weight: 400;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
     a {
         color: #000000;
         text-decoration: none;

@@ -1,12 +1,8 @@
-$yourCommentBorderColor: #c0d3eb;
-$defaultCommentBorderColor: #D1D5D9;
-$yourcommentHeaderBg: #f1f8ff;
-$defaultCommentHeaderBg: #f6f8fa;
+@import "../../../../assets/css/my/varyable";
 
 :host {
     display: flex;
     flex-flow: row nowrap;
-
     .avatar {
         flex: 0 0 70px;
 
@@ -23,8 +19,11 @@ $defaultCommentHeaderBg: #f6f8fa;
         border: 1px solid $defaultCommentBorderColor;
         border-radius: 3px;
         &.write{
+            .editor-toolbar {
+                background: $defaultCommentHeaderBg;
+            }
             .body {
-                padding: 8px;
+                // padding: 8px;
                 display: flex;
                 flex-flow: column nowrap;
                 border-radius: 5px;
@@ -41,7 +40,7 @@ $defaultCommentHeaderBg: #f6f8fa;
         }
         &.read{
             .header {
-                padding: 0 8px;
+                padding: 0 15px;
                 background: $defaultCommentHeaderBg;
                 display: flex;
                 flex-flow: row nowrap;
@@ -55,14 +54,16 @@ $defaultCommentHeaderBg: #f6f8fa;
                 }
             }
             .body {
-                // >* {
-                //     padding: 0 15px;
-                // }
-                padding: 0 8px;
+                padding: 8px 15px;
             }
         }
         &.current-user {
             border-color: $yourCommentBorderColor;
+            &.write {
+                .editor-toolbar{
+                    background: $yourcommentHeaderBg;
+                }
+            }
             &.read {
                 .header {
                     background: $yourcommentHeaderBg;

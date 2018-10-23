@@ -16,4 +16,8 @@ export class SlnService extends ListBaseService {
     ) { 
         super(http);
     }
+
+    public clear() {
+        
+    }
 }

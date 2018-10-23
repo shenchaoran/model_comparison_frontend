@@ -1,6 +1,6 @@
 <ogms-home-banner></ogms-home-banner>
 <div class="home-content">
-    <!-- <ogms-panel [template]='issueTemplate' [list]='issueList | async' [title]='issueTitle'></ogms-panel> -->
+    <ogms-panel [template]='issueTemplate' [list]='issueList | async' [title]='issueTitle'></ogms-panel>
     <ogms-panel [template]='slnTemplate' [list]='slnList | async' [title]='slnTitle'></ogms-panel>
     <ogms-panel [template]='taskTemplate' [list]='taskList | async' [title]='taskTitle'></ogms-panel>
     <ogms-panel [template]='modelTemplate' [list]='modelList | async' [title]='modelTitle'></ogms-panel>
@@ -8,7 +8,24 @@
 </div>
 
 <ng-template #issueTemplate let-item='item'>
-    {{item._id}}
+    <div class='list-item'>
+        <span class='panel-item-header'>
+            <a [routerLink]='"/issues/" + item._id'>{{item.meta.name}}</a>
+        </span>
+        <div class='panel-item-body'>
+            <p>{{item.meta.desc | stringLimit: 180 | description}}</p>
+        </div>
+        <div class='panel-item-footer'>
+            <span>
+                <mat-icon>person</mat-icon>
+                <span>{{item.auth.userName}}</span>
+            </span>
+            <span>
+                <mat-icon>star</mat-icon>
+                <span>654</span>
+            </span>
+        </div>
+    </div>
 </ng-template>
 
 <ng-template #slnTemplate let-item='item'>

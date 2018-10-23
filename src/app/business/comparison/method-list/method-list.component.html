@@ -16,4 +16,4 @@
     </mat-card>
 </ng-template>
 
-<ogms-cards-template [template]='template' [service]='service'></ogms-cards-template>
+<ogms-cards-template [template]='template' [list]='list' [count]='count' (onPageChange)='onPageChange($event)'></ogms-cards-template>

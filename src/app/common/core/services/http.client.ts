@@ -121,4 +121,15 @@ export class _HttpClient {
         url = this.appendJWT(url, appendJWT);
         return this.resInterceptor(this.http.put(url, body, options), parseRes);
     }
+
+    patch(
+        url: string,
+        body: any | null,
+        options: any = {},
+        appendJWT?: boolean,
+        parseRes?: boolean
+    ): Observable<any> {
+        url = this.appendJWT(url, appendJWT);
+        return this.resInterceptor(this.http.patch(url, body, options), parseRes);
+    }
 }
