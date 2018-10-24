@@ -166,6 +166,7 @@ export class ConversationService extends ListBaseService {
     }
 
     public clear() {
+        this.authorId = null;
         this.users = [];
         this.commentCount = 0;
         this.conversation = null;

@@ -59,10 +59,14 @@ aside {
 }
 
 ogms-sidebar-section {
-    .header {
+    .title {
         mat-icon {
             float: right;
         }
+    }
+
+    .menu {
+        display: none;
     }
 
     .participants {

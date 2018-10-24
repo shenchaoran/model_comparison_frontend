@@ -62,11 +62,9 @@
                 </mat-tab-group>
             </article>
             <aside ogms-aside>
-                <!-- <ng-template [ngTemplateOutlet]='slnTempCard' [ngTemplateOutletContext]='{item: 1}'></ng-template>
-                <ng-template [ngTemplateOutlet]='slnTempCard' [ngTemplateOutletContext]='{item: 2}'></ng-template> -->
                 <div>
                     <ogms-sidebar-section>
-                        <div class='header'>
+                        <div class='title'>
                             Solutions
                             <mat-icon inline>settings</mat-icon>
                         </div>
@@ -78,6 +76,15 @@
                             </ul>
                         </div>
                         <div class='body'>
+                            <ng-container *ngIf=''>
+
+                            </ng-container>
+                            <ng-container>
+
+                            </ng-container>
+                                <li>1</li>
+                                <li>1</li>
+                                <li>1</li>
 
                         </div>
                     </ogms-sidebar-section>
@@ -85,8 +92,8 @@
 
                 <div>
                     <ogms-sidebar-section>
-                        <div class='header'>
-                            Participants
+                        <div class='title'>
+                            {{users.length}} Participants
                         </div>
                         <div class='body participants'>
                             <ng-container *ngFor='let user of users'>

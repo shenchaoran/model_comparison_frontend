@@ -3,7 +3,8 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import {
     TopicService,
     ConversationService,
-    UserService
+    UserService,
+    SlnService,
 } from '../../services';
 import {
     Topic,
@@ -50,6 +51,7 @@ export class TopicDetailComponent extends DefaultLifeHook implements OnInit {
     constructor(
         private topicService: TopicService,
         private conversationService: ConversationService,
+        private slnService: SlnService,
         private userService: UserService,
         private route: ActivatedRoute,
         private router: Router,
