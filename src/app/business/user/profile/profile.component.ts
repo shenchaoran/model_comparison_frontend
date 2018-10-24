@@ -49,7 +49,7 @@ export class ProfileComponent implements OnInit {
   ngOnInit() {
     //* 获取 user 数据
     this.user = this.service.getMockuser();
-    console.log(this.user);
+    // console.log(this.user);
     this.router$ = this.router.events
       .pipe(filter(e => e instanceof ActivationEnd))
       .subscribe(() => this.setActive());

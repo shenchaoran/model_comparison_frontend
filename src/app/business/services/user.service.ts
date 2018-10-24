@@ -23,7 +23,7 @@ export class UserService {
         private router?: Router,
         private location?: Location,
     ) {
-        console.log('\n******** UserService constructor', counter++)
+        console.log('******** UserService constructor', counter++)
         var jwt = localStorage.getItem('jwt');
         if (jwt) {
             jwt = JSON.parse(jwt);
@@ -102,6 +102,7 @@ export class UserService {
                     else {
                         res.data.user.rememberAccount = user.rememberAccount;
                         this.jwt = res.data;
+                        this.http.resetHeaders();
                         return res;
                     }
                 })
@@ -156,7 +157,7 @@ export class UserService {
 
     //* 获取用户相关issues
     getMockUserIssues(){
-        console.log(getFakeList());
+        // console.log(getFakeList());
         return getFakeList();
     }
 }

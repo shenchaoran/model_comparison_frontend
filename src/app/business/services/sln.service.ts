@@ -38,23 +38,40 @@ export class SlnService extends ListBaseService {
         private msrService: MSRService,
     ) { 
         super(http);
-        console.log('\n******** SlnService constructor ', counter++);
+        console.log('******** SlnService constructor ', counter++);
         this.clear();
+    }
+
+    public initList(solutionList: Solution[], solutionCount: number) {
+        this.solutionList = solutionList;
+        this.solutionCount = solutionCount;
     }
 
     public findOne(id, withRequestProgress?) {
         this.clear();
+
         return super.findOne(id, withRequestProgress).pipe(map(res => {
+            if(!res.error) {
+
+            }
             return res;
         }));
     }
 
-    // public findAll() {
+    public findAll(query?) {
+        this.clear();
 
-    // }
+        return super.findAll(query).pipe(map(res => {
+            if(!res.error) {
+                this.solutionList = res.data.docs;
+                this.solutionCount = res.data.count;
+            }
+            return res;
+        }));
+    }
 
     public clear() {
-        this.conversationService.clear();
+        // this.conversationService.clear();
         this.solution = null;
         this.solutionList = [];
         this.solutionCount = 0;

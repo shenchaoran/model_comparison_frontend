@@ -40,8 +40,20 @@ export class ConversationService extends ListBaseService {
         private userService: UserService,
     ) {
         super(http);
-        console.log('\n******** ConversationService constructor ', counter++);
+        console.log('******** ConversationService constructor ', counter++);
         this.clear();
+    }
+
+    /**
+     * inlet
+     */
+    public init(conversation: Conversation, users: User[], commentCount: number, authorId: string, hadSavedConversation: boolean = true) {
+        this.conversation = conversation;
+        this.users = users;
+        this.commentCount = commentCount;
+        this.authorId = authorId;
+        this.hadSavedConversation = hadSavedConversation;
+        this.newEmptyComment();
     }
 
     /**
