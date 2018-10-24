@@ -45,7 +45,29 @@
 
     <!-- Latest Tasks -->
     <div>
-        <h2 class="f4 mb-2 text-normal">Latest Tasks</h2>
-        
+        <h2 class="f4 mb-2 text-normal">Latest Results & Diagnostics</h2>
+        <ol class="card-list">
+            <li *ngFor="let topic of user_topics" class="card-item">
+                <div class="card-item-content" routerLink="">
+                    <span class="d-block">
+                        <a class="title-p" routerLink="">{{topic.title}}</a>
+                    </span>
+                    <div class="description">
+                        <p>{{topic.description | stringLimit: 180 | description}}</p>
+                    </div>
+                    <div class="sponsor">
+                        <span>
+                            <mat-icon>person</mat-icon>
+                            <a>{{topic.sponsor}}</a>
+                        </span>
+                        <span style="float: right">
+                            <mat-icon>star</mat-icon>
+                            <span>654</span>
+                        </span>
+                    </div>
+                </div>
+            </li>
+
+        </ol>
     </div>
 </div>

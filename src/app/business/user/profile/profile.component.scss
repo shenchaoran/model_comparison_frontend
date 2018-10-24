@@ -27,13 +27,13 @@
     text-align: center;
 
     >img {
-        width: 230px;
-        height: 230px;
+        width: 200px; 
         display: inline-block;
         overflow: hidden;
         line-height: 1;
         vertical-align: middle;
-        border-radius: 6px;
+        border-radius: 50%; 
+        background-color: rgba(128, 128, 128,0.13);
     }
 }
 

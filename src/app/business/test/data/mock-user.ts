@@ -1,7 +1,7 @@
 export const USER:any = {
     name: 'Cipchk',
     avatar:
-      'https://avatars3.githubusercontent.com/u/16205971?s=460&v=4',
+      '',
     userid: '00000001',
     email: 'cipchk@qq.com',
     title: '教授',

@@ -27,6 +27,9 @@ export class ProfileComponent implements OnInit {
     }, {
       key: 'user-solutions',
       tab: 'Solutions',
+    },{
+      key:'user-tasks',
+      tab:'Results & Diagnostics',
     }
   ]
 

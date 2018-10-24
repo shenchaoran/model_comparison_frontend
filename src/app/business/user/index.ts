@@ -1,3 +1,5 @@
+import { UserSettingsComponent } from './user-settings/user-settings.component';
+import { UserTasksComponent } from './profile/user-tasks/user-tasks.component';
 import { NgModule } from '@angular/core';
 import { SharedModule } from '@common/shared';
 import { MatSharedModule } from '@common/mat-shared';
@@ -27,6 +29,8 @@ const components = [
     UserSolutionsComponent,
     UserIssuesComponent,
     UserTopicsComponent,
+    UserTasksComponent,
+    UserSettingsComponent,
 ];
 const services = [];
 

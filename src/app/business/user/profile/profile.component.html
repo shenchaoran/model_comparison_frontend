@@ -3,9 +3,9 @@
     <nz-card [nzBordered]="false" class="mb-lg" [nzLoading]="!user">
       <ng-container *ngIf="user">
         <div class="avatarHolder">
-          <img src="{{user.avatar}}"> 
+          <img src="{{user.avatar}}" onerror="this.src='../../../../assets/img/user/avatar_def.png'"> 
         </div>
-        <h1><span class="username">{{user.name}}</span></h1>
+        <h1 style="text-align:center"><span class="username">{{user.name}}</span></h1>
         <button nz-button nzType="default" style="width:100%;margin-bottom: 20px" *ngIf=false>Follow</button>
 
         <nz-divider nzDashed style="margin-top:12px;margin-bottom:12px"></nz-divider>

@@ -1,0 +1,29 @@
+:host-context(body) {
+    background: #fff;
+    box-sizing: border-box;
+    min-width: 1012px;
+}
+.setting-container{
+    padding-top: 24px;
+    padding-bottom: 24px;
+    background-color: #fff;
+    width: 1012px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.subhead{
+    display: flex;
+    padding-bottom: 8px;
+    margin-bottom: 16px;
+    border-bottom: 1px #e1e4e8 solid;
+    flex-flow: row wrap;
+    h2{
+        margin:0px;
+    }
+    .subhead-heading{
+        font-size: 24px;
+        font-weight: normal;
+        flex: 1 1 auto;
+    }
+}
