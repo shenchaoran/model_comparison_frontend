@@ -1,0 +1,61 @@
+<!-- <ol class="topic-list">
+  <li *ngFor="let topic of user_topics" class="topic-item">
+    <span class="topic-item-content">
+      <span class="d-block">
+        <a routerLink="">
+          <span>{{topic.title}}</span>
+        </a>
+      </span>
+      <p class="text-gray text-small mb-2">
+        Sponsor: 
+        <a routerLink="">{{topic.sponsor}}</a>
+      </p>
+      <p class="topic-desc text-gray text-small">
+        {{topic.description}}
+      </p>
+    </span>
+
+  </li>
+</ol> -->
+
+<div class="topic-list">
+    <mat-button-toggle-group>
+        <mat-button-toggle>Created</mat-button-toggle>
+        <mat-button-toggle>Followed</mat-button-toggle>
+    </mat-button-toggle-group>
+    <mat-card *ngFor="let topic of user_topics" class="topic-item">
+        <mat-card-header>
+            <mat-card-title>
+                <a routerLink="">
+                    <span>{{topic.title}}</span>
+                </a>
+            </mat-card-title>
+            <!-- <mat-card-subtitle>
+                Created By:
+                <a routerLink="">{{topic.sponsor}}</a>
+            </mat-card-subtitle> -->
+        </mat-card-header>
+
+        <mat-card-content>
+            <p>
+                {{topic.description}}
+            </p>
+        </mat-card-content>
+        <mat-card-footer>
+            <span style="float:left;padding-left:20px">
+                Created By:
+                <a routerLink="">{{topic.sponsor}}</a>
+            </span>
+            <div style="float: right;padding-right:20px;">
+                <span>
+                    <mat-icon>star</mat-icon>
+                    <span style="margin-right:30px">{{topic.star}}</span>
+                </span>
+                <span>
+                    <mat-icon>message</mat-icon>
+                    <span>{{topic.message}}</span>
+                </span>
+            </div>
+        </mat-card-footer>
+    </mat-card>
+</div>

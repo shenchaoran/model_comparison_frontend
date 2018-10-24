@@ -1,9 +1,12 @@
+import { getFakeList } from './../test/data/mock-user-issues';
 import { Injectable } from '@angular/core';
 import { Location } from '@angular/common';
 import { _HttpClient } from '@common/core/services/http.client';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
+
+import { USER } from "../test/data/mock-user";
 
 var counter = 1;
 @Injectable({
@@ -144,5 +147,16 @@ export class UserService {
             return false;
         }
         return true;
+    }
+
+    //* 获取模拟的用户信息
+    getMockuser(){
+        return USER;
+    }
+
+    //* 获取用户相关issues
+    getMockUserIssues(){
+        console.log(getFakeList());
+        return getFakeList();
     }
 }
