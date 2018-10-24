@@ -1,0 +1,80 @@
+#create-btn {
+    position: absolute;
+    right: 30px;
+    top: -28px;
+    z-index: 100;
+}
+
+.doc-title {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 20px;
+
+    &.read {
+        margin: 9px 0 29px;
+    }
+
+    .topic-name {
+        flex: 1 1 auto;
+        margin-right: 25px;
+
+        mat-form-field {
+            width: 100%;
+        }
+    }
+
+    .title-btn-group {
+        flex: 0 1 300px;
+
+        >button {
+            float: right;
+        }
+
+        >button:not(:last-child) {
+            margin-right: 20px;
+        }
+    }
+}
+
+.doc-desc {
+    position: relative;
+    margin-top: 15px;
+
+    .desc-btn-group {
+        position: absolute;
+        right: 7px;
+        top: 7px;
+    }
+}
+
+article {
+    overflow: hidden;
+}
+
+aside {
+    margin-top: 48px;
+}
+
+ogms-sidebar-section {
+    .header {
+        mat-icon {
+            float: right;
+        }
+    }
+
+    .participants {
+        display: flex;
+        flex-flow: row wrap;
+
+        >img {
+            border-radius: 3px;
+            width: 26px;
+            height: 26px;
+            margin-top: 5px;
+            margin-left: 5px;
+        }
+    }
+}

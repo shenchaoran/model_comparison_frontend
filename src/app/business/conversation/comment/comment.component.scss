@@ -18,6 +18,7 @@
         position: relative;
         border: 1px solid $defaultCommentBorderColor;
         border-radius: 3px;
+        overflow: hidden;
         &.write{
             .editor-toolbar {
                 background: $defaultCommentHeaderBg;

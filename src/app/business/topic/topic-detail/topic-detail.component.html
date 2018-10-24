@@ -1,0 +1,108 @@
+<div ogms-rx-box>
+    <button id='create-btn' routerLink='../create' mat-fab color="primary">
+        <mat-icon>add</mat-icon>
+    </button>
+    <ng-template #topicLoading>
+        <div ogms-loading>
+            <mat-spinner></mat-spinner>
+        </div>
+    </ng-template>
+
+    <ng-container *ngIf='topic else topicLoading'>
+        <div class='doc-title' [class.read]='titleMode === "READ"'>
+            <ng-container *ngIf='titleMode === "WRITE" else readTemp'>
+                <span class='topic-name'>
+                    <mat-form-field>
+                        <input matInput placeholder='Topic Name' [(ngModel)]='topic.meta.name' required minlength="5">
+                        <mat-error *ngIf='"required"'>必填</mat-error>
+                        <mat-error *ngIf='"minlength"'>长度不够</mat-error>
+                    </mat-form-field>
+                </span>
+                <div class='title-btn-group'>
+                    <button mat-button color='primary' (click)='onTitleEditSave()'>Save</button>
+                    <button mat-button color='primary' (click)='onTitleEditCancel()'>Cancel</button>
+                </div>
+            </ng-container>
+            <ng-template #readTemp>
+                <h2>{{topic.meta.name}}</h2>
+                <div class='title-btn-group'>
+                    <button mat-button color='primary' *ngIf='couldEdit' (click)='onTitleEditClick()'>Edit</button>
+                    <!-- <button mat-flat-button color='primary' *ngIf='couldEdit' [routerLink]='["../create"]'>New Topic</button> -->
+                </div>
+            </ng-template>
+        </div>
+
+        <div ogms-flex-1-0>
+            <article>
+                <mat-tab-group selectedIndex='0' (selectedIndexChange)='onSelectedIndexChange($event)'>
+                    <mat-tab label='Topic'>
+                        <div class='doc-desc' *ngIf='descMode === "WRITE"'>
+                            <simplemde [(ngModel)]='topic.meta.descMD' [options]='mdeOption'></simplemde>
+                            <div class='desc-btn-group'>
+                                <button mat-button color='primary' (click)='onDescEditCancel()'>Cancel</button>
+                                <button mat-button color='primary' (click)='onDescEditSave()'>Save</button>
+                            </div>
+                        </div>
+                        <div class='doc-desc' *ngIf='descMode === "READ"'>
+                            <div [innerHTML]='topic.meta.descHTML'></div>
+                            <div class='desc-btn-group'>
+                                <button mat-button color='primary' *ngIf='couldEdit' (click)='onDescEditClick()'>Edit</button>
+                            </div>
+                        </div>
+                    </mat-tab>
+
+                    <mat-tab label='Conversation'>
+                        <ng-container *ngIf='conversation else conLoading'>
+                            <ogms-conversation [ngModel]='conversation'></ogms-conversation>
+                        </ng-container>
+                        <ng-template #conLoading>
+                            <mat-spinner></mat-spinner>
+                        </ng-template>
+                    </mat-tab>
+                </mat-tab-group>
+            </article>
+            <aside ogms-aside>
+                <!-- <ng-template [ngTemplateOutlet]='slnTempCard' [ngTemplateOutletContext]='{item: 1}'></ng-template>
+                <ng-template [ngTemplateOutlet]='slnTempCard' [ngTemplateOutletContext]='{item: 2}'></ng-template> -->
+                <div>
+                    <ogms-sidebar-section>
+                        <div class='header'>
+                            Solutions
+                            <mat-icon inline>settings</mat-icon>
+                        </div>
+                        <div class='menu' #menu>
+                            <ul>
+                                <li>1</li>
+                                <li>1</li>
+                                <li>1</li>
+                            </ul>
+                        </div>
+                        <div class='body'>
+
+                        </div>
+                    </ogms-sidebar-section>
+                </div>
+
+                <div>
+                    <ogms-sidebar-section>
+                        <div class='header'>
+                            Participants
+                        </div>
+                        <div class='body participants'>
+                            <ng-container *ngFor='let user of users'>
+                                <img [attr.src]='"data:image/png;base64," + user.avator'>
+                            </ng-container>
+                        </div>
+                    </ogms-sidebar-section>
+                </div>
+            </aside>
+        </div>
+    </ng-container>
+</div>
+
+
+<!-- <ng-template #slnTempCard let-item='item'>
+    <div class='aside-card'>
+        {{item}}
+    </div>
+</ng-template> -->

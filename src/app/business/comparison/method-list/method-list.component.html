@@ -16,4 +16,6 @@
     </mat-card>
 </ng-template>
 
-<ogms-cards-template [template]='template' [list]='list' [count]='count' (onPageChange)='onPageChange($event)'></ogms-cards-template>
+<div ogms-rx-box>
+    <ogms-cards-template [template]='template' [list]='list' [count]='count' (onPageChange)='onPageChange($event)'></ogms-cards-template>
+</div>

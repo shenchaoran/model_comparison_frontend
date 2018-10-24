@@ -34,7 +34,7 @@ import {
 import {
     ConversationService,
     UserService,
-    IssueService,
+    TopicService,
 } from '@services';
 
 // 二选一，根据 _id 或者 ngModel 初始化该组件
@@ -71,7 +71,7 @@ export class ConversationComponent implements ControlValueAccessor, OnInit {
 
     constructor(
         public conversationService: ConversationService,
-        private issueService: IssueService,
+        private topicService: TopicService,
         private userService: UserService,
         private cdRef: ChangeDetectorRef,
     ) {

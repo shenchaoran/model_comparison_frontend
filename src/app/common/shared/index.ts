@@ -34,6 +34,7 @@ import {
     HeaderMenuComponent,
     MatCascaderSelectComponent,
     CascaderSelectValidator,
+    SidebarSectionComponent,
 } from './components';
 
 import {
@@ -94,6 +95,7 @@ const components = [
     MapBaseComponent,
     CardsTemplateComponent,
     MatCascaderSelectComponent,
+    SidebarSectionComponent,
 ];
 
 const directives = [

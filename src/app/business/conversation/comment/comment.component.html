@@ -7,12 +7,12 @@
 <div 
     *ngIf='comment'
     class='comment-container' 
-    [class.current-user]='author._id === user._id' 
+    [class.current-user]='author && user && author._id === user._id' 
     [class.write]='currentComment.state === "WRITE"'
     [class.read]='currentComment.state === "READ"'>
     <ng-container *ngIf='currentComment.state === "WRITE" else readTemplate'>
         <div class='body'>
-            <simplemde #simpleMDE [(ngModel)]='currentComment.md'></simplemde>
+            <simplemde [(ngModel)]='currentComment.md'></simplemde>
         </div>
         <div class='footer'>
             <button mat-flat-button color='warn' (click)='onCancel()'>Cancel</button>
@@ -57,21 +57,21 @@
                     <mat-icon>more_horiz</mat-icon>
                 </button>
                 <mat-menu #moreMenu="matMenu">
-                    <button mat-menu-item>
+                    <button mat-menu-item (click)='onQuoteReply()'>
                         <span>Quote reply</span>
                     </button>
                     <!-- 版主 有隐藏的权限 -->
-                    <ng-container>
+                    <ng-container *ngIf='authorId === user._id'>
                         <button mat-menu-item>
                             <span>Hide</span>
                         </button>
                     </ng-container>
                     <!-- 评论者 有编辑和删除的权限 -->
-                    <ng-container *ngIf='author._id === comment.from_uid'>
+                    <ng-container *ngIf='user._id === comment.from_uid'>
                         <button mat-menu-item (click)='onEdit()'>
                             <span>Edit</span>
                         </button>
-                        <button color='"warn"' mat-menu-item>
+                        <button mat-menu-item (click)='onDelete()' color='warn'>
                             <span>Delete</span>
                         </button>
                     </ng-container>

@@ -2,11 +2,12 @@ import { ResourceSrc } from './resource.enum';
 import { User } from './user.class';
 import * as ObjectID from 'objectid';
 
-export class Issue {
+export class Topic {
     _id?: any;
     meta: {
         name: string,
-        desc: string,
+        descHTML: string,
+        descMD: string
         time: number
     };
     auth: {
@@ -30,7 +31,8 @@ export class Issue {
         this._id = ObjectID().toString();
         this.meta = {
             name: '',
-            desc: '',
+            descMD: '',
+            descHTML: '',
             time: new Date().getTime()
         };
         this.auth = {

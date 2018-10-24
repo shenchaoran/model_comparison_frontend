@@ -12,7 +12,6 @@ export class Conversation {
     love_uids: string[];
     tags: (string | 'TOP' | 'HOT')[];
     comments: Comment[];
-    participants: string[];
     
     constructor(user: User, pid: string) {
         this._id = ObjectID().toString();
@@ -20,7 +19,6 @@ export class Conversation {
         this.like_uids = [];
         this.love_uids = [];
         this.tags = [];
-        this.participants = [];
         this.comments = [];
     }
 }
@@ -50,9 +48,9 @@ export class Comment {
         name: string,
         count: number
     }[];
-    isEmpty: boolean;
+    hadSaved: boolean;
 
-    constructor(user: User, isEmpty: boolean = true, type: CommentType, to_uid?: string, state: CommentState = CommentState.WRITE) {
+    constructor(user: User, hadSaved: boolean = false, type: CommentType, to_uid?: string, state: CommentState = CommentState.WRITE) {
         this._id = ObjectID().toString();
         this.content = [{
             time: new Date().getTime(),
@@ -63,7 +61,7 @@ export class Comment {
         this.svid = 0;
         this.reactions = [];
         this.to_uid = to_uid;
-        this.isEmpty = isEmpty;
+        this.hadSaved = hadSaved;
         if(user) {
             this.from_uid = user._id;
             this.anonymous = false;

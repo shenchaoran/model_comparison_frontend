@@ -1,5 +1,5 @@
 <div style='margin-top: 24px !important'>
-    <div *ngIf='list else loadingTemplate'>
+    <div *ngIf='list'>
         <div class='card-box' *ngIf='template && list'>
             <div class='card' *ngFor='let item of list'>
                 <ng-template [ngTemplateOutlet]='template' [ngTemplateOutletContext]='{item: item}'></ng-template>
@@ -16,10 +16,4 @@
                 (page)='onPageChange.emit($event)'></mat-paginator>
         </div>
     </div>
-
-    <ng-template #loadingTemplate>
-        <div ogms-loading>
-            <mat-spinner></mat-spinner>
-        </div>
-    </ng-template>
 </div>

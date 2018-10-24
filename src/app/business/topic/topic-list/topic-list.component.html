@@ -1,7 +1,7 @@
 <ng-template #template let-item='item'>
     <div class='list-item'>
         <span class='panel-item-header'>
-            <a [routerLink]='"/issues/" + item._id'>{{item.meta.name}}</a>
+            <a [routerLink]='"/topics/" + item._id'>{{item.meta.name}}</a>
         </span>
         <div class='panel-item-body'>
             <p>{{item.meta.desc | stringLimit: 180 | description}}</p>
@@ -20,5 +20,14 @@
 </ng-template>
 
 <div ogms-rx-box>
-    <ogms-cards-template [template]='template' [list]='issueList' [count]='issueCount' (onPageChange)='onPageChange($event)'></ogms-cards-template>
+    <ogms-cards-template [template]='template' [list]='topicList' [count]='topicCount' (onPageChange)='onPageChange($event)'></ogms-cards-template>
+    <button id='create-btn' [routerLink]='"./create"' mat-fab color="primary">
+        <mat-icon>add</mat-icon>
+    </button>
 </div>
+
+<ng-container *ngIf='!topicList'>
+    <div ogms-loading>
+        <mat-spinner></mat-spinner>
+    </div>
+</ng-container>

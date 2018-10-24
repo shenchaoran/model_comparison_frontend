@@ -1,0 +1,23 @@
+.header {
+    margin-bottom: 5px;
+    &.has-menu {
+        position: relative;
+        cursor: pointer;
+        .title:hover {
+            color: blue;
+        }
+        .menu {
+            position: absolute;
+            right: 0;
+            background: #fff;
+            z-index: 1;
+            border: 1px solid #eee;
+            border-radius: 5px;
+            display: none;
+        }
+    }
+}
+.body {
+
+}
+

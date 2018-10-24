@@ -7,18 +7,19 @@ import { _HttpClient } from '@common/core/services/http.client';
 import { ListBaseService } from './list-base.service';
 import { UserService } from './user.service';
 import { ConversationService } from './conversation.service';
-import { Issue } from '../models/issue.class';
+import { Topic } from '../models/topic.class';
 import { Conversation, Comment } from '../models/conversation.class';
 
 var counter = 1;
 @Injectable({
     providedIn: 'root'
 })
-export class IssueService extends ListBaseService {
-    protected baseUrl = '/comparison/issues';
-    public issue: Issue;
-    public issueList: Issue[];
-    public issueCount: Number;
+export class TopicService extends ListBaseService {
+    protected baseUrl = '/comparison/topics';
+    public topic: Topic;
+    public topicList: Topic[];
+    public topicCount: Number;
+    public hadSaved: boolean;
     public get conversation(): Conversation {
         return this.conversationService.conversation;
     }
@@ -29,22 +30,30 @@ export class IssueService extends ListBaseService {
         private conversationService: ConversationService
     ) {
         super(http);
-        console.log('\n******** IssueService constructor ', counter++);
+        console.log('\n******** TopicService constructor ', counter++);
+        this.clear();
     }
 
-    public createIssue() {
-        this.issue = new Issue(this.userService.user);
-        let cid = this.conversationService.createConversation(this.issue._id)._id;
-        this.issue.cid = cid;
-        return this.issue;
+    public createTopic() {
+        this.clear();
+        this.topic = new Topic(this.userService.user);
+        let cid = this.conversationService.createConversation(this.topic._id)._id;
+        this.topic.cid = cid;
+        this.hadSaved = false;
+        return this.topic;
     }
 
     public findOne(id, withRequestProgress?) {
+        this.clear();
+
         return super.findOne(id, withRequestProgress)
             .pipe(
                 map(res => {
                     if(!res.error){
-                        this.issue = res.data.issue;
+                        this.topic = res.data.topic;
+                        this.hadSaved = true;
+                        this.conversationService.users = res.data.users;
+                        this.conversationService.authorId = this.topic.auth.userId;
                         // this.conversation = res.data.conversation;
                     }
                 })
@@ -57,19 +66,22 @@ export class IssueService extends ListBaseService {
             pageSize: 50
         }).pipe(map(res => {
             if(!res.error) {
-                this.issueList = res.data.docs;
-                this.issueCount = res.data.count;
+                this.topicList = res.data.docs;
+                this.topicCount = res.data.count;
             }
             return res;
         }));
     }
 
-    public postIssue() {
-        return this.http.post(`${this.baseUrl}`, {
-            issue: this.issue,
-            conversation: this.conversation
-        })
-        .pipe(
+    public upsertTopic() {
+        let fn = this.hadSaved? 
+            () => this.http.patch(`${this.baseUrl}/${this.topic._id}`, {topic: this.topic}) :
+            () => this.http.post(`${this.baseUrl}`, {
+                topic: this.topic,
+                conversation: this.conversation
+            });
+
+        return fn().pipe(
             map(res => {
                 if(!res.error) {}
                 return res;
@@ -77,17 +89,8 @@ export class IssueService extends ListBaseService {
         );
     }
 
-    public patchIssue() {
-        return this.http.patch(`${this.baseUrl}/${this.issue._id}`, this.issue).pipe(map(res => {
-            if(!res.error) {
-
-            }
-            return res;
-        }))
-    }
-
-    public deleteIssue() {
-        return this.http.delete(`${this.baseUrl}/${this.issue._id}`).pipe(map(res => {
+    public deleteTopic() {
+        return this.http.delete(`${this.baseUrl}/${this.topic._id}`).pipe(map(res => {
             if(!res.error) {
 
             }
@@ -97,8 +100,9 @@ export class IssueService extends ListBaseService {
 
     public clear() {
         this.conversationService.clear();
-        this.issue = null;
-        this.issueCount = 0;
-        this.issueList = null;
+        this.topic = null;
+        this.topicCount = 0;
+        this.topicList = [];
+        this.hadSaved = null;
     }
 }
