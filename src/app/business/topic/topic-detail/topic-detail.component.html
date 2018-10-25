@@ -31,6 +31,9 @@
                 </div>
             </ng-template>
         </div>
+        <div class='header-meta'>
+            <a class='author' routerLink='/user'>{{topic.auth.userName}}</a> created this topic at {{topic.meta.time | date: 'yyyy.MM.dd'}}
+        </div>
 
         <div ogms-flex-1-0>
             <article>

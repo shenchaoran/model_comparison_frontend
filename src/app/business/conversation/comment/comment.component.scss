@@ -19,6 +19,16 @@
         border: 1px solid $defaultCommentBorderColor;
         border-radius: 3px;
         overflow: hidden;
+        .header {
+            font-size: 14px;
+            .author {
+                font-weight: 600;
+                color: #586069;
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
         &.write{
             .editor-toolbar {
                 background: $defaultCommentHeaderBg;
