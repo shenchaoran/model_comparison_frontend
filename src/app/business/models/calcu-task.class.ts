@@ -13,7 +13,9 @@ export class CalcuTask {
     _id?: any;
     meta: {
         name: string,
-        desc: string,
+        desc?: string,
+        descMD?: string,
+        descHTML?: string,
         time: number
     };
     auth: {
@@ -34,6 +36,7 @@ export class CalcuTask {
     std: any;
     state: CalcuTaskState;
     progress: number;
+    subscribed_uids: string[];
     // [key: string]: any;
 
     constructor(user: User, ms?) {
@@ -63,6 +66,7 @@ export class CalcuTask {
             desc: undefined,
             time: new Date().getTime()
         };
+        this.subscribed_uids = [];
         this.state = CalcuTaskState.INIT;
         if(user) {
             this.auth = {

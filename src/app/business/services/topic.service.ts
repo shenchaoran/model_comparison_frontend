@@ -1,4 +1,4 @@
-import { SlnService } from './sln.service';
+import { SolutionService } from './sln.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
@@ -29,10 +29,7 @@ export class TopicService extends ListBaseService {
     public solutionList: Solution[] | any[];                // 只存一些简单的信息，在 topic-detail 页面用
     public solutionCount: number | any;
 
-    public get conversation(): Conversation {
-        return this.conversationService.conversation;
-    }
-
+    public get conversation(): Conversation {return this.conversationService.conversation;}
     public get user(): User { return this.userService.user; }
 
     constructor(
@@ -72,6 +69,7 @@ export class TopicService extends ListBaseService {
                             res.data.users,
                             res.data.commentCount,
                             this.topic.auth.userId,
+                            this.topic._id,
                         );
                     }
                     return res;
@@ -126,7 +124,7 @@ export class TopicService extends ListBaseService {
     //     }));
     // }
 
-    public upsertTopic() {
+    public upsert() {
         let fn = this.hadSaved ?
             () => this.http.patch(`${this.baseUrl}/${this.topic._id}`, { topic: this.topic }) :
             () => this.http.post(`${this.baseUrl}`, {
@@ -137,11 +135,10 @@ export class TopicService extends ListBaseService {
         return fn().pipe(map(res => {
             if (!res.error) { }
             return res;
-        })
-        );
+        }));
     }
 
-    public deleteTopic() {
+    public delete() {
         return this.http.delete(`${this.baseUrl}/${this.topic._id}`).pipe(map(res => {
             if (!res.error) {
 
@@ -150,6 +147,9 @@ export class TopicService extends ListBaseService {
         }))
     }
 
+    /**
+     * 关联/取消关联方案
+     */
     public changeIncludeSln(sln) {
         let isRemove = sln.topicId === this.topic._id;
         return this.http.patch(`${this.baseUrl}/${this.topic._id}/solution`, {
@@ -176,6 +176,9 @@ export class TopicService extends ListBaseService {
         }));
     }
 
+    /**
+     * 订阅/取消订阅
+     */
     public subscribeToggle(ac, uid) {
         return this.http.patch(`${this.baseUrl}/${this.topic._id}`, {
             ac: ac,

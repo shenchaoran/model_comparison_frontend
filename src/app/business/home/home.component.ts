@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import {
     MSRService,
-    SlnService,
+    SolutionService,
     TaskService,
     DatasetService,
     MSService,
@@ -48,7 +48,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     constructor(
         private msrService: MSRService,
         private topicService: TopicService,
-        private slnService: SlnService,
+        private solutionService: SolutionService,
         private taskService: TaskService,
         private datasetService: DatasetService,
         private msService: MSService,
@@ -57,7 +57,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     ngOnInit() {
         this.modelList = this.msService.getTopK(3);
         this.dataList = this.datasetService.getTopK(3);
-        this.slnList = this.slnService.getTopK(3);
+        this.slnList = this.solutionService.getTopK(3);
         this.topicList = this.topicService.getTopK(3);
         this.taskList = this.taskService.getTopK(3);
     }

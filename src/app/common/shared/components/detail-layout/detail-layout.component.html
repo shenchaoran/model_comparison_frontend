@@ -1,0 +1,12 @@
+<div ogms-rx-box>
+    <ng-content select='.header-title'></ng-content>
+    <ng-content select='.header-meta'></ng-content>
+    <div class='body' ogms-flex-1-0>
+        <article>
+            <ng-content select='.article'></ng-content>
+        </article>
+        <aside ogms-aside>
+            <ng-content select='.aside'></ng-content>
+        </aside>
+    </div>
+</div>

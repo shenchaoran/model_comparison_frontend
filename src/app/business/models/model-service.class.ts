@@ -12,7 +12,10 @@ export class MS {
         meta: {
             name: string,
             keywords: string[],
-            abstract: string
+            abstract: string,
+            desc?: string,
+            descMD?: string,
+            descHTML?: string,
         },
         IO: {
             schemas: UDXSchema[],
@@ -24,6 +27,7 @@ export class MS {
     stdIds: string[];
     topic: string;
     exeName: string;
+    subscribed_uids: string[];
 }
 
 export class Event {

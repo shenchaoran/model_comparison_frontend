@@ -1,9 +1,11 @@
-<div ogms-loading *ngIf='!slnFG else docTemp'>
-    <mat-spinner></mat-spinner>
-</div>
-<ng-template #docTemp>
-    <article>
-        <h1>Create Comparison Solution</h1>
+<ng-template #loadingTemp>
+    <div ogms-loading>
+        <mat-spinner></mat-spinner>
+    </div>
+</ng-template>
+<div *ngIf='slnFG else loadingTemp'>
+    <article ogms-rx-box>
+        <h2>Create Comparison Solution</h2>
         <div class="container flex-box-col-nowrap max-size">
             <form [formGroup]='slnFG'>
                 <mat-horizontal-stepper linear #stepper>
@@ -40,15 +42,15 @@
                     </mat-step>
                     <mat-step>
                         <ng-template matStepLabel>Select Participants</ng-template>
-                        <ng-container *ngIf='!msList else msListTemplate'>
+                        <ng-container *ngIf='!mss else msListTemplate'>
                             <mat-spinner></mat-spinner>
                         </ng-container>
                         <ng-template #msListTemplate>
                             <div class='form-container ms-list-group'>
                                 <div class='form-item use-default-width'>
                                     <!-- TODO 这里最好再把模型列表按照可参与对比的类型分类，否则选择的几个模型毫无关联可能会出错 -->
-                                    <mat-selection-list formControlName='participants' #mss (selectionChange)='onParticipantsChange()'>
-                                        <mat-list-option *ngFor='let ms of msList' [value]='ms'>
+                                    <mat-selection-list formControlName='participants' (selectionChange)='onParticipantsChange()'>
+                                        <mat-list-option *ngFor='let ms of mss' [value]='ms'>
                                             {{ms.MDL.meta.name}}
                                         </mat-list-option>
                                     </mat-selection-list>
@@ -76,7 +78,8 @@
                                 <ng-template #cmpObjCfgTemplate>
                                     <div>
                                         <div class='form-container cmpObj-form-container' *ngFor='let cmpObj of cmpObjs.controls; let i=index;'>
-                                            <ogms-cmp-obj-cfg [methods]='cmpMethods' [formControlName]='i' [participants]='participants.value'></ogms-cmp-obj-cfg>
+                                            <ogms-cmp-obj-cfg [methods]='cmpMethods' [formControlName]='i'
+                                                [participants]='participants.value'></ogms-cmp-obj-cfg>
 
                                             <span class='close-tag' (click)='removeCmpObj(i)'>
                                                 <mat-icon>cancel</mat-icon>
@@ -85,7 +88,8 @@
                                     </div>
                                 </ng-template>
                                 <div class='flex-box-row-nowrap form-item' id='add-cmpObj-btn'>
-                                    <button mat-stroked-button color='primary' class='flex-item-1-1-auto' (click)='addCmpObj()' [disabled]='participantsNum === 0'>
+                                    <button mat-stroked-button color='primary' class='flex-item-1-1-auto' (click)='addCmpObj()'
+                                        [disabled]='participantsNum === 0'>
                                         <mat-icon>add</mat-icon>
                                         <span>Add comparison feature</span>
                                     </button>
@@ -100,15 +104,16 @@
                     <mat-step>
                         <ng-template matStepLabel>Preview outline</ng-template>
                         <div class='form-container'>
-                            <ogms-cmp-sln-outline [cmpSln]='cmpSln'></ogms-cmp-sln-outline>
+                            <ogms-cmp-sln-outline [solution]='solution'></ogms-cmp-sln-outline>
                         </div>
                         <div class='stepy-btn-group'>
                             <button mat-stroked-button matStepperPrevious color="primary">Back</button>
-                            <button mat-stroked-button color="primary" (click)="submitSln()" [disabled]='!slnFG.valid' cdkFocusInitial>Submit</button>
+                            <button mat-stroked-button color="primary" (click)="submitSln()" [disabled]='!slnFG.valid'
+                                cdkFocusInitial>Submit</button>
                         </div>
                     </mat-step>
                 </mat-horizontal-stepper>
             </form>
         </div>
     </article>
-</ng-template>
+</div>

@@ -28,11 +28,11 @@ export class GeoModelDetailComponent extends DocBaseComponent implements OnInit 
 
     constructor(
         public route: ActivatedRoute,
-        public slnService: MSService,
+        public solutionService: MSService,
 //private _notice: NzNotificationService,
         public title: DynamicTitleService
     ) {
-        super(route, slnService, title);
+        super(route, solutionService, title);
     }
 
     ngOnInit() {

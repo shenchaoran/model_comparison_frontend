@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
-import { SlnService } from '../../services/sln.service';
+import { SolutionService } from '../../services/sln.service';
 import { NzNotificationService, NzModalService } from "ng-zorro-antd";
 import { DynamicTitleService } from '@common/core/services/dynamic-title.service';
 
@@ -16,7 +16,7 @@ export class SolutionListComponent {
     }
 
     constructor(
-        public service: SlnService,
+        public service: SolutionService,
         public route: ActivatedRoute,
         public title: DynamicTitleService
     ) { 

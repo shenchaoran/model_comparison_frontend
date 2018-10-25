@@ -22,22 +22,22 @@ import { CmpState } from '@models'
     styleUrls: ['./cmp-detail.component.scss']
 })
 export class CmpDetailComponent extends DocBaseComponent implements OnInit {
-    cmpTask;
+    task;
     @ViewChildren('echartDOM') echartDOM: QueryList<ElementRef>;
 
     constructor(
         public route: ActivatedRoute,
-        public slnService: TaskService,
+        public solutionService: TaskService,
         public title: DynamicTitleService,
         public renderer2: Renderer2
     ) {
-        super(route, slnService, title);
+        super(route, solutionService, title);
     }
 
     ngOnInit() {
         super.ngOnInit();
         this._subscriptions.push(this.doc.subscribe(doc => {
-            this.cmpTask = doc;
+            this.task = doc;
             this.fetchInterval();
         }));
     }
@@ -45,7 +45,7 @@ export class CmpDetailComponent extends DocBaseComponent implements OnInit {
     private fetchInterval() {
         const record$ = interval(3000).pipe(
             switchMap((v, i) => {
-                return this.slnService.findOne(this.cmpTask._id, false);
+                return this.solutionService.findOne(this.task._id, false);
             }),
             map(response => {
                 if (!response.error) {
@@ -55,11 +55,11 @@ export class CmpDetailComponent extends DocBaseComponent implements OnInit {
         )
 
         const subscription = record$.subscribe(doc => {
-            this.cmpTask = doc;
-            if (this.cmpTask.state !== CmpState.RUNNING) {
+            this.task = doc;
+            if (this.task.state !== CmpState.RUNNING) {
                 subscription.unsubscribe();
-                if (this.cmpTask.state === CmpState.FINISHED_SUCCEED ||
-                    this.cmpTask.state === CmpState.FINISHED_FAILED)
+                if (this.task.state === CmpState.FINISHED_SUCCEED ||
+                    this.task.state === CmpState.FINISHED_FAILED)
                     this.buildChart();
             }
         });
@@ -70,7 +70,7 @@ export class CmpDetailComponent extends DocBaseComponent implements OnInit {
         let i = 0;
         setTimeout(() => {
             let $echartDOMs = $('.echart-dom')
-            this.cmpTask.cmpObjs.map(cmpObj => {
+            this.task.cmpObjs.map(cmpObj => {
                 cmpObj.methods.map((method) => {
                     if (method.id === '5b713f39a4857f1ba4be23ff') {
                         if (method.result.state === CmpState.FINISHED_SUCCEED) {
