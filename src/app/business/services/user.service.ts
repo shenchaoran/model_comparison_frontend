@@ -149,6 +149,10 @@ export class UserService {
         return true;
     }
 
+
+
+
+
     //* 获取模拟的用户信息
     getMockuser(){
         return USER;
@@ -156,7 +160,7 @@ export class UserService {
 
     //* 获取用户相关issues
     getMockUserIssues(){
-        console.log(getFakeList());
+        // console.log(getFakeList());
         return getFakeList();
     }
 }

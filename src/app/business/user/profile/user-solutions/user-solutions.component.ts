@@ -1,6 +1,6 @@
 import { OgmsBaseComponent } from './../../../../common/shared/components/ogms-base/ogms-base.component';
 import { SlnService } from './../../../services/sln.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, } from '@angular/core';
 
 @Component({
   selector: 'ogms-user-solutions',

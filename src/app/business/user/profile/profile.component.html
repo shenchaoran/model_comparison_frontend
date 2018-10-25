@@ -5,7 +5,7 @@
         <div class="avatarHolder">
           <img src="{{user.avatar}}" onerror="this.src='../../../../assets/img/user/avatar_def.png'"> 
         </div>
-        <h1 style="text-align:center"><span class="username">{{user.name}}</span></h1>
+        <h1 style="text-align:center"><span class="username">{{user.username}}</span></h1>
         <button nz-button nzType="default" style="width:100%;margin-bottom: 20px" *ngIf=false>Follow</button>
 
         <nz-divider nzDashed style="margin-top:12px;margin-bottom:12px"></nz-divider>
@@ -14,14 +14,13 @@
           <p *ngIf="user.title"><i class="title"></i>{{user.title}}</p>
           
           <p *ngIf="user.group"><i class="group"></i>{{user.group}}</p>
-          <p *ngIf="user.geographic.province">
+          <p *ngIf="user.location">
             <i class="address" ></i>
-            {{user.geographic.province.label}}
-            {{user.geographic.city.label}}
+            {{user.location}}
           </p>
           <p *ngIf="user.email">
             <i  class="email" href="../../../../assets/icon/user/mailbox.svg"></i>
-            <a href="mailto:{{user.email}}">{{user.email}}</a>
+            <a style="display: flex" href="mailto:{{user.email}}" title="{{user.email}}">{{user.email}}</a>
           </p>
         </div>
       </ng-container>

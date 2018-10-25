@@ -1,6 +1,6 @@
 import { OgmsBaseComponent } from './../../../../common/shared/components/ogms-base/ogms-base.component';
 import { TaskService } from '@services';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, } from '@angular/core';
 
 @Component({
   selector: 'ogms-user-tasks',
@@ -8,7 +8,6 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./user-tasks.component.scss']
 })
 export class UserTasksComponent extends OgmsBaseComponent implements OnInit {
-
   results:any[];
   result_type="comparison";
   constructor(
@@ -27,6 +26,8 @@ export class UserTasksComponent extends OgmsBaseComponent implements OnInit {
               this.results = response.data.docs;
           }
       }));
+
+      
   }
 
 }

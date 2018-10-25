@@ -20,6 +20,8 @@ export class TopicService extends ListBaseService {
     public topicList: Topic[];
     public topicCount: Number;
     public hadSaved: boolean;
+    public currentUser_topicList: Topic[];
+    public currentUser_topicCount: Number;
     public get conversation(): Conversation {
         return this.conversationService.conversation;
     }
@@ -49,7 +51,7 @@ export class TopicService extends ListBaseService {
         return super.findOne(id, withRequestProgress)
             .pipe(
                 map(res => {
-                    if(!res.error){
+                    if (!res.error) {
                         this.topic = res.data.topic;
                         this.hadSaved = true;
                         this.conversationService.users = res.data.users;
@@ -65,7 +67,7 @@ export class TopicService extends ListBaseService {
             pageIndex: 1,
             pageSize: 50
         }).pipe(map(res => {
-            if(!res.error) {
+            if (!res.error) {
                 this.topicList = res.data.docs;
                 this.topicCount = res.data.count;
             }
@@ -73,9 +75,25 @@ export class TopicService extends ListBaseService {
         }));
     }
 
+    public findByUserId(userId) {
+        return this.http.get(`${this.baseUrl}`, {
+            params: {
+                pageIndex: 1,
+                pageSize: 50,
+                userId: userId,
+            }
+        }).pipe(map(res => {
+            if (!res.error) {
+                this.currentUser_topicList = res.data.docs;
+                this.currentUser_topicCount = res.data.count;
+            }
+            return res;
+        }));
+    }
+
     public upsertTopic() {
-        let fn = this.hadSaved? 
-            () => this.http.patch(`${this.baseUrl}/${this.topic._id}`, {topic: this.topic}) :
+        let fn = this.hadSaved ?
+            () => this.http.patch(`${this.baseUrl}/${this.topic._id}`, { topic: this.topic }) :
             () => this.http.post(`${this.baseUrl}`, {
                 topic: this.topic,
                 conversation: this.conversation
@@ -83,7 +101,7 @@ export class TopicService extends ListBaseService {
 
         return fn().pipe(
             map(res => {
-                if(!res.error) {}
+                if (!res.error) { }
                 return res;
             })
         );
@@ -91,7 +109,7 @@ export class TopicService extends ListBaseService {
 
     public deleteTopic() {
         return this.http.delete(`${this.baseUrl}/${this.topic._id}`).pipe(map(res => {
-            if(!res.error) {
+            if (!res.error) {
 
             }
             return res;
@@ -104,5 +122,7 @@ export class TopicService extends ListBaseService {
         this.topicCount = 0;
         this.topicList = [];
         this.hadSaved = null;
+        this.currentUser_topicList = null;
+        this.currentUser_topicCount = 0;
     }
 }
