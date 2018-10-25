@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, ContentChild, ContentChildren, ElementRef, AfterContentInit, HostListener, Host } from '@angular/core';
+import { Component, OnInit, Input, Output, ContentChild, ContentChildren, ElementRef, AfterContentInit, HostListener, ViewChild, Renderer2 } from '@angular/core';
 
 @Component({
     selector: 'ogms-sidebar-section',
@@ -8,24 +8,36 @@ import { Component, OnInit, Input, Output, ContentChild, ContentChildren, Elemen
 export class SidebarSectionComponent implements OnInit, AfterContentInit {
     // 此处必须在 light DOM 中声明
     @ContentChild('menu') menuRef: ElementRef;
-    showMenu: boolean = false;
 
-    constructor() { }
+    // shadow DOM
+    @ViewChild('titleRef') titleRef: ElementRef;
+
+    constructor(
+        private el: ElementRef,
+        private renderer2: Renderer2,
+    ) { }
 
     ngOnInit() {
     }
 
     ngAfterContentInit() {
-        console.log(this.menuRef);
+        // console.log(this.menuRef);
         
     }
 
-    onHeaderClick() {
-        this.showMenu = true;
+    onHeaderClick(e) {
+        if(!!this.menuRef) {
+            this.renderer2.setStyle(this.menuRef.nativeElement, 'display', 'block');
+        }
     }
 
-    @HostListener('click', ['$event'])
+    @HostListener('window:click', ['$event'])
     onclick(e) {
-        this.showMenu = false;
+        if(!!this.menuRef) {
+            if(this.titleRef.nativeElement.contains(e.target))
+                return ;
+            if(!this.menuRef.nativeElement.contains(e.target))
+                this.renderer2.setStyle(this.menuRef.nativeElement, 'display', 'none');
+        }
     }
 }

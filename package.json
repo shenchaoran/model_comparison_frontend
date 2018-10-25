@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "start": "ng serve --port 8888 --hmr --source-map",
-    "debug": "ng serve --port 8888 --hmr --source-map",
+    "debug": "node --nolazy node_modules/@angular/cli/bin/ng serve --proxy-config proxy.conf.json --port 8888 --hmr --source-map",
     "webpack-server": "webpack-dev-server --inline --progress --content-base src",
     "build": "ng build --prod --source-map",
     "build:prod": "node --max_old_space_size=5120 node_modules/@angular/cli/bin/ng build --prod --watch --target=production --output-path=prod --build-optimizer --vendor-chunk",

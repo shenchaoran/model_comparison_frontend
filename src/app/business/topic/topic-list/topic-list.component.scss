@@ -7,6 +7,8 @@
     margin: -1px 0 0 -1px;
     display: flex;
     flex-flow: column nowrap;
+    // align-items: stretch;
+    height: 100%;
     .panel-item-header {
         padding: 0 0 10px;
         font-weight: 400;

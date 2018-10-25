@@ -26,6 +26,7 @@ export class Topic {
     };
     solutionIds: string[];
     cid: string;
+    subscribed_uids: string[];
 
     constructor(user: User, cid?: string) {
         this._id = ObjectID().toString();
@@ -40,6 +41,7 @@ export class Topic {
             userId: user._id,
             userName: user.username
         };
+        this.subscribed_uids = [];
         this.solutionIds = [];
         this.cid = cid;
     }

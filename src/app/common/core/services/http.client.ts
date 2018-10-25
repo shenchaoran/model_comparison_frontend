@@ -3,7 +3,6 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
-import { NzNotificationService } from 'ng-zorro-antd';
 
 /**
  * 封装HttpClient，主要解决：
@@ -11,40 +10,28 @@ import { NzNotificationService } from 'ng-zorro-antd';
  *      response interceptor
  */
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class _HttpClient {
+    headers: HttpHeaders = new HttpHeaders();
+
     constructor(
         private http: HttpClient,
         @Inject('BACKEND') private backend,
         private loading: SlimLoadingBarService,
-        //private _notice: NzNotificationService
-    ) { }
-
-    private appendDomain(url: string): string {
-        return `http://${this.backend.host}:${this.backend.port}${this.backend.API_prefix}${url}`;
+    ) {
+        const jwtStr = localStorage.getItem('jwt');
+        if (jwtStr) {
+            this.headers = new HttpHeaders().append('Authorization', `bearer ${JSON.parse(jwtStr).token}`);
+        }
     }
 
-    private appendJWT(url: string, appendJWT: boolean, withRequestProgress?: boolean): string {
-        if (withRequestProgress !== false)
-            this.loading.start();
-        url = this.appendDomain(url);
-        if (appendJWT !== false) {
-            const jwtStr = localStorage.getItem('jwt');
-            let jwt = undefined;
-            if (jwtStr) {
-                jwt = JSON.parse(jwtStr);
-                if (url.indexOf('?') === -1) {
-                    url += `?Authorization=bearer ${jwt.token}`;
-                }
-                else {
-                    url += `&Authorization=bearer ${jwt.token}`;
-                }
-            }
-            else {
-
-            }
+    resetHeaders() {
+        const jwtStr = localStorage.getItem('jwt');
+        if (jwtStr) {
+            this.headers = new HttpHeaders().append('Authorization', `bearer ${JSON.parse(jwtStr).token}`);
         }
-        return url;
     }
 
     private resInterceptor(observable: Observable<any>, parseRes?: boolean, withRequestProgress?: boolean): Observable<any> {
@@ -85,8 +72,10 @@ export class _HttpClient {
         parseRes?: boolean,
         withRequestProgress?: boolean
     ): Observable<any> {
-        url = this.appendJWT(url, appendJWT, withRequestProgress);
-        return this.resInterceptor(this.http.get(url, options), parseRes, withRequestProgress);
+        return this.resInterceptor(this.http.get(url, {
+            ...options, 
+            headers: this.headers
+        }), parseRes, withRequestProgress);
     }
 
     post(
@@ -97,8 +86,10 @@ export class _HttpClient {
         parseRes?: boolean,
         withRequestProgress?: boolean
     ): Observable<any> {
-        url = this.appendJWT(url, appendJWT, withRequestProgress);
-        return this.resInterceptor(this.http.post(url, body, options), parseRes, withRequestProgress);
+        return this.resInterceptor(this.http.post(url, body, {
+            ...options, 
+            headers: this.headers
+        }), parseRes, withRequestProgress);
     }
 
     delete(
@@ -107,8 +98,10 @@ export class _HttpClient {
         appendJWT?: boolean,
         parseRes?: boolean
     ): Observable<any> {
-        url = this.appendJWT(url, appendJWT);
-        return this.resInterceptor(this.http.delete(url, options), parseRes);
+        return this.resInterceptor(this.http.delete(url, {
+            ...options,
+            headers: this.headers
+        }), parseRes);
     }
 
     put(
@@ -118,8 +111,10 @@ export class _HttpClient {
         appendJWT?: boolean,
         parseRes?: boolean
     ): Observable<any> {
-        url = this.appendJWT(url, appendJWT);
-        return this.resInterceptor(this.http.put(url, body, options), parseRes);
+        return this.resInterceptor(this.http.put(url, body, {
+            ...options,
+            headers: this.headers
+        }), parseRes);
     }
 
     patch(
@@ -129,7 +124,9 @@ export class _HttpClient {
         appendJWT?: boolean,
         parseRes?: boolean
     ): Observable<any> {
-        url = this.appendJWT(url, appendJWT);
-        return this.resInterceptor(this.http.patch(url, body, options), parseRes);
+        return this.resInterceptor(this.http.patch(url, body, {
+            ...options,
+            headers: this.headers
+        }), parseRes);
     }
 }

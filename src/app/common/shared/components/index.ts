@@ -18,3 +18,4 @@ export * from './cards-template/cards-template.component';
 export * from './mat-cascader-select/mat-cascader-select.component';
 export * from './mat-cascader-select/cascader-select.validator';
 export * from './sidebar-section/sidebar-section.component';
+export * from './siderbar-menu-modal/siderbar-menu-modal.component';

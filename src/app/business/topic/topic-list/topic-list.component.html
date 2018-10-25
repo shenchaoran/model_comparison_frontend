@@ -4,7 +4,7 @@
             <a [routerLink]='"/topics/" + item._id'>{{item.meta.name}}</a>
         </span>
         <div class='panel-item-body'>
-            <p>{{item.meta.desc | stringLimit: 180 | description}}</p>
+            <p>{{item.meta.descMD | stringLimit: 180 | description}}</p>
         </div>
         <div class='panel-item-footer'>
             <span>

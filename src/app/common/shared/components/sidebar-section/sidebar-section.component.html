@@ -1,9 +1,9 @@
 <div>
     <div class='header' [class.has-menu]='!!menuRef'>
-        <div class='title' (click)='onHeaderClick()'>
-            <ng-content select='.header'></ng-content>
+        <div class='title' #titleRef (click)='onHeaderClick($event)'>
+            <ng-content select='.title'></ng-content>
         </div>
-        <div class='menu' [style.display]='showMenu? "block": "none"'>
+        <div class='menu'>
             <ng-content select='.menu'></ng-content>
         </div>
     </div>

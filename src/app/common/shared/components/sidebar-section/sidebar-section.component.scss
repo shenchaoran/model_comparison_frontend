@@ -1,19 +1,22 @@
 .header {
     margin-bottom: 5px;
+    z-index: 2;
     &.has-menu {
         position: relative;
-        cursor: pointer;
+        .title {
+            cursor: pointer;
+        }
         .title:hover {
-            color: blue;
+            color: #0366d6;
         }
         .menu {
             position: absolute;
             right: 0;
             background: #fff;
             z-index: 1;
-            border: 1px solid #eee;
-            border-radius: 5px;
-            display: none;
+            border: 1px solid #e1e4e8;
+            border-radius: 3px;
+            // display: none;
         }
     }
 }
