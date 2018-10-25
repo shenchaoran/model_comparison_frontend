@@ -27,6 +27,7 @@ export class MS {
     stdIds: string[];
     topic: string;
     exeName: string;
+    subscribed_uids: string[];
 }
 
 export class Event {

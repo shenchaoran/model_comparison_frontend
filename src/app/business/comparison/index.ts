@@ -34,7 +34,14 @@ const modules = [
     ConversationModule,
     SimplemdeModule.forRoot(),
 ];
-const services = [];
+const services = [
+    // {
+    //     provide: 'MAT_PROGRESS_SPINNER_DEFAULT_OPTIONS',
+    //     useValue: {
+    //         diameter: 40
+    //     }
+    // },
+];
 @NgModule({
     imports: [...modules],
     declarations: [...components],

@@ -1,4 +1,5 @@
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Resolve } from '@angular/router';
@@ -11,6 +12,10 @@ import { ListBaseService } from './list-base.service';
 export class CmpMethodService extends ListBaseService {
     protected baseUrl = '/comparison/methods';
 
+    public methods: any[];
+    public methodCount: number;
+    public method: any;
+
     constructor(
         protected http: _HttpClient
     ) {
@@ -21,5 +26,15 @@ export class CmpMethodService extends ListBaseService {
         return this.http.get(`${this.baseUrl}/matched`, {
             params: query
         })
+    }
+
+    findAll(where) {
+        return this.http.get(`${this.baseUrl}`).pipe(map(res => {
+            if(!res.error) {
+                this.methods = res.data.docs;
+                this.methodCount = res.data.count;
+            }
+            return res;
+        }))
     }
 }

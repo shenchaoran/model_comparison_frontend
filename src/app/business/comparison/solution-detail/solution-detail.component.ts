@@ -30,6 +30,7 @@ export class SolutionDetailComponent extends DefaultLifeHook implements OnInit {
     get topic() {return this.solutionService.topic;}
     get tasks() {return this.solutionService.tasks;}
     get mss() {return this.solutionService.mss;}
+    get includeUser() {return this.solution.subscribed_uids && this.solution.subscribed_uids.findIndex(v => v === this.user._id) !== -1;}
 
     constructor(
         public route: ActivatedRoute,
@@ -50,7 +51,36 @@ export class SolutionDetailComponent extends DefaultLifeHook implements OnInit {
         });
     }
 
-    onTitleEditSave() {}
-    onTitleEditCancel() {}
-    onTitleEditClick() {}
+    onTitleEditSave() {
+        this.solutionService.upsert().subscribe(res => {
+            this.descMode = 'READ';
+        });
+    }
+    onTitleEditCancel() {
+        this.solution.meta.name = this._originTitle;
+        this.titleMode = 'READ';
+    }
+    onTitleEditClick() {
+        this.titleMode = "WRITE";
+        this._originTitle = this.solution.meta.name;
+    }
+
+    onDescEditSave() {
+        this.solution.meta.descHTML = this.simpleMDE.simplemde.markdown(this.solution.meta.descMD);
+        this.solutionService.upsert().subscribe(res => {
+            this.descMode = 'READ';
+        });
+    }
+    onDescEditCancel() {
+        this.descMode = 'READ';
+        this.solution.meta.descMD = this._originDesc;
+    }
+    onDescEditClick() {
+        this.descMode = "WRITE";
+        this._originDesc = this.solution.meta.descMD;
+    }
+    onSubscribeToggle() {
+        let ac = this.includeUser? 'unsubscribe': 'subscribe';
+        this.solutionService.subscribeToggle(ac, this.user._id).subscribe(res =>{});
+    }
 }

@@ -30,6 +30,7 @@ export class Task {
     cmpObjs: Array<CmpObj>;
     schemas: UDXSchema[];
     cid: string;
+    subscribed_uids: string[];
 
     constructor(user: User) {
         this._id = ObjectID().toString();
@@ -41,6 +42,7 @@ export class Task {
         this.calcuTaskIds = [];
         this.cmpObjs = [];
         this.schemas = [];
+        this.subscribed_uids = [];
         
         if(user) {
             this.auth = {

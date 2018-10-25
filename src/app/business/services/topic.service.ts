@@ -107,7 +107,7 @@ export class TopicService extends ListBaseService {
     //     }));
     // }
 
-    public upsertTopic() {
+    public upsert() {
         let fn = this.hadSaved ?
             () => this.http.patch(`${this.baseUrl}/${this.topic._id}`, { topic: this.topic }) :
             () => this.http.post(`${this.baseUrl}`, {
@@ -118,11 +118,10 @@ export class TopicService extends ListBaseService {
         return fn().pipe(map(res => {
             if (!res.error) { }
             return res;
-        })
-        );
+        }));
     }
 
-    public deleteTopic() {
+    public delete() {
         return this.http.delete(`${this.baseUrl}/${this.topic._id}`).pipe(map(res => {
             if (!res.error) {
 

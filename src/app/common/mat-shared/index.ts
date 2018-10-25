@@ -95,6 +95,14 @@ const MAT_MODULES = [
     ],
     exports: [
         ...MAT_MODULES
+    ],
+    providers: [
+        {
+            provide: 'MAT_PROGRESS_SPINNER_DEFAULT_OPTIONS',
+            useValue: {
+                diameter: 40
+            }
+        },
     ]
 })
 export class MatSharedModule { }

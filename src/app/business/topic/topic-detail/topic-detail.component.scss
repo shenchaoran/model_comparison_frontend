@@ -42,71 +42,30 @@
 .header-meta {
     font-size: 14px;
     padding: 10px 0;
+
     .author {
         font-weight: 600;
         color: #586069;
-    
+
         &:hover {
             text-decoration: underline;
         }
     }
 }
 
-article {
-    overflow: hidden;
-
-    .wiki-tab {
-        position: relative;
-        margin-top: 15px;
-
-        .desc-btn-group {
-            position: absolute;
-            right: 7px;
-            top: 7px;
-        }
-    }
-}
-
-aside {
-    margin-top: 48px;
-
-    .sln-list {
-        mat-icon {
-            cursor: pointer;
-            vertical-align: middle;
-        }
-
-        li {
-            &:not(:last-child) {
-                border-bottom: 1px solid #f3f3f3e0;
-            }
-
-            &:hover {
-                color: #0366d6;
-            }
-        }
+.sln-list {
+    mat-icon {
+        cursor: pointer;
+        vertical-align: middle;
     }
 
-    .participants {
-        display: flex;
-        flex-flow: row wrap;
-
-        >img {
-            border-radius: 3px;
-            width: 26px;
-            height: 26px;
-            margin-top: 5px;
-            margin-left: 5px;
+    li {
+        &:not(:last-child) {
+            border-bottom: 1px solid #f3f3f3e0;
         }
-    }
 
-    .notification {
-        .body {
-            a {
-                margin-top: 8px;
-                width: 100%;
-                // height: 25px;
-            }
+        &:hover {
+            color: #0366d6;
         }
     }
 }

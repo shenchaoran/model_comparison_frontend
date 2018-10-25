@@ -26,6 +26,7 @@ export class Solution {
     cmpObjs: CmpObj[];
     [key: string]: any;
     cid: string;
+    subscribed_uids: string[];
 
     constructor(user: User) {
         this._id = ObjectID().toString();
@@ -35,6 +36,7 @@ export class Solution {
             time: new Date().getTime()
         };
         this.cmpObjs = [];
+        this.subscribed_uids = [];
         if(user) {
             this.auth = {
                 userId: user._id,

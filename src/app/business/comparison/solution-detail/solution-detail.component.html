@@ -33,9 +33,8 @@
     </div>
 
     <div class='header-meta'>
-        <a class='author' routerLink='/user'>{{solution.auth.userName}}</a> created this topic at {{solution.meta.time
-        |
-        date: 'yyyy.MM.dd'}}
+        <a class='author' routerLink='/user'>{{solution.auth.userName}}</a> created this solution at
+        {{solution.meta.time | date: 'yyyy.MM.dd'}}
     </div>
 
     <div class='article'>
@@ -67,6 +66,71 @@
     </div>
 
     <div class='aside'>
+        <div>
+            <ogms-sidebar-section>
+                <div class='title'>
+                    Topic
+                    <mat-icon inline>settings</mat-icon>
+                </div>
+                <div class='body'>
 
+                </div>
+            </ogms-sidebar-section>
+        </div>
+
+        <div>
+            <ogms-sidebar-section>
+                <div class='title'>
+                    Tasks
+                    <mat-icon inline>settings</mat-icon>
+                </div>
+                <div class='body'>
+
+                </div>
+            </ogms-sidebar-section>
+        </div>
+
+        <div>
+            <ogms-sidebar-section>
+                <div class='title'>
+                    Models
+                    <mat-icon inline>settings</mat-icon>
+                </div>
+                <div class='body'>
+
+                </div>
+            </ogms-sidebar-section>
+        </div>
+
+        <div>
+            <ogms-sidebar-section>
+                <div class='title'>
+                    {{users.length}} Participants
+                </div>
+                <div class='body participants'>
+                    <ng-container *ngFor='let user of users'>
+                        <img [attr.src]='"data:image/png;base64," + user.avator'>
+                    </ng-container>
+                </div>
+            </ogms-sidebar-section>
+        </div>
+
+        <div class='notification'>
+            <ogms-sidebar-section>
+                <div class='title'>
+                    Notifications
+                </div>
+                <div class='body'>
+                    <a mat-stroked-button (click)='onSubscribeToggle()'>
+                        <ng-container *ngIf='includeUser else noticeTemp'>
+                            <mat-icon inline>notifications_off</mat-icon>Unsubscribe
+                        </ng-container>
+                        <ng-template #noticeTemp>
+                            <mat-icon inline>notifications</mat-icon>Subscribe
+                        </ng-template>
+                    </a>
+                </div>
+            </ogms-sidebar-section>
+        </div>
     </div>
 </ogms-detail-layout>

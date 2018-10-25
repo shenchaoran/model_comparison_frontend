@@ -87,7 +87,7 @@ export class TopicDetailComponent extends DefaultLifeHook implements OnInit {
     }
 
     onTitleEditSave() {
-        this.topicService.upsertTopic().subscribe(res => {
+        this.topicService.upsert().subscribe(res => {
             this.titleMode = 'READ';
         });
     }
@@ -109,7 +109,7 @@ export class TopicDetailComponent extends DefaultLifeHook implements OnInit {
 
     onDescEditSave() {
         this.topic.meta.descHTML = this.simpleMDE.simplemde.markdown(this.topic.meta.descMD);
-        this.topicService.upsertTopic().subscribe(res => {
+        this.topicService.upsert().subscribe(res => {
             this.descMode = 'READ';
         });
     }
