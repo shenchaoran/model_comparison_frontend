@@ -3,12 +3,8 @@
         <div class='title' #titleRef (click)='onHeaderClick($event)'>
             <ng-content select='.title'></ng-content>
         </div>
-        <div class='menu'>
-            <ng-content select='.menu'></ng-content>
-        </div>
+        <ng-content select='.menu'></ng-content>
     </div>
 
-    <div class='body'>
-        <ng-content select='.body'></ng-content>
-    </div>
+    <ng-content select='.body'></ng-content>
 </div>

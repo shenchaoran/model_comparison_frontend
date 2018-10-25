@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { HeaderMenuLayoutComponent, DocDetailTemplateComponent } from '@common/shared';
+import { HeaderMenuLayoutComponent } from '@common/shared';
 import { GeoModelListComponent } from './geo-model-list/geo-model-list.component';
 import { GeoModelDetailComponent } from './geo-model-detail/geo-model-detail.component';
 import { MSService } from '@services/ms.service';
@@ -23,24 +23,18 @@ const routes: Routes = [
                 },
             },
             {
-                path: '',
-                component: DocDetailTemplateComponent,
-                children: [
-                    {
-                        path: ':id',
-                        component: GeoModelDetailComponent,
-                        data: {
-                            title: 'Model Resource'
-                        }
-                    },
-                    {
-                        path: ':id/invoke',
-                        component: InvokeComponent,
-                        data: {
-                            title: 'Model Invoke'
-                        }
-                    }
-                ]
+                path: ':id',
+                component: GeoModelDetailComponent,
+                data: {
+                    title: 'Model Resource'
+                }
+            },
+            {
+                path: ':id/invoke',
+                component: InvokeComponent,
+                data: {
+                    title: 'Model Invoke'
+                }
             }
         ]
     }

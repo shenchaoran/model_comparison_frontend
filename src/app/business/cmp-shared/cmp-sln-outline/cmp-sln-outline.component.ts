@@ -12,10 +12,10 @@ export class CmpSlnOutlineComponent implements OnInit {
     _cmpSln;
     @ViewChildren(MatTable) tableComponents: QueryList<MatTable<any>>;
     @Input() 
-    set cmpSln(v: Solution) {
+    set solution(v: Solution) {
         this._cmpSln = v;
     }
-    get cmpSln() {
+    get solution() {
         return this._cmpSln;
     }
 

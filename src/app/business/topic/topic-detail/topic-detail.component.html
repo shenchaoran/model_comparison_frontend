@@ -9,7 +9,7 @@
     </ng-template>
 
     <ng-container *ngIf='topic else topicLoading'>
-        <div class='doc-title' [class.read]='titleMode === "READ"'>
+        <div class='header-title' [class.read]='titleMode === "READ"'>
             <ng-container *ngIf='titleMode === "WRITE" else readTemp'>
                 <span class='topic-name'>
                     <mat-form-field>
@@ -38,15 +38,15 @@
         <div ogms-flex-1-0>
             <article>
                 <mat-tab-group selectedIndex='0' (selectedIndexChange)='onSelectedIndexChange($event)'>
-                    <mat-tab label='Topic'>
-                        <div class='doc-desc' *ngIf='descMode === "WRITE"'>
+                    <mat-tab label='Wiki'>
+                        <div class='wiki-tab' *ngIf='descMode === "WRITE"'>
                             <simplemde [(ngModel)]='topic.meta.descMD' [options]='mdeOption'></simplemde>
                             <div class='desc-btn-group'>
                                 <button mat-button color='primary' (click)='onDescEditCancel()'>Cancel</button>
                                 <button mat-button color='primary' (click)='onDescEditSave()'>Save</button>
                             </div>
                         </div>
-                        <div class='doc-desc' *ngIf='descMode === "READ"'>
+                        <div class='wiki-tab' *ngIf='descMode === "READ"'>
                             <div [innerHTML]='topic.meta.descHTML'></div>
                             <div class='desc-btn-group'>
                                 <button mat-button color='primary' *ngIf='couldEdit' (click)='onDescEditClick()'>Edit</button>
@@ -64,6 +64,7 @@
                     </mat-tab>
                 </mat-tab-group>
             </article>
+            
             <aside ogms-aside>
                 <div>
                     <ogms-sidebar-section>

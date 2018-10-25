@@ -1,4 +1,4 @@
-<div *ngIf='_loading else template'>
+<div *ngIf='!conversation else template'>
     <mat-spinner></mat-spinner>
 </div>
 <ng-template #template>

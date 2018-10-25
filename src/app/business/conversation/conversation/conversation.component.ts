@@ -42,7 +42,7 @@ import {
     selector: 'ogms-conversation',
     templateUrl: './conversation.component.html',
     styleUrls: ['./conversation.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    // changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,
@@ -55,7 +55,6 @@ export class ConversationComponent implements ControlValueAccessor, OnInit {
     conversation: Conversation;
     emptyComment: Comment;
     conversation$: Subject<any> = new Subject();
-    _loading: boolean = true;
     
     @Input() set _id(v: string) {
         this.conversationService.findOne(v)
@@ -71,7 +70,6 @@ export class ConversationComponent implements ControlValueAccessor, OnInit {
 
     constructor(
         public conversationService: ConversationService,
-        private topicService: TopicService,
         private userService: UserService,
         private cdRef: ChangeDetectorRef,
     ) {
@@ -81,7 +79,6 @@ export class ConversationComponent implements ControlValueAccessor, OnInit {
         });
         this.conversation$.subscribe(v => {
             this.conversation = v;
-            this._loading = false;
             this.cdRef.markForCheck();
         })
     }

@@ -1,26 +1,118 @@
-.header {
-    margin-bottom: 5px;
-    z-index: 2;
-    &.has-menu {
-        position: relative;
-        .title {
+:host {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    color: #586069;
+    font-size: 14px;
+
+    /deep/ .header {
+        margin-bottom: 5px;
+        z-index: 2;
+
+        &.has-menu {
+            position: relative;
+            >.title {
+                user-select: none;
+                cursor: pointer;
+        
+                &:hover {
+                    color: #0366d6;
+                }
+        
+                mat-icon {
+                    float: right;
+                    vertical-align: middle;
+                }
+            }
+        
+            >.menu {
+                display: none;
+                color: #24292e;
+                position: absolute;
+                right: 0;
+                background: #fff;
+                z-index: 1;
+                border: 1px solid #e1e4e8;
+                border-radius: 3px;
+        
+                >* {
+                    padding-left: 8px;
+                    padding-right: 8px;
+                }
+        
+                .loading {
+                    width: 100%;
+                    height: 200px;
+                }
+        
+                .title {
+                    font-weight: 600;
+                    padding-top: 5px;
+                    padding-bottom: 5px;
+                    border-bottom: 1px solid #e1e4e8;
+                    background: #f6f8fa;
+                }
+        
+                .filter {
+                    padding: 10px 8px;
+                    box-sizing: border-box;
+                    border-bottom: 1px solid #e1e4e8;
+                    background: #f6f8fa;
+        
+                    >input {
+                        width: 100%;
+                        padding: 5px;
+                        border: 1px solid #dfe2e5;
+                        border-radius: 3px;
+                        background-color: #fff;
+                        outline: none;
+                        box-shadow: inset 0 1px 2px rgba(27, 31, 35, 0.075);
+                        vertical-align: middle;
+                        line-height: 20px;
+                    }
+                }
+        
+                .opt-list {
+                    max-height: 350px;
+                    overflow: scroll;
+                    padding: 0;
+        
+                    li {
+                        display: flex;
+                        flex-flow: row nowrap;
+                        align-items: center;
+                        padding-left: 8px;
+                        padding-right: 8px;
+        
+                        .sln-select-placeholder {
+                            flex: 0 0 18px;
+                        }
+        
+                        &:hover {
+                            color: #fff;
+                            background-color: #0366d6;
+                        }
+                    }
+                }
+            }
+        }
+        >.title {
+            font-weight: 600;
+            user-select: none;
+        }
+    }
+    
+    /deep/ .ul-option {
+        list-style: none;
+        padding: 0;
+        margin-bottom: 0;
+
+        li {
+            vertical-align: middle;
+            padding: 4px 0;
             cursor: pointer;
-        }
-        .title:hover {
-            color: #0366d6;
-        }
-        .menu {
-            position: absolute;
-            right: 0;
-            background: #fff;
-            z-index: 1;
-            border: 1px solid #e1e4e8;
-            border-radius: 3px;
-            // display: none;
+
+            &:not(:last-child) {
+                border-bottom: 1px solid #eaecef;
+            }
         }
     }
 }
-.body {
-
-}
-

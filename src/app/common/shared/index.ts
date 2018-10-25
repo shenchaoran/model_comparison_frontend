@@ -20,7 +20,6 @@ import {
     HeaderMenuLayoutComponent,
     ListTemplateComponent,
     FooterComponent,
-    DocDetailTemplateComponent,
     TableFeatureComponent,
     SubMenuComponent,
     CmpTabsViewComponent,
@@ -36,6 +35,7 @@ import {
     CascaderSelectValidator,
     SidebarSectionComponent,
     SiderbarMenuModalComponent,
+    DetailLayoutComponent,
 } from './components';
 
 import {
@@ -84,7 +84,6 @@ const components = [
     HeaderMenuLayoutComponent,
     ListTemplateComponent,
     FooterComponent,
-    DocDetailTemplateComponent,
     TableFeatureComponent,
     SubMenuComponent,
     CmpTabsViewComponent,
@@ -98,6 +97,7 @@ const components = [
     MatCascaderSelectComponent,
     SidebarSectionComponent,
     SiderbarMenuModalComponent,
+    DetailLayoutComponent,
 ];
 
 const directives = [

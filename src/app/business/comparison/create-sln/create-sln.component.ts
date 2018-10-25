@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy, Inject }
 import { FormBuilder, Validators, FormGroup, FormArray, FormControl } from '@angular/forms';
 import { Solution, ResourceSrc } from '@models';
 import {
-    SlnService,
+    SolutionService,
     UserService,
     MSService,
 } from '../../services';
@@ -21,7 +21,7 @@ export class CreateSlnComponent implements OnInit {
     cmpMethods;
     slnFG: FormGroup;
     msList: any[];
-    cmpSln: Solution;
+    solution: Solution;
     get cmpObjs() {
         return this.slnFG.get('cmpObjs') as FormArray;
     }
@@ -36,9 +36,8 @@ export class CreateSlnComponent implements OnInit {
     constructor(
         private fb: FormBuilder,
         private cdRef: ChangeDetectorRef,
-        private service: SlnService,
+        private service: SolutionService,
         private msService: MSService,
-        private _notice: NzNotificationService,
         private router: Router,
         private route: ActivatedRoute,
         private cmpMethodService: CmpMethodService,
@@ -46,7 +45,7 @@ export class CreateSlnComponent implements OnInit {
         private userService: UserService,
     ) { 
         this.userService.redirectIfNotLogined();
-        this.cmpSln = new Solution(this.userService.user);
+        this.solution = new Solution(this.userService.user);
     }
 
     ngOnInit() {
@@ -61,11 +60,11 @@ export class CreateSlnComponent implements OnInit {
             .subscribe(state => {
                 // if (state === 'VALID') {
                 let v = this.slnFG.value;
-                this.cmpSln.meta.name = v.name;
-                this.cmpSln.meta.desc = v.desc;
-                this.cmpSln.auth.src = v.auth;
-                this.cmpSln.participants = v.participants;
-                this.cmpSln.cmpObjs = _.map(v.cmpObjs, cmpObj => {
+                this.solution.meta.name = v.name;
+                this.solution.meta.desc = v.desc;
+                this.solution.auth.src = v.auth;
+                this.solution.participants = v.participants;
+                this.solution.cmpObjs = _.map(v.cmpObjs, cmpObj => {
                     return {
                         ...cmpObj,
                         dataRefers: _.map(cmpObj.dataRefers, dataRefer => {
@@ -86,7 +85,7 @@ export class CreateSlnComponent implements OnInit {
                         })
                     }
                 });
-                // console.log(JSON.stringify(this.cmpSln));
+                // console.log(JSON.stringify(this.solution));
                 // }
             })
 
@@ -130,22 +129,21 @@ export class CreateSlnComponent implements OnInit {
     }
 
     submitSln() {
-        this.service.insert(this.cmpSln)
+        this.service.insert(this.solution)
             .subscribe(response => {
                 if (!response.error) {
-                    this._notice.success('Success', 'create comparison solution succeed!');
-                    this.cmpSln._id = response.data._id;
+                    this.solution._id = response.data._id;
 
                     this.dialog.open(SlnConfirmDialog)
                         .afterClosed()
                         .subscribe(result => {
                             if (result === 'outline') {
-                                this.router.navigate(['..', this.cmpSln._id,], {
+                                this.router.navigate(['..', this.solution._id,], {
                                     relativeTo: this.route
                                 });
                             }
                             else if (result === 'configure') {
-                                this.router.navigate(['/comparison/solutions', this.cmpSln._id, 'invoke']);
+                                this.router.navigate(['/comparison/solutions', this.solution._id, 'invoke']);
                             }
                         });
                 }

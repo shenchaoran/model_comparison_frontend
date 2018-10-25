@@ -26,7 +26,7 @@ export class TaskService extends ListBaseService {
     }
 
     insert(obj: {
-        cmpTask: any,
+        task: any,
         calcuTasks: any[]
     }): Observable<any> {
         return this.http.post(`${this.baseUrl}`, obj);

@@ -26,12 +26,12 @@ export class ConversationService extends ListBaseService {
     public pageSize: number = 20;
 
     // 以下变量需要随时维护
-    public authorId: string;
+    public authorId: string;                            // 版主 id，如创建 topic/solution/task 的作者 id
     public emptyComment$: BehaviorSubject<Comment>;
     private hadSavedConversation: boolean = false;
     public commentCount: number;
-    public conversation: Conversation;             // 一个服务实例围绕着 conversation 对象做一系列处理
-    public users: User[];                          // 只保存其他用户（不包括当前登录用户），和 conversation 相关的用户信息，每次查找用户时，从这里查，避免从数据库重复获取
+    public conversation: Conversation;                  // 一个服务实例围绕着 conversation 对象做一系列处理
+    public users: User[];                               // 只保存其他用户（不包括当前登录用户），和 conversation 相关的用户信息，每次查找用户时，从这里查，避免从数据库重复获取
     
     get user() { return this.userService.user; }
 
@@ -47,13 +47,18 @@ export class ConversationService extends ListBaseService {
     /**
      * inlet
      */
-    public init(conversation: Conversation, users: User[], commentCount: number, authorId: string, hadSavedConversation: boolean = true) {
-        this.conversation = conversation;
-        this.users = users;
-        this.commentCount = commentCount;
-        this.authorId = authorId;
-        this.hadSavedConversation = hadSavedConversation;
-        this.newEmptyComment();
+    public init(conversation: Conversation, users: User[], commentCount: number, authorId: string, pid: string, hadSavedConversation: boolean = true) {
+        if(conversation) {
+            this.conversation = conversation;
+            this.users = users;
+            this.commentCount = commentCount;
+            this.authorId = authorId;
+            this.hadSavedConversation = hadSavedConversation;
+            this.newEmptyComment();
+        }
+        else {
+            this.createConversation(pid);
+        }
     }
 
     /**

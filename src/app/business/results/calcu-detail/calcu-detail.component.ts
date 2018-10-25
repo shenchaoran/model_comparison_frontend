@@ -20,10 +20,10 @@ export class CalcuDetailComponent extends DocBaseComponent implements OnInit {
 
     constructor(
         public route: ActivatedRoute,
-        public slnService: MSRService,
+        public solutionService: MSRService,
         public title: DynamicTitleService
     ) { 
-        super(route, slnService, title);
+        super(route, solutionService, title);
     }
 
     ngOnInit() {
@@ -37,7 +37,7 @@ export class CalcuDetailComponent extends DocBaseComponent implements OnInit {
     private fetchInterval() {
         const record$ = interval(3000).pipe(
             switchMap((v, i) => {
-                return this.slnService.findOne(this.msRecord._id, false);
+                return this.solutionService.findOne(this.msRecord._id, false);
             }),
             map(response => {
                 if(!response.error) {

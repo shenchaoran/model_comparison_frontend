@@ -12,7 +12,10 @@ export class MS {
         meta: {
             name: string,
             keywords: string[],
-            abstract: string
+            abstract: string,
+            desc?: string,
+            descMD?: string,
+            descHTML?: string,
         },
         IO: {
             schemas: UDXSchema[],

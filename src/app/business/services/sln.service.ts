@@ -16,19 +16,27 @@ import {
     CalcuTask,
     Conversation,
     Comment,
+    MS,
+    User,
 } from '../models';
 
 var counter = 1;
 @Injectable({
     providedIn: 'root'
 })
-export class SlnService extends ListBaseService {
+export class SolutionService extends ListBaseService {
     protected baseUrl = '/comparison/solutions';
     
     public solution: Solution;
+    public topic: Topic;                        // siderbar-summary
+    public tasks: Task[];                       // siderbar-summary
+    public mss: MS[];                 // siderbar-summary
     public solutionList: Solution[];
     public solutionCount: number;
     public hadSaved: boolean;
+
+    public get user(): User { return this.userService.user; }
+    public get conversation(): Conversation {return this.conversationService.conversation;}
 
     constructor(
         protected http: _HttpClient,
@@ -38,7 +46,7 @@ export class SlnService extends ListBaseService {
         private msrService: MSRService,
     ) { 
         super(http);
-        console.log('******** SlnService constructor ', counter++);
+        console.log('******** SolutionService constructor ', counter++);
         this.clear();
     }
 
@@ -52,7 +60,18 @@ export class SlnService extends ListBaseService {
 
         return super.findOne(id, withRequestProgress).pipe(map(res => {
             if(!res.error) {
-
+                this.solution = res.data.solution;
+                this.topic = res.data.topic;
+                this.tasks = res.data.tasks;
+                this.mss = res.data.mss;
+                
+                this.conversationService.init(
+                    res.data.conversation,
+                    res.data.users,
+                    res.data.commentCount,
+                    this.topic.auth.userId,
+                    this.topic._id
+                );
             }
             return res;
         }));
@@ -75,6 +94,9 @@ export class SlnService extends ListBaseService {
         this.solution = null;
         this.solutionList = [];
         this.solutionCount = 0;
+        this.topic = null;
+        this.tasks = null;
+        this.mss = null;
         this.hadSaved = null;
     }
 }

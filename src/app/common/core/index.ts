@@ -17,7 +17,7 @@ import { _HttpClient } from '@common/core/services/http.client';
 import { BACKEND } from '@config';
 import {
     UserService,
-    SlnService,
+    SolutionService,
     TaskService,
     TopicService,
     CmpMethodService,
@@ -102,7 +102,7 @@ const services = [
     },
     // { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
     UserService,
-    SlnService,
+    SolutionService,
     TaskService,
     TopicService,
     CmpMethodService,

@@ -34,7 +34,7 @@ import {
     ConversationService,
     UserService,
     TopicService,
-    SlnService,
+    SolutionService,
     TaskService,
     MSRService,
 } from '../../services';
@@ -77,7 +77,7 @@ export class CommentComponent implements ControlValueAccessor, OnInit, AfterView
 
     constructor(
         // private topicService: TopicService,
-        // private slnService: SlnService,
+        // private solutionService: SolutionService,
         // private taskService: TaskService,
         // private msrService: MSRService,
         private conversationService: ConversationService,

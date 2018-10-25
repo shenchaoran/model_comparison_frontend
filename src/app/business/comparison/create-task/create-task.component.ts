@@ -1,6 +1,6 @@
 import { Component, OnInit, HostListener } from "@angular/core";
 import { 
-    SlnService, 
+    SolutionService, 
     TaskService,
     UserService
  } from "../../services";
@@ -18,7 +18,7 @@ import { MatSnackBar } from '@angular/material';
 })
 export class CreateTaskComponent extends DocBaseComponent implements OnInit {
     sln;
-    cmpTask;
+    task;
     calcuTasks = [];
     cmpTaskFG;
 
@@ -38,16 +38,16 @@ export class CreateTaskComponent extends DocBaseComponent implements OnInit {
     constructor(
         public route: ActivatedRoute,
         public router: Router,
-        public slnService: SlnService,
+        public solutionService: SolutionService,
         public title: DynamicTitleService,
         private fb: FormBuilder,
         public taskService: TaskService,
         public snackBar: MatSnackBar,
         private userService: UserService,
     ) {
-        super(route, slnService, title);
+        super(route, solutionService, title);
         this.userService.redirectIfNotLogined();
-        this.cmpTask = new Task(this.userService.user);
+        this.task = new Task(this.userService.user);
 
         this.cmpTaskFG = this.fb.group({
             name: [null, [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
@@ -74,24 +74,24 @@ export class CreateTaskComponent extends DocBaseComponent implements OnInit {
 
     submitTask(type) {
         if (type === 'save') {
-            this.cmpTask.state = CmpState.INIT;
+            this.task.state = CmpState.INIT;
         }
         else if (type === 'run') {
-            this.cmpTask.state = CmpState.COULD_START;
+            this.task.state = CmpState.COULD_START;
         }
-        this.cmpTask.meta.name = this.cmpTaskFG.value.name;
-        this.cmpTask.meta.desc = this.cmpTaskFG.value.desc;
-        this.cmpTask.auth.src = this.cmpTaskFG.value.auth;
-        this.cmpTask.solutionId = this.sln._id;
-        this.cmpTask.topicId = this.sln.topicId;
-        this.cmpTask.calcuTaskIds = [];
-        this.cmpTask.schemas = [];
+        this.task.meta.name = this.cmpTaskFG.value.name;
+        this.task.meta.desc = this.cmpTaskFG.value.desc;
+        this.task.auth.src = this.cmpTaskFG.value.auth;
+        this.task.solutionId = this.sln._id;
+        this.task.topicId = this.sln.topicId;
+        this.task.calcuTaskIds = [];
+        this.task.schemas = [];
         this.sln.participants.map(ms => ms.MDL.IO.schemas.map(schema => {
             schema.msId = ms._id;
-            this.cmpTask.schemas.push(schema);
+            this.task.schemas.push(schema);
         }));
         _.map(this.cmpTaskFG.value.calcuTasks, (calcuTask, i) => {
-            this.cmpTask.calcuTaskIds.push({
+            this.task.calcuTaskIds.push({
                 _id: calcuTask._id,
                 progress: 0
             });
@@ -105,8 +105,8 @@ export class CreateTaskComponent extends DocBaseComponent implements OnInit {
             }
             this.calcuTasks.push(calcuTask);
         });
-        this.cmpTask.cmpObjs = this.sln.cmpObjs
-        this.cmpTask.cmpObjs.map(cmpObj => {
+        this.task.cmpObjs = this.sln.cmpObjs
+        this.task.cmpObjs.map(cmpObj => {
             let slnDataRefers = cmpObj.dataRefers;
             cmpObj.dataRefers = [];
             this.calcuTasks.map(msr => {
@@ -122,7 +122,7 @@ export class CreateTaskComponent extends DocBaseComponent implements OnInit {
             // })
         });
         this.taskService.insert({
-            cmpTask: this.cmpTask,
+            task: this.task,
             calcuTasks: this.calcuTasks
         })
             .subscribe(response => {

@@ -13,7 +13,9 @@ export class CalcuTask {
     _id?: any;
     meta: {
         name: string,
-        desc: string,
+        desc?: string,
+        descMD?: string,
+        descHTML?: string,
         time: number
     };
     auth: {

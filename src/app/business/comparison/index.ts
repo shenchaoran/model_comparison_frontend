@@ -4,6 +4,8 @@ import { MatSharedModule } from '@common/mat-shared';
 
 import { CmpSharedModule } from '../cmp-shared';
 import { ComparisonRoutingModule } from './index-routing.module';
+import { ConversationModule } from '../conversation';
+import { SimplemdeModule, SIMPLEMDE_CONFIG } from 'ng2-simplemde';
 
 import { SolutionListComponent } from './solution-list/solution-list.component';
 import { SolutionDetailComponent } from './solution-detail/solution-detail.component';
@@ -29,6 +31,8 @@ const modules = [
     MatSharedModule,
     ComparisonRoutingModule,
     CmpSharedModule,
+    ConversationModule,
+    SimplemdeModule.forRoot(),
 ];
 const services = [];
 @NgModule({

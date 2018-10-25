@@ -1,19 +1,19 @@
-<h2>{{cmpSln?.meta?.name}}</h2>
+<h2>{{solution?.meta?.name}}</h2>
 <section>
     <h3>Description</h3>
-    <p>{{cmpSln?.meta.desc}}</p>
+    <p>{{solution?.meta.desc}}</p>
 </section>
 <section>
     <h3>Participants</h3>
     <div>
         <mat-chip-list>
-            <mat-chip *ngFor='let ms of cmpSln?.participants' [routerLink]='["/models", ms._id]' class='topic model-topic'>{{ms.MDL.meta.name}}</mat-chip>
+            <mat-chip *ngFor='let ms of solution?.participants' [routerLink]='["/models", ms._id]' class='topic model-topic'>{{ms.MDL.meta.name}}</mat-chip>
         </mat-chip-list>
     </div>
 </section>
 <section>
     <h3>Comparison features</h3>
-    <section *ngFor='let cmpObj of cmpSln?.cmpObjs; let i=index'>
+    <section *ngFor='let cmpObj of solution?.cmpObjs; let i=index'>
         <h4>{{i+1}}. {{cmpObj.name}}</h4>
         <p>
             <i>Description:</i>
