@@ -24,14 +24,11 @@ export class TopicService extends ListBaseService {
     public topicList: Topic[];
     public topicCount: number;
     public hadSaved: boolean;
-<<<<<<< HEAD
     public currentUser_topicList: Topic[];
     public currentUser_topicCount: Number;
-=======
     public solutionList: Solution[] | any[];                // 只存一些简单的信息，在 topic-detail 页面用
     public solutionCount: number | any;
 
->>>>>>> master
     public get conversation(): Conversation {
         return this.conversationService.conversation;
     }
@@ -97,7 +94,6 @@ export class TopicService extends ListBaseService {
         }));
     }
 
-<<<<<<< HEAD
     public findByUserId(userId) {
         return this.http.get(`${this.baseUrl}`, {
             params: {
@@ -113,7 +109,6 @@ export class TopicService extends ListBaseService {
             return res;
         }));
     }
-=======
     // public patchTopic(obj: {[key: string]: any}) {
     //     return this.http.patch(`${this.baseUrl}/${this.topic._id}`, obj).pipe(map(res => {
     //         if (!res.error) { }
@@ -130,7 +125,6 @@ export class TopicService extends ListBaseService {
     //         return res;
     //     }));
     // }
->>>>>>> master
 
     public upsertTopic() {
         let fn = this.hadSaved ?
@@ -140,18 +134,10 @@ export class TopicService extends ListBaseService {
                 conversation: this.conversation
             });
 
-<<<<<<< HEAD
-        return fn().pipe(
-            map(res => {
-                if (!res.error) { }
-                return res;
-            })
-=======
         return fn().pipe(map(res => {
             if (!res.error) { }
             return res;
         })
->>>>>>> master
         );
     }
 
@@ -216,12 +202,9 @@ export class TopicService extends ListBaseService {
         this.topicCount = 0;
         this.topicList = [];
         this.hadSaved = null;
-<<<<<<< HEAD
         this.currentUser_topicList = null;
         this.currentUser_topicCount = 0;
-=======
         this.solutionList = [];
         this.solutionCount = 0;
->>>>>>> master
     }
 }

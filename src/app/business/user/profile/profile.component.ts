@@ -54,15 +54,9 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit() {
-<<<<<<< HEAD
     //TODO 获取 user 数据  不要直接从user中取，要从后台重新获取一遍
     this.user = this.userService.user;
     console.log(this.user);
-=======
-    //* 获取 user 数据
-    this.user = this.service.getMockuser();
-    // console.log(this.user);
->>>>>>> master
     this.router$ = this.router.events
       .pipe(filter(e => e instanceof ActivationEnd))
       .subscribe(() => this.setActive());
