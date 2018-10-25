@@ -1,68 +1,78 @@
-<section class='doc' *ngIf='msRecord'>
-    <div class='doc-title'>{{msRecord.meta.name}}</div>
-    <div class='doc-body row'>
-        <article class='article col-xs-9 col-sm-9 col-md-9 col-lg-9'>
-            <section>
-                <div class='section-header flex-box-row-nowrap'>
-                    <span class='title'>Basic information</span>
-                    <span class='placeholder flex-item-1-1-auto'></span>
-                </div>
-                <div class='section-body'>
-                    <dl class='ogms-table-info'>
-                        <div nz-row>
-                            <dt nz-col nzSpan='4'>Author</dt>
-                            <dd nz-col nzSpan='8'>{{msRecord.auth.userName | undefined}}</dd>
-                            <dt nz-col nzSpan='4'>Authorization</dt>
-                            <dd nz-col nzSpan='8'>{{msRecord.auth.src | resourceSrc}}</dd>
-                            <dt nz-col nzSpan='4'>Create time</dt>
-                            <dd nz-col nzSpan='8'>{{msRecord.meta.time | date:'yyyy-MM-dd'}}</dd>
-                            <dt nz-col nzSpan='4'>Status</dt>
-                            <dd nz-col nzSpan='8'>
-                                <span>
-                                    {{ msRecord.state === 'INIT'? 'To configured' : msRecord.state === 'RUNNING'? 'Running' : msRecord.state === 'COULD_START'?
-                                    'Ready to start' : msRecord.state === 'START_PENDING'? 'Starting' : msRecord.state === 'START_FAILED'?
-                                    'Invoking failed' : msRecord.state === 'FINISHED_FAILED'? 'Run failed' : msRecord.state
-                                    === 'FINISHED_SUCCEED'? 'Run succeed' : 'Unknown' }}
-                                </span>
-                            </dd>
-                        </div>
-                    </dl>
-                    <div class='detail-desc'>
-                        {{msRecord.meta.desc | description}}
-                    </div>
-                </div>
-            </section>
-            <section>
-                <div class='section-header flex-box-row-nowrap'>
-                    <span class='title'>Progress</span>
-                    <span class='placeholder flex-item-1-1-auto'></span>
-                </div>
-                <div class='section-body'>
-                    <div [style.width]='_width'>
-                        <nz-progress [nzPercent]="!msRecord.progress? 0: msRecord.progress" [nzStatus]="msRecord.state === 'FINISHED_SUCCEED'? 'success': msRecord.state === 'FINISHED_FAILED'? 'exception': 'active'">
-                        </nz-progress>
-                    </div>
-                </div>
-            </section>
-            <section>
-                <div class='section-header flex-box-row-nowrap'>
-                    <span class='title'>Calculation configuration</span>
-                    <span class='placeholder flex-item-1-1-auto'></span>
-                </div>
-                <div class='section-body'>
-                    <ogms-calcu-result [msr]='msRecord'></ogms-calcu-result>
-                </div>
-            </section>
-        </article>
-        <aside class='sider-content col-xs-3 col-sm-3 col-md-3 col-lg-3'>
-            <!-- <section class='sider-item'>
-                        <div class='sider-item-title'>
-                            <span>Solutions</span>
-                        </div>
-                        <div class='sider-item-body'>
-                            
-                        </div>
-                    </section> -->
-        </aside>
+<ng-template #loadingTemp>
+    <div ogms-loading>
+        <mat-spinner></mat-spinner>
     </div>
-</section>
+</ng-template>
+<div *ngIf='msRecord else loadingTemp' ogms-rx-box>
+    <section class='doc'>
+        <div class='doc-title'>{{msRecord.meta.name}}</div>
+        <div class='doc-body row'>
+            <article class='article col-xs-9 col-sm-9 col-md-9 col-lg-9'>
+                <section>
+                    <div class='section-header flex-box-row-nowrap'>
+                        <span class='title'>Basic information</span>
+                        <span class='placeholder flex-item-1-1-auto'></span>
+                    </div>
+                    <div class='section-body'>
+                        <dl class='ogms-table-info'>
+                            <div nz-row>
+                                <dt nz-col nzSpan='4'>Author</dt>
+                                <dd nz-col nzSpan='8'>{{msRecord.auth.userName | undefined}}</dd>
+                                <dt nz-col nzSpan='4'>Authorization</dt>
+                                <dd nz-col nzSpan='8'>{{msRecord.auth.src | resourceSrc}}</dd>
+                                <dt nz-col nzSpan='4'>Create time</dt>
+                                <dd nz-col nzSpan='8'>{{msRecord.meta.time | date:'yyyy-MM-dd'}}</dd>
+                                <dt nz-col nzSpan='4'>Status</dt>
+                                <dd nz-col nzSpan='8'>
+                                    <span>
+                                        {{ msRecord.state === 'INIT'? 'To configured' : msRecord.state === 'RUNNING'?
+                                        'Running' : msRecord.state === 'COULD_START'?
+                                        'Ready to start' : msRecord.state === 'START_PENDING'? 'Starting' :
+                                        msRecord.state === 'START_FAILED'?
+                                        'Invoking failed' : msRecord.state === 'FINISHED_FAILED'? 'Run failed' :
+                                        msRecord.state
+                                        === 'FINISHED_SUCCEED'? 'Run succeed' : 'Unknown' }}
+                                    </span>
+                                </dd>
+                            </div>
+                        </dl>
+                        <div class='detail-desc'>
+                            {{msRecord.meta.desc | description}}
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class='section-header flex-box-row-nowrap'>
+                        <span class='title'>Progress</span>
+                        <span class='placeholder flex-item-1-1-auto'></span>
+                    </div>
+                    <div class='section-body'>
+                        <div [style.width]='_width'>
+                            <nz-progress [nzPercent]="!msRecord.progress? 0: msRecord.progress" [nzStatus]="msRecord.state === 'FINISHED_SUCCEED'? 'success': msRecord.state === 'FINISHED_FAILED'? 'exception': 'active'">
+                            </nz-progress>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class='section-header flex-box-row-nowrap'>
+                        <span class='title'>Calculation configuration</span>
+                        <span class='placeholder flex-item-1-1-auto'></span>
+                    </div>
+                    <div class='section-body'>
+                        <ogms-calcu-result [msr]='msRecord'></ogms-calcu-result>
+                    </div>
+                </section>
+            </article>
+            <aside class='sider-content col-xs-3 col-sm-3 col-md-3 col-lg-3'>
+                <!-- <section class='sider-item'>
+                                    <div class='sider-item-title'>
+                                        <span>Solutions</span>
+                                    </div>
+                                    <div class='sider-item-body'>
+                                        
+                                    </div>
+                                </section> -->
+            </aside>
+        </div>
+    </section>
+</div>
