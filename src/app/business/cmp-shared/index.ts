@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
-import { SharedModule } from '@common/shared';
+import { SharedModule } from '@shared';
 import { RouterModule, Routes } from '@angular/router';
-import { MatSharedModule } from '@common/mat-shared'
+import { MatSharedModule } from '@mat-shared'
 
 //////////////////// component ////////////////////////
 import { CalcuCfgComponent, SiteDialog } from './calcu-cfg/calcu-cfg.component';

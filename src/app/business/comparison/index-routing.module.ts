@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { SolutionDetailComponent } from './solution-detail/solution-detail.component';
 import { SolutionListComponent } from './solution-list/solution-list.component';
-import { HeaderMenuLayoutComponent } from '@common/shared';
+import { HeaderMenuLayoutComponent } from '@shared';
 import { CreateSlnComponent } from './create-sln/create-sln.component';
 import { CreateTaskComponent } from './create-task/create-task.component';
 

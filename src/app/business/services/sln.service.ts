@@ -2,11 +2,8 @@ import { ConversationService } from './conversation.service';
 import { MSRService } from './msr.service';
 import { UserService } from './user.service';
 import { TaskService } from './task.service';
-import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { HttpHeaders, HttpParams } from '@angular/common/http';
-import { Resolve } from '@angular/router';
-import { _HttpClient } from '../../common/core/services';
+import { _HttpClient } from '../../core/services';
 import { ListBaseService } from './list-base.service';
 import { map } from 'rxjs/operators';
 import { 

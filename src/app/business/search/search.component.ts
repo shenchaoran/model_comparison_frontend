@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { SearchService } from '@services';
-import { NzNotificationService, NzModalService } from 'ng-zorro-antd';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
 @Component({
@@ -26,7 +25,6 @@ export class SearchComponent implements OnInit {
 
     constructor(
         private service: SearchService,
-//private _notice: NzNotificationService,
         private route: ActivatedRoute
     ) { }
 

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
-import { SharedModule } from '@common/shared';
-import { MatSharedModule } from '@common/mat-shared';
+import { SharedModule } from '@shared';
+import { MatSharedModule } from '@mat-shared';
 
 import { ResultsRoutingModule } from './index-routing.module';
 import { CalcuListComponent } from './calcu-list/calcu-list.component';

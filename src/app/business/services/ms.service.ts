@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { _HttpClient } from '@common/core/services/http.client';
+import { _HttpClient } from '@core/services/http.client';
 import { ListBaseService } from './list-base.service';
 import { MS } from '../models';
 

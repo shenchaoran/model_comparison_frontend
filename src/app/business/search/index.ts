@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { SearchComponent } from './search.component';
-import { SharedModule } from '@common/shared';
+import { SharedModule } from '@shared';
 import { FiltersComponent } from './filters/filters.component';
 import { SearchRoutingModule } from './index-routing.module';
 import { ResultsComponent } from './results/results.component';

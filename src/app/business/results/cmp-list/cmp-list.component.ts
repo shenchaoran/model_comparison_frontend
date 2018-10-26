@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import { TaskService } from '../../services/task.service';
-import { DynamicTitleService } from '@common/core/services/dynamic-title.service';
+import { DynamicTitleService } from '@core/services/dynamic-title.service';
 
 @Component({
   selector: 'ogms-cmp-list',

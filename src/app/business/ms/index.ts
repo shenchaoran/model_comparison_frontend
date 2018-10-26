@@ -1,7 +1,7 @@
-import { MatSharedModule } from '@common/mat-shared';
+import { MatSharedModule } from '@mat-shared';
 import { OlModule } from '../ol';
 import { NgModule } from '@angular/core';
-import { SharedModule } from '@common/shared';
+import { SharedModule } from '@shared';
 
 import { ModelsRoutingModule } from './index-routing.module';
 import { MSService } from '@services';
@@ -9,7 +9,6 @@ import { GeoModelDetailComponent } from './geo-model-detail/geo-model-detail.com
 import { GeoModelListComponent } from './geo-model-list/geo-model-list.component';
 import { InvokeComponent } from './invoke/invoke.component';
 import { CmpSharedModule } from '../cmp-shared';
-import { NzNotificationService, NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';
 
 export * from '@services';
 

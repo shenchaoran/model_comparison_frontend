@@ -1,37 +1,92 @@
-import { NgModule, ApplicationRef } from '@angular/core';
+import { NgModule, Component } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterModule } from '@angular/router';
-import { _HttpClient } from '@common/core/services/http.client';
-import { GlobalState } from './global.state';
-
-import { AppTranslationModule } from './app.translation.module';
-import { SharedModule } from '@common/shared';
+import { _HttpClient } from '@core/services/http.client';
+import { SharedModule } from '@shared';
 import { CoreModule } from '@core';
-import { AppRoutingModule } from './app-routing';
-import { App } from './app.component';
-import { NgZorroAntdModule } from 'ng-zorro-antd';
-import { NzNotificationService, NZ_NOTIFICATION_CONFIG } from 'ng-zorro-antd';
-import { DisqusModule } from "ngx-disqus";
 
-// TODO 把所有加载一次的服务放在core模块中
+
+@Component({
+    selector: 'ogms-app',
+    template: `
+        <router-outlet></router-outlet>
+        <ng2-slim-loading-bar color='#e0631a' height='4px'></ng2-slim-loading-bar>
+    `
+})
+export class AppComponent { }
+
+/********************************************************************** */
+const routes: Routes = [
+    {
+        path: '',
+        redirectTo: 'home',
+        pathMatch: 'full'
+    },
+    {
+        path: 'home',
+        loadChildren: './business/home/index#HomeModule'
+    },
+    {
+        path: 'user',
+        loadChildren: './business/user/index#UserModule'
+    },
+    {
+        path: 'datasets',
+        loadChildren: './business/datasets/index#DatasetsModule'
+    },
+    {
+        path: 'models',
+        loadChildren: './business/ms/index#ModelsModule'
+    },
+    {
+        path: 'comparison',
+        loadChildren: './business/comparison/index#ComparisonModule'
+    },
+    {
+        path: 'results',
+        loadChildren: './business/results/index#ResultsModule'
+    },
+    {
+        path: 'search',
+        loadChildren: './business/search/index#SearchModule'
+    },
+    {
+        path: 'test',
+        loadChildren: './business/test/index#TestModule'
+    },
+    {
+        path: 'topics',
+        loadChildren: './business/topic/index#TopicModule'
+    },
+    {
+        path: '**',
+        redirectTo: 'home',
+        pathMatch: 'full'
+    }
+];
 
 @NgModule({
-    bootstrap: [App],
-    declarations: [App],
+    imports: [
+        RouterModule.forRoot(routes, { useHash: true })
+    ],
+    exports: [RouterModule]
+})
+export class AppRoutingModule { }
+
+/********************************************************************** */
+@NgModule({
+    bootstrap: [AppComponent],
+    declarations: [AppComponent],
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
-        NgZorroAntdModule,
         RouterModule,
         AppRoutingModule,
 
-        AppTranslationModule,
         SharedModule.forRoot(),
         CoreModule.forRoot(),
     ],
-    providers: [
-        GlobalState,
-    ]
+    providers: []
 })
-export class AppModule {}
+export class AppModule { }

@@ -1,8 +1,8 @@
 import { Component, OnInit, AfterViewInit, ElementRef, ViewChild, ViewContainerRef, Renderer2 } from '@angular/core';
 import { CmpMethodService } from '../../services/cmp-method.service';
-import { DocBaseComponent } from '@common/shared'
+import { DocBaseComponent } from '@shared'
 import { Router, ActivatedRoute, Params } from "@angular/router";
-import { DynamicTitleService } from "@common/core/services/dynamic-title.service";
+import { DynamicTitleService } from "@core/services/dynamic-title.service";
 
 @Component({
     selector: 'ogms-method-detail',

@@ -4,7 +4,7 @@ import { CmpDetailComponent } from './cmp-detail/cmp-detail.component';
 import { CmpListComponent } from './cmp-list/cmp-list.component';
 import { CalcuDetailComponent } from './calcu-detail/calcu-detail.component';
 import { CalcuListComponent } from './calcu-list/calcu-list.component';
-import { HeaderMenuLayoutComponent } from '@common/shared';
+import { HeaderMenuLayoutComponent } from '@shared';
 
 const routes: Routes = [
     {

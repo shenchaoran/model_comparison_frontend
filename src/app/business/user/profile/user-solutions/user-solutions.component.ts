@@ -1,6 +1,6 @@
-import { Solution } from './../../../models/solution.class';
-import { OgmsBaseComponent } from './../../../../common/shared/components/ogms-base/ogms-base.component';
-import { SolutionService } from './../../../services/sln.service';
+import { Solution } from '@models';
+import { OgmsBaseComponent } from '@shared/components/ogms-base/ogms-base.component';
+import { SolutionService } from '@services/sln.service';
 import { Component, OnInit, } from '@angular/core';
 
 @Component({

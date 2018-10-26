@@ -1,9 +1,8 @@
 import { Component, OnInit, HostListener, OnDestroy, ViewChild } from "@angular/core";
 import { Router, ActivatedRoute, Params } from "@angular/router";
-import { NzNotificationService, NzModalService } from "ng-zorro-antd";
-import { DynamicTitleService } from "@common/core/services/dynamic-title.service";
+import { DynamicTitleService } from "@core/services/dynamic-title.service";
 import { ReactiveFormsModule } from "@angular/forms";
-import { DocBaseComponent } from '@common/shared';
+import { DocBaseComponent } from '@shared';
 import { ConversationService, SolutionService, UserService } from "@services";
 import { Simplemde } from 'ng2-simplemde';
 

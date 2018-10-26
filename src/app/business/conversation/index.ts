@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '@shared';
-import { MatSharedModule } from '../../common/mat-shared';
+import { MatSharedModule } from '../../mat-shared';
 // import { NgxEditorModule } from 'ngx-editor';
 import { SimplemdeModule, SIMPLEMDE_CONFIG } from 'ng2-simplemde';
 
@@ -17,12 +17,7 @@ const components = [
     ConversationComponent,
     CommentComponent
 ];
-const services = [
-    // {
-    //     provide: SIMPLEMDE_CONFIG,
-    //     useValue: {}
-    // }
-];
+const services = [];
 var exportComponents = [
     ConversationComponent
 ];
