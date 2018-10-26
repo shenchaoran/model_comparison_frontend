@@ -19,3 +19,4 @@ export * from './mat-cascader-select/cascader-select.validator';
 export * from './sidebar-section/sidebar-section.component';
 export * from './siderbar-menu-modal/siderbar-menu-modal.component';
 export * from './detail-layout/detail-layout.component';
+export * from './create-doc/create-doc.component';

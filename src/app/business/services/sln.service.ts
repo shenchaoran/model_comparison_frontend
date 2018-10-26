@@ -1,6 +1,6 @@
 import { ConversationService } from './conversation.service';
 import { MSRService } from './msr.service';
-import { UserService } from '@services/user.service';
+import { UserService } from './user.service';
 import { TaskService } from './task.service';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
@@ -50,15 +50,20 @@ export class SolutionService extends ListBaseService {
         this.clear();
     }
 
-    public initList(solutionList: Solution[], solutionCount: number) {
+    public import(solution: Solution, solutionList: Solution[], solutionCount: number,) {
+        this.clear();
+
+        this.solution = solution;
         this.solutionList = solutionList;
         this.solutionCount = solutionCount;
     }
 
     public create() {
+        this.userService.redirectIfNotLogined();
         this.clear();
+        
         this.solution = new Solution(this.user);
-        let cid = this.conversationService.createConversation(this.solution._id)._id;
+        let cid = this.conversationService.create(this.solution._id)._id;
         this.solution.cid = cid;
         this.hadSaved = false;
         return this.solution;
@@ -75,7 +80,7 @@ export class SolutionService extends ListBaseService {
                 this.mss = res.data.mss;
                 this.hadSaved = true;
                 
-                this.conversationService.init(
+                this.conversationService.import(
                     res.data.conversation,
                     res.data.users,
                     res.data.commentCount,

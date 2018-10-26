@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import {MatSnackBar} from '@angular/material';
 import {
     TopicService,
     ConversationService,
@@ -12,7 +13,6 @@ import {
     Comment,
     Solution,
 } from '../../models';
-import { DefaultLifeHook } from '../../../common/shared/classes/default-life-hook.class';
 import { Simplemde } from 'ng2-simplemde';
 
 @Component({
@@ -20,7 +20,7 @@ import { Simplemde } from 'ng2-simplemde';
     templateUrl: './topic-detail.component.html',
     styleUrls: ['./topic-detail.component.scss']
 })
-export class TopicDetailComponent extends DefaultLifeHook implements OnInit {
+export class TopicDetailComponent implements OnInit {
     titleMode: 'READ' | 'WRITE';
     descMode: 'READ' | 'WRITE';
     _originTitle: string;
@@ -35,35 +35,46 @@ export class TopicDetailComponent extends DefaultLifeHook implements OnInit {
     get users() {return this.conversationService.users;}
     get topic(): Topic {return this.topicService.topic;}
     get conversation(): Conversation {return this.conversationService.conversation;}
-    get solutions(): Solution[] {return this.topicService.solutionList;}
+    get solutions(): Solution[] {return this.solutionService.solutionList;}
     get selectedSolutions(): Solution[] {return this.solutions.filter(v => v.topicId === this.topic._id);}
     get includeUser() {return this.topic.subscribed_uids && this.topic.subscribed_uids.findIndex(v => v === this.user._id) !== -1;}
+    get hadSaved() {return this.topicService.hadSaved;}
 
     constructor(
         private topicService: TopicService,
         private conversationService: ConversationService,
         private userService: UserService,
+        private solutionService: SolutionService,
         private route: ActivatedRoute,
-    ) {
-        super(topicService);
-    }
+        private snackBar: MatSnackBar,
+    ) {}
 
     ngOnInit() {
         this.route.params.subscribe((params: Params) => {
             const topicId = params['id'];
-            if(topicId === 'create') {
-                this.userService.redirectIfNotLogined();
-                this.topicService.createTopic();
-                this.descMode = 'WRITE';
-                this.titleMode = 'WRITE';
-                this._originDesc = null;
-                this._originTitle = null;
-            }
-            else {
+            // if(topicId === 'create') {
+            //     this.topicService.create();
+            //     this.descMode = 'WRITE';
+            //     this.titleMode = 'WRITE';
+            //     this._originDesc = null;
+            //     this._originTitle = null;
+            // }
+            // else {
                 this.descMode = 'READ';
                 this.titleMode = 'READ';
-                this.topicService.findOne(topicId).subscribe(res => {});
-            }
+                this.topicService.findOne(topicId).subscribe(res => {
+                    if(!res.error) {
+                        if(this.couldEdit && !this.topic.meta.wikiMD) {
+                            this.descMode = 'WRITE';
+                            this.snackBar.open('please improve the wiki documentation as soon as possible!', null, {
+                                duration: 2000,
+                                verticalPosition: 'top',
+                                horizontalPosition: 'end',
+                            });
+                        }
+                    }
+                });
+            // }
         });
     }
 

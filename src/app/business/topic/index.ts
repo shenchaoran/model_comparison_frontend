@@ -7,6 +7,7 @@ import { SimplemdeModule, SIMPLEMDE_CONFIG } from 'ng2-simplemde';
 import { TopicRoutingModule } from './index-routing.module';
 import { TopicListComponent } from './topic-list/topic-list.component';
 import { TopicDetailComponent } from './topic-detail/topic-detail.component';
+import { CreateTopicComponent } from './create-topic/create-topic.component';
 
 const modules = [
     SharedModule,
@@ -18,6 +19,7 @@ const modules = [
 const components = [
     TopicDetailComponent,
     TopicListComponent,
+    CreateTopicComponent,
 ];
 const services = [];
 const pipes = [];

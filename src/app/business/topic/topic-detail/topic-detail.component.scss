@@ -5,54 +5,6 @@
     z-index: 100;
 }
 
-.header-title {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: space-between;
-    align-items: center;
-    // border-bottom: 1px solid #eee;
-    margin-bottom: 20px;
-
-    &.read {
-        margin: 9px 0;
-    }
-
-    .topic-name {
-        flex: 1 1 auto;
-        margin-right: 25px;
-
-        mat-form-field {
-            width: 100%;
-        }
-    }
-
-    .title-btn-group {
-        flex: 0 1 300px;
-
-        >button {
-            float: right;
-        }
-
-        >button:not(:last-child) {
-            margin-right: 20px;
-        }
-    }
-}
-
-.header-meta {
-    font-size: 14px;
-    padding: 10px 0;
-
-    .author {
-        font-weight: 600;
-        color: #586069;
-
-        &:hover {
-            text-decoration: underline;
-        }
-    }
-}
-
 .sln-list {
     mat-icon {
         cursor: pointer;

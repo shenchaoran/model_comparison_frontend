@@ -12,67 +12,68 @@ import { Topic } from '../models/topic.class';
 import { Solution } from '../models/solution.class';
 import { Conversation, Comment } from '../models/conversation.class';
 import { User } from '../models/user.class';
+import { OgmsService } from './service.interface';
 
 var counter = 1;
 @Injectable({
     providedIn: 'root'
 })
-export class TopicService extends ListBaseService {
+export class TopicService extends ListBaseService implements OgmsService {
     protected baseUrl = '/comparison/topics';
 
     public topic: Topic;
     public topicList: Topic[];
     public topicCount: number;
     public hadSaved: boolean;
-    public solutionList: Solution[] | any[];                // 只存一些简单的信息，在 topic-detail 页面用
-    public solutionCount: number | any;
 
-    public get conversation(): Conversation {return this.conversationService.conversation;}
+    public get conversation(): Conversation { return this.conversationService.conversation; }
     public get user(): User { return this.userService.user; }
 
     constructor(
         protected http: _HttpClient,
         private userService: UserService,
         private conversationService: ConversationService,
+        private solutionService: SolutionService,
     ) {
         super(http);
         console.log('******** TopicService constructor ', counter++);
         this.clear();
     }
 
-    public createTopic() {
+    
+
+    public create() {
+        this.userService.redirectIfNotLogined();
         this.clear();
+
         this.topic = new Topic(this.user);
-        let cid = this.conversationService.createConversation(this.topic._id)._id;
+        let cid = this.conversationService.create(this.topic._id)._id;
         this.topic.cid = cid;
         this.hadSaved = false;
         return this.topic;
     }
 
-    public findOne(id, withRequestProgress?) {
+    public findOne(id) {
         this.clear();
 
-        return super.findOne(id, withRequestProgress)
-            .pipe(
-                map(res => {
-                    if (!res.error) {
-                        this.topic = res.data.topic;
-                        this.hadSaved = true;
+        return this.http.get(`${this.baseUrl}/${id}`).pipe(map(res => {
+            if (!res.error) {
+                this.topic = res.data.topic;
+                this.hadSaved = true;
 
-                        this.solutionList = res.data.solutions;
-                        this.solutionCount = res.data.solutionCount;
+                this.solutionService.solutionList = res.data.solutions;
+                this.solutionService.solutionCount = res.data.solutionCount;
 
-                        this.conversationService.init(
-                            res.data.conversation,
-                            res.data.users,
-                            res.data.commentCount,
-                            this.topic.auth.userId,
-                            this.topic._id,
-                        );
-                    }
-                    return res;
-                })
-            )
+                this.conversationService.import(
+                    res.data.conversation,
+                    res.data.users,
+                    res.data.commentCount,
+                    this.topic.auth.userId,
+                    this.topic._id,
+                );
+            }
+            return res;
+        }));
     }
 
     public findAll() {
@@ -181,14 +182,14 @@ export class TopicService extends ListBaseService {
             ac: ac,
             uid: uid
         }).pipe(map(res => {
-            if(!res.error) {
+            if (!res.error) {
                 let i = this.topic.subscribed_uids.findIndex(v => v === this.user._id);
-                if(ac === 'subscribe') {
-                    if(i === -1) {
+                if (ac === 'subscribe') {
+                    if (i === -1) {
                         this.topic.subscribed_uids.push(this.user._id);
                     }
                 }
-                else if(ac === 'unsubscribe') {
+                else if (ac === 'unsubscribe') {
                     this.topic.subscribed_uids.splice(i, 1);
                 }
             }
@@ -202,7 +203,5 @@ export class TopicService extends ListBaseService {
         this.topicCount = 0;
         this.topicList = [];
         this.hadSaved = null;
-        this.solutionList = [];
-        this.solutionCount = 0;
     }
 }

@@ -1,0 +1,21 @@
+$formWidth: 700px;
+$dividerColor: #d2d2d2;
+
+.create-doc {
+    margin: 20px auto 0;
+    width: $formWidth;
+
+    form {
+        .form-field {
+            // margin-bottom: 15px;
+            width: 100%;
+    
+            &.max-width>* {
+                width: 100%;
+            }
+        }
+        .submit {
+            width: auto;
+        }
+    }
+}

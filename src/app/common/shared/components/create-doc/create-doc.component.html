@@ -1,0 +1,35 @@
+<div class='create-doc'>
+    <div class='Subhead'>
+        <h2 class='Subhead-heading'>{{title}}</h2>
+        <p class='Subhead-description'>{{headerMeta}}</p>
+    </div>
+
+    <form class='create-form' [formGroup]='docFG'>
+        <div class='form-field max-width'>
+            <mat-form-field>
+                <input matInput formControlName='name' placeholder="name" #docName>
+                <mat-error *ngIf='"required"'>必填</mat-error>
+                <mat-error *ngIf='"minlength"'>最小长度</mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class='form-field max-width'>
+            <mat-form-field>
+                <textarea matInput formControlName='desc' placeholder="description" #docDesc></textarea>
+                <mat-error *ngIf='"required"'>必填</mat-error>
+                <mat-error *ngIf='"minlength"'>最小长度</mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class='form-field'>
+            <!-- <label>Authorition: </label> -->
+            <mat-button-toggle-group formControlName='auth'>
+                <mat-button-toggle value='PRIVATE'>Private</mat-button-toggle>
+                <mat-button-toggle value='PUBLIC'>Public</mat-button-toggle>
+            </mat-button-toggle-group>
+        </div>
+        <hr>
+        <button class='form-field submit' (click)='onSubmitClick()' mat-stroked-button color='primary' [disabled]='docFG.invalid'>{{submitText}}</button>
+    </form>
+
+</div>
