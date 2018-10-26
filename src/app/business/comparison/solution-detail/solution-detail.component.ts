@@ -5,7 +5,6 @@ import { DynamicTitleService } from "@common/core/services/dynamic-title.service
 import { ReactiveFormsModule } from "@angular/forms";
 import { DocBaseComponent } from '@common/shared';
 import { ConversationService, SolutionService, UserService } from "@services";
-import { DefaultLifeHook } from '../../../common/shared/classes';
 import { Simplemde } from 'ng2-simplemde';
 
 @Component({
@@ -13,7 +12,7 @@ import { Simplemde } from 'ng2-simplemde';
     templateUrl: './solution-detail.component.html',
     styleUrls: ['./solution-detail.component.scss']
 })
-export class SolutionDetailComponent extends DefaultLifeHook implements OnInit {
+export class SolutionDetailComponent implements OnInit {
     titleMode: 'READ' | 'WRITE';
     descMode: 'READ' | 'WRITE';
     _originTitle: string;
@@ -38,9 +37,7 @@ export class SolutionDetailComponent extends DefaultLifeHook implements OnInit {
         public title: DynamicTitleService,
         public conversationService: ConversationService,
         public userService: UserService,
-    ) {
-        super(solutionService);
-    }
+    ) {}
 
     ngOnInit() {
         this.route.params.subscribe((params: Params) => {

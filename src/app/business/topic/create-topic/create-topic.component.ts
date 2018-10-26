@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TopicService } from '@services';
-import { DefaultLifeHook } from '../../../common/shared/classes/default-life-hook.class';
 
 @Component({
     selector: 'ogms-create-topic',
     templateUrl: './create-topic.component.html',
     styleUrls: ['./create-topic.component.scss']
 })
-export class CreateTopicComponent extends DefaultLifeHook implements OnInit {
+export class CreateTopicComponent implements OnInit {
     _title: string = 'Create a new research topic';
     _headerMeta: string = 'A comparison topic face to a specific geographic issue, and include several comparison solutions to solve this issue.';
     _submitText: string = 'Create topic';
@@ -19,7 +18,6 @@ export class CreateTopicComponent extends DefaultLifeHook implements OnInit {
         private topicService: TopicService,
         private router: Router,
     ) {
-        super(topicService);
         this.topicService.create();
     }
 

@@ -13,7 +13,6 @@ import {
     Comment,
     Solution,
 } from '../../models';
-import { DefaultLifeHook } from '../../../common/shared/classes/default-life-hook.class';
 import { Simplemde } from 'ng2-simplemde';
 
 @Component({
@@ -21,7 +20,7 @@ import { Simplemde } from 'ng2-simplemde';
     templateUrl: './topic-detail.component.html',
     styleUrls: ['./topic-detail.component.scss']
 })
-export class TopicDetailComponent extends DefaultLifeHook implements OnInit {
+export class TopicDetailComponent implements OnInit {
     titleMode: 'READ' | 'WRITE';
     descMode: 'READ' | 'WRITE';
     _originTitle: string;
@@ -47,9 +46,7 @@ export class TopicDetailComponent extends DefaultLifeHook implements OnInit {
         private userService: UserService,
         private route: ActivatedRoute,
         private snackBar: MatSnackBar,
-    ) {
-        super(topicService);
-    }
+    ) {}
 
     ngOnInit() {
         this.route.params.subscribe((params: Params) => {

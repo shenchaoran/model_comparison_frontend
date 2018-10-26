@@ -13,14 +13,13 @@ import {
     Comment,
     Solution,
 } from '../../models';
-import { DefaultLifeHook } from '../../../common/shared/classes/default-life-hook.class';
 
 @Component({
     selector: 'ogms-sln-config',
     templateUrl: './sln-config.component.html',
     styleUrls: ['./sln-config.component.scss']
 })
-export class SlnConfigComponent extends DefaultLifeHook implements OnInit {
+export class SlnConfigComponent implements OnInit {
     @Input() cfg;
 
     constructor(
@@ -28,10 +27,7 @@ export class SlnConfigComponent extends DefaultLifeHook implements OnInit {
         private msService: MSService,
         private userService: UserService,
         private cmpMethodService: CmpMethodService,
-    ) {
-        super(solutionService);
-
-    }
+    ) {}
 
     ngOnInit() {
 

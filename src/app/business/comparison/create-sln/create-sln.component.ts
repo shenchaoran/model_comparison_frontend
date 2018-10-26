@@ -12,18 +12,18 @@ import {
 import { Router, ActivatedRoute } from '@angular/router';
 import * as uuidv1 from 'uuid/v1';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { DefaultLifeHook } from '../../../common/shared/classes/default-life-hook.class';
 
 @Component({
     selector: 'ogms-create-sln',
     templateUrl: './create-sln.component.html',
     styleUrls: ['./create-sln.component.scss']
 })
-export class CreateSlnComponent extends DefaultLifeHook implements OnInit {
+
+export class CreateSlnComponent implements OnInit {
     _title: string = 'Create a new comparison solution';
     _headerMeta: string = 'A comparison solution compare sereral factor of model.';
     _submitText: string = 'Create solution';
-    
+
     get solution() { return this.solutionService.solution; }
     get cmpMethods() { return this.cmpMethodService.methods; }
     get mss() { return this.msService.mss; }
@@ -38,7 +38,6 @@ export class CreateSlnComponent extends DefaultLifeHook implements OnInit {
         private cmpMethodService: CmpMethodService,
         private userService: UserService,
     ) {
-        super(solutionService);
         this.solutionService.create();
     }
 
@@ -49,6 +48,6 @@ export class CreateSlnComponent extends DefaultLifeHook implements OnInit {
         this.solution.auth.src = e.auth;
         this.solution.meta.name = e.name;
         this.solution.meta.desc = e.desc;
-        this.solutionService.upsert().subscribe(res => {});
+        this.solutionService.upsert().subscribe(res => { });
     }
 }
