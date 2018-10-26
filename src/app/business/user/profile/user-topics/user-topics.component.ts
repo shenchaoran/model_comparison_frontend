@@ -12,17 +12,10 @@ export class UserTopicsComponent implements OnInit {
 
   user_topics:any[];
   get topicList(): Topic[] {
-    if(this.createdTopic===null){
-      return this.subscribedTopic === null? null : this.subscribedTopic.splice(0,4);
-    }
-    return this.createdTopic.concat(this.subscribedTopic);
+    console.log(this.topicService.topicList);
+    return this.topicService.topicList;
   }
-  get createdTopic(): Topic[] {
-    return this.topicService.user_createTopics;
-  }
-  get subscribedTopic(): Topic[] {
-    return this.topicService.user_subscribedTopics;
-  }
+
   constructor(
     private service:UserService,
     public topicService: TopicService,

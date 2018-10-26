@@ -24,8 +24,6 @@ export class TopicService extends ListBaseService {
     public topicList: Topic[];
     public topicCount: number;
     public hadSaved: boolean;
-    public user_createTopics: Topic[];
-    public user_subscribedTopics: Topic[];
     public solutionList: Solution[] | any[];                // 只存一些简单的信息，在 topic-detail 页面用
     public solutionCount: number | any;
 
@@ -100,8 +98,8 @@ export class TopicService extends ListBaseService {
             }
         }).pipe(map(res => {
             if (!res.error) {
-                this.user_createTopics = res.data.created;
-                this.user_subscribedTopics = res.data.subscribed;
+                this.topicList = res.data.docs;
+                console.log(this.topicList[0]);
             }
             return res;
         }));
@@ -204,8 +202,6 @@ export class TopicService extends ListBaseService {
         this.topicCount = 0;
         this.topicList = [];
         this.hadSaved = null;
-        this.user_subscribedTopics = null;
-        this.user_createTopics = null;
         this.solutionList = [];
         this.solutionCount = 0;
     }

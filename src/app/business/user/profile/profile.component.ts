@@ -61,6 +61,7 @@ export class ProfileComponent implements OnInit {
     console.log("userid:"+ this.user._id); 
     this.topicService.findByUserId(this.user._id).subscribe(res => { });
     this.slnService.findByUserId(this.user._id).subscribe(res => { });
+    //todo task 数据展示
   }
 
   to(item: any) {

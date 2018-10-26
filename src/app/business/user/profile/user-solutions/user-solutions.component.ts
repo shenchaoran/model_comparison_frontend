@@ -11,16 +11,7 @@ import { Component, OnInit, } from '@angular/core';
 export class UserSolutionsComponent extends OgmsBaseComponent implements OnInit {
   slns:any[];
   get slnList(): Solution[] {
-    if(this.createdSln === null){
-      return this.subscribedSln===null?null: this.subscribedSln.splice(0,4);
-    }
-    return this.createdSln.concat(this.subscribedSln);
-  }
-  get createdSln(): Solution[] {
-    return this.service.user_createSln;
-  }
-  get subscribedSln(): Solution[] {
-    return this.service.user_subscribedSln;
+    return this.service.solutionList;
   }
 
   constructor(
@@ -31,14 +22,14 @@ export class UserSolutionsComponent extends OgmsBaseComponent implements OnInit 
 
   ngOnInit() {
     //* 并不是该用户的数据  获取的所有 solutions 的数据 
-    this._subscriptions.push(this.service.findAll({})
-      .subscribe(response => {
-          if (response.error) {
-              return Promise.reject(response.error);
-          } else {
-              this.slns = response.data.docs;
-          }
-      }));
+    // this._subscriptions.push(this.service.findAll({})
+    //   .subscribe(response => {
+    //       if (response.error) {
+    //           return Promise.reject(response.error);
+    //       } else {
+    //           this.slns = response.data.docs;
+    //       }
+    //   }));
   }
 
 }

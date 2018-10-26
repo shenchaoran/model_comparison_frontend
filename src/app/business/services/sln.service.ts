@@ -34,8 +34,6 @@ export class SolutionService extends ListBaseService {
     public solutionList: Solution[];
     public solutionCount: number;
     public hadSaved: boolean;
-    public user_createSln: Solution[];
-    public user_subscribedSln: Solution[];
 
     public get user(): User { return this.userService.user; }
     public get conversation(): Conversation {return this.conversationService.conversation;}
@@ -109,8 +107,7 @@ export class SolutionService extends ListBaseService {
             }
         }).pipe(map(res => {
             if (!res.error) {
-                this.user_createSln = res.data.created;
-                this.user_subscribedSln = res.data.subscribed;
+                this.solutionList = res.data.docs;
             }
             return res;
         }));
@@ -171,7 +168,5 @@ export class SolutionService extends ListBaseService {
         this.tasks = null;
         this.mss = null;
         this.hadSaved = null;
-        this.user_createSln=null;
-        this.user_subscribedSln=null;
     }
 }

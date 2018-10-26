@@ -12,21 +12,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserOverviewComponent implements OnInit {
   get topicList(): Topic[] {
-    if (this.topicService.user_createTopics === null) {
-      return this.topicService.user_subscribedTopics === null ? null : this.topicService.user_subscribedTopics.splice(0, 4);
-    }
-    return this.topicService.user_createTopics.concat(this.topicService.user_subscribedTopics).splice(0, 4);
+    let tmp:any[] = this.topicService.topicList.concat([]);
+    return tmp.splice(0,4);
   }
 
-  // get slnList(): Solution[] {
-  //   if (this.slnService.user_createSln === null) {
-  //     return this.slnService.user_subscribedSln === null ? null : this.slnService.user_subscribedSln.splice(0, 4);
-  //   }
-  //   return this.slnService.user_createSln.concat(this.slnService.user_subscribedSln).splice(0, 4);
-  // }
+  get slnList(): Solution[] {
+    let tmp:any[] = this.slnService.solutionList.concat([]);
+    return tmp.splice(0, 4);
+  }
 
   taskList: Task[];
-  slnList: Solution[];
+  // slnList: Solution[];
 
   constructor(
     private service: UserService,
@@ -44,13 +40,13 @@ export class UserOverviewComponent implements OnInit {
       }
     });
 
-    this.slnService.getTopK(4).subscribe(response => {
-      if (response.error) {
-        return Promise.reject(response.error);
-      } else {
-        console.log(response);
-        this.slnList = response.docs;
-      }
-    });
+    // this.slnService.getTopK(4).subscribe(response => {
+    //   if (response.error) {
+    //     return Promise.reject(response.error);
+    //   } else {
+    //     console.log(response);
+    //     this.slnList = response.docs;
+    //   }
+    // });
   }
 }

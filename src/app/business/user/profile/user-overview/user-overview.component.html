@@ -1,7 +1,7 @@
 <div>
 
     <!-- Latest Topics -->
-    <div>
+    <div *ngIf="topicList.length>0">
         <h2 class="f4 mb-2 text-normal">Latest Topics</h2>
         <ol class="card-list">
             <li *ngFor="let topic of topicList" class="card-item">
@@ -21,7 +21,7 @@
     </div>
 
     <!-- Latest Solutions -->
-    <div *ngIf="slnList">
+    <div *ngIf="slnList.length>0">
         <h2 class="f4 mb-2 text-normal">Latest Solutions</h2>
         <ol class="card-list">
             <li *ngFor="let sln of slnList" class="card-item">
