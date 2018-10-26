@@ -1,6 +1,6 @@
 import { ConversationService } from './conversation.service';
 import { MSRService } from './msr.service';
-import { UserService } from '@services/user.service';
+import { UserService } from './user.service';
 import { TaskService } from './task.service';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
@@ -56,6 +56,7 @@ export class SolutionService extends ListBaseService {
     }
 
     public create() {
+        this.userService.redirectIfNotLogined();
         this.clear();
         this.solution = new Solution(this.user);
         let cid = this.conversationService.create(this.solution._id)._id;

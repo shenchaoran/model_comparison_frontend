@@ -4,6 +4,7 @@ import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Resolve } from '@angular/router';
 import { _HttpClient } from '@common/core/services/http.client';
 import { ListBaseService } from './list-base.service';
+import { UserService } from './user.service';
 
 @Injectable({
     providedIn: 'root'
@@ -12,9 +13,14 @@ export class TaskService extends ListBaseService {
     protected baseUrl = '/comparison/tasks';
 
     constructor(
-        protected http: _HttpClient
+        protected http: _HttpClient,
+        private userService: UserService,
     ) { 
         super(http);
+    }
+
+    create() {
+        this.userService.redirectIfNotLogined();
     }
 
     invoke(id: string): Observable<any> {

@@ -23,7 +23,6 @@ export class CreateSlnComponent extends DefaultLifeHook implements OnInit {
     _title: string = 'Create a new comparison solution';
     _headerMeta: string = 'A comparison solution compare sereral factor of model.';
     _submitText: string = 'Create solution';
-    submitDisabled = true;
     
     get solution() { return this.solutionService.solution; }
     get cmpMethods() { return this.cmpMethodService.methods; }
@@ -50,6 +49,6 @@ export class CreateSlnComponent extends DefaultLifeHook implements OnInit {
         this.solution.auth.src = e.auth;
         this.solution.meta.name = e.name;
         this.solution.meta.desc = e.desc;
-        this.solutionService.insert().subscribe(res => {});
+        this.solutionService.upsert().subscribe(res => {});
     }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import {MatSnackBar} from '@angular/material';
 import {
     TopicService,
     ConversationService,
@@ -45,6 +46,7 @@ export class TopicDetailComponent extends DefaultLifeHook implements OnInit {
         private conversationService: ConversationService,
         private userService: UserService,
         private route: ActivatedRoute,
+        private snackBar: MatSnackBar,
     ) {
         super(topicService);
     }
@@ -52,19 +54,29 @@ export class TopicDetailComponent extends DefaultLifeHook implements OnInit {
     ngOnInit() {
         this.route.params.subscribe((params: Params) => {
             const topicId = params['id'];
-            if(topicId === 'create') {
-                this.userService.redirectIfNotLogined();
-                this.topicService.create();
-                this.descMode = 'WRITE';
-                this.titleMode = 'WRITE';
-                this._originDesc = null;
-                this._originTitle = null;
-            }
-            else {
+            // if(topicId === 'create') {
+            //     this.topicService.create();
+            //     this.descMode = 'WRITE';
+            //     this.titleMode = 'WRITE';
+            //     this._originDesc = null;
+            //     this._originTitle = null;
+            // }
+            // else {
                 this.descMode = 'READ';
                 this.titleMode = 'READ';
-                this.topicService.findOne(topicId).subscribe(res => {});
-            }
+                this.topicService.findOne(topicId).subscribe(res => {
+                    if(!res.error) {
+                        if(this.couldEdit && !this.topic.meta.wikiMD) {
+                            this.descMode = 'WRITE';
+                            this.snackBar.open('please improve the wiki documentation as soon as possible!', null, {
+                                duration: 2000,
+                                verticalPosition: 'top',
+                                horizontalPosition: 'end',
+                            });
+                        }
+                    }
+                });
+            // }
         });
     }
 

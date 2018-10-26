@@ -13,6 +13,7 @@ import { MethodDetailComponent } from './method-detail/method-detail.component';
 import { MethodListComponent } from './method-list/method-list.component';
 import { CreateSlnComponent } from './create-sln/create-sln.component';
 import { CreateTaskComponent } from './create-task/create-task.component';
+import { SlnConfigComponent } from './sln-config/sln-config.component';
 
 const components = [
     SolutionListComponent,
@@ -21,6 +22,7 @@ const components = [
     MethodDetailComponent,
     MethodListComponent,
     CreateSlnComponent,
+    SlnConfigComponent,
 ];
 var entryComponents = [];
 const modules = [

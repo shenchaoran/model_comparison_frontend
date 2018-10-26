@@ -33,9 +33,9 @@
     </div>
 
     <div class='header-meta'>
-        <p>{{solution.meta.desc}}</p>
-        <a class='author' routerLink='/user'>{{solution.auth.userName}}</a> created this solution at
-        {{solution.meta.time | date: 'yyyy.MM.dd'}}
+        <p>{{solution.meta.desc | description}}</p>
+        <p><a class='author' routerLink='/user'>{{solution.auth.userName}}</a> created this solution at
+            {{solution.meta.time | date: 'yyyy.MM.dd'}}</p>
     </div>
 
     <div class='article'>

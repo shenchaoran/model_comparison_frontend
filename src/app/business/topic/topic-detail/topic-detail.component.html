@@ -32,8 +32,9 @@
     </div>
     
     <div class='header-meta'>
-        <a class='author' routerLink='/user'>{{topic.auth.userName}}</a> created this topic at {{topic.meta.time |
-        date: 'yyyy.MM.dd'}}
+        <p>{{topic.meta.desc | description}}</p>
+        <p><a class='author' routerLink='/user'>{{topic.auth.userName}}</a> created this topic at {{topic.meta.time |
+            date: 'yyyy.MM.dd'}}</p>
     </div>
 
     <div class='article'>

@@ -41,6 +41,7 @@ export class TopicService extends ListBaseService {
     }
 
     public create() {
+        this.userService.redirectIfNotLogined();
         this.clear();
         this.topic = new Topic(this.user);
         let cid = this.conversationService.create(this.topic._id)._id;
