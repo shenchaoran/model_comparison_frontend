@@ -6,14 +6,13 @@ import {
 import {
     Topic,
 } from '../../models';
-import { DefaultLifeHook } from '../../../common/shared/classes';
 
 @Component({
     selector: 'ogms-topic-list',
     templateUrl: './topic-list.component.html',
     styleUrls: ['./topic-list.component.scss']
 })
-export class TopicListComponent extends DefaultLifeHook implements OnInit {
+export class TopicListComponent implements OnInit {
     get topicList(): Topic[] {
         return this.topicService.topicList;
     }
@@ -23,9 +22,7 @@ export class TopicListComponent extends DefaultLifeHook implements OnInit {
 
     constructor(
         public topicService: TopicService
-    ) {
-        super(topicService);
-    }
+    ) {}
 
     ngOnInit() {
         this.topicService.findAll().subscribe(res => {})

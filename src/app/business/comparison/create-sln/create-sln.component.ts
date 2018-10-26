@@ -12,14 +12,13 @@ import {
 import { Router, ActivatedRoute } from '@angular/router';
 import * as uuidv1 from 'uuid/v1';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { DefaultLifeHook } from '../../../common/shared/classes/default-life-hook.class';
 
 @Component({
     selector: 'ogms-create-sln',
     templateUrl: './create-sln.component.html',
     styleUrls: ['./create-sln.component.scss']
 })
-export class CreateSlnComponent extends DefaultLifeHook implements OnInit {
+export class CreateSlnComponent implements OnInit {
     slnFG: FormGroup;
 
     get solution() { return this.solutionService.solution; }
@@ -47,8 +46,6 @@ export class CreateSlnComponent extends DefaultLifeHook implements OnInit {
         private cmpMethodService: CmpMethodService,
         private userService: UserService,
     ) {
-        super(solutionService);
-        this.userService.redirectIfNotLogined();
         this.solutionService.create();
     }
 
