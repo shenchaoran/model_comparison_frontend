@@ -1,3 +1,4 @@
+import { Solution } from './../../../models/solution.class';
 import { OgmsBaseComponent } from './../../../../common/shared/components/ogms-base/ogms-base.component';
 import { SolutionService } from './../../../services/sln.service';
 import { Component, OnInit, } from '@angular/core';
@@ -9,6 +10,19 @@ import { Component, OnInit, } from '@angular/core';
 })
 export class UserSolutionsComponent extends OgmsBaseComponent implements OnInit {
   slns:any[];
+  get slnList(): Solution[] {
+    if(this.createdSln === null){
+      return this.subscribedSln===null?null: this.subscribedSln.splice(0,4);
+    }
+    return this.createdSln.concat(this.subscribedSln);
+  }
+  get createdSln(): Solution[] {
+    return this.service.user_createSln;
+  }
+  get subscribedSln(): Solution[] {
+    return this.service.user_subscribedSln;
+  }
+
   constructor(
     private service: SolutionService,
   ) { 

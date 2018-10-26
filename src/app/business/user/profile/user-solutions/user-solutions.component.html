@@ -4,10 +4,10 @@
 </mat-button-toggle-group>
 
 <nz-card [nzBordered]="false" [nzLoading]="!slns">
-  <section *ngFor="let sln of slns" class="list-item">
+  <section *ngFor="let sln of slnList" class="list-item">
     <div class="detail-group">
       <h3>
-          <a [routerLink]='sln._id'>{{sln.auth.userName}}/{{sln.meta.name}}</a>
+          <a [routerLink]='"/comparison/solutions/" + sln._id'>{{sln.auth.userName}}/{{sln.meta.name}}</a>
       </h3>
       <p>{{sln.meta.desc | stringLimit: 180 | description}}</p>
       <p>

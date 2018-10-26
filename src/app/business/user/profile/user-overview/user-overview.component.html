@@ -12,7 +12,7 @@
                     <div class="sponsor">
                         <div class="text-gray text-small float_right">
                             Created By:
-                            <a [routerLink]='"/topics/" + topic._id'>{{topic.auth.userName}}</a>
+                            <span>{{topic.auth.userName}}</span>
                         </div>
                     </div>
                 </a>
@@ -21,21 +21,21 @@
     </div>
 
     <!-- Latest Solutions -->
-    <div>
+    <div *ngIf="slnList">
         <h2 class="f4 mb-2 text-normal">Latest Solutions</h2>
         <ol class="card-list">
-            <li *ngFor="let topic of user_topics" class="card-item">
+            <li *ngFor="let sln of slnList" class="card-item">
                 <div class="card-item-content" routerLink="">
                     <span class="d-block">
-                        <a class="title-p" routerLink="">{{topic.title}}</a>
+                        <a class="title-p" [routerLink]='"/comparison/solutions/" + sln._id'>{{sln.meta.name}}</a>
                     </span>
                     <div class="description">
-                        <p>{{topic.description | stringLimit: 180 | description}}</p>
+                        <p>{{sln.meta.description | stringLimit: 180 | description}}</p>
                     </div>
                     <div class="sponsor">
                         <div class="text-gray text-small float_right">
                             Created By:
-                            <a routerLink="">{{topic.sponsor}}</a>
+                            <span>{{sln.auth.userName}}</span>
                         </div>
                     </div>
                 </div>
@@ -44,21 +44,21 @@
     </div>
 
     <!-- Latest Tasks -->
-    <div>
+    <div *ngIf = "taskList">
         <h2 class="f4 mb-2 text-normal">Latest Results & Diagnostics</h2>
         <ol class="card-list">
-            <li *ngFor="let topic of user_topics" class="card-item">
+            <li *ngFor="let task of taskList" class="card-item">
                 <div class="card-item-content" routerLink="">
                     <span class="d-block">
-                        <a class="title-p" routerLink="">{{topic.title}}</a>
+                        <a class="title-p" class=""[routerLink]='"/results/comparison/" + task._id'>{{task.meta.name}}</a>
                     </span>
                     <div class="description">
-                        <p>{{topic.description | stringLimit: 180 | description}}</p>
+                        <p>{{task.meta.description | stringLimit: 180 | description}}</p>
                     </div>
                     <div class="sponsor">
                         <span>
                             <mat-icon>person</mat-icon>
-                            <a>{{topic.sponsor}}</a>
+                            <span>{{task.auth.userName}}</span>
                         </span>
                         <span style="float: right">
                             <mat-icon>star</mat-icon>

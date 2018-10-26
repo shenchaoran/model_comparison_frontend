@@ -6,7 +6,7 @@
     <mat-card *ngFor="let topic of topicList" class="topic-item">
         <mat-card-header>
             <mat-card-title>
-                <a routerLink="">
+                <a [routerLink]='"/topics/" + topic._id'>
                     <span>{{topic.meta.name}}</span>
                 </a>
             </mat-card-title>
@@ -23,7 +23,7 @@
         <mat-card-footer>
             <span style="float:left;padding-left:20px">
                 Created By:
-                <a routerLink="">{{topic.auth.userName}}</a>
+                <span>{{topic.auth.userName}}</span>
             </span>
             <div style="float: right;padding-right:20px;">
                 <span>

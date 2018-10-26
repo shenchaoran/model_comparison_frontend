@@ -3,7 +3,7 @@
     <nz-card [nzBordered]="false" class="mb-lg" [nzLoading]="!user">
       <ng-container *ngIf="user">
         <div class="avatarHolder">
-          <img src="{{user.avatar}}" onerror="this.src='../../../../assets/img/user/avatar_def.png'"> 
+          <img [attr.src]='"data:image/png;base64," + user.avator'> 
         </div>
         <h1 style="text-align:center"><span class="username">{{user.username}}</span></h1>
         <button nz-button nzType="default" style="width:100%;margin-bottom: 20px" *ngIf=false>Follow</button>

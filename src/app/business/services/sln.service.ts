@@ -34,6 +34,8 @@ export class SolutionService extends ListBaseService {
     public solutionList: Solution[];
     public solutionCount: number;
     public hadSaved: boolean;
+    public user_createSln: Solution[];
+    public user_subscribedSln: Solution[];
 
     public get user(): User { return this.userService.user; }
     public get conversation(): Conversation {return this.conversationService.conversation;}
@@ -99,6 +101,21 @@ export class SolutionService extends ListBaseService {
         }));
     }
 
+    public findByUserId(userId) {
+        this.clear();
+        return this.http.get(`${this.baseUrl}`, {
+            params: {
+                userId: userId,
+            }
+        }).pipe(map(res => {
+            if (!res.error) {
+                this.user_createSln = res.data.created;
+                this.user_subscribedSln = res.data.subscribed;
+            }
+            return res;
+        }));
+    }
+
     public upsert() {
         let fn = this.hadSaved ?
             () => this.http.patch(`${this.baseUrl}/${this.solution._id}`, { solution: this.solution }) :
@@ -154,5 +171,7 @@ export class SolutionService extends ListBaseService {
         this.tasks = null;
         this.mss = null;
         this.hadSaved = null;
+        this.user_createSln=null;
+        this.user_subscribedSln=null;
     }
 }

@@ -1,3 +1,4 @@
+import { SolutionService } from './../../services/sln.service';
 import { TopicService } from './../../services/topic.service';
 
 import {
@@ -35,16 +36,12 @@ export class ProfileComponent implements OnInit {
     }
   ]
   pos = 0;
-  get topicList(): Topic[] {
-    return this.topicService.currentUser_topicList;
-  }
-  get topicCount(): Number {
-    return this.topicService.currentUser_topicCount;
-  }
+
   constructor(
     private router: Router,
     private userService: UserService,
     public topicService: TopicService,
+    public slnService: SolutionService, 
   ) { }
 
   private setActive() {
@@ -61,9 +58,9 @@ export class ProfileComponent implements OnInit {
       .pipe(filter(e => e instanceof ActivationEnd))
       .subscribe(() => this.setActive());
     this.setActive();
-    console.log("userid:"+ this.user._id);
+    console.log("userid:"+ this.user._id); 
     this.topicService.findByUserId(this.user._id).subscribe(res => { });
-
+    this.slnService.findByUserId(this.user._id).subscribe(res => { });
   }
 
   to(item: any) {
