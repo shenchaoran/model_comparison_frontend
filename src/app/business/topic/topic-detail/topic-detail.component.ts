@@ -104,11 +104,11 @@ export class TopicDetailComponent extends DefaultLifeHook implements OnInit {
 
     onDescEditCancel() {
         this.descMode = 'READ';
-        this.topic.meta.descMD = this._originDesc;
+        this.topic.meta.wikiMD = this._originDesc;
     }
 
     onDescEditSave() {
-        this.topic.meta.descHTML = this.simpleMDE.simplemde.markdown(this.topic.meta.descMD);
+        this.topic.meta.wikiHTML = this.simpleMDE.simplemde.markdown(this.topic.meta.wikiMD);
         this.topicService.upsert().subscribe(res => {
             this.descMode = 'READ';
         });
@@ -116,7 +116,7 @@ export class TopicDetailComponent extends DefaultLifeHook implements OnInit {
     
     onDescEditClick() {
         this.descMode = "WRITE";
-        this._originDesc = this.topic.meta.descMD;
+        this._originDesc = this.topic.meta.wikiMD;
     }
 
     onSubscribeToggle() {

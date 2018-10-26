@@ -68,7 +68,7 @@ export class CreateTaskComponent extends DocBaseComponent implements OnInit {
     ngOnInit() {
         super.ngOnInit();
         this.doc.subscribe(doc => {
-            this.sln = doc;
+            this.sln = doc.solution;
         });
     }
 

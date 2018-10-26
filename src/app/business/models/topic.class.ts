@@ -7,8 +7,8 @@ export class Topic {
     meta: {
         name: string,
         desc?: string,
-        descMD?: string,
-        descHTML?: string,
+        wikiMD?: string,
+        wikiHTML?: string,
         time: number
     };
     auth: {
@@ -33,8 +33,8 @@ export class Topic {
         this._id = ObjectID().toString();
         this.meta = {
             name: '',
-            descMD: '',
-            descHTML: '',
+            wikiMD: '',
+            wikiHTML: '',
             time: new Date().getTime()
         };
         this.auth = {

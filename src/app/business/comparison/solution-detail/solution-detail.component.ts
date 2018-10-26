@@ -66,18 +66,18 @@ export class SolutionDetailComponent extends DefaultLifeHook implements OnInit {
     }
 
     onDescEditSave() {
-        this.solution.meta.descHTML = this.simpleMDE.simplemde.markdown(this.solution.meta.descMD);
+        this.solution.meta.wikiHTML = this.simpleMDE.simplemde.markdown(this.solution.meta.wikiMD);
         this.solutionService.upsert().subscribe(res => {
             this.descMode = 'READ';
         });
     }
     onDescEditCancel() {
         this.descMode = 'READ';
-        this.solution.meta.descMD = this._originDesc;
+        this.solution.meta.wikiMD = this._originDesc;
     }
     onDescEditClick() {
         this.descMode = "WRITE";
-        this._originDesc = this.solution.meta.descMD;
+        this._originDesc = this.solution.meta.wikiMD;
     }
     onSubscribeToggle() {
         let ac = this.includeUser? 'unsubscribe': 'subscribe';

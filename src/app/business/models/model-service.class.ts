@@ -14,8 +14,8 @@ export class MS {
             keywords: string[],
             abstract: string,
             desc?: string,
-            descMD?: string,
-            descHTML?: string,
+            wikiMD?: string,
+            wikiHTML?: string,
         },
         IO: {
             schemas: UDXSchema[],

@@ -14,8 +14,8 @@ export class CalcuTask {
     meta: {
         name: string,
         desc?: string,
-        descMD?: string,
-        descHTML?: string,
+        wikiMD?: string,
+        wikiHTML?: string,
         time: number
     };
     auth: {
