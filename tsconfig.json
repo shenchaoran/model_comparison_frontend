@@ -23,41 +23,26 @@
             "dom"
         ],
         "paths": {
-            "@common": [
-                "app/common"
-            ],
-            "@common/*": [
-                "app/common/*"
-            ],
-            "@ol-map": [
-                "app/common/feature/ol-map"
-            ],
-            "@ol-map/*": [
-                "app/common/feature/ol-map/*"
-            ],
             "@shared": [
-                "app/common/shared"
+                "app/shared"
             ],
             "@shared/*": [
-                "app/common/shared/*"
+                "app/shared/*"
             ],
             "@core": [
-                "app/common/core/"
+                "app/core/"
             ],
             "@core/*": [
-                "app/common/core/*"
+                "app/core/*"
             ],
             "@ngx-shared": [
-                "app/common/ngx-shared"
-            ],
-            "@ngx-shared/*": [
-                "app/common/ngx-shared/*"
+                "app/ngx-shared"
             ],
             "@feature": [
-                "app/common/feature"
+                "app/feature"
             ],
             "@feature/*": [
-                "app/common/feature/*"
+                "app/feature/*"
             ],
             "@config": [
                 "config"
@@ -66,10 +51,10 @@
                 "config/*"
             ],
             "@utils": [
-                "app/common/utils"
+                "app/utils"
             ],
             "@utils/*": [
-                "app/common/utils/*"
+                "app/utils/*"
             ],
             "@models": [
                 "app/business/models"
@@ -82,6 +67,9 @@
             ],
             "@services/*": [
                 "app/business/services/*"
+            ],
+            "@mat-shared": [
+                "app/mat-shared"
             ]
         }
     },

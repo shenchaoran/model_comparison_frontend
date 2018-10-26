@@ -5,8 +5,8 @@ import {
     UserService
  } from "../../services";
 import { Router, ActivatedRoute, Params } from "@angular/router";
-import { DynamicTitleService } from "@common/core/services/dynamic-title.service";
-import { DocBaseComponent } from '@common/shared';
+import { DynamicTitleService } from "@core/services/dynamic-title.service";
+import { DocBaseComponent } from '@shared';
 import { FormBuilder, Validators, FormGroup, FormArray, FormControl } from '@angular/forms';
 import { Task, CalcuTask, ResourceSrc, CmpState, CalcuTaskState } from '@models';
 import { MatSnackBar } from '@angular/material';

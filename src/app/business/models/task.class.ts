@@ -1,4 +1,4 @@
-import { User } from './../../common/core/services/settings.service';
+import { User } from './user.class';
 import { UserService } from '@services/user.service';
 import { UDXSchema } from '@models/UDX-schema.class';
 import { ResourceSrc } from '@models/resource.enum';

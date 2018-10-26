@@ -9,9 +9,9 @@ import {
 } from "@angular/core";
 import { TaskService } from '../../services/task.service';
 import { Router, ActivatedRoute, Params } from "@angular/router";
-import { DynamicTitleService } from "@common/core/services/dynamic-title.service";
+import { DynamicTitleService } from "@core/services/dynamic-title.service";
 import { ReactiveFormsModule } from "@angular/forms";
-import { DocBaseComponent } from '@common/shared';
+import { DocBaseComponent } from '@shared';
 import { Observable, interval } from 'rxjs'
 import { map, switchMap, filter, tap, startWith } from 'rxjs/operators';
 import { CmpState } from '@models'

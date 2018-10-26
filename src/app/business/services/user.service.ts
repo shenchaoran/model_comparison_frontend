@@ -1,7 +1,7 @@
 import { getFakeList } from './../test/data/mock-user-issues';
 import { Injectable } from '@angular/core';
 import { Location } from '@angular/common';
-import { _HttpClient } from '@common/core/services/http.client';
+import { _HttpClient } from '@core/services/http.client';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';

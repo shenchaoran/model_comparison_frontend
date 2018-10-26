@@ -1,4 +1,4 @@
-import { OgmsBaseComponent } from './../../../../common/shared/components/ogms-base/ogms-base.component';
+import { OgmsBaseComponent } from './../../../../shared/components/ogms-base/ogms-base.component';
 import { TaskService } from '@services';
 import { Component, OnInit } from '@angular/core';
 

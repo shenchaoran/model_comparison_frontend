@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
-import { SharedModule } from '@common/shared';
-import { MatSharedModule } from '@common/mat-shared';
+import { SharedModule } from '@shared';
+import { MatSharedModule } from '@mat-shared';
 
 import { CmpSharedModule } from '../cmp-shared';
 import { ComparisonRoutingModule } from './index-routing.module';
@@ -33,14 +33,7 @@ const modules = [
     ConversationModule,
     SimplemdeModule.forRoot(),
 ];
-const services = [
-    // {
-    //     provide: 'MAT_PROGRESS_SPINNER_DEFAULT_OPTIONS',
-    //     useValue: {
-    //         diameter: 40
-    //     }
-    // },
-];
+const services = [];
 @NgModule({
     imports: [...modules],
     declarations: [...components],

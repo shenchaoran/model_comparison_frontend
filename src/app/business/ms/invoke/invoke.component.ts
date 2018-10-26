@@ -1,8 +1,7 @@
 import { Component, OnInit, OnDestroy, HostListener } from "@angular/core";
 import { MSService, UserService } from "../../services";
 import { Router, ActivatedRoute, Params } from "@angular/router";
-import { NzNotificationService, NzModalService } from "ng-zorro-antd";
-import { DynamicTitleService } from "@common/core/services/dynamic-title.service";
+import { DynamicTitleService } from "@core/services/dynamic-title.service";
 import { ResourceSrc, CalcuTaskState, CalcuTask } from '@models';
 import {
     AbstractControl,
@@ -12,7 +11,7 @@ import {
     Validators,
     ValidatorFn,
 } from '@angular/forms';
-import { DocBaseComponent } from '@common/shared';
+import { DocBaseComponent } from '@shared';
 
 @Component({
     selector: 'ogms-invoke',
@@ -29,7 +28,6 @@ export class InvokeComponent extends DocBaseComponent implements OnInit {
     constructor(
         public route: ActivatedRoute,
         public solutionService: MSService,
-        //private _notice: NzNotificationService,
         public title: DynamicTitleService,
         public userService: UserService,
         public fb: FormBuilder,

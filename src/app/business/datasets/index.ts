@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { SharedModule } from '@common/shared';
+import { SharedModule } from '@shared';
 
 import { DatasetsRoutingModule } from './index-routing.module';
 import { DatasetsComponent } from './datasets/datasets.component';

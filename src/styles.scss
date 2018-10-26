@@ -1,20 +1,12 @@
-@import "assets/css/lib/material-icon.css";
-
 @import "~normalize.css/normalize.css";
 $fa-font-path: '~font-awesome/fonts';
 @import '~font-awesome/scss/font-awesome.scss';
-@import "~ionicons/css/ionicons.min.css";
 @import "~ng2-slim-loading-bar/style.css";
 @import "~openlayers/dist/ol.css";
-@import "~prismjs/themes/prism-coy.css";
-@import "~prismjs/plugins/line-numbers/prism-line-numbers.css";
 // @import "~golden-layout/src/css/goldenlayout-base.css";
 // @import "~golden-layout/src/css/goldenlayout-translucent-theme.css";
-// @import '~ol3-layerswitcher/src/ol3-layerswitcher.css';
-// @import '~handsontable/dist/handsontable.full.css';
 // @import '~bootstrap/dist/css/bootstrap.min.css';
 // @import "~handsontable/dist/handsontable.full.min.css";
-// @import "~leaflet/dist/leaflet.css";
 @import "assets/css/my/global.scss";
 @import "assets/css/my/scrollbar.scss";
 @import "assets/css/my/layout.scss";
@@ -25,5 +17,3 @@ $fa-font-path: '~font-awesome/fonts';
 @import "assets/css/my/simplemde.scss";
 @import "assets/css/my/primer.scss";
 // @import "assets/css/my/golden-layout.scss";
-// TODO relative path problems
-// @import 'assets/css/ol3-ext/ol3-ext.css';

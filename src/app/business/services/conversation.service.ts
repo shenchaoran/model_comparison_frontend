@@ -5,7 +5,7 @@ import {
 } from '@angular/router';
 import { ListBaseService } from './list-base.service';
 import { UserService } from './user.service';
-import { _HttpClient } from '../../common/core/services';
+import { _HttpClient } from '../../core/services';
 import {
     Conversation,
     CommentType,

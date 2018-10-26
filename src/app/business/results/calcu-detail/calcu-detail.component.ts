@@ -1,8 +1,7 @@
 import { Component, OnInit, HostListener } from "@angular/core";
 import { MSRService } from '../../services/msr.service';
 import { Router, ActivatedRoute, Params } from "@angular/router";
-import { NzNotificationService, NzModalService } from "ng-zorro-antd";
-import { DynamicTitleService } from "@common/core/services/dynamic-title.service";
+import { DynamicTitleService } from "@core/services/dynamic-title.service";
 import { ReactiveFormsModule } from "@angular/forms";
 import { DocBaseComponent } from '@shared';
 import { CalcuTaskState } from '@models'

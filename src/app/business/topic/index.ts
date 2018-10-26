@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '@shared';
 import { ConversationModule } from '../conversation';
-import { MatSharedModule } from '../../common/mat-shared';
-import { SimplemdeModule, SIMPLEMDE_CONFIG } from 'ng2-simplemde';
+import { MatSharedModule } from '../../mat-shared';
+import { SimplemdeModule } from 'ng2-simplemde';
 
 import { TopicRoutingModule } from './index-routing.module';
 import { TopicListComponent } from './topic-list/topic-list.component';
