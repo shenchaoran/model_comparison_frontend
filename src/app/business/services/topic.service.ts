@@ -55,6 +55,8 @@ export class TopicService extends ListBaseService implements OgmsService {
 
     public findOne(id) {
         this.clear();
+        this.solutionService.clear();
+        this.conversationService.clear();
 
         return this.http.get(`${this.baseUrl}/${id}`).pipe(map(res => {
             if (!res.error) {
