@@ -36,6 +36,7 @@ import {
     SidebarSectionComponent,
     SiderbarMenuModalComponent,
     DetailLayoutComponent,
+    CreateDocComponent,
 } from './components';
 
 import {
@@ -98,6 +99,7 @@ const components = [
     SidebarSectionComponent,
     SiderbarMenuModalComponent,
     DetailLayoutComponent,
+    CreateDocComponent,
 ];
 
 const directives = [

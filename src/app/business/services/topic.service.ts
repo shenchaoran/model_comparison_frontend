@@ -40,10 +40,10 @@ export class TopicService extends ListBaseService {
         this.clear();
     }
 
-    public createTopic() {
+    public create() {
         this.clear();
         this.topic = new Topic(this.user);
-        let cid = this.conversationService.createConversation(this.topic._id)._id;
+        let cid = this.conversationService.create(this.topic._id)._id;
         this.topic.cid = cid;
         this.hadSaved = false;
         return this.topic;
@@ -62,7 +62,7 @@ export class TopicService extends ListBaseService {
                         this.solutionList = res.data.solutions;
                         this.solutionCount = res.data.solutionCount;
 
-                        this.conversationService.init(
+                        this.conversationService.import(
                             res.data.conversation,
                             res.data.users,
                             res.data.commentCount,

@@ -64,10 +64,10 @@ module.exports = {
     plugins: [
         //热替换
         new webpack.HotModuleReplacementPlugin(),
-        new webpack.optimize.CommonsChunkPlugin({
-            name: ['vendor', 'polyfills']
-            //多个html共用一个js文件，提取公共代码
-        }),
+        // new webpack.optimize.CommonsChunkPlugin({
+        //     name: ['vendor', 'polyfills']
+        //     //多个html共用一个js文件，提取公共代码
+        // }),
 
         new HtmlWebpackPlugin({
             template: './src/index.html'

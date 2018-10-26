@@ -38,6 +38,7 @@ export class TopicDetailComponent extends DefaultLifeHook implements OnInit {
     get solutions(): Solution[] {return this.topicService.solutionList;}
     get selectedSolutions(): Solution[] {return this.solutions.filter(v => v.topicId === this.topic._id);}
     get includeUser() {return this.topic.subscribed_uids && this.topic.subscribed_uids.findIndex(v => v === this.user._id) !== -1;}
+    get hadSaved() {return this.topicService.hadSaved;}
 
     constructor(
         private topicService: TopicService,
@@ -53,7 +54,7 @@ export class TopicDetailComponent extends DefaultLifeHook implements OnInit {
             const topicId = params['id'];
             if(topicId === 'create') {
                 this.userService.redirectIfNotLogined();
-                this.topicService.createTopic();
+                this.topicService.create();
                 this.descMode = 'WRITE';
                 this.titleMode = 'WRITE';
                 this._originDesc = null;

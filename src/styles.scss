@@ -8,7 +8,6 @@ $fa-font-path: '~font-awesome/fonts';
 @import "~openlayers/dist/ol.css";
 @import "~prismjs/themes/prism-coy.css";
 @import "~prismjs/plugins/line-numbers/prism-line-numbers.css";
-@import "~primer-utilities/index.scss";
 // @import "~golden-layout/src/css/goldenlayout-base.css";
 // @import "~golden-layout/src/css/goldenlayout-translucent-theme.css";
 // @import '~ol3-layerswitcher/src/ol3-layerswitcher.css';
@@ -24,6 +23,7 @@ $fa-font-path: '~font-awesome/fonts';
 @import "assets/css/my/form.scss";
 @import "assets/css/my/material-theme.scss";
 @import "assets/css/my/simplemde.scss";
+@import "assets/css/my/primer.scss";
 // @import "assets/css/my/golden-layout.scss";
 // TODO relative path problems
 // @import 'assets/css/ol3-ext/ol3-ext.css';

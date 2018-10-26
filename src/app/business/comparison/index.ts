@@ -11,7 +11,7 @@ import { SolutionListComponent } from './solution-list/solution-list.component';
 import { SolutionDetailComponent } from './solution-detail/solution-detail.component';
 import { MethodDetailComponent } from './method-detail/method-detail.component';
 import { MethodListComponent } from './method-list/method-list.component';
-import { CreateSlnComponent, SlnConfirmDialog } from './create-sln/create-sln.component';
+import { CreateSlnComponent } from './create-sln/create-sln.component';
 import { CreateTaskComponent } from './create-task/create-task.component';
 
 const components = [
@@ -21,11 +21,8 @@ const components = [
     MethodDetailComponent,
     MethodListComponent,
     CreateSlnComponent,
-    SlnConfirmDialog,
 ];
-var entryComponents = [
-    SlnConfirmDialog
-];
+var entryComponents = [];
 const modules = [
     SharedModule,
     MatSharedModule,

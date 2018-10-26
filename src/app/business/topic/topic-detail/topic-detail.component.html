@@ -11,14 +11,15 @@
         <ng-container *ngIf='titleMode === "WRITE" else readTemp'>
             <span class='topic-name'>
                 <mat-form-field>
-                    <input matInput placeholder='Topic Name' [(ngModel)]='topic.meta.name' required minlength="5">
+                    <input matInput placeholder='Topic Name' [(ngModel)]='topic.meta.name' required minlength="5" #titleName='ngModel'>
                     <mat-error *ngIf='"required"'>必填</mat-error>
                     <mat-error *ngIf='"minlength"'>长度不够</mat-error>
                 </mat-form-field>
             </span>
             <div class='title-btn-group'>
-                <button mat-button color='primary' (click)='onTitleEditSave()'>Save</button>
-                <button mat-button color='primary' (click)='onTitleEditCancel()'>Cancel</button>
+                <!-- 参考 ngModel 的结构 -->
+                <button mat-button color='primary' (click)='onTitleEditSave()' [disabled]='titleName.invalid'>Save</button>
+                <button mat-button color='primary' (click)='onTitleEditCancel()' [disabled]='hadSaved? false: titleName.invalid'>Cancel</button>
             </div>
         </ng-container>
         <ng-template #readTemp>
@@ -39,10 +40,10 @@
         <mat-tab-group selectedIndex='0' (selectedIndexChange)='onSelectedIndexChange($event)'>
             <mat-tab label='Wiki'>
                 <div class='wiki-tab' *ngIf='descMode === "WRITE"'>
-                    <simplemde [(ngModel)]='topic.meta.wikiMD' [options]='mdeOption'></simplemde>
+                    <simplemde [(ngModel)]='topic.meta.wikiMD' [options]='mdeOption'  #mde='ngModel' required minlength='5'></simplemde>
                     <div class='desc-btn-group'>
-                        <button mat-button color='primary' (click)='onDescEditCancel()'>Cancel</button>
-                        <button mat-button color='primary' (click)='onDescEditSave()'>Save</button>
+                        <button mat-button color='primary' (click)='onDescEditCancel()' [disabled]='hadSaved? false: mde.invalid'>Cancel</button>
+                        <button mat-button color='primary' (click)='onDescEditSave()' [disabled]='mde.invalid'>Save</button>
                     </div>
                 </div>
                 <div class='wiki-tab' *ngIf='descMode === "READ"'>

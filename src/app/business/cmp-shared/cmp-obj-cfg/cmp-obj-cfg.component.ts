@@ -126,13 +126,12 @@ export class CmpObjCfgComponent implements ControlValueAccessor, OnInit {
                     methods: [null, [Validators.required]]
                 });
 
-                this.cmpObjFG.statusChanges
-                    .subscribe(state => {
-                        console.log(state);
-                        if (state === 'VALID') {
-                            return this.propagateChange(this.cmpObjFG.value);
-                        }
-                    })
+                this.cmpObjFG.statusChanges.subscribe(state => {
+                    console.log(state);
+                    if (state === 'VALID') {
+                        return this.propagateChange(this.cmpObjFG.value);
+                    }
+                })
             });
     }
 
@@ -140,7 +139,7 @@ export class CmpObjCfgComponent implements ControlValueAccessor, OnInit {
 
     }
 
-    onSelected(e) {}
+    onSelected(e) { }
 
     private propagateChange = (e: any) => { };
 

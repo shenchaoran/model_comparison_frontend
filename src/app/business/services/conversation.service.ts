@@ -47,7 +47,7 @@ export class ConversationService extends ListBaseService {
     /**
      * inlet
      */
-    public init(conversation: Conversation, users: User[], commentCount: number, authorId: string, pid: string, hadSavedConversation: boolean = true) {
+    public import(conversation: Conversation, users: User[], commentCount: number, authorId: string, pid: string, hadSavedConversation: boolean = true) {
         if(conversation) {
             this.conversation = conversation;
             this.users = users;
@@ -57,14 +57,14 @@ export class ConversationService extends ListBaseService {
             this.newEmptyComment();
         }
         else {
-            this.createConversation(pid);
+            this.create(pid);
         }
     }
 
     /**
      * inlet
      */
-    public createConversation(pid: string) {
+    public create(pid: string) {
         this.clear();
         this.conversation = new Conversation(this.user, pid);
         return this.conversation;

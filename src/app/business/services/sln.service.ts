@@ -58,7 +58,7 @@ export class SolutionService extends ListBaseService {
     public create() {
         this.clear();
         this.solution = new Solution(this.user);
-        let cid = this.conversationService.createConversation(this.solution._id)._id;
+        let cid = this.conversationService.create(this.solution._id)._id;
         this.solution.cid = cid;
         this.hadSaved = false;
         return this.solution;
@@ -75,7 +75,7 @@ export class SolutionService extends ListBaseService {
                 this.mss = res.data.mss;
                 this.hadSaved = true;
                 
-                this.conversationService.init(
+                this.conversationService.import(
                     res.data.conversation,
                     res.data.users,
                     res.data.commentCount,
