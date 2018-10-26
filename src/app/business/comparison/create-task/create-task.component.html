@@ -1,8 +1,10 @@
-<div ogms-loading *ngIf='!sln else docTemp'>
-    <mat-spinner></mat-spinner>
-</div>
-<ng-template #docTemp>
-    <h1>Create Comparison Task</h1>
+<ng-template #loadingTemp>
+        <div ogms-loading>
+            <mat-spinner></mat-spinner>
+        </div>
+    </ng-template>
+<div ogms-rx-box *ngIf='sln else loadingTemp'>
+    <h2>Create Comparison Task</h2>
     <article>
         <form [formGroup]='cmpTaskFG'>
             <h3>Basic Information</h3>
@@ -66,4 +68,4 @@
             <button mat-stroked-button color='primary' (click)='submitTask("run")' [disabled]="!cmpTaskFG.valid">Start Comparison</button>
         </div>
     </article>
-</ng-template>
+</div>

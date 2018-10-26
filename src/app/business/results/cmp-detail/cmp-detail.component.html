@@ -1,7 +1,9 @@
-<div ogms-loading *ngIf='!task else docTemp'>
-    <mat-spinner></mat-spinner>
-</div>
-<ng-template #docTemp>
+<ng-template #loadingTemp>
+        <div ogms-loading>
+            <mat-spinner></mat-spinner>
+        </div>
+    </ng-template>
+<div *ngIf='task else loadingTemp' ogms-rx-box>
     <div class='container'>
         <article>
             <h2>{{task?.meta?.name}}</h2>
@@ -67,4 +69,4 @@
 
         <aside></aside>
     </div>
-</ng-template>
+</div>

@@ -1,7 +1,10 @@
-<div ogms-loading *ngIf='!msiForm else docTemp'>
-    <mat-spinner></mat-spinner>
-</div>
-<ng-template #docTemp>
+<ng-template #loadTemp>
+    <div ogms-loading>
+        <mat-spinner></mat-spinner>
+    </div>
+</ng-template>
+
+<div *ngIf='msiForm else loadTemp' ogms-rx-box>
     <article class='doc' style='margin: 24px auto !important;'>
         <form [formGroup]='msiForm'>
             <div class="doc-title">{{model.MDL.meta.name}} Data Configuration</div>
@@ -34,7 +37,8 @@
                         <span class='placeholder flex-item-1-1-auto'></span>
                     </div>
                     <div class='section-body'>
-                        <ogms-calcu-cfg formControlName='msInstance' *ngIf='msInstance' [msInstance]='msInstance' (onValidChange)='onCalcuCfgChange($event)'></ogms-calcu-cfg>
+                        <ogms-calcu-cfg formControlName='msInstance' *ngIf='msInstance' [msInstance]='msInstance'
+                            (onValidChange)='onCalcuCfgChange($event)'></ogms-calcu-cfg>
                     </div>
                 </section>
 
@@ -57,4 +61,4 @@
             </div>
         </form>
     </article>
-</ng-template>
+</div>

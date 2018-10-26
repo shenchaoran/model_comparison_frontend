@@ -167,6 +167,7 @@
 
 </div> -->
 
+<div ogms-rx-box>
     <section class="doc" *ngIf='model'>
         <div class="doc-title">{{model.MDL.meta.name}}</div>
         <div class="doc-body flex-box-row-nowrap">
@@ -211,15 +212,18 @@
                     <div class="section-body">
                         <div>
                             <div style="margin-bottom: 16px;">
-                                <button nz-button [disabled]="_disabledButton" [nzType]="'primary'" [nzLoading]="_operating" (click)="_operateData(_ioDataset)">Operating</button>
-                                <span style="margin-left: 8px;" *ngIf="_checkedNumber">Selected {{_checkedNumber}} items</span>
+                                <button nz-button [disabled]="_disabledButton" [nzType]="'primary'" [nzLoading]="_operating"
+                                    (click)="_operateData(_ioDataset)">Operating</button>
+                                <span style="margin-left: 8px;" *ngIf="_checkedNumber">Selected {{_checkedNumber}}
+                                    items</span>
                             </div>
-                            <nz-table #nzTable [nzData]="_ioDataSet" [nzPageSize]="10" (nzDataChange)="_displayDataChange($event)" (nzPageIndexChange)="_refreshStatus(_ioDataset)"
-                                (nzPageSizeChange)="_refreshStatus(_ioDataset)">
+                            <nz-table #nzTable [nzData]="_ioDataSet" [nzPageSize]="10" (nzDataChange)="_displayDataChange($event)"
+                                (nzPageIndexChange)="_refreshStatus(_ioDataset)" (nzPageSizeChange)="_refreshStatus(_ioDataset)">
                                 <thead nz-thead>
                                     <tr>
                                         <th nz-th nzCheckbox>
-                                            <label nz-checkbox [(ngModel)]="_allChecked" [nzIndeterminate]="_indeterminate" (ngModelChange)="_checkAll($event, _ioDataset)">
+                                            <label nz-checkbox [(ngModel)]="_allChecked" [nzIndeterminate]="_indeterminate"
+                                                (ngModelChange)="_checkAll($event, _ioDataset)">
                                             </label>
                                         </th>
                                         <th nz-th>
@@ -260,3 +264,4 @@
             </aside>
         </div>
     </section>
+</div>

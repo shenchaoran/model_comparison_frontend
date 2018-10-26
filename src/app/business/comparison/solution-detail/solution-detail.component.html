@@ -41,14 +41,14 @@
         <mat-tab-group>
             <mat-tab label='Wiki'>
                 <div class='wiki-tab' *ngIf='descMode === "WRITE"'>
-                    <simplemde [(ngModel)]='solution.meta.descMD' [options]='mdeOption'></simplemde>
+                    <simplemde [(ngModel)]='solution.meta.wikiMD' [options]='mdeOption'></simplemde>
                     <div class='desc-btn-group'>
                         <button mat-button color='primary' (click)='onDescEditCancel()'>Cancel</button>
                         <button mat-button color='primary' (click)='onDescEditSave()'>Save</button>
                     </div>
                 </div>
                 <div class='wiki-tab' *ngIf='descMode === "READ"'>
-                    <div [innerHTML]='solution.meta.descHTML'></div>
+                    <div [innerHTML]='solution.meta.wikiHTML'></div>
                     <div class='desc-btn-group'>
                         <button mat-button color='primary' *ngIf='couldEdit' (click)='onDescEditClick()'>Edit</button>
                     </div>
@@ -56,7 +56,7 @@
             </mat-tab>
 
             <mat-tab label='Configuration'>
-
+                <ogms-cmp-sln-outline [solution]='solution'></ogms-cmp-sln-outline>
             </mat-tab>
 
             <mat-tab label='Conversation'>
