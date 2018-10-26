@@ -50,7 +50,10 @@ export class SolutionService extends ListBaseService {
         this.clear();
     }
 
-    public initList(solutionList: Solution[], solutionCount: number) {
+    public import(solution: Solution, solutionList: Solution[], solutionCount: number,) {
+        this.clear();
+
+        this.solution = solution;
         this.solutionList = solutionList;
         this.solutionCount = solutionCount;
     }
@@ -58,6 +61,7 @@ export class SolutionService extends ListBaseService {
     public create() {
         this.userService.redirectIfNotLogined();
         this.clear();
+        
         this.solution = new Solution(this.user);
         let cid = this.conversationService.create(this.solution._id)._id;
         this.solution.cid = cid;

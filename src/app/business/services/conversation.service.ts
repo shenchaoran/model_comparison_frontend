@@ -31,7 +31,7 @@ export class ConversationService extends ListBaseService {
     private hadSavedConversation: boolean = false;
     public commentCount: number;
     public conversation: Conversation;                  // 一个服务实例围绕着 conversation 对象做一系列处理
-    public users: User[];                               // 只保存其他用户（不包括当前登录用户），和 conversation 相关的用户信息，每次查找用户时，从这里查，避免从数据库重复获取
+    public users: User[];                               // 会话参与者
     
     get user() { return this.userService.user; }
 
@@ -47,7 +47,14 @@ export class ConversationService extends ListBaseService {
     /**
      * inlet
      */
-    public import(conversation: Conversation, users: User[], commentCount: number, authorId: string, pid: string, hadSavedConversation: boolean = true) {
+    public import(
+        conversation: Conversation, 
+        users: User[], 
+        commentCount: number, 
+        authorId: string, 
+        pid: string, 
+        hadSavedConversation: boolean = true
+    ) {
         if(conversation) {
             this.conversation = conversation;
             this.users = users;
