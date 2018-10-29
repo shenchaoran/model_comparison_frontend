@@ -45,16 +45,12 @@ declare let L: any;
 declare let AmCharts: any;
 declare let Chart: any;
 declare let Chartist: any;
-declare let chroma: any;
 declare var $: any;
 declare var jQuery: any;
-declare var postal: any;
-declare let Handsontable: any;
-declare let geojsonvt: any;
-declare let showdown: any;
+// declare let showdown: any;
 declare var echart: any;
 declare var editormd: any;
-// declare let ol: any;
+declare let ol: any;
 // declare var proj4: any;
 
 interface JQuery {}

@@ -2,7 +2,7 @@ import { Component, OnInit, AfterViewInit, Input, Output, EventEmitter, HostList
 import * as uuidv1 from 'uuid/v1';
 import { GEOSERVER } from '@config'
 import { OlService } from '../services/ol.service'
-declare const ol: any;
+declare var ol: any;
 
 @Component({
     selector: 'ogms-global-site',

@@ -5,7 +5,6 @@ import { NgxUploaderModule } from 'ngx-uploader';
 import { MatSharedModule } from '../mat-shared';
 import { ListFilterService } from './components/list-template/list-filter.service';
 import { HeaderMenuService } from './components/header-menu/services/header-menu.service';
-import { BaMenuService } from './components/header-menu/services/baMenu.service';
 
 import {
     FileUploader,
@@ -38,8 +37,6 @@ import {
     LoadingDirective,
 } from './directives';
 
-import {} from './services';
-
 import {
     MomentDatePipe,
     UndefinedPipe,
@@ -52,7 +49,6 @@ import {
 
 const services = [
     ListFilterService,
-    BaMenuService,
     HeaderMenuService,
 ];
 
@@ -101,7 +97,6 @@ const pipes = [
 ];
 
 export * from '@shared/components';
-export * from '@shared/services';
 export * from '@shared/pipes';
 export * from '@shared/directives';
 export * from './classes';
