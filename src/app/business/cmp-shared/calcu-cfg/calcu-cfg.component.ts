@@ -9,6 +9,7 @@ import {
     Inject,
     ChangeDetectorRef,
 } from '@angular/core';
+import { map, get } from 'lodash';
 import { UploadCfg } from '@shared';
 import { ResourceSrc, CalcuTask, Solution } from '@models';
 import { DatasetService, UserService } from '@services';
@@ -26,6 +27,7 @@ import { timer } from 'rxjs';
 import { debounce } from 'rxjs/operators';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { UploadInput } from 'ngx-uploader';
+import { chain, find,  } from 'lodash';
 
 @Component({
     selector: 'ogms-calcu-cfg',
@@ -109,13 +111,13 @@ export class CalcuCfgComponent implements OnInit, AfterViewInit {
 
     appendSchema() {
         let appendSchema = (type, schema) => {
-            _.map(this._msInstance.IO[type], event => {
+            map(this._msInstance.IO[type] as any[], event => {
                 if (event.schemaId === schema.id) {
                     event.schema = schema;
                 }
             });
         }
-        _.map(this._msInstance.IO.schemas, schema => {
+        map(this._msInstance.IO.schemas, schema => {
             appendSchema('inputs', schema);
             appendSchema('std', schema);
             appendSchema('parameters', schema);
@@ -139,10 +141,10 @@ export class CalcuCfgComponent implements OnInit, AfterViewInit {
             };
             return this.fb.group(gp);
         }
-        let inputCtrls = _.map(this._msInstance.IO.inputs, item => myFormGroup(item, 'inputs'));
-        let outputCtrls = _.map(this._msInstance.IO.outputs, item => myFormGroup(item, 'outputs'));
-        let stdCtrls = _.map(this._msInstance.IO.std, item => myFormGroup(item, 'std'));
-        let paraCtrls = _.map(this._msInstance.IO.parameters, item => myFormGroup(item, 'parameters'));
+        let inputCtrls = map(this._msInstance.IO.inputs, item => myFormGroup(item, 'inputs'));
+        let outputCtrls = map(this._msInstance.IO.outputs, item => myFormGroup(item, 'outputs'));
+        let stdCtrls = map(this._msInstance.IO.std, item => myFormGroup(item, 'std'));
+        let paraCtrls = map(this._msInstance.IO.parameters, item => myFormGroup(item, 'parameters'));
         let dataSrc = this._msInstance.IO.dataSrc === '' || !this._msInstance.IO.dataSrc ? 'STD' : this._msInstance.IO.dataSrc;
         this.IOForm = this.fb.group({
             dataSrc: [dataSrc, [Validators.required]],
@@ -163,17 +165,17 @@ export class CalcuCfgComponent implements OnInit, AfterViewInit {
                 if (status === 'VALID') {
                     const dataSrc = this._msInstance.IO.dataSrc = this.IOForm.value.dataSrc;
                     let setV = (tag) => {
-                        this._msInstance.IO[tag] = _.map(this.IOForm.value[tag], item => {
+                        this._msInstance.IO[tag] = map(this.IOForm.value[tag] as any[], item => {
                             return {
                                 id: item.id,
                                 name: item.name,
                                 description: item.description,
-                                schemaId: _.get(item, 'schema.id'),
+                                schemaId: get(item, 'schema.id'),
                                 optional: item.optional,
                                 cached: item.file ? true : false,
-                                value: (dataSrc === 'UPLOAD' && tag === 'inputs') ? _.get(item, 'file.value') :
+                                value: (dataSrc === 'UPLOAD' && tag === 'inputs') ? get(item, 'file.value') :
                                     (tag === 'std' && item.id === '--index') ? item.value : undefined,
-                                fname: (dataSrc === 'UPLOAD' && tag === 'inputs') ? _.get(item, 'file.fname') : item.fname,
+                                fname: (dataSrc === 'UPLOAD' && tag === 'inputs') ? get(item, 'file.fname') : item.fname,
                                 ext: item.ext
                             };
                         });
@@ -195,8 +197,8 @@ export class CalcuCfgComponent implements OnInit, AfterViewInit {
     download(url) {
         if (url === 'STD') {
             // TODO
-            _.map(this._msInstance.IO.inputs, (input, i) => {
-                window.open(`http://${this.backend.host}:${this.backend.port}${this.backend.API_prefix}${input.url}`, i);
+            map(this._msInstance.IO.inputs as any[], (input, i) => {
+                window.open(`http://${this.backend.host}:${this.backend.port}${this.backend.API_prefix}${input.url}`);
             })
         }
         else {
@@ -213,10 +215,9 @@ export class CalcuCfgComponent implements OnInit, AfterViewInit {
             .afterClosed()
             .subscribe(site => {
                 if (site) {
-                    let siteCtrl = _
-                        .chain((this.IOForm.get('std') as any).controls)
+                    let siteCtrl = chain((this.IOForm.get('std') as any).controls)
                         .find(control => {
-                            return _.get(control, 'value.schema.structure.type') === 'coordinate-index';
+                            return get(control, 'value.schema.structure.type') === 'coordinate-index';
                         })
                         .value()
 
@@ -284,7 +285,7 @@ export class CalcuCfgComponent implements OnInit, AfterViewInit {
         }
         let rules = rulesOfRequired[v];
         for (let tag in rules) {
-            _.map((this.IOForm.get(tag) as any).controls, control => {
+            map((this.IOForm.get(tag) as any).controls as any[], control => {
                 for (let key in rules[tag]) {
                     let leafCtrl = control.get(key)
                     if (rules[tag][key]) {

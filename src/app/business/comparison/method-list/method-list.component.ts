@@ -16,7 +16,7 @@ export class MethodListComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.service.findAll({}).subscribe(response => {
+        this.service.findAll().subscribe(response => {
             this._loading = false
             if (!response.error) {
                 this.list = response.data.docs;

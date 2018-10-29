@@ -28,8 +28,8 @@ export class CmpMethodService extends ListBaseService {
         })
     }
 
-    findAll(where) {
-        return this.http.get(`${this.baseUrl}`).pipe(map(res => {
+    findAll(where?) {
+        return super.findAll(where).pipe(map(res => {
             if(!res.error) {
                 this.methods = res.data.docs;
                 this.methodCount = res.data.count;

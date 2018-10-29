@@ -3,6 +3,7 @@ import { ListFilterService } from '@shared/components/list-template/list-filter.
 import { OgmsBaseComponent } from '@shared/components/ogms-base/ogms-base.component';
 import { DynamicTitleService } from '@core/services/dynamic-title.service';
 import { ActivatedRoute } from "@angular/router";
+import { get, map, find } from 'lodash';
 
 @Component({
     selector: 'ogms-list-template',
@@ -110,7 +111,7 @@ export class ListTemplateComponent extends OgmsBaseComponent implements OnInit, 
     }
 
     ngOnInit() {
-        let pageSize = _.get(this, 'searchFilters.pageSize')
+        let pageSize = get(this, 'searchFilters.pageSize')
         this._subscriptions.push(this.service.findAll(pageSize? {
             pageSize: pageSize
         }: {})
@@ -139,12 +140,12 @@ export class ListTemplateComponent extends OgmsBaseComponent implements OnInit, 
 
     changeFilters(v, type) {
         if (type === 'owner') {
-            _.map(this.starFilters, opt => opt.checked = opt.value === v);
+            map(this.starFilters as any[], opt => opt.checked = opt.value === v);
             this.searchFilters.owner = v;
         }
         else {
-            let filter = _.find(this.sortsFilters, filter => filter.value === type);
-            _.map(filter.options, opt => opt.checked = opt.value === v);
+            let filter = find(this.sortsFilters, filter => filter.value === type);
+            map(filter.options as any[], opt => opt.checked = opt.value === v);
             this.searchFilters[filter.value] = v;
         }
         this.search();

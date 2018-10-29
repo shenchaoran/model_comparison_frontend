@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DatasetService } from '../../services/dataset.service';
 import { Router } from '@angular/router';
+import { cloneDeep } from 'lodash';
 
 @Component({
     selector: 'ogms-datasets',
@@ -35,7 +36,7 @@ export class DatasetsComponent implements OnInit {
     }
 
     onEventSelected(event) {
-        this.selectedEvent = _.cloneDeep(event);
+        this.selectedEvent = cloneDeep(event);
     }
 
     onClassSelected(std) {

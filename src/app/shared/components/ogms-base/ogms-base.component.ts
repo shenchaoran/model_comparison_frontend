@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { map } from 'lodash';
 
 @Component({
     selector: 'ogms-ogms-base',
@@ -14,7 +15,7 @@ export class OgmsBaseComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        _.map(this._subscriptions, sub => {
+        map(this._subscriptions as any[], sub => {
             sub.unsubscribe();
         })
     }

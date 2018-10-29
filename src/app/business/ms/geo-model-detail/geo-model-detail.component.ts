@@ -4,6 +4,7 @@ import { Router, ActivatedRoute, Params } from "@angular/router";
 import { DynamicTitleService } from "@core/services/dynamic-title.service";
 import { ReactiveFormsModule } from "@angular/forms";
 import { DocBaseComponent } from '@shared';
+import { get } from 'lodash';
 
 @Component({
     selector: 'ogms-geo-model-detail',
@@ -39,14 +40,14 @@ export class GeoModelDetailComponent extends DocBaseComponent implements OnInit 
             this.model = doc;
             this.title.setTitle(this.model.MDL.meta.name);
 
-            const schemaStructure = _.get(this.model, 'MDL.IO.schemas[0].structure');
+            const schemaStructure = get(this.model, 'MDL.IO.schemas[0].structure');
             if (schemaStructure) {
                 //add io table dataset
                 for (let i = 0; i < schemaStructure.length; i++) {
                     this._ioDataset.push(schemaStructure[i]);
                 }
             }
-            const params = _.get(this.model, 'MDL.params');
+            const params = get(this.model, 'MDL.params');
             if (params) {
                 for (let i = 0; i < params.length; i++) {
                     this._paramsDataSet.push(params[i]);
@@ -83,7 +84,7 @@ export class GeoModelDetailComponent extends DocBaseComponent implements OnInit 
 
     _operateData(dataset) {
         this._operating = true;
-        setTimeout(_ => {
+        setTimeout(v => {
             dataset.forEach(value => (value.checked = false));
             this._refreshStatus(dataset);
             this._operating = false;

@@ -5,7 +5,9 @@ import { TaskService } from './task.service';
 import { Injectable } from '@angular/core';
 import { _HttpClient } from '../../core/services';
 import { ListBaseService } from './list-base.service';
+// import { TopicService } from './topic.service';
 import { map } from 'rxjs/operators';
+import { MSService } from './ms.service';
 import { 
     Solution,
     Topic,
@@ -39,8 +41,10 @@ export class SolutionService extends ListBaseService {
         protected http: _HttpClient,
         private conversationService: ConversationService,
         private taskService: TaskService,
+        // private topicService: TopicService,
         private userService: UserService,
         private msrService: MSRService,
+        private msService: MSService,
     ) { 
         super(http);
         console.log('******** SolutionService constructor ', counter++);
@@ -72,9 +76,10 @@ export class SolutionService extends ListBaseService {
         return super.findOne(id, withRequestProgress).pipe(map(res => {
             if(!res.error) {
                 this.solution = res.data.solution;
-                this.topic = res.data.topic;
-                this.tasks = res.data.tasks;
-                this.mss = res.data.mss;
+                
+                // this.topicService.import(res.data.topic);
+                this.taskService.import(null, res.data.tasks, res.data.tasks.length);
+                this.msService.import(null, res.data.mss, res.data.mss.length);
                 this.hadSaved = true;
                 
                 this.conversationService.import(

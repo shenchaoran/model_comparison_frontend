@@ -1,9 +1,9 @@
 import { Observable } from "rxjs";
 
 export interface OgmsService {
-    import?(...args: any[]): void;
-    create(...args: any[]): any;
-    clear(...args: any[]): void;
+    import?(...args: any[]): void;                  // 从别的服务哪里初始化
+    create?(...args: any[]): any;                    // 新建条目
+    clear(...args: any[]): void;                    // 清空单例服务的内存
     insert(...args: any[]): Observable<any>;
     upsert(...args: any[]): Observable<any>;
     findOne(...args: any[]): Observable<any>;

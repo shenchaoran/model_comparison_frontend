@@ -27,7 +27,7 @@ import {
     NG_VALIDATORS,
     NG_VALUE_ACCESSOR,
 } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { get } from 'lodash';
 import * as SimpleMDE from 'simplemde';
 import { Simplemde } from 'ng2-simplemde';
 import {
@@ -69,8 +69,8 @@ export class CommentComponent implements ControlValueAccessor, OnInit, AfterView
     get user(): User { return this.userService.user; }
 
     get currentComment() {
-        let i = _.get(this, 'comment.svid');
-        return _.get(this, `comment.content[${i}]`);
+        let i = get(this, 'comment.svid');
+        return get(this, `comment.content[${i}]`);
     }
     editorConfig: SimpleMDE.Options;
     @ViewChild(Simplemde) simpleMDE: any;

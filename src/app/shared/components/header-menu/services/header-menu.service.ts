@@ -1,5 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { Router, Routes } from '@angular/router';
+import { cloneDeep, map, chain } from 'lodash';
 
 @Injectable()
 export class HeaderMenuService {
@@ -12,13 +13,13 @@ export class HeaderMenuService {
     getMenus(type: string) {
         let routes: Routes = undefined;
         if(type === 'HEADER_MENUS') {
-            routes = <Routes>_.cloneDeep(this.header_menus);
+            routes = <Routes>cloneDeep(this.header_menus);
         }
         else if(type === 'USER_MENUS') {
-            routes = <Routes>_.cloneDeep(this.user_menus);
+            routes = <Routes>cloneDeep(this.user_menus);
         }
         else if(type === 'LOGIN_MENUS') {
-            routes = <Routes>_.cloneDeep(this.login_menus);
+            routes = <Routes>cloneDeep(this.login_menus);
         }
         
         if(routes === undefined) {
@@ -29,7 +30,7 @@ export class HeaderMenuService {
             let strcatRoute = (suffixPath, children) => {
                 if(children && children.length){
                     let childPath = '';
-                    _.map(children, (child, i) => {
+                    map(children as any[], (child, i) => {
                         // if(suffixPath === '') {
                         //     child.path = child.path;
                         // }
@@ -49,7 +50,7 @@ export class HeaderMenuService {
                     return suffixPath;
                 }
             };
-            _.chain(menuItems)
+            chain(menuItems)
                 .map((menuItem) => {
                     // menuItem.path = strcatRoute(menuItem.path, menuItem.children);
                     strcatRoute(menuItem.path, menuItem.children);

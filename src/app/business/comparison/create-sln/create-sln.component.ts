@@ -48,6 +48,10 @@ export class CreateSlnComponent implements OnInit {
         this.solution.auth.src = e.auth;
         this.solution.meta.name = e.name;
         this.solution.meta.desc = e.desc;
-        this.solutionService.upsert().subscribe(res => { });
+        this.solutionService.upsert().subscribe(res => {
+            if(!res.error) {
+                this.router.navigate(['/comparison', this.solution._id]);
+            }
+        });
     }
 }

@@ -10,7 +10,7 @@ export class HomeBannerComponent implements OnInit {
   array = ['Run all kinds of model online', 'Build your own global model config', 'Compare model result with others'];
 
   ngOnInit() {
-    setTimeout(_ => {
+    setTimeout(v => {
       //this.array = ['Run all kinds of model online', 'Build your own global model config', 'Compare model result with others'];
     }, 3000);
   }

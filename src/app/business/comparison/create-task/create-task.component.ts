@@ -10,6 +10,7 @@ import { DocBaseComponent } from '@shared';
 import { FormBuilder, Validators, FormGroup, FormArray, FormControl } from '@angular/forms';
 import { Task, CalcuTask, ResourceSrc, CmpState, CalcuTaskState } from '@models';
 import { MatSnackBar } from '@angular/material';
+import { map } from 'lodash';
 
 @Component({
     selector: 'ogms-create-task',
@@ -89,7 +90,7 @@ export class CreateTaskComponent extends DocBaseComponent implements OnInit {
             schema.msId = ms._id;
             this.task.schemas.push(schema);
         }));
-        _.map(this.cmpTaskFG.value.calcuTasks, (calcuTask, i) => {
+        map(this.cmpTaskFG.value.calcuTasks as any[], (calcuTask, i) => {
             this.task.calcuTaskIds.push({
                 _id: calcuTask._id,
                 progress: 0
@@ -168,14 +169,14 @@ export class CreateTaskComponent extends DocBaseComponent implements OnInit {
     }
 
     updateTabLabel() {
-        let map = {};
-        _.map(this._tabLabelCfg, tabLabel => {
-            if (!map[tabLabel.id])
-                map[tabLabel.id] = 1;
+        let tmp = {};
+        map(this._tabLabelCfg as any[], tabLabel => {
+            if (!tmp[tabLabel.id])
+                tmp[tabLabel.id] = 1;
             else {
-                map[tabLabel.id]++;
+                tmp[tabLabel.id]++;
             }
-            tabLabel.index = map[tabLabel.id];
+            tabLabel.index = tmp[tabLabel.id];
             if (tabLabel.useDefault !== false)
                 tabLabel.label = `${tabLabel.name} (instance ${tabLabel.index})`;
         });

@@ -146,7 +146,6 @@ declare var Chart: any;
 declare var Chartist: any;
 declare const chroma: any;
 declare var jQuery: any;
-declare var _: any;
 declare var postal: any;
 ```
 

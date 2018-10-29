@@ -12,23 +12,24 @@ import { Simplemde } from 'ng2-simplemde';
     styleUrls: ['./solution-detail.component.scss']
 })
 export class SolutionDetailComponent implements OnInit {
-    titleMode: 'READ' | 'WRITE';
-    descMode: 'READ' | 'WRITE';
+    editMode: 'READ' | 'WRITE';
+    
     _originTitle: string;
+    _originWiki: string;
     _originDesc: string;
-    
-    mdeOption = { placeholder: 'Solution description...'};
+
+    mdeOption = { placeholder: 'Solution description...' };
     @ViewChild(Simplemde) simpleMDE: any;
-    
-    get user() {return this.userService.user;}
-    get users() {return this.conversationService.users;}
-    get solution() {return this.solutionService.solution;}
-    get couldEdit() {return this.user && this.solution && this.solution.auth.userId === this.user._id;}
-    get conversation() {return this.conversationService.conversation;}
-    get topic() {return this.solutionService.topic;}
-    get tasks() {return this.solutionService.tasks;}
-    get mss() {return this.solutionService.mss;}
-    get includeUser() {return this.solution.subscribed_uids && this.solution.subscribed_uids.findIndex(v => v === this.user._id) !== -1;}
+
+    get user() { return this.userService.user; }
+    get users() { return this.conversationService.users; }
+    get solution() { return this.solutionService.solution; }
+    get couldEdit() { return this.user && this.solution && this.solution.auth.userId === this.user._id; }
+    get conversation() { return this.conversationService.conversation; }
+    get topic() { return this.solutionService.topic; }
+    get tasks() { return this.solutionService.tasks; }
+    get mss() { return this.solutionService.mss; }
+    get includeUser() { return this.solution.subscribed_uids && this.solution.subscribed_uids.findIndex(v => v === this.user._id) !== -1; }
 
     constructor(
         public route: ActivatedRoute,
@@ -36,47 +37,37 @@ export class SolutionDetailComponent implements OnInit {
         public title: DynamicTitleService,
         public conversationService: ConversationService,
         public userService: UserService,
-    ) {}
+    ) { }
 
     ngOnInit() {
         this.route.params.subscribe((params: Params) => {
             const solutionId = params['id'];
-            this.descMode = 'READ';
-            this.titleMode = 'READ';
-            this.solutionService.findOne(solutionId).subscribe(res => {});
+            this.editMode = 'READ';
+            this.solutionService.findOne(solutionId).subscribe(res => { });
         });
     }
 
-    onTitleEditSave() {
-        this.solutionService.upsert().subscribe(res => {
-            this.descMode = 'READ';
-        });
-    }
-    onTitleEditCancel() {
-        this.solution.meta.name = this._originTitle;
-        this.titleMode = 'READ';
-    }
-    onTitleEditClick() {
-        this.titleMode = "WRITE";
+    onEditClick() {
+        this.editMode = 'WRITE';
+        this._originDesc = this.solution.meta.desc;
+        this._originWiki = this.solution.meta.wikiMD;
         this._originTitle = this.solution.meta.name;
     }
 
-    onDescEditSave() {
+    onEditSave() {
         this.solution.meta.wikiHTML = this.simpleMDE.simplemde.markdown(this.solution.meta.wikiMD);
-        this.solutionService.upsert().subscribe(res => {
-            this.descMode = 'READ';
-        });
+        this.solutionService.upsert().subscribe(res => { this.editMode = 'READ'; });
     }
-    onDescEditCancel() {
-        this.descMode = 'READ';
-        this.solution.meta.wikiMD = this._originDesc;
+
+    onEditCancel() {
+        this.solution.meta.wikiMD = this._originWiki;
+        this.solution.meta.desc = this._originDesc;
+        this.solution.meta.name = this._originTitle;
+        this.editMode = 'READ';
     }
-    onDescEditClick() {
-        this.descMode = "WRITE";
-        this._originDesc = this.solution.meta.wikiMD;
-    }
+    
     onSubscribeToggle() {
-        let ac = this.includeUser? 'unsubscribe': 'subscribe';
-        this.solutionService.subscribeToggle(ac, this.user._id).subscribe(res =>{});
+        let ac = this.includeUser ? 'unsubscribe' : 'subscribe';
+        this.solutionService.subscribeToggle(ac, this.user._id).subscribe(res => { });
     }
 }

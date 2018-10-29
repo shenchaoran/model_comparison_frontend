@@ -10,6 +10,7 @@ import {
     NG_VALIDATORS,
     NG_VALUE_ACCESSOR
 } from '@angular/forms';
+import { get } from 'lodash';
 import { UserService } from '../../services';
 
 @Component({
@@ -35,9 +36,9 @@ export class SignInComponent implements OnInit {
 
     ngOnInit() {
         this.signInFG = this.fb.group({
-            username: [_.get(this.service, 'jwt.user.username'), [Validators.required, Validators.minLength(3)]],
+            username: [get(this.service, 'jwt.user.username'), [Validators.required, Validators.minLength(3)]],
             password: ['', [Validators.required, Validators.minLength(6)]],
-            rememberAccount: [_.get(this.service, 'jwt.user.rememberAccount')]
+            rememberAccount: [get(this.service, 'jwt.user.rememberAccount')]
         });
     }
 

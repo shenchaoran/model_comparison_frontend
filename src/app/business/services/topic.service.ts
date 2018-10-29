@@ -1,4 +1,3 @@
-import { SolutionService } from './sln.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
@@ -7,11 +6,9 @@ import { Resolve } from '@angular/router';
 import { _HttpClient } from '@core/services/http.client';
 import { ListBaseService } from './list-base.service';
 import { UserService } from './user.service';
+import { SolutionService } from './sln.service';
 import { ConversationService } from './conversation.service';
-import { Topic } from '../models/topic.class';
-import { Solution } from '../models/solution.class';
-import { Conversation, Comment } from '../models/conversation.class';
-import { User } from '../models/user.class';
+import { Topic, Solution, Conversation, Comment, User } from '../models';
 import { OgmsService } from './service.interface';
 
 var counter = 1;
@@ -40,7 +37,10 @@ export class TopicService extends ListBaseService implements OgmsService {
         this.clear();
     }
 
-    
+    public import(topic: Topic) {
+        this.clear();
+        this.topic = topic;
+    }
 
     public create() {
         this.userService.redirectIfNotLogined();
@@ -78,13 +78,10 @@ export class TopicService extends ListBaseService implements OgmsService {
         }));
     }
 
-    public findAll() {
+    public findAll(query?) {
         this.clear();
 
-        return this.http.get(`${this.baseUrl}`, {
-            pageIndex: 1,
-            pageSize: 50
-        }).pipe(map(res => {
+        return super.findAll(query).pipe(map(res => {
             if (!res.error) {
                 this.topicList = res.data.docs;
                 this.topicCount = res.data.count;

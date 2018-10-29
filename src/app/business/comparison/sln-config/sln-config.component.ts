@@ -20,8 +20,10 @@ import {
     styleUrls: ['./sln-config.component.scss']
 })
 export class SlnConfigComponent implements OnInit {
+    
     @Input() cfg;
 
+    
     constructor(
         private solutionService: SolutionService,
         private msService: MSService,

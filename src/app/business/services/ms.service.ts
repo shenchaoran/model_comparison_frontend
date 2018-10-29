@@ -3,12 +3,16 @@ import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { _HttpClient } from '@core/services/http.client';
 import { ListBaseService } from './list-base.service';
-import { MS } from '../models';
+import { UserService } from './user.service';
+import { SolutionService } from './sln.service';
+import { ConversationService } from './conversation.service';
+import { Topic, Solution, Conversation, Comment, User, MS } from '../models';
+import { OgmsService } from './service.interface';
 
 @Injectable({
     providedIn: 'root'
 })
-export class MSService extends ListBaseService {
+export class MSService extends ListBaseService implements OgmsService {
     protected baseUrl = '/model-service';
 
     public mss: MS[];
@@ -16,22 +20,19 @@ export class MSService extends ListBaseService {
     public ms: MS;
     
     constructor(
-        protected http: _HttpClient
+        protected http: _HttpClient,
+        private userService: UserService,
+        private conversationService: ConversationService,
     ) { 
         super(http);
     }
 
-    // resolve(): Promise<any> {
-    //     return this.findAll({})
-    //         .toPromise()
-    //         .then(response => {
-    //             if (response.error) {
-    //                 return Promise.reject(response.error);
-    //             } else {
-    //                 return Promise.resolve(response.data);
-    //             }
-    //         });
-    // }
+    public import(ms: MS, mss: MS[], msCount: number,) {
+        this.clear();
+        this.ms = ms;
+        this.mss = mss;
+        this.msCount = msCount;
+    }
 
     invoke(obj): Observable<any> {
         return this.http.post(`/model-service/invoke`, {
@@ -43,8 +44,10 @@ export class MSService extends ListBaseService {
         return this.http.get(`/calculation/log/${msrId}`)
     }
 
-    findAll(where) {
-        return this.http.get(`${this.baseUrl}`).pipe(map(res => {
+    findAll(query?) {
+        this.clear();
+
+        return super.findAll(query).pipe(map(res => {
             if(!res.error) {
                 this.mss = res.data.docs;
                 this.msCount = res.data.count;

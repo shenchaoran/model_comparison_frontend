@@ -19,6 +19,7 @@ import {
 } from '@angular/forms';
 import { CascaderSelectValidator } from '@shared/components/mat-cascader-select/cascader-select.validator';
 import { Subject, combineLatest } from 'rxjs';
+import { map } from 'lodash';
 
 @Component({
     selector: 'ogms-mat-cascader-select',
@@ -59,7 +60,7 @@ export class MatCascaderSelectComponent implements ControlValueAccessor, OnInit 
             if(src.children) {
                 this._flapSource.push({
                     placeholder: src.placeholder,
-                    options: level === 1? _.map(src.children, child => {
+                    options: level === 1? map(src.children as any[], child => {
                         return {
                             label: child.label,
                             value: child.value
@@ -73,7 +74,7 @@ export class MatCascaderSelectComponent implements ControlValueAccessor, OnInit 
         recurFlap(v, 1);
 
         this.selectsFG = this.fb.group({
-            selects: this.fb.array(_.map(this._flapSource, src => {
+            selects: this.fb.array(map(this._flapSource as any[], src => {
                 return this.fb.control(null, Validators.required);
             }))
         });
@@ -81,7 +82,7 @@ export class MatCascaderSelectComponent implements ControlValueAccessor, OnInit 
         this.selectsFG.statusChanges
             .subscribe(state => {
                 if(state === 'VALID') {
-                    let v = _.map(this.selectsFG.value.selects, v => v.value);
+                    let v = map(this.selectsFG.value.selects as any[], v => v.value);
                     this.propagateChange(v);
                 }
             })
@@ -104,7 +105,7 @@ export class MatCascaderSelectComponent implements ControlValueAccessor, OnInit 
             }
             else if(newSrc && newSrc.children) {
                 if(level < this._flapSource.length-1) {
-                    this._flapSource[level+1].options = _.map(newSrc.children, child => {
+                    this._flapSource[level+1].options = map(newSrc.children as any[], child => {
                         return {
                             label: child.label,
                             value: child.value
@@ -130,7 +131,7 @@ export class MatCascaderSelectComponent implements ControlValueAccessor, OnInit 
         getSubOptionsByRecur(this._source, 0)
 
         // if(level === this._flapSource.length -1) {
-        //     this.propagateChange(_.map(this._rst, item => item.value));
+        //     this.propagateChange(map(this._rst as any[], item => item.value));
         // }
     }
 

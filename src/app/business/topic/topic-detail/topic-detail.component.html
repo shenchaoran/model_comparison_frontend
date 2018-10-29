@@ -7,8 +7,8 @@
     </div>
 </ng-template>
 <ogms-detail-layout *ngIf='topic else topicLoading'>
-    <div class='header-title' [class.read]='titleMode === "READ"'>
-        <ng-container *ngIf='titleMode === "WRITE" else readTemp'>
+    <div class='header-title' [class.read]='editMode === "READ"'>
+        <ng-container *ngIf='editMode === "WRITE" else readTemp'>
             <span class='topic-name'>
                 <mat-form-field>
                     <input matInput placeholder='Topic Name' [(ngModel)]='topic.meta.name' required minlength="5" #titleName='ngModel'>
@@ -18,14 +18,14 @@
             </span>
             <div class='title-btn-group'>
                 <!-- 参考 ngModel 的结构 -->
-                <button mat-button color='primary' (click)='onTitleEditSave()' [disabled]='titleName.invalid'>Save</button>
-                <button mat-button color='primary' (click)='onTitleEditCancel()' [disabled]='hadSaved? false: titleName.invalid'>Cancel</button>
+                <button mat-button color='primary' (click)='onEditSave()' [disabled]='titleName.invalid || mde.invalid'>Save</button>
+                <button mat-button color='primary' (click)='onEditCancel()' [disabled]='hadSaved? false: (titleName.invalid || mde.invalid)'>Cancel</button>
             </div>
         </ng-container>
         <ng-template #readTemp>
             <h2>{{topic.meta.name}}</h2>
             <div class='title-btn-group'>
-                <button mat-button color='primary' *ngIf='couldEdit' (click)='onTitleEditClick()'>Edit</button>
+                <button mat-button color='primary' *ngIf='couldEdit' (click)='onEditClick()'>Edit</button>
                 <!-- <button mat-flat-button color='primary' *ngIf='couldEdit' [routerLink]='["../create"]'>New Topic</button> -->
             </div>
         </ng-template>
@@ -40,18 +40,18 @@
     <div class='article'>
         <mat-tab-group selectedIndex='0' (selectedIndexChange)='onSelectedIndexChange($event)'>
             <mat-tab label='Wiki'>
-                <div class='wiki-tab' *ngIf='descMode === "WRITE"'>
+                <div class='wiki-tab' *ngIf='editMode === "WRITE"'>
                     <simplemde [(ngModel)]='topic.meta.wikiMD' [options]='mdeOption'  #mde='ngModel' required minlength='5'></simplemde>
-                    <div class='desc-btn-group'>
-                        <button mat-button color='primary' (click)='onDescEditCancel()' [disabled]='hadSaved? false: mde.invalid'>Cancel</button>
-                        <button mat-button color='primary' (click)='onDescEditSave()' [disabled]='mde.invalid'>Save</button>
-                    </div>
+                    <!-- <div class='desc-btn-group'>
+                        <button mat-button color='primary' (click)='onEditCancel()' [disabled]='hadSaved? false: mde.invalid'>Cancel</button>
+                        <button mat-button color='primary' (click)='onEditSave()' [disabled]='mde.invalid'>Save</button>
+                    </div> -->
                 </div>
-                <div class='wiki-tab' *ngIf='descMode === "READ"'>
+                <div class='wiki-tab' *ngIf='editMode === "READ"'>
                     <div [innerHTML]='topic.meta.wikiHTML'></div>
-                    <div class='desc-btn-group'>
-                        <button mat-button color='primary' *ngIf='couldEdit' (click)='onDescEditClick()'>Edit</button>
-                    </div>
+                    <!-- <div class='desc-btn-group'>
+                        <button mat-button color='primary' *ngIf='couldEdit' (click)='onEditClick()'>Edit</button>
+                    </div> -->
                 </div>
             </mat-tab>
 
@@ -137,10 +137,3 @@
         </div>
     </div>
 </ogms-detail-layout>
-
-
-<!-- <ng-template #slnTempCard let-item='item'>
-    <div class='aside-card'>
-        {{item}}
-    </div>
-</ng-template> -->

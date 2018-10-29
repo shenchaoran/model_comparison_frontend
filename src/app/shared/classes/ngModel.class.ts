@@ -2,7 +2,7 @@ import { ControlValueAccessor } from '@angular/forms'
 
 export class NgModelBase implements ControlValueAccessor {
     public onTouchedCallback: () => {}
-    public onChangeCallback: (_: any) => {}
+    public onChangeCallback: (v: any) => {}
     public _innerValue: any
 
     set value(v: any) {

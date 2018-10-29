@@ -45,4 +45,20 @@ export class ListBaseService {
                 })
             )
     }
+
+
+    delete(id) {
+        return this.http.delete(`${this.baseUrl}/${id}`)
+    }
+
+    patch(id, doc) {
+        return this.http.patch(`${this.baseUrl}/${id}`, doc);
+    }
+
+    upsert(id, hadSaved, doc) {
+        if(hadSaved)
+            return this.http.patch(`${this.baseUrl}/${id}`, doc)
+        else 
+            return this.http.post(`${this.baseUrl}`, doc);
+    }
 }

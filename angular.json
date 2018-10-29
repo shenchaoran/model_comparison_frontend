@@ -35,7 +35,6 @@
                         ],
                         "scripts": [
                             "node_modules/jquery/dist/jquery.min.js",
-                            "node_modules/lodash/lodash.min.js",
                             "node_modules/postal/lib/postal.min.js",
                             "node_modules/openlayers/dist/ol.js",
                             "node_modules/showdown/dist/showdown.min.js",

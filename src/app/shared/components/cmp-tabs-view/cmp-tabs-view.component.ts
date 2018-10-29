@@ -19,8 +19,10 @@ import {
     AfterViewInit,
     Renderer2,
 } from '@angular/core';
-// declare let GoldenLayout: any;
-import * as GoldenLayout from 'golden-layout';
+import { forIn, isEqual, map } from 'lodash';
+declare var GoldenLayout: any;
+// 卸载了 暂时用不掉这个组件，有点占空间
+// import * as GoldenLayout from 'golden-layout';
 
 @Component({
     selector: 'ogms-cmp-tabs-view',
@@ -37,7 +39,7 @@ export class CmpTabsViewComponent implements OnInit, OnChanges, AfterViewInit {
         name: string,
         component: any
     }[];
-    @ViewChild('layout') private layout: GoldenLayout;
+    // @ViewChild('layout') private layout: GoldenLayout;
 
     constructor(
         private el: ElementRef,
@@ -50,9 +52,9 @@ export class CmpTabsViewComponent implements OnInit, OnChanges, AfterViewInit {
 
     ngOnChanges(changes: { [key: string]: SimpleChange }) {
         let hadChanged;
-        _.forIn(changes, (v, k) => {
+        forIn(changes, (v, k) => {
             if (v.previousValue) {
-                if (!_.isEqual(v.currentValue, v.previousValue)) {
+                if (!isEqual(v.currentValue, v.previousValue)) {
                     hadChanged = true;
                 }
             }
@@ -72,49 +74,49 @@ export class CmpTabsViewComponent implements OnInit, OnChanges, AfterViewInit {
     }
 
     initLayout() {
-        if (this.config && this.childComponents) {
+        // if (this.config && this.childComponents) {
 
-            this.viewContainer.clear();
-            if (this.layout && this.layout.destroy) {
-                this.layout.destroy();
-            }
+        //     this.viewContainer.clear();
+        //     if (this.layout && this.layout.destroy) {
+        //         this.layout.destroy();
+        //     }
 
-            this.layout = new GoldenLayout(this.config, $(this.el.nativeElement).find('#layout'));
-            _.map(this.childComponents, childComponent => {
-                this.layout.registerComponent(childComponent.name, (container, componentState) => {
-                    const factory = this.componentFactoryResolver.resolveComponentFactory(childComponent.component);
-                    var compRef = this.viewContainer.createComponent(factory);
-                    // 给组件的属性传值
-                    _.forIn(componentState, (v, key) => {
-                        compRef.instance[key] = v;
-                    });
-                    container.getElement().append(compRef.location.nativeElement);
-                    container['compRef'] = compRef;
-                    compRef.changeDetectorRef.detectChanges();
-                });
-            });
+        //     this.layout = new GoldenLayout(this.config, $(this.el.nativeElement).find('#layout'));
+        //     map(this.childComponents, childComponent => {
+        //         this.layout.registerComponent(childComponent.name, (container, componentState) => {
+        //             const factory = this.componentFactoryResolver.resolveComponentFactory(childComponent.component);
+        //             var compRef = this.viewContainer.createComponent(factory);
+        //             // 给组件的属性传值
+        //             forIn(componentState, (v, key) => {
+        //                 compRef.instance[key] = v;
+        //             });
+        //             container.getElement().append(compRef.location.nativeElement);
+        //             container['compRef'] = compRef;
+        //             compRef.changeDetectorRef.detectChanges();
+        //         });
+        //     });
 
-            this.renderer.setStyle($(this.el.nativeElement).find('#layout')[0], 'height', '600px');
-            this.layout.on('initialised', () => {
-                this.layout.updateSize();
-            });
-            this.layout.init();
-            this.layout.on('itemDestroyed', item => {
-                if (item.container) {
-                    let compRef = item.container["compRef"];
-                    if (compRef) {
-                        compRef.destroy();
-                    }
-                }
-            });
-        }
+        //     this.renderer.setStyle($(this.el.nativeElement).find('#layout')[0], 'height', '600px');
+        //     this.layout.on('initialised', () => {
+        //         this.layout.updateSize();
+        //     });
+        //     this.layout.init();
+        //     this.layout.on('itemDestroyed', item => {
+        //         if (item.container) {
+        //             let compRef = item.container["compRef"];
+        //             if (compRef) {
+        //                 compRef.destroy();
+        //             }
+        //         }
+        //     });
+        // }
     }
 
     @HostListener('window:resize', ['$event'])
     onResize(event) {
-        if (this.layout) {
-            this.layout.updateSize();
-        }
+        // if (this.layout) {
+        //     this.layout.updateSize();
+        // }
     }
 
 }
