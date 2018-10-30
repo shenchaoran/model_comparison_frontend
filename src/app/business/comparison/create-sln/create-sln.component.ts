@@ -24,21 +24,14 @@ export class CreateSlnComponent implements OnInit {
     _headerMeta: string = 'A comparison solution compare sereral factor of model.';
     _submitText: string = 'Create solution';
 
-    get solution() { return this.solutionService.solution; }
-    get cmpMethods() { return this.cmpMethodService.methods; }
-    get mss() { return this.msService.mss; }
-
+    solution: Solution;
 
     constructor(
         private router: Router,
-        private fb: FormBuilder,
-        private cdRef: ChangeDetectorRef,
         private solutionService: SolutionService,
-        private msService: MSService,
-        private cmpMethodService: CmpMethodService,
-        private userService: UserService,
+        private conversationService: ConversationService,
     ) {
-        this.solutionService.create();
+        this.solution = this.solutionService.create();
     }
 
     ngOnInit() {
@@ -48,7 +41,10 @@ export class CreateSlnComponent implements OnInit {
         this.solution.auth.src = e.auth;
         this.solution.meta.name = e.name;
         this.solution.meta.desc = e.desc;
-        this.solutionService.upsert().subscribe(res => {
+        this.solutionService.insert({
+            solution: this.solution,
+            conversation: this.conversationService.conversation,
+        }).subscribe(res => {
             if(!res.error) {
                 this.router.navigate(['/comparison', this.solution._id]);
             }

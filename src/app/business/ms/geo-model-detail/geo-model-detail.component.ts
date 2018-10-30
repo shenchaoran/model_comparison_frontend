@@ -3,7 +3,7 @@ import { MSService } from "../../services/ms.service";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { DynamicTitleService } from "@core/services/dynamic-title.service";
 import { ReactiveFormsModule } from "@angular/forms";
-import { DocBaseComponent } from '@shared';
+import { OgmsBaseComponent } from '@shared';
 import { get } from 'lodash';
 
 @Component({
@@ -11,8 +11,8 @@ import { get } from 'lodash';
     templateUrl: './geo-model-detail.component.html',
     styleUrls: ['./geo-model-detail.component.scss']
 })
-export class GeoModelDetailComponent extends DocBaseComponent implements OnInit {
-    model: any;
+export class GeoModelDetailComponent extends OgmsBaseComponent implements OnInit {
+    ms: any;
     solutions: any[];
 
     _isLoading = true;
@@ -28,32 +28,34 @@ export class GeoModelDetailComponent extends DocBaseComponent implements OnInit 
 
     constructor(
         public route: ActivatedRoute,
-        public solutionService: MSService,
+        public msService: MSService,
         public title: DynamicTitleService
     ) {
-        super(route, solutionService, title);
+        super();
     }
 
     ngOnInit() {
-        super.ngOnInit();
-        this._subscriptions.push(this.doc.subscribe(doc => {
-            this.model = doc;
-            this.title.setTitle(this.model.MDL.meta.name);
+        const msId = this.route.snapshot.paramMap.get('id');
+        this.msService.findOne(msId).subscribe(res => {
+            if(!res.error) {
+                this.ms = res.data;
+                this.title.setTitle(this.ms.MDL.meta.name);
 
-            const schemaStructure = get(this.model, 'MDL.IO.schemas[0].structure');
-            if (schemaStructure) {
-                //add io table dataset
-                for (let i = 0; i < schemaStructure.length; i++) {
-                    this._ioDataset.push(schemaStructure[i]);
+                const schemaStructure = get(this.ms, 'MDL.IO.schemas[0].structure');
+                if (schemaStructure) {
+                    //add io table dataset
+                    for (let i = 0; i < schemaStructure.length; i++) {
+                        this._ioDataset.push(schemaStructure[i]);
+                    }
+                }
+                const params = get(this.ms, 'MDL.params');
+                if (params) {
+                    for (let i = 0; i < params.length; i++) {
+                        this._paramsDataSet.push(params[i]);
+                    }
                 }
             }
-            const params = get(this.model, 'MDL.params');
-            if (params) {
-                for (let i = 0; i < params.length; i++) {
-                    this._paramsDataSet.push(params[i]);
-                }
-            }
-        }));
+        })
     }
 
     _displayDataChange($event) {

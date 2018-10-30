@@ -13,22 +13,31 @@ import {
     styleUrls: ['./topic-list.component.scss']
 })
 export class TopicListComponent implements OnInit {
-    get topicList(): Topic[] {
-        return this.topicService.topicList;
-    }
-    get topicCount(): Number {
-        return this.topicService.topicCount;
-    }
+    topicList: Topic[];
+    topicCount: Number;
 
     constructor(
         public topicService: TopicService
     ) {}
 
     ngOnInit() {
-        this.topicService.findAll().subscribe(res => {})
+        this.topicService.findAll().subscribe(res => {
+            if(!res.error) {
+                this.topicList = res.data.docs;
+                this.topicCount = res.data.count;
+            }
+        })
     }
 
     onPageChange(e) {
-        this.topicService.findAll();
+        this.topicService.findAll({
+            pageIndex: e.pageIndex,
+            pageSize: e.pageSize
+        }).subscribe(res => {
+            if(!res.error) {
+                this.topicList = res.data.docs;
+                this.topicCount = res.data.count;
+            }
+        })
     }
 }

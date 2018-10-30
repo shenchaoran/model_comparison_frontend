@@ -7,51 +7,57 @@
     </div>
 </ng-template>
 <ogms-detail-layout *ngIf='topic else topicLoading'>
-    <div class='header-title' [class.read]='editMode === "READ"'>
-        <ng-container *ngIf='editMode === "WRITE" else readTemp'>
-            <span class='topic-name'>
+    <div class='header'>
+        <ng-container *ngIf='editMode === "WRITE" else readTemplate'>
+            <div class='header-title'>
+                <span class='topic-name'>
+                    <mat-form-field>
+                        <input matInput placeholder='Topic Name' [(ngModel)]='topic.meta.name' required minlength="5"
+                            #titleName='ngModel'>
+                        <mat-error *ngIf='"required"'>必填</mat-error>
+                        <mat-error *ngIf='"minlength"'>长度不够</mat-error>
+                    </mat-form-field>
+                </span>
+                <div class='title-btn-group'>
+                    <!-- 参考 ngModel 的结构 -->
+                    <button mat-button color='primary' (click)='onEditSave()' [disabled]='titleName.invalid'>Save</button>
+                    <button mat-button color='primary' (click)='onEditCancel()'>Cancel</button>
+                </div>
+            </div>
+
+            <div class='header-meta'>
                 <mat-form-field>
-                    <input matInput placeholder='Topic Name' [(ngModel)]='topic.meta.name' required minlength="5" #titleName='ngModel'>
+                    <textarea matInput placeholder="" [(ngModel)]='topic.meta.desc' required minlength="5"></textarea>
                     <mat-error *ngIf='"required"'>必填</mat-error>
                     <mat-error *ngIf='"minlength"'>长度不够</mat-error>
                 </mat-form-field>
-            </span>
-            <div class='title-btn-group'>
-                <!-- 参考 ngModel 的结构 -->
-                <button mat-button color='primary' (click)='onEditSave()' [disabled]='titleName.invalid || mde.invalid'>Save</button>
-                <button mat-button color='primary' (click)='onEditCancel()' [disabled]='hadSaved? false: (titleName.invalid || mde.invalid)'>Cancel</button>
             </div>
         </ng-container>
-        <ng-template #readTemp>
-            <h2>{{topic.meta.name}}</h2>
-            <div class='title-btn-group'>
-                <button mat-button color='primary' *ngIf='couldEdit' (click)='onEditClick()'>Edit</button>
-                <!-- <button mat-flat-button color='primary' *ngIf='couldEdit' [routerLink]='["../create"]'>New Topic</button> -->
+        <ng-template #readTemplate>
+            <div class='header-title read'>
+                <h2>{{topic.meta.name}}</h2>
+                <div class='title-btn-group'>
+                    <button mat-button color='primary' *ngIf='couldEdit' (click)='onEditClick()'>Edit</button>
+                    <!-- <button mat-flat-button color='primary' *ngIf='couldEdit' [routerLink]='["../create"]'>New Topic</button> -->
+                </div>
+            </div>
+            <div class='header-meta'>
+                <p>{{topic.meta.desc | description}}</p>
+                <p><a class='author' routerLink='/user'>{{topic.auth.userName}}</a> created this topic at
+                    {{topic.meta.time |
+                    date: 'yyyy.MM.dd'}}</p>
             </div>
         </ng-template>
-    </div>
-    
-    <div class='header-meta'>
-        <p>{{topic.meta.desc | description}}</p>
-        <p><a class='author' routerLink='/user'>{{topic.auth.userName}}</a> created this topic at {{topic.meta.time |
-            date: 'yyyy.MM.dd'}}</p>
     </div>
 
     <div class='article'>
         <mat-tab-group selectedIndex='0' (selectedIndexChange)='onSelectedIndexChange($event)'>
             <mat-tab label='Wiki'>
                 <div class='wiki-tab' *ngIf='editMode === "WRITE"'>
-                    <simplemde [(ngModel)]='topic.meta.wikiMD' [options]='mdeOption'  #mde='ngModel' required minlength='5'></simplemde>
-                    <!-- <div class='desc-btn-group'>
-                        <button mat-button color='primary' (click)='onEditCancel()' [disabled]='hadSaved? false: mde.invalid'>Cancel</button>
-                        <button mat-button color='primary' (click)='onEditSave()' [disabled]='mde.invalid'>Save</button>
-                    </div> -->
+                    <simplemde [(ngModel)]='topic.meta.wikiMD' [options]='mdeOption' required minlength='5'></simplemde>
                 </div>
                 <div class='wiki-tab' *ngIf='editMode === "READ"'>
                     <div [innerHTML]='topic.meta.wikiHTML'></div>
-                    <!-- <div class='desc-btn-group'>
-                        <button mat-button color='primary' *ngIf='couldEdit' (click)='onEditClick()'>Edit</button>
-                    </div> -->
                 </div>
             </mat-tab>
 

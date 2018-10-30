@@ -10,7 +10,8 @@ import { UserService } from '../../services';
 import { Router, ActivationEnd } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { Topic } from '@models';
+import { Topic, Solution } from '@models';
+
 
 @Component({
   selector: 'ogms-profile',
@@ -59,8 +60,8 @@ export class ProfileComponent implements OnInit {
       .subscribe(() => this.setActive());
     this.setActive();
     console.log("userid:"+ this.user._id); 
-    this.topicService.findByUserId(this.user._id).subscribe(res => { });
-    this.slnService.findByUserId(this.user._id).subscribe(res => { });
+    this.topicService.findByUserId(this.user._id).subscribe(res => {});
+    this.slnService.findByUserId(this.user._id).subscribe(res => {});
     //todo task 数据展示
   }
 

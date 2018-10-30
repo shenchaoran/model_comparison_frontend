@@ -5,8 +5,7 @@ import {
     HostListener
 } from '@angular/core';
 import * as uuidv1 from 'uuid/v1';
-import { OgmsBaseComponent } from '@shared/components/ogms-base/ogms-base.component';
-import { DocBaseComponent } from '@shared/components/doc-base/doc-base.component';
+import { OgmsBaseComponent } from '../../classes';
 import { Observable } from 'rxjs';
 declare const ol: any;
 

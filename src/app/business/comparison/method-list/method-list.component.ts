@@ -16,11 +16,11 @@ export class MethodListComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.service.findAll().subscribe(response => {
+        this.service.findAll().subscribe(res => {
             this._loading = false
-            if (!response.error) {
-                this.list = response.data.docs;
-                this.count = response.data.count;
+            if (!res.error) {
+                this.list = res.data.docs;
+                this.count = res.data.count;
             }
         });
     }

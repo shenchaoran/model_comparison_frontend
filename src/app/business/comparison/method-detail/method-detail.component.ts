@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit, ElementRef, ViewChild, ViewContainerRef, Renderer2 } from '@angular/core';
 import { CmpMethodService } from '../../services/cmp-method.service';
-import { DocBaseComponent } from '@shared'
+import { OgmsBaseComponent } from '@shared'
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { DynamicTitleService } from "@core/services/dynamic-title.service";
 import * as simplemed from 'simplemde';
@@ -10,28 +10,29 @@ import * as simplemed from 'simplemde';
     templateUrl: './method-detail.component.html',
     styleUrls: ['./method-detail.component.scss']
 })
-export class MethodDetailComponent extends DocBaseComponent implements OnInit, AfterViewInit {
+export class MethodDetailComponent extends OgmsBaseComponent implements OnInit, AfterViewInit {
     method;
     @ViewChild('div') div: ElementRef;
     constructor(
         public route: ActivatedRoute,
-        public solutionService: CmpMethodService,
+        public cmpMethodService: CmpMethodService,
         public title: DynamicTitleService,
         private renderer2: Renderer2
     ) {
-        super(route, solutionService, title)
+        super()
     }
 
     ngOnInit() {
-        super.ngOnInit();
-        this._subscriptions.push(this.doc.subscribe(doc => {
-            this.method = doc;
-            let html = (simplemed as any).markdown(this.method.md);
-            // let converter = new showdown.Converter();
-            // let html = converter.makeHtml(this.method.md);
-            console.log(this.method.md)
-            this.renderer2.setProperty(this.div.nativeElement, 'innerHTML', html)
-        }));
+        this.cmpMethodService.findOne(this.route.snapshot.paramMap.get('id')).subscribe(res => {
+            if(!res.error) {
+                this.method = res.data;
+                let html = (simplemed as any).markdown(this.method.md);
+                // let converter = new showdown.Converter();
+                // let html = converter.makeHtml(this.method.md);
+                console.log(this.method.md)
+                this.renderer2.setProperty(this.div.nativeElement, 'innerHTML', html)
+            }
+        });
     }
 
     ngAfterViewInit() {

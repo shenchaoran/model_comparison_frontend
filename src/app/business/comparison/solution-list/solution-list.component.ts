@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import { SolutionService } from '../../services/sln.service';
 import { DynamicTitleService } from '@core/services/dynamic-title.service';
+import { Solution } from '@models';
 
 @Component({
     selector: 'ogms-solution-list',
@@ -9,18 +10,11 @@ import { DynamicTitleService } from '@core/services/dynamic-title.service';
     styleUrls: ['./solution-list.component.scss']
 })
 export class SolutionListComponent implements OnInit {
-    createBtn = {
-        display: true,
-        url: '/comparison/solutions/create'
-    }
-
     constructor(
-        public service: SolutionService,
+        public solutionService: SolutionService,
         public route: ActivatedRoute,
         public title: DynamicTitleService
     ) {}
 
-    ngOnInit() {
-
-    }
+    ngOnInit() {}
 }

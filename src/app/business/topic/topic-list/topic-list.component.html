@@ -19,15 +19,15 @@
     </div>
 </ng-template>
 
-<div ogms-rx-box>
+<div ogms-rx-box *ngIf='topicList else loadingTemp'>
     <ogms-cards-template [template]='template' [list]='topicList' [count]='topicCount' (onPageChange)='onPageChange($event)'></ogms-cards-template>
     <button id='create-btn' [routerLink]='"./create"' mat-fab color="primary">
         <mat-icon>add</mat-icon>
     </button>
 </div>
 
-<ng-container *ngIf='!topicList'>
+<ng-template #loadingTemp>
     <div ogms-loading>
         <mat-spinner></mat-spinner>
     </div>
-</ng-container>
+</ng-template>

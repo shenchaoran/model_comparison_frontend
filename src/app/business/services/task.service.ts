@@ -5,7 +5,6 @@ import { Resolve } from '@angular/router';
 import { _HttpClient } from '@core/services/http.client';
 import { ListBaseService } from './list-base.service';
 import { UserService } from './user.service';
-import { OgmsService } from './service.interface';
 import { ConversationService } from './conversation.service';
 import { Task, Solution, Topic, MS, Conversation, Comment, User,  } from '../models';
 
@@ -13,7 +12,7 @@ var counter = 1;
 @Injectable({
     providedIn: 'root'
 })
-export class TaskService extends ListBaseService implements OgmsService {
+export class TaskService extends ListBaseService {
     protected baseUrl = '/comparison/tasks';
 
     public task: Task;
@@ -31,27 +30,13 @@ export class TaskService extends ListBaseService implements OgmsService {
     ) { 
         super(http);
         console.log('******** TopicService constructor ', counter++);
-        this.clear();
-    }
-
-    public import(task: Task, taskList: Task[], taskCount: number) {
-        this.clear();
-
-        this.hadSaved = true;
-        this.task = task;
-        this.taskList = taskList;
-        this.taskCount = taskCount;
     }
 
     public create() {
-        this.userService.redirectIfNotLogined();
-        this.clear();
-
-        this.task = new Task(this.user);
-        let cid = this.conversationService.create(this.task._id)._id;
-        this.task.cid = cid;
-        this.hadSaved = false;
-        return this.task;
+        let task = new Task(this.user);
+        let cid = this.conversationService.create(task._id)._id;
+        task.cid = cid;
+        return task;
     }
 
     invoke(id: string): Observable<any> {
@@ -60,19 +45,5 @@ export class TaskService extends ListBaseService implements OgmsService {
         } else {
             return undefined;
         }
-    }
-
-    insert(obj: {
-        task: any,
-        calcuTasks: any[]
-    }): Observable<any> {
-        return this.http.post(`${this.baseUrl}`, obj);
-    }
-
-    public clear() {
-        this.task = null;
-        this.taskList = [];
-        this.taskCount = null;
-        this.hadSaved = null;
     }
 }
