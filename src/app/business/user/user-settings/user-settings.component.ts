@@ -4,7 +4,7 @@ import { Component, OnInit, ChangeDetectorRef, Inject } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ImageCroppedEvent } from 'ngx-image-cropper/src/image-cropper.component';
-
+import { get } from 'lodash';
 export interface DialogData {
   selectedImg: string;
   imageChangedEvent: any;
@@ -40,7 +40,7 @@ export class UserSettingsComponent implements OnInit {
     this.user = this.service.user;
 
     this.settingsFG = this.fb.group({
-      id: [_.get(this.service, 'jwt.user._id')],
+      id: [get(this.service, 'jwt.user._id')],
       url: [''],
       group: [''],
       location: [''],
