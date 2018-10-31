@@ -1,22 +1,23 @@
 import { Component, OnInit, HostListener } from "@angular/core";
-import { 
-    SolutionService, 
+import {
+    SolutionService,
     TaskService,
     UserService
- } from "../../services";
+} from "../../services";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { DynamicTitleService } from "@core/services/dynamic-title.service";
-import { DocBaseComponent } from '@shared';
+import { OgmsBaseComponent } from '@shared';
 import { FormBuilder, Validators, FormGroup, FormArray, FormControl } from '@angular/forms';
 import { Task, CalcuTask, ResourceSrc, CmpState, CalcuTaskState } from '@models';
 import { MatSnackBar } from '@angular/material';
+import { map } from 'lodash';
 
 @Component({
     selector: 'ogms-create-task',
     templateUrl: './create-task.component.html',
     styleUrls: ['./create-task.component.scss']
 })
-export class CreateTaskComponent extends DocBaseComponent implements OnInit {
+export class CreateTaskComponent extends OgmsBaseComponent implements OnInit {
     sln;
     task;
     calcuTasks = [];
@@ -45,8 +46,8 @@ export class CreateTaskComponent extends DocBaseComponent implements OnInit {
         public snackBar: MatSnackBar,
         private userService: UserService,
     ) {
-        super(route, solutionService, title);
-        this.task = new Task(this.userService.user);
+        super();
+        this.task = this.taskService.create();
 
         this.cmpTaskFG = this.fb.group({
             name: [null, [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
@@ -56,18 +57,18 @@ export class CreateTaskComponent extends DocBaseComponent implements OnInit {
             calcuTasks: this.fb.array([], Validators.required)
         });
 
-        this.cmpTaskFG.statusChanges
-            .subscribe(status => {
-                if (status === 'VALID') {
-                    // console.log(this.taskFG.value);
-                }
-            })
+        this.cmpTaskFG.statusChanges.subscribe(status => {
+            if (status === 'VALID') {
+                // console.log(this.taskFG.value);
+            }
+        })
     }
 
     ngOnInit() {
-        super.ngOnInit();
-        this.doc.subscribe(doc => {
-            this.sln = doc.solution;
+        this.solutionService.findOne(this.route.snapshot.paramMap.get('id')).subscribe(res => {
+            if (!res.error) {
+                this.sln = res.data;
+            }
         });
     }
 
@@ -89,7 +90,7 @@ export class CreateTaskComponent extends DocBaseComponent implements OnInit {
             schema.msId = ms._id;
             this.task.schemas.push(schema);
         }));
-        _.map(this.cmpTaskFG.value.calcuTasks, (calcuTask, i) => {
+        map(this.cmpTaskFG.value.calcuTasks as any[], (calcuTask, i) => {
             this.task.calcuTaskIds.push({
                 _id: calcuTask._id,
                 progress: 0
@@ -122,16 +123,16 @@ export class CreateTaskComponent extends DocBaseComponent implements OnInit {
         });
         this.taskService.insert({
             task: this.task,
-            calcuTasks: this.calcuTasks
-        })
-            .subscribe(response => {
-                if (!response.error) {
-                    if (type === 'run' && response.data.code === 200) {
-                        this.snackBar.open(response.data.desc, null, {duration: 500});
-                    }
-                    this.router.navigate(['/results/comparison', response.data._id]);
+            calcuTasks: this.calcuTasks,
+            conversation: this.taskService.conversation
+        }).subscribe(res => {
+            if (!res.error) {
+                if (type === 'run' && res.data.code === 200) {
+                    this.snackBar.open(res.data.desc, null, { duration: 500 });
                 }
-            })
+                this.router.navigate(['/results/comparison', res.data._id]);
+            }
+        })
     }
 
     onCalcuValidChange(valid) {
@@ -156,7 +157,7 @@ export class CreateTaskComponent extends DocBaseComponent implements OnInit {
 
     onSiteSelected(site, i) {
         let tabLabel = this._tabLabelCfg[i];
-        if (tabLabel.useDefault !== false){
+        if (tabLabel.useDefault !== false) {
             tabLabel.useDefault = false;
             tabLabel.label = `${tabLabel.name}: ${site.coor}`;
         }
@@ -168,14 +169,14 @@ export class CreateTaskComponent extends DocBaseComponent implements OnInit {
     }
 
     updateTabLabel() {
-        let map = {};
-        _.map(this._tabLabelCfg, tabLabel => {
-            if (!map[tabLabel.id])
-                map[tabLabel.id] = 1;
+        let tmp = {};
+        map(this._tabLabelCfg as any[], tabLabel => {
+            if (!tmp[tabLabel.id])
+                tmp[tabLabel.id] = 1;
             else {
-                map[tabLabel.id]++;
+                tmp[tabLabel.id]++;
             }
-            tabLabel.index = map[tabLabel.id];
+            tabLabel.index = tmp[tabLabel.id];
             if (tabLabel.useDefault !== false)
                 tabLabel.label = `${tabLabel.name} (instance ${tabLabel.index})`;
         });

@@ -24,5 +24,8 @@
     </section>
 </ng-template>
 
-<ogms-list-template [template]='modelTemplate' [service]='service' [createBtn]='createBtn'>
-</ogms-list-template>
+<ogms-list-template [template]='modelTemplate' [service]='solutionService'></ogms-list-template>
+
+<button id='create-btn' routerLink='/comparison/solutions/create' mat-fab color="primary">
+    <mat-icon>add</mat-icon>
+</button>

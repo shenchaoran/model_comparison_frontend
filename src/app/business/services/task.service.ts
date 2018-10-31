@@ -1,4 +1,3 @@
-import { Topic, Task } from '@models';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpParams } from '@angular/common/http';
@@ -7,24 +6,38 @@ import { _HttpClient } from '@core/services/http.client';
 import { ListBaseService } from './list-base.service';
 import { UserService } from './user.service';
 import { map } from 'rxjs/operators';
+import { ConversationService } from './conversation.service';
+import { Task, Solution, Topic, MS, Conversation, Comment, User,  } from '../models';
 
+var counter = 1;
 @Injectable({
     providedIn: 'root'
 })
 export class TaskService extends ListBaseService {
     protected baseUrl = '/comparison/tasks';
 
-    public taskList:Task[];
+    public task: Task;
+    public taskList: Task[];
+    public taskCount: number;
+    public hadSaved: boolean;
+
+    public get conversation(): Conversation { return this.conversationService.conversation; }
+    public get user(): User { return this.userService.user; }
 
     constructor(
         protected http: _HttpClient,
         private userService: UserService,
+        private conversationService: ConversationService,
     ) { 
         super(http);
+        console.log('******** TopicService constructor ', counter++);
     }
 
-    create() {
-        this.userService.redirectIfNotLogined();
+    public create() {
+        let task = new Task(this.user);
+        let cid = this.conversationService.create(task._id)._id;
+        task.cid = cid;
+        return task;
     }
 
     invoke(id: string): Observable<any> {

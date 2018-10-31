@@ -1,4 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { filter } from 'lodash';
 
 @Pipe({
     name: 'filter',
@@ -7,8 +8,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class ArrayFilterPipe implements PipeTransform {
 
-    transform(items: any[], filter: number): any[] {
-        return _.filter(items, filter);
+    transform(items: any[], filterStr): any[] {
+        return filter(items, filterStr);
     }
 
 }

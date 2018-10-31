@@ -11,7 +11,8 @@ import { UserService } from '../../services';
 import { Router, ActivationEnd } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { Topic } from '@models';
+import { Topic, Solution } from '@models';
+
 
 @Component({
   selector: 'ogms-profile',

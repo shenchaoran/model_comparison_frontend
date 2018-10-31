@@ -1,7 +1,7 @@
 import { Observable, Subject, from, of, combineLatest } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { CmpMethodService } from '../../services/cmp-method.service';
 import { CasCaderData } from '@shared';
+import { cloneDeep, chain, map } from 'lodash';
 import {
     Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChange,
     ChangeDetectionStrategy,
@@ -56,7 +56,7 @@ export class CmpObjCfgComponent implements ControlValueAccessor, OnInit {
     }
     @Input()
     set participants(v) {
-        this.participants$.next(_.cloneDeep(v))
+        this.participants$.next(cloneDeep(v))
     }
     get methodsFG() {
         return this.cmpObjFG.get('methods');
@@ -72,16 +72,16 @@ export class CmpObjCfgComponent implements ControlValueAccessor, OnInit {
                 this._participants = v[1];
                 this._cmpMethods = v[2];
                 function getCasCaderData(type, ms) {
-                    return _.map(ms.MDL.IO[type], event => {
+                    return map(ms.MDL.IO[type] as any[], event => {
                         return {
                             placeholder: 'Table column',
                             label: event.name,
                             value: event,
                             children: (() => {
-                                let targetSchema = _.chain(ms.MDL.IO.schemas)
+                                let targetSchema = chain(ms.MDL.IO.schemas)
                                     .find(schema => schema.id = event.schemaId)
                                     .value();
-                                return _.map(targetSchema.structure.columns, col => {
+                                return map(targetSchema.structure.columns as any[], col => {
                                     return {
                                         label: col.id,
                                         value: col.id
@@ -91,7 +91,7 @@ export class CmpObjCfgComponent implements ControlValueAccessor, OnInit {
                         }
                     });
                 }
-                this._dataReferCfgs = _.map(this._participants, ms => {
+                this._dataReferCfgs = map(this._participants as any[], ms => {
                     let cfg: CasCaderData = {
                         placeholder: 'Data type',
                         children: [
@@ -116,7 +116,7 @@ export class CmpObjCfgComponent implements ControlValueAccessor, OnInit {
                     id: this._cmpObj.id,
                     name: ['', [Validators.required, Validators.minLength(1)]],
                     desc: ['', [Validators.required, Validators.minLength(2)]],
-                    dataRefers: this.fb.array(_.map(this._participants, ms => {
+                    dataRefers: this.fb.array(map(this._participants as any[], ms => {
                         return this.fb.group({
                             msId: ms._id,
                             msName: ms.MDL.meta.name,

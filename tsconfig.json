@@ -1,6 +1,7 @@
 {
     "compileOnSave": true,
     "compilerOptions": {
+        "allowSyntheticDefaultImports": true,
         "outDir": "./dist/out-tsc",
         "baseUrl": "src",
         "sourceMap": true,
@@ -23,6 +24,9 @@
             "dom"
         ],
         "paths": {
+            "lodash/*": [
+                "../node_modules/@types/lodash-es/*"
+            ],
             "@shared": [
                 "app/shared"
             ],

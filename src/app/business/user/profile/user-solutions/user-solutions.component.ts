@@ -1,5 +1,5 @@
 import { Solution } from '@models';
-import { OgmsBaseComponent } from '@shared/components/ogms-base/ogms-base.component';
+import { OgmsBaseComponent } from '@shared';
 import { SolutionService } from '@services/sln.service';
 import { Component, OnInit, } from '@angular/core';
 
@@ -11,7 +11,7 @@ import { Component, OnInit, } from '@angular/core';
 export class UserSolutionsComponent extends OgmsBaseComponent implements OnInit {
   slns:any[];
   get slnList(): Solution[] {
-    return this.service.solutionList;
+    return this.service.user_solutions;
   }
 
   constructor(

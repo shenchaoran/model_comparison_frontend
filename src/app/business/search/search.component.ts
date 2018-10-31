@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SearchService } from '@services';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import { forIn } from 'lodash';
 
 @Component({
     selector: 'ogms-search',
@@ -50,7 +51,7 @@ export class SearchComponent implements OnInit {
     }
 
     onFiltersChange(options) {
-        _.forIn(options, (v, k) => {
+        forIn(options, (v, k) => {
             if(k !== 'sort') {
                 this.options[k] = v;
             }

@@ -47,7 +47,7 @@ export class TableFeatureComponent implements OnInit {
 
     _operateData(dataset) {
         this._operating = true;
-        setTimeout(_ => {
+        setTimeout(v => {
             dataset.forEach(value => (value.checked = false));
             this._refreshStatus(dataset);
             this._operating = false;

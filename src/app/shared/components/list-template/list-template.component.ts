@@ -1,8 +1,10 @@
 import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { ListFilterService } from '@shared/components/list-template/list-filter.service';
-import { OgmsBaseComponent } from '@shared/components/ogms-base/ogms-base.component';
+import { OgmsBaseComponent } from '../../classes';
 import { DynamicTitleService } from '@core/services/dynamic-title.service';
 import { ActivatedRoute } from "@angular/router";
+import { get, map, find } from 'lodash';
+import { Subject } from 'rxjs';
 
 @Component({
     selector: 'ogms-list-template',
@@ -11,14 +13,12 @@ import { ActivatedRoute } from "@angular/router";
 })
 export class ListTemplateComponent extends OgmsBaseComponent implements OnInit, OnDestroy {
     _loading = true;
+    _ownerFilterV;
+    _search$: Subject<any>;
+
     list: any[];
     count: number;
-    _ownerFilterV;
 
-    @Input() public createBtn: {
-        display: boolean,
-        url: string
-    };
     @Input() public service: any;
     @Input() public searchFilters: {
         q?: string,
@@ -105,54 +105,48 @@ export class ListTemplateComponent extends OgmsBaseComponent implements OnInit, 
     constructor(
         public route: ActivatedRoute,
         public title: DynamicTitleService
-    ) { 
-        super()
+    ) {
+        super();
+        this._search$ = new Subject();
+        this._subscriptions.push(this._search$.subscribe(searchFilters => {
+            this._loading = true;
+            this._subscriptions.push(this.service.findAll(searchFilters).subscribe(res => {
+                this._loading = false;
+                if (!res.error) {
+                    this.list = res.data.docs;
+                    this.count = res.data.count;
+                } else {
+
+                }
+            }));
+        }));
+    }
+
+    onSearchClick() {
+        this._search$.next(this.searchFilters);
     }
 
     ngOnInit() {
-        let pageSize = _.get(this, 'searchFilters.pageSize')
-        this._subscriptions.push(this.service.findAll(pageSize? {
-            pageSize: pageSize
-        }: {})
-            .subscribe(response => {
-                this._loading = false
-                if (response.error) {
-                    return Promise.reject(response.error);
-                } else {
-                    this.list = response.data.docs;
-                    this.count = response.data.count;
-                }
-            }));
+        let pageSize = get(this, 'searchFilters.pageSize') || 20;
+        this._search$.next({ pageSize: pageSize });
     }
 
-    search() {
-        this._loading = true
-        this._subscriptions.push(this.service.findAll(this.searchFilters)
-            .subscribe(response => {
-                this._loading = false
-                if (!response.error) {
-                    this.list = response.data.docs;
-                    this.count = response.data.count;
-                }
-            }));
-    }
-
-    changeFilters(v, type) {
+    onChangeFilters(v, type) {
         if (type === 'owner') {
-            _.map(this.starFilters, opt => opt.checked = opt.value === v);
+            map(this.starFilters as any[], opt => opt.checked = opt.value === v);
             this.searchFilters.owner = v;
         }
         else {
-            let filter = _.find(this.sortsFilters, filter => filter.value === type);
-            _.map(filter.options, opt => opt.checked = opt.value === v);
+            let filter = find(this.sortsFilters, filter => filter.value === type);
+            map(filter.options as any[], opt => opt.checked = opt.value === v);
             this.searchFilters[filter.value] = v;
         }
-        this.search();
+        this._search$.next(this.searchFilters);
     }
 
     onPageChange(pageEvent) {
         this.searchFilters.pageIndex = pageEvent.pageIndex;
         this.searchFilters.pageSize = pageEvent.pageSize;
-        this.search();
+        this._search$.next(this.searchFilters);
     }
 }

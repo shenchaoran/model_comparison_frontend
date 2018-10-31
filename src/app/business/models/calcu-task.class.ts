@@ -6,7 +6,7 @@ import { User } from './user.class';
 
 import { ResourceSrc } from './resource.enum';
 import * as ObjectID from 'objectid';
-import { UserService } from '../services/user.service';
+import { cloneDeep, map } from 'lodash';
 
 
 export class CalcuTask {
@@ -43,16 +43,16 @@ export class CalcuTask {
         if (ms) {
             this.ms = ms;
             this.topic = ms.topic;
-            this.IO = _.cloneDeep(ms.MDL.IO);
+            this.IO = cloneDeep(ms.MDL.IO);
             this.IO.dataSrc = 'STD';
             let appendSchema = (type, schema) => {
-                _.map(this.IO[type], event => {
+                map(this.IO[type] as any[], event => {
                     if (event.schemaId === schema.id) {
                         event.schema = schema;
                     }
                 });
             }
-            _.map(this.IO.schemas, schema => {
+            map(this.IO.schemas as any[], schema => {
                 appendSchema('inputs', schema);
                 appendSchema('std', schema);
                 appendSchema('parameters', schema);

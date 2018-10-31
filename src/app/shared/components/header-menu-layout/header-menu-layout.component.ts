@@ -60,7 +60,6 @@ export class HeaderMenuLayoutComponent implements OnInit, OnDestroy {
         this.navMenu = this.menuService.getMenus('HEADER_MENUS');
         this.userMenu = this.menuService.getMenus('USER_MENUS');
 
-        postal.channel('MENU_CHANNEL').publish('menu.update');
         this.route.queryParams
             .subscribe((params: Params) => {
                 if (params['q']) {

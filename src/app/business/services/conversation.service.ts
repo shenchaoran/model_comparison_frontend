@@ -10,7 +10,7 @@ import {
     Conversation,
     CommentType,
     Comment
-} from '@models/conversation.class';
+} from '@models';
 import { User } from '../models/user.class';
 import { Subject, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';

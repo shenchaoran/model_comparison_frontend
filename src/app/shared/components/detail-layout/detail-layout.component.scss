@@ -33,9 +33,15 @@
         }
     }
 
+    /deep/ .header-meta.read {
+            margin-top: 10px;
+    }
     /deep/ .header-meta {
         font-size: 14px;
         // padding: 10px 0;
+        >* {
+            width: 100%;
+        }
 
         .author {
             font-weight: 600;

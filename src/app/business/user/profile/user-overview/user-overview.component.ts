@@ -4,6 +4,7 @@ import { Topic, Solution } from '@models';
 import { TopicService } from './../../../services/topic.service';
 import { UserService } from './../../../services/user.service';
 import { Component, OnInit } from '@angular/core';
+import { take } from 'lodash';
 
 @Component({
   selector: 'ogms-user-overview',
@@ -12,13 +13,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserOverviewComponent implements OnInit {
   get topicList(): Topic[] {
-    let tmp:any[] = this.topicService.topicList.concat([]);
-    return tmp.splice(0,4);
+      return take(this.topicService.user_topics, 4);
   }
 
   get slnList(): Solution[] {
-    let tmp:any[] = this.slnService.solutionList.concat([]);
-    return tmp.splice(0, 4);
+    return take(this.slnService.user_solutions, 4);
   }
 
   get taskList():Task[]{

@@ -1,12 +1,12 @@
 <div ogms-rx-box id='container' *ngIf='list else spinTemplate'>
     <div id='nav-filter-group'>
-        <mat-button-toggle-group *ngIf='starFilters' [ngModel]='_ownerFilterV' (ngModelChange)='changeFilters($event, "owner")'>
+        <mat-button-toggle-group *ngIf='starFilters' [ngModel]='_ownerFilterV' (ngModelChange)='onChangeFilters($event, "owner")'>
             <mat-button-toggle *ngFor='let item of starFilters' [value]='item.value'>{{item.label}}</mat-button-toggle>
         </mat-button-toggle-group>
         <mat-form-field id='search-btn-group'>
             <mat-label>Search</mat-label>
             <input matInput [(ngModel)]="searchFilters.q">
-            <button (click)='search()' color='primary' mat-flat-button matSuffix>
+            <button (click)='onSearchClick()' color='primary' mat-flat-button matSuffix>
                 <mat-icon>search</mat-icon>
             </button>
         </mat-form-field>
@@ -22,7 +22,7 @@
                     <mat-icon>expand_more</mat-icon>
                 </button>
                 <mat-menu #popMenu>
-                    <button class='pop-menu-group' mat-menu-item *ngFor='let item of filter.options' (click)='changeFilters(item.value, filter.value)'>
+                    <button class='pop-menu-group' mat-menu-item *ngFor='let item of filter.options' (click)='onChangeFilters(item.value, filter.value)'>
                         <div>
                             <mat-icon *ngIf='item.checked'>check</mat-icon>
                         </div>
@@ -41,21 +41,9 @@
         </ng-container>
     </div>
 
-    <div class='flex-box-row-nowrap'>
-        <!-- <span class='flex-item-1-1-auto'></span> -->
-        <mat-paginator 
-            *ngIf='count> 25' 
-            [length]="count" 
-            [pageIndex]='searchFilters.pageIndex'
-            [pageSize]="searchFilters.pageSize" 
-            [pageSizeOptions]="[10,20,30]"
-            (page)='onPageChange($event)'></mat-paginator>
-        <!-- <span class='flex-item-1-1-auto'></span> -->
-    </div>
+    <mat-paginator *ngIf='count> 25' [length]="count" [pageIndex]='searchFilters.pageIndex' [pageSize]="searchFilters.pageSize"
+        [pageSizeOptions]="[10,20,30]" (page)='onPageChange($event)'></mat-paginator>
 
-    <button id='create-btn' *ngIf='createBtn?.display' [routerLink]='createBtn.url' mat-fab color="primary">
-        <mat-icon>add</mat-icon>
-    </button>
 </div>
 
 <ng-template #spinTemplate>

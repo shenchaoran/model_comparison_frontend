@@ -139,15 +139,7 @@ angular自带的一些常用模块，一般大多数module中都要用，所以�
 
 在`typings.d.ts`中添加声明。
 ``` typescript
-declare var GoogleMapsLoader: any;
-declare var L: any;
-declare var AmCharts: any;
-declare var Chart: any;
-declare var Chartist: any;
-declare const chroma: any;
 declare var jQuery: any;
-declare var _: any;
-declare var postal: any;
 ```
 
 ## TODO

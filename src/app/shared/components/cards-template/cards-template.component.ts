@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ListTemplateComponent } from '@shared/components/list-template/list-template.component';
 import { DynamicTitleService } from '@core/services/dynamic-title.service';
 import { ActivatedRoute } from "@angular/router";
-import { OgmsBaseComponent } from '@shared/components/ogms-base/ogms-base.component';
+import { OgmsBaseComponent } from '../../classes';
 
 @Component({
     selector: 'ogms-cards-template',

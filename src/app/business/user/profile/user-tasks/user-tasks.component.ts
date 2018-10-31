@@ -1,5 +1,5 @@
 import { Task } from './../../../models/task.class';
-import { OgmsBaseComponent } from './../../../../shared/components/ogms-base/ogms-base.component';
+import { OgmsBaseComponent } from '@shared';
 import { TaskService } from '@services';
 import { Component, OnInit, } from '@angular/core';
 

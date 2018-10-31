@@ -19,10 +19,6 @@ export class ListBaseService {
         });
     }
 
-    insert(doc: any): Observable<any> {
-        return this.http.post(`${this.baseUrl}`, {doc: doc});
-    }
-
     findOne(id, withRequestProgress?): Observable<any> {
         return this.http.get(`${this.baseUrl}/${id}`, undefined, undefined, undefined, withRequestProgress);
     }
@@ -33,16 +29,18 @@ export class ListBaseService {
                 pageSize: k,
                 pageIndex: 1
             }
-        })
-            .pipe(
-                map(res => {
-                    if(res.error) {
-                        
-                    }
-                    else {
-                        return res.data;
-                    }
-                })
-            )
+        });
+    }
+
+    insert(body): Observable<any> {
+        return this.http.post(`${this.baseUrl}`, body);
+    }
+
+    delete(id) {
+        return this.http.delete(`${this.baseUrl}/${id}`)
+    }
+
+    patch(id, body) {
+        return this.http.patch(`${this.baseUrl}/${id}`, body);
     }
 }

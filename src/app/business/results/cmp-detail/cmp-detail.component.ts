@@ -11,7 +11,7 @@ import { TaskService } from '../../services/task.service';
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { DynamicTitleService } from "@core/services/dynamic-title.service";
 import { ReactiveFormsModule } from "@angular/forms";
-import { DocBaseComponent } from '@shared';
+import { OgmsBaseComponent, } from '@shared';
 import { Observable, interval } from 'rxjs'
 import { map, switchMap, filter, tap, startWith } from 'rxjs/operators';
 import { CmpState } from '@models'
@@ -21,31 +21,32 @@ import { CmpState } from '@models'
     templateUrl: './cmp-detail.component.html',
     styleUrls: ['./cmp-detail.component.scss']
 })
-export class CmpDetailComponent extends DocBaseComponent implements OnInit {
+export class CmpDetailComponent extends OgmsBaseComponent implements OnInit {
     task;
     @ViewChildren('echartDOM') echartDOM: QueryList<ElementRef>;
 
     constructor(
         public route: ActivatedRoute,
-        public solutionService: TaskService,
+        public taskService: TaskService,
         public title: DynamicTitleService,
         public renderer2: Renderer2
     ) {
-        super(route, solutionService, title);
+        super();
     }
 
     ngOnInit() {
-        super.ngOnInit();
-        this._subscriptions.push(this.doc.subscribe(doc => {
-            this.task = doc;
-            this.fetchInterval();
-        }));
+        this.taskService.findOne(this.route.snapshot.paramMap.get('id')).subscribe(res => {
+            if(!res.error) {
+                this.task = res.data;
+                this.fetchInterval();
+            }
+        });
     }
 
     private fetchInterval() {
         const record$ = interval(3000).pipe(
             switchMap((v, i) => {
-                return this.solutionService.findOne(this.task._id, false);
+                return this.taskService.findOne(this.task._id, false);
             }),
             map(response => {
                 if (!response.error) {

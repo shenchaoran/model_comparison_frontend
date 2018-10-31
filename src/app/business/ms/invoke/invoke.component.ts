@@ -11,62 +11,60 @@ import {
     Validators,
     ValidatorFn,
 } from '@angular/forms';
-import { DocBaseComponent } from '@shared';
+import { OgmsBaseComponent } from '@shared';
 
 @Component({
     selector: 'ogms-invoke',
     templateUrl: './invoke.component.html',
     styleUrls: ['./invoke.component.scss']
 })
-export class InvokeComponent extends DocBaseComponent implements OnInit {
+export class InvokeComponent extends OgmsBaseComponent implements OnInit {
     _width = '520px';
 
-    model: any;
+    ms: any;
     msInstance;
     msiForm: FormGroup;
 
     constructor(
         public route: ActivatedRoute,
-        public solutionService: MSService,
+        public msService: MSService,
         public title: DynamicTitleService,
         public userService: UserService,
         public fb: FormBuilder,
         public router: Router
     ) {
-        super(route, solutionService, title);
-        this.userService.redirectIfNotLogined();
+        super();
     }
 
     ngOnInit() {
-        super.ngOnInit();
-        this._subscriptions.push(this.doc.subscribe(doc => {
-            this.model = doc;
-            // this.title.setTitle(this.model.MDL.meta.name);
-            this.msInstance = new CalcuTask(this.userService.user, this.model);
-            this.msInstance.cmpTaskId = undefined;
-
-            this.msiForm = this.fb.group({
-                _id: this.msInstance._id,
-                name: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
-                desc: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(140)]],
-                src: [ResourceSrc.PUBLIC, Validators.required],
-                msInstance: [null, Validators.required]
-            });
-            this.msiForm.statusChanges
-                // .filter(status => status === 'VALID')
-                .subscribe(status => {
-                    let hint = this.msInstanceValidator();
-                    if(hint === null) {
-                        if (status === 'VALID') {
-                            this.msInstance.meta.name = this.msiForm.value['name'];
-                            this.msInstance.meta.desc = this.msiForm.value['desc'];
-                            this.msInstance.auth.src = this.msiForm.value.src;
-                            this.msInstance.std = this.msiForm.value['msInstance'].std;
-                            this.msInstance.IO = this.msiForm.value['msInstance'].IO;
-                        }
-                    }
+        this.msService.findOne(this.route.snapshot.paramMap.get('id')).subscribe(res => {
+            if(!res.error) {
+                this.ms = res.data;this.msInstance = new CalcuTask(this.userService.user, this.ms);
+                this.msInstance.cmpTaskId = undefined;
+    
+                this.msiForm = this.fb.group({
+                    _id: this.msInstance._id,
+                    name: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+                    desc: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(140)]],
+                    src: [ResourceSrc.PUBLIC, Validators.required],
+                    msInstance: [null, Validators.required]
                 });
-        }));
+                this.msiForm.statusChanges
+                    // .filter(status => status === 'VALID')
+                    .subscribe(status => {
+                        let hint = this.msInstanceValidator();
+                        if(hint === null) {
+                            if (status === 'VALID') {
+                                this.msInstance.meta.name = this.msiForm.value['name'];
+                                this.msInstance.meta.desc = this.msiForm.value['desc'];
+                                this.msInstance.auth.src = this.msiForm.value.src;
+                                this.msInstance.std = this.msiForm.value['msInstance'].std;
+                                this.msInstance.IO = this.msiForm.value['msInstance'].IO;
+                            }
+                        }
+                    });
+            }
+        });
     }
 
     invoke(type) {
@@ -76,7 +74,7 @@ export class InvokeComponent extends DocBaseComponent implements OnInit {
         else if (type === 'invoke') {
             this.msInstance.state = CalcuTaskState.COULD_START;
         }
-        this._subscriptions.push(this.solutionService.invoke(this.msInstance)
+        this._subscriptions.push(this.msService.invoke(this.msInstance)
             .subscribe(response => {
                 if (!response.error) {
                     let res = response.data;

@@ -7,6 +7,8 @@ import {
     MSService,
     TopicService,
 } from '../services';
+import { Observable } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
 
 // TODO universal
 @Component({
@@ -46,7 +48,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
     dataList;
 
     constructor(
-        private msrService: MSRService,
         private topicService: TopicService,
         private solutionService: SolutionService,
         private taskService: TaskService,
@@ -55,11 +56,15 @@ export class HomeComponent implements OnInit, AfterViewInit {
     ) { }
 
     ngOnInit() {
-        this.modelList = this.msService.getTopK(3);
-        this.dataList = this.datasetService.getTopK(3);
-        this.slnList = this.solutionService.getTopK(3);
-        this.topicList = this.topicService.getTopK(3);
-        this.taskList = this.taskService.getTopK(3);
+        let fn = service => (service.getTopK(3) as Observable<any>).pipe(
+            filter(res => !res.error),
+            map(res => res.data)
+        );
+        this.modelList = fn(this.msService);
+        this.dataList = fn(this.datasetService);
+        this.slnList = fn(this.solutionService);
+        this.topicList = fn(this.topicService);
+        this.taskList = fn(this.taskService);
     }
 
     ngAfterViewInit() {

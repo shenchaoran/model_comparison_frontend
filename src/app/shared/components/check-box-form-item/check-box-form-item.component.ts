@@ -17,6 +17,7 @@ import {
     NG_VALIDATORS,
     NG_VALUE_ACCESSOR
 } from '@angular/forms';
+import { map, chain, filter, } from 'lodash';
 
 @Component({
     selector: 'ogms-check-box-form-item',
@@ -41,7 +42,7 @@ export class CheckBoxFormItemComponent implements OnInit {
     v;
     _checkOpts = [];
     @Input() set checkOpts(v) {
-        this._checkOpts = _.map(v, item => {
+        this._checkOpts = map(v as any[], item => {
             return {
                 label: item,
                 value: item,
@@ -57,8 +58,7 @@ export class CheckBoxFormItemComponent implements OnInit {
     }
 
     emitChange() {
-        this.v = _
-            .chain(this._checkOpts)
+        this.v = chain(this._checkOpts)
             .filter(item => !!item.checked)
             .map(item => item.value)
             .value();
