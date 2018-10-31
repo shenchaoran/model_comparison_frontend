@@ -48,13 +48,6 @@ export class TaskService extends ListBaseService {
         }
     }
 
-    insert(obj: {
-        task: any,
-        calcuTasks: any[]
-    }): Observable<any> {
-        return this.http.post(`${this.baseUrl}`, obj);
-    }
-
     public findByUserId(userId) {
         this.clear();
         return this.http.get(`${this.baseUrl}`, {

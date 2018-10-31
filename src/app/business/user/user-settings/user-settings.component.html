@@ -24,7 +24,7 @@
             <div class='error-panel' [style.display]='errorInfo.show? "block": "none"'>
                 {{errorInfo.message}}
             </div>
-            <button mat-flat-button color="primary" (click)='onSubmit()' [disable] = "onRequest">Submit</button>
+            <button mat-flat-button color="primary" (click)='onSubmit()' [disabled] = "onRequest">Submit</button>
         </div>
         <div class="right_content">
           <h4>Profile picture</h4>
