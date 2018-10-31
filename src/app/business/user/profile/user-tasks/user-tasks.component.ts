@@ -1,3 +1,4 @@
+import { Task } from './../../../models/task.class';
 import { OgmsBaseComponent } from './../../../../shared/components/ogms-base/ogms-base.component';
 import { TaskService } from '@services';
 import { Component, OnInit, } from '@angular/core';
@@ -8,7 +9,9 @@ import { Component, OnInit, } from '@angular/core';
   styleUrls: ['./user-tasks.component.scss']
 })
 export class UserTasksComponent extends OgmsBaseComponent implements OnInit {
-  results:any[];
+  get taskList(): Task[] {
+    return this.service.taskList;
+  }
   result_type="comparison";
   constructor(
     private service:TaskService,
@@ -17,17 +20,6 @@ export class UserTasksComponent extends OgmsBaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    //* 获取的所有 task 的数据 -->并不是该用户的数据
-    this._subscriptions.push(this.service.findAll({})
-      .subscribe(response => {
-          if (response.error) {
-              return Promise.reject(response.error);
-          } else {
-              this.results = response.data.docs;
-          }
-      }));
-
-      
   }
 
 }

@@ -8,12 +8,9 @@ import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef  } from '
   styleUrls: ['./user-issues.component.scss']
 })
 export class UserIssuesComponent implements OnInit {
-  list: any[];
   constructor(private service:UserService) { }
 
   ngOnInit() {
-    this.list = this.service.getMockUserIssues();
-    console.log(this.list);
   }
 
 }

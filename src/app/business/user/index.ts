@@ -1,4 +1,4 @@
-import { UserSettingsComponent } from './user-settings/user-settings.component';
+import { UserSettingsComponent,CropDialog } from './user-settings/user-settings.component';
 import { UserTasksComponent } from './profile/user-tasks/user-tasks.component';
 import { NgModule } from '@angular/core';
 import { SharedModule } from '@shared';
@@ -13,11 +13,13 @@ import { UserIssuesComponent } from './profile/user-issues/user-issues.component
 import { UserSolutionsComponent } from './profile/user-solutions/user-solutions.component';
 import { UserOverviewComponent } from './profile/user-overview/user-overview.component';
 import { UserTopicsComponent } from './profile/user-topics/user-topics.component';
+import { ImageCropperModule } from 'ngx-image-cropper';
 
 const modules = [
     UserRoutingModule,
     SharedModule,
     MatSharedModule,
+    ImageCropperModule
 ];
 const components = [
     SignInComponent, 
@@ -29,13 +31,15 @@ const components = [
     UserIssuesComponent,
     UserTopicsComponent,
     UserTasksComponent,
-    UserSettingsComponent,
+    UserSettingsComponent, 
+    CropDialog
 ];
 const services = [];
 
 @NgModule({
     imports: [...modules],
     declarations: [...components],
-    providers: [...services]
+    providers: [...services],
+    entryComponents:[UserSettingsComponent,CropDialog]
 })
 export class UserModule { }

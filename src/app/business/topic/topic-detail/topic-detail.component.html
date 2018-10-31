@@ -112,7 +112,7 @@
                 </div>
                 <div class='body participants'>
                     <ng-container *ngFor='let user of users'>
-                        <img [attr.src]='"data:image/png;base64," + user.avator'>
+                        <img [attr.src]='user.avator'>
                     </ng-container>
                 </div>
             </ogms-sidebar-section>

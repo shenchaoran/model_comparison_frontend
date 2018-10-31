@@ -1,8 +1,37 @@
 <div class="setting-container">
-  <div class="subhead mt-0 mb-0">
-    <h2 class="subhead-heading">
-      Profile
-    </h2>
-  </div>
-
+    <div class="subhead mt-0 mb-0">
+        <h2 class="subhead-heading">
+            Profile
+        </h2>
+    </div>
+    <form [formGroup]='settingsFG'>
+        <div class="left_content">
+            <mat-form-field>
+                <input matInput placeholder="UserName" value="{{this.user.username}}" disabled>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="Email" value="{{this.user.email}}" disabled>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="URL" formControlName="url" value="{{this.user.url===null?'':this.user.url}}">
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="Group" formControlName="group" value="{{this.user.group===null?'':this.user.group}}">
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="Location" formControlName="location" value="{{this.user.location===null?'':this.user.location}}">
+            </mat-form-field>
+            <div class='error-panel' [style.display]='errorInfo.show? "block": "none"'>
+                {{errorInfo.message}}
+            </div>
+            <button mat-flat-button color="primary" (click)='onSubmit()' [disable] = "onRequest">Submit</button>
+        </div>
+        <div class="right_content">
+          <h4>Profile picture</h4>
+          <img class="avatar" src="{{this.croppedImg}}" [attr.src]=' user.avator'>
+          <label class="img_label btn">Upload new picture
+            <input class="img_input" accept="image/*" type="file" (change)="onFileChange($event)" >
+          </label>
+        </div>
+    </form>
 </div>

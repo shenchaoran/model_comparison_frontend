@@ -44,7 +44,7 @@
     </div>
 
     <!-- Latest Tasks -->
-    <div *ngIf = "taskList">
+    <div *ngIf = "taskList.length>0">
         <h2 class="f4 mb-2 text-normal">Latest Results & Diagnostics</h2>
         <ol class="card-list">
             <li *ngFor="let task of taskList" class="card-item">

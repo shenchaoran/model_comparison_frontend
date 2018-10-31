@@ -28,7 +28,7 @@ export class UserService {
         if (jwt) {
             jwt = JSON.parse(jwt);
             this._jwt = jwt;
-            if(this.isLogined){
+            if (this.isLogined) {
                 this.logined$ = new BehaviorSubject<boolean>(true);
                 return;
             }
@@ -130,6 +130,26 @@ export class UserService {
             )
     }
 
+    setUp(user): Observable<any> {
+        return this.http.post('/user/set-up', user)
+            .pipe(
+                map(res => {
+                    if (res.error) {
+                        console.error('error in user.service: ', `${res.error.code} - ${res.error.desc}`);
+                        return res;
+                    }
+                    else {
+                        this.jwt.user.url = res.data.user.url;
+                        this.jwt.user.group = res.data.user.group;
+                        this.jwt.user.location = res.data.user.location;
+                        this.jwt.user.avator = res.data.user.avator;
+                        this.router.navigate(['/user/profile/user-overview']);
+                        return res;
+                    }
+                })
+            )
+    }
+
     passwordReset(user): Observable<any> {
         return this.http.post('user/password-reset', user);
     }
@@ -148,20 +168,5 @@ export class UserService {
             return false;
         }
         return true;
-    }
-
-
-
-
-
-    //* 获取模拟的用户信息
-    getMockuser(){
-        return USER;
-    }
-
-    //* 获取用户相关issues
-    getMockUserIssues(){
-        // console.log(getFakeList());
-        return getFakeList();
     }
 }

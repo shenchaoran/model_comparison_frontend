@@ -1,0 +1,26 @@
+<mat-card class="crop-card">
+    <mat-card-header>
+      <div mat-card-avatar class="example-header-image"></div>
+      <mat-card-title>Crop your new profile picture</mat-card-title> 
+    </mat-card-header>
+
+    <mat-card-content>
+            <image-cropper
+                [imageChangedEvent]="imageChangedEvent"
+                [maintainAspectRatio]="true"
+                [aspectRatio]="1"
+                [resizeToWidth]="200"
+                [roundCropper]="false"
+                format="png"
+                outputType="both"
+                (imageCropped)="imageCropped($event)"
+                (imageLoaded)="imageLoaded()"
+                (loadImageFailed)="loadImageFailed()"
+                style="max-height: 33vh"
+                [style.display]="cropperReady ? null : 'none'"
+            ></image-cropper>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button cdkFocusInitial [mat-dialog-close]="croppedImage">Set new profile picture</button>
+    </mat-card-actions>
+  </mat-card>
