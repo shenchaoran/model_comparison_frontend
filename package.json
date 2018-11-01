@@ -37,6 +37,7 @@
     "ng-zorro-antd": "^1.2.0",
     "ng2-simplemde": "^2.1.0",
     "ng2-slim-loading-bar": "^4.0.0",
+    "ngx-image-cropper": "^1.2.2",
     "ngx-uploader": "^6.1.0",
     "objectid": "^1.1.0",
     "openlayers": "^4.2.0",
