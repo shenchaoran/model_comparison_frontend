@@ -84,8 +84,8 @@
                     <div class='filter'>
                         <input placeholder='Filter solution' [(ngModel)]='slnFilter'>
                     </div>
-                    <ul *ngIf='solutions && solutions.length' class='opt-list ul-option'>
-                        <li *ngFor='let sln of solutions' (click)='onSlnLiClick(sln)'>
+                    <ul *ngIf='solutionList && solutionList.length' class='opt-list ul-option'>
+                        <li *ngFor='let sln of solutionList' (click)='onSlnLiClick(sln)'>
                             <div class='sln-select-placeholder'>
                                 <mat-icon inline *ngIf='sln.topicId === topic._id'>clear</mat-icon>
                             </div>

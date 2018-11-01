@@ -19,7 +19,8 @@ import {
 } from '@angular/forms';
 import { CascaderSelectValidator } from '@shared/components/mat-cascader-select/cascader-select.validator';
 import { Subject, combineLatest } from 'rxjs';
-import { map } from 'lodash';
+import { debounceTime, throttleTime } from 'rxjs/operators';
+import { map, get } from 'lodash';
 
 @Component({
     selector: 'ogms-mat-cascader-select',
@@ -37,8 +38,7 @@ import { map } from 'lodash';
 export class MatCascaderSelectComponent implements ControlValueAccessor, OnInit {
     selectsFG: FormGroup;
 
-    _rst = [];
-    _flapSource: {
+    _flapOptions: {
         placeholder: String,
         value?: any,
         options: {
@@ -46,79 +46,85 @@ export class MatCascaderSelectComponent implements ControlValueAccessor, OnInit 
             value: String
         }[]
     }[];
-    _source;
 
-    get selectFCArray() {
-        return (this.selectsFG.get('selects') as FormArray).controls;
-    }
+    _options;
+    _value = [];
+    options$ = new Subject<any>();
+    value$ = new Subject<any>();
 
-    @Input() options: {} = {};
-    @Input() set source(v: CasCaderData) {
-        this._source = v;
-        this._flapSource = []
-        let recurFlap = (src: CasCaderData, level) => {
-            if(src.children) {
-                this._flapSource.push({
-                    placeholder: src.placeholder,
-                    options: level === 1? map(src.children as any[], child => {
-                        return {
-                            label: child.label,
-                            value: child.value
-                        };
-                    }): null
-                });
-                recurFlap(src.children[0], level++)
-            }
-        }
+    get selectFCArray() { return (this.selectsFG.get('selects') as FormArray).controls; }
 
-        recurFlap(v, 1);
-
-        this.selectsFG = this.fb.group({
-            selects: this.fb.array(map(this._flapSource as any[], src => {
-                return this.fb.control(null, Validators.required);
-            }))
-        });
-
-        this.selectsFG.statusChanges
-            .subscribe(state => {
-                if(state === 'VALID') {
-                    let v = map(this.selectsFG.value.selects as any[], v => v.value);
-                    this.propagateChange(v);
-                }
-            })
+    @Input() set options(v: CasCaderData) {
+        this.options$.next(v);
     }
 
     constructor(
         private fb: FormBuilder
-    ) { }
+    ) {
+        combineLatest(this.options$, this.value$).subscribe(v => {
+            this._options = v[0];
+            this._value = v[1];
 
-    ngOnInit() {}
+            this._flapOptions = []
+            let recurFlap = (src: CasCaderData, level) => {
+                if (src && src.children) {
+                    this._flapOptions.push({
+                        placeholder: src.placeholder,
+                        options: level === 1 ? map(src.children as any[], child => {
+                            return {
+                                label: child.label,
+                                value: child.value
+                            };
+                        }) : null
+                    });
+                    recurFlap(src.children[0], level++)
+                }
+            }
+            recurFlap(this._options, 1);
+
+            this.selectsFG = this.fb.group({
+                selects: this.fb.array(map(this._flapOptions as any[], (src, i) => {
+                    return this.fb.control(get(this._value, i), Validators.required);
+                }))
+            });
+            console.log(this._flapOptions, this.selectsFG.value);
+
+            this.selectsFG.statusChanges.subscribe(state => {
+                if (state === 'VALID') {
+                    let v = map(this.selectsFG.value.selects as any[], v => v.value);
+                    this.propagateChange(v);
+                }
+            });
+        })
+    }
+
+    ngOnInit() { }
 
     onSelected(e, level) {
-        this._rst[level] = e.value;
-        this._rst.splice(level+1);
-        
+        this._value[level] = e.value;
+        this._value.splice(level + 1);
+
         let getSubOptionsByRecur = (src, i) => {
-            let newSrc = src.children[this._rst[i].index];
-            if(i< level) {
-                getSubOptionsByRecur(newSrc, i+1);
+            let newSrc = src.children[this._value[i].index];
+            if (i < level) {
+                getSubOptionsByRecur(newSrc, i + 1);
             }
-            else if(newSrc && newSrc.children) {
-                if(level < this._flapSource.length-1) {
-                    this._flapSource[level+1].options = map(newSrc.children as any[], child => {
+            else if (newSrc && newSrc.children) {
+                if (level < this._flapOptions.length - 1) {
+                    this._flapOptions[level + 1].options = map(newSrc.children as any[], child => {
                         return {
                             label: child.label,
                             value: child.value
                         };
                     });
-                    let nextToClearCtrl = this.selectFCArray[level+1];
+                    let nextToClearCtrl = this.selectFCArray[level + 1];
                     (nextToClearCtrl as any).value = null;
                     nextToClearCtrl.updateValueAndValidity();
                     nextToClearCtrl.markAsPristine();
 
-                    let j = level+2;
-                    while(j < this._flapSource.length) {
-                        this._flapSource[j].options = null;
+                    let j = level + 2;
+                    while (j < this._flapOptions.length) {
+                        this._flapOptions[j].options = null;
                         (this.selectFCArray[j] as any).value = null;
                         this.selectFCArray[j].updateValueAndValidity();
                         this.selectFCArray[j].markAsPristine();
@@ -127,11 +133,11 @@ export class MatCascaderSelectComponent implements ControlValueAccessor, OnInit 
                 }
             }
         }
-        
-        getSubOptionsByRecur(this._source, 0)
 
-        // if(level === this._flapSource.length -1) {
-        //     this.propagateChange(map(this._rst as any[], item => item.value));
+        getSubOptionsByRecur(this._options, 0)
+
+        // if(level === this._flapOptions.length -1) {
+        //     this.propagateChange(map(this._value as any[], item => item.value));
         // }
     }
 
@@ -141,7 +147,7 @@ export class MatCascaderSelectComponent implements ControlValueAccessor, OnInit 
         if (!obj) {
             obj = []
         }
-        this._rst = obj;
+        this.value$.next(obj);
     }
 
     public registerOnChange(fn: any) {

@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '@shared';
 import { RouterModule, Routes } from '@angular/router';
-import { MatSharedModule } from '@mat-shared'
+import { MatSharedModule } from '@mat-shared';
+import { MatCascaderModule } from '@shared/ogms-cascader';
 
 //////////////////// component ////////////////////////
 import { CalcuCfgComponent, SiteDialog } from './calcu-cfg/calcu-cfg.component';
@@ -24,6 +25,7 @@ const modules = [
     RouterModule,
     OlModule,
     MatSharedModule,
+    MatCascaderModule,
 ];
 const components = [
     CalcuCfgComponent,
