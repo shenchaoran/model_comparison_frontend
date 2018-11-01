@@ -10,3 +10,4 @@ export * from './calcu-task.class';
 export * from './task.class';
 export * from './conversation.class';
 export * from './topic.class';
+export * from './cmp-methods.class';

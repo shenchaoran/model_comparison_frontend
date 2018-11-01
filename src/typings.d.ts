@@ -47,10 +47,8 @@ declare let Chart: any;
 declare let Chartist: any;
 declare var $: any;
 declare var jQuery: any;
-// declare let showdown: any;
-declare var echart: any;
+declare var echarts: any;
 declare var editormd: any;
 declare let ol: any;
-// declare var proj4: any;
 
 interface JQuery {}

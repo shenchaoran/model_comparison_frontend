@@ -48,9 +48,7 @@ export class SolutionService extends ListBaseService {
     }
 
     public findByUserId(userId) {
-        return super.findAll({
-            userId: userId,
-        }).pipe(map(res => {
+        return super.findAll({ userId }).pipe(map(res => {
             if(!res.error) {
                 this.user_solutions = res.data.docs;
             }
@@ -58,9 +56,13 @@ export class SolutionService extends ListBaseService {
     }
 
     public subscribeToggle(slnId, ac, uid) {
-        return super.patch(`${slnId}`, {
-            ac: ac,
-            uid: uid
-        });
+        return super.patch(`${slnId}`, { ac, uid });
+    }
+
+    public updatePts(solutionId, ids) {
+        return super.patch(`${solutionId}`, {
+            ac: 'updatePts',
+            ids
+        })
     }
 }

@@ -1,5 +1,4 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Moment } from 'moment';
 import { format } from 'date-fns';
 
 @Pipe({ name: 'moment' })
