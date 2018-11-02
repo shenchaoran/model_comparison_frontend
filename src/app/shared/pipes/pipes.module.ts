@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NgxSharedModule } from '@shared';
 import { ArrayFilterPipe } from './array-filter.pipe';
 import { CoordinatePipe } from './coordinate.pipe';
 import { DescriptionPipe } from './description.pipe';
@@ -20,7 +20,7 @@ const pipes = [
 
 @NgModule({
   imports: [
-    CommonModule
+    NgxSharedModule,
   ],
   declarations: [...pipes],
   exports: [...pipes]

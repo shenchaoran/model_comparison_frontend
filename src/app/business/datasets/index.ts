@@ -7,10 +7,10 @@ import {
 import {
 
 } from '@angular/material';
-import {
-    // NzMenuModule,
-    NgZorroAntdModule,
-} from 'ng-zorro-antd';
+// import {
+//     // NzMenuModule,
+//     NgZorroAntdModule,
+// } from 'ng-zorro-antd';
 
 import { DatasetsRoutingModule } from './index-routing.module';
 import { DatasetsComponent } from './datasets/datasets.component';
@@ -20,7 +20,7 @@ import { SiteDataComponent } from './site-data/site-data.component'
 const modules = [
     NgxSharedModule,
     // NzMenuModule,
-    NgZorroAntdModule,
+    // NgZorroAntdModule,
     DatasetsRoutingModule,
     OlModule,
     HeaderMenuLayoutModule,

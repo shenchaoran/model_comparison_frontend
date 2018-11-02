@@ -4,6 +4,7 @@ import {
     Optional,
     SkipSelf
 } from '@angular/core';
+import { NgxSharedModule } from '@shared';
 import { HttpClientModule } from '@angular/common/http';
 import { HEADER_MENUS, USER_MENUS, LOGIN_MENUS, BACKEND } from '@config';
 import { DynamicTitleService } from '@core/services';
@@ -109,6 +110,7 @@ const services = [
     imports: [ 
         HttpClientModule,
         OverlayModule,
+        NgxSharedModule,
     ],
     providers: [...services]
 })

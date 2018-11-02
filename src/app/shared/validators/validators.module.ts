@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NgxSharedModule } from '@shared';
 
 @NgModule({
     imports: [
-        CommonModule
+        NgxSharedModule
     ],
     declarations: [
     ],

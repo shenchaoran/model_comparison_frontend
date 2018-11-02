@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { NgxSharedModule } from '../ngx-shared';
 import { OverlayModule } from '@angular/cdk/overlay';
-import {
-    // NzMenuModule,
-    // NzBackTopModule,
-    NgZorroAntdModule,
-} from 'ng-zorro-antd';
+// import {
+//     // NzMenuModule,
+//     // NzBackTopModule,
+//     NgZorroAntdModule,
+// } from 'ng-zorro-antd';
 
 import { FooterComponent } from './footer/footer.component';
 import { HeaderMenuComponent } from './header-menu/header-menu.component';
@@ -17,7 +17,7 @@ import { HeaderMenuService } from './header-menu.service';
     imports: [
         OverlayModule,
         NgxSharedModule,
-        NgZorroAntdModule,
+        // NgZorroAntdModule,
         // NzMenuModule,
         // NzBackTopModule,
     ],

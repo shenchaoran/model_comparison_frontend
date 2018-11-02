@@ -11,12 +11,12 @@ import {
     MatChipsModule,
     MatIconModule,
 } from '@angular/material';
-import {
-    // NzGridModule,
-    // NzProgressModule,
-    // NzTableModule,
-    NgZorroAntdModule,
-} from 'ng-zorro-antd';
+// import {
+//     // NzGridModule,
+//     // NzProgressModule,
+//     // NzTableModule,
+//     NgZorroAntdModule,
+// } from 'ng-zorro-antd';
 
 import { ResultsRoutingModule } from './index-routing.module';
 import { CalcuListComponent } from './calcu-list/calcu-list.component';
@@ -33,7 +33,7 @@ const modules = [
     // NzGridModule,
     // NzProgressModule,
     // NzTableModule,
-    NgZorroAntdModule,
+    // NgZorroAntdModule,
     ResultsRoutingModule,
     CmpSharedModule,
     HeaderMenuLayoutModule,

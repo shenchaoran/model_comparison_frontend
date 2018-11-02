@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NgxSharedModule } from '@shared';
 import { RxBoxDirective } from './rx-box.directive';
 import { AsideDirective } from './aside.directive';
 import { Flex10Directive } from './flex-1-0.directive';
@@ -14,7 +14,7 @@ const directives = [
 
 @NgModule({
   imports: [
-    CommonModule
+    NgxSharedModule
   ],
   declarations: [...directives],
   exports: [...directives],

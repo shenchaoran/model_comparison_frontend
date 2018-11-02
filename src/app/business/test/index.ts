@@ -7,12 +7,12 @@ import {
     NgxSharedModule,
     DirectivesModule,
  } from '@shared';
-import {
-    // NzAnchorModule,
-    // NzFormModule,
-    // NzInputModule,
-    NgZorroAntdModule,
-} from 'ng-zorro-antd';
+// import {
+//     // NzAnchorModule,
+//     // NzFormModule,
+//     // NzInputModule,
+//     NgZorroAntdModule,
+// } from 'ng-zorro-antd';
 import {
     MatTableModule,
 } from '@angular/material';
@@ -30,7 +30,7 @@ const modules = [
     // NzAnchorModule,
     // NzFormModule,
     // NzInputModule,
-    NgZorroAntdModule,
+    // NgZorroAntdModule,
     FileUploaderModule,
     TestRoutingModule,
     OlModule,

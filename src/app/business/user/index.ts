@@ -7,16 +7,16 @@ import {
     NgxSharedModule,
     PipesModule,
 } from '@shared';
-import {
-    // NzCardModule,
-    // NzGridModule,
-    // NzButtonModule,
-    // NzDividerModule,
-    // NzTabsModule,
-    // NzListModule,
-    // NzAvatarModule,
-    NgZorroAntdModule,
-} from 'ng-zorro-antd';
+// import {
+//     // NzCardModule,
+//     // NzGridModule,
+//     // NzButtonModule,
+//     // NzDividerModule,
+//     // NzTabsModule,
+//     // NzListModule,
+//     // NzAvatarModule,
+//     NgZorroAntdModule,
+// } from 'ng-zorro-antd';
 import {
     MatFormFieldModule,
     MatInputModule,
@@ -56,7 +56,7 @@ const modules = [
     // NzTabsModule,
     // NzListModule,
     // NzAvatarModule,
-    NgZorroAntdModule,
+    // NgZorroAntdModule,
     UserRoutingModule,
     ImageCropperModule,
     DirectivesModule,
