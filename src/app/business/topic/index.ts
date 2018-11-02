@@ -1,20 +1,46 @@
 import { NgModule } from '@angular/core';
-import { SharedModule } from '@shared';
 import { ConversationModule } from '../conversation';
-import { MatSharedModule } from '../../mat-shared';
 import { SimplemdeModule } from 'ng2-simplemde';
-
+import { 
+    NgxSharedModule,
+    HeaderMenuLayoutModule,
+    DetailLayoutModule,
+    CustomTemplateModule,
+    CreateDocModule,
+    DirectivesModule,
+    PipesModule,
+ } from '@shared';
+import {
+    MatIconModule,
+    MatProgressSpinnerModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatTabsModule,
+} from '@angular/material';
 import { TopicRoutingModule } from './index-routing.module';
 import { TopicListComponent } from './topic-list/topic-list.component';
 import { TopicDetailComponent } from './topic-detail/topic-detail.component';
 import { CreateTopicComponent } from './create-topic/create-topic.component';
 
 const modules = [
-    SharedModule,
+    NgxSharedModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatTabsModule,
     ConversationModule,
     TopicRoutingModule,
-    MatSharedModule,
-    SimplemdeModule.forRoot()
+    SimplemdeModule.forRoot(),
+    HeaderMenuLayoutModule,
+    DetailLayoutModule,
+    CustomTemplateModule,
+    DetailLayoutModule,
+    CreateDocModule,
+    DirectivesModule,
+    PipesModule,
 ];
 const components = [
     TopicDetailComponent,

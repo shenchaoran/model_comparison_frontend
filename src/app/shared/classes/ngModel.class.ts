@@ -7,14 +7,14 @@ export class NgModelBase implements ControlValueAccessor, Validator {
     public _innerValue$: Subject<any> = new Subject();
 
 
-    set value(v: any) {
+    public set value(v: any) {
         if (v !== this._innerValue) {
             this._innerValue = v
             this.propagateChange(v)
         }
     }
 
-    get value(): any {
+    public get value(): any {
         return this._innerValue
     }
 
@@ -22,18 +22,18 @@ export class NgModelBase implements ControlValueAccessor, Validator {
         return null;
     }
 
-    writeValue(v: any) {
+    public writeValue(v: any) {
         if (v !== this._innerValue) {
             this._innerValue = v;
             this._innerValue$.next(v);
         }
     }
 
-    registerOnChange(fn: any) {
+    public registerOnChange(fn: any) {
         this.propagateChange = fn
     }
 
-    registerOnTouched(fn: any) {
+    public registerOnTouched(fn: any) {
         this.propagateChange = fn
     }
 }

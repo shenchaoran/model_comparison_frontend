@@ -4,10 +4,12 @@ import {
     Optional,
     SkipSelf
 } from '@angular/core';
-
+import { OverlayModule } from '@angular/cdk/overlay';
+import { HttpClientModule } from '@angular/common/http';
 import { HEADER_MENUS, USER_MENUS, LOGIN_MENUS, BACKEND } from '@config';
 import { DynamicTitleService } from '@core/services';
 import { _HttpClient } from '@core/services/http.client';
+import { MatSnackBar } from '@angular/material';
 import {
     UserService,
     SolutionService,
@@ -99,11 +101,15 @@ const services = [
     MSService,
     MSRService,
     SearchService,
+    MatSnackBar,
 ];
 
 @NgModule({
     declarations: [],
-    imports: [],
+    imports: [ 
+        HttpClientModule,
+        OverlayModule
+    ],
     providers: [...services]
 })
 export class CoreModule {

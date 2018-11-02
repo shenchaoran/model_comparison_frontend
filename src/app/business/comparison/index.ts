@@ -1,11 +1,30 @@
 import { NgModule } from '@angular/core';
-import { SharedModule } from '@shared';
-import { MatSharedModule } from '@mat-shared';
-
+import { 
+    NgxSharedModule,
+    HeaderMenuLayoutModule,
+    CustomTemplateModule,
+    PipesModule,
+    DetailLayoutModule,
+    CreateDocModule,
+    DirectivesModule,
+} from '@shared';
 import { CmpSharedModule } from '../cmp-shared';
 import { ComparisonRoutingModule } from './index-routing.module';
 import { ConversationModule } from '../conversation';
 import { SimplemdeModule, SIMPLEMDE_CONFIG } from 'ng2-simplemde';
+import {
+    MatProgressSpinnerModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatChipsModule,
+    MatTabsModule,
+    MatCardModule,
+    MatIconModule,
+    MatSelectModule,
+    MatButtonToggleModule,
+    MatListModule,
+} from '@angular/material';
 
 import { SolutionListComponent } from './solution-list/solution-list.component';
 import { SolutionDetailComponent } from './solution-detail/solution-detail.component';
@@ -24,12 +43,28 @@ const components = [
 ];
 var entryComponents = [];
 const modules = [
-    SharedModule,
-    MatSharedModule,
+    NgxSharedModule,
+    HeaderMenuLayoutModule,
+    MatProgressSpinnerModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatChipsModule,
+    MatTabsModule,
+    MatCardModule,
+    MatIconModule,
+    MatSelectModule,
+    MatListModule,
+    MatButtonToggleModule,
     ComparisonRoutingModule,
     CmpSharedModule,
     ConversationModule,
     SimplemdeModule.forRoot(),
+    CustomTemplateModule,
+    PipesModule,
+    DetailLayoutModule,
+    CreateDocModule,
+    DirectivesModule,
 ];
 const services = [];
 @NgModule({

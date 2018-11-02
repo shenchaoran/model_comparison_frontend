@@ -9,7 +9,7 @@ import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef  } from '
 })
 export class UserIssuesComponent implements OnInit {
   constructor(private service:UserService) { }
-
+  list
   ngOnInit() {
   }
 

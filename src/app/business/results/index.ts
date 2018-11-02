@@ -1,6 +1,22 @@
 import { NgModule } from '@angular/core';
-import { SharedModule } from '@shared';
-import { MatSharedModule } from '@mat-shared';
+import { 
+    HeaderMenuLayoutModule,
+    NgxSharedModule,
+    CustomTemplateModule,
+    DirectivesModule,
+    PipesModule,
+} from '@shared';
+import {
+    MatProgressSpinnerModule,
+    MatChipsModule,
+    MatIconModule,
+} from '@angular/material';
+import {
+    // NzGridModule,
+    // NzProgressModule,
+    // NzTableModule,
+    NgZorroAntdModule,
+} from 'ng-zorro-antd';
 
 import { ResultsRoutingModule } from './index-routing.module';
 import { CalcuListComponent } from './calcu-list/calcu-list.component';
@@ -10,10 +26,20 @@ import { CmpDetailComponent } from './cmp-detail/cmp-detail.component';
 import { CmpSharedModule } from '../cmp-shared';
 
 const modules = [
-    SharedModule,
+    NgxSharedModule,
+    MatProgressSpinnerModule,
+    MatChipsModule,
+    MatIconModule,
+    // NzGridModule,
+    // NzProgressModule,
+    // NzTableModule,
+    NgZorroAntdModule,
     ResultsRoutingModule,
     CmpSharedModule,
-    MatSharedModule,
+    HeaderMenuLayoutModule,
+    CustomTemplateModule,
+    DirectivesModule,
+    PipesModule,
 ];
 const components = [
     CalcuListComponent,

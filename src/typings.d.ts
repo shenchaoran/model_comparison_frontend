@@ -50,5 +50,4 @@ declare var jQuery: any;
 declare var echarts: any;
 declare var editormd: any;
 declare let ol: any;
-
 interface JQuery {}

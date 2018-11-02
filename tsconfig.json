@@ -75,7 +75,8 @@
         }
     },
     "angularCompilerOptions": {
-        "preserveWhitespaces": "off"
+        "preserveWhitespaces": "off",
+        "annotationsAs": "decorators"
     },
     "include": [
         "src/**/*",

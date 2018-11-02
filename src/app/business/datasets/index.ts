@@ -1,5 +1,16 @@
 import { NgModule } from '@angular/core';
-import { SharedModule } from '@shared';
+import { 
+    HeaderMenuLayoutModule,
+    NgxSharedModule,
+    DirectivesModule,
+} from '@shared';
+import {
+
+} from '@angular/material';
+import {
+    // NzMenuModule,
+    NgZorroAntdModule,
+} from 'ng-zorro-antd';
 
 import { DatasetsRoutingModule } from './index-routing.module';
 import { DatasetsComponent } from './datasets/datasets.component';
@@ -7,9 +18,13 @@ import { OlModule } from '../ol';
 import { SiteDataComponent } from './site-data/site-data.component'
 
 const modules = [
-    SharedModule,
+    NgxSharedModule,
+    // NzMenuModule,
+    NgZorroAntdModule,
     DatasetsRoutingModule,
     OlModule,
+    HeaderMenuLayoutModule,
+    DirectivesModule,
 ];
 const components = [
     // GeoDataComponent,

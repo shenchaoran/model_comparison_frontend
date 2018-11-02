@@ -12,6 +12,7 @@ export class UserTasksComponent extends OgmsBaseComponent implements OnInit {
   get taskList(): Task[] {
     return this.service.taskList;
   }
+  results
   result_type="comparison";
   constructor(
     private service:TaskService,

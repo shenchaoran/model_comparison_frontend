@@ -2,10 +2,8 @@ import { NgModule, Component } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { _HttpClient } from '@core/services/http.client';
-import { SharedModule } from '@shared';
 import { CoreModule } from '@core';
-
+import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
 
 @Component({
     selector: 'ogms-app',
@@ -84,8 +82,7 @@ export class AppRoutingModule { }
         BrowserAnimationsModule,
         RouterModule,
         AppRoutingModule,
-
-        SharedModule.forRoot(),
+        SlimLoadingBarModule,
         CoreModule.forRoot(),
     ],
     providers: []
