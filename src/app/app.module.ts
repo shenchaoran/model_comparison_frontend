@@ -4,6 +4,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CoreModule } from '@core';
 import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
+import { NgZorroAntdModule } from 'ng-zorro-antd';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 @Component({
     selector: 'ogms-app',
@@ -84,6 +86,8 @@ export class AppRoutingModule { }
         AppRoutingModule,
         SlimLoadingBarModule,
         CoreModule.forRoot(),
+        NgZorroAntdModule.forRoot(),
+        OverlayModule,
     ],
     providers: []
 })

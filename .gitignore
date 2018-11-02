@@ -58,3 +58,6 @@ src/assets/img/app/logo.psd
 /test
 .editorconfig
 /src/assets/img/app/logo.psd
+build-dev
+build-prod
+prod

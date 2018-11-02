@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 // material
 import {
@@ -20,6 +21,7 @@ import { MatCascaderComponent } from './mat-cascader.component';
     MatFormFieldModule,
     MatInputModule,
     MatRippleModule,
+    OverlayModule,
   ],
   declarations: [
     MatCascaderComponent

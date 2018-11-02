@@ -5,7 +5,8 @@
   "scripts": {
     "start": "ng serve --port 8888 --hmr",
     "debug": "node --nolazy node_modules/@angular/cli/bin/ng serve --proxy-config proxy.conf.json --port 8888 --hmr --configuration=hmr --common-chunk --vendor-chunk --source-map",
-    "build": "node --max_old_space_size=5120 node_modules/@angular/cli/bin/ng build --delete-output-path --prod --build-optimizer --watch --common-chunk --vendor-chunk --stats-json",
+    "build:prod": "node --max_old_space_size=5120 node_modules/@angular/cli/bin/ng build --delete-output-path --build-prod --build-optimizer --watch --common-chunk --vendor-chunk --stats-json",
+    "build:dev": "ng build --aot --delete-output-path --output-path=build-dev --watch --common-chunk --vendor-chunk --stats-json",
     "webpack-server": "webpack-dev-server --port 8888 --inline --progress --content-base src --colors --hot --devtool eval",
     "stats": "npx webpack-bundle-analyzer prod/stats.json --port 8889",
     "test": "ng test",
