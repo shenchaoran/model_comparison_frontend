@@ -70,13 +70,12 @@ export class CmpDetailComponent extends OgmsBaseComponent implements OnInit {
     private buildChart() {
         let i = 0;
         setTimeout(() => {
-            let $echartDOMs = $('.echart-dom')
             this.task.cmpObjs.map(cmpObj => {
                 cmpObj.methods.map((method) => {
                     if (method.id === '5b713f39a4857f1ba4be23ff') {
                         if (method.result.state === CmpState.FINISHED_SUCCEED) {
                             echarts
-                                .init($echartDOMs[i])
+                                .init(this.echartDOM.toArray()[i].nativeElement)
                                 .setOption(method.result);
                         }
                         i++;

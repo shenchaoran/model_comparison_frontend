@@ -7,7 +7,13 @@ import {
 import * as uuidv1 from 'uuid/v1';
 import { OgmsBaseComponent } from '../../classes';
 import { Observable } from 'rxjs';
-declare const ol: any;
+import Map from 'ol/Map';
+import OSM from 'ol/source/OSM';
+import Tile from 'ol/layer/Tile';
+import View from 'ol/View';
+import { defaults as defaultsControl } from 'ol/control/util';
+import FullScreen from 'ol/control/FullScreen';
+import ScaleLine from 'ol/control/ScaleLine';
 
 @Component({
     selector: 'ogms-map-base',
@@ -30,28 +36,27 @@ export class MapBaseComponent extends OgmsBaseComponent implements OnInit, After
     ngAfterViewInit() {
         this.observable = Observable.create(observer => {
             setTimeout(() => {
-                this.map = new ol.Map({
+                this.map = new Map({
                     target: this.targetId,
                     layers: [
-                        new ol.layer.Tile({
+                        new Tile({
                             title: 'OSM',
                             visible: true,
-                            source: new ol.source.OSM()
-                        })
+                            source: new OSM()
+                        } as any)
                     ],
-                    view: new ol.View({
+                    view: new View({
                         center: [0, 0],
                         zoom: 2
                     }),
-                    controls: ol.control
-                        .defaults({
-                            attribution: false,
-                            rotate: false,
-                            zoom: false
-                        })
+                    controls: defaultsControl({
+                        attribution: false,
+                        rotate: false,
+                        zoom: false
+                    })
                         .extend([
-                            new ol.control.FullScreen(),
-                            new ol.control.ScaleLine()
+                            new FullScreen(),
+                            new ScaleLine()
                         ])
                 });
                 observer.next();
