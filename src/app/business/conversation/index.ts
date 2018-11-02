@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { SimplemdeModule, SIMPLEMDE_CONFIG } from 'ng2-simplemde';
-import { OverlayModule } from '@angular/cdk/overlay';
 import { 
     HeaderMenuLayoutModule,
     NgxSharedModule,
@@ -17,7 +16,6 @@ import { ConversationComponent } from './conversation/conversation.component';
 import { CommentComponent } from './comment/comment.component';
 
 const modules = [
-    OverlayModule,
     NgxSharedModule,
     MatProgressSpinnerModule,
     MatButtonModule,

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { NgxSharedModule } from '../ngx-shared';
+import { OverlayModule } from '@angular/cdk/overlay';
 import {
     // NzMenuModule,
     // NzBackTopModule,
@@ -14,6 +15,7 @@ import { HeaderMenuService } from './header-menu.service';
 
 @NgModule({
     imports: [
+        OverlayModule,
         NgxSharedModule,
         NgZorroAntdModule,
         // NzMenuModule,

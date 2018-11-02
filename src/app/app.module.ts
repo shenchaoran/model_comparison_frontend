@@ -80,6 +80,7 @@ export class AppRoutingModule { }
     bootstrap: [AppComponent],
     declarations: [AppComponent],
     imports: [
+        OverlayModule,
         BrowserModule,
         BrowserAnimationsModule,
         RouterModule,
@@ -87,7 +88,6 @@ export class AppRoutingModule { }
         SlimLoadingBarModule,
         CoreModule.forRoot(),
         NgZorroAntdModule.forRoot(),
-        OverlayModule,
     ],
     providers: []
 })

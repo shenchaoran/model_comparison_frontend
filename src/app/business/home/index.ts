@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { HomeRoutingModule } from './index-routing.module';
+import { OverlayModule } from '@angular/cdk/overlay';
 import { 
     NgxSharedModule,
     HeaderMenuLayoutModule, 
@@ -19,6 +20,7 @@ import { HomeBannerComponent } from './home-banner/home-banner.component';
 import { PanelComponent } from './panel/panel.component';
 
 const modules = [
+    OverlayModule,
     NgxSharedModule,
     MatIconModule,
     // NzCarouselModule,

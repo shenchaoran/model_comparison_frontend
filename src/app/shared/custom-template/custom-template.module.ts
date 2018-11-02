@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { NgxSharedModule } from '../ngx-shared';
 import { DirectivesModule } from '../directives';
-import { OverlayModule } from '@angular/cdk/overlay';
 import {
     MatPaginatorModule,
     MatButtonModule,
@@ -34,7 +33,6 @@ const components = [
         MatButtonToggleModule,
         MatProgressSpinnerModule,
         DirectivesModule,
-        OverlayModule,
     ],
     declarations: [...components],
     exports: [...components]
