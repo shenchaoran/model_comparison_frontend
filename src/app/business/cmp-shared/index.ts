@@ -23,7 +23,7 @@ import {
 // NzCollapseModule
 // } from 'ng-zorro-antd';
 
-// import { NgZorroAntdModule } from 'ng-zorro-antd';
+import { NgZorroAntdModule } from 'ng-zorro-antd';
 
 import { CalcuCfgComponent, SiteDialog } from './calcu-cfg/calcu-cfg.component';
 import { CmpObjCfgComponent } from './cmp-obj-cfg/cmp-obj-cfg.component';
@@ -48,7 +48,7 @@ const modules = [
     // NzCollapseModule,
     // NzGridModule,
     // NzTableModule,
-    // NgZorroAntdModule,
+    NgZorroAntdModule,
     MatDialogModule,
     OlModule,
     FileUploaderModule,

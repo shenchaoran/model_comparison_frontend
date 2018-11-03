@@ -5,7 +5,7 @@
   "scripts": {
     "start": "ng serve --port 8888 --hmr",
     "debug": "node --nolazy node_modules/@angular/cli/bin/ng serve --proxy-config proxy.conf.json --port 8888 --hmr --configuration=hmr --common-chunk --vendor-chunk --source-map",
-    "aot": "node --max_old_space_size=5120 node_modules/@angular/cli/bin/ng serve --port 8888 --aot --hmr --configuration=hmr --source-map",
+    "aot": "node --max_old_space_size=5120 node_modules/@angular/cli/bin/ng serve --proxy-config proxy.conf.json --port 8888 --aot --hmr --configuration=hmr --source-map",
     "build:prod": "node --max_old_space_size=5120 node_modules/@angular/cli/bin/ng build --delete-output-path --build-prod --build-optimizer --watch --common-chunk --vendor-chunk --stats-json",
     "build:dev": "ng build --aot --delete-output-path --output-path=build-dev --watch --common-chunk --vendor-chunk --stats-json",
     "stats:prod": "npx webpack-bundle-analyzer prod/stats.json --port 8889",

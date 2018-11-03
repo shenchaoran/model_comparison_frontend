@@ -1,48 +1,4 @@
-<nav>
-    <img id="logo" routerLink='/home' src="assets/img/app/logo-blue-white.png" height="35" />
-    <form id='search' autocomplete="on">
-        <input type='input' name='q' spellcheck="false" [(ngModel)]='q' placeholder='Search' autocomplete="on">
-        <button hidden type='submit' (click)='search()'></button>
-    </form>
-    <div id="nav-menu">
-        <ogms-header-menu [menuItems]='navMenu'></ogms-header-menu>
-    </div>
-    <span class='flex-item-1-1-auto'></span>
-    <div id="login-menu">
-        <div *ngIf="logined else gotoLogin">
-            <ogms-header-menu [menuItems]='userMenu'></ogms-header-menu>
-        </div>
-
-        <ng-template #gotoLogin>
-            <!-- <ogms-header-menu [menuItems]='loginMenu'></ogms-header-menu> -->
-            <div id='sign-in-group'>
-                <!-- <ul [nzMode]="'horizontal'" nz-menu>
-                    <li nz-submenu>
-                        <span title>
-                            <a class='ogms-menu-link' (click)='login()'>
-                                Sign in
-                            </a>
-                        </span>
-                    </li>
-                </ul> -->
-                <ogms-header-menu [menuItems]='signInMenu' (click)='login()'></ogms-header-menu>
-                &nbsp;
-                <span style='color: #586069 !important;'>or</span>
-                &nbsp;
-                <ogms-header-menu [menuItems]='signUpMenu' (click)='register()'></ogms-header-menu>
-                <!-- <ul [nzMode]="'horizontal'" nz-menu>
-                    <li nz-submenu>
-                        <span title>
-                            <a class='ogms-menu-link' (click)='register()'>
-                                Sign up
-                            </a>
-                        </span>
-                    </li>
-                </ul> -->
-            </div>
-        </ng-template>
-    </div>
-</nav>
+<ogms-header></ogms-header>
 <section class='body'>
     <router-outlet></router-outlet>
 </section>

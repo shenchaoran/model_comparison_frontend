@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { NgxSharedModule } from '@shared';
+import { NgxSharedModule } from '../ngx-shared';
 
 @NgModule({
     imports: [

@@ -14,7 +14,8 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { OgmsBaseComponent, } from '@shared';
 import { Observable, interval } from 'rxjs'
 import { map, switchMap, filter, tap, startWith } from 'rxjs/operators';
-import { CmpState } from '@models'
+import { CmpState } from '@models';
+import echarts from 'echarts';
 
 @Component({
     selector: 'ogms-cmp-detail',

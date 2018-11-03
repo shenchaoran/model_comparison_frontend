@@ -9,14 +9,14 @@ import {
 import {
     MatIconModule,
 } from '@angular/material';
-// import {
-//     // NzCarouselModule,
-//     NgZorroAntdModule,
-// } from 'ng-zorro-antd';
+import {
+    // NzCarouselModule,
+    NgZorroAntdModule,
+} from 'ng-zorro-antd';
 import { PipesModule } from '@shared/pipes';
 
 import { HomeComponent } from './home.component';
-// import { HomeBannerComponent } from './home-banner/home-banner.component';
+import { HomeBannerComponent } from './home-banner/home-banner.component';
 import { PanelComponent } from './panel/panel.component';
 
 const modules = [
@@ -24,7 +24,7 @@ const modules = [
     NgxSharedModule,
     MatIconModule,
     // NzCarouselModule,
-    // NgZorroAntdModule,
+    NgZorroAntdModule,
     HomeRoutingModule,
     PipesModule,
     HeaderMenuLayoutModule,
@@ -32,7 +32,7 @@ const modules = [
 ];
 const components = [
     HomeComponent,
-    // HomeBannerComponent,
+    HomeBannerComponent,
     PanelComponent,
 ];
 const services = [];

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { NgxSharedModule } from '@shared';
+import { NgxSharedModule } from '../ngx-shared';
 import { ArrayFilterPipe } from './array-filter.pipe';
 import { CoordinatePipe } from './coordinate.pipe';
 import { DescriptionPipe } from './description.pipe';

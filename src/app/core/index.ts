@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { NgxSharedModule } from '@shared';
 import { HttpClientModule } from '@angular/common/http';
-import { HEADER_MENUS, USER_MENUS, LOGIN_MENUS, BACKEND } from '@config';
+import { HEADER_MENUS, USER_MENUS, BACKEND } from '@config';
 import { DynamicTitleService } from '@core/services';
 import { _HttpClient } from '@core/services/http.client';
 import { MatSnackBar } from '@angular/material';
@@ -50,10 +50,6 @@ const services = [
     {
         provide: 'USER_MENUS',
         useValue: USER_MENUS
-    },
-    {
-        provide: 'LOGIN_MENUS',
-        useValue: LOGIN_MENUS
     },
     {
         provide: 'SIMPLEMDE_CONFIG',

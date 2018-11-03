@@ -1,38 +1,33 @@
 import { NgModule } from '@angular/core';
 import { NgxSharedModule } from '../ngx-shared';
 import { OverlayModule } from '@angular/cdk/overlay';
-// import {
-//     // NzMenuModule,
-//     // NzBackTopModule,
-//     NgZorroAntdModule,
-// } from 'ng-zorro-antd';
+import { NgZorroAntdModule } from 'ng-zorro-antd';
+import {
+    MatButtonModule,
+    MatMenuModule,
+    MatIconModule,
+} from '@angular/material';
 
 import { FooterComponent } from './footer/footer.component';
-import { HeaderMenuComponent } from './header-menu/header-menu.component';
 import { HeaderMenuLayoutComponent } from './header-menu-layout/header-menu-layout.component';
-import { SubMenuComponent } from './subMenu/subMenu.component';
-import { HeaderMenuService } from './header-menu.service';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
     imports: [
         OverlayModule,
         NgxSharedModule,
-        // NgZorroAntdModule,
-        // NzMenuModule,
-        // NzBackTopModule,
+        NgZorroAntdModule,
+        MatButtonModule,
+        MatMenuModule,
+        MatIconModule,
     ],
     declarations: [
-        HeaderMenuComponent,
-        SubMenuComponent,
         HeaderMenuLayoutComponent,
         FooterComponent,
+        HeaderComponent,
     ],
-    providers: [
-        HeaderMenuService
-    ],
+    providers: [],
     exports: [
-        HeaderMenuComponent,
-        SubMenuComponent,
         HeaderMenuLayoutComponent,
         FooterComponent,
     ]

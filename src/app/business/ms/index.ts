@@ -16,14 +16,14 @@ import {
     MatInputModule,
     MatButtonToggleModule,
 } from '@angular/material';
-// import {
-//     // NzButtonModule,
-//     // NzGridModule,
-//     // NzTableModule,
-//     // NzPaginationModule,
-//     NgZorroAntdModule,
-// } from 'ng-zorro-antd';
-// import { NzCheckboxModule } from 'ng-zorro-antd';
+import {
+    // NzButtonModule,
+    // NzGridModule,
+    // NzTableModule,
+    // NzPaginationModule,
+    NgZorroAntdModule,
+    NzCheckboxModule,
+} from 'ng-zorro-antd';
 
 import { ModelsRoutingModule } from './index-routing.module';
 import { GeoModelDetailComponent } from './geo-model-detail/geo-model-detail.component';
@@ -51,7 +51,7 @@ const modules = [
     // NzCheckboxModule,
     // NzTableModule,
     // NzPaginationModule,
-    // NgZorroAntdModule,
+    NgZorroAntdModule,
     HeaderMenuLayoutModule,
     CustomTemplateModule,
     DirectivesModule,

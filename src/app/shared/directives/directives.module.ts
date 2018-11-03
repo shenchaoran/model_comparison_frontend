@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { NgxSharedModule } from '@shared';
+import { NgxSharedModule } from '../ngx-shared';
 import { RxBoxDirective } from './rx-box.directive';
 import { AsideDirective } from './aside.directive';
 import { Flex10Directive } from './flex-1-0.directive';

@@ -5,7 +5,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CoreModule } from '@core';
 import { NgxSharedModule } from '@shared';
 import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
-// import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { OverlayModule } from '@angular/cdk/overlay';
 
 @Component({
@@ -84,12 +83,10 @@ export class AppRoutingModule { }
         OverlayModule,
         BrowserModule,
         BrowserAnimationsModule,
-        // RouterModule,
         AppRoutingModule,
         SlimLoadingBarModule,
         CoreModule.forRoot(),
         NgxSharedModule,
-        // NgZorroAntdModule,
     ],
     providers: []
 })
