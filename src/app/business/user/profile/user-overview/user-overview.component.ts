@@ -20,7 +20,11 @@ export class UserOverviewComponent implements OnInit {
     return take(this.slnService.user_solutions, 4);
   }
 
-  taskList: Task[];
+  get taskList():Task[]{
+    let tmp:any[]=this.taskService.taskList.concat([]);
+    return tmp.splice(0,4);
+  }
+
   // slnList: Solution[];
 
   constructor(
@@ -31,20 +35,11 @@ export class UserOverviewComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.taskService.getTopK(4).subscribe(response => {
-      if (response.error) {
-        return Promise.reject(response.error);
-      } else {
-        this.taskList = response.docs;
-      }
-    });
-
-    // this.slnService.getTopK(4).subscribe(response => {
+    // this.taskService.getTopK(4).subscribe(response => {
     //   if (response.error) {
     //     return Promise.reject(response.error);
     //   } else {
-    //     console.log(response);
-    //     this.slnList = response.docs;
+    //     this.taskList = response.docs;
     //   }
     // });
   }

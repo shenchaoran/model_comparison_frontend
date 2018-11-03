@@ -1,7 +1,8 @@
 import { Observable, Subject, from, of, combineLatest } from 'rxjs';
+import { debounce, debounceTime, throttleTime, filter,} from 'rxjs/operators';
 import { CmpMethodService } from '../../services/cmp-method.service';
 import { CasCaderData } from '@shared';
-import { cloneDeep, chain, map } from 'lodash';
+import { cloneDeep, chain, map, find, get } from 'lodash';
 import {
     Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChange,
     ChangeDetectionStrategy,
@@ -22,6 +23,7 @@ import {
     NG_VALIDATORS,
     NG_VALUE_ACCESSOR
 } from '@angular/forms';
+import { NgModelBase } from '../../../shared/classes';
 
 @Component({
     selector: 'ogms-cmp-obj-cfg',
@@ -34,125 +36,127 @@ import {
             multi: true
         }
     ],
-    changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CmpObjCfgComponent implements ControlValueAccessor, OnInit {
-    _formLoading;
-    _methodLoading = true;
-    _cmpObj;
-    _participants;
-    _dataReferCfgs;
-    _cmpMethods;
+export class CmpObjCfgComponent extends NgModelBase implements ControlValueAccessor, OnInit {
+    _dataReferOptions;
 
-    cmpMethods$: Subject<any[]> = new Subject();
-    cmpObj$: Subject<any> = new Subject();
-    participants$: Subject<any[]> = new Subject();
-
+    _mode$: Subject<any> = new Subject();
+    _mode: 'WRITE' | 'READ';
     cmpObjFG: FormGroup;
+    displayedColumns = ['msName', 'eventName', 'field'];
 
-    @Input()
-    set methods(v) {
-        this.cmpMethods$.next(v);
-    }
-    @Input()
-    set participants(v) {
-        this.participants$.next(cloneDeep(v))
-    }
-    get methodsFG() {
-        return this.cmpObjFG.get('methods');
-    }
+    @Input() set mode(v) {
+        this._mode$.next(v);
+    };
+    @Input() methods;
+    @Input() participants;
+    get methodsFG() { return this.cmpObjFG.get('methods'); }
+    get cmpObj() { return this._innerValue; }
 
     constructor(
         private fb: FormBuilder,
-        private cmpMethodService: CmpMethodService
     ) {
-        combineLatest(this.cmpObj$, this.participants$, this.cmpMethods$)
-            .subscribe(v => {
-                this._cmpObj = v[0];
-                this._participants = v[1];
-                this._cmpMethods = v[2];
-                function getCasCaderData(type, ms) {
-                    return map(ms.MDL.IO[type] as any[], event => {
-                        return {
-                            placeholder: 'Table column',
-                            label: event.name,
-                            value: event,
-                            children: (() => {
-                                let targetSchema = chain(ms.MDL.IO.schemas)
-                                    .find(schema => schema.id = event.schemaId)
-                                    .value();
-                                return map(targetSchema.structure.columns as any[], col => {
-                                    return {
-                                        label: col.id,
-                                        value: col.id
-                                    }
-                                })
-                            })()
-                        }
-                    });
-                }
-                this._dataReferCfgs = map(this._participants as any[], ms => {
-                    let cfg: CasCaderData = {
-                        placeholder: 'Data type',
-                        children: [
-                            {
-                                placeholder: 'Data item',
-                                label: 'Input',
-                                value: 'inputs',
-                                children: getCasCaderData('inputs', ms)
-                            },
-                            {
-                                placeholder: 'Data item',
-                                label: 'Output',
-                                value: 'outputs',
-                                children: getCasCaderData('outputs', ms)
-                            }
-                        ]
-                    };
-                    return cfg;
-                });
-
-                this.cmpObjFG = this.fb.group({
-                    id: this._cmpObj.id,
-                    name: ['', [Validators.required, Validators.minLength(1)]],
-                    desc: ['', [Validators.required, Validators.minLength(2)]],
-                    dataRefers: this.fb.array(map(this._participants as any[], ms => {
-                        return this.fb.group({
-                            msId: ms._id,
-                            msName: ms.MDL.meta.name,
-                            selected: [[], [Validators.required]]
-                        });
-                    })),
-                    methods: [null, [Validators.required]]
-                });
-
-                this.cmpObjFG.statusChanges.subscribe(state => {
-                    console.log(state);
-                    if (state === 'VALID') {
-                        return this.propagateChange(this.cmpObjFG.value);
-                    }
-                })
-            });
+        super();
     }
 
     ngOnInit() {
+        let stream = combineLatest(this._innerValue$, this._mode$);
+        let read$ = stream.pipe(filter(v => v[1] === 'READ'));
+        let write$ = stream.pipe(filter(v => v[1] === 'WRITE'));
+        write$.subscribe(v => {
+            this._mode = 'WRITE';
+            this._dataReferOptions = map(this.participants as any[], ms => {
+                return [
+                    {
+                        text: 'Input',
+                        value: 'inputs',
+                        children: this.getCasCaderData('inputs', ms)
+                    },
+                    {
+                        text: 'Output',
+                        value: 'outputs',
+                        children: this.getCasCaderData('outputs', ms)
+                    }
+                ]
+            });
 
+            this.cmpObjFG = this.fb.group({
+                id: this.cmpObj.id,
+                name: [this.cmpObj.name, [Validators.required, Validators.minLength(1)]],
+                desc: [this.cmpObj.desc, [Validators.required, Validators.minLength(2)]],
+                dataRefers: this.fb.array(map(this.participants as any[], ms => {
+                    let df = find(this.cmpObj.dataRefers, { msId: ms._id }) as any;
+                    let selectedCasOpts = [];
+                    df && (selectedCasOpts = [
+                        df.eventType,
+                        df.eventId,
+                        df.field
+                    ]);
+                    // console.log(selectedCasOpts);
+                    return this.fb.group({
+                        msId: ms._id,
+                        msName: ms.MDL.meta.name,
+                        selected: [selectedCasOpts, [Validators.required]]
+                    });
+                })),
+                methods: [map(this.cmpObj.methods as any[], v => v.id), [Validators.required]]
+            });
+            this.cmpObjFG.get('dataRefers').get('0').statusChanges.subscribe(state => {
+                console.log('dataRefer state: ', state, this.cmpObjFG.get('dataRefers').get('0'));
+
+            });
+            this.cmpObjFG.get('dataRefers').get('0').valueChanges.subscribe(value => {
+                console.log('dataRefer state: ', value, this.cmpObjFG.get('dataRefers').get('0'));
+
+            });
+            this.cmpObjFG.statusChanges.pipe(filter(v => v === 'VALID'), debounceTime(100), throttleTime(500)).subscribe(state => {
+                this.cmpObj.name = this.cmpObjFG.value.name;
+                this.cmpObj.desc = this.cmpObjFG.value.desc;
+                this.cmpObj.dataRefers = map(this.cmpObjFG.value.dataRefers as any[], dataRefer => {
+                    let ms = find(this.participants, { _id: dataRefer.msId }) as any;
+                    let event = find(ms.MDL.IO[dataRefer.selected[0]], item => item.id === dataRefer.selected[1]);
+                    return {
+                        msId: dataRefer.msId,
+                        msName: dataRefer.msName,
+                        eventType: dataRefer.selected[0],
+                        eventId: dataRefer.selected[1],
+                        field: dataRefer.selected[2],
+                        eventName: event.name,
+                        schemaId: event.schemaId
+                    };
+                });
+                this.cmpObj.methods = map(this.cmpObjFG.value.methods as any[], methodId => {
+                    let method = find(this.methods, { _id: methodId }) as any;
+                    return method ? {
+                        id: method._id,
+                        name: method.meta.name
+                    } : null;
+                });
+                return this.propagateChange(this.cmpObj);
+            });
+        });
+
+        read$.subscribe(v => {
+            this._mode = 'READ';
+
+        })
     }
 
-    onSelected(e) { }
-
-    private propagateChange = (e: any) => { };
-
-    public writeValue(obj: any) {
-        if (!obj) {
-            obj = {}
-        }
-        this.cmpObj$.next(obj);
+    private getCasCaderData(type, ms) {
+        return map(ms.MDL.IO[type] as any[], event => {
+            let schema = find(ms.MDL.IO.schemas, { id: event.schemaId });
+            let cols = get(schema, 'structure.columns');
+            let children = map(cols, col => {
+                return {
+                    text: (col as any).id,
+                    value: (col as any).id
+                };
+            });
+            return {
+                text: event.name,
+                value: event.id,
+                children: children
+            };
+        });
     }
-
-    public registerOnChange(fn: any) {
-        this.propagateChange = fn;
-    }
-
-    public registerOnTouched(fn: any) { }
 }

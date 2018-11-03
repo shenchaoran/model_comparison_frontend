@@ -10,7 +10,6 @@ import { Topic } from '@models';
 })
 export class UserTopicsComponent implements OnInit {
 
-  user_topics:any[];
   get topicList(): Topic[] {
     return this.topicService.user_topics;
   }
@@ -21,7 +20,6 @@ export class UserTopicsComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-    this.user_topics = this.service.getMockUserIssues();
   }
 
 }

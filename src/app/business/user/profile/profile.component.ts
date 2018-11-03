@@ -1,3 +1,4 @@
+import { TaskService } from './../../services/task.service';
 import { SolutionService } from './../../services/sln.service';
 import { TopicService } from './../../services/topic.service';
 
@@ -43,6 +44,7 @@ export class ProfileComponent implements OnInit {
     private userService: UserService,
     public topicService: TopicService,
     public slnService: SolutionService, 
+    public taskServic: TaskService,
   ) { }
 
   private setActive() {
@@ -60,9 +62,9 @@ export class ProfileComponent implements OnInit {
       .subscribe(() => this.setActive());
     this.setActive();
     console.log("userid:"+ this.user._id); 
-    this.topicService.findByUserId(this.user._id).subscribe(res => {});
-    this.slnService.findByUserId(this.user._id).subscribe(res => {});
-    //todo task 数据展示
+    this.topicService.findByUserId(this.user._id).subscribe(res => { });
+    this.slnService.findByUserId(this.user._id).subscribe(res => { });
+    this.taskServic.findByUserId(this.user._id).subscribe(res=>{}); 
   }
 
   to(item: any) {
@@ -74,9 +76,4 @@ export class ProfileComponent implements OnInit {
     //Add 'implements OnDestroy' to the class.
     this.router$.unsubscribe();
   }
-
-
-
-
-
 }

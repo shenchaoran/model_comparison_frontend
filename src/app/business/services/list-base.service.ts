@@ -19,6 +19,14 @@ export class ListBaseService {
         });
     }
 
+    findByIds(ids: string[]): Observable<any> {
+        return this.http.get(`${this.baseUrl}`, {
+            params: {
+                ids: ids
+            }
+        });
+    }
+
     findOne(id, withRequestProgress?): Observable<any> {
         return this.http.get(`${this.baseUrl}/${id}`, undefined, undefined, undefined, withRequestProgress);
     }

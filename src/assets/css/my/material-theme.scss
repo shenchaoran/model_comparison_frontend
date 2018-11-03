@@ -1,6 +1,7 @@
 // @import '~@angular/material/prebuilt-themes/indigo-pink.css';
-@import '~@angular/material/_theming.scss';
+// @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 
+@import '~@angular/material/_theming.scss';
 @include mat-core();
 $candy-app-primary: mat-palette($mat-blue);
 $candy-app-accent:  mat-palette($mat-pink, A200, A100, A400);

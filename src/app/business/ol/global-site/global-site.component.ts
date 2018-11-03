@@ -36,7 +36,7 @@ export class GlobalSiteComponent implements OnInit, AfterViewInit {
 
     buildMap() {
         let v = $('#' + this.targetId).length;
-        console.log(v);
+        // console.log(v);
         if (v) {
             this.baseLayerGroup = new ol.layer.Group({
                 title: 'Base',

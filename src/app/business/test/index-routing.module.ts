@@ -6,7 +6,8 @@ import { HeaderMenuLayoutComponent } from '@shared';
 import { TestComponent } from './test.component';
 import { ReactiveFormComponent } from './reactive-form/reactive-form.component';
 import { FileUploaderTestComponent } from './file-uploader-test/file-uploader-test.component';
-import { GlobalSiteComponent } from '../ol/global-site/global-site.component'
+import { GlobalSiteComponent } from '../ol/global-site/global-site.component';
+import { TestTableComponent } from './test-table/test-table.component';
 
 const routes: Routes = [
     {
@@ -36,7 +37,11 @@ const routes: Routes = [
                     {
                         path: 'conversation',
                         component: ConversationComponent
-                    }
+                    }, 
+                    {
+                        path: 'table',
+                        component: TestTableComponent
+                    },
                 ]
             }
         ]

@@ -1,39 +1,44 @@
 <div nz-row class="py-lg">
-  <div nz-col nzSpan="6" class="profile-left">
-    <nz-card [nzBordered]="false" class="mb-lg" [nzLoading]="!user">
-      <ng-container *ngIf="user">
-        <div class="avatarHolder">
-          <img [attr.src]='"data:image/png;base64," + user.avator'> 
-        </div>
-        <h1 style="text-align:center"><span class="username">{{user.username}}</span></h1>
-        <button nz-button nzType="default" style="width:100%;margin-bottom: 20px" *ngIf=false>Follow</button>
+    <div nz-col nzSpan="6" class="profile-left">
+        <nz-card [nzBordered]="false" class="mb-lg" [nzLoading]="!user">
+            <ng-container *ngIf="user">
+                <div class="avatarHolder">
+                    <img [attr.src]='user.avator'>
+                </div>
+                <h1 style="text-align:center"><span class="username">{{user.username}}</span></h1>
+                <button nz-button nzType="default" style="width:100%;margin-bottom: 20px" *ngIf=false>Follow</button>
 
-        <nz-divider nzDashed style="margin-top:12px;margin-bottom:12px"></nz-divider>
-        
-        <div class="detail">
-          <p *ngIf="user.title"><i class="title"></i>{{user.title}}</p>
-          
-          <p *ngIf="user.group"><i class="group"></i>{{user.group}}</p>
-          <p *ngIf="user.location">
-            <i class="address" ></i>
-            {{user.location}}
-          </p>
-          <p *ngIf="user.email">
-            <i  class="email" href="../../../../assets/icon/user/mailbox.svg"></i>
-            <a style="display: flex" href="mailto:{{user.email}}" title="{{user.email}}">{{user.email}}</a>
-          </p>
-        </div>
-      </ng-container>
-    </nz-card>
-  </div>
-  <div nz-col nzSpan="18" class="profile-right col-18">
-    <nz-card class='tabsCard' [nzBordered]="false" [nzTitle]="tagTitleTpl">
-      <ng-template #tagTitleTpl>
-        <nz-tabset nzSize="small" [nzSelectedIndex]="pos">
-          <nz-tab *ngFor="let i of tabs" [nzTitle]="i.tab" (nzClick)="to(i)"></nz-tab>
-        </nz-tabset>
-      </ng-template>
-      <router-outlet></router-outlet>
-    </nz-card>
-  </div>
+                <nz-divider nzDashed style="margin-top:12px;margin-bottom:12px"></nz-divider>
+
+                <div class="detail"> 
+                    <p *ngIf="user.group" class="user_info" title="{{user.group}}">
+                      <i class="group"></i>
+                      <span class="ws">{{user.group}}</span>
+                    </p>
+                    <p *ngIf="user.location" class="user_info" title="{{user.location}}">
+                        <i class="address"></i>
+                        <span class="ws">{{user.location}}</span>
+                    </p>
+                    <p *ngIf="user.email" class="user_info">
+                        <i class="email"></i>
+                        <a href="mailto:{{user.email}}" title="{{user.email}}" class="ws">{{user.email}}</a>
+                    </p>
+                    <p *ngIf="user.url" class="user_info">
+                        <mat-icon>link</mat-icon>
+                        <a href="{{user.url}}" title="{{user.url}}" target="_blank" class="ws">{{user.url}}</a>
+                    </p>
+                </div>
+            </ng-container>
+        </nz-card>
+    </div>
+    <div nz-col nzSpan="18" class="profile-right col-18">
+        <nz-card class='tabsCard' [nzBordered]="false" [nzTitle]="tagTitleTpl">
+            <ng-template #tagTitleTpl>
+                <nz-tabset nzSize="small" [nzSelectedIndex]="pos">
+                    <nz-tab *ngFor="let i of tabs" [nzTitle]="i.tab" (nzClick)="to(i)"></nz-tab>
+                </nz-tabset>
+            </ng-template>
+            <router-outlet></router-outlet>
+        </nz-card>
+    </div>
 </div>

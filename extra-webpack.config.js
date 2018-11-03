@@ -10,5 +10,5 @@ module.exports = {
     // plugins: [
     //     new webpack.BannerPlugin('created by scr.')
     // ],
-    devtool: 'cheap-eval-source-map'  //PD added this
+    // devtool: 'cheap-eval-source-map'  //PD added this
 };

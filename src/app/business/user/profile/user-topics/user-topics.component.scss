@@ -48,4 +48,11 @@ mat-button-toggle-group{
 mat-card-content p{
     margin-left:10px;
     text-indent: 2em;
+
+}
+
+mat-card-content{
+    max-height: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

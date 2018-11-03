@@ -38,9 +38,7 @@ export class TopicService extends ListBaseService {
     }
 
     public findByUserId(userId) {
-        return super.findAll({
-            userId: userId,
-        }).pipe(map(res => {
+        return super.findAll({ userId }).pipe(map(res => {
             if(!res.error) {
                 this.user_topics = res.data.docs;
             }
@@ -51,20 +49,14 @@ export class TopicService extends ListBaseService {
     /**
      * 关联/取消关联方案
      */
-    public changeIncludeSln(topicId, ac, sln) {
-        return this.http.patch(`${this.baseUrl}/${topicId}/solution`, {
-            ac: ac,
-            solutionId: sln._id
-        });
+    public changeIncludeSln(topicId, ac, solutionId) {
+        return this.http.patch(`${this.baseUrl}/${topicId}/solution`, { ac, solutionId });
     }
 
     /**
      * 订阅/取消订阅
      */
     public subscribeToggle(topicId, ac, uid) {
-        return super.patch(`${topicId}`, {
-            ac: ac,
-            uid: uid
-        });
+        return super.patch(`${topicId}`, { ac, uid });
     }
 }

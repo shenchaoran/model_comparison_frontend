@@ -1,3 +1,7 @@
+$width: 620px;
+$width: 620px;
+$dividerColor: #d2d2d2;
+
 #create-btn {
     position: absolute;
     right: 30px;
@@ -5,38 +9,28 @@
     z-index: 100;
 }
 
-.container{
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: center;
-    @media (max-width: 768px) {
-        article {
-            flex: 1 1 100%;
-        }
-        aside {
-            flex: 1 1 100%;
+.cmpObj-container{
+    position: relative;
+    &:not(:last-child) {
+        border-bottom: 1px dashed $dividerColor;
+        margin-bottom: 25px;
+    }
+    
+    .close-tag {
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin: 15px 15px;
+        cursor: pointer;
+        &:hover {
+            filter: drop-shadow(0 0 0 black);
         }
     }
-    @media (min-width: 768px) {
-        article {
-            flex: 3 1 75%;
-        }
-        aside {
-            flex: 1 1 25%;
-        }
-    }
-    @media (min-width: 980px) {
-        article {
-            flex: 4 1 70%;
-        }
-        aside {
-            flex: 1 1 30%;
-        }
-    }
-    article {
+}
 
-    }
-    aside {
-
+.ac-btn-group {
+    margin: 10px 0 25px;
+    >button:not(:last-child) {
+        margin-right: 15px;
     }
 }

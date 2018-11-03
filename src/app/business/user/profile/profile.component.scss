@@ -7,7 +7,6 @@
 .py-lg {
     padding-top: 24px;
     padding-bottom: 24px;
-    background-color: #fff;
     width: 1012px;
     margin-right: auto;
     margin-left: auto;
@@ -84,6 +83,17 @@
           background: url("../../../../assets/icon/user/mailbox.svg");
         }
     }
+
+    mat-icon{
+        position: absolute;
+        height: 14px;
+        width: 14px;
+        left: 0;
+        top: 4px;
+        font-size: 18px;
+        line-height: 1;
+        margin-left: -2px;
+    }
 }
 
 .tabsCard {
@@ -92,4 +102,14 @@
             padding: 10px 10px 0 10px;
         }
     }
+}
+
+.user_info{
+    width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.ws{
+    white-space: nowrap;
 }

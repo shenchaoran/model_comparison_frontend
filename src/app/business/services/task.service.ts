@@ -5,6 +5,7 @@ import { Resolve } from '@angular/router';
 import { _HttpClient } from '@core/services/http.client';
 import { ListBaseService } from './list-base.service';
 import { UserService } from './user.service';
+import { map } from 'rxjs/operators';
 import { ConversationService } from './conversation.service';
 import { Task, Solution, Topic, MS, Conversation, Comment, User,  } from '../models';
 
@@ -45,5 +46,24 @@ export class TaskService extends ListBaseService {
         } else {
             return undefined;
         }
+    }
+
+    public findByUserId(userId) {
+        this.clear();
+        return this.http.get(`${this.baseUrl}`, {
+            params: {
+                userId: userId,
+            }
+        }).pipe(map(res => {
+            if (!res.error) {
+                this.taskList = res.data.docs;
+                console.log(this.taskList[0]);
+            }
+            return res;
+        }));
+    }
+
+    public clear() {
+        this.taskList = [];
     }
 }
