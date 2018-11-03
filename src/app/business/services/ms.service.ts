@@ -12,7 +12,6 @@ import { Topic, Solution, Conversation, Comment, User, MS } from '../models';
     providedIn: 'root'
 })
 export class MSService extends ListBaseService {
-    protected baseUrl = '/model-service';
     public get conversation() { return this.conversationService.conversation; }
 
     constructor(
@@ -21,6 +20,7 @@ export class MSService extends ListBaseService {
         private conversationService: ConversationService,
     ) { 
         super(http);
+        this.baseUrl = `${this.http.api.backend}/model-service`;
     }
 
     invoke(msInstance): Observable<any> {

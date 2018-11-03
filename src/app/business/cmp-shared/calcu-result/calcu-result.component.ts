@@ -5,6 +5,7 @@ import {
     Output,
     EventEmitter,
     forwardRef,
+    Inject,
 } from '@angular/core';
 import {
     ControlValueAccessor,
@@ -14,7 +15,7 @@ import {
     NG_VALIDATORS,
     NG_VALUE_ACCESSOR
 } from '@angular/forms';
-import { BACKEND } from '@config';
+import { API } from '@config';
 
 @Component({
     selector: 'ogms-calcu-result',
@@ -33,14 +34,16 @@ export class CalcuResultComponent implements OnInit {
     std
     msrId
 
-    constructor() { }
+    constructor(
+        @Inject('API') private api,
+    ) { }
 
     ngOnInit() {
 
     }
 
     download(event) {
-        let url = `http://${BACKEND.host}:${BACKEND.port}${BACKEND.API_prefix}/data/download?msrId=${this.msrId}&eventId=${event.id}`
+        let url = `${this.api.backend}/data/download?msrId=${this.msrId}&eventId=${event.id}`
         window.open(url)
     }
 }

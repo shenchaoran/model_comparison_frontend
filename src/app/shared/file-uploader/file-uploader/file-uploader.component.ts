@@ -38,7 +38,7 @@ export class FileUploader {
     @Input() set uploadInput(v: UploadInput) {
         this._uploadInput = {
             ...v,
-            url: `http://${this.backend.host}:${this.backend.port}${this.backend.API_prefix}${v.url}`
+            url: `${this.api.backend}${v.url}`
         };
     }
     @Output() onFileUploading = new EventEmitter<any>();
@@ -52,7 +52,7 @@ export class FileUploader {
     public uploadFileInProgress: boolean;
     constructor(
         private renderer2: Renderer2,
-        @Inject('BACKEND') private backend,
+        @Inject('API') private api,
     ) {
         this._id = uuidv1();
         this.options = {

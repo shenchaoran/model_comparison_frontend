@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { NgxSharedModule } from '@shared';
 import { HttpClientModule } from '@angular/common/http';
-import { HEADER_MENUS, USER_MENUS, BACKEND } from '@config';
+import { HEADER_MENUS, USER_MENUS, API } from '@config';
 import { DynamicTitleService } from '@core/services';
 import { _HttpClient } from '@core/services/http.client';
 import { MatSnackBar } from '@angular/material';
@@ -36,12 +36,8 @@ const services = [
     DynamicTitleService,
     _HttpClient,
     {
-        provide: 'BACKEND',
-        useValue: {
-            host: BACKEND.host,
-            port: BACKEND.port,
-            API_prefix: BACKEND.API_prefix
-        }
+        provide: 'API',
+        useValue: API
     },
     {
         provide: 'HEADER_MENUS',
