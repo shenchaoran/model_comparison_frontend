@@ -143,11 +143,28 @@ export class UserService {
                         this.jwt.user.group = res.data.user.group;
                         this.jwt.user.location = res.data.user.location;
                         this.jwt.user.avator = res.data.user.avator;
+                        localStorage.setItem('jwt', JSON.stringify(this.jwt));
                         this.router.navigate(['/user/profile/user-overview']);
                         return res;
                     }
                 })
             )
+    }
+
+    getUserInfo(id): Observable<any> { 
+        return this.http.get('/user/get-user-info', {
+            params: {
+                id: id
+            }
+        }).pipe(
+            map(res => {
+                if (res.error) {
+                    console.error('error in user.service: ', `${res.error.code} - ${res.error.desc}`);
+                    return res;
+                }
+                return res;
+            })
+        )
     }
 
     passwordReset(user): Observable<any> {

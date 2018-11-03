@@ -11,7 +11,7 @@ import { take } from 'lodash';
   templateUrl: './user-overview.component.html',
   styleUrls: ['./user-overview.component.scss']
 })
-export class UserOverviewComponent implements OnInit {
+export class UserOverviewComponent implements OnInit { 
   get topicList(): Topic[] {
       return take(this.topicService.user_topics, 4);
   }
@@ -34,7 +34,7 @@ export class UserOverviewComponent implements OnInit {
     public taskService: TaskService
   ) { }
 
-  ngOnInit() {
+  ngOnInit() { 
     // this.taskService.getTopK(4).subscribe(response => {
     //   if (response.error) {
     //     return Promise.reject(response.error);
