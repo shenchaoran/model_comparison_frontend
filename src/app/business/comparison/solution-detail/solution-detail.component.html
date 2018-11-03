@@ -56,7 +56,7 @@
     </div>
 
     <div class='article'>
-        <mat-tab-group>
+        <mat-tab-group (selectedIndexChange)='onSelectedIndexChange($event)'>
             <mat-tab label='Wiki'>
                 <div class='wiki-tab' *ngIf='_editMode === "WRITE"'>
                     <simplemde [(ngModel)]='solution.meta.wikiMD' [options]='mdeOption'></simplemde>
@@ -74,11 +74,61 @@
             </mat-tab>
 
             <mat-tab label='Participants'>
+                <div *ngIf='couldEdit' class='ac-btn-group'>
+                    <ng-container *ngIf='_ptMSEditMode === "READ"'>
+                        <button mat-stroked-button color='primary' (click)='onPtMSEditClick()'>Edit</button>
+                    </ng-container>
 
+                    <ng-container *ngIf='_ptMSEditMode === "WRITE"'>
+                        <button mat-stroked-button color='primary' (click)='onPtMSEditCancel()'>Cancel</button>
+                        <button mat-stroked-button color='primary' (click)='onPtMSEditSave()'>Save</button>
+                    </ng-container>
+                </div>
+
+                <div *ngIf='_ptMSEditMode === "WRITE"'>
+                    <mat-selection-list #ptSelect [(ngModel)]='solution.msIds' (selectionChange)='onParticipantsChange()'>
+                        <mat-list-option *ngFor='let ms of mss' [value]='ms._id'>{{ms.meta.name}}</mat-list-option>
+                    </mat-selection-list>
+                </div>
+
+                <div *ngIf='_ptMSEditMode === "READ"'>
+                    <mat-nav-list>
+                        <mat-list-item *ngFor='let ms of ptMSs'>{{ms.MDL.meta.name}}</mat-list-item>
+                    </mat-nav-list>
+                </div>
             </mat-tab>
 
             <mat-tab label='Data configuration'>
+                <div *ngIf='couldEdit' class='ac-btn-group'>
+                    <ng-container *ngIf='_cmpCfgMode === "READ"'>
+                        <button mat-stroked-button color='primary' (click)='onCmpCfgEditClick()'>Edit</button>
+                    </ng-container>
 
+                    <ng-container *ngIf='_cmpCfgMode === "WRITE"'>
+                        <button mat-stroked-button color='primary' (click)='onCmpCfgEditCancel()'>Cancel</button>
+                        <button mat-stroked-button color='primary' (click)='onCmpCfgEditSave()'>Save</button>
+                    </ng-container>
+                </div>
+
+                <ng-container *ngIf='cmpObjs.length === 0 else cmpObjTemp'>
+                    <p><i>No comparison configuration.</i></p>
+                </ng-container>
+
+                <ng-template #cmpObjTemp>
+                    <div *ngFor='let cmpObj of cmpObjs; let i=index;' class='cmpObj-container'>
+                        <ogms-cmp-obj-cfg [mode]='_cmpCfgMode' [methods]='cmpMethods' [participants]='ptMSs' [(ngModel)]='cmpObj'></ogms-cmp-obj-cfg>
+                        <span *ngIf='_cmpCfgMode === "WRITE"' class='close-tag' (click)='removeCmpObj(i)'>
+                            <mat-icon>cancel</mat-icon>
+                        </span>
+                    </div>
+                </ng-template>
+
+                <div *ngIf='_cmpCfgMode === "WRITE"' class='flex-box-row-nowrap form-item' id='add-cmpObj-btn'>
+                    <button mat-stroked-button color='primary' class='flex-item-1-1-auto' (click)='addCmpObj()' [disabled]='ptMSs.length === 0'>
+                        <mat-icon>add</mat-icon>
+                        <span>Add comparison feature</span>
+                    </button>
+                </div>
             </mat-tab>
 
             <mat-tab label='Conversation'>

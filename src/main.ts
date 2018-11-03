@@ -18,8 +18,11 @@ const bootstrap = () => {
     return platformBrowserDynamic().bootstrapModule(AppModule);
 };
 
+// console.log(environment);
+// console.log('is hot:', module.hot);
+
 if (environment.hmr) {
-    if (module['hot']) {
+    if (module.hot) {
         hmrBootstrap(module, bootstrap);
     } else {
         console.error('HMR is not enabled for webpack-dev-server!');

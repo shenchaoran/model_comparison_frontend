@@ -70,7 +70,8 @@ const routes: Routes = [
     imports: [
         RouterModule.forRoot(routes, { useHash: true })
     ],
-    exports: [RouterModule]
+    exports: [RouterModule],
+    declarations: []
 })
 export class AppRoutingModule { }
 

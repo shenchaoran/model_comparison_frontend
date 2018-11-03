@@ -23,10 +23,8 @@ export class MSService extends ListBaseService {
         super(http);
     }
 
-    invoke(obj): Observable<any> {
-        return this.http.post(`/model-service/invoke`, {
-            msInstance: obj
-        });
+    invoke(msInstance): Observable<any> {
+        return this.http.post(`/model-service/invoke`, { msInstance });
     }
 
     getLog(msrId) {

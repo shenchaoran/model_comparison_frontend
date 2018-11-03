@@ -1,12 +1,8 @@
-@import "~normalize.css/normalize.css";
 $fa-font-path: '~font-awesome/fonts';
 @import '~font-awesome/scss/font-awesome.scss';
 @import "~ng2-slim-loading-bar/style.css";
 @import "~openlayers/dist/ol.css";
-// @import "~golden-layout/src/css/goldenlayout-base.css";
-// @import "~golden-layout/src/css/goldenlayout-translucent-theme.css";
-// @import '~bootstrap/dist/css/bootstrap.min.css';
-// @import "~handsontable/dist/handsontable.full.min.css";
+
 @import "assets/css/my/global.scss";
 @import "assets/css/my/scrollbar.scss";
 @import "assets/css/my/layout.scss";

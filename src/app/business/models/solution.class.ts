@@ -22,11 +22,12 @@ export class Solution {
         src: ResourceSrc
     };
     topicId: string;
-    participants: any[];
+    taskIds: string[];
+    msIds: string[];
     cmpObjs: CmpObj[];
-    [key: string]: any;
     cid: string;
     subscribed_uids: string[];
+    [key: string]: any;
 
     constructor(user: User) {
         this._id = ObjectID().toString();
@@ -37,6 +38,7 @@ export class Solution {
         };
         this.cmpObjs = [];
         this.subscribed_uids = [];
+        this.msIds = [];
         if(user) {
             this.auth = {
                 userId: user._id,
@@ -79,6 +81,7 @@ export class CmpObj {
 export class DataRefer {
     msId: string;
     msName: string;
+    eventType: 'inputs' | 'outputs';
     eventId: string;
     eventName: string;
     schemaId: string;

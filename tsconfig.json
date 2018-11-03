@@ -24,9 +24,6 @@
             "dom"
         ],
         "paths": {
-            "lodash/*": [
-                "../node_modules/@types/lodash-es/*"
-            ],
             "@shared": [
                 "app/shared"
             ],
