@@ -60,4 +60,7 @@ src/assets/img/app/logo.psd
 /src/assets/img/app/logo.psd
 build-dev
 build-prod
+build-aot
 prod
+scripts/nginx-1.12.2/logs
+scripts/nginx-1.12.2/conf/nginx.conf

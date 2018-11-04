@@ -1,46 +1,13 @@
 <!doctype html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="environment" content="mock">
     <title>Model Comparison</title>
     <link rel="icon" type="image/x-icon" href="./favicon.ico">
     <link href="./assets/css/lib/material-icon.css" rel="stylesheet">
-
-    <script type="text/javascript">
-        function detectBrowser() {
-            var browser = {};
-            var ua = navigator.userAgent.toLowerCase();
-            var s;
-
-            (s = ua.match(/rv:([\d.]+)\) like gecko/)) ? browser.ie = s[1]:
-                (s = ua.match(/msie ([\d.]+)/)) ? browser.ie = s[1] :
-                (s = ua.match(/firefox\/([\d.]+)/)) ? browser.firefox = s[1] :
-                (s = ua.match(/chrome\/([\d.]+)/)) ? browser.chrome = s[1] :
-                (s = ua.match(/opera.([\d.]+)/)) ? browser.opera = s[1] :
-                (s = ua.match(/version\/([\d.]+).*safari/)) ? browser.safari = s[1] : 0;
-
-            if (browser.ie) {
-                if (browser.ie < 11) {
-                    window.location.href = "browser-download.html";
-                }
-            } else if (browser.chrome) {
-
-            } else if (browser.firefox) {
-
-            } else if (browser.safari) {
-
-            } else if (browser.opera) {}
-        }
-    </script>
 </head>
-
-<body onload="detectBrowser()">
-    <ogms-app>
-    </ogms-app>
+<body>
+    <ogms-app></ogms-app>
 </body>
-
 </html>
