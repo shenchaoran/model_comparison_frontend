@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, OnDestroy, ViewChild } from "@angular/core";
+import { Component, OnInit, HostListener, OnDestroy, ViewChild, ChangeDetectorRef, } from "@angular/core";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { DynamicTitleService } from "@core/services/dynamic-title.service";
 import { ReactiveFormsModule } from "@angular/forms";
@@ -51,6 +51,7 @@ export class SolutionDetailComponent implements OnInit {
         public userService: UserService,
         private snackBar: MatSnackBar,
         public msService: MSService,
+        private cdRef: ChangeDetectorRef,
     ) { }
 
     ngOnInit() {
@@ -177,11 +178,5 @@ export class SolutionDetailComponent implements OnInit {
     onCmpCfgEditCancel() {
         this._cmpCfgMode = 'READ';
         this.solution.cmpObjs = this._originCmpObjs;
-    }
-
-    onSelectedIndexChange(index) {
-        if(index === 2 && this._editMode === 'WRITE') {
-
-        }
     }
 }

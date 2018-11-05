@@ -13,7 +13,7 @@ $dividerColor: #d2d2d2;
     position: relative;
     &:not(:last-child) {
         border-bottom: 1px dashed $dividerColor;
-        margin-bottom: 25px;
+        margin-bottom: 35px;
     }
     
     .close-tag {

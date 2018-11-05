@@ -8,13 +8,6 @@
     </div>
 </ng-template>
 
-<ng-container *ngIf='solution else readTemplate'>
-
-</ng-container>
-<ng-template #readTemplate>
-
-</ng-template>
-
 <ogms-detail-layout *ngIf='solution else loadingTemp'>
     <div class='header'>
         <ng-container *ngIf='_editMode === "WRITE" else readTemp'>
@@ -56,7 +49,7 @@
     </div>
 
     <div class='article'>
-        <mat-tab-group (selectedIndexChange)='onSelectedIndexChange($event)'>
+        <mat-tab-group>
             <mat-tab label='Wiki'>
                 <div class='wiki-tab' *ngIf='_editMode === "WRITE"'>
                     <simplemde [(ngModel)]='solution.meta.wikiMD' [options]='mdeOption'></simplemde>

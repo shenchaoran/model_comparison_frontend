@@ -62,5 +62,6 @@ build-dev
 build-prod
 build-aot
 prod
-scripts/nginx-1.12.2/logs
 scripts/nginx-1.12.2/conf/nginx.conf
+model_comparison_frontend.rar
+/scripts/nginx-1.12.2/logs

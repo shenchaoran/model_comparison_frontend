@@ -1,5 +1,5 @@
 import { Observable, Subject, from, of, combineLatest } from 'rxjs';
-import { debounce, debounceTime, throttleTime, filter,} from 'rxjs/operators';
+import { debounce, debounceTime, throttleTime, filter, } from 'rxjs/operators';
 import { CmpMethodService } from '../../services/cmp-method.service';
 import { cloneDeep, chain, map, find, get } from 'lodash';
 import {
@@ -38,17 +38,53 @@ import { NgModelBase } from '../../../shared/classes';
 })
 export class CmpObjCfgComponent extends NgModelBase implements ControlValueAccessor, OnInit {
     _dataReferOptions;
-
     _mode$: Subject<any> = new Subject();
-    _mode: 'WRITE' | 'READ';
+    _mode: 'WRITE' | 'READ' = 'READ';
+    _participants;
     cmpObjFG: FormGroup;
     displayedColumns = ['msName', 'eventName', 'field'];
 
     @Input() set mode(v) {
+        console.log('cmpObj mode:', v)
         this._mode$.next(v);
     };
     @Input() methods;
-    @Input() participants;
+    @Input() 
+    set participants(v) {
+        this._participants = v;
+        function getCasCaderData(type, ms) {
+            return map(ms.MDL.IO[type] as any[], event => {
+                let schema = find(ms.MDL.IO.schemas, { id: event.schemaId });
+                let cols = get(schema, 'structure.columns');
+                let children = map(cols, col => {
+                    return {
+                        text: (col as any).id,
+                        value: (col as any).id
+                    };
+                });
+                return {
+                    text: event.name,
+                    value: event.id,
+                    children: children
+                };
+            });
+        }
+        this._dataReferOptions = map(this.participants as any[], ms => {
+            return [
+                {
+                    text: 'Input',
+                    value: 'inputs',
+                    children: getCasCaderData('inputs', ms)
+                },
+                {
+                    text: 'Output',
+                    value: 'outputs',
+                    children: getCasCaderData('outputs', ms)
+                }
+            ]
+        });
+    }
+    get participants() { return this._participants; }
     get methodsFG() { return this.cmpObjFG.get('methods'); }
     get cmpObj() { return this._innerValue; }
 
@@ -56,28 +92,34 @@ export class CmpObjCfgComponent extends NgModelBase implements ControlValueAcces
         private fb: FormBuilder,
     ) {
         super();
-    }
-
-    ngOnInit() {
+        this._innerValue$.subscribe(v => {
+            this._innerValue = v;
+        });
         let stream = combineLatest(this._innerValue$, this._mode$);
         let read$ = stream.pipe(filter(v => v[1] === 'READ'));
         let write$ = stream.pipe(filter(v => v[1] === 'WRITE'));
+        this._mode$.pipe(filter(v => v === 'WRITE')).subscribe(v => {
+            this.initWriteMode();
+        });
         write$.subscribe(v => {
+            this.initWriteMode();
+        });
+
+        read$.subscribe(v => {
+            this._mode = 'READ';
+        });
+    }
+
+    ngOnInit() {}
+
+    onDataReferChange(dfs, i) {
+        let ctrl = this.cmpObjFG.get(`dataRefers.${i}.selected`);
+        // ctrl.setValue(dfs);
+    }
+
+    private initWriteMode() {
+        if (this.cmpObj) {
             this._mode = 'WRITE';
-            this._dataReferOptions = map(this.participants as any[], ms => {
-                return [
-                    {
-                        text: 'Input',
-                        value: 'inputs',
-                        children: this.getCasCaderData('inputs', ms)
-                    },
-                    {
-                        text: 'Output',
-                        value: 'outputs',
-                        children: this.getCasCaderData('outputs', ms)
-                    }
-                ]
-            });
 
             this.cmpObjFG = this.fb.group({
                 id: this.cmpObj.id,
@@ -100,14 +142,11 @@ export class CmpObjCfgComponent extends NgModelBase implements ControlValueAcces
                 })),
                 methods: [map(this.cmpObj.methods as any[], v => v.id), [Validators.required]]
             });
-            this.cmpObjFG.get('dataRefers').get('0').statusChanges.subscribe(state => {
-                console.log('dataRefer state: ', state, this.cmpObjFG.get('dataRefers').get('0'));
-
-            });
-            this.cmpObjFG.get('dataRefers').get('0').valueChanges.subscribe(value => {
-                console.log('dataRefer state: ', value, this.cmpObjFG.get('dataRefers').get('0'));
-
-            });
+            // let ctrl = this.cmpObjFG.get('dataRefers.0.selected');
+            // combineLatest(ctrl.statusChanges, ctrl.valueChanges).subscribe(([state, value]) => {
+            //     console.log('dataRefer state: ', state);
+            //     console.log('dataRefer value: ', value);
+            // });
             this.cmpObjFG.statusChanges.pipe(filter(v => v === 'VALID'), debounceTime(100), throttleTime(500)).subscribe(state => {
                 this.cmpObj.name = this.cmpObjFG.value.name;
                 this.cmpObj.desc = this.cmpObjFG.value.desc;
@@ -133,29 +172,6 @@ export class CmpObjCfgComponent extends NgModelBase implements ControlValueAcces
                 });
                 return this.propagateChange(this.cmpObj);
             });
-        });
-
-        read$.subscribe(v => {
-            this._mode = 'READ';
-
-        })
-    }
-
-    private getCasCaderData(type, ms) {
-        return map(ms.MDL.IO[type] as any[], event => {
-            let schema = find(ms.MDL.IO.schemas, { id: event.schemaId });
-            let cols = get(schema, 'structure.columns');
-            let children = map(cols, col => {
-                return {
-                    text: (col as any).id,
-                    value: (col as any).id
-                };
-            });
-            return {
-                text: event.name,
-                value: event.id,
-                children: children
-            };
-        });
+        }
     }
 }

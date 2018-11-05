@@ -7,19 +7,23 @@
         (onClear)='_onClearUploaded()' [size]='"small"'></ogms-file-uploader> -->
     <!-- <nz-datepicker style='width: 250px;' [(ngModel)]='date' (ngModelChange)='onDateChange($event)' [nzFormat]='"YYYY-MM-DD"'></nz-datepicker> -->
     <br>
-    <br>
 
     <!-- <ogms-file-uploader-form-item [label]='"test file"' [ngModel]='fileId' (ngModelChange)='onUploaded($event)' [uploadInput]="uploadInput"></ogms-file-uploader-form-item> -->
 
-    <span [nz-tooltip]='"s"'>with tooltip</span>
+    <!-- <span [nz-tooltip]='"s"'>with tooltip</span> -->
 
     <br>
-    <ngx-mat-cascader placeholder='Select' [(data)]='cascaderData' [(ngModel)]='cascaderValue' (ngModelChange)='onCascaderChange($event, "ngModel")' (valueChange)='onCascaderChange($event, "value")'></ngx-mat-cascader>
+    <ngx-mat-cascader 
+    placeholder='Select' 
+    [(data)]='cascaderData' 
+    [ngModel]='cascaderValue' 
+    (ngModelChange)='onCascaderChange($event, "ngModelChange")'
+    (valueChange)='onCascaderChange($event, "valueChange")'></ngx-mat-cascader>
     <br>
     <!-- <ngx-mat-cascader placeholder='Select' [(data)]='cascaderData2' [value]='[1,12,122]'></ngx-mat-cascader> -->
     
     <!-- <ogms-handsome-table></ogms-handsome-table> -->
 
     <!-- <div id='map' style='width: 500px; height: 350px;'></div> -->
-    <div #echartDOM id="echart-dom" style="width: 600px;height:400px;"></div>
+    <!-- <div #echartDOM id="echart-dom" style="width: 600px;height:400px;"></div> -->
 </div>

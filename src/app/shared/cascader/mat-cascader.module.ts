@@ -7,7 +7,6 @@ import {
   MatButtonModule,
   MatFormFieldModule,
   MatInputModule,
-  MatRippleModule,
 } from '@angular/material';
 
 import { MatCascaderComponent } from './mat-cascader.component';
@@ -19,7 +18,6 @@ import { MatCascaderComponent } from './mat-cascader.component';
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
-    MatRippleModule,
   ],
   declarations: [
     MatCascaderComponent
