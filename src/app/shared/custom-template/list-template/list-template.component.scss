@@ -97,14 +97,14 @@
     justify-content: space-between;
     align-items: center;
     mat-button-toggle-group {
-        border: 1px solid #673ab7;
+        border: 1px solid #2196f3;
         mat-button-toggle {
-            color: #673ab7;
+            color: #2196f3;
             &.mat-button-toggle-checked {
                 background: #e4e6f2;
             }
             &:first-child {
-                border-right: 1px solid #673ab7;
+                border-right: 1px solid #2196f3;
             }
         }
     }

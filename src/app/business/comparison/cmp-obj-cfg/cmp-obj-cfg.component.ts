@@ -10,6 +10,7 @@ import {
     AfterViewInit,
     HostListener,
     Inject,
+    ChangeDetectorRef,
 } from '@angular/core';
 import {
     AbstractControl,
@@ -37,6 +38,7 @@ import { NgModelBase } from '../../../shared/classes';
     ],
 })
 export class CmpObjCfgComponent extends NgModelBase implements ControlValueAccessor, OnInit {
+    _dfs;
     _dataReferOptions;
     _mode$: Subject<any> = new Subject();
     _mode: 'WRITE' | 'READ' = 'READ';
@@ -90,6 +92,7 @@ export class CmpObjCfgComponent extends NgModelBase implements ControlValueAcces
 
     constructor(
         private fb: FormBuilder,
+        private cdRef: ChangeDetectorRef,
     ) {
         super();
         this._innerValue$.subscribe(v => {
@@ -112,15 +115,27 @@ export class CmpObjCfgComponent extends NgModelBase implements ControlValueAcces
 
     ngOnInit() {}
 
-    onDataReferChange(dfs, i) {
+    onDFChange(dfs, i) {
         let ctrl = this.cmpObjFG.get(`dataRefers.${i}.selected`);
-        // ctrl.setValue(dfs);
+        ctrl.setValue = dfs;
+        ctrl.updateValueAndValidity();
+        // this.cdRef.markForCheck();
     }
 
     private initWriteMode() {
         if (this.cmpObj) {
             this._mode = 'WRITE';
 
+            this._dfs = map(this.participants as any[], ms => {
+                let df = find(this.cmpObj.dataRefers, { msId: ms._id }) as any;
+                let selectedCasOpts = [];
+                df && (selectedCasOpts = [
+                    df.eventType,
+                    df.eventId,
+                    df.field
+                ]);
+                return selectedCasOpts;
+            })
             this.cmpObjFG = this.fb.group({
                 id: this.cmpObj.id,
                 name: [this.cmpObj.name, [Validators.required, Validators.minLength(1)]],
@@ -142,12 +157,11 @@ export class CmpObjCfgComponent extends NgModelBase implements ControlValueAcces
                 })),
                 methods: [map(this.cmpObj.methods as any[], v => v.id), [Validators.required]]
             });
-            // let ctrl = this.cmpObjFG.get('dataRefers.0.selected');
-            // combineLatest(ctrl.statusChanges, ctrl.valueChanges).subscribe(([state, value]) => {
-            //     console.log('dataRefer state: ', state);
-            //     console.log('dataRefer value: ', value);
-            // });
+            // this.cmpObjFG.valueChanges.subscribe(v => {
+            //     console.log('cmpObj changed');
+            // })
             this.cmpObjFG.statusChanges.pipe(filter(v => v === 'VALID'), debounceTime(100), throttleTime(500)).subscribe(state => {
+                console.log('cmpObj changed');
                 this.cmpObj.name = this.cmpObjFG.value.name;
                 this.cmpObj.desc = this.cmpObjFG.value.desc;
                 this.cmpObj.dataRefers = map(this.cmpObjFG.value.dataRefers as any[], dataRefer => {

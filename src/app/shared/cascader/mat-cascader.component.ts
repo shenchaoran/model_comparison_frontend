@@ -54,15 +54,15 @@ export class MatCascaderComponent extends NgModelBase {
         return this._innerValue;
     }
     set value(nV) {
-        // if (this._innerValue !== nV) {
-        //     if (!this._innerValue)
-        //         this._innerValue = [];
+        if (this._innerValue !== nV) {
+            if (!this._innerValue)
+                this._innerValue = [];
             this._innerValue.splice(0);
             map(nV, item => this._innerValue.push(item));
             // this._innerValue = nV;
-            this.propagateChange(111);
+            this.propagateChange(this._innerValue);
             this.valueChange.emit(this._innerValue);
-        // }
+        }
     }
     @Output()
     valueChange = new EventEmitter<(string | number)[]>();

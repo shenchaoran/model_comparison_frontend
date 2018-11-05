@@ -20,10 +20,17 @@
         <p class='title'><i>Data References</i></p>
         <div formArrayName='dataRefers' class='form-container dataRefer-group'>
             <div class='dataRefer-item form-item' *ngFor='let ms of participants; let i=index;' [formGroupName]='i'>
-                <!-- <ngx-mat-cascader formControlName='selected' #dfs placeholder='{{ms.MDL.meta.name}} data reference'
-                                    [data]='_dataReferOptions[i]' (valueChange)='onDataReferChange($event, i)'></ngx-mat-cascader> -->
+                <ngx-mat-cascader formControlName='selected' #dfs placeholder='{{ms.MDL.meta.name}} data reference'
+                                    [data]='_dataReferOptions[i]' (valueChange)='onDFChange($event, i)'></ngx-mat-cascader>
             </div>
         </div>
+        
+        <!-- <div class='form-container dataRefer-group'>
+            <div class='dataRefer-item form-item' *ngFor='let ms of participants; let i=index;' [formGroupName]='i'>
+                <ngx-mat-cascader #dfs placeholder='{{ms.MDL.meta.name}} data reference' [data]='_dataReferOptions[i]'
+                    [(ngModel)]='_dfs[i]'></ngx-mat-cascader>
+            </div>
+        </div> -->
 
         <p class='title'><i>Comparison Method</i></p>
         <div class='form-container'>
@@ -66,5 +73,10 @@
             <tr mat-header-row *matHeaderRowDef='displayedColumns'></tr>
             <tr mat-row *matRowDef='let v; columns: displayedColumns'></tr>
         </table>
+
+        <p class='title'><i>Comparison Method</i></p>
+        <mat-nav-list>
+            <mat-list-item *ngFor='let method of cmpObj.methods'>{{method.name}}</mat-list-item>
+        </mat-nav-list>
     </div>
 </ng-template>

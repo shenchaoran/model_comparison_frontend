@@ -23,7 +23,7 @@ export class ReactiveFormComponent implements OnInit {
             this.validateForm.controls[key].updateValueAndValidity();
         }
         // console.log(value);
-        console.log(this.validateForm.controls["obj"]);
+        // console.log(this.validateForm.controls["obj"]);
     }
 
     resetForm(e: MouseEvent): void {
@@ -85,7 +85,7 @@ export class ReactiveFormComponent implements OnInit {
             ])
         });
         // console.log(this.validateForm.get["obj"]);
-        console.log(this.validateForm.controls["obj"]);
+        // console.log(this.validateForm.controls["obj"]);
         // console.log(this.validateForm.get["userName"]);
     }
 

@@ -7,7 +7,7 @@
             </mat-expansion-panel-header>
             <section>
                 <div class='form-item data-src-group'>
-                    <mat-button-toggle-group formControlName='dataSrc' (ngModelChange)='changeValidate($event)'>
+                    <mat-button-toggle-group appearance="legacy" formControlName='dataSrc' (ngModelChange)='changeValidate($event)'>
                         <mat-button-toggle value='STD'>Use standard input data</mat-button-toggle>
                         <mat-button-toggle value='UPLOAD'>Use your personal data</mat-button-toggle>
                     </mat-button-toggle-group>
