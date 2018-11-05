@@ -413,8 +413,7 @@ export class FileUploaderTestComponent implements OnInit {
     }
 
     onCascaderChange(e, type) {
-        console.log(this.cascaderValue);
-        console.log(type, e)
+        console.log(type, this.cascaderValue, e)
     }
 
     onSelected(e) {
@@ -423,7 +422,7 @@ export class FileUploaderTestComponent implements OnInit {
 
     ngAfterViewInit() {
         setTimeout(() => {
-            this.buildChart();
+            // this.buildChart();
 
         }, 0);
     }

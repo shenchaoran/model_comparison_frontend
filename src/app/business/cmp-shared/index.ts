@@ -26,7 +26,6 @@ import {
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 
 import { CalcuCfgComponent, SiteDialog } from './calcu-cfg/calcu-cfg.component';
-import { CmpObjCfgComponent } from './cmp-obj-cfg/cmp-obj-cfg.component';
 import { CalcuResultComponent } from './calcu-result/calcu-result.component';
 import { StdDataBaseComponent } from './std-data-base/std-data-base.component';
 import { CmpMethodCfgComponent } from './cmp-method-cfg/cmp-method-cfg.component';
@@ -56,7 +55,6 @@ const modules = [
 ];
 const components = [
     CalcuCfgComponent,
-    CmpObjCfgComponent,
     CalcuResultComponent,
     StdDataBaseComponent,
     CmpMethodCfgComponent,

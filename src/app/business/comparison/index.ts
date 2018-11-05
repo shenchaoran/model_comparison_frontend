@@ -12,6 +12,7 @@ import { CmpSharedModule } from '../cmp-shared';
 import { ComparisonRoutingModule } from './index-routing.module';
 import { ConversationModule } from '../conversation';
 import { SimplemdeModule, SIMPLEMDE_CONFIG } from 'ng2-simplemde';
+import { MatCascaderModule } from '@shared/cascader';
 import {
     MatProgressSpinnerModule,
     MatFormFieldModule,
@@ -24,6 +25,7 @@ import {
     MatSelectModule,
     MatButtonToggleModule,
     MatListModule,
+    MatTableModule,
 } from '@angular/material';
 
 import { SolutionListComponent } from './solution-list/solution-list.component';
@@ -32,6 +34,7 @@ import { MethodDetailComponent } from './method-detail/method-detail.component';
 import { MethodListComponent } from './method-list/method-list.component';
 import { CreateSlnComponent } from './create-sln/create-sln.component';
 import { CreateTaskComponent } from './create-task/create-task.component';
+import { CmpObjCfgComponent } from './cmp-obj-cfg/cmp-obj-cfg.component';
 
 const components = [
     SolutionListComponent,
@@ -40,6 +43,7 @@ const components = [
     MethodDetailComponent,
     MethodListComponent,
     CreateSlnComponent,
+    CmpObjCfgComponent,
 ];
 var entryComponents = [];
 const modules = [
@@ -65,6 +69,8 @@ const modules = [
     DetailLayoutModule,
     CreateDocModule,
     DirectivesModule,
+    MatCascaderModule,
+    MatTableModule,
 ];
 const services = [];
 @NgModule({
