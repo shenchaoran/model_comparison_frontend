@@ -47,7 +47,6 @@ declare let Chart: any;
 declare let Chartist: any;
 declare var $: any;
 declare var jQuery: any;
-declare var echarts: any;
 declare var editormd: any;
 declare let ol: any;
 
