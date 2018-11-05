@@ -56,7 +56,6 @@ export class TaskService extends ListBaseService {
         }).pipe(map(res => {
             if (!res.error) {
                 this.taskList = res.data.docs;
-                console.log(this.taskList[0]);
             }
             return res;
         }));

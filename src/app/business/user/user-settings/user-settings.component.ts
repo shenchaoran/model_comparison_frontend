@@ -18,10 +18,10 @@ export interface DialogData {
 export class UserSettingsComponent implements OnInit {
   settingsFG: FormGroup;
   selectedImg: any;
-  croppedImg: string;
+  croppedImg: string ='';
   imageChangedEvent: any = '';
   onRequest: boolean = false;
-  user: User;
+  user: User; 
   errorInfo: {
     show: boolean,
     message?: string
@@ -51,6 +51,7 @@ export class UserSettingsComponent implements OnInit {
   onSubmit() {
     this.onRequest = true;
     this.errorInfo = { show: false };
+    this.settingsFG.value.file = this.croppedImg;
     var settingsData = this.settingsFG.value;
     console.log(settingsData);
     if (settingsData.url === '' && settingsData.group === '' && settingsData.location === '' && settingsData.file === '') {
@@ -91,6 +92,7 @@ export class UserSettingsComponent implements OnInit {
       reader.onload = () => {
         this.cd.markForCheck();
         this.selectedImg = reader.result;
+        console.log("selectedImg:" + this.selectedImg);
         //判断图片大小  小于1M
         if (fileSize > 1024 * 1000) {
           this.errorInfo = {
@@ -113,9 +115,7 @@ export class UserSettingsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      this.croppedImg = result;
-      this.settingsFG.value.file = result;
-      console.log("result:" + this.croppedImg);
+      this.croppedImg = result; 
     });
   }
 

@@ -11,7 +11,7 @@ import { take } from 'lodash';
   templateUrl: './user-overview.component.html',
   styleUrls: ['./user-overview.component.scss']
 })
-export class UserOverviewComponent implements OnInit {
+export class UserOverviewComponent implements OnInit { 
   get topicList(): Topic[] {
       return take(this.topicService.user_topics, 4);
   }
@@ -21,11 +21,9 @@ export class UserOverviewComponent implements OnInit {
   }
 
   get taskList():Task[]{
-    let tmp:any[]=this.taskService.taskList.concat([]);
-    return tmp.splice(0,4);
+    return take(this.taskService.taskList,4);
   }
 
-  // slnList: Solution[];
 
   constructor(
     private service: UserService,
@@ -34,13 +32,6 @@ export class UserOverviewComponent implements OnInit {
     public taskService: TaskService
   ) { }
 
-  ngOnInit() {
-    // this.taskService.getTopK(4).subscribe(response => {
-    //   if (response.error) {
-    //     return Promise.reject(response.error);
-    //   } else {
-    //     this.taskList = response.docs;
-    //   }
-    // });
+  ngOnInit() { 
   }
 }
