@@ -9,11 +9,10 @@ import { ListBaseService } from './list-base.service';
     providedIn: 'root'
 })
 export class MSRService extends ListBaseService {
-    protected baseUrl = '/calculation';
-
     constructor(
         protected http: _HttpClient
     ) {
         super(http);
+        this.baseUrl = `${this.http.api.backend}/calculation`;
     }
 }

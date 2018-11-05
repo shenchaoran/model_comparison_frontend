@@ -1,6 +1,6 @@
 {
     "useage": "--proxy-config proxy.conf.json",
     "**": {
-        "target": "http://localhost:9999"
+        "target": "http://localhost:7777"
     }
 }

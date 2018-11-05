@@ -14,8 +14,6 @@ var counter = 1;
     providedIn: 'root'
 })
 export class TaskService extends ListBaseService {
-    protected baseUrl = '/comparison/tasks';
-
     public task: Task;
     public taskList: Task[];
     public taskCount: number;
@@ -30,6 +28,7 @@ export class TaskService extends ListBaseService {
         private conversationService: ConversationService,
     ) { 
         super(http);
+        this.baseUrl = `${this.http.api.backend}/comparison/tasks`;
         console.log('******** TopicService constructor ', counter++);
     }
 

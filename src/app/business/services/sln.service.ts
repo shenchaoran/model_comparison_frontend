@@ -24,8 +24,6 @@ var counter = 1;
     providedIn: 'root'
 })
 export class SolutionService extends ListBaseService {
-    protected baseUrl = '/comparison/solutions';
-    
     public user_solutions: Solution[];
 
     public get user(): User { return this.userService.user; }
@@ -37,6 +35,7 @@ export class SolutionService extends ListBaseService {
         private userService: UserService,
     ) { 
         super(http);
+        this.baseUrl = `${this.http.api.backend}/comparison/solutions`;
         console.log('******** SolutionService constructor ', counter++);
     }
 

@@ -1,15 +1,26 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { 
+    HeaderMenuLayoutModule,
+    NgxSharedModule,
+    DirectivesModule,
+ } from '@shared';
+import {
+
+} from '@angular/material';
+// import {
+
+// } from 'ng-zorro-antd';
 
 import { SearchComponent } from './search.component';
-import { SharedModule } from '@shared';
 import { FiltersComponent } from './filters/filters.component';
 import { SearchRoutingModule } from './index-routing.module';
 import { ResultsComponent } from './results/results.component';
 
 const modules = [
-    SharedModule,
+    NgxSharedModule,
     SearchRoutingModule,
+    HeaderMenuLayoutModule,
+    DirectivesModule,
 ];
 const components = [
     SearchComponent,

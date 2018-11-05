@@ -1,187 +1,62 @@
 // header menu 的图标库使用的是 zorro 的
 // sider menu 的图标库使用的是 ngx-admin 的
 export class MenuClass {
-    isDivider?: boolean;
     path?: string;
-    data?: {
-        menu: {
-            title: string;
-            id?: string;
-            icon?: string;
-            selected?: boolean;
-            expanded?: boolean;
-            order?: number;
-            show?: boolean;
-        };
-    };
+    label: string;
     children?: Array<MenuClass>;
     disabled?: boolean;
+    icon?: string;
 }
 
 export const HEADER_MENUS: MenuClass[] = [
     {
-        path: 'home',
-        data: {
-            menu: {
-                title: 'Home',
-                id: 'home',
-                icon: 'home',
-                selected: true,
-                expanded: false,
-                order: 0
-            }
-        }
+        path: '/home',
+        label: 'Home',
     },
     {
-        path: 'datasets',
-        data: {
-            menu: {
-                title: 'Datasets',
-                id: 'datasets',
-                icon: ''
-            }
-        }
+        path: '/datasets',
+        label: 'Datasets',
     },
     {
-        path: 'models',
-        data: {
-            menu: {
-                title: 'Models',
-                id: 'models',
-                icon: ''
-            }
-        }
+        path: '/models',
+        label: 'Models',
     },
     {
-        path: 'comparison/solutions',
-        data: {
-            menu: {
-                title: 'Comparison'
-            }
-        },
-        // children: [
-        //     {
-        //         path: 'methods',
-        //         data: {
-        //             menu: {
-        //                 title: 'Comparison methods'
-        //             }
-        //         }
-        //     },
-        //     {
-        //         path: 'solutions',
-        //         data: {
-        //             menu: {
-        //                 title: 'Comparison solutions'
-        //             }
-        //         }
-        //     },
-        //     {
-        //         path: 'solutions/create',
-        //         data: {
-        //             menu: {
-        //                 title: 'Create solutions'
-        //             }
-        //         }
-        //     }
-        // ]
+        path: '/comparison/solutions',
+        label: 'Comparison'
     },
     {
-        path: 'results',
-        data: {
-            menu: {
-                title: 'Results & Diagnostics',
-                id: 'results',
-                icon: ''
-            }
-        },
+        path: '/results',
+        label: 'Results & Diagnostics',
         children: [
             {
-                path: 'calculation',
-                data: {
-                    menu: {
-                        title: 'Calculation Result'
-                    }
-                }
+                path: '/results/calculation',
+                label: 'Calculation Result',
             },
             {
-                path: 'comparison',
-                data: {
-                    menu: {
-                        title: 'Comparison Result'
-                    }
-                }
+                path: '/results/comparison',
+                label: 'Comparison Result'
             }
         ]
     },
-    // {
-    //     path: 'test',
-    //     data: {
-    //         menu: {
-    //             title: 'Test'
-    //         }
-    //     }
-    // }
 ];
 
 // 登录成功后的用户菜单
-export const USER_MENUS: MenuClass[] = [
-    {
-        path: 'user',
-        data: {
-            menu: {
-                title: 'User',
-                id: 'user',
-                icon: 'user',
-                selected: true,
-                expanded: false,
-                order: 0
-            }
+export const USER_MENUS: MenuClass = {
+    path: '/user',
+    label: 'User',
+    children: [
+        {
+            path: '/user/profile',
+            label: 'Profile'
         },
-        children: [
-            {
-                path: 'profile',
-                data: {
-                    menu: {
-                        title: 'Profile'
-                    }
-                }
-            },
-            {
-                path: 'set-up',
-                data: {
-                    menu: {
-                        title: 'Setting'
-                    }
-                }
-            },
-            {
-                path: 'sign-out',
-                data: {
-                    menu: {
-                        title: 'Sign Out'
-                    }
-                }
-            }
-        ]
-    }
-];
-
-export const LOGIN_MENUS: MenuClass[] = [
-    {
-        path: 'user/sign-in',
-        data: {
-            menu: {
-                title: 'Sign in'
-            }
+        {
+            path: '/user/set-up',
+            label: 'Setting'
+        },
+        {
+            path: '/user/sign-out',
+            label: 'Sign Out'
         }
-    },
-    {
-        path: 'user/sign-up',
-        data: {
-            menu: {
-                title: 'Sign up'
-            }
-        }
-    }
-];
+    ]
+};

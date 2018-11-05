@@ -1,5 +1,5 @@
 <form *ngIf='IOForm' [formGroup]='IOForm'>
-    <mat-accordion multi displayMode='flat'>
+    <mat-accordion multi>
         <mat-expansion-panel *ngIf='IOForm.controls["std"].controls.length || IOForm.controls["inputs"].controls.length' expanded>
             <mat-expansion-panel-header>
                 <mat-panel-title>Inputs</mat-panel-title>

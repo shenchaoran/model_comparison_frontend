@@ -28,10 +28,10 @@
                 "app/core/*"
             ],
             "@ngx-shared": [
-                "app/ngx-shared"
+                "app/shared/ngx-shared"
             ],
             "@ngx-shared/*": [
-                "app/ngx-shared/*"
+                "app/shared/ngx-shared/*"
             ],
             "@feature": [
                 "app/feature"

@@ -9,7 +9,7 @@ import { PswResetComponent } from './psw-reset/psw-reset.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { ProfileComponent } from './profile/profile.component';
-import { HeaderMenuLayoutComponent } from '@shared/components/header-menu-layout/header-menu-layout.component'; 
+import { HeaderMenuLayoutComponent } from '@shared'; 
 import { UserSettingsComponent } from './user-settings/user-settings.component';
 
 const routes: Routes = [

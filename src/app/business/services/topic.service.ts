@@ -15,8 +15,6 @@ var counter = 1;
     providedIn: 'root'
 })
 export class TopicService extends ListBaseService {
-    protected baseUrl = '/comparison/topics';
-
     public user_topics: Topic[];
     public get conversation(): Conversation { return this.conversationService.conversation; }
     public get user(): User { return this.userService.user; }
@@ -27,6 +25,7 @@ export class TopicService extends ListBaseService {
         private conversationService: ConversationService,
     ) {
         super(http);
+        this.baseUrl = `${this.http.api.backend}/comparison/topics`;
         console.log('******** TopicService constructor ', counter++);
     }
 

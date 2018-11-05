@@ -20,8 +20,6 @@ var counter = 1;
     providedIn: 'root',
 })
 export class ConversationService extends ListBaseService {
-    protected baseUrl = '/conversations';
-
     public pageIndex: number = 1;
     public pageSize: number = 20;
 
@@ -40,6 +38,7 @@ export class ConversationService extends ListBaseService {
         private userService: UserService,
     ) {
         super(http);
+        this.baseUrl = `${this.http.api.backend}/conversations`;
         console.log('******** ConversationService constructor ', counter++);
         this.clear();
     }

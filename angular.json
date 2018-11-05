@@ -33,11 +33,7 @@
                             "src/styles.scss",
                             "src/styles.less"
                         ],
-                        "scripts": [
-                            "node_modules/jquery/dist/jquery.min.js",
-                            "node_modules/openlayers/dist/ol.js",
-                            "node_modules/echarts/dist/echarts.min.js"
-                        ]
+                        "scripts": []
                     },
                     "configurations": {
                         "hmr": {

@@ -92,7 +92,7 @@ export class UserService {
     }
 
     signIn(user): Observable<any> {
-        return this.http.post('/user/sign-in', user)
+        return this.http.post('/api/user/sign-in', user)
             .pipe(
                 map(res => {
                     if (res.error) {
@@ -114,7 +114,7 @@ export class UserService {
     }
 
     signUp(user): Observable<any> {
-        return this.http.post('/user/sign-up', user)
+        return this.http.post('/api/user/sign-up', user)
             .pipe(
                 map(res => {
                     if (res.error) {
@@ -131,7 +131,7 @@ export class UserService {
     }
 
     setUp(user): Observable<any> {
-        return this.http.post('/user/set-up', user)
+        return this.http.post('/api/user/set-up', user)
             .pipe(
                 map(res => {
                     if (res.error) {
@@ -168,7 +168,7 @@ export class UserService {
     }
 
     passwordReset(user): Observable<any> {
-        return this.http.post('user/password-reset', user);
+        return this.http.post('/api/user/password-reset', user);
     }
 
     /**

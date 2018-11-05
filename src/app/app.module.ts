@@ -2,10 +2,10 @@ import { NgModule, Component } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { _HttpClient } from '@core/services/http.client';
-import { SharedModule } from '@shared';
 import { CoreModule } from '@core';
-
+import { NgxSharedModule } from '@shared';
+import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 @Component({
     selector: 'ogms-app',
@@ -80,13 +80,13 @@ export class AppRoutingModule { }
     bootstrap: [AppComponent],
     declarations: [AppComponent],
     imports: [
+        OverlayModule,
         BrowserModule,
         BrowserAnimationsModule,
-        RouterModule,
         AppRoutingModule,
-
-        SharedModule.forRoot(),
+        SlimLoadingBarModule,
         CoreModule.forRoot(),
+        NgxSharedModule,
     ],
     providers: []
 })
