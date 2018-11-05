@@ -21,11 +21,9 @@ export class UserOverviewComponent implements OnInit {
   }
 
   get taskList():Task[]{
-    let tmp:any[]=this.taskService.taskList.concat([]);
-    return tmp.splice(0,4);
+    return take(this.taskService.taskList,4);
   }
 
-  // slnList: Solution[];
 
   constructor(
     private service: UserService,
@@ -35,12 +33,5 @@ export class UserOverviewComponent implements OnInit {
   ) { }
 
   ngOnInit() { 
-    // this.taskService.getTopK(4).subscribe(response => {
-    //   if (response.error) {
-    //     return Promise.reject(response.error);
-    //   } else {
-    //     this.taskList = response.docs;
-    //   }
-    // });
   }
 }

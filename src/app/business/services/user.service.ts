@@ -152,7 +152,7 @@ export class UserService {
     }
 
     getUserInfo(id): Observable<any> { 
-        return this.http.get('/user/get-user-info', {
+        return this.http.get('/api/user/get-user-info', {
             params: {
                 id: id
             }
