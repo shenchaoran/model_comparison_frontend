@@ -1,0 +1,50 @@
+<nav>
+    <a mat-button routerLink='/home'>
+        <img id="logo" src="assets/img/app/logo-blue-white.png" height="35" />
+    </a>
+    <form id='search' autocomplete="on">
+        <input type='input' name='q' spellcheck="false" [(ngModel)]='q' placeholder='Search' autocomplete="on">
+        <button hidden type='submit' (click)='search()'></button>
+    </form>
+    <div id="nav-menu">
+        <ng-container *ngFor='let menu of header_menus'>
+            <ng-container *ngIf='menu.children && menu.children.length else menuA'>
+                <button class='menu-btn' mat-button [matMenuTriggerFor]='subMenuTemp'>
+                    {{menu.label}}
+                    <mat-icon>arrow_drop_down</mat-icon>
+                </button>
+                <mat-menu #subMenuTemp='matMenu'>
+                    <button mat-menu-item *ngFor='let subMenu of menu.children' [routerLink]='subMenu.path'>
+                        {{subMenu.label}}
+                    </button>
+                </mat-menu>
+            </ng-container>
+            <ng-template #menuA>
+                <button class='menu-btn' mat-button [routerLink]='menu.path'>{{menu.label}}</button>
+            </ng-template>
+        </ng-container>
+    </div>
+    <span class='flex-item-1-1-auto'></span>
+    <div id="login-menu">
+        <div *ngIf="logined else gotoLogin">
+            <button class='menu-btn' mat-button [matMenuTriggerFor]='userMenuTemp'>
+                User
+                <mat-icon>arrow_drop_down</mat-icon>
+            </button>
+            <mat-menu #userMenuTemp='matMenu'>
+                <button mat-menu-item *ngFor='let subMenu of user_menus.children' [routerLink]='subMenu.path'>
+                    {{subMenu.label}}
+                </button>
+            </mat-menu>
+        </div>
+        <ng-template #gotoLogin>
+            <div id='sign-in-group'>
+                <button class='menu-btn' mat-button routerLink='/user/sign-in'>Sign in</button>
+                &nbsp;
+                <span style='color: #586069 !important;'>or</span>
+                &nbsp;
+                <button class='menu-btn' mat-button routerLink='/user/sign-up'>Sign up</button>
+            </div>
+        </ng-template>
+    </div>
+</nav>

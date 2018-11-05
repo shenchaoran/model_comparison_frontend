@@ -1,7 +1,6 @@
 import { Observable, Subject, from, of, combineLatest } from 'rxjs';
 import { debounce, debounceTime, throttleTime, filter,} from 'rxjs/operators';
 import { CmpMethodService } from '../../services/cmp-method.service';
-import { CasCaderData } from '@shared';
 import { cloneDeep, chain, map, find, get } from 'lodash';
 import {
     Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChange,

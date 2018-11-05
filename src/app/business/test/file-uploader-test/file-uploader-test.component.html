@@ -13,15 +13,13 @@
 
     <span [nz-tooltip]='"s"'>with tooltip</span>
 
-    <!-- <ogms-mat-cascader-select [options]='options' [(ngModel)]='selectData' (ngModelChange)='onSelected($event)'></ogms-mat-cascader-select> -->
-
     <br>
-    <ngx-mat-cascader placeholder='Select' [(data)]='cascaderData' [(ngModel)]='cascaderValue' (ngModelChange)='onCascaderChange($event)' (valueChange)='onCascaderChange($event)'></ngx-mat-cascader>
+    <ngx-mat-cascader placeholder='Select' [(data)]='cascaderData' [(ngModel)]='cascaderValue' (ngModelChange)='onCascaderChange($event, "ngModel")' (valueChange)='onCascaderChange($event, "value")'></ngx-mat-cascader>
     <br>
     <!-- <ngx-mat-cascader placeholder='Select' [(data)]='cascaderData2' [value]='[1,12,122]'></ngx-mat-cascader> -->
     
     <!-- <ogms-handsome-table></ogms-handsome-table> -->
 
     <!-- <div id='map' style='width: 500px; height: 350px;'></div> -->
-    <div id="echart-dom" style="width: 600px;height:400px;"></div>
+    <div #echartDOM id="echart-dom" style="width: 600px;height:400px;"></div>
 </div>

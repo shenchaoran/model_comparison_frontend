@@ -7,11 +7,11 @@ import { ListBaseService } from './list-base.service';
     providedIn: 'root'
 })
 export class DatasetService extends ListBaseService {
-    protected baseUrl = '/std-data';
     constructor(
         protected http: _HttpClient
     ) {
         super(http);
+        this.baseUrl = `${this.http.api.backend}/std-data`;
     }
 
     preview(id, query): Observable<any> {

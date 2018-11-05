@@ -85,7 +85,6 @@ export class CommentComponent implements ControlValueAccessor, OnInit, AfterView
         private cdRef: ChangeDetectorRef,
         // private route: ActivatedRoute,
         // private location: Location,
-        @Inject('BACKEND') private backend,
     ) {}
 
     ngOnInit() {}

@@ -4,10 +4,13 @@ import {
     Optional,
     SkipSelf
 } from '@angular/core';
-
-import { HEADER_MENUS, USER_MENUS, LOGIN_MENUS, BACKEND } from '@config';
+import { NgxSharedModule } from '@shared';
+import { HttpClientModule } from '@angular/common/http';
+import { HEADER_MENUS, USER_MENUS, API } from '@config';
 import { DynamicTitleService } from '@core/services';
 import { _HttpClient } from '@core/services/http.client';
+import { MatSnackBar } from '@angular/material';
+import { OverlayModule } from '@angular/cdk/overlay';
 import {
     UserService,
     SolutionService,
@@ -33,12 +36,8 @@ const services = [
     DynamicTitleService,
     _HttpClient,
     {
-        provide: 'BACKEND',
-        useValue: {
-            host: BACKEND.host,
-            port: BACKEND.port,
-            API_prefix: BACKEND.API_prefix
-        }
+        provide: 'API',
+        useValue: API
     },
     {
         provide: 'HEADER_MENUS',
@@ -47,10 +46,6 @@ const services = [
     {
         provide: 'USER_MENUS',
         useValue: USER_MENUS
-    },
-    {
-        provide: 'LOGIN_MENUS',
-        useValue: LOGIN_MENUS
     },
     {
         provide: 'SIMPLEMDE_CONFIG',
@@ -99,11 +94,16 @@ const services = [
     MSService,
     MSRService,
     SearchService,
+    MatSnackBar,
 ];
 
 @NgModule({
     declarations: [],
-    imports: [],
+    imports: [ 
+        HttpClientModule,
+        OverlayModule,
+        NgxSharedModule,
+    ],
     providers: [...services]
 })
 export class CoreModule {

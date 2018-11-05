@@ -10,8 +10,6 @@ import { ListBaseService } from './list-base.service';
     providedIn: 'root'
 })
 export class CmpMethodService extends ListBaseService {
-    protected baseUrl = '/comparison/methods';
-
     public methods: any[];
     public methodCount: number;
     public method: any;
@@ -20,6 +18,7 @@ export class CmpMethodService extends ListBaseService {
         protected http: _HttpClient
     ) {
         super(http);
+        this.baseUrl = `${this.http.api.backend}/comparison/methods`
     }
 
     findAllMatched(query) {

@@ -1,8 +1,32 @@
 import { UserSettingsComponent,CropDialog } from './user-settings/user-settings.component';
 import { UserTasksComponent } from './profile/user-tasks/user-tasks.component';
 import { NgModule } from '@angular/core';
-import { SharedModule } from '@shared';
-import { MatSharedModule } from '@mat-shared';
+import { 
+    DirectivesModule,
+    HeaderMenuLayoutModule,
+    NgxSharedModule,
+    PipesModule,
+} from '@shared';
+import {
+    // NzCardModule,
+    // NzGridModule,
+    // NzButtonModule,
+    // NzDividerModule,
+    // NzTabsModule,
+    // NzListModule,
+    // NzAvatarModule,
+    NgZorroAntdModule,
+} from 'ng-zorro-antd';
+import {
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
+    MatCheckboxModule,
+    MatButtonToggleModule,
+    MatChipsModule,
+    MatCardModule,
+    MatDialogModule,
+} from '@angular/material';
 
 import { UserRoutingModule } from './index-routing.module';
 import { SignInComponent } from './sign-in/sign-in.component';
@@ -16,10 +40,28 @@ import { UserTopicsComponent } from './profile/user-topics/user-topics.component
 import { ImageCropperModule } from 'ngx-image-cropper';
 
 const modules = [
+    NgxSharedModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
+    MatCheckboxModule,
+    MatButtonToggleModule,
+    MatChipsModule,
+    MatCardModule,
+    MatDialogModule,
+    // NzCardModule,
+    // NzGridModule,
+    // NzButtonModule,
+    // NzDividerModule,
+    // NzTabsModule,
+    // NzListModule,
+    // NzAvatarModule,
+    NgZorroAntdModule,
     UserRoutingModule,
-    SharedModule,
-    MatSharedModule,
-    ImageCropperModule
+    ImageCropperModule,
+    DirectivesModule,
+    HeaderMenuLayoutModule,
+    PipesModule,
 ];
 const components = [
     SignInComponent, 

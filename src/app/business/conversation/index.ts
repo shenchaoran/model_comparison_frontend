@@ -1,17 +1,28 @@
 import { NgModule } from '@angular/core';
-import { SharedModule } from '@shared';
-import { MatSharedModule } from '../../mat-shared';
-// import { NgxEditorModule } from 'ngx-editor';
 import { SimplemdeModule, SIMPLEMDE_CONFIG } from 'ng2-simplemde';
+import { 
+    HeaderMenuLayoutModule,
+    NgxSharedModule,
+} from '@shared';
+import { 
+    MatProgressSpinnerModule,
+    MatButtonModule,
+    MatMenuModule,
+    MatIconModule,
+
+} from '@angular/material';
 
 import { ConversationComponent } from './conversation/conversation.component';
 import { CommentComponent } from './comment/comment.component';
 
 const modules = [
-    SharedModule,
-    MatSharedModule,
-    // NgxEditorModule,
+    NgxSharedModule,
+    MatProgressSpinnerModule,
+    MatButtonModule,
+    MatMenuModule,
+    MatIconModule,
     SimplemdeModule.forRoot(),
+    HeaderMenuLayoutModule,
 ];
 const components = [
     ConversationComponent,

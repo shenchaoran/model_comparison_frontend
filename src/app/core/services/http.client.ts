@@ -2,6 +2,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { API } from '@config';
 import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 
 /**
@@ -18,8 +19,8 @@ export class _HttpClient {
 
     constructor(
         private http: HttpClient,
-        @Inject('BACKEND') private backend,
         private loading: SlimLoadingBarService,
+        @Inject('API') public api,
     ) {
         const jwtStr = localStorage.getItem('jwt');
         if (jwtStr) {

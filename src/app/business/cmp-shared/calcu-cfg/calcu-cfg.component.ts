@@ -62,7 +62,7 @@ export class CalcuCfgComponent implements OnInit, AfterViewInit {
     uploadInput: UploadInput;
 
     constructor(
-        @Inject('BACKEND') private backend,
+        @Inject('API') private api,
         private userService: UserService,
         private fb: FormBuilder,
         private datasetService: DatasetService,
@@ -198,11 +198,11 @@ export class CalcuCfgComponent implements OnInit, AfterViewInit {
         if (url === 'STD') {
             // TODO
             map(this._msInstance.IO.inputs as any[], (input, i) => {
-                window.open(`http://${this.backend.host}:${this.backend.port}${this.backend.API_prefix}${input.url}`);
+                window.open(`${this.api.backend}${input.url}`);
             })
         }
         else {
-            window.open(`http://${this.backend.host}:${this.backend.port}${this.backend.API_prefix}${url}`);
+            window.open(`${this.api.backend}${url}`);
         }
     }
 

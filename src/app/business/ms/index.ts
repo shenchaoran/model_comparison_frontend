@@ -1,10 +1,31 @@
-import { MatSharedModule } from '@mat-shared';
 import { OlModule } from '../ol';
 import { NgModule } from '@angular/core';
-import { SharedModule } from '@shared';
+import { 
+    HeaderMenuLayoutModule,
+    NgxSharedModule,
+    CustomTemplateModule,
+    DirectivesModule,
+    PipesModule,
+} from '@shared';
+import { 
+    MatChipsModule, 
+    MatIconModule, 
+    MatProgressSpinnerModule, 
+    MatFormFieldModule, 
+    MatButtonModule, 
+    MatInputModule,
+    MatButtonToggleModule,
+} from '@angular/material';
+import {
+    // NzButtonModule,
+    // NzGridModule,
+    // NzTableModule,
+    // NzPaginationModule,
+    NgZorroAntdModule,
+    NzCheckboxModule,
+} from 'ng-zorro-antd';
 
 import { ModelsRoutingModule } from './index-routing.module';
-import { MSService } from '@services';
 import { GeoModelDetailComponent } from './geo-model-detail/geo-model-detail.component';
 import { GeoModelListComponent } from './geo-model-list/geo-model-list.component';
 import { InvokeComponent } from './invoke/invoke.component';
@@ -14,11 +35,27 @@ export * from '@services';
 
 const services = [];
 const modules = [
-    SharedModule,
+    NgxSharedModule,
     ModelsRoutingModule,
     CmpSharedModule,
     OlModule,
-    MatSharedModule,
+    MatChipsModule, 
+    MatIconModule, 
+    MatProgressSpinnerModule, 
+    MatFormFieldModule, 
+    MatButtonModule, 
+    MatButtonToggleModule,
+    MatInputModule,
+    // NzButtonModule,
+    // NzGridModule,
+    // NzCheckboxModule,
+    // NzTableModule,
+    // NzPaginationModule,
+    NgZorroAntdModule,
+    HeaderMenuLayoutModule,
+    CustomTemplateModule,
+    DirectivesModule,
+    PipesModule,
 ];
 const components = [
     GeoModelDetailComponent,

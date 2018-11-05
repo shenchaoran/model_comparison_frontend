@@ -102,13 +102,13 @@ export class GeoModelDetailComponent extends OgmsBaseComponent implements OnInit
         //     document.documentElement.scrollTop,
         //     document.body.scrollTop
         // );
-        const scrollH = jQuery("#root-container")[0].scrollTop;
-        const h = jQuery("#separator")[0].offsetTop - scrollH;
-        console.log(h);
-        if (h < -50) {
-            jQuery(".side-catalog").css("visibility", "visible");
-        } else {
-            jQuery(".side-catalog").css("visibility", "hidden");
-        }
+        // const scrollH = jQuery("#root-container")[0].scrollTop;
+        // const h = jQuery("#separator")[0].offsetTop - scrollH;
+        // console.log(h);
+        // if (h < -50) {
+        //     jQuery(".side-catalog").css("visibility", "visible");
+        // } else {
+        //     jQuery(".side-catalog").css("visibility", "hidden");
+        // }
     }
 }

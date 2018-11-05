@@ -37,7 +37,7 @@
                 "app/core/*"
             ],
             "@ngx-shared": [
-                "app/ngx-shared"
+                "app/shared/ngx-shared"
             ],
             "@feature": [
                 "app/feature"
@@ -75,7 +75,8 @@
         }
     },
     "angularCompilerOptions": {
-        "preserveWhitespaces": "off"
+        "preserveWhitespaces": "off",
+        "annotationsAs": "decorators"
     },
     "include": [
         "src/**/*",

@@ -14,7 +14,8 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { OgmsBaseComponent, } from '@shared';
 import { Observable, interval } from 'rxjs'
 import { map, switchMap, filter, tap, startWith } from 'rxjs/operators';
-import { CmpState } from '@models'
+import { CmpState } from '@models';
+import echarts from 'echarts';
 
 @Component({
     selector: 'ogms-cmp-detail',
@@ -70,13 +71,12 @@ export class CmpDetailComponent extends OgmsBaseComponent implements OnInit {
     private buildChart() {
         let i = 0;
         setTimeout(() => {
-            let $echartDOMs = $('.echart-dom')
             this.task.cmpObjs.map(cmpObj => {
                 cmpObj.methods.map((method) => {
                     if (method.id === '5b713f39a4857f1ba4be23ff') {
                         if (method.result.state === CmpState.FINISHED_SUCCEED) {
                             echarts
-                                .init($echartDOMs[i])
+                                .init(this.echartDOM.toArray()[i].nativeElement)
                                 .setOption(method.result);
                         }
                         i++;

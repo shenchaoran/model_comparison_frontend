@@ -1,21 +1,39 @@
 import { NgModule } from '@angular/core';
-import { SharedModule } from '@shared';
-import { MatSharedModule } from '@mat-shared';
+import { HomeRoutingModule } from './index-routing.module';
+import { OverlayModule } from '@angular/cdk/overlay';
+import { 
+    NgxSharedModule,
+    HeaderMenuLayoutModule, 
+    DirectivesModule,
+} from '@shared';
+import {
+    MatIconModule,
+} from '@angular/material';
+import {
+    // NzCarouselModule,
+    NgZorroAntdModule,
+} from 'ng-zorro-antd';
+import { PipesModule } from '@shared/pipes';
 
 import { HomeComponent } from './home.component';
-import { HomeRoutingModule } from './index-routing.module';
 import { HomeBannerComponent } from './home-banner/home-banner.component';
 import { PanelComponent } from './panel/panel.component';
 
 const modules = [
-    SharedModule,
+    OverlayModule,
+    NgxSharedModule,
+    MatIconModule,
+    // NzCarouselModule,
+    NgZorroAntdModule,
     HomeRoutingModule,
-    MatSharedModule,
+    PipesModule,
+    HeaderMenuLayoutModule,
+    DirectivesModule,
 ];
 const components = [
     HomeComponent,
     HomeBannerComponent,
-    PanelComponent
+    PanelComponent,
 ];
 const services = [];
 var exportComponents = [];

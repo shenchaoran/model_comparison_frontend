@@ -1,10 +1,30 @@
 import { NgModule } from '@angular/core';
-import { SharedModule } from '@shared';
-import { RouterModule, Routes } from '@angular/router';
-import { MatSharedModule } from '@mat-shared';
-import { MatCascaderModule } from '@shared/ogms-cascader';
+import { 
+    MatCascaderModule,
+    NgxSharedModule,
+    FileUploaderModule,
+    FormControlItemModule,
+} from '@shared';
+import {
+    MatChipsModule,
+    MatTableModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatButtonModule,
+    MatIconModule,
+    MatExpansionModule,
+    MatButtonToggleModule,
+    MatDialogModule,
+} from '@angular/material';
+// import {
+//     NzGridModule,
+//     NzTableModule,
+// NzCollapseModule
+// } from 'ng-zorro-antd';
 
-//////////////////// component ////////////////////////
+import { NgZorroAntdModule } from 'ng-zorro-antd';
+
 import { CalcuCfgComponent, SiteDialog } from './calcu-cfg/calcu-cfg.component';
 import { CmpObjCfgComponent } from './cmp-obj-cfg/cmp-obj-cfg.component';
 import { CalcuResultComponent } from './calcu-result/calcu-result.component';
@@ -12,20 +32,27 @@ import { StdDataBaseComponent } from './std-data-base/std-data-base.component';
 import { CmpMethodCfgComponent } from './cmp-method-cfg/cmp-method-cfg.component';
 import { OlModule } from '../ol';
 import { CmpSlnOutlineComponent } from './cmp-sln-outline/cmp-sln-outline.component';
-////////////////////// export //////////////////////
-export { CalcuCfgComponent } from './calcu-cfg/calcu-cfg.component';
-export { CmpObjCfgComponent } from './cmp-obj-cfg/cmp-obj-cfg.component';
-export { CalcuResultComponent } from './calcu-result/calcu-result.component';
-export { StdDataBaseComponent } from './std-data-base/std-data-base.component';
-export { CmpMethodCfgComponent } from './cmp-method-cfg/cmp-method-cfg.component';
-////////////////////////////////////////////
 
 const modules = [
-    SharedModule,
-    RouterModule,
-    OlModule,
-    MatSharedModule,
+    NgxSharedModule,
+    MatChipsModule,
+    MatTableModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatButtonModule,
+    MatIconModule,
+    MatExpansionModule,
+    MatButtonToggleModule,
     MatCascaderModule,
+    // NzCollapseModule,
+    // NzGridModule,
+    // NzTableModule,
+    NgZorroAntdModule,
+    MatDialogModule,
+    OlModule,
+    FileUploaderModule,
+    FormControlItemModule,
 ];
 const components = [
     CalcuCfgComponent,
