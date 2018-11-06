@@ -8,9 +8,9 @@ export class NgModelBase implements ControlValueAccessor {
 
 
     public set value(v: any) {
-        // if (v !== this._innerValue) {
+        if (v !== this._innerValue) {
             this._innerValue = v;
-        // }
+        }
     }
 
     public get value(): any {
@@ -18,10 +18,10 @@ export class NgModelBase implements ControlValueAccessor {
     }
 
     public writeValue(v: any) {
-        // if (v !== this._innerValue) {
+        if (v !== this._innerValue) {
             this._innerValue = v;
             this._innerValue$.next(v);
-        // }
+        }
     }
 
     public registerOnChange(fn: any) {

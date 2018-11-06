@@ -35,18 +35,3 @@ body {
 .method-topic:hover {
     background: #86befd !important;
 }
-
-.ol-map {
-    border: 1px solid #e5e5e5;
-    border-radius: 5px;
-    width: 550px;
-    height: 350px;
-}
-
-.ol-full-screen,
-.cmp-ol-map:fullscreen,
-.cmp-ol-map:-moz-full-screen,
-.cmp-ol-map:-webkit-full-screen,
-.cmp-ol-map:-ms-fullscreen {
-    width: 100vw;
-}

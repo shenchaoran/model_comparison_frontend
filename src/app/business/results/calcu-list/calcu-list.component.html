@@ -2,7 +2,7 @@
     <section class='list-item'>
         <div class='detail-group'>
             <h3>
-                <a [routerLink]='msRecord._id'>{{msRecord.auth.userName}}/{{msRecord.meta.name}}</a>
+                <a [routerLink]='msRecord._id'>{{msRecord.auth.userName}} / {{msRecord.meta.name}}</a>
             </h3>
             <p>{{msRecord.meta.desc | stringLimit: 180 | description}}</p>
             <p>

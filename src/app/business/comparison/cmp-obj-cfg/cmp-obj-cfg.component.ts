@@ -23,7 +23,7 @@ import {
     NG_VALIDATORS,
     NG_VALUE_ACCESSOR
 } from '@angular/forms';
-import { NgModelBase } from '../../../shared/classes';
+import { NgModelBase } from '@shared';
 
 @Component({
     selector: 'ogms-cmp-obj-cfg',
@@ -47,7 +47,7 @@ export class CmpObjCfgComponent extends NgModelBase implements ControlValueAcces
     displayedColumns = ['msName', 'eventName', 'field'];
 
     @Input() set mode(v) {
-        console.log('cmpObj mode:', v)
+        // console.log('cmpObj mode:', v)
         this._mode$.next(v);
     };
     @Input() methods;
@@ -161,7 +161,7 @@ export class CmpObjCfgComponent extends NgModelBase implements ControlValueAcces
             //     console.log('cmpObj changed');
             // })
             this.cmpObjFG.statusChanges.pipe(filter(v => v === 'VALID'), debounceTime(100), throttleTime(500)).subscribe(state => {
-                console.log('cmpObj changed');
+                // console.log('cmpObj changed');
                 this.cmpObj.name = this.cmpObjFG.value.name;
                 this.cmpObj.desc = this.cmpObjFG.value.desc;
                 this.cmpObj.dataRefers = map(this.cmpObjFG.value.dataRefers as any[], dataRefer => {

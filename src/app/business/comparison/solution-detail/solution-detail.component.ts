@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, OnDestroy, ViewChild, ChangeDetectorRef, } from "@angular/core";
+import { Component, OnInit, HostListener, OnDestroy, ViewChild, ChangeDetectorRef, Renderer2, ElementRef, } from "@angular/core";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { DynamicTitleService } from "@core/services/dynamic-title.service";
 import { ReactiveFormsModule } from "@angular/forms";
@@ -7,7 +7,7 @@ import { ConversationService, SolutionService, UserService, MSService } from "@s
 import { Simplemde } from 'ng2-simplemde';
 import { Solution, Task, Topic, MS, CmpMethod, CmpObj } from "@models";
 import { MatSnackBar, MatSelectionList } from '@angular/material';
-import { cloneDeep, isEqual } from 'lodash';
+import { cloneDeep, isEqual, get, pull, } from 'lodash';
 
 @Component({
     selector: 'ogms-solution-detail',
@@ -24,15 +24,19 @@ export class SolutionDetailComponent implements OnInit {
     _originWiki: string;
     _originDesc: string;
 
+    topicFilter;
+
     mdeOption = { placeholder: 'Solution description...' };
     @ViewChild(Simplemde) simpleMDE: any;
     @ViewChild(MatSelectionList) ptSelect: MatSelectionList;
+    @ViewChild('menu') menuRef: ElementRef;
 
     solution: Solution;
     tasks: Task[];              // { _id, meta, auth }
     topic: Topic;               // { _id, meta, auth }
     mss: MS[] | any[];          // { _id, meta, auth }, 所有的 ms
     ptMSs: MS[];                // MS, 参与的 ms
+    topicList: Topic[];         // { _id, meta, auth }[]
     cmpMethods: CmpMethod[];
 
     get user() { return this.userService.user; }
@@ -52,6 +56,7 @@ export class SolutionDetailComponent implements OnInit {
         private snackBar: MatSnackBar,
         public msService: MSService,
         private cdRef: ChangeDetectorRef,
+        private renderer2: Renderer2,
     ) { }
 
     ngOnInit() {
@@ -64,6 +69,7 @@ export class SolutionDetailComponent implements OnInit {
                 this.mss = res.data.mss;
                 this.ptMSs = res.data.ptMSs;
                 this.cmpMethods = res.data.cmpMethods;
+                this.topicList = res.data.topicList;
 
                 this.conversationService.import(
                     res.data.conversation,
@@ -82,6 +88,33 @@ export class SolutionDetailComponent implements OnInit {
                 }
             }
         });
+    }
+
+    onAttachTopic(topic) {
+        let ac = this.solution.topicId === topic._id? 'removeTopic': 'addTopic';
+        this.solutionService.patch(this.solution._id, {
+            topicId: topic._id,
+            ac: ac,
+            originalTopicId: get(this.topic, '_id'),
+        }).subscribe(res => {
+            if(!res.error) {
+                this.renderer2.setStyle(this.menuRef.nativeElement, 'display', 'none');
+                let i = topic.solutionIds.indexOf(this.solution._id);
+                if(ac === 'removeTopic') {
+                    this.solution.topicId = null;
+                    this.topic = null;
+                    pull(topic.solutionIds, this.solution._id);
+                }
+                else if(ac === 'addTopic') {
+                    this.solution.topicId = topic._id;
+                    pull(get(this.topic, 'solutionIds'), this.solution._id);
+                    this.topic = topic;
+                    i === -1 && this.topic.solutionIds.push(this.solution._id);
+                }
+                
+            }
+        })
+        // ajax
     }
 
     onParticipantsChange() {

@@ -137,8 +137,34 @@
                     Topic
                     <mat-icon inline>settings</mat-icon>
                 </div>
+                <div class='menu' #menu *ngIf='solution.auth.userId === user._id'>
+                    <div class='title'>Attach topic</div>
+                    <div class='filter'>
+                        <input placeholder='Filter topic' [(ngModel)]='topicFilter'>
+                    </div>
+                    <ul *ngIf='topicList && topicList.length' class='opt-list aside-ul'>
+                        <li *ngFor='let topic of topicList' (click)='onAttachTopic(topic)'>
+                            <div class='sln-select-placeholder'>
+                                <mat-icon inline *ngIf='solution.topicId === topic._id'>clear</mat-icon>
+                            </div>
+                            {{topic.auth.userName}} / {{topic.meta.name}}
+                        </li>
+                        <li routerLink='/topics'>
+                            <div class='sln-select-placeholder'></div>more
+                        </li>
+                    </ul>
+                </div>
                 <div class='body'>
-
+                    <ng-container *ngIf='topic && topic.auth && topic.meta else noTopicTemp'>
+                        <ul class='aside-ul with-route'>
+                            <li [routerLink]='["/topics", topic._id]'>
+                                {{topic.auth.userName}} / {{topic.meta.name}}
+                            </li>
+                        </ul>
+                    </ng-container>
+                    <ng-template #noTopicTemp>
+                        <i>No related Topic.</i>
+                    </ng-template>
                 </div>
             </ogms-sidebar-section>
         </div>
@@ -150,7 +176,19 @@
                     <mat-icon inline>settings</mat-icon>
                 </div>
                 <div class='body'>
-
+                    <ng-container *ngIf='tasks.length else noTaskTemp'>
+                        <ul class='aside-ul with-route'>
+                            <li *ngFor='let task of tasks' [routerLink]='["/results/comparison", task._id]'>
+                                {{task.auth.userName}} / {{task.meta.name}}
+                            </li>
+                        </ul>
+                    </ng-container>
+                    <ng-template #noTaskTemp>
+                        <i>No related comparison task.</i>
+                    </ng-template>
+                    <button mat-stroked-button class='create-btn' [routerLink]='["/comparison/solutions", solution._id, "invoke"]'>
+                        <mat-icon inline>add</mat-icon>&nbsp;<span>Create one</span>
+                    </button>
                 </div>
             </ogms-sidebar-section>
         </div>
@@ -162,7 +200,16 @@
                     <mat-icon inline>settings</mat-icon>
                 </div>
                 <div class='body'>
-
+                    <ng-container *ngIf='ptMSs.length else noMSTemp'>
+                        <ul class='aside-ul with-route'>
+                            <li *ngFor='let ms of ptMSs' [routerLink]='["/models", ms._id]'>
+                                {{ms.auth.nodeName}} / {{ms.MDL.meta.name}}
+                            </li>
+                        </ul>
+                    </ng-container>
+                    <ng-template #noMSTemp>
+                        <i>No related models.</i>
+                    </ng-template>
                 </div>
             </ogms-sidebar-section>
         </div>
@@ -170,7 +217,7 @@
         <div>
             <ogms-sidebar-section>
                 <div class='title'>
-                    {{users.length}} Participants
+                    {{users.length}} participants
                 </div>
                 <div class='body participants'>
                     <ng-container *ngFor='let user of users'>
@@ -180,20 +227,20 @@
             </ogms-sidebar-section>
         </div>
 
-        <div class='notification'>
+        <div>
             <ogms-sidebar-section>
                 <div class='title'>
                     Notifications
                 </div>
-                <div class='body'>
-                    <a mat-stroked-button (click)='onSubscribeToggle()'>
+                <div class='body notification'>
+                    <button mat-stroked-button (click)='onSubscribeToggle()'>
                         <ng-container *ngIf='includeUser else noticeTemp'>
-                            <mat-icon inline>notifications_off</mat-icon>Unsubscribe
+                            <mat-icon inline>notifications_off</mat-icon>&nbsp;<span>Unsubscribe</span>
                         </ng-container>
                         <ng-template #noticeTemp>
-                            <mat-icon inline>notifications</mat-icon>Subscribe
+                            <mat-icon inline>notifications</mat-icon>&nbsp;<span>Subscribe</span>
                         </ng-template>
-                    </a>
+                    </button>
                 </div>
             </ogms-sidebar-section>
         </div>

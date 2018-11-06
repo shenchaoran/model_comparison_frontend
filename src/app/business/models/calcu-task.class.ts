@@ -23,7 +23,8 @@ export class CalcuTask {
         userName: string,
         src: ResourceSrc
     };
-    ms: any;
+    // ms: any;
+    msId: string;
     topic: string;
     cmpTaskId: string;
     node: any;
@@ -33,15 +34,17 @@ export class CalcuTask {
         data: any[],
         std: any[]
     };
-    std: any;
+    // std: any;
+    stdId: string;
     state: CalcuTaskState;
     progress: number;
     subscribed_uids: string[];
-    // [key: string]: any;
+    [key: string]: any;
 
     constructor(user: User, ms?) {
         if (ms) {
-            this.ms = ms;
+            // this.ms = ms;
+            this.msId = ms._id;
             this.topic = ms.topic;
             this.IO = cloneDeep(ms.MDL.IO);
             this.IO.dataSrc = 'STD';

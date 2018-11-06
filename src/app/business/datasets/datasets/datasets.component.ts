@@ -22,8 +22,7 @@ export class DatasetsComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.service.findAll()
-            .subscribe(response => {
+        this.service.findAll().subscribe(response => {
                 if (!response.error) {
                     this.stdList = response.data.docs;
                     this.stdCount = response.data.count;

@@ -16,7 +16,7 @@
                 <ng-container *ngIf='IOForm.controls["dataSrc"].value === "STD" else uploadTemplate'>
                     <mat-form-field class='form-item std-src-group'>
                         <mat-select placeholder='Select standard data source' formControlName='STD' #dataSrc>
-                            <mat-option *ngFor='let item of stds' [value]='item'>{{item.meta.name}}</mat-option>
+                            <mat-option *ngFor='let item of calcuTask.stds' [value]='item'>{{item.meta.name}}</mat-option>
                         </mat-select>
                         <button id='preview-btn' (click)='onSuffixClick($event)' mat-button matSuffix mat-icon-button *ngIf="IOForm.controls['STD'].value" target='_blank' [routerLink]='["../../../datasets", IOForm.controls["STD"].value._id]'>
                             <mat-icon>call_made</mat-icon>

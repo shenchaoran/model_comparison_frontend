@@ -1,7 +1,7 @@
 <ng-template #modelTemplate let-model='item'>
     <section class='list-item'>
             <div class='detail-group'>
-                <h3><a [routerLink]='model._id'>{{model.auth.nodeName}}/{{model.MDL.meta.name}}</a></h3>
+                <h3><a [routerLink]='model._id'>{{model.auth.nodeName}} / {{model.MDL.meta.name}}</a></h3>
                 <p>{{model.MDL.meta.abstract | stringLimit: 180 | description}}</p>
                 <p>
                     <mat-chip-list>

@@ -15,33 +15,25 @@ export class DatasetService extends ListBaseService {
     }
 
     preview(id, query): Observable<any> {
-        return this.http.get(`/std-data/${id}/preview`, {
+        return this.http.get(`${this.baseUrl}/${id}/preview`, {
             params: query
         });
     }
 
     download(id, query): Observable<any> {
-        return this.http.get(`/std-data/${id}/download`, {
+        return this.http.get(`${this.baseUrl}/${id}/download`, {
             params: query
         })
     }
 
-    fetchDbEntries(ids): Observable<any> {
-        return this.http.get(`/std-data/docs`, {
-            params: {
-                ids: ids
-            }
-        })
-    }
-
     // preview(id, query): Observable<any> {
-    //     return this.http.get(`/std-data/${id}/preview`, {
+    //     return this.http.get(`${this.baseUrl}/${id}/preview`, {
     //         params: query
     //     });
     // }
 
     // download(id, query): Observable<any> {
-    //     return this.http.get(`/std-data/${id}/download`, {
+    //     return this.http.get(`${this.baseUrl}/${id}/download`, {
     //         params: query
     //     })
     // }

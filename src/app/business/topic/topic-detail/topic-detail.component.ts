@@ -76,16 +76,26 @@ export class TopicDetailComponent implements OnInit {
         });
     }
 
-    onSlnLiClick(sln) {
-        let ac = sln.topicId === this.topic._id? 'remove': 'add';
-        this.topicService.changeIncludeSln(this.topic._id, ac, sln).subscribe(res => {
+    onAttachSolution(sln) {
+        let ac = sln.topicId === this.topic._id? 'removeSolution': 'addSolution';
+        this.topicService.patch(this.topic._id, { 
+            ac,
+            solutionId: sln._id,
+            originalTopicId: sln.topicId,
+        }).subscribe(res => {
             if(!res.error) {
                 let i = this.topic.solutionIds.indexOf(sln._id);
-                if(ac === 'remove') {
-                    i !== -1 && this.topic.solutionIds.splice(i, 1);
+                if(ac === 'removeSolution') {
+                    if(i !== -1){
+                        this.topic.solutionIds.splice(i, 1);
+                        sln.topicId = null;
+                    }
                 }
                 else {
-                    i === -1 && this.topic.solutionIds.push(sln._id);
+                    if(i === -1){
+                        this.topic.solutionIds.push(sln._id);
+                        sln.topicId = this.topic._id;
+                    }
                 }
             }
         })
