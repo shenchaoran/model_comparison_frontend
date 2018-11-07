@@ -3,6 +3,7 @@ import { UploadInput } from 'ngx-uploader';
 import { ResourceSrc } from '@models';
 import { cloneDeep } from 'lodash';
 import echarts from 'echarts';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
     selector: 'ogms-file-uploader-test',
@@ -42,7 +43,7 @@ export class FileUploaderTestComponent implements OnInit {
         text: 'two',
     }];
     cascaderValue: number[] = [];
-    cascaderData2 = cloneDeep(this.cascaderData);
+    cascaderFC = this.fb.control([], Validators.required)
 
     options = {
         "placeholder": "Data type",
@@ -393,7 +394,9 @@ export class FileUploaderTestComponent implements OnInit {
     };
     selectData;
 
-    constructor() {
+    constructor(
+        private fb: FormBuilder,
+    ) {
         this.uploadInput = {
             type: 'uploadAll',
             url: '/data',
@@ -407,6 +410,10 @@ export class FileUploaderTestComponent implements OnInit {
                 Authorization: 'bearer ' + JSON.parse(localStorage.getItem('jwt')).token
             }
         };
+
+        this.cascaderFC.valueChanges.subscribe(v => {
+            console.log('cascader value changed: ', v);
+        })
     }
 
     ngOnInit() {

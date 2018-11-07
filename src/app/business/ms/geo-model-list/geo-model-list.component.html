@@ -1,29 +1,28 @@
 <ng-template #modelTemplate let-model='item'>
     <section class='list-item'>
-            <div class='detail-group'>
-                <h3><a [routerLink]='model._id'>{{model.auth.nodeName}} / {{model.MDL.meta.name}}</a></h3>
-                <p>{{model.MDL.meta.abstract | stringLimit: 180 | description}}</p>
-                <p>
-                    <mat-chip-list>
-                        <mat-chip *ngIf='model.topic' class='topic'>{{model.topic}}</mat-chip>
-                    </mat-chip-list>
-                </p>
-                <div>{{model.auth.nodeName}}</div>
-            </div>
-            <div class='actions-group'>
-                <a [routerLink]='[model._id, "invoke"]'>
-                    <mat-icon>play_arrow</mat-icon>
-                </a>
-                <a>
-                    <mat-icon>star</mat-icon>
-                    <span>654</span>
-                </a>
-            </div>
-        </section>
+        <div class='detail-group'>
+            <h3><a class='v-align-middle' [routerLink]='model._id'>{{model.auth.nodeName}} / {{model.MDL.meta.name}}</a></h3>
+            <p class='text-gray mb-2 pr-4'>{{model.MDL.meta.abstract | stringLimit: 180 | description}}</p>
+            <!-- <p class='f6 text-gray mr-3 mb-0 mt-2'>{{model.auth.nodeName}}</p> -->
+        </div>
+        <div class='tag-group'>
+            <mat-chip-list>
+                <mat-chip class='topic-chip' *ngIf='model.tag'>
+                    {{model.tag}}
+                </mat-chip>
+            </mat-chip-list>
+        </div>
+        <div class='actions-group'>
+            <a class='actions muted-link' [routerLink]='[model._id, "invoke"]'>
+                <mat-icon>play_arrow</mat-icon>
+            </a>
+            <a class='actions muted-link'>
+                <mat-icon>star</mat-icon>
+                <span>654</span>
+            </a>
+        </div>
+    </section>
 </ng-template>
 
-<ogms-list-template 
-    [template]='modelTemplate' 
-    [service]='service'>
+<ogms-list-template [template]='modelTemplate' [service]='service'>
 </ogms-list-template>
-

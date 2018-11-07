@@ -1,21 +1,36 @@
+html,
+body{
+    height: 100%;
+}
+
+.go-top-button {
+    top: unset !important;
+    left: unset !important;
+    bottom: 150px !important;
+    right: 50px !important;
+    width: 50px !important;
+    height: 50px !important;
+    border-radius: 999px !important;
+}
+
 .flex-box-row-nowrap {
     display: flex;
     flex-flow: row nowrap;
 }
 
-.flex-item-1-1-auto {
+.flex-spacer {
     flex: 1 1 auto;
 }
 
 // reactive-layout
 @mixin layout($paddingHorizontal) {
-    nav {
+    .ogms-header-nav {
         padding: 0 $paddingHorizontal;
     }
     .rx-box {
         padding: 24px $paddingHorizontal;
     }
-    footer {
+    .ogms-footer {
         padding-left: $paddingHorizontal !important;
         padding-right: $paddingHorizontal !important;
     }

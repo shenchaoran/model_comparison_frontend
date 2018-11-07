@@ -34,7 +34,7 @@
         </ng-container>
         <ng-template #readTemp>
             <div class='header-title read'>
-                <h2>{{solution.meta.name}}</h2>
+                <h2 class='pb-3'>{{solution.meta.name}}</h2>
                 <div class='title-btn-group'>
                     <button mat-button color='primary' *ngIf='couldEdit' (click)='onEditClick()'>Edit</button>
                     <!-- <button mat-flat-button color='primary' *ngIf='couldEdit' [routerLink]='["../create"]'>New Topic</button> -->
@@ -117,7 +117,7 @@
                 </ng-template>
 
                 <div *ngIf='_cmpCfgMode === "WRITE"' class='flex-box-row-nowrap form-item' id='add-cmpObj-btn'>
-                    <button mat-stroked-button color='primary' class='flex-item-1-1-auto' (click)='addCmpObj()' [disabled]='ptMSs.length === 0'>
+                    <button mat-stroked-button color='primary' class='flex-spacer' (click)='addCmpObj()' [disabled]='ptMSs.length === 0'>
                         <mat-icon>add</mat-icon>
                         <span>Add comparison feature</span>
                     </button>
@@ -144,13 +144,13 @@
                     </div>
                     <ul *ngIf='topicList && topicList.length' class='opt-list aside-ul'>
                         <li *ngFor='let topic of topicList' (click)='onAttachTopic(topic)'>
-                            <div class='sln-select-placeholder'>
+                            <div class='sln-select-spacer'>
                                 <mat-icon inline *ngIf='solution.topicId === topic._id'>clear</mat-icon>
                             </div>
                             {{topic.auth.userName}} / {{topic.meta.name}}
                         </li>
                         <li routerLink='/topics'>
-                            <div class='sln-select-placeholder'></div>more
+                            <div class='sln-select-spacer'></div>more
                         </li>
                     </ul>
                 </div>

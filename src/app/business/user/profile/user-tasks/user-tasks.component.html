@@ -12,7 +12,7 @@
       <p>{{item.meta.desc | stringLimit: 180 | description}}</p>
       <p>
         <mat-chip-list>
-          <mat-chip *ngFor="let ms of item.participants" [routerLink]='["/geo-models",ms._id]' class="topic model-topic">{{ms.msName}}</mat-chip>
+          <mat-chip *ngFor="let ms of item.participants" [routerLink]='["/geo-models",ms._id]' class="topic ms-chip">{{ms.msName}}</mat-chip>
         </mat-chip-list>
       </p>
       <div>{{item.meta.time | date: 'yyyy-MM-dd hh:mm'}}</div>

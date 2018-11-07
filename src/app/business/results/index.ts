@@ -10,14 +10,10 @@ import {
     MatProgressSpinnerModule,
     MatChipsModule,
     MatIconModule,
+    MatProgressBarModule,
+    MatTableModule,
+    MatGridListModule,
 } from '@angular/material';
-import {
-    // NzGridModule,
-    // NzProgressModule,
-    // NzTableModule,
-    NgZorroAntdModule,
-} from 'ng-zorro-antd';
-
 import { ResultsRoutingModule } from './index-routing.module';
 import { CalcuListComponent } from './calcu-list/calcu-list.component';
 import { CmpListComponent } from './cmp-list/cmp-list.component';
@@ -30,16 +26,16 @@ const modules = [
     MatProgressSpinnerModule,
     MatChipsModule,
     MatIconModule,
-    // NzGridModule,
-    // NzProgressModule,
-    // NzTableModule,
-    NgZorroAntdModule,
+    MatProgressBarModule,
+    MatGridListModule,
+    MatTableModule,
     ResultsRoutingModule,
     CmpSharedModule,
     HeaderMenuLayoutModule,
     CustomTemplateModule,
     DirectivesModule,
     PipesModule,
+
 ];
 const components = [
     CalcuListComponent,

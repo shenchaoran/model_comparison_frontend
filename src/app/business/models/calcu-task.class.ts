@@ -25,7 +25,10 @@ export class CalcuTask {
     };
     // ms: any;
     msId: string;
-    topic: string;
+    msName: string;
+    topicId: string;
+    topicName: string;
+    // topic: string;
     cmpTaskId: string;
     node: any;
     IO: {
@@ -45,7 +48,10 @@ export class CalcuTask {
         if (ms) {
             // this.ms = ms;
             this.msId = ms._id;
-            this.topic = ms.topic;
+            this.msName = ms.MDL.meta.name;
+            this.topicId = ms.topicId;
+            this.topicName = ms.topicName;
+            // this.topic = ms.topic;
             this.IO = cloneDeep(ms.MDL.IO);
             this.IO.dataSrc = 'STD';
             let appendSchema = (type, schema) => {

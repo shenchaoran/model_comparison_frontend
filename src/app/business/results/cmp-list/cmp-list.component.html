@@ -1,16 +1,15 @@
 <ng-template #slnTemplate let-sln='item'>
     <section class='list-item'>
         <div class='detail-group'>
-            <h3>
-                <a [routerLink]='sln._id'>{{sln.auth.userName}} / {{sln.meta.name}}</a>
-            </h3>
-            <p>{{sln.meta.desc | stringLimit: 180 | description}}</p>
-            <p>
-                <mat-chip-list>
-                    <mat-chip *ngFor='let ms of sln.participants' [routerLink]='["/geo-models", ms._id]' class='topic model-topic'>{{ms.msName}}</mat-chip>
-                </mat-chip-list>
-            </p>
+            <h3><a [routerLink]='sln._id'>{{sln.auth.userName}} / {{sln.meta.name}}</a></h3>
+            <p class='text-gray mb-2 pr-4'>{{sln.meta.desc | stringLimit: 180 | description}}</p>
             <div>{{sln.meta.time | date: 'yyyy-MM-dd hh:mm'}}</div>
+        </div>
+        <div class='tag-group'>
+            <mat-chip-list>
+                <!-- <mat-chip *ngIf='sln.topicId'></mat-chip> -->
+                <mat-chip *ngFor='let ms of sln.participants' [routerLink]='["/geo-models", ms._id]' class='ms-chip'>{{ms.msName}}</mat-chip>
+            </mat-chip-list>
         </div>
         <div class='actions-group'>
             <a>

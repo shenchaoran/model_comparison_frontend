@@ -62,7 +62,7 @@ npm run debug
 - [ ] remove disabled-button, use snackbar to alert valid state
 - [ ] remove header, use mat-toolbar
 - [ ] remove custom card, use mat-card
-- [ ] remove ng-zorro-antd
+- [ ] remove ng-zorro-antd !!!
     - [ ] 样式冲突，首先移除
 - [ ] 首页重新设计，展现的元素尽量少，首页去除 ajax
 - [ ] 动态设置 title

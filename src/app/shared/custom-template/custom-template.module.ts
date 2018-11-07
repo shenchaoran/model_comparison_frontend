@@ -10,6 +10,7 @@ import {
     MatIconModule,
     MatProgressSpinnerModule,
     MatButtonToggleModule,
+    MatRippleModule,
 } from '@angular/material';
 import { CardsTemplateComponent } from './cards-template/cards-template.component';
 import { ListTemplateComponent,} from './list-template/list-template.component';
@@ -33,6 +34,7 @@ const components = [
         MatButtonToggleModule,
         MatProgressSpinnerModule,
         DirectivesModule,
+        MatRippleModule,
     ],
     declarations: [...components],
     exports: [...components]

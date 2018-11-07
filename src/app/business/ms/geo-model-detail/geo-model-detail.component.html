@@ -6,20 +6,18 @@
                 <section>
                     <div class="section-header flex-box-row-nowrap">
                         <span class="title">Basic Information</span>
-                        <span class="flex-item-1-1-auto"></span>
+                        <span class="flex-spacer"></span>
                     </div>
                     <div class="section-body">
                         <dl class="ogms-table-info">
-                            <div nz-row>
-                                <dt nz-col [nzSpan]='4'>Full Name</dt>
-                                <dd nz-col [nzSpan]='8'>{{ms.MDL.meta.name}}</dd>
-                                <dt nz-col [nzSpan]='4'>Organization</dt>
-                                <dd nz-col [nzSpan]='8'>OpenGMS</dd>
-                                <dt nz-col [nzSpan]='4'>Type</dt>
-                                <dd nz-col [nzSpan]='8'>Carbon Globle</dd>
-                                <dt nz-col [nzSpan]='4'>Create Time</dt>
-                                <dd nz-col [nzSpan]='8'>2018-01-01</dd>
-                            </div>
+                            <dt>Full Name</dt>
+                            <dd>{{ms.MDL.meta.name}}</dd>
+                            <dt>Organization</dt>
+                            <dd>OpenGMS</dd>
+                            <dt>Type</dt>
+                            <dd>Carbon Globle</dd>
+                            <dt>Create Time</dt>
+                            <dd>2018-01-01</dd>
                         </dl>
                         <div class='detail-desc'>
                             {{ms.MDL.meta.abstract}}
@@ -29,7 +27,7 @@
                 <section>
                     <div class="section-header flex-box-row-nowrap">
                         <span class="title">Detail Information</span>
-                        <span class="flex-item-1-1-auto"></span>
+                        <span class="flex-spacer"></span>
                     </div>
                     <div class="section-body">
                         XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
@@ -38,17 +36,19 @@
                 <section>
                     <div class="section-header flex-box-row-nowrap">
                         <span class="title">IO Feature Info</span>
-                        <span class="flex-item-1-1-auto"></span>
+                        <span class="flex-spacer"></span>
                     </div>
                     <div class="section-body">
                         <div>
                             <div style="margin-bottom: 16px;">
-                                <button nz-button [disabled]="_disabledButton" [nzType]="'primary'" [nzLoading]="_operating"
-                                    (click)="_operateData(_ioDataset)">Operating</button>
+                                <button mat-button [disabled]="_disabledButton" color="'primary'" (click)="_operateData(_ioDataset)">Operating</button>
                                 <span style="margin-left: 8px;" *ngIf="_checkedNumber">Selected {{_checkedNumber}}
                                     items</span>
                             </div>
-                            <nz-table #nzTable [nzData]="_ioDataSet" [nzPageSize]="10" (nzDataChange)="_displayDataChange($event)"
+                            <!-- <table mat-table [dataSource]='_ioDataset'>
+
+                            </table> -->
+                            <!-- <nz-table #nzTable [nzData]="_ioDataSet" [nzPageSize]="10" (nzDataChange)="_displayDataChange($event)"
                                 (nzPageIndexChange)="_refreshStatus(_ioDataset)" (nzPageSizeChange)="_refreshStatus(_ioDataset)">
                                 <thead nz-thead>
                                     <tr>
@@ -76,14 +76,14 @@
                                         <td nz-td>{{data.description}}</td>
                                     </tr>
                                 </tbody>
-                            </nz-table>
+                            </nz-table> -->
                         </div>
                     </div>
                 </section>
                 <section>
                     <div class="section-header flex-box-row-nowrap">
                         <span class="title">Parameter Info</span>
-                        <span class="flex-item-1-1-auto"></span>
+                        <span class="flex-spacer"></span>
                     </div>
                     <div class="section-body">
                     </div>

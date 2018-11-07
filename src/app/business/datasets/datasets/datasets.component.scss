@@ -1,3 +1,5 @@
+@import "../../../../assets/css/my/varyable";
+
 .ogms-left {
     width: 300px !important;
     // .list-item {
@@ -17,9 +19,13 @@
     // }
     .menu {
         width: 300px !important;
-        border-radius: 5px;
-        border: 1px #e1e4e8 solid !important;
         margin-bottom: 25px;
+        >a {
+            cursor: pointer;
+            &:before {
+                background-color: $primaryColor;
+            }
+        }
     }
 }
 

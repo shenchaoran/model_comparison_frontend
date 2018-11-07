@@ -5,7 +5,7 @@
             <a class='flex-box-row-nowrap' (click)='changeFilter("type", category)'>
                 <span *ngIf='options["type"] === category.name' class='selected-tip'></span>
                 <span [class.selected]='options["type"] === category.name'>{{category.name}}</span>
-                <span class='flex-item-1-1-auto'></span>
+                <span class='flex-spacer'></span>
                 <span *ngIf='category.num !== ""' class='count-tag'>
                     {{category.num}}
                 </span>
@@ -22,7 +22,7 @@
             <li *ngFor='let item of child.values' (click)='changeFilter(child.key, item)'>
                 <a class='flex-box-row-nowrap' [class.selected]='options[child.key] === item.name'>
                     <span>{{item.name}}</span>
-                    <span class='flex-item-1-1-auto'></span>
+                    <span class='flex-spacer'></span>
                     <span *ngIf='options[child.key] === item.name'>
                         <i class="fa fa-times"></i>
                     </span>

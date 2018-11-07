@@ -23,8 +23,8 @@ export class MSService extends ListBaseService {
         this.baseUrl = `${this.http.api.backend}/model-service`;
     }
 
-    invoke(msInstance): Observable<any> {
-        return this.http.post(`/model-service/invoke`, { msInstance });
+    invoke(msId, msInstance): Observable<any> {
+        return this.http.post(`${this.baseUrl}/${msId}/invoke`, { msInstance });
     }
 
     getLog(msrId) {

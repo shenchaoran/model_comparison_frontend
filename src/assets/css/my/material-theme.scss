@@ -24,3 +24,9 @@ mat-button-toggle {
 mat-icon {
     vertical-align: middle;
 }
+
+
+.pop-menu-item.selected {
+    font-weight: 600;
+    background: rgba(0, 0, 0, 0.04)
+}

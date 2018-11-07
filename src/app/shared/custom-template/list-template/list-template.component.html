@@ -13,20 +13,17 @@
     </div>
 
     <div class='list-box'>
-        <div class='list-header'>
-            <span class='stat-span'>{{count}} items found</span>
-            <span class='flex-item-1-1-auto'></span>
+        <div class='list-header pb-3'>
+            <h3 class='stat-span'>{{count}} items found</h3>
+            <span class='flex-spacer'></span>
             <div *ngFor='let filter of sortsFilters'>
                 <button mat-button [matMenuTriggerFor]='popMenu'>
                     {{filter.label}}
                     <mat-icon>expand_more</mat-icon>
                 </button>
                 <mat-menu #popMenu>
-                    <button class='pop-menu-group' mat-menu-item *ngFor='let item of filter.options' (click)='onChangeFilters(item.value, filter.value)'>
-                        <div>
-                            <mat-icon *ngIf='item.checked'>check</mat-icon>
-                        </div>
-                        <div>{{item.label}}</div>
+                    <button mat-menu-item *ngFor='let item of filter.options' (click)='onChangeFilters(item.value, filter.value)' class='pop-menu-item' [class.selected]='item.checked'>
+                        <span>{{item.label}}</span>
                     </button>
                 </mat-menu>
             </div>

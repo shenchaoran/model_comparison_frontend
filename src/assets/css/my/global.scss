@@ -7,31 +7,30 @@ body {
     position: relative;
 }
 
-.topic {
-    display: inline-block;
-    white-space: nowrap;
-    background-color: #E1ECF4 !important;
-    cursor: pointer !important;
-    outline: none;
+.topic-chip {
+    background: #a5d6a7 !important;
+    &:hover {
+        background: #81c784 !important;
+    }
 }
 
-.topic:hover {
-    text-decoration: none;
-    background-color: #cee0ed !important;
+.sln-chip {
+    background: #fdb0b0 !important;
+    &:hover {
+        background: #e29999 !important;
+    }
 }
 
-.model-topic {
+.ms-chip {
     background: #bcbdfaab !important;
+    &:hover {
+        background: #bcbdfa !important;
+    }
 }
 
-.model-topic:hover {
-    background: #bcbdfa !important;
-}
-
-.method-topic {
+.method-chip {
     background: #b6d8ff !important;
-}
-
-.method-topic:hover {
-    background: #86befd !important;
+    &:hover {
+        background: #86befd !important;
+    }
 }

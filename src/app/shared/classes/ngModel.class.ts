@@ -29,6 +29,6 @@ export class NgModelBase implements ControlValueAccessor {
     }
 
     public registerOnTouched(fn: any) {
-        this.propagateChange = fn;
+        // this.propagateChange = fn;
     }
 }

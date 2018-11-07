@@ -1,20 +1,18 @@
 <ng-template #template let-msRecord='item'>
     <section class='list-item'>
         <div class='detail-group'>
-            <h3>
-                <a [routerLink]='msRecord._id'>{{msRecord.auth.userName}} / {{msRecord.meta.name}}</a>
-            </h3>
-            <p>{{msRecord.meta.desc | stringLimit: 180 | description}}</p>
-            <p>
-                <mat-chip-list>
-                    <mat-chip *ngIf='msRecord.topicId' [routerLink]='["../topics", msRecord.topicId]'>{{msRecord.topic}}</mat-chip>
-                    <mat-chip *ngIf='msRecord.msId' [routerLink]='["../models/", msRecord.msId]'>{{msRecord.msName + "," + msRecord.msId}}</mat-chip>
-                </mat-chip-list>
-            </p>
+            <h3><a [routerLink]='msRecord._id'>{{msRecord.auth.userName}} / {{msRecord.meta.name}}</a></h3>
+            <p class='text-gray mb-2 pr-4'>{{msRecord.meta.desc | stringLimit: 180 | description}}</p>
             <div>{{msRecord.meta.time | date: 'yyyy-MM-dd hh:mm'}}</div>
         </div>
+        <div class='tag-group'>
+            <mat-chip-list>
+                <mat-chip *ngIf='msRecord.topicId && msRecord.topicName' [routerLink]='["../topics", msRecord.topicId]' class='topic-chip'>{{msRecord.topic}}</mat-chip>
+                <mat-chip *ngIf='msRecord.msId && msRecord.msName' [routerLink]='["../models/", msRecord.msId]' class='ms-chip'>{{msRecord.msName}}</mat-chip>
+            </mat-chip-list>
+        </div>
         <div class='actions-group'>
-            <a>
+            <a class='actions muted-link'>
                 <mat-icon>star</mat-icon>
                 <span>654</span>
             </a>

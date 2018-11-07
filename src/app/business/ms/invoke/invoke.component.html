@@ -12,7 +12,7 @@
                 <section>
                     <div class='section-header flex-box-row-nowrap'>
                         <span class='title'>Basic information</span>
-                        <span class='flex-item-1-1-auto'></span>
+                        <span class='flex-spacer'></span>
                     </div>
                     <div class='section-body'>
                         <mat-form-field class='form-item'>
@@ -34,10 +34,10 @@
                 <section>
                     <div class='section-header flex-box-row-nowrap'>
                         <span class='title'>IO</span>
-                        <span class='flex-item-1-1-auto'></span>
+                        <span class='flex-spacer'></span>
                     </div>
                     <div class='section-body'>
-                        <ogms-calcu-cfg formControlName='msInstance' *ngIf='msInstance' [msInstance]='msInstance'
+                        <ogms-calcu-cfg formControlName='calcuTask' [calcuTask]='calcuTask'
                             (onValidChange)='onCalcuCfgChange($event)'></ogms-calcu-cfg>
                     </div>
                 </section>
@@ -45,7 +45,7 @@
                 <section>
                     <div class='section-header flex-box-row-nowrap'>
                         <span class='title'>Operating</span>
-                        <span class='flex-item-1-1-auto'></span>
+                        <span class='flex-spacer'></span>
                     </div>
                     <div id='form-submit' class='section-body'>
                         <button mat-stroked-button color='primary' (click)='invoke("save")' [disabled]='!msiForm.valid'>

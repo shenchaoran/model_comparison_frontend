@@ -1,6 +1,11 @@
 <ng-container *ngIf='IO'>
-    <nz-collapse nzBordered='false'>
-        <nz-collapse-panel [nzHeader]="'Inputs'" nzActive="true">
+    <mat-accordion multi>
+        <mat-expansion-panel expanded>
+            <mat-expansion-panel-header>
+                <mat-panel-title>Inputs</mat-panel-title>
+                <mat-panel-description></mat-panel-description>
+            </mat-expansion-panel-header>
+
             <ng-container *ngFor='let event of IO.inputs'>
                 <div class='ogms-form-item' nz-row>
                     <span nz-col nzSpan='6'>{{event.name}}</span>
@@ -9,9 +14,12 @@
                     </div>
                 </div>
             </ng-container>
-        </nz-collapse-panel>
-
-        <nz-collapse-panel *ngIf='IO?.paramsters?.length' [nzHeader]="'Parameters'" nzActive="true">
+        </mat-expansion-panel>
+        <mat-expansion-panel expanded *ngIf='IO?.paramsters?.length'>
+            <mat-expansion-panel-header>
+                <mat-panel-title>Parameters</mat-panel-title>
+                <mat-panel-description></mat-panel-description>
+            </mat-expansion-panel-header>
             <ng-container *ngFor='let event of IO.paramsters'>
                 <div class='ogms-form-item' nz-row>
                     <span nz-col nzSpan='6'>{{event.name}}</span>
@@ -20,9 +28,12 @@
                     </div>
                 </div>
             </ng-container>
-        </nz-collapse-panel>
-
-        <nz-collapse-panel [nzHeader]="'Outputs'" nzActive="true">
+        </mat-expansion-panel>
+        <mat-expansion-panel expanded>
+            <mat-expansion-panel-header>
+                <mat-panel-title>Outputs</mat-panel-title>
+                <mat-panel-description></mat-panel-description>
+            </mat-expansion-panel-header>
             <ng-container *ngFor='let event of IO.outputs'>
                 <div class='ogms-form-item' nz-row>
                     <span nz-col nzSpan='6'>{{event.name}}</span>
@@ -31,54 +42,6 @@
                     </div>
                 </div>
             </ng-container>
-        </nz-collapse-panel>
-
-        <!-- <nz-collapse-panel [nzHeader]="'Log'" nzActive="true">   
-        </nz-collapse-panel> -->
-    </nz-collapse>
-    <!-- <mat-accordion>
-            <mat-expansion-panel>
-                <mat-expansion-panel-header>
-                    <mat-panel-title>Inputs</mat-panel-title>
-                    <mat-panel-description></mat-panel-description>
-                </mat-expansion-panel-header>
-    
-                <ng-container *ngFor='let event of IO.inputs'>
-                    <div class='ogms-form-item' nz-row>
-                        <span nz-col nzSpan='6'>{{event.name}}</span>
-                        <div nz-col nzSpan='18'>
-                            <a (click)='download(event)'>{{event.fname}}</a>
-                        </div>
-                    </div>
-                </ng-container>
-            </mat-expansion-panel>
-            <mat-expansion-panel *ngIf='IO?.paramsters?.length'>
-                <mat-expansion-panel-header>
-                    <mat-panel-title>Parameters</mat-panel-title>
-                    <mat-panel-description></mat-panel-description>
-                </mat-expansion-panel-header>
-                <ng-container *ngFor='let event of IO.paramsters'>
-                    <div class='ogms-form-item' nz-row>
-                        <span nz-col nzSpan='6'>{{event.name}}</span>
-                        <div nz-col nzSpan='18'>
-                            <a (click)='download(event)'>{{event.value}}</a>
-                        </div>
-                    </div>
-                </ng-container>
-            </mat-expansion-panel>
-            <mat-expansion-panel>
-                <mat-expansion-panel-header>
-                    <mat-panel-title>Outputs</mat-panel-title>
-                    <mat-panel-description></mat-panel-description>
-                </mat-expansion-panel-header>
-                <ng-container *ngFor='let event of IO.outputs'>
-                    <div class='ogms-form-item' nz-row>
-                        <span nz-col nzSpan='6'>{{event.name}}</span>
-                        <div nz-col nzSpan='18'>
-                            <a (click)='download(event)'>{{event.fname}}</a>
-                        </div>
-                    </div>
-                </ng-container>
-            </mat-expansion-panel>
-        </mat-accordion> -->
+        </mat-expansion-panel>
+    </mat-accordion>
 </ng-container>

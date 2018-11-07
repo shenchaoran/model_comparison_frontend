@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { HomeRoutingModule } from './index-routing.module';
 import { OverlayModule } from '@angular/cdk/overlay';
+import { NguCarouselModule } from '@ngu/carousel';
 import { 
     NgxSharedModule,
     HeaderMenuLayoutModule, 
@@ -9,10 +10,6 @@ import {
 import {
     MatIconModule,
 } from '@angular/material';
-import {
-    // NzCarouselModule,
-    NgZorroAntdModule,
-} from 'ng-zorro-antd';
 import { PipesModule } from '@shared/pipes';
 
 import { HomeComponent } from './home.component';
@@ -23,8 +20,7 @@ const modules = [
     OverlayModule,
     NgxSharedModule,
     MatIconModule,
-    // NzCarouselModule,
-    NgZorroAntdModule,
+    NguCarouselModule,
     HomeRoutingModule,
     PipesModule,
     HeaderMenuLayoutModule,

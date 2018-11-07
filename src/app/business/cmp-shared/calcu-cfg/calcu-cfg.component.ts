@@ -48,7 +48,7 @@ export class CalcuCfgComponent extends NgModelBase implements OnInit, AfterViewI
     selectedSTD;
 
     IOForm: FormGroup;
-    @Input() set msInstance(v) {
+    @Input() set calcuTask(v) {
         this._innerValue = v;
         this._innerValue$.next(v);
     }
@@ -174,7 +174,7 @@ export class CalcuCfgComponent extends NgModelBase implements OnInit, AfterViewI
                     setV('outputs');
                     setV('std');
                     setV('parameters');
-                    this.calcuTask.std = this.IOForm.value.STD;
+                    this.calcuTask.stdId = get(this, 'IOForm.value.STD._id');
                     this.propagateChange(this.calcuTask);
                 }
                 else {
