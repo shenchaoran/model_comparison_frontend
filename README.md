@@ -82,6 +82,9 @@ npm run debug
 - [ ] calcu detail
     - [x] mat-tab: basic-info, data configuration, conversation
     - [ ] 结果打包下载
+- [ ] auth guard
+- [ ] mongodb 大文档的查询效率
+- [ ] build-optimizer 入口代码被当做 dead code 删掉了？
 
 ## Architecture
 
