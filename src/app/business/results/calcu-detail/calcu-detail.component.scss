@@ -1,0 +1,11 @@
+.progress-section {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    .progress-bar {
+        flex: 0 1 520px;
+    }
+    .progress-comment {
+        padding: 0 15px;
+    }
+}

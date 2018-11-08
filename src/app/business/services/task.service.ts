@@ -34,7 +34,7 @@ export class TaskService extends ListBaseService {
 
     public create() {
         let task = new Task(this.user);
-        let cid = this.conversationService.create(task._id)._id;
+        let cid = this.conversationService.create(task._id, 'task')._id;
         task.cid = cid;
         return task;
     }

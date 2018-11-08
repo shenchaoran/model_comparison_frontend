@@ -63,6 +63,7 @@ export class TopicDetailComponent implements OnInit {
                     res.data.commentCount,
                     res.data.topic.auth.userId,
                     res.data.topic._id,
+                    'topic',
                 );
                 if (this.couldEdit && !this.topic.meta.wikiMD) {
                     this.editMode = 'WRITE';

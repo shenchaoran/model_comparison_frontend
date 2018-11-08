@@ -1,13 +1,16 @@
 .cmpObj {
     // padding-left: 20px;
     margin-top: 15px;
+
     h3,
     h4 {
         font-weight: 400 !important;
     }
+
     >section {
         padding-left: 20px;
     }
+
     .desc {
         font-size: 16px;
         color: #586069;
@@ -15,139 +18,28 @@
         line-height: 1.5;
         margin: 10px 0;
     }
+
     .participants {
         margin-left: 12px;
-    }
-}
-
-.doc {
-    padding: 0 15px;
-    .doc-title {
-        background: #ffffff;
-        padding: 25px 29px 15px;
-        // margin-top: 20px;
-        // margin-bottom: 10px;
-        font-weight: 500;
-        line-height: 1.1;
-        font-size: 30px;
-        vertical-align: sub;
-        color: rgb(33, 33, 33);
-        font-family: Verdana, Arial, Helvetica, Sans-Serif;
-    }
-    .doc-body {
-        .article {
-            // flex: 1;
-            padding: 0 29px 29px 0;
-            background: #fff;
-        }
-        .sider-content {
-            padding: 0 15px;
-            background: #fff;
-            .sider-item {
-                margin-top: 15px;
-                padding-top: 15px;
-                border-top: 1px solid #c9c9c9;
-                .sider-item-title * {
-                    font-weight: 500;
-                    font-size: 16px;
-                    padding: 5px 0;
-                    margin: -5px 0 5px;
-                    line-height: 16px;
-                    color: #525558;
-                }
-                .sider-item-body {
-                    * {
-                        font-size: 14px;
-                        color: #586069;
-                    }
-                    padding-left: 8px;
-                    .sider-desc {
-                        // font-size: 12px;
-                        color: #586069;
-                        padding: 0 10px 7px;
-                    }
-                    ul {
-                        li {
-                            border-bottom: 1px solid #e6ebf1;
-                            margin: 5px 0;
-                            padding: 8px 0;
-                            color: #586069;
-                            a {
-                                font-size: 14px;
-                                color: #525558;
-                            }
-                            a:hover {
-                                color: #0366d6;
-                            }
-                        }
-                        li:last-child {
-                            border-bottom: none;
-                        }
-                    }
-                }
-                .avatar {
-                    width: 45px;
-                    height: 45px;
-                    border-radius: 45px;
-                }
-            }
-            .sider-item:first-child {
-                margin-top: 0;
-                border-top: none;
-            }
-            .side-catalog {
-                position: fixed;
-                bottom: 10px;
-                visibility: hidden;
-                background: #fff;
-            }
-        }
-        .section-header {
-            border-left: solid 12px #4F9CEE;
-        }
-    }
-}
-
-section {
-    .section-header {
-        margin: 24px 0;
-        .title {
-            padding: 0 8px 0 18px;
-            background: #fff;
-            font-size: 20px;
-            font-weight: 500;
-            line-height: 24px;
-        }
-    }
-    .detail-desc {
-        margin: 15px 0;
-        // padding: 15px 5px 0 12px;
-        line-height: 26px;
-        // word-break: break-all;
-        word-wrap: break-word;
-        font-size: 18px;
-        * {
-            font-size: 16px;
-        }
-    }
-    .section-body {
-        margin-left: 29px;
     }
 }
 
 .ogms-table-info {
     display: flex;
     flex-flow: row wrap;
+
     dt,
     dd {
+        box-sizing: border-box;
         // border-bottom: 1px dashed rgb(224, 224, 224);
         line-height: 26px;
         word-break: break-all;
         word-wrap: break-word;
         background: url('/assets/img/article/underline.png');
     }
+
     dt {
-        flex: 1;
+        flex: 16.66%;
         padding: 0 5px 0 12px;
         font-weight: 700;
         overflow: hidden;
@@ -157,8 +49,9 @@ section {
         color: #999;
         float: left;
     }
+
     dd {
-        flex: 2;
+        flex: 33.33%;
         zoom: 1;
         color: #333;
         float: left;

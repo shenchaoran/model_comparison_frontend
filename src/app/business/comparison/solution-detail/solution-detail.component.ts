@@ -76,7 +76,8 @@ export class SolutionDetailComponent implements OnInit {
                     res.data.users,
                     res.data.commentCount,
                     this.solution.auth.userId,
-                    this.solution._id
+                    this.solution._id,
+                    'solution',
                 );
                 if (this.couldEdit && !this.solution.meta.wikiMD) {
                     this._editMode = 'WRITE';

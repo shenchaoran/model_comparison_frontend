@@ -5,6 +5,7 @@ import {
     CustomTemplateModule,
     DirectivesModule,
     PipesModule,
+    DetailLayoutModule,
 } from '@shared';
 import {
     MatProgressSpinnerModule,
@@ -13,7 +14,10 @@ import {
     MatProgressBarModule,
     MatTableModule,
     MatGridListModule,
+    MatTabsModule,
+    MatButtonModule,
 } from '@angular/material';
+import { ConversationModule } from '../conversation';
 import { ResultsRoutingModule } from './index-routing.module';
 import { CalcuListComponent } from './calcu-list/calcu-list.component';
 import { CmpListComponent } from './cmp-list/cmp-list.component';
@@ -29,9 +33,13 @@ const modules = [
     MatProgressBarModule,
     MatGridListModule,
     MatTableModule,
+    MatButtonModule,
+    MatTabsModule,
     ResultsRoutingModule,
     CmpSharedModule,
     HeaderMenuLayoutModule,
+    ConversationModule,
+    DetailLayoutModule,
     CustomTemplateModule,
     DirectivesModule,
     PipesModule,

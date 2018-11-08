@@ -3,9 +3,9 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 // 手势操作库
 import 'hammerjs';
 
-import { AppModule } from 'app/app.module';
-import { environment } from 'environments/environment';
-import { hmrBootstrap } from 'hmr';
+import { AppModule } from './app/app.module';
+import { environment } from './environments/environment';
+import { hmrBootstrap } from './hmr';
 
 // add by SCR
 import 'zone.js/dist/zone';

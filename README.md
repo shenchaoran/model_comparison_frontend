@@ -56,7 +56,7 @@ npm run debug
 - [ ] 用户个人空间相关
     - [ ] 路由 RESTful 风格化：user/:username
     - [ ] 关注、收藏的 topic, sln, task
-    - [ ] 消息订阅与通知
+    - [ ] 消息订阅与通知：subscribeToggle 统一处理所有资源，而不是分别处理
 - [ ] remove slim-loading-bar, use mat-progress-bar
 - [ ] remove list-template, use mat-list
 - [ ] remove disabled-button, use snackbar to alert valid state
@@ -70,10 +70,18 @@ npm run debug
     - [ ] colorful label/tag
     - [ ] navigation component/filter/menu
     - [ ] popover
-    - [ ] subhead with description
+    - [x] subhead with description
     - [ ] css-truncate
     - [ ] color plaette
-    - [ ] Typography
+    - [x] Typography
+    - [ ] remove simplemde, use primer-markdown
+    - [ ] comment markdown
+- [ ] ms detail
+    - [ ] mat-tab: wiki, data description, conversation
+    - [ ] sider-bar: topic, solution, notification
+- [ ] calcu detail
+    - [ ] mat-tab: basic-info, data configuration, conversation
+    - [ ] 结果打包下载
 
 ## Architecture
 
@@ -118,6 +126,11 @@ angular自带的一些常用模块，一般大多数module中都要用，所以�
     - dynamic-title.service：动态设置标题
 
 ## 开发者说明
+**layout**
+
+- grid: primer-grid-layout, refer [here](https://styleguide.github.com/primer/objects/grid#column-widths)
+- flex
+
 **How to use 3td party module**
 
 优先通过 ES6 module 导入，可以享受到 tree-shaking，如果库不支持的话，在 angular.json 中将三方库整个引入。并在`typings.d.ts`中添加声明。

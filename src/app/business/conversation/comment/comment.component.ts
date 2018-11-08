@@ -76,15 +76,9 @@ export class CommentComponent implements ControlValueAccessor, OnInit, AfterView
     @ViewChild(Simplemde) simpleMDE: any;
 
     constructor(
-        // private topicService: TopicService,
-        // private solutionService: SolutionService,
-        // private taskService: TaskService,
-        // private msrService: MSRService,
         private conversationService: ConversationService,
         private userService: UserService,
         private cdRef: ChangeDetectorRef,
-        // private route: ActivatedRoute,
-        // private location: Location,
     ) {}
 
     ngOnInit() {}

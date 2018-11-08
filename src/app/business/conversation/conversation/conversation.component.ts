@@ -1,7 +1,7 @@
-import { 
-    Component, 
-    OnInit, 
-    Input, 
+import {
+    Component,
+    OnInit,
+    Input,
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Output,
@@ -17,7 +17,7 @@ import {
     NG_VALIDATORS,
     NG_VALUE_ACCESSOR
 } from '@angular/forms';
-import { 
+import {
     fromJS,
 } from 'immutable';
 import {
@@ -26,8 +26,8 @@ import {
     combineLatest
 } from 'rxjs';
 
-import { 
-    Conversation, 
+import {
+    Conversation,
     CommentType,
     Comment
 } from '@models';
@@ -36,6 +36,7 @@ import {
     UserService,
     TopicService,
 } from '@services';
+import { NgModelBase } from '@shared';
 
 // 二选一，根据 _id 或者 ngModel 初始化该组件
 @Component({
@@ -51,56 +52,36 @@ import {
         }
     ],
 })
-export class ConversationComponent implements ControlValueAccessor, OnInit {
-    conversation: Conversation;
+export class ConversationComponent extends NgModelBase implements OnInit {
+    get conversation(): Conversation { return this._innerValue; }
+    set conversation(v: Conversation) { this._innerValue = v; }
     emptyComment: Comment;
-    conversation$: Subject<any> = new Subject();
-    
-    @Input() set _id(v: string) {
-        this.conversationService.findOne(v)
-            .subscribe(res => {
-                if(res.error) {
+    _innerValue$: Subject<any> = new Subject();
 
-                }
-                else {
-                    this.conversation$.next(res.data);
-                }
-            });
+    @Input() set _id(v: string) {
+        this.conversationService.findOne(v).subscribe(res => {
+            if (!res.error) {
+                this._innerValue$.next(res.data);
+            }
+        });
     }
 
     constructor(
         public conversationService: ConversationService,
-        private userService: UserService,
         private cdRef: ChangeDetectorRef,
     ) {
+        super();
         this.conversationService.emptyComment$.subscribe(v => {
             this.emptyComment = v;
-            this.cdRef.markForCheck();
+            // this.cdRef.markForCheck();
         });
-        this.conversation$.subscribe(v => {
+        this._innerValue$.subscribe(v => {
             this.conversation = v;
-            this.cdRef.markForCheck();
+            // this.cdRef.markForCheck();
         })
     }
 
-    onCommentChange(comment) {
+    onCommentChange(comment) { }
 
-    }
-
-    ngOnInit() {
-    }
-
-    public writeValue(obj: any) {
-        if(obj) {
-            this.conversation$.next(obj);
-        }
-    }
-    
-    private propagateChange = (e: any) => {};
-    
-    public registerOnChange(fn: any) {
-        this.propagateChange = fn;
-    }
-
-    public registerOnTouched() {}
+    ngOnInit() { }
 }

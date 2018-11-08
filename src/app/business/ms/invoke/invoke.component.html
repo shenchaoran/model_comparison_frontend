@@ -14,7 +14,7 @@
                         <span class='title'>Basic information</span>
                         <span class='flex-spacer'></span>
                     </div>
-                    <div class='section-body'>
+                    <div class=''>
                         <mat-form-field class='form-item'>
                             <input matInput formControlName='name' placeholder="Name">
                         </mat-form-field>
@@ -36,7 +36,7 @@
                         <span class='title'>IO</span>
                         <span class='flex-spacer'></span>
                     </div>
-                    <div class='section-body'>
+                    <div class=''>
                         <ogms-calcu-cfg formControlName='calcuTask' [calcuTask]='calcuTask'
                             (onValidChange)='onCalcuCfgChange($event)'></ogms-calcu-cfg>
                     </div>
@@ -47,7 +47,7 @@
                         <span class='title'>Operating</span>
                         <span class='flex-spacer'></span>
                     </div>
-                    <div id='form-submit' class='section-body'>
+                    <div id='form-submit' class=''>
                         <button mat-stroked-button color='primary' (click)='invoke("save")' [disabled]='!msiForm.valid'>
                             <mat-icon>save</mat-icon>
                             Save

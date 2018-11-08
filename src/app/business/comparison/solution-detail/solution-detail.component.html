@@ -33,16 +33,16 @@
             </div>
         </ng-container>
         <ng-template #readTemp>
-            <div class='header-title read'>
-                <h2 class='pb-3'>{{solution.meta.name}}</h2>
+            <div class='header-title read Subhead mt-0 mb-0'>
+                <h2 class='Subhead-heading'>{{solution.meta.name}}</h2>
                 <div class='title-btn-group'>
                     <button mat-button color='primary' *ngIf='couldEdit' (click)='onEditClick()'>Edit</button>
                     <!-- <button mat-flat-button color='primary' *ngIf='couldEdit' [routerLink]='["../create"]'>New Topic</button> -->
                 </div>
             </div>
             <div class='header-meta read'>
-                <p>{{solution.meta.desc | description}}</p>
-                <p><a class='author' routerLink='/user'>{{solution.auth.userName}}</a> created this solution at
+                <p class='f3-light text-gray'>{{solution.meta.desc | description}}</p>
+                <p class='text-gray'><a class='author' routerLink='/user'>{{solution.auth.userName}}</a> created this solution at
                     {{solution.meta.time | date: 'yyyy.MM.dd'}}</p>
             </div>
         </ng-template>
@@ -59,7 +59,7 @@
                     </div> -->
                 </div>
                 <div class='wiki-tab' *ngIf='_editMode === "READ"'>
-                    <div [innerHTML]='solution.meta.wikiHTML'></div>
+                    <div class='markdown-body' [innerHTML]='solution.meta.wikiHTML'></div>
                     <!-- <div class='desc-btn-group'>
                         <button mat-button color='primary' *ngIf='couldEdit' (click)='onEditClick()'>Edit</button>
                     </div> -->

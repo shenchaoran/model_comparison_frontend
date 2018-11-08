@@ -7,9 +7,9 @@
             </mat-expansion-panel-header>
 
             <ng-container *ngFor='let event of IO.inputs'>
-                <div class='ogms-form-item' nz-row>
-                    <span nz-col nzSpan='6'>{{event.name}}</span>
-                    <div nz-col nzSpan='18'>
+                <div class='col-12 float-left'>
+                    <span class='col-3 float-left px-1 pb-2'>{{event.name}}</span>
+                    <div class='col-9 float-left px-1 pb-2'>
                         <a (click)='download(event)'>{{event.fname}}</a>
                     </div>
                 </div>
@@ -21,9 +21,9 @@
                 <mat-panel-description></mat-panel-description>
             </mat-expansion-panel-header>
             <ng-container *ngFor='let event of IO.paramsters'>
-                <div class='ogms-form-item' nz-row>
-                    <span nz-col nzSpan='6'>{{event.name}}</span>
-                    <div nz-col nzSpan='18'>
+                <div class='col-12 float-left'>
+                    <span class='col-3 float-left px-1 pb-2'>{{event.name}}</span>
+                    <div class='col-9 float-left px-1 pb-2'>
                         <a (click)='download(event)'>{{event.value}}</a>
                     </div>
                 </div>
@@ -35,9 +35,9 @@
                 <mat-panel-description></mat-panel-description>
             </mat-expansion-panel-header>
             <ng-container *ngFor='let event of IO.outputs'>
-                <div class='ogms-form-item' nz-row>
-                    <span nz-col nzSpan='6'>{{event.name}}</span>
-                    <div nz-col nzSpan='18'>
+                <div class='col-12 float-left'>
+                    <span class='col-3 float-left px-1 pb-2'>{{event.name}}</span>
+                    <div class='col-9 float-left px-1 pb-2'>
                         <a (click)='download(event)'>{{event.fname}}</a>
                     </div>
                 </div>

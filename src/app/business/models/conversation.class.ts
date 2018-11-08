@@ -6,6 +6,7 @@ import { ConversationService } from '../services/conversation.service';
 export class Conversation {
     _id?: any;
     pid: string;
+    ptype: 'topic' | 'task' | 'solution' | 'calcuTask' | 'ms';
     // 点赞
     like_uids: string[];
     // 收藏
@@ -13,9 +14,10 @@ export class Conversation {
     tags: (string | 'TOP' | 'HOT')[];
     comments: Comment[];
     
-    constructor(user: User, pid: string) {
+    constructor(user: User, pid: string, ptype) {
         this._id = ObjectID().toString();
         this.pid = pid;
+        this.ptype = ptype;
         this.like_uids = [];
         this.love_uids = [];
         this.tags = [];
