@@ -38,3 +38,9 @@ body {
         background: #86befd !important;
     }
 }
+
+.ogms-dl-group {
+    >* {
+        border-bottom: 1px dashed #ccc;
+    }
+}

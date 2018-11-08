@@ -31,6 +31,12 @@ export class ListBaseService {
         return this.http.get(`${this.baseUrl}/${id}`, undefined, undefined, undefined, withRequestProgress);
     }
 
+    findOneByWhere(where): Observable<any> {
+        return this.http.get(`${this.baseUrl}`, {
+            params: where
+        });
+    }
+
     getTopK(k) {
         return this.http.get(`${this.baseUrl}`, {
             params: {

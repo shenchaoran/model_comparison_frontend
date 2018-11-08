@@ -14,15 +14,15 @@
                 <p class='f3-light text-gray my-3'>
                     {{msRecord.meta.desc | description}}
                 </p>
-                <dl class='ogms-table-info'>
-                    <dt>Author</dt>
-                    <dd>{{msRecord.auth.userName | undefined}}</dd>
-                    <dt>Authorization</dt>
-                    <dd>{{msRecord.auth.src | resourceSrc}}</dd>
-                    <dt>Create time</dt>
-                    <dd>{{msRecord.meta.time | date:'yyyy-MM-dd'}}</dd>
-                    <dt>Status</dt>
-                    <dd>
+                <dl class='ogms-dl-group my-3 clearfix'>
+                    <dt class='pb-1 mb-1 col-2 float-left px-3 text-bold text-gray'>Author</dt>
+                    <dd class='pb-1 mb-1 col-4 float-left'>{{msRecord.auth.userName | undefined}}</dd>
+                    <dt class='pb-1 mb-1 col-2 float-left px-3 text-bold text-gray'>Authorization</dt>
+                    <dd class='pb-1 mb-1 col-4 float-left'>{{msRecord.auth.src | resourceSrc}}</dd>
+                    <dt class='pb-1 mb-1 col-2 float-left px-3 text-bold text-gray'>Create time</dt>
+                    <dd class='pb-1 mb-1 col-4 float-left'>{{msRecord.meta.time | date:'yyyy-MM-dd'}}</dd>
+                    <dt class='pb-1 mb-1 col-2 float-left px-3 text-bold text-gray'>Status</dt>
+                    <dd class='pb-1 mb-1 col-4 float-left'>
                         <span>
                             {{ msRecord.state === 'INIT'? 'To configured' : msRecord.state === 'RUNNING'?
                             'Running' : msRecord.state === 'COULD_START'?

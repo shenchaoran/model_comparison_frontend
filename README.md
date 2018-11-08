@@ -85,6 +85,11 @@ npm run debug
 - [ ] auth guard
 - [ ] mongodb 大文档的查询效率
 - [ ] build-optimizer 入口代码被当做 dead code 删掉了？
+- [ ] lazy-loading: conversation ...
+- [ ] 并行计算接入
+    - [ ] 结算节点的注册
+    - [ ] 模型调用接口相同，用户并不知道是否使用了并行，但同时要暴露并行调用的参数
+    - [ ] 并行结果/效率的查看，转到并行服务管理器
 
 ## Architecture
 
@@ -192,4 +197,3 @@ declare var jQuery: any;
 
 - 文件和文件夹命名：烤串命名法
 - 文件命名：feature.type.ts
-
