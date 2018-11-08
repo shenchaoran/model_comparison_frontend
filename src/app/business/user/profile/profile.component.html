@@ -1,19 +1,18 @@
-<div nz-row class="py-lg">
-    <div nz-col nzSpan="6" class="profile-left">
-        <nz-card [nzBordered]="false" class="mb-lg" [nzLoading]="!user">
+<div class="py-lg">
+    <div class="profile-left">
+        <div class="mb-lg">
             <ng-container *ngIf="user">
                 <div class="avatarHolder">
                     <img [attr.src]='user.avator'>
                 </div>
                 <h1 style="text-align:center"><span class="username">{{user.username}}</span></h1>
-                <button nz-button nzType="default" style="width:100%;margin-bottom: 20px" *ngIf=false>Follow</button>
 
-                <nz-divider nzDashed style="margin-top:12px;margin-bottom:12px"></nz-divider>
+                <div class="line"></div>
 
-                <div class="detail"> 
+                <div class="detail">
                     <p *ngIf="user.group" class="user_info" title="{{user.group}}">
-                      <i class="group"></i>
-                      <span class="ws">{{user.group}}</span>
+                        <i class="group"></i>
+                        <span class="ws">{{user.group}}</span>
                     </p>
                     <p *ngIf="user.location" class="user_info" title="{{user.location}}">
                         <i class="address"></i>
@@ -29,16 +28,30 @@
                     </p>
                 </div>
             </ng-container>
-        </nz-card>
+        </div>
     </div>
-    <div nz-col nzSpan="18" class="profile-right col-18">
-        <nz-card class='tabsCard' [nzBordered]="false" [nzTitle]="tagTitleTpl">
-            <ng-template #tagTitleTpl>
-                <nz-tabset nzSize="small" [nzSelectedIndex]="pos">
-                    <nz-tab *ngFor="let i of tabs" [nzTitle]="i.tab" (nzClick)="to(i)"></nz-tab>
-                </nz-tabset>
-            </ng-template>
-            <router-outlet></router-outlet>
-        </nz-card>
+    <div class="profile-right">
+        <mat-tab-group>
+            <mat-tab label="Overview">
+                <ng-template matTabContent>
+                    <ogms-user-overview></ogms-user-overview>
+                </ng-template>
+            </mat-tab>
+            <mat-tab label="Topics">
+                <ng-template matTabContent>
+                    <ogms-user-topics></ogms-user-topics> 
+                </ng-template>
+            </mat-tab>
+            <mat-tab label="Solutions">
+                <ng-template matTabContent>
+                    <ogms-user-solutions></ogms-user-solutions> 
+                </ng-template>
+            </mat-tab>
+            <mat-tab label="Results & Diagnostics">
+                <ng-template matTabContent>
+                    <ogms-user-tasks></ogms-user-tasks>
+                </ng-template>
+            </mat-tab>
+        </mat-tab-group>
     </div>
 </div>

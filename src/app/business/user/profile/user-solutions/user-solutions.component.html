@@ -3,7 +3,7 @@
     <mat-button-toggle>Followed</mat-button-toggle>
 </mat-button-toggle-group>
 
-<nz-card [nzBordered]="false" [nzLoading]="!slnList">
+<div >
   <section *ngFor="let sln of slnList" class="list-item">
     <div class="detail-group">
       <h3>
@@ -27,4 +27,4 @@
       </a>
     </div>
   </section>
-</nz-card>
+</div>
