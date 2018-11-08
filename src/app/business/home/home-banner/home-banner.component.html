@@ -1,37 +1,17 @@
-<div class="bg">
-  <nz-carousel nzAutoPlay>
-    <div nz-carousel-content>
-      <div nz-row>
-        <div>
-          <div class="text-first">Run all kinds of model online</div>
-          <div class="text-second">I am the detail information the detail information the detail information the detail information</div>
-        </div>
+<div class="MarketplaceJumbotron py-6">
+  <ngu-carousel #myCarousel [inputs]="carouselTileConfig" [dataSource]="carouselTileItems">
+    <ngu-tile *nguCarouselDef="let item; let i = index; let ani = animate" [@slider]="ani"> 
+      <div class="tile">
+        <h1 class='alt-h1 text-center text-white mt-md-4 mb-3 mx-2 lh-condensed-ultra'>{{item.h1}}</h1>
+        <p class='alt-lead mb-5 mx-2 text-center text-white lh-condensed' style='opacity: 0.5'>{{item.desc}}</p>
       </div>
-    </div>
-    <div nz-carousel-content>
-      <div nz-row>
-        <div>
-          <div class="text-first">Provide your own Topic</div>
-          <div class="text-second">I am the detail information the detail information the detail information the detail information</div>
-        </div>
-      </div>
-    </div>
-    <div nz-carousel-content>
-      <div nz-row>
-        <div>
-          <div class="text-first">Create solution to compare topic</div>
-          <div class="text-second">I am the detail information the detail information the detail information the detail information</div>
-        </div>
-        <div class="text-first"></div>
-      </div>
-    </div>
-    <div nz-carousel-content>
-      <div nz-row>
-        <div>
-          <div class="text-first">Config and Compute the task user-defined</div>
-          <div class="text-second">I am the detail information the detail information the detail information the detail information</div>
-        </div>
-      </div>
-    </div>
-  </nz-carousel>
+    </ngu-tile>
+  
+    <button NguCarouselPrev class="switch-btn leftRs" [style.opacity]="myCarousel.isFirst ? 0.5:1">&lt;</button>
+    <button NguCarouselNext class="switch-btn rightRs" [style.opacity]="myCarousel.isLast ? 0.5:1">&gt;</button>
+  
+    <ul class="myPoint" NguCarouselPoint>
+      <li *ngFor="let i of myCarousel.pointNumbers; let i = index" [class.active]="i==myCarousel.activePoint" (click)="myCarousel.moveTo(i)"></li>
+    </ul>
+  </ngu-carousel>
 </div>

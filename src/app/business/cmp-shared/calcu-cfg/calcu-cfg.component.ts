@@ -28,6 +28,7 @@ import { debounce } from 'rxjs/operators';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { UploadInput } from 'ngx-uploader';
 import { chain, find,  } from 'lodash';
+import { NgModelBase } from '@shared';
 
 @Component({
     selector: 'ogms-calcu-cfg',
@@ -39,22 +40,17 @@ import { chain, find,  } from 'lodash';
             useExisting: forwardRef(() => CalcuCfgComponent),
             multi: true
         }
-        // {
-        //     provide: NG_VALIDATORS,
-        //     useExisting: forwardRef(() => CalcuCfgComponent),
-        //     multi: true
-        // }
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CalcuCfgComponent implements OnInit, AfterViewInit {
-    _msInstance;
-    stds;
+export class CalcuCfgComponent extends NgModelBase implements OnInit, AfterViewInit {
+    get calcuTask() { return this.value; }
     selectedSTD;
 
     IOForm: FormGroup;
-    @Input() set msInstance(v) {
-        this.init(v);
+    @Input() set calcuTask(v) {
+        this._innerValue = v;
+        this._innerValue$.next(v);
     }
     @Input() width = '350px';
     @Output() onValidChange = new EventEmitter<boolean>();
@@ -65,10 +61,11 @@ export class CalcuCfgComponent implements OnInit, AfterViewInit {
         @Inject('API') private api,
         private userService: UserService,
         private fb: FormBuilder,
-        private datasetService: DatasetService,
         public dialog: MatDialog,
         public cdRef: ChangeDetectorRef,
     ) {
+        super();
+
         const token = this.userService.token;
         const user = this.userService.user;
 
@@ -86,23 +83,16 @@ export class CalcuCfgComponent implements OnInit, AfterViewInit {
                 Authorization: 'bearer ' + token
             }
         };
+
+        this._innerValue$.subscribe(v => {
+            this.init();
+        })
     }
 
-    init(v) {
-        this._msInstance = v;
-        this.fetchStds(v.ms.stdIds);
+    init() {
         this.appendSchema();
         this.buildForm();
         this.onValidChange.emit(false);
-    }
-
-    fetchStds(stdIds) {
-        this.datasetService.fetchDbEntries(stdIds)
-            .subscribe(response => {
-                if (!response.error) {
-                    this.stds = response.data;
-                }
-            })
     }
 
     ngAfterViewInit() { }
@@ -111,13 +101,13 @@ export class CalcuCfgComponent implements OnInit, AfterViewInit {
 
     appendSchema() {
         let appendSchema = (type, schema) => {
-            map(this._msInstance.IO[type] as any[], event => {
+            map(this.calcuTask.IO[type] as any[], event => {
                 if (event.schemaId === schema.id) {
                     event.schema = schema;
                 }
             });
         }
-        map(this._msInstance.IO.schemas, schema => {
+        map(this.calcuTask.IO.schemas, schema => {
             appendSchema('inputs', schema);
             appendSchema('std', schema);
             appendSchema('parameters', schema);
@@ -141,11 +131,11 @@ export class CalcuCfgComponent implements OnInit, AfterViewInit {
             };
             return this.fb.group(gp);
         }
-        let inputCtrls = map(this._msInstance.IO.inputs, item => myFormGroup(item, 'inputs'));
-        let outputCtrls = map(this._msInstance.IO.outputs, item => myFormGroup(item, 'outputs'));
-        let stdCtrls = map(this._msInstance.IO.std, item => myFormGroup(item, 'std'));
-        let paraCtrls = map(this._msInstance.IO.parameters, item => myFormGroup(item, 'parameters'));
-        let dataSrc = this._msInstance.IO.dataSrc === '' || !this._msInstance.IO.dataSrc ? 'STD' : this._msInstance.IO.dataSrc;
+        let inputCtrls = map(this.calcuTask.IO.inputs, item => myFormGroup(item, 'inputs'));
+        let outputCtrls = map(this.calcuTask.IO.outputs, item => myFormGroup(item, 'outputs'));
+        let stdCtrls = map(this.calcuTask.IO.std, item => myFormGroup(item, 'std'));
+        let paraCtrls = map(this.calcuTask.IO.parameters, item => myFormGroup(item, 'parameters'));
+        let dataSrc = this.calcuTask.IO.dataSrc === '' || !this.calcuTask.IO.dataSrc ? 'STD' : this.calcuTask.IO.dataSrc;
         this.IOForm = this.fb.group({
             dataSrc: [dataSrc, [Validators.required]],
             inputs: this.fb.array(inputCtrls),
@@ -163,9 +153,9 @@ export class CalcuCfgComponent implements OnInit, AfterViewInit {
             .subscribe(status => {
                 // console.log(status);
                 if (status === 'VALID') {
-                    const dataSrc = this._msInstance.IO.dataSrc = this.IOForm.value.dataSrc;
+                    const dataSrc = this.calcuTask.IO.dataSrc = this.IOForm.value.dataSrc;
                     let setV = (tag) => {
-                        this._msInstance.IO[tag] = map(this.IOForm.value[tag] as any[], item => {
+                        this.calcuTask.IO[tag] = map(this.IOForm.value[tag] as any[], item => {
                             return {
                                 id: item.id,
                                 name: item.name,
@@ -184,8 +174,8 @@ export class CalcuCfgComponent implements OnInit, AfterViewInit {
                     setV('outputs');
                     setV('std');
                     setV('parameters');
-                    this._msInstance.std = this.IOForm.value.STD;
-                    this.propagateChange(this._msInstance);
+                    this.calcuTask.stdId = get(this, 'IOForm.value.STD._id');
+                    this.propagateChange(this.calcuTask);
                 }
                 else {
                     // this.propagateChange(null);
@@ -197,7 +187,7 @@ export class CalcuCfgComponent implements OnInit, AfterViewInit {
     download(url) {
         if (url === 'STD') {
             // TODO
-            map(this._msInstance.IO.inputs as any[], (input, i) => {
+            map(this.calcuTask.IO.inputs as any[], (input, i) => {
                 window.open(`${this.api.backend}${input.url}`);
             })
         }
@@ -307,19 +297,6 @@ export class CalcuCfgComponent implements OnInit, AfterViewInit {
         //     STDCtrl.updateValueAndValidity()
         // }
     }
-
-    private propagateChange = (e: any) => { };
-
-    public writeValue(obj: any) {
-        if(obj)
-            this.init(obj);
-    }
-
-    public registerOnChange(fn: any) {
-        this.propagateChange = fn;
-    }
-
-    public registerOnTouched(fn: any) { }
 }
 
 @Component({

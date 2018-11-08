@@ -1,33 +1,14 @@
 <div ogms-rx-box class="flex-box-row-nowrap">
     <div class="ogms-left">
-        <div class='menu'>
-            <ul nz-menu [nzMode]='"inline"'>
-                <li nz-menu-item *ngFor='let item of stdList; let i=index;' [nzSelected]='i===0' (click)='onClassSelected(item)'>
-                    <!-- <span title [routerLink]='item.stdClass' [queryParams]='{id: item._id}'>{{item.meta.name}}</span> -->
-                    <span title>{{item.meta.name}}</span>
-                </li>
-            </ul>
-        </div>
-        <ng-container *ngIf='_eventMenuVisiable'>
-            <div class='menu'>
-                <ul nz-menu [nzMode]='"inline"'>
-                    <li nz-submenu [nzOpen]='true'>
-                        <span title>Inputs</span>
-                        <ul>
-                            <li *ngFor='let item of selectedSTD?.content?.IO?.inputs; let i=index;' nz-menu-item (click)='onEventSelected(item)'>{{item.name}}</li>
-                        </ul>
-                    </li>
-                    <li nz-submenu>
-                        <span title>Outputs</span>
-                        <ul>
-                            <li *ngFor='let item of selectedSTD?.content?.IO?.outputs' nz-menu-item (click)='onEventSelected(item)'>{{item.name}}</li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </ng-container>
+        <nav class="menu" aria-labelledby="menu-heading">
+            <span class="menu-heading" id="menu-heading">Standard dataset</span>
+            <a matRipple *ngFor='let item of stdList'
+             [class.selected]='selectedSTD === item' 
+             (click)='onClassSelected(item)' 
+             class="menu-item">{{item.meta.name}}</a>
+        </nav>
     </div>
-    <div class="ogms-right flex-item-1-1-auto">
+    <div class="ogms-right flex-spacer">
         <!-- <router-outlet></router-outlet> -->
 
         <!-- TODO: 隐藏还是只显示一个 -->
@@ -42,5 +23,3 @@
         </ng-container>
     </div>
 </div>
-
-

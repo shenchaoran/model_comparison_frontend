@@ -48,11 +48,32 @@ npm run debug
 - [ ] docking layout
 - [x] 页面加载速度
 - [x] 评论系统
-- [ ] 和bootstrap结合
-- [x] 分割common module，打包后太大
+- [x] ~~和bootstrap结合~~
+- [x] 分割 common module ，打包后太大
 - [ ] echarts tree-shaking
 - [ ] zorro tree-shaking
 - [ ] material theme custom
+- [ ] 用户个人空间相关
+    - [ ] 路由 RESTful 风格化：user/:username
+    - [ ] 关注、收藏的 topic, sln, task
+    - [ ] 消息订阅与通知
+- [ ] remove slim-loading-bar, use mat-progress-bar
+- [ ] remove list-template, use mat-list
+- [ ] remove disabled-button, use snackbar to alert valid state
+- [ ] remove header, use mat-toolbar
+- [ ] remove custom card, use mat-card
+- [ ] remove ng-zorro-antd !!!
+    - [ ] 样式冲突，首先移除
+- [ ] 首页重新设计，展现的元素尽量少，首页去除 ajax
+- [ ] 动态设置 title
+- [ ] primer style
+    - [ ] colorful label/tag
+    - [ ] navigation component/filter/menu
+    - [ ] popover
+    - [ ] subhead with description
+    - [ ] css-truncate
+    - [ ] color plaette
+    - [ ] Typography
 
 ## Architecture
 

@@ -1,4 +1,4 @@
-<nav>
+<nav class='ogms-header-nav'>
     <a mat-button routerLink='/home'>
         <img id="logo" src="assets/img/app/logo-blue-white.png" height="35" />
     </a>
@@ -24,7 +24,7 @@
             </ng-template>
         </ng-container>
     </div>
-    <span class='flex-item-1-1-auto'></span>
+    <span class='flex-spacer'></span>
     <div id="login-menu">
         <div *ngIf="logined else gotoLogin">
             <button class='menu-btn' mat-button [matMenuTriggerFor]='userMenuTemp'>

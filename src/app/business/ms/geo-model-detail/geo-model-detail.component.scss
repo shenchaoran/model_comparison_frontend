@@ -1,0 +1,12 @@
+.doc-body {
+    display: flex;
+    flex-flow: row nowrap;
+
+    article {
+        flex: 3;
+    }
+
+    aside {
+        flex: 1;
+    }
+}

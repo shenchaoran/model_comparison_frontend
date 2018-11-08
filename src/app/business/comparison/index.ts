@@ -26,6 +26,7 @@ import {
     MatButtonToggleModule,
     MatListModule,
     MatTableModule,
+    MatSnackBarModule,
 } from '@angular/material';
 
 import { SolutionListComponent } from './solution-list/solution-list.component';
@@ -59,6 +60,7 @@ const modules = [
     MatIconModule,
     MatSelectModule,
     MatListModule,
+    MatSnackBarModule,
     MatButtonToggleModule,
     ComparisonRoutingModule,
     CmpSharedModule,

@@ -23,8 +23,12 @@ export class CalcuTask {
         userName: string,
         src: ResourceSrc
     };
-    ms: any;
-    topic: string;
+    // ms: any;
+    msId: string;
+    msName: string;
+    topicId: string;
+    topicName: string;
+    // topic: string;
     cmpTaskId: string;
     node: any;
     IO: {
@@ -33,16 +37,21 @@ export class CalcuTask {
         data: any[],
         std: any[]
     };
-    std: any;
+    // std: any;
+    stdId: string;
     state: CalcuTaskState;
     progress: number;
     subscribed_uids: string[];
-    // [key: string]: any;
+    [key: string]: any;
 
     constructor(user: User, ms?) {
         if (ms) {
-            this.ms = ms;
-            this.topic = ms.topic;
+            // this.ms = ms;
+            this.msId = ms._id;
+            this.msName = ms.MDL.meta.name;
+            this.topicId = ms.topicId;
+            this.topicName = ms.topicName;
+            // this.topic = ms.topic;
             this.IO = cloneDeep(ms.MDL.IO);
             this.IO.dataSrc = 'STD';
             let appendSchema = (type, schema) => {

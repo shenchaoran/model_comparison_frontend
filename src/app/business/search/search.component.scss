@@ -1,0 +1,11 @@
+.container {
+    display: flex;
+    flex-flow: row nowrap;
+    aside {
+        flex: 1;
+        order: 0;
+    }
+    article {
+        flex: 3;
+    }
+}

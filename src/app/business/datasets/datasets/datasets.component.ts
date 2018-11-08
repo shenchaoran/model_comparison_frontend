@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DatasetService } from '../../services/dataset.service';
+import { DatasetService } from '../../services';
 import { Router } from '@angular/router';
 import { cloneDeep } from 'lodash';
 
@@ -13,26 +13,24 @@ export class DatasetsComponent implements OnInit {
     stdCount: number;
     selectedSTD: any;
 
-    _eventMenuVisiable: boolean;
     selectedEvent: any;
 
     constructor(
-        private service: DatasetService,
+        private datasetService: DatasetService,
         private router: Router,
     ) { }
 
     ngOnInit() {
-        this.service.findAll()
-            .subscribe(response => {
-                if (!response.error) {
-                    this.stdList = response.data.docs;
-                    this.stdCount = response.data.count;
+        this.datasetService.findAll().subscribe(res => {
+            if (!res.error) {
+                this.stdList = res.data.docs;
+                this.stdCount = res.data.count;
 
-                    if (this.stdCount > 0) {
-                        this.selectedSTD = this.stdList[0];
-                    }
+                if (this.stdCount > 0) {
+                    this.selectedSTD = this.stdList[0];
                 }
-            });
+            }
+        });
     }
 
     onEventSelected(event) {
@@ -42,6 +40,5 @@ export class DatasetsComponent implements OnInit {
     onClassSelected(std) {
         this.selectedSTD = std;
         this.selectedEvent = undefined;
-        this._eventMenuVisiable = false;
     }
 }

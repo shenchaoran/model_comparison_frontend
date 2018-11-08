@@ -1,7 +1,8 @@
 // @import '~@angular/material/prebuilt-themes/indigo-pink.css';
 // @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
-
+@import './varyable';
 @import '~@angular/material/_theming.scss';
+
 @include mat-core();
 $candy-app-primary: mat-palette($mat-blue);
 $candy-app-accent:  mat-palette($mat-pink, A200, A100, A400);
@@ -22,4 +23,10 @@ mat-button-toggle {
 
 mat-icon {
     vertical-align: middle;
+}
+
+
+.pop-menu-item.selected {
+    font-weight: 600;
+    background: rgba(0, 0, 0, 0.04)
 }

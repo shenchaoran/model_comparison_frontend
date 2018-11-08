@@ -1,4 +1,4 @@
-<mat-button-toggle-group>
+<mat-button-toggle-group appearance="legacy">
     <mat-button-toggle>Calculation</mat-button-toggle>
     <mat-button-toggle>Comparison</mat-button-toggle>
 </mat-button-toggle-group>
@@ -7,12 +7,12 @@
   <section *ngFor="let item of results" class="list-item">
     <div class="detail-group">
       <h3>
-        <a [routerLink]='["/results",result_type,item._id]'>{{item.auth.userName}}/{{item.meta.name}}</a>
+        <a [routerLink]='["/results",result_type,item._id]'>{{item.auth.userName}} / {{item.meta.name}}</a>
       </h3>
       <p>{{item.meta.desc | stringLimit: 180 | description}}</p>
       <p>
         <mat-chip-list>
-          <mat-chip *ngFor="let ms of item.participants" [routerLink]='["/geo-models",ms._id]' class="topic model-topic">{{ms.msName}}</mat-chip>
+          <mat-chip *ngFor="let ms of item.participants" [routerLink]='["/geo-models",ms._id]' class="topic ms-chip">{{ms.msName}}</mat-chip>
         </mat-chip-list>
       </p>
       <div>{{item.meta.time | date: 'yyyy-MM-dd hh:mm'}}</div>

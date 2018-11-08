@@ -15,15 +15,9 @@ import {
     MatButtonModule, 
     MatInputModule,
     MatButtonToggleModule,
+    MatGridListModule,
+    MatTableModule,
 } from '@angular/material';
-import {
-    // NzButtonModule,
-    // NzGridModule,
-    // NzTableModule,
-    // NzPaginationModule,
-    NgZorroAntdModule,
-    NzCheckboxModule,
-} from 'ng-zorro-antd';
 
 import { ModelsRoutingModule } from './index-routing.module';
 import { GeoModelDetailComponent } from './geo-model-detail/geo-model-detail.component';
@@ -41,17 +35,13 @@ const modules = [
     OlModule,
     MatChipsModule, 
     MatIconModule, 
-    MatProgressSpinnerModule, 
+    MatProgressSpinnerModule,
+    MatTableModule, 
     MatFormFieldModule, 
     MatButtonModule, 
+    MatGridListModule,
     MatButtonToggleModule,
     MatInputModule,
-    // NzButtonModule,
-    // NzGridModule,
-    // NzCheckboxModule,
-    // NzTableModule,
-    // NzPaginationModule,
-    NgZorroAntdModule,
     HeaderMenuLayoutModule,
     CustomTemplateModule,
     DirectivesModule,

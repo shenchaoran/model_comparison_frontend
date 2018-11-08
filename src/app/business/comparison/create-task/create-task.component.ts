@@ -1,16 +1,12 @@
 import { Component, OnInit, HostListener } from "@angular/core";
-import {
-    SolutionService,
-    TaskService,
-    UserService
-} from "../../services";
+import { SolutionService, TaskService, UserService, } from "../../services";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { DynamicTitleService } from "@core/services/dynamic-title.service";
 import { OgmsBaseComponent } from '@shared';
 import { FormBuilder, Validators, FormGroup, FormArray, FormControl } from '@angular/forms';
-import { Task, CalcuTask, ResourceSrc, CmpState, CalcuTaskState } from '@models';
+import { Task, CalcuTask, ResourceSrc, CmpState, CalcuTaskState, MS, Solution,  } from '@models';
 import { MatSnackBar } from '@angular/material';
-import { map } from 'lodash';
+import { map, filter, includes,  } from 'lodash';
 
 @Component({
     selector: 'ogms-create-task',
@@ -18,7 +14,10 @@ import { map } from 'lodash';
     styleUrls: ['./create-task.component.scss']
 })
 export class CreateTaskComponent extends OgmsBaseComponent implements OnInit {
-    sln;
+    sln: Solution;
+    ptMSs: MS[];
+    stds;
+
     task;
     calcuTasks = [];
     cmpTaskFG;
@@ -65,9 +64,11 @@ export class CreateTaskComponent extends OgmsBaseComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.solutionService.findOne(this.route.snapshot.paramMap.get('id')).subscribe(res => {
+        this.solutionService.createTask(this.route.snapshot.paramMap.get('id')).subscribe(res => {
             if (!res.error) {
-                this.sln = res.data;
+                this.sln = res.data.solution;
+                this.ptMSs = res.data.ptMSs;
+                this.stds = res.data.stds;
             }
         });
     }
@@ -86,7 +87,7 @@ export class CreateTaskComponent extends OgmsBaseComponent implements OnInit {
         this.task.topicId = this.sln.topicId;
         this.task.calcuTaskIds = [];
         this.task.schemas = [];
-        this.sln.participants.map(ms => ms.MDL.IO.schemas.map(schema => {
+        this.ptMSs.map(ms => ms.MDL.IO.schemas.map(schema => {
             schema.msId = ms._id;
             this.task.schemas.push(schema);
         }));
@@ -110,7 +111,7 @@ export class CreateTaskComponent extends OgmsBaseComponent implements OnInit {
             let slnDataRefers = cmpObj.dataRefers;
             cmpObj.dataRefers = [];
             this.calcuTasks.map(msr => {
-                let dr = slnDataRefers.find(dr => dr.msId === msr.ms._id);
+                let dr = slnDataRefers.find(dr => dr.msId === msr.msId);
                 cmpObj.dataRefers.push({
                     ...dr,
                     msrId: msr._id,
@@ -142,6 +143,10 @@ export class CreateTaskComponent extends OgmsBaseComponent implements OnInit {
 
     addInstance(ms) {
         let newCalTask = new CalcuTask(this.userService.user, ms);
+        let matchedSTDs = filter(this.stds as any[], std => {
+            return includes(std.models, newCalTask.msId);
+        });
+        newCalTask.stds = matchedSTDs;
         this.calTasksCtrl.push(new FormControl(newCalTask, Validators.required))
         this.calTasksCtrl.updateValueAndValidity();
 

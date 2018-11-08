@@ -5,19 +5,9 @@
     z-index: 100;
 }
 
-.sln-list {
+.aside-ul {
     mat-icon {
         cursor: pointer;
         vertical-align: middle;
-    }
-
-    li {
-        &:not(:last-child) {
-            border-bottom: 1px solid #f3f3f3e0;
-        }
-
-        &:hover {
-            color: #0366d6;
-        }
     }
 }

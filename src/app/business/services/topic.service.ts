@@ -46,13 +46,6 @@ export class TopicService extends ListBaseService {
     }
 
     /**
-     * 关联/取消关联方案
-     */
-    public changeIncludeSln(topicId, ac, solutionId) {
-        return this.http.patch(`${this.baseUrl}/${topicId}/solution`, { ac, solutionId });
-    }
-
-    /**
      * 订阅/取消订阅
      */
     public subscribeToggle(topicId, ac, uid) {

@@ -5,22 +5,28 @@
         (onClear)='_onClearUploaded()'></ogms-file-uploader>
     <ogms-file-uploader id='uploader' [uploadInput]="uploadInput" (onFileUploading)="_onFileUpload($event)" (onFileUploadCompleted)='_onFileUploadCompleted($event)'
         (onClear)='_onClearUploaded()' [size]='"small"'></ogms-file-uploader> -->
-    <!-- <nz-datepicker style='width: 250px;' [(ngModel)]='date' (ngModelChange)='onDateChange($event)' [nzFormat]='"YYYY-MM-DD"'></nz-datepicker> -->
     <br>
 
     <!-- <ogms-file-uploader-form-item [label]='"test file"' [ngModel]='fileId' (ngModelChange)='onUploaded($event)' [uploadInput]="uploadInput"></ogms-file-uploader-form-item> -->
-
-    <!-- <span [nz-tooltip]='"s"'>with tooltip</span> -->
 
     <br>
     <ngx-mat-cascader 
     placeholder='Select' 
     [(data)]='cascaderData' 
-    [ngModel]='cascaderValue' 
-    (ngModelChange)='onCascaderChange($event, "ngModelChange")'
+    [(ngModel)]='cascaderValue' 
+    (ngModelChange)='onCascaderChange($event, "ngModelChange")'></ngx-mat-cascader>
+    <br>
+    <ngx-mat-cascader 
+    placeholder='Select' 
+    [(data)]='cascaderData' 
+    [(value)]='cascaderValue' 
     (valueChange)='onCascaderChange($event, "valueChange")'></ngx-mat-cascader>
     <br>
-    <!-- <ngx-mat-cascader placeholder='Select' [(data)]='cascaderData2' [value]='[1,12,122]'></ngx-mat-cascader> -->
+    <ngx-mat-cascader 
+    [formControl]='cascaderFC'
+    placeholder='Select' 
+    [(data)]='cascaderData'></ngx-mat-cascader>
+    <br>
     
     <!-- <ogms-handsome-table></ogms-handsome-table> -->
 

@@ -54,8 +54,10 @@ mat-form-field {
 }
 
 .cmpObj.read {
+    padding-bottom: 35px;
     table {
         width: $formWidth;
+        margin-bottom: 20px;
     }
 }
 

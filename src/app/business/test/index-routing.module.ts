@@ -1,7 +1,6 @@
 import { ConversationComponent } from '../conversation/conversation/conversation.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { SiderNavComponent } from './sider-nav/sider-nav.component';
 import { HeaderMenuLayoutComponent } from '@shared';
 import { TestComponent } from './test.component';
 import { ReactiveFormComponent } from './reactive-form/reactive-form.component';
@@ -18,10 +17,6 @@ const routes: Routes = [
                 path: '',
                 component: TestComponent,
                 children: [
-                    {
-                        path: 'sider-nav',
-                        component: SiderNavComponent
-                    },
                     {
                         path: 'reactive-form',
                         component: ReactiveFormComponent

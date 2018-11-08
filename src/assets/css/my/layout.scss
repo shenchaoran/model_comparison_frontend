@@ -1,15 +1,16 @@
-.columns {
-    display: flex;
-    flex-flow: row nowrap;
-    margin: 0 -10px;
-    .column {
-        padding: 0 10px;
-    }
+html,
+body{
+    height: 100%;
 }
 
-.flex-box-col-nowrap {
-    display: flex;
-    flex-flow: column nowrap;
+.go-top-button {
+    top: unset !important;
+    left: unset !important;
+    bottom: 150px !important;
+    right: 50px !important;
+    width: 50px !important;
+    height: 50px !important;
+    border-radius: 999px !important;
 }
 
 .flex-box-row-nowrap {
@@ -17,30 +18,19 @@
     flex-flow: row nowrap;
 }
 
-.flex-item-1-1-auto {
+.flex-spacer {
     flex: 1 1 auto;
 }
 
-.flex-item-1 {
-    flex: 1;
-}
-
-.flex-item-2 {
-    flex: 2;
-}
-
-.flex-item-3 {
-    flex: 3;
-}
-
+// reactive-layout
 @mixin layout($paddingHorizontal) {
-    nav {
+    .ogms-header-nav {
         padding: 0 $paddingHorizontal;
     }
     .rx-box {
         padding: 24px $paddingHorizontal;
     }
-    footer {
+    .ogms-footer {
         padding-left: $paddingHorizontal !important;
         padding-right: $paddingHorizontal !important;
     }

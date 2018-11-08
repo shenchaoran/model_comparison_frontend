@@ -29,11 +29,6 @@ import { map, chain, filter, } from 'lodash';
             useExisting: forwardRef(() => CheckBoxFormItemComponent),
             multi: true
         }
-        // {
-        //     provide: NG_VALIDATORS,
-        //     useExisting: forwardRef(() => CheckBoxFormItemComponent),
-        //     multi: true
-        // }
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

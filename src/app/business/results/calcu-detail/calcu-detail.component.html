@@ -11,30 +11,29 @@
                 <section>
                     <div class='section-header flex-box-row-nowrap'>
                         <span class='title'>Basic information</span>
-                        <span class='placeholder flex-item-1-1-auto'></span>
+                        <span class='flex-spacer'></span>
                     </div>
                     <div class='section-body'>
+                        <mat-grid-list></mat-grid-list>
                         <dl class='ogms-table-info'>
-                            <div nz-row>
-                                <dt nz-col nzSpan='4'>Author</dt>
-                                <dd nz-col nzSpan='8'>{{msRecord.auth.userName | undefined}}</dd>
-                                <dt nz-col nzSpan='4'>Authorization</dt>
-                                <dd nz-col nzSpan='8'>{{msRecord.auth.src | resourceSrc}}</dd>
-                                <dt nz-col nzSpan='4'>Create time</dt>
-                                <dd nz-col nzSpan='8'>{{msRecord.meta.time | date:'yyyy-MM-dd'}}</dd>
-                                <dt nz-col nzSpan='4'>Status</dt>
-                                <dd nz-col nzSpan='8'>
-                                    <span>
-                                        {{ msRecord.state === 'INIT'? 'To configured' : msRecord.state === 'RUNNING'?
-                                        'Running' : msRecord.state === 'COULD_START'?
-                                        'Ready to start' : msRecord.state === 'START_PENDING'? 'Starting' :
-                                        msRecord.state === 'START_FAILED'?
-                                        'Invoking failed' : msRecord.state === 'FINISHED_FAILED'? 'Run failed' :
-                                        msRecord.state
-                                        === 'FINISHED_SUCCEED'? 'Run succeed' : 'Unknown' }}
-                                    </span>
-                                </dd>
-                            </div>
+                            <dt>Author</dt>
+                            <dd>{{msRecord.auth.userName | undefined}}</dd>
+                            <dt>Authorization</dt>
+                            <dd>{{msRecord.auth.src | resourceSrc}}</dd>
+                            <dt>Create time</dt>
+                            <dd>{{msRecord.meta.time | date:'yyyy-MM-dd'}}</dd>
+                            <dt>Status</dt>
+                            <dd>
+                                <span>
+                                    {{ msRecord.state === 'INIT'? 'To configured' : msRecord.state === 'RUNNING'?
+                                    'Running' : msRecord.state === 'COULD_START'?
+                                    'Ready to start' : msRecord.state === 'START_PENDING'? 'Starting' :
+                                    msRecord.state === 'START_FAILED'?
+                                    'Invoking failed' : msRecord.state === 'FINISHED_FAILED'? 'Run failed' :
+                                    msRecord.state
+                                    === 'FINISHED_SUCCEED'? 'Run succeed' : 'Unknown' }}
+                                </span>
+                            </dd>
                         </dl>
                         <div class='detail-desc'>
                             {{msRecord.meta.desc | description}}
@@ -44,19 +43,19 @@
                 <section>
                     <div class='section-header flex-box-row-nowrap'>
                         <span class='title'>Progress</span>
-                        <span class='placeholder flex-item-1-1-auto'></span>
+                        <span class='flex-spacer'></span>
                     </div>
                     <div class='section-body'>
                         <div [style.width]='_width'>
-                            <nz-progress [nzPercent]="!msRecord.progress? 0: msRecord.progress" [nzStatus]="msRecord.state === 'FINISHED_SUCCEED'? 'success': msRecord.state === 'FINISHED_FAILED'? 'exception': 'active'">
-                            </nz-progress>
+                            <mat-progress-bar [value]="!msRecord.progress? 0: msRecord.progress" mode='determinate'></mat-progress-bar>
                         </div>
+                        <!-- msRecord.state === 'FINISHED_SUCCEED'? 'success': msRecord.state === 'FINISHED_FAILED'? 'exception': 'active' -->
                     </div>
                 </section>
                 <section>
                     <div class='section-header flex-box-row-nowrap'>
                         <span class='title'>Calculation configuration</span>
-                        <span class='placeholder flex-item-1-1-auto'></span>
+                        <span class='flex-spacer'></span>
                     </div>
                     <div class='section-body'>
                         <ogms-calcu-result [msr]='msRecord'></ogms-calcu-result>

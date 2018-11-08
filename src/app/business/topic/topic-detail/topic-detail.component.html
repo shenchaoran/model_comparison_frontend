@@ -35,13 +35,13 @@
         </ng-container>
         <ng-template #readTemplate>
             <div class='header-title read'>
-                <h2>{{topic.meta.name}}</h2>
+                <h2 class='pb-3'>{{topic.meta.name}}</h2>
                 <div class='title-btn-group'>
                     <button mat-button color='primary' *ngIf='couldEdit' (click)='onEditClick()'>Edit</button>
                     <!-- <button mat-flat-button color='primary' *ngIf='couldEdit' [routerLink]='["../create"]'>New Topic</button> -->
                 </div>
             </div>
-            <div class='header-meta'>
+            <div class='header-meta read'>
                 <p>{{topic.meta.desc | description}}</p>
                 <p><a class='author' routerLink='/user'>{{topic.auth.userName}}</a> created this topic at
                     {{topic.meta.time |
@@ -84,29 +84,32 @@
                     <div class='filter'>
                         <input placeholder='Filter solution' [(ngModel)]='slnFilter'>
                     </div>
-                    <ul *ngIf='solutionList && solutionList.length' class='opt-list ul-option'>
-                        <li *ngFor='let sln of solutionList' (click)='onSlnLiClick(sln)'>
-                            <div class='sln-select-placeholder'>
+                    <ul *ngIf='solutionList && solutionList.length' class='opt-list aside-ul'>
+                        <li *ngFor='let sln of solutionList' (click)='onAttachSolution(sln)'>
+                            <div class='sln-select-spacer'>
                                 <mat-icon inline *ngIf='sln.topicId === topic._id'>clear</mat-icon>
                             </div>
-                            {{sln.auth.userName}}/{{sln.meta.name}}
+                            {{sln.auth.userName}} / {{sln.meta.name}}
                         </li>
                         <li routerLink='/comparison/solutions'>
-                            <div class='sln-select-placeholder'></div>more
+                            <div class='sln-select-spacer'></div>more
                         </li>
                     </ul>
                 </div>
                 <div class='body'>
                     <ng-container *ngIf='selectedSolutions.length else noSlnTemp'>
-                        <ul class='sln-list ul-option'>
+                        <ul class='aside-ul with-route'>
                             <li *ngFor='let sln of selectedSolutions' [routerLink]='["/comparison/solutions", sln._id]'>
-                                {{sln.auth.userName}}/{{sln.meta.name}}
+                                {{sln.auth.userName}} / {{sln.meta.name}}
                             </li>
                         </ul>
                     </ng-container>
                     <ng-template #noSlnTemp>
                         <i>No related Solution.</i>
                     </ng-template>
+                    <button mat-stroked-button class='create-btn' routerLink='/comparison/solutions/create'>
+                        <mat-icon inline>add</mat-icon>&nbsp;<span>Create one</span>
+                    </button>
                 </div>
             </ogms-sidebar-section>
         </div>
@@ -114,7 +117,7 @@
         <div>
             <ogms-sidebar-section>
                 <div class='title'>
-                    {{users.length}} Participants
+                    {{users.length}} participants
                 </div>
                 <div class='body participants'>
                     <ng-container *ngFor='let user of users'>
@@ -124,20 +127,20 @@
             </ogms-sidebar-section>
         </div>
 
-        <div class='notification'>
+        <div>
             <ogms-sidebar-section>
                 <div class='title'>
                     Notifications
                 </div>
-                <div class='body'>
-                    <a mat-stroked-button (click)='onSubscribeToggle()'>
+                <div class='body notification'>
+                    <button mat-stroked-button (click)='onSubscribeToggle()'>
                         <ng-container *ngIf='includeUser else noticeTemp'>
-                            <mat-icon inline>notifications_off</mat-icon>Unsubscribe
+                            <mat-icon inline>notifications_off</mat-icon>&nbsp;<span>Unsubscribe</span>
                         </ng-container>
                         <ng-template #noticeTemp>
-                            <mat-icon inline>notifications</mat-icon>Subscribe
+                            <mat-icon inline>notifications</mat-icon>&nbsp;<span>Subscribe</span>
                         </ng-template>
-                    </a>
+                    </button>
                 </div>
             </ogms-sidebar-section>
         </div>

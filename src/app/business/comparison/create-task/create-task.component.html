@@ -27,7 +27,7 @@
 
                 <div class='form-item auth-group'>
                     <label>Authorition: </label>
-                    <mat-button-toggle-group formControlName='auth'>
+                    <mat-button-toggle-group appearance="legacy" formControlName='auth'>
                         <mat-button-toggle value='PRIVATE'>Private</mat-button-toggle>
                         <mat-button-toggle value='PUBLIC'>Public</mat-button-toggle>
                     </mat-button-toggle-group>
@@ -44,7 +44,7 @@
                 <div class='ms-chip-list'>
                     <p>Please select the following tag to create calculation instance.</p>
                     <mat-chip-list class='form-item'>
-                        <mat-chip *ngFor='let ms of sln.participants' color="primary" selected (click)='addInstance(ms)'>{{ms.MDL.meta.name}}</mat-chip>
+                        <mat-chip *ngFor='let ms of ptMSs' color="primary" selected (click)='addInstance(ms)'>{{ms.MDL.meta.name}}</mat-chip>
                     </mat-chip-list>
                 </div>
                 <div *ngIf='calTasksCtrl?.controls?.length'>

@@ -7,9 +7,6 @@ import {
 import {
 
 } from '@angular/material';
-// import {
-
-// } from 'ng-zorro-antd';
 
 import { SearchComponent } from './search.component';
 import { FiltersComponent } from './filters/filters.component';

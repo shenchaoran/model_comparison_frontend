@@ -64,4 +64,12 @@ export class SolutionService extends ListBaseService {
             ids
         })
     }
+
+    public createTask(solutionId) {
+        return this.http.get(`${this.baseUrl}/${solutionId}`, {
+            params: {
+                ac: 'createTask',
+            }
+        })
+    }
 }

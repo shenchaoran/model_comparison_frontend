@@ -9,7 +9,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { HEADER_MENUS, USER_MENUS, API } from '@config';
 import { DynamicTitleService } from '@core/services';
 import { _HttpClient } from '@core/services/http.client';
-import { MatSnackBar } from '@angular/material';
+import { 
+    MatSnackBar,
+    MAT_PROGRESS_SPINNER_DEFAULT_OPTIONS,
+} from '@angular/material';
 import { OverlayModule } from '@angular/cdk/overlay';
 import {
     UserService,
@@ -35,6 +38,12 @@ const services = [
     AuthGuard,
     DynamicTitleService,
     _HttpClient,
+    {
+        provide: 'MAT_PROGRESS_SPINNER_DEFAULT_OPTIONS',
+        useValue: {
+            diameter: 50
+        }
+    },
     {
         provide: 'API',
         useValue: API

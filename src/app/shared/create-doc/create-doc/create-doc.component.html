@@ -9,7 +9,7 @@
             <mat-form-field>
                 <input matInput formControlName='name' placeholder="name" #docName>
                 <mat-error *ngIf='"required"'>必填</mat-error>
-                <mat-error *ngIf='"minlength"'>最小长度</mat-error>
+                <!-- <mat-error *ngIf='"minlength"'>最小长度</mat-error> -->
             </mat-form-field>
         </div>
 
@@ -17,19 +17,19 @@
             <mat-form-field>
                 <textarea matInput formControlName='desc' placeholder="description" #docDesc></textarea>
                 <mat-error *ngIf='"required"'>必填</mat-error>
-                <mat-error *ngIf='"minlength"'>最小长度</mat-error>
+                <!-- <mat-error *ngIf='"minlength"'>最小长度</mat-error> -->
             </mat-form-field>
         </div>
 
         <div class='form-field'>
             <!-- <label>Authorition: </label> -->
-            <mat-button-toggle-group formControlName='auth'>
+            <mat-button-toggle-group appearance="legacy" formControlName='auth'>
                 <mat-button-toggle value='PRIVATE'>Private</mat-button-toggle>
                 <mat-button-toggle value='PUBLIC'>Public</mat-button-toggle>
             </mat-button-toggle-group>
         </div>
         <hr>
-        <button class='form-field submit' (click)='onSubmitClick()' mat-stroked-button color='primary' [disabled]='docFG.invalid'>{{submitText}}</button>
+        <button class='form-field submit' (click)='onSubmitClick()' mat-flat-button color='primary'>{{submitText}}</button>
     </form>
 
 </div>
