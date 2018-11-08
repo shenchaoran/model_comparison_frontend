@@ -3,7 +3,7 @@
     <mat-button-toggle>Comparison</mat-button-toggle>
 </mat-button-toggle-group>
 
-<nz-card [nzBordered]="false" [nzLoading]="!results">
+<div >
   <section *ngFor="let item of results" class="list-item">
     <div class="detail-group">
       <h3>
@@ -24,4 +24,4 @@
       </a>
     </div>
   </section>
-</nz-card>
+</div>

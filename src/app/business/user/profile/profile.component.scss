@@ -10,17 +10,24 @@
     width: 1012px;
     margin-right: auto;
     margin-left: auto;
+    display: flex;
 }
 
 .profile-left{
     float: left;
     padding-right: 16px;
+    padding-left: 16px;
+    padding-top: 30px; 
+    flex: 1;
 }
 
 .profile-right{
     float: left;
     padding-left: 8px;
+    flex: 3;
 }
+
+
 
 .avatarHolder {
     text-align: center;
@@ -43,6 +50,13 @@
     line-height: 24px;
     color: #666;
     margin-left: 10px;
+}
+
+.line{
+    background: none;
+    border-top: 1px dashed #e8e8e8;
+    margin-top:12px;
+    margin-bottom:12px
 }
 
 .detail {
@@ -105,7 +119,7 @@
 }
 
 .user_info{
-    width: 200px;
+    width: 220px;
     overflow: hidden;
     text-overflow: ellipsis;
 }

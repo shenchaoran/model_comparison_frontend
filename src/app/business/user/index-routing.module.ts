@@ -1,8 +1,7 @@
 import { UserTasksComponent } from './profile/user-tasks/user-tasks.component';
 import { UserTopicsComponent } from './profile/user-topics/user-topics.component';
 import { UserOverviewComponent } from './profile/user-overview/user-overview.component';
-import { UserSolutionsComponent } from './profile/user-solutions/user-solutions.component';
-import { UserIssuesComponent } from './profile/user-issues/user-issues.component';
+import { UserSolutionsComponent } from './profile/user-solutions/user-solutions.component'; 
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PswResetComponent } from './psw-reset/psw-reset.component';
