@@ -1,5 +1,5 @@
 <form [formGroup]="validateForm" (ngSubmit)="submitForm($event,validateForm.value)">
-    <input nz-input formControlName="userName" placeholder="async validate try to write JasonWood">
+    <input formControlName="userName" placeholder="async validate try to write JasonWood">
     <div *ngIf="validateForm.get('userName').dirty && validateForm.get('userName').errors || validateForm.get('userName').pending ">
         <ng-container *ngIf="validateForm.get('userName').hasError('required')">
             Please input your username!
@@ -11,7 +11,7 @@
             Validating...
         </ng-container>
     </div>
-    <input nz-input formControlName="email" placeholder="email" type="email">
+    <input formControlName="email" placeholder="email" type="email">
     <div *ngIf="validateForm.get('email').dirty&&validateForm.get('email').errors">
         <ng-container *ngIf="validateForm.get('email').hasError('email')">
             The input is not valid E-mail!
@@ -20,10 +20,10 @@
             Please input your E-mail!
         </ng-container>
     </div>
-    <input nz-input type="password" formControlName="password" (ngModelChange)="validateConfirmPassword()">
+    <input type="password" formControlName="password" (ngModelChange)="validateConfirmPassword()">
     <div *ngIf="validateForm.get('password').dirty&&validateForm.get('password').hasError('required')">Please input
         your password!</div>
-    <input nz-input type="password" formControlName="confirm" placeholder="confirm your password">
+    <input type="password" formControlName="confirm" placeholder="confirm your password">
     <div *ngIf="validateForm.get('confirm').dirty&&validateForm.get('confirm').errors">
         <ng-container *ngIf="validateForm.get('confirm').hasError('required')">
             Please confirm your password!
@@ -32,13 +32,13 @@
             Password is inconsistent!
         </ng-container>
     </div>
-    <textarea formControlName="comment" nz-input rows="2" placeholder="write any thing"></textarea>
+    <textarea formControlName="comment" rows="2" placeholder="write any thing"></textarea>
     <div *ngIf="validateForm.get('comment').dirty&&validateForm.get('comment').hasError('required')">Please write
         something here!</div>
-    <textarea formControlName="prop1" nz-input rows="2" placeholder="write any thing"></textarea>
+    <textarea formControlName="prop1" rows="2" placeholder="write any thing"></textarea>
     <div *ngIf="validateForm.get('obj.prop1').dirty&&validateForm.get('obj.prop1').hasError('required')">Please write
         something here!</div>
-    <textarea formControlName="prop2" nz-input rows="2" placeholder="write any thing"></textarea>
+    <textarea formControlName="prop2" rows="2" placeholder="write any thing"></textarea>
     <div *ngIf="validateForm.get('obj.prop2').dirty&&validateForm.get('obj.prop2').hasError('required')">Please write
         something here!</div>
     <div formArrayName='array'>
@@ -47,20 +47,20 @@
                 <nz-form-item>
                     <nz-form-label [nzSpan]="7" nzRequired>Object array 1</nz-form-label>
                     <nz-form-control [nzSpan]="12" nzHasFeedback>
-                        <textarea formControlName="prop1" nz-input rows="2" placeholder="write any thing"></textarea>
+                        <textarea formControlName="prop1"  rows="2" placeholder="write any thing"></textarea>
                         <nz-form-explain *ngIf="validateForm.get('array.'+i+'.prop1').dirty&&validateForm.get('array.'+i+'.prop1').hasError('required')">Please write something here!</nz-form-explain>
                     </nz-form-control>
                 </nz-form-item>
                 <nz-form-item>
                     <nz-form-label [nzSpan]="7" nzRequired>Object array 2</nz-form-label>
                     <nz-form-control [nzSpan]="12" nzHasFeedback>
-                        <textarea formControlName="prop2" nz-input rows="2" placeholder="write any thing"></textarea>
+                        <textarea formControlName="prop2"  rows="2" placeholder="write any thing"></textarea>
                         <nz-form-explain *ngIf="validateForm.get('array.'+i+'.prop2').dirty&&validateForm.get('array.'+i+'.prop2').hasError('required')">Please write something here!</nz-form-explain>
                     </nz-form-control>
                 </nz-form-item>
             </div>
         </ng-container> -->
     </div>
-    <button nz-button nzType="primary" [disabled]="!validateForm.valid">Submit</button>
-    <button nz-button (click)="resetForm($event)">Reset</button>
+    <button nzType="primary" [disabled]="!validateForm.valid">Submit</button>
+    <button (click)="resetForm($event)">Reset</button>
 </form>

@@ -51,7 +51,7 @@ npm run debug
 - [x] ~~和bootstrap结合~~
 - [x] 分割 common module ，打包后太大
 - [ ] echarts tree-shaking
-- [ ] zorro tree-shaking
+- [x] zorro tree-shaking
 - [ ] material theme custom
 - [ ] 用户个人空间相关
     - [ ] 路由 RESTful 风格化：user/:username
@@ -62,8 +62,8 @@ npm run debug
 - [ ] remove disabled-button, use snackbar to alert valid state
 - [ ] remove header, use mat-toolbar
 - [ ] remove custom card, use mat-card
-- [ ] remove ng-zorro-antd !!!
-    - [ ] 样式冲突，首先移除
+- [x] remove ng-zorro-antd !!!
+    - [x] 样式和组件冲突，首先移除
 - [ ] 首页重新设计，展现的元素尽量少，首页去除 ajax
 - [ ] 动态设置 title
 - [ ] primer style
@@ -80,7 +80,7 @@ npm run debug
     - [ ] mat-tab: wiki, data description, conversation
     - [ ] sider-bar: topic, solution, notification
 - [ ] calcu detail
-    - [ ] mat-tab: basic-info, data configuration, conversation
+    - [x] mat-tab: basic-info, data configuration, conversation
     - [ ] 结果打包下载
 
 ## Architecture
