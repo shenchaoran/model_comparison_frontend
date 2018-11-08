@@ -65,3 +65,4 @@ prod
 scripts/nginx-1.12.2/conf/nginx.conf
 model_comparison_frontend.rar
 /scripts/nginx-1.12.2/logs
+proxy.conf.json
