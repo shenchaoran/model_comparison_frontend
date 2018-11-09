@@ -38,7 +38,7 @@
                 <h3 class='f3-light mb-2'>Progress</h3>
                 <div class='progress-section'>
                     <div class='progress-bar'>
-                        <mat-progress-bar [value]="!msRecord.progress? 0: msRecord.progress" mode='determinate' [color]='msRecord.state === "FINISHED_SUCCEED"? "primary": msRecord.state === "FINISHED_FAILED"? "warn": "accent"'></mat-progress-bar>
+                        <mat-progress-bar [value]="!msRecord.progress? 0: msRecord.progress" mode='determinate' [color]='msRecord.state === "FINISHED_SUCCEED"? "primary": msRecord.state === "FINISHED_FAILED"? "warn": "primary"'></mat-progress-bar>
                     </div>
                     <div class='progress-comment' [ngSwitch]='msRecord.state'>
                         <ng-container *ngSwitchCase='"FINISHED_SUCCEED"'>
@@ -55,6 +55,9 @@
                                     <span>Click to start</span>
                                 </button>
                             </ng-container>
+                        </ng-container>
+                        <ng-container *ngSwitchCase='"RUNNING"'>
+                            <mat-icon color='primary'>cached</mat-icon>&nbsp; {{msRecord.progress}}%
                         </ng-container>
                     </div>
                 </div>
