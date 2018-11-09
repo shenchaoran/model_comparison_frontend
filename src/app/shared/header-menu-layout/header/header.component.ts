@@ -1,4 +1,4 @@
-import { MenuClass } from './../../../../config/menu.config';
+import { MenuClass } from '@config/menu.config';
 import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
