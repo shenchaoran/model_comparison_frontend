@@ -14,6 +14,7 @@ var counter = 1;
 })
 export class UserService {
     private _jwt;
+    private baseUrl;
     // TODO 改成一旦有订阅，立即发布当前状态
     public logined$: BehaviorSubject<boolean>;
 
@@ -23,7 +24,8 @@ export class UserService {
         private router?: Router,
         private location?: Location,
     ) {
-        console.log('******** UserService constructor', counter++)
+        console.log('******** UserService constructor', counter++);
+        this.baseUrl = '/api/user';
         var jwt = localStorage.getItem('jwt');
         if (jwt) {
             jwt = JSON.parse(jwt);
@@ -92,7 +94,7 @@ export class UserService {
     }
 
     signIn(user): Observable<any> {
-        return this.http.post('/api/user/sign-in', user)
+        return this.http.post(`${this.baseUrl}/sign-in`, user)
             .pipe(
                 map(res => {
                     if (res.error) {
@@ -114,7 +116,7 @@ export class UserService {
     }
 
     signUp(user): Observable<any> {
-        return this.http.post('/api/user/sign-up', user)
+        return this.http.post(`${this.baseUrl}/sign-up`, user)
             .pipe(
                 map(res => {
                     if (res.error) {
@@ -131,7 +133,7 @@ export class UserService {
     }
 
     setUp(user): Observable<any> {
-        return this.http.post('/api/user/set-up', user)
+        return this.http.post(`${this.baseUrl}/set-up`, user)
             .pipe(
                 map(res => {
                     if (res.error) {
@@ -151,8 +153,8 @@ export class UserService {
             )
     }
 
-    getUserInfo(id): Observable<any> { 
-        return this.http.get('/api/user/get-user-info', {
+    getUserInfo(id): Observable<any> {
+        return this.http.get(`${this.baseUrl}/get-user-info`, {
             params: {
                 id: id
             }
@@ -168,7 +170,7 @@ export class UserService {
     }
 
     passwordReset(user): Observable<any> {
-        return this.http.post('/api/user/password-reset', user);
+        return this.http.post(`${this.baseUrl}/password-reset`, user);
     }
 
     /**
@@ -185,5 +187,22 @@ export class UserService {
             return false;
         }
         return true;
+    }
+
+    /**
+     * 订阅/取消订阅
+     *
+     * @param {*} pType
+     * @param {*} ac
+     * @param {*} pid
+     * @returns Promise<res>
+     * @memberof UserService
+     */
+    toggleSubscribe(pType, ac, pid) {
+        return this.http.patch(`${this.baseUrl}/${this.user._id}`, {
+            ac,
+            pType,
+            pid
+        });
     }
 }

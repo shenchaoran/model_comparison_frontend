@@ -51,7 +51,7 @@
     </div>
 
     <div class='article'>
-        <mat-tab-group selectedIndex='0' (selectedIndexChange)='onSelectedIndexChange($event)'>
+        <mat-tab-group selectedIndex='0' (selectedIndexChange)='onTabChange($event)'>
             <mat-tab label='Wiki'>
                 <div class='wiki-tab' *ngIf='editMode === "WRITE"'>
                     <simplemde [(ngModel)]='topic.meta.wikiMD' [options]='mdeOption' required minlength='5'></simplemde>
@@ -62,12 +62,10 @@
             </mat-tab>
 
             <mat-tab label='Conversation'>
-                <ng-container *ngIf='conversation else conLoading'>
-                    <ogms-conversation [ngModel]='conversation'></ogms-conversation>
-                </ng-container>
-                <ng-template #conLoading>
+                <div *ngIf='!conversation' class='col-12 d-flex flex-justify-center flex-items-center' style='height: 350px'>
                     <mat-spinner></mat-spinner>
-                </ng-template>
+                </div>
+                <ogms-conversation *ngIf='conversation' [ngModel]='conversation'></ogms-conversation>
             </mat-tab>
         </mat-tab-group>
     </div>
@@ -127,7 +125,7 @@
             </ogms-sidebar-section>
         </div>
 
-        <div>
+        <div *ngIf='user'>
             <ogms-sidebar-section>
                 <div class='title'>
                     Notifications

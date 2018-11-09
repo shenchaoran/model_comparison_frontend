@@ -1,11 +1,13 @@
 import { OlModule } from '../ol';
 import { NgModule } from '@angular/core';
+import { ConversationModule } from '../conversation';
 import { 
     HeaderMenuLayoutModule,
     NgxSharedModule,
     CustomTemplateModule,
     DirectivesModule,
     PipesModule,
+    DetailLayoutModule,
 } from '@shared';
 import { 
     MatChipsModule, 
@@ -17,6 +19,7 @@ import {
     MatButtonToggleModule,
     MatGridListModule,
     MatTableModule,
+    MatTabsModule,
 } from '@angular/material';
 
 import { ModelsRoutingModule } from './index-routing.module';
@@ -31,12 +34,15 @@ const services = [];
 const modules = [
     NgxSharedModule,
     ModelsRoutingModule,
+    ConversationModule,
     CmpSharedModule,
+    DetailLayoutModule,
     OlModule,
     MatChipsModule, 
     MatIconModule, 
     MatProgressSpinnerModule,
     MatTableModule, 
+    MatTabsModule,
     MatFormFieldModule, 
     MatButtonModule, 
     MatGridListModule,

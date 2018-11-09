@@ -42,24 +42,6 @@
     <div *ngIf="validateForm.get('obj.prop2').dirty&&validateForm.get('obj.prop2').hasError('required')">Please write
         something here!</div>
     <div formArrayName='array'>
-        <!-- <ng-container *ngFor='let item of validateForm.controls["array"].controls;let i=index;'>
-            <div [formGroupName]='i'>
-                <nz-form-item>
-                    <nz-form-label [nzSpan]="7" nzRequired>Object array 1</nz-form-label>
-                    <nz-form-control [nzSpan]="12" nzHasFeedback>
-                        <textarea formControlName="prop1"  rows="2" placeholder="write any thing"></textarea>
-                        <nz-form-explain *ngIf="validateForm.get('array.'+i+'.prop1').dirty&&validateForm.get('array.'+i+'.prop1').hasError('required')">Please write something here!</nz-form-explain>
-                    </nz-form-control>
-                </nz-form-item>
-                <nz-form-item>
-                    <nz-form-label [nzSpan]="7" nzRequired>Object array 2</nz-form-label>
-                    <nz-form-control [nzSpan]="12" nzHasFeedback>
-                        <textarea formControlName="prop2"  rows="2" placeholder="write any thing"></textarea>
-                        <nz-form-explain *ngIf="validateForm.get('array.'+i+'.prop2').dirty&&validateForm.get('array.'+i+'.prop2').hasError('required')">Please write something here!</nz-form-explain>
-                    </nz-form-control>
-                </nz-form-item>
-            </div>
-        </ng-container> -->
     </div>
     <button nzType="primary" [disabled]="!validateForm.valid">Submit</button>
     <button (click)="resetForm($event)">Reset</button>

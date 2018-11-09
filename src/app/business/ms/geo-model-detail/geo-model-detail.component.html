@@ -1,97 +1,202 @@
-<div ogms-rx-box>
-    <section class="doc" *ngIf='ms'>
-        <div class="doc-title">{{ms.MDL.meta.name}}</div>
-        <div class="doc-body">
-            <article class="article">
-                <section>
-                    <div class="section-header flex-box-row-nowrap">
-                        <span class="title">Basic Information</span>
-                        <span class="flex-spacer"></span>
-                    </div>
-                    <div class="">
-                        <dl class="ogms-table-info">
-                            <dt>Full Name</dt>
-                            <dd>{{ms.MDL.meta.name}}</dd>
-                            <dt>Organization</dt>
-                            <dd>OpenGMS</dd>
-                            <dt>Type</dt>
-                            <dd>Carbon Globle</dd>
-                            <dt>Create Time</dt>
-                            <dd>2018-01-01</dd>
-                        </dl>
-                        <div>
-                            {{ms.MDL.meta.abstract}}
-                        </div>
-                    </div>
-                </section>
-                <section>
-                    <div class="section-header flex-box-row-nowrap">
-                        <span class="title">Detail Information</span>
-                        <span class="flex-spacer"></span>
-                    </div>
-                    <div class="">
-                        XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-                    </div>
-                </section>
-                <section>
-                    <div class="section-header flex-box-row-nowrap">
-                        <span class="title">IO Feature Info</span>
-                        <span class="flex-spacer"></span>
-                    </div>
-                    <div class="">
-                        <div>
-                            <div style="margin-bottom: 16px;">
-                                <button mat-button [disabled]="_disabledButton" color="'primary'" (click)="_operateData(_ioDataset)">Operating</button>
-                                <span style="margin-left: 8px;" *ngIf="_checkedNumber">Selected {{_checkedNumber}}
-                                    items</span>
-                            </div>
-                            <!-- <table mat-table [dataSource]='_ioDataset'>
+<ng-template #loadingTemp>
+    <div ogms-loading>
+        <mat-spinner></mat-spinner>
+    </div>
+</ng-template>
 
-                            </table> -->
-                            <!-- <nz-table #nzTable [nzData]="_ioDataSet" [nzPageSize]="10" (nzDataChange)="_displayDataChange($event)"
-                                (nzPageIndexChange)="_refreshStatus(_ioDataset)" (nzPageSizeChange)="_refreshStatus(_ioDataset)">
-                                <thead nz-thead>
-                                    <tr>
-                                        <th nz-th nzCheckbox>
-                                            <label nz-checkbox [(ngModel)]="_allChecked" [nzIndeterminate]="_indeterminate"
-                                                (ngModelChange)="_checkAll($event, _ioDataset)">
-                                            </label>
-                                        </th>
-                                        <th nz-th>
-                                            <span>Name</span>
-                                        </th>
+<ogms-detail-layout *ngIf='ms else loadingTemp'>
+    <div class='header Subhead mt-0 mb-3'>
+        <h2 class='Subhead-heading'>{{ms.MDL.meta.name}}</h2>
+    </div>
 
-                                        <th nz-th>
-                                            <span>Description</span>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody nz-tbody>
-                                    <tr nz-tbody-tr *ngFor="let data of nzTable.data">
-                                        <td nz-td nzCheckbox>
-                                            <label nz-checkbox [(ngModel)]="data.checked" (ngModelChange)="_refreshStatus(_ioDataset)">
-                                            </label>
-                                        </td>
-                                        <td nz-td>{{data.id}}</td>
-                                        <td nz-td>{{data.description}}</td>
-                                    </tr>
-                                </tbody>
-                            </nz-table> -->
-                        </div>
-                    </div>
-                </section>
-                <section>
-                    <div class="section-header flex-box-row-nowrap">
-                        <span class="title">Parameter Info</span>
-                        <span class="flex-spacer"></span>
-                    </div>
-                    <div class="">
-                    </div>
-                </section>
-            </article>
-            <aside class="sider-content">
+    <div class="article">
+        <mat-tab-group (selectedIndexChange)='onTabChange($event)'>
+            <mat-tab label="Wiki">
+                <dl class="ogms-dl-group my-3 clearfix">
+                    <dt class='pb-1 mb-1 col-2 float-left px-3 text-bold text-gray'>Full Name</dt>
+                    <dd class='pb-1 mb-1 col-4 float-left'>{{ms.MDL.meta.name}}</dd>
+                    <dt class='pb-1 mb-1 col-2 float-left px-3 text-bold text-gray'>Organization</dt>
+                    <dd class='pb-1 mb-1 col-4 float-left'>OpenGMS</dd>
+                    <dt class='pb-1 mb-1 col-2 float-left px-3 text-bold text-gray'>Type</dt>
+                    <dd class='pb-1 mb-1 col-4 float-left'>{{ms.tag}}</dd>
+                    <dt class='pb-1 mb-1 col-2 float-left px-3 text-bold text-gray'>Create Time</dt>
+                    <dd class='pb-1 mb-1 col-4 float-left'>{{ms.MDL.meta.time | date: 'yyyy-MM-dd'}}</dd>
+                </dl>
+                <div class='markdown-body'>
+                    {{ms.MDL.meta.abstract}}
+                </div>
+            </mat-tab>
 
-            </aside>
+            <mat-tab label="Input & Output">
+                <h3 class='h4 mt-3'>Inputs</h3>
+                <table *ngIf='inputs && inputs.length else noInputsTemp' mat-table [dataSource]='inputs' class='mb-3 col-12'>
+                    <ng-container matColumnDef='name'>
+                        <th mat-header-cell *matHeaderCellDef>Name</th>
+                        <td mat-cell *matCellDef='let element'>{{element.name}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef='description'>
+                        <th mat-header-cell *matHeaderCellDef>Description</th>
+                        <td mat-cell *matCellDef='let element'>{{element.description | undefined}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef='schemaId'>
+                        <th mat-header-cell *matHeaderCellDef>Data schema</th>
+                        <td mat-cell *matCellDef='let element'>{{element.schemaId}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef='ext'>
+                        <th mat-header-cell *matHeaderCellDef>Data format</th>
+                        <td mat-cell *matCellDef='let element'>{{element.ext | undefined}}</td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef='displayedColumns'></tr>
+                    <tr mat-row *matRowDef='let row; columns: displayedColumns;'></tr>
+                </table>
+                <ng-template #noInputsTemp>
+                    <p class='mt-2 mb-3'><i>No inputs</i></p>
+                </ng-template>
+
+                <h3 class='h4 mt-3'>Parameters</h3>
+                <table *ngIf='parameters && parameters.length else noParasTemp' mat-table [dataSource]='parameters'
+                    class='mb-3 col-12'>
+                    <ng-container matColumnDef='name'>
+                        <th mat-header-cell *matHeaderCellDef>Name</th>
+                        <td mat-cell *matCellDef='let element'>{{element.name}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef='description'>
+                        <th mat-header-cell *matHeaderCellDef>Description</th>
+                        <td mat-cell *matCellDef='let element'>{{element.description | undefined}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef='schemaId'>
+                        <th mat-header-cell *matHeaderCellDef>Data schema</th>
+                        <td mat-cell *matCellDef='let element'>{{element.schemaId}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef='ext'>
+                        <th mat-header-cell *matHeaderCellDef>Data format</th>
+                        <td mat-cell *matCellDef='let element'>{{element.ext | undefined}}</td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef='displayedColumns'></tr>
+                    <tr mat-row *matRowDef='let row; columns: displayedColumns;'></tr>
+                </table>
+                <ng-template #noParasTemp>
+                    <p class='mt-2 mb-3'><i>No parameters</i></p>
+                </ng-template>
+
+
+                <h3 class='h4 mt-3'>Outputs</h3>
+                <table *ngIf='outputs && outputs.length else noOutputsTemp' mat-table [dataSource]='outputs' class='mb-3 col-12'>
+                    <ng-container matColumnDef='name'>
+                        <th mat-header-cell *matHeaderCellDef>Name</th>
+                        <td mat-cell *matCellDef='let element'>{{element.name}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef='description'>
+                        <th mat-header-cell *matHeaderCellDef>Description</th>
+                        <td mat-cell *matCellDef='let element'>{{element.description | undefined}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef='schemaId'>
+                        <th mat-header-cell *matHeaderCellDef>Data schema</th>
+                        <td mat-cell *matCellDef='let element'>{{element.schemaId}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef='ext'>
+                        <th mat-header-cell *matHeaderCellDef>Data format</th>
+                        <td mat-cell *matCellDef='let element'>{{element.ext | undefined}}</td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef='displayedColumns'></tr>
+                    <tr mat-row *matRowDef='let row; columns: displayedColumns;'></tr>
+                </table>
+                <ng-template #noOutputsTemp>
+                    <p class='mt-2 mb-3'><i>No outputs</i></p>
+                </ng-template>
+            </mat-tab>
+
+            <mat-tab label="Conversation">
+                <div *ngIf='!conversation' class='col-12 d-flex flex-justify-center flex-items-center' style='height: 350px'>
+                    <mat-spinner></mat-spinner>
+                </div>
+                <ogms-conversation *ngIf='conversation' [ngModel]='conversation'></ogms-conversation>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+
+    <div class="aside">
+        <div>
+            <ogms-sidebar-section>
+                <div class='title'>
+                    Topic
+                    <mat-icon inline>settings</mat-icon>
+                </div>
+                <div class='body'>
+                    <ng-container *ngIf='topic && topic.auth && topic.meta else noTopicTemp'>
+                        <ul class='aside-ul with-route'>
+                            <li [routerLink]='["/topics", topic._id]'>
+                                {{topic.auth.userName}} / {{topic.meta.name}}
+                            </li>
+                        </ul>
+                    </ng-container>
+                    <ng-template #noTopicTemp>
+                        <i>No related Topic.</i>
+                    </ng-template>
+                </div>
+            </ogms-sidebar-section>
         </div>
-    </section>
-</div>
+
+        <div>
+            <ogms-sidebar-section>
+                <div class='title'>
+                    Solutions
+                    <mat-icon inline>settings</mat-icon>
+                </div>
+                <div class='body'>
+                    <ul *ngIf='solutions' class='aside-ul with-route'>
+                        <li *ngFor='let solution of solutions'>
+                            {{sln.auth.userName}} / {{sln.meta.name}}
+                        </li>
+                    </ul>
+                    <ng-container *ngIf='!solutions'>
+                        <i>No relate solution.</i>
+                    </ng-container>
+                </div>
+            </ogms-sidebar-section>
+        </div>
+
+        <div>
+            <ogms-sidebar-section>
+                <div class='title'>
+                    {{users.length}} participants
+                </div>
+                <div class='body participants'>
+                    <ng-container *ngFor='let user of users'>
+                        <img [attr.src]='user.avator'>
+                    </ng-container>
+                </div>
+            </ogms-sidebar-section>
+        </div>
+
+        <div *ngIf='user'>
+            <ogms-sidebar-section>
+                <div class='title'>
+                    Notifications
+                </div>
+                <div class='body notification'>
+                    <button mat-stroked-button (click)='onSubscribeToggle()'>
+                        <ng-container *ngIf='includeUser else noticeTemp'>
+                            <mat-icon inline>notifications_off</mat-icon>&nbsp;<span>Unsubscribe</span>
+                        </ng-container>
+                        <ng-template #noticeTemp>
+                            <mat-icon inline>notifications</mat-icon>&nbsp;<span>Subscribe</span>
+                        </ng-template>
+                    </button>
+                </div>
+            </ogms-sidebar-section>
+        </div>
+    </div>
+</ogms-detail-layout>
