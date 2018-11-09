@@ -11,10 +11,12 @@ import { ConversationService, MSRService, MSService } from "@services";
 @Component({
     selector: 'ogms-calcu-detail',
     templateUrl: './calcu-detail.component.html',
-    styleUrls: ['./calcu-detail.component.scss']
+    styleUrls: ['./calcu-detail.component.scss'],
+    providers: [ConversationService]
 })
 export class CalcuDetailComponent extends OgmsBaseComponent implements OnInit {
     msRecord;
+    hadTriggeredConversation: boolean = false;
 
     get users() { return this.conversationService.users; }
     get conversation(): Conversation { return this.conversationService.conversation; }
@@ -32,14 +34,6 @@ export class CalcuDetailComponent extends OgmsBaseComponent implements OnInit {
         this.msrService.findOne(this.route.snapshot.paramMap.get('id')).subscribe(res => {
             if(!res.error) {
                 this.msRecord = res.data.msr;
-                this.conversationService.import(
-                    res.data.conversation,
-                    res.data.users,
-                    res.data.commentCount,
-                    res.data.msr.auth.userId,
-                    res.data.msr._id,
-                    'calcuTask',
-                );
                 this.fetchInterval();
             }
         });
@@ -72,5 +66,25 @@ export class CalcuDetailComponent extends OgmsBaseComponent implements OnInit {
                 this.fetchInterval();
             }
         });
+    }
+
+    onTabChange(index) {
+        if (index === 2 && !this.hadTriggeredConversation) {
+            this.conversationService.findOneByWhere({
+                pid: this.msRecord._id
+            }).subscribe(res => {
+                if (!res.error) {
+                    this.hadTriggeredConversation = true;
+                    this.conversationService.import(
+                        res.data.conversation,
+                        res.data.users,
+                        res.data.commentCount,
+                        this.msRecord.auth.userId,
+                        this.msRecord._id,
+                        'calcuTask'
+                    );
+                }
+            })
+        }
     }
 }

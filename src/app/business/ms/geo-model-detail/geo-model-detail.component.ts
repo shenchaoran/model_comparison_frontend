@@ -13,7 +13,7 @@ import { ConversationService, MSService } from "@services";
 export class GeoModelDetailComponent extends OgmsBaseComponent implements OnInit {
     ms: any;
     displayedColumns = ["name", "description", "schemaId", "ext"];
-    hadTriggered: boolean = false;
+    hadTriggeredConversation: boolean = false;
 
     get inputs() { return get(this, 'ms.MDL.IO.inputs'); }
     get parameters() { return get(this, 'ms.MDL.IO.parameters'); }
@@ -40,12 +40,12 @@ export class GeoModelDetailComponent extends OgmsBaseComponent implements OnInit
     }
 
     onTabChange(index) {
-        if(index === 2 && !this.hadTriggered) {
+        if(index === 2 && !this.hadTriggeredConversation) {
             this.conversationService.findOneByWhere({
                 pid: this.ms._id
             }).subscribe(res => {
                 if(!res.error) {
-                    this.hadTriggered = true;
+                    this.hadTriggeredConversation = true;
                     this.conversationService.import(
                         res.data.conversation,
                         res.data.users,

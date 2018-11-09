@@ -12,7 +12,8 @@ import { cloneDeep, isEqual, get, pull, } from 'lodash';
 @Component({
     selector: 'ogms-solution-detail',
     templateUrl: './solution-detail.component.html',
-    styleUrls: ['./solution-detail.component.scss']
+    styleUrls: ['./solution-detail.component.scss'],
+    providers: [ConversationService]
 })
 export class SolutionDetailComponent implements OnInit {
     _editMode: 'READ' | 'WRITE' = 'READ';
@@ -23,6 +24,7 @@ export class SolutionDetailComponent implements OnInit {
     _originTitle: string;
     _originWiki: string;
     _originDesc: string;
+    hadTriggeredConversation: boolean = false;
 
     topicFilter;
 
@@ -71,14 +73,6 @@ export class SolutionDetailComponent implements OnInit {
                 this.cmpMethods = res.data.cmpMethods;
                 this.topicList = res.data.topicList;
 
-                this.conversationService.import(
-                    res.data.conversation,
-                    res.data.users,
-                    res.data.commentCount,
-                    this.solution.auth.userId,
-                    this.solution._id,
-                    'solution',
-                );
                 if (this.couldEdit && !this.solution.meta.wikiMD) {
                     this._editMode = 'WRITE';
                     this.snackBar.open('please improve the wiki documentation as soon as possible!', null, {
@@ -212,5 +206,25 @@ export class SolutionDetailComponent implements OnInit {
     onCmpCfgEditCancel() {
         this._cmpCfgMode = 'READ';
         this.solution.cmpObjs = this._originCmpObjs;
+    }
+    
+    onTabChange(index) {
+        if (index === 3 && !this.hadTriggeredConversation) {
+            this.conversationService.findOneByWhere({
+                pid: this.solution._id
+            }).subscribe(res => {
+                if (!res.error) {
+                    this.hadTriggeredConversation = true;
+                    this.conversationService.import(
+                        res.data.conversation,
+                        res.data.users,
+                        res.data.commentCount,
+                        this.solution.auth.userId,
+                        this.solution._id,
+                        'solution'
+                    );
+                }
+            })
+        }
     }
 }
