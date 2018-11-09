@@ -7,7 +7,7 @@ import { ConversationService, SolutionService, UserService, MSService } from "@s
 import { Simplemde } from 'ng2-simplemde';
 import { Solution, Task, Topic, MS, CmpMethod, CmpObj } from "@models";
 import { MatSnackBar, MatSelectionList } from '@angular/material';
-import { cloneDeep, isEqual, get, pull, } from 'lodash';
+import { cloneDeep, isEqual, get, pull, findIndex, } from 'lodash';
 
 @Component({
     selector: 'ogms-solution-detail',
@@ -45,7 +45,7 @@ export class SolutionDetailComponent implements OnInit {
     get users() { return this.conversationService.users; }
     get couldEdit() { return this.user && this.solution && this.solution.auth.userId === this.user._id; }
     get conversation() { return this.conversationService.conversation; }
-    get includeUser() { return this.solution.subscribed_uids && this.solution.subscribed_uids.findIndex(v => v === this.user._id) !== -1; }
+    get includeUser() { return findIndex(get(this, 'solution.subscribed_uids'),  v => v === this.user._id) !== -1;}
     get cmpObjs() { return this.solution.cmpObjs; }
 
 
@@ -149,7 +149,7 @@ export class SolutionDetailComponent implements OnInit {
     
     onSubscribeToggle() {
         let ac = this.includeUser ? 'unsubscribe' : 'subscribe';
-        this.solutionService.subscribeToggle(this.solution._id, ac, this.user._id).subscribe(res => {
+        this.userService.toggleSubscribe('solution', ac, this.solution._id).subscribe(res => {
             if(!res.error) {
                 let i = this.solution.subscribed_uids.findIndex(v => v === this.user._id);
                 if(ac === 'subscribe') {

@@ -2,8 +2,9 @@ import { Component, OnInit, HostListener } from "@angular/core";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { DynamicTitleService } from "@core/services/dynamic-title.service";
 import { OgmsBaseComponent } from '@shared';
-import { get } from 'lodash';
-import { ConversationService, MSService } from "@services";
+import { get, findIndex } from 'lodash';
+import { ConversationService, MSService, UserService } from "@services";
+import { Topic, Solution, } from '@models';
 
 @Component({
     selector: 'ogms-geo-model-detail',
@@ -12,18 +13,24 @@ import { ConversationService, MSService } from "@services";
 })
 export class GeoModelDetailComponent extends OgmsBaseComponent implements OnInit {
     ms: any;
+    topic: Topic;
+    solutions: Solution[];
     displayedColumns = ["name", "description", "schemaId", "ext"];
     hadTriggeredConversation: boolean = false;
 
+    get user() { return this.conversationService.user; }
+    get users() { return this.conversationService.users; }
     get inputs() { return get(this, 'ms.MDL.IO.inputs'); }
     get parameters() { return get(this, 'ms.MDL.IO.parameters'); }
     get outputs() { return get(this, 'ms.MDL.IO.outputs'); }
     get conversation() { return this.conversationService.conversation; }
+    get includeUser() { return findIndex(get(this, 'ms.subscribed_uids'),  v => v === this.user._id) !== -1;}
     constructor(
         public route: ActivatedRoute,
         public msService: MSService,
         public title: DynamicTitleService,
         private conversationService: ConversationService,
+        private userService: UserService,
     ) {
         super();
     }
@@ -36,7 +43,7 @@ export class GeoModelDetailComponent extends OgmsBaseComponent implements OnInit
 
                 this.title.setTitle(this.ms.MDL.meta.name);
             }
-        })
+        });
     }
 
     onTabChange(index) {
@@ -57,5 +64,18 @@ export class GeoModelDetailComponent extends OgmsBaseComponent implements OnInit
                 }
             })
         }
+    }
+    
+    onSubscribeToggle() {
+        let ac = this.includeUser ? 'unsubscribe' : 'subscribe';
+        this.userService.toggleSubscribe('ms', ac, this.ms._id).subscribe(res => {
+            if (!res.error) {
+                let i = this.ms.subscribed_uids.findIndex(v => v === this.user._id);
+                if (ac === 'subscribe')
+                    i === -1 && this.ms.subscribed_uids.push(this.user._id);
+                else
+                    i !== -1 && this.ms.subscribed_uids.splice(i, 1);
+            }
+        });
     }
 }

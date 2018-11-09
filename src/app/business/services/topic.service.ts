@@ -44,11 +44,4 @@ export class TopicService extends ListBaseService {
             return res;
         }));
     }
-
-    /**
-     * 订阅/取消订阅
-     */
-    public subscribeToggle(topicId, ac, uid) {
-        return super.patch(`${topicId}`, { ac, uid });
-    }
 }

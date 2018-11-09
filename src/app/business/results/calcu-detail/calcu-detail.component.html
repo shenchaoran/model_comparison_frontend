@@ -81,11 +81,14 @@
                     <mat-icon inline>settings</mat-icon>
                 </div>
                 <div class='body'>
-                    <ul class='aside-ul with-route'>
+                    <ul *ngIf='msRecord.msId && msRecord.msName else noModelTemp' class='aside-ul with-route'>
                         <li [routerLink]='["/models", msRecord.msId]'>
                             {{msRecord.msName}}
                         </li>
                     </ul>
+                    <ng-template #noModelTemp>
+                        <i>No related model.</i>
+                    </ng-template>
                 </div>
             </ogms-sidebar-section>
         </div>
@@ -103,7 +106,7 @@
             </ogms-sidebar-section>
         </div>
 
-        <!-- <div>
+        <div *ngIf='user'>
             <ogms-sidebar-section>
                 <div class='title'>
                     Notifications
@@ -119,6 +122,6 @@
                     </button>
                 </div>
             </ogms-sidebar-section>
-        </div> -->
+        </div>
     </aside>
 </ogms-detail-layout>

@@ -54,10 +54,6 @@ export class SolutionService extends ListBaseService {
         }));
     }
 
-    public subscribeToggle(slnId, ac, uid) {
-        return super.patch(`${slnId}`, { ac, uid });
-    }
-
     public updatePts(solutionId, ids) {
         return super.patch(`${solutionId}`, {
             ac: 'updatePts',

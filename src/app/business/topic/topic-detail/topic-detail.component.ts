@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
+import { findIndex, get, } from 'lodash';
 import {
     TopicService,
     ConversationService,
@@ -40,7 +41,7 @@ export class TopicDetailComponent implements OnInit {
     get users() { return this.conversationService.users; }
     get conversation(): Conversation { return this.conversationService.conversation; }
     get selectedSolutions(): Solution[] { return this.solutionList.filter(v => v.topicId === this.topic._id); }
-    get includeUser() { return this.topic.subscribed_uids && this.topic.subscribed_uids.findIndex(v => v === this.user._id) !== -1; }
+    get includeUser() { return findIndex(get(this, 'topic.subscribed_uids'), v => v === this.user._id) !== -1;}
 
     constructor(
         private topicService: TopicService,
@@ -124,7 +125,7 @@ export class TopicDetailComponent implements OnInit {
 
     onSubscribeToggle() {
         let ac = this.includeUser ? 'unsubscribe' : 'subscribe';
-        this.topicService.subscribeToggle(this.topic._id, ac, this.user._id).subscribe(res => {
+        this.userService.toggleSubscribe('topic', ac, this.topic._id).subscribe(res => {
             if (!res.error) {
                 let i = this.topic.subscribed_uids.findIndex(v => v === this.user._id);
                 if (ac === 'subscribe')

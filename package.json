@@ -72,7 +72,6 @@
     "@types/jasminewd2": "2.0.3",
     "@types/jquery": "2.0.41",
     "@types/lodash": "^4.14.71",
-    "@types/lodash-es": "^4.17.1",
     "@types/node": "6.0.69",
     "@types/ol": "^4.6.2",
     "@types/proj4": "^2.3.4",
@@ -115,6 +114,6 @@
     "wintersmith-sassy": "1.1.0"
   },
   "sideEffects": [
-      "node_modules/ol/proj.js"
+    "node_modules/ol/proj.js"
   ]
 }
