@@ -117,8 +117,8 @@ export class CmpObjCfgComponent extends NgModelBase implements ControlValueAcces
 
     onDFChange(dfs, i) {
         let ctrl = this.cmpObjFG.get(`dataRefers.${i}.selected`);
-        ctrl.setValue = dfs;
-        ctrl.updateValueAndValidity();
+        // ctrl.setValue = dfs;
+        // ctrl.updateValueAndValidity();
         // this.cdRef.markForCheck();
     }
 

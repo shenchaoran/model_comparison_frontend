@@ -46,7 +46,7 @@ export class CreateSlnComponent implements OnInit {
             conversation: this.conversationService.conversation,
         }).subscribe(res => {
             if(!res.error) {
-                this.router.navigate(['/comparison', this.solution._id]);
+                this.router.navigate(['/comparison/solutions', this.solution._id]);
             }
         });
     }
