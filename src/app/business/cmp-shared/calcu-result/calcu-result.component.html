@@ -7,23 +7,23 @@
             </mat-expansion-panel-header>
 
             <ng-container *ngFor='let event of IO.inputs'>
-                <div class='ogms-form-item' nz-row>
-                    <span nz-col nzSpan='6'>{{event.name}}</span>
-                    <div nz-col nzSpan='18'>
+                <div class='col-12 float-left'>
+                    <span class='col-3 float-left px-1 pb-2'>{{event.name}}</span>
+                    <div class='col-9 float-left px-1 pb-2'>
                         <a (click)='download(event)'>{{event.fname}}</a>
                     </div>
                 </div>
             </ng-container>
         </mat-expansion-panel>
-        <mat-expansion-panel expanded *ngIf='IO?.paramsters?.length'>
+        <mat-expansion-panel expanded *ngIf='IO?.parameters?.length'>
             <mat-expansion-panel-header>
                 <mat-panel-title>Parameters</mat-panel-title>
                 <mat-panel-description></mat-panel-description>
             </mat-expansion-panel-header>
-            <ng-container *ngFor='let event of IO.paramsters'>
-                <div class='ogms-form-item' nz-row>
-                    <span nz-col nzSpan='6'>{{event.name}}</span>
-                    <div nz-col nzSpan='18'>
+            <ng-container *ngFor='let event of IO.parameters'>
+                <div class='col-12 float-left'>
+                    <span class='col-3 float-left px-1 pb-2'>{{event.name}}</span>
+                    <div class='col-9 float-left px-1 pb-2'>
                         <a (click)='download(event)'>{{event.value}}</a>
                     </div>
                 </div>
@@ -35,9 +35,9 @@
                 <mat-panel-description></mat-panel-description>
             </mat-expansion-panel-header>
             <ng-container *ngFor='let event of IO.outputs'>
-                <div class='ogms-form-item' nz-row>
-                    <span nz-col nzSpan='6'>{{event.name}}</span>
-                    <div nz-col nzSpan='18'>
+                <div class='col-12 float-left'>
+                    <span class='col-3 float-left px-1 pb-2'>{{event.name}}</span>
+                    <div class='col-9 float-left px-1 pb-2'>
                         <a (click)='download(event)'>{{event.fname}}</a>
                     </div>
                 </div>

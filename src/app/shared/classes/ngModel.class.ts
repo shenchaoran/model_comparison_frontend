@@ -1,34 +1,33 @@
-import { ControlValueAccessor, FormControl, Validator } from '@angular/forms';
+import { ControlValueAccessor } from '@angular/forms';
 import { Subject } from 'rxjs';
 
 export class NgModelBase implements ControlValueAccessor {
-    public propagateChange = (v: any) => { };
     public _innerValue: any;
     public _innerValue$: Subject<any> = new Subject();
 
+    public propagateChange: (v: any) => void = (v: any) => v;
 
-    public set value(v: any) {
+    set value(v: any) {
         if (v !== this._innerValue) {
             this._innerValue = v;
+            this.propagateChange(v);
         }
     }
 
-    public get value(): any {
+    get value(): any {
         return this._innerValue;
     }
 
-    public writeValue(v: any) {
+    writeValue(v: any) {
         if (v !== this._innerValue) {
             this._innerValue = v;
             this._innerValue$.next(v);
         }
     }
 
-    public registerOnChange(fn: any) {
+    registerOnChange(fn: any) {
         this.propagateChange = fn;
     }
 
-    public registerOnTouched(fn: any) {
-        // this.propagateChange = fn;
-    }
+    registerOnTouched() { }
 }

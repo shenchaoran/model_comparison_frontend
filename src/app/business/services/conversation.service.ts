@@ -24,6 +24,7 @@ export class ConversationService extends ListBaseService {
     public pageSize: number = 20;
 
     // 以下变量需要随时维护
+    public ptype: 'topic' | 'task' | 'solution' | 'calcuTask' | 'ms';
     public authorId: string;                            // 版主 id，如创建 topic/solution/task 的作者 id
     public emptyComment$: BehaviorSubject<Comment>;
     private hadSavedConversation: boolean = false;
@@ -52,6 +53,7 @@ export class ConversationService extends ListBaseService {
         commentCount: number, 
         authorId: string, 
         pid: string, 
+        ptype: string,
         hadSavedConversation: boolean = true
     ) {
         if(conversation) {
@@ -63,16 +65,16 @@ export class ConversationService extends ListBaseService {
             this.newEmptyComment();
         }
         else {
-            this.create(pid);
+            this.create(pid, ptype);
         }
     }
 
     /**
      * inlet
      */
-    public create(pid: string) {
+    public create(pid: string, ptype) {
         this.clear();
-        this.conversation = new Conversation(this.user, pid);
+        this.conversation = new Conversation(this.user, pid, ptype);
         return this.conversation;
     }
 

@@ -8,6 +8,7 @@ body {
 }
 
 .topic-chip {
+    cursor: pointer !important;
     background: #a5d6a7 !important;
     &:hover {
         background: #81c784 !important;
@@ -15,6 +16,7 @@ body {
 }
 
 .sln-chip {
+    cursor: pointer !important;
     background: #fdb0b0 !important;
     &:hover {
         background: #e29999 !important;
@@ -22,6 +24,7 @@ body {
 }
 
 .ms-chip {
+    cursor: pointer !important;
     background: #bcbdfaab !important;
     &:hover {
         background: #bcbdfa !important;
@@ -29,8 +32,15 @@ body {
 }
 
 .method-chip {
+    cursor: pointer !important;
     background: #b6d8ff !important;
     &:hover {
         background: #86befd !important;
+    }
+}
+
+.ogms-dl-group {
+    >* {
+        border-bottom: 1px dashed #ccc;
     }
 }

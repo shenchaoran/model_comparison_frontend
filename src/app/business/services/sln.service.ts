@@ -41,7 +41,7 @@ export class SolutionService extends ListBaseService {
 
     public create() {
         let solution = new Solution(this.user);
-        let cid = this.conversationService.create(solution._id)._id;
+        let cid = this.conversationService.create(solution._id, 'solution')._id;
         solution.cid = cid;
         return solution;
     }
@@ -52,10 +52,6 @@ export class SolutionService extends ListBaseService {
                 this.user_solutions = res.data.docs;
             }
         }));
-    }
-
-    public subscribeToggle(slnId, ac, uid) {
-        return super.patch(`${slnId}`, { ac, uid });
     }
 
     public updatePts(solutionId, ids) {

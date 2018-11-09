@@ -3,75 +3,125 @@
         <mat-spinner></mat-spinner>
     </div>
 </ng-template>
-<div *ngIf='msRecord else loadingTemp' ogms-rx-box>
-    <section class='doc'>
-        <div class='doc-title'>{{msRecord.meta.name}}</div>
-        <div class='doc-body row'>
-            <article class='article col-xs-9 col-sm-9 col-md-9 col-lg-9'>
-                <section>
-                    <div class='section-header flex-box-row-nowrap'>
-                        <span class='title'>Basic information</span>
-                        <span class='flex-spacer'></span>
+<ogms-detail-layout *ngIf='msRecord else loadingTemp'>
+    <div class='header Subhead mt-0 mb-3'>
+        <h2 class='Subhead-heading'>{{msRecord.meta.name}}</h2>
+    </div>
+
+    <article class='article'>
+        <mat-tab-group (selectedIndexChange)='onTabChange($event)'>
+            <mat-tab label='Basic information'>
+                <p class='f3-light text-gray my-3'>
+                    {{msRecord.meta.desc | description}}
+                </p>
+                <dl class='ogms-dl-group my-3 clearfix'>
+                    <dt class='pb-1 mb-1 col-2 float-left px-3 text-bold text-gray'>Author</dt>
+                    <dd class='pb-1 mb-1 col-4 float-left'>{{msRecord.auth.userName | undefined}}</dd>
+                    <dt class='pb-1 mb-1 col-2 float-left px-3 text-bold text-gray'>Authorization</dt>
+                    <dd class='pb-1 mb-1 col-4 float-left'>{{msRecord.auth.src | resourceSrc}}</dd>
+                    <dt class='pb-1 mb-1 col-2 float-left px-3 text-bold text-gray'>Create time</dt>
+                    <dd class='pb-1 mb-1 col-4 float-left'>{{msRecord.meta.time | date:'yyyy-MM-dd'}}</dd>
+                    <dt class='pb-1 mb-1 col-2 float-left px-3 text-bold text-gray'>Status</dt>
+                    <dd class='pb-1 mb-1 col-4 float-left'>
+                        <span>
+                            {{ msRecord.state === 'INIT'? 'To configured' : msRecord.state === 'RUNNING'?
+                            'Running' : msRecord.state === 'COULD_START'?
+                            'Ready to start' : msRecord.state === 'START_PENDING'? 'Starting' :
+                            msRecord.state === 'START_FAILED'?
+                            'Invoking failed' : msRecord.state === 'FINISHED_FAILED'? 'Run failed' :
+                            msRecord.state
+                            === 'FINISHED_SUCCEED'? 'Run succeed' : 'Unknown' }}
+                        </span>
+                    </dd>
+                </dl>
+
+                <h3 class='f3-light mb-2'>Progress</h3>
+                <div class='progress-section'>
+                    <div class='progress-bar'>
+                        <mat-progress-bar [value]="!msRecord.progress? 0: msRecord.progress" mode='determinate' [color]='msRecord.state === "FINISHED_SUCCEED"? "primary": msRecord.state === "FINISHED_FAILED"? "warn": "accent"'></mat-progress-bar>
                     </div>
-                    <div class='section-body'>
-                        <mat-grid-list></mat-grid-list>
-                        <dl class='ogms-table-info'>
-                            <dt>Author</dt>
-                            <dd>{{msRecord.auth.userName | undefined}}</dd>
-                            <dt>Authorization</dt>
-                            <dd>{{msRecord.auth.src | resourceSrc}}</dd>
-                            <dt>Create time</dt>
-                            <dd>{{msRecord.meta.time | date:'yyyy-MM-dd'}}</dd>
-                            <dt>Status</dt>
-                            <dd>
-                                <span>
-                                    {{ msRecord.state === 'INIT'? 'To configured' : msRecord.state === 'RUNNING'?
-                                    'Running' : msRecord.state === 'COULD_START'?
-                                    'Ready to start' : msRecord.state === 'START_PENDING'? 'Starting' :
-                                    msRecord.state === 'START_FAILED'?
-                                    'Invoking failed' : msRecord.state === 'FINISHED_FAILED'? 'Run failed' :
-                                    msRecord.state
-                                    === 'FINISHED_SUCCEED'? 'Run succeed' : 'Unknown' }}
-                                </span>
-                            </dd>
-                        </dl>
-                        <div class='detail-desc'>
-                            {{msRecord.meta.desc | description}}
-                        </div>
+                    <div class='progress-comment' [ngSwitch]='msRecord.state'>
+                        <ng-container *ngSwitchCase='"FINISHED_SUCCEED"'>
+                            <mat-icon color='primary'>check_circle</mat-icon>&nbsp;run finished!
+                        </ng-container>
+                        <ng-container *ngSwitchCase='"FINISHED_FAILED"'>
+                            <mat-icon color='warn'>error</mat-icon>&nbsp; {{msRecord.progress}}%
+                        </ng-container>
+                        <ng-container *ngSwitchCase='"COULD_START"'>
+                            <mat-icon color='accent'>cached</mat-icon>&nbsp; 0%
+                            <ng-container *ngIf='msRecord.state === "COULD_START"'>
+                                <button mat-button color='primary' class='v-align-middle' (click)='onStartClick()'>
+                                    <mat-icon>play_arrow</mat-icon>
+                                    <span>Click to start</span>
+                                </button>
+                            </ng-container>
+                        </ng-container>
                     </div>
-                </section>
-                <section>
-                    <div class='section-header flex-box-row-nowrap'>
-                        <span class='title'>Progress</span>
-                        <span class='flex-spacer'></span>
-                    </div>
-                    <div class='section-body'>
-                        <div [style.width]='_width'>
-                            <mat-progress-bar [value]="!msRecord.progress? 0: msRecord.progress" mode='determinate'></mat-progress-bar>
-                        </div>
-                        <!-- msRecord.state === 'FINISHED_SUCCEED'? 'success': msRecord.state === 'FINISHED_FAILED'? 'exception': 'active' -->
-                    </div>
-                </section>
-                <section>
-                    <div class='section-header flex-box-row-nowrap'>
-                        <span class='title'>Calculation configuration</span>
-                        <span class='flex-spacer'></span>
-                    </div>
-                    <div class='section-body'>
-                        <ogms-calcu-result [msr]='msRecord'></ogms-calcu-result>
-                    </div>
-                </section>
-            </article>
-            <aside class='sider-content col-xs-3 col-sm-3 col-md-3 col-lg-3'>
-                <!-- <section class='sider-item'>
-                                    <div class='sider-item-title'>
-                                        <span>Solutions</span>
-                                    </div>
-                                    <div class='sider-item-body'>
-                                        
-                                    </div>
-                                </section> -->
-            </aside>
+                </div>
+            </mat-tab>
+
+            <mat-tab label='Input & Output' class='mb-3'>
+                <ogms-calcu-result [msr]='msRecord'></ogms-calcu-result>
+            </mat-tab>
+
+            <mat-tab label='Conversation'>
+                <div *ngIf='!conversation' class='col-12 d-flex flex-justify-center flex-items-center' style='height: 350px'>
+                    <mat-spinner></mat-spinner>
+                </div>
+                <ogms-conversation *ngIf='conversation' [ngModel]='conversation'></ogms-conversation>
+            </mat-tab>
+        </mat-tab-group>
+    </article>
+
+    <aside class='aside'>
+        <div>
+            <ogms-sidebar-section>
+                <div class='title'>
+                    Model
+                    <mat-icon inline>settings</mat-icon>
+                </div>
+                <div class='body'>
+                    <ul *ngIf='msRecord.msId && msRecord.msName else noModelTemp' class='aside-ul with-route'>
+                        <li [routerLink]='["/models", msRecord.msId]'>
+                            {{msRecord.msName}}
+                        </li>
+                    </ul>
+                    <ng-template #noModelTemp>
+                        <i>No related model.</i>
+                    </ng-template>
+                </div>
+            </ogms-sidebar-section>
         </div>
-    </section>
-</div>
+
+        <div>
+            <ogms-sidebar-section>
+                <div class='title'>
+                    {{users.length}} participants
+                </div>
+                <div class='body participants'>
+                    <ng-container *ngFor='let user of users'>
+                        <img [attr.src]='user.avator'>
+                    </ng-container>
+                </div>
+            </ogms-sidebar-section>
+        </div>
+
+        <div *ngIf='user'>
+            <ogms-sidebar-section>
+                <div class='title'>
+                    Notifications
+                </div>
+                <div class='body notification'>
+                    <button mat-stroked-button (click)='onSubscribeToggle()'>
+                        <ng-container *ngIf='includeUser else noticeTemp'>
+                            <mat-icon inline>notifications_off</mat-icon>&nbsp;<span>Unsubscribe</span>
+                        </ng-container>
+                        <ng-template #noticeTemp>
+                            <mat-icon inline>notifications</mat-icon>&nbsp;<span>Subscribe</span>
+                        </ng-template>
+                    </button>
+                </div>
+            </ogms-sidebar-section>
+        </div>
+    </aside>
+</ogms-detail-layout>

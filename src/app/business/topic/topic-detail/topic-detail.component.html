@@ -34,16 +34,16 @@
             </div>
         </ng-container>
         <ng-template #readTemplate>
-            <div class='header-title read'>
-                <h2 class='pb-3'>{{topic.meta.name}}</h2>
+            <div class='header-title read Subhead mt-0 mb-0'>
+                <h2 class='Subhead-heading'>{{topic.meta.name}}</h2>
                 <div class='title-btn-group'>
                     <button mat-button color='primary' *ngIf='couldEdit' (click)='onEditClick()'>Edit</button>
                     <!-- <button mat-flat-button color='primary' *ngIf='couldEdit' [routerLink]='["../create"]'>New Topic</button> -->
                 </div>
             </div>
             <div class='header-meta read'>
-                <p>{{topic.meta.desc | description}}</p>
-                <p><a class='author' routerLink='/user'>{{topic.auth.userName}}</a> created this topic at
+                <p class='f3-light text-gray'>{{topic.meta.desc | description}}</p>
+                <p class='text-gray'><a class='author' routerLink='/user'>{{topic.auth.userName}}</a> created this topic at
                     {{topic.meta.time |
                     date: 'yyyy.MM.dd'}}</p>
             </div>
@@ -51,23 +51,21 @@
     </div>
 
     <div class='article'>
-        <mat-tab-group selectedIndex='0' (selectedIndexChange)='onSelectedIndexChange($event)'>
+        <mat-tab-group selectedIndex='0' (selectedIndexChange)='onTabChange($event)'>
             <mat-tab label='Wiki'>
                 <div class='wiki-tab' *ngIf='editMode === "WRITE"'>
                     <simplemde [(ngModel)]='topic.meta.wikiMD' [options]='mdeOption' required minlength='5'></simplemde>
                 </div>
                 <div class='wiki-tab' *ngIf='editMode === "READ"'>
-                    <div [innerHTML]='topic.meta.wikiHTML'></div>
+                    <div class='markdown-body' [innerHTML]='topic.meta.wikiHTML'></div>
                 </div>
             </mat-tab>
 
             <mat-tab label='Conversation'>
-                <ng-container *ngIf='conversation else conLoading'>
-                    <ogms-conversation [ngModel]='conversation'></ogms-conversation>
-                </ng-container>
-                <ng-template #conLoading>
+                <div *ngIf='!conversation' class='col-12 d-flex flex-justify-center flex-items-center' style='height: 350px'>
                     <mat-spinner></mat-spinner>
-                </ng-template>
+                </div>
+                <ogms-conversation *ngIf='conversation' [ngModel]='conversation'></ogms-conversation>
             </mat-tab>
         </mat-tab-group>
     </div>
@@ -127,7 +125,7 @@
             </ogms-sidebar-section>
         </div>
 
-        <div>
+        <div *ngIf='user'>
             <ogms-sidebar-section>
                 <div class='title'>
                     Notifications

@@ -1,10 +1,10 @@
 import { Component, OnInit, HostListener } from "@angular/core";
-import { MSService } from "../../services/ms.service";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { DynamicTitleService } from "@core/services/dynamic-title.service";
-import { ReactiveFormsModule } from "@angular/forms";
 import { OgmsBaseComponent } from '@shared';
-import { get } from 'lodash';
+import { get, findIndex } from 'lodash';
+import { ConversationService, MSService, UserService } from "@services";
+import { Topic, Solution, } from '@models';
 
 @Component({
     selector: 'ogms-geo-model-detail',
@@ -13,23 +13,24 @@ import { get } from 'lodash';
 })
 export class GeoModelDetailComponent extends OgmsBaseComponent implements OnInit {
     ms: any;
-    solutions: any[];
+    topic: Topic;
+    solutions: Solution[];
+    displayedColumns = ["name", "description", "schemaId", "ext"];
+    hadTriggeredConversation: boolean = false;
 
-    _isLoading = true;
-
-    _allChecked = false;
-    _disabledButton = true;
-    _checkedNumber = 0;
-    _displayData: Array<any> = [];
-    _operating = false;
-    _ioDataset = [];
-    _paramsDataSet = [];
-    _indeterminate = false;
-
+    get user() { return this.conversationService.user; }
+    get users() { return this.conversationService.users; }
+    get inputs() { return get(this, 'ms.MDL.IO.inputs'); }
+    get parameters() { return get(this, 'ms.MDL.IO.parameters'); }
+    get outputs() { return get(this, 'ms.MDL.IO.outputs'); }
+    get conversation() { return this.conversationService.conversation; }
+    get includeUser() { return findIndex(get(this, 'ms.subscribed_uids'),  v => v === this.user._id) !== -1;}
     constructor(
         public route: ActivatedRoute,
         public msService: MSService,
-        public title: DynamicTitleService
+        public title: DynamicTitleService,
+        private conversationService: ConversationService,
+        private userService: UserService,
     ) {
         super();
     }
@@ -38,77 +39,43 @@ export class GeoModelDetailComponent extends OgmsBaseComponent implements OnInit
         const msId = this.route.snapshot.paramMap.get('id');
         this.msService.findOne(msId).subscribe(res => {
             if(!res.error) {
-                this.ms = res.data;
+                this.ms = res.data.ms;
+
                 this.title.setTitle(this.ms.MDL.meta.name);
-
-                const schemaStructure = get(this.ms, 'MDL.IO.schemas[0].structure');
-                if (schemaStructure) {
-                    //add io table dataset
-                    for (let i = 0; i < schemaStructure.length; i++) {
-                        this._ioDataset.push(schemaStructure[i]);
-                    }
-                }
-                const params = get(this.ms, 'MDL.params');
-                if (params) {
-                    for (let i = 0; i < params.length; i++) {
-                        this._paramsDataSet.push(params[i]);
-                    }
-                }
             }
-        })
+        });
     }
 
-    _displayDataChange($event) {
-        this._displayData = $event;
-    }
-
-    _refreshStatus(dataset) {
-        const allChecked = this._displayData.every(
-            value => value.checked === true
-        );
-        const allUnChecked = this._displayData.every(value => !value.checked);
-        this._allChecked = allChecked;
-        this._indeterminate = !allChecked && !allUnChecked;
-        this._disabledButton = dataset ? !dataset.some(value => value.checked) : false;
-        this._checkedNumber = dataset ? dataset.filter(
-            value => value.checked
-        ).length : 0;
-    }
-
-    _checkAll(value, dataset) {
-        if (value) {
-            this._displayData.forEach(data => (data.checked = true));
-        } else {
-            this._displayData.forEach(data => (data.checked = false));
+    onTabChange(index) {
+        if(index === 2 && !this.hadTriggeredConversation) {
+            this.conversationService.findOneByWhere({
+                pid: this.ms._id
+            }).subscribe(res => {
+                if(!res.error) {
+                    this.hadTriggeredConversation = true;
+                    this.conversationService.import(
+                        res.data.conversation,
+                        res.data.users,
+                        res.data.commentCount,
+                        this.ms.auth.userId,
+                        this.ms._id,
+                        'ms'
+                    );
+                }
+            })
         }
-        this._refreshStatus(dataset);
     }
-
-    _operateData(dataset) {
-        this._operating = true;
-        setTimeout(v => {
-            dataset.forEach(value => (value.checked = false));
-            this._refreshStatus(dataset);
-            this._operating = false;
-        }, 1000);
-    }
-
-    @HostListener("scroll")
-    onScroll(event: any) {
-        // console.log('onScroll');
-        // const scrollH = Math.max(
-        //     window.pageYOffset,
-        //     window.scrollY,
-        //     document.documentElement.scrollTop,
-        //     document.body.scrollTop
-        // );
-        // const scrollH = jQuery("#root-container")[0].scrollTop;
-        // const h = jQuery("#separator")[0].offsetTop - scrollH;
-        // console.log(h);
-        // if (h < -50) {
-        //     jQuery(".side-catalog").css("visibility", "visible");
-        // } else {
-        //     jQuery(".side-catalog").css("visibility", "hidden");
-        // }
+    
+    onSubscribeToggle() {
+        let ac = this.includeUser ? 'unsubscribe' : 'subscribe';
+        this.userService.toggleSubscribe('ms', ac, this.ms._id).subscribe(res => {
+            if (!res.error) {
+                let i = this.ms.subscribed_uids.findIndex(v => v === this.user._id);
+                if (ac === 'subscribe')
+                    i === -1 && this.ms.subscribed_uids.push(this.user._id);
+                else
+                    i !== -1 && this.ms.subscribed_uids.splice(i, 1);
+            }
+        });
     }
 }

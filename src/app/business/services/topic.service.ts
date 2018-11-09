@@ -31,7 +31,7 @@ export class TopicService extends ListBaseService {
 
     public create() {
         let topic = new Topic(this.user);
-        let cid = this.conversationService.create(topic._id)._id;
+        let cid = this.conversationService.create(topic._id, 'topic')._id;
         topic.cid = cid;
         return topic;
     }
@@ -43,12 +43,5 @@ export class TopicService extends ListBaseService {
             }
             return res;
         }));
-    }
-
-    /**
-     * 订阅/取消订阅
-     */
-    public subscribeToggle(topicId, ac, uid) {
-        return super.patch(`${topicId}`, { ac, uid });
     }
 }

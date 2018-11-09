@@ -6,10 +6,11 @@
     "start": "ng serve --port 8888 --hmr",
     "debug": "node --nolazy node_modules/@angular/cli/bin/ng serve --proxy-config proxy.conf.json --port 8888 --hmr --configuration=hmr --common-chunk --vendor-chunk --source-map",
     "aot": "node --max_old_space_size=5120 node_modules/@angular/cli/bin/ng serve --proxy-config proxy.conf.json --port 8888 --aot --hmr --configuration=hmr --source-map",
-    "build:prod": "node --max_old_space_size=5120 node_modules/@angular/cli/bin/ng build --output-path=build-prod --delete-output-path --prod --build-optimizer --watch --common-chunk --vendor-chunk --stats-json",
-    "build:prod:2": "node --max_old_space_size=5120 node_modules/@angular/cli/bin/ng build --output-path=build-prod --delete-output-path --prod --build-optimizer=false --watch --common-chunk --vendor-chunk --stats-json",
+    "build:prod:optimizer": "node --max_old_space_size=5120 node_modules/@angular/cli/bin/ng build --output-path=build-prod-optimizer --delete-output-path --prod --build-optimizer --watch --common-chunk --vendor-chunk --stats-json",
+    "build:prod:": "node --max_old_space_size=5120 node_modules/@angular/cli/bin/ng build --output-path=build-prod --delete-output-path --prod --build-optimizer=false --watch --common-chunk --vendor-chunk --stats-json",
     "build:aot": "node --max_old_space_size=5120 node_modules/@angular/cli/bin/ng  build --aot --output-path=build-aot --delete-output-path --watch --common-chunk --vendor-chunk --stats-json",
-    "stats:prod": "npx webpack-bundle-analyzer prod/stats.json --port 8889",
+    "stats:prod:optimizer": "npx webpack-bundle-analyzer build-prod-optimizer/stats.json --port 8889",
+    "stats:prod": "npx webpack-bundle-analyzer build-prod/stats.json --port 8889",
     "stats:aot": "npx webpack-bundle-analyzer build-aot/stats.json --port 8886",
     "webpack-server": "webpack-dev-server --port 8888 --inline --progress --content-base src --colors --hot --devtool eval",
     "test": "ng test",
@@ -33,6 +34,7 @@
     "@ngu/carousel": "^1.5.4",
     "@types/echarts": "^4.1.1",
     "core-js": "2.4.1",
+    "date-fns": "^1.29.0",
     "echarts": "^4.2.0-rc.2",
     "font-awesome": "^4.7.0",
     "hammerjs": "^2.0.8",
@@ -41,7 +43,6 @@
     "install": "^0.12.2",
     "jquery": "3.2.1",
     "lodash": "^4.17.4",
-    "ng-zorro-antd": "^1.8.0",
     "ng2-go-top-button": "^6.0.0",
     "ng2-simplemde": "^2.1.0",
     "ng2-slim-loading-bar": "^4.0.0",
@@ -49,6 +50,7 @@
     "ngx-uploader": "^6.1.0",
     "npm": "^6.4.1",
     "objectid": "^1.1.0",
+    "octicons": "^8.1.0",
     "ol": "^5.2.0",
     "primer": "^10.8.1",
     "proj4": "^2.4.4",
@@ -70,7 +72,6 @@
     "@types/jasminewd2": "2.0.3",
     "@types/jquery": "2.0.41",
     "@types/lodash": "^4.14.71",
-    "@types/lodash-es": "^4.17.1",
     "@types/node": "6.0.69",
     "@types/ol": "^4.6.2",
     "@types/proj4": "^2.3.4",
@@ -111,5 +112,8 @@
     "webpack-dev-server": "^3.1.9",
     "wintersmith": "2.2.5",
     "wintersmith-sassy": "1.1.0"
-  }
+  },
+  "sideEffects": [
+    "node_modules/ol/proj.js"
+  ]
 }

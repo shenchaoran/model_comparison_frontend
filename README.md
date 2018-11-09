@@ -44,36 +44,59 @@ npm run debug
 如有端口冲突更改`package.json`中的`"start": "ng serve --port 8888 --proxy-config proxy.conf.json"`。
 
 ## TODO
-- [ ] 页面右下角加后台运行列表
-- [ ] docking layout
-- [x] 页面加载速度
-- [x] 评论系统
-- [x] ~~和bootstrap结合~~
-- [x] 分割 common module ，打包后太大
-- [ ] echarts tree-shaking
-- [ ] zorro tree-shaking
-- [ ] material theme custom
+type: optimization, feature, important, style
+- [ ] **feature**: docking layout
+- [x] **optimization**: 页面加载速度
+- [x] **feature**: 评论系统
+- [x] ~~**feature**: 和bootstrap结合~~
+- [x] **optimization**: 分割 common module ，打包后太大
+- [ ] **optimization**: echarts tree-shaking
+- [x] **optimization**: zorro tree-shaking
+- [ ] **optimization**: custom material theme
 - [ ] 用户个人空间相关
     - [ ] 路由 RESTful 风格化：user/:username
     - [ ] 关注、收藏的 topic, sln, task
-    - [ ] 消息订阅与通知
-- [ ] remove slim-loading-bar, use mat-progress-bar
-- [ ] remove list-template, use mat-list
-- [ ] remove disabled-button, use snackbar to alert valid state
-- [ ] remove header, use mat-toolbar
-- [ ] remove custom card, use mat-card
-- [ ] remove ng-zorro-antd !!!
-    - [ ] 样式冲突，首先移除
-- [ ] 首页重新设计，展现的元素尽量少，首页去除 ajax
-- [ ] 动态设置 title
-- [ ] primer style
+    - [ ] 消息订阅与通知：subscribeToggle 统一处理所有资源，而不是分别处理
+    - [ ] 页面右下角加后台运行列表
+- [ ] **optimization**: remove slim-loading-bar, use mat-progress-bar
+- [ ] **optimization**: remove list-template, use mat-list
+- [ ] **optimization**: remove disabled-button, use snackbar to alert valid state
+- [ ] **optimization**: remove header, use mat-toolbar
+- [ ] **optimization**: remove custom card, use mat-card
+- [x] **important**: remove ng-zorro-antd !!!
+    - [x] 样式和组件冲突，首先移除
+- [ ] **important**: 首页重新设计，展现的元素尽量少，首页去除 ajax
+- [ ] **optimization**: 动态设置 title
+- [ ] **style**: primer style
     - [ ] colorful label/tag
     - [ ] navigation component/filter/menu
     - [ ] popover
-    - [ ] subhead with description
+    - [x] subhead with description
     - [ ] css-truncate
     - [ ] color plaette
-    - [ ] Typography
+    - [x] Typography
+    - [ ] remove simplemde, use primer-markdown
+    - [ ] comment markdown
+- [ ] **feature**: ms detail
+    - [x] mat-tab: wiki, data description, conversation
+    - [ ] sider-bar: topic, solution, notification
+- [ ] **feature**: calcu detail
+    - [x] mat-tab: basic-info, data configuration, conversation
+    - [ ] 结果打包下载
+- [ ] **optimization**: auth guard
+- [ ] **optimization**: mongodb 大文档的查询效率
+- [ ] **optimization**: build-optimizer 入口代码被当做 dead code 删掉了？
+- [ ] **optimization**: lazy-loading:
+    - [x] conversation
+    - [ ] sider-section
+- [ ] **feature**: 并行计算接入
+    - [ ] 结算节点的注册
+    - [ ] 模型调用接口相同，用户并不知道是否使用了并行，但同时要暴露并行调用的参数
+    - [ ] 并行结果/效率的查看，转到并行服务管理器
+- [ ] **optimization**: RESTful API
+- [ ] **optimization**: 数据库重新设计，尽量使数据库操作最小化
+- [ ] **optimization**: angular universe, 服务端渲染
+- [ ] **feature**: search
 
 ## Architecture
 
@@ -118,6 +141,11 @@ angular自带的一些常用模块，一般大多数module中都要用，所以�
     - dynamic-title.service：动态设置标题
 
 ## 开发者说明
+**layout**
+
+- grid: primer-grid-layout, refer [here](https://styleguide.github.com/primer/objects/grid#column-widths)
+- flex
+
 **How to use 3td party module**
 
 优先通过 ES6 module 导入，可以享受到 tree-shaking，如果库不支持的话，在 angular.json 中将三方库整个引入。并在`typings.d.ts`中添加声明。
@@ -176,4 +204,3 @@ declare var jQuery: any;
 
 - 文件和文件夹命名：烤串命名法
 - 文件命名：feature.type.ts
-
