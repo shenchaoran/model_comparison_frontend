@@ -6,8 +6,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { USER } from "../test/data/mock-user";
-
 var counter = 1;
 @Injectable({
     providedIn: 'root'
@@ -144,19 +142,15 @@ export class UserService {
                         this.jwt.user.location = res.data.user.location;
                         this.jwt.user.avator = res.data.user.avator;
                         localStorage.setItem('jwt', JSON.stringify(this.jwt));
-                        this.router.navigate(['/user/profile/user-overview']);
+                        this.router.navigate(['/user/'+this.jwt.user.username]);
                         return res;
                     }
                 })
             )
     }
 
-    getUserInfo(id): Observable<any> { 
-        return this.http.get('/api/user/get-user-info', {
-            params: {
-                id: id
-            }
-        }).pipe(
+    getUserInfo(userName): Observable<any> { 
+        return this.http.get('/api/user'+`/${userName}`).pipe(
             map(res => {
                 if (res.error) {
                     console.error('error in user.service: ', `${res.error.code} - ${res.error.desc}`);
@@ -175,6 +169,7 @@ export class UserService {
      * 检查是否登录，如果没有登录，则先重定向到登录页面
      */
     redirectIfNotLogined() {
+        console.log(2);
         if (!this.isLogined) {
             this.router.navigate(['../..', 'login'], {
                 relativeTo: this.route,

@@ -4,17 +4,17 @@
         <h2 class="f4 mb-2 text-normal">Latest Topics</h2>
         <ol class="card-list">
             <li *ngFor="let topic of topicList" class="card-item">
-                <a class="card-item-content" [routerLink]='"/topics/" + topic._id'>
-                    <span class="d-block">
+                <div class="card-item-content" >
+                    <a class="d-block" [routerLink]='"/topics/" + topic._id'>
                         <p class="title-p text-gray">{{topic.meta.name}}</p>
-                    </span>
+                    </a>
                     <div class="sponsor">
                         <div class="text-gray text-small float_right">
-                            Created By:
-                            <span>{{topic.auth.userName}}</span>
+                            Created By: 
+                            <a [routerLink]='"/user/" + topic.auth.userName'>{{topic.auth.userName}}</a>
                         </div>
                     </div>
-                </a>
+                </div>
             </li>
         </ol>
     </div>
@@ -24,7 +24,7 @@
         <h2 class="f4 mb-2 text-normal">Latest Solutions</h2>
         <ol class="card-list">
             <li *ngFor="let sln of slnList" class="card-item">
-                <div class="card-item-content" routerLink="">
+                <div class="card-item-content">
                     <span class="d-block">
                         <a class="title-p" [routerLink]='"/comparison/solutions/" + sln._id'>{{sln.meta.name}}</a>
                     </span>
@@ -34,7 +34,7 @@
                     <div class="sponsor">
                         <div class="text-gray text-small float_right">
                             Created By:
-                            <span>{{sln.auth.userName}}</span>
+                            <a [routerLink]='"/user/" + sln.auth.userName'>{{sln.auth.userName}}</a>
                         </div>
                     </div>
                 </div>
@@ -47,7 +47,7 @@
         <h2 class="f4 mb-2 text-normal">Latest Results & Diagnostics</h2>
         <ol class="card-list">
             <li *ngFor="let task of taskList" class="card-item">
-                <div class="card-item-content" routerLink="">
+                <div class="card-item-content">
                     <span class="d-block">
                         <a class="title-p" class=""[routerLink]='"/results/comparison/" + task._id'>{{task.meta.name}}</a>
                     </span>
@@ -56,8 +56,8 @@
                     </div>
                     <div class="sponsor">
                         <span>
-                            <mat-icon>person</mat-icon>
-                            <span>{{task.auth.userName}}</span>
+                            <mat-icon>person</mat-icon> 
+                            <a [routerLink]='"/user/" + task.auth.userName'>{{task.auth.userName}}</a>
                         </span>
                         <span style="float: right">
                             <mat-icon>star</mat-icon>

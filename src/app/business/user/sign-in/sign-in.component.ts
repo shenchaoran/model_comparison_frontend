@@ -35,6 +35,7 @@ export class SignInComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+        this.service.signOut();
         this.signInFG = this.fb.group({
             username: [get(this.service, 'jwt.user.username'), [Validators.required, Validators.minLength(3)]],
             password: ['', [Validators.required, Validators.minLength(6)]],

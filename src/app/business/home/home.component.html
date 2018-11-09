@@ -18,7 +18,7 @@
         <div class='panel-item-footer'>
             <span>
                 <mat-icon>person</mat-icon>
-                <span>{{item.auth.userName}}</span>
+                <a [routerLink]='"/user/" + item.auth.userName'>{{item.auth.userName}}</a>
             </span>
             <span>
                 <mat-icon>star</mat-icon>
@@ -39,7 +39,7 @@
         <div class='panel-item-footer'>
             <span>
                 <mat-icon>person</mat-icon>
-                <span>{{item.auth.userName}}</span>
+                <a [routerLink]='"/user/" + item.auth.userName'>{{item.auth.userName}}</a>
             </span>
             <span>
                 <mat-icon>star</mat-icon>
@@ -60,7 +60,7 @@
         <div class='panel-item-footer'>
             <span>
                 <mat-icon>person</mat-icon>
-                <span>{{item.auth.userName}}</span>
+                <a [routerLink]='"/user/" + item.auth.userName'>{{item.auth.userName}}</a>
             </span>
             <span>
                 <mat-icon>star</mat-icon>
@@ -81,7 +81,7 @@
         <div class='panel-item-footer'>
             <span>
                 <mat-icon>person</mat-icon>
-                <span>{{item.auth.nodeName}}</span>
+                <a [routerLink]='"/user/" + item.auth.nodeName'>{{item.auth.nodeName}}</a> 
             </span>
             <span>
                 <mat-icon>star</mat-icon>

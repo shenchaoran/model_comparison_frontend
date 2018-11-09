@@ -9,7 +9,7 @@
         <div class='panel-item-footer'>
             <span>
                 <mat-icon>person</mat-icon>
-                <span>{{item.auth.userName}}</span>
+                <a [routerLink]='"/user/" + item.auth.userName'>{{item.auth.userName}}</a> 
             </span>
             <span>
                 <mat-icon>star</mat-icon>

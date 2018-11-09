@@ -51,14 +51,14 @@ export const USER_MENUS: MenuClass = {
     label: 'User',
     children: [
         {
-            path: '/user/profile',
+            path: '/user/:userName',
             label: 'Profile'
         },
         {
-            path: '/user/set-up',
+            path: '/user/:userName/set-up',
             label: 'Setting'
         },
-        {
+        { 
             path: '/user/sign-out',
             label: 'Sign Out'
         }

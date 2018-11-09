@@ -4,7 +4,7 @@
 </mat-button-toggle-group>
 
 <div >
-  <section *ngFor="let item of results" class="list-item">
+  <section *ngFor="let item of taskList" class="list-item">
     <div class="detail-group">
       <h3>
         <a [routerLink]='["/results",result_type,item._id]'>{{item.auth.userName}} / {{item.meta.name}}</a>

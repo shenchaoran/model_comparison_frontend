@@ -9,11 +9,7 @@
                 <a [routerLink]='"/topics/" + topic._id'>
                     <span>{{topic.meta.name}}</span>
                 </a>
-            </mat-card-title>
-            <!-- <mat-card-subtitle>
-                Created By:
-                <a routerLink="">{{topic.sponsor}}</a>
-            </mat-card-subtitle> -->
+            </mat-card-title> 
         </mat-card-header>
 
         <mat-card-content>
@@ -22,8 +18,8 @@
         </mat-card-content>
         <mat-card-footer>
             <span style="float:left;padding-left:20px">
-                Created By:
-                <span>{{topic.auth.userName}}</span>
+                Created By: 
+                <a [routerLink]='"/user/" + topic.auth.userName'>{{topic.auth.userName}}</a>
             </span>
             <div style="float: right;padding-right:20px;">
                 <span>

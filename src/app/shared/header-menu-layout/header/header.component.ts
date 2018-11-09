@@ -1,7 +1,9 @@
+import { MenuClass } from './../../../../config/menu.config';
 import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
 import { UserService } from '@services';
+import { forEach, replace } from 'lodash';
 
 @Component({
   selector: 'ogms-header',
@@ -27,7 +29,12 @@ export class HeaderComponent implements OnInit {
         private userService: UserService,
         @Inject('HEADER_MENUS') public header_menus, 
         @Inject('USER_MENUS') public user_menus,
-    ) { }
+    ) {
+        if(this.logined){
+            this.replaceMenuConfig(this.user_menus,/:userName/g,this.userService.user.username);
+            console.log(this.user_menus);
+        }
+     }
 
     ngOnInit() {
         this.route.queryParams.subscribe((params: Params) => {
@@ -38,6 +45,8 @@ export class HeaderComponent implements OnInit {
 
         this.userService.logined$.subscribe(logined => {
             this.logined = logined;
+            this.replaceMenuConfig(this.user_menus,/:userName/g,this.userService.user.username);
+            console.log(this.user_menus);
         });
     }
 
@@ -64,6 +73,21 @@ export class HeaderComponent implements OnInit {
                 redirect: this.redirect
             }
         });
+    }
+
+    /**
+     * 将 header_menus 或 user_menus 中的占位符替换
+     * @param menus 参考 menu.config.ts 中 USER_MENUS。
+     * @param regExp 正则 /\/:userName/g
+     * @param replacement  
+     */
+    replaceMenuConfig(menus:MenuClass,regExp,replacement){
+        menus.path = replace(menus.path,regExp,replacement);
+        forEach(menus.children,item=>{
+            item.path = replace(item.path,regExp,replacement);
+            console.log(item)
+        });
+        console.log("menus:"+menus.children);
     }
 
 }

@@ -221,7 +221,7 @@
                 </div>
                 <div class='body participants'>
                     <ng-container *ngFor='let user of users'>
-                        <img [attr.src]='user.avator'>
+                        <img [attr.src]='user.avator' [routerLink]='"/user/" + user.username'>
                     </ng-container>
                 </div>
             </ogms-sidebar-section>
