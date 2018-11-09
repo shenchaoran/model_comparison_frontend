@@ -92,13 +92,13 @@
             </mat-tab>
 
             <mat-tab label='Data configuration'>
-                <div *ngIf='couldEdit' class='ac-btn-group'>
+                <div *ngIf='couldEdit' class='my-3'>
                     <ng-container *ngIf='_cmpCfgMode === "READ"'>
                         <button mat-stroked-button color='primary' (click)='onCmpCfgEditClick()'>Edit</button>
                     </ng-container>
 
                     <ng-container *ngIf='_cmpCfgMode === "WRITE"'>
-                        <button mat-stroked-button color='primary' (click)='onCmpCfgEditCancel()'>Cancel</button>
+                        <button mat-stroked-button color='primary' (click)='onCmpCfgEditCancel()' class='mr-3'>Cancel</button>
                         <button mat-stroked-button color='primary' (click)='onCmpCfgEditSave()'>Save</button>
                     </ng-container>
                 </div>
@@ -116,12 +116,10 @@
                     </div>
                 </ng-template>
 
-                <div *ngIf='_cmpCfgMode === "WRITE"' class='flex-box-row-nowrap form-item' id='add-cmpObj-btn'>
-                    <button mat-stroked-button color='primary' class='flex-spacer' (click)='addCmpObj()' [disabled]='ptMSs.length === 0'>
-                        <mat-icon>add</mat-icon>
-                        <span>Add comparison feature</span>
-                    </button>
-                </div>
+                <button *ngIf='_cmpCfgMode === "WRITE"' mat-stroked-button color='primary' class='col-12 my-3' (click)='addCmpObj()' [disabled]='ptMSs.length === 0'>
+                    <mat-icon>add</mat-icon>
+                    <span>Add comparison feature</span>
+                </button>
             </mat-tab>
 
             <mat-tab label='Conversation'>

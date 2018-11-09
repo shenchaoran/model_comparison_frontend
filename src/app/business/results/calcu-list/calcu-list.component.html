@@ -7,8 +7,8 @@
         </div>
         <div class='tag-group'>
             <mat-chip-list>
-                <mat-chip *ngIf='msRecord.topicId && msRecord.topicName' [routerLink]='["../topics", msRecord.topicId]' class='topic-chip'>{{msRecord.topic}}</mat-chip>
-                <mat-chip *ngIf='msRecord.msId && msRecord.msName' [routerLink]='["../models/", msRecord.msId]' class='ms-chip'>{{msRecord.msName}}</mat-chip>
+                <mat-chip *ngIf='msRecord.topicId && msRecord.topicName' [routerLink]='["/topics", msRecord.topicId]' class='topic-chip'>{{msRecord.topic}}</mat-chip>
+                <mat-chip *ngIf='msRecord.msId && msRecord.msName' [routerLink]='["/models/", msRecord.msId]' class='ms-chip'>{{msRecord.msName}}</mat-chip>
             </mat-chip-list>
         </div>
         <div class='actions-group'>

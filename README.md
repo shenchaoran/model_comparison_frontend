@@ -97,6 +97,7 @@ type: optimization, feature, important, style
 - [ ] **optimization**: 数据库重新设计，尽量使数据库操作最小化
 - [ ] **optimization**: angular universe, 服务端渲染
 - [ ] **feature**: search
+- [ ] **optimization**: 后台数据库 patch 局部更新
 
 ## Architecture
 
