@@ -32,7 +32,6 @@ export class HeaderComponent implements OnInit {
     ) {
         if(this.logined){
             this.replaceMenuConfig(this.user_menus,/:userName/g,this.userService.user.username);
-            console.log(this.user_menus);
         }
      }
 
@@ -46,7 +45,6 @@ export class HeaderComponent implements OnInit {
         this.userService.logined$.subscribe(logined => {
             this.logined = logined;
             this.replaceMenuConfig(this.user_menus,/:userName/g,this.userService.user.username);
-            console.log(this.user_menus);
         });
     }
 
@@ -85,9 +83,7 @@ export class HeaderComponent implements OnInit {
         menus.path = replace(menus.path,regExp,replacement);
         forEach(menus.children,item=>{
             item.path = replace(item.path,regExp,replacement);
-            console.log(item)
         });
-        console.log("menus:"+menus.children);
     }
 
 }

@@ -169,7 +169,6 @@ export class UserService {
      * 检查是否登录，如果没有登录，则先重定向到登录页面
      */
     redirectIfNotLogined() {
-        console.log(2);
         if (!this.isLogined) {
             this.router.navigate(['../..', 'login'], {
                 relativeTo: this.route,
