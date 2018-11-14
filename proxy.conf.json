@@ -1,6 +1,9 @@
 {
-    "useage": "--proxy-config proxy.conf.json",
-    "**": {
-        "target": "http://localhost:7777"
+    "/api": {
+        "target": "http://localhost:9999",
+        "secure": false
+    }, 
+    "/geoserver": {
+        "target": "http://localhost:8787"
     }
 }

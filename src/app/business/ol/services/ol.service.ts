@@ -17,12 +17,13 @@ export class OlService {
                 .then(res => {
                     let parsed
                     try{
-                        parsed = res.json()
+                        parsed = res.json() //* geoServer 返回的是html格式数据，需要配置成返回json数据，不然这个地方会报错。
                     }
                     catch(e) {
                         parsed = null;
                     }
                     finally{
+                        console.log("parsed:"+ JSON.stringify(parsed));
                         return parsed;
                     }
                 })
