@@ -21,9 +21,8 @@ export class Solution {
         userName: string,
         src: ResourceSrc
     };
-    topicId: string;
-    taskIds: string[];
-    msIds: string[];
+    topicIds?: string[];
+    msIds?: string[];
     cmpObjs: CmpObj[];
     cid: string;
     subscribed_uids: string[];
@@ -66,7 +65,9 @@ export class CmpObj {
     schemaId?: string;
     methods: {
         id: string,
-        name: string
+        name: string,
+        // 保存结果文件路径
+        result: string
     }[];
     progress?: number;
 
@@ -89,5 +90,4 @@ export class DataRefer {
     msrId?: string;
     value?: string;
     field?: string;
-    cmpResult?: any;
 }

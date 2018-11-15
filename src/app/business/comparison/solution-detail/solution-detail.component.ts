@@ -7,7 +7,7 @@ import { ConversationService, SolutionService, UserService, MSService } from "@s
 import { Simplemde } from 'ng2-simplemde';
 import { Solution, Task, Topic, MS, CmpMethod, CmpObj } from "@models";
 import { MatSnackBar, MatSelectionList } from '@angular/material';
-import { cloneDeep, isEqual, get, pull, findIndex, } from 'lodash';
+import { cloneDeep, isEqual, get, pull, findIndex, indexOf} from 'lodash';
 
 @Component({
     selector: 'ogms-solution-detail',
@@ -86,25 +86,21 @@ export class SolutionDetailComponent implements OnInit {
     }
 
     onAttachTopic(topic) {
-        let ac = this.solution.topicId === topic._id? 'removeTopic': 'addTopic';
+        let ac = indexOf(this.solution.topicIds, topic._id) !== -1? 'removeTopic': 'addTopic';
         this.solutionService.patch(this.solution._id, {
             topicId: topic._id,
             ac: ac,
-            originalTopicId: get(this.topic, '_id'),
         }).subscribe(res => {
             if(!res.error) {
                 this.renderer2.setStyle(this.menuRef.nativeElement, 'display', 'none');
-                let i = topic.solutionIds.indexOf(this.solution._id);
                 if(ac === 'removeTopic') {
-                    this.solution.topicId = null;
-                    this.topic = null;
-                    pull(topic.solutionIds, this.solution._id);
+                    pull(this.solution.topicIds, topic._id)
                 }
                 else if(ac === 'addTopic') {
-                    this.solution.topicId = topic._id;
-                    pull(get(this.topic, 'solutionIds'), this.solution._id);
-                    this.topic = topic;
-                    i === -1 && this.topic.solutionIds.push(this.solution._id);
+                    if(indexOf(this.solution.topicIds, topic._id) === -1) {
+                        !this.solution.topicIds && (this.solution.topicIds = []);
+                        this.solution.topicIds.push(topic._id)
+                    }
                 }
                 
             }

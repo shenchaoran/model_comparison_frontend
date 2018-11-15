@@ -26,10 +26,9 @@ export class MethodDetailComponent extends OgmsBaseComponent implements OnInit, 
         this.cmpMethodService.findOne(this.route.snapshot.paramMap.get('id')).subscribe(res => {
             if(!res.error) {
                 this.method = res.data;
-                let html = (simplemed as any).markdown(this.method.md);
+                let html = (simplemed as any).markdown(this.method.meta.wikiMD);
                 // let converter = new showdown.Converter();
                 // let html = converter.makeHtml(this.method.md);
-                console.log(this.method.md)
                 this.renderer2.setProperty(this.div.nativeElement, 'innerHTML', html)
             }
         });

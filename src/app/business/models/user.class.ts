@@ -4,7 +4,7 @@ export class User {
     password: string;
     email?: string;
     avator: string;
-    url?:string;
-    group?:string;
-    location?:string;
+    url?: string;
+    group?: string;
+    location?: string;
 }

@@ -23,37 +23,42 @@ export class CalcuTask {
         userName: string,
         src: ResourceSrc
     };
-    // ms: any;
     msId: string;
     msName: string;
     topicId: string;
     topicName: string;
-    // topic: string;
     cmpTaskId: string;
-    node: any;
+    cmpTaskName: string;
+    nodeId: string;
     IO: {
         dataSrc: 'STD' | 'UPLOAD',
         schemas: any[],
-        data: any[],
-        std: any[]
+        inputs: Event[],
+        parameters: Event[],
+        outputs: Event[],
+        std: Event[]
     };
-    // std: any;
+    log: {
+        cached: boolean,
+        dataId: string
+    };
     stdId: string;
     state: CalcuTaskState;
     progress: number;
     subscribed_uids: string[];
+    cid: string;
     [key: string]: any;
 
     constructor(user: User, ms?) {
         if (ms) {
-            // this.ms = ms;
             this.msId = ms._id;
             this.msName = ms.MDL.meta.name;
             this.topicId = ms.topicId;
             this.topicName = ms.topicName;
-            // this.topic = ms.topic;
             this.IO = cloneDeep(ms.MDL.IO);
             this.IO.dataSrc = 'STD';
+            // TODO 选择节点
+            this.nodeId = ms.nodeIds[0];
             let appendSchema = (type, schema) => {
                 map(this.IO[type] as any[], event => {
                     if (event.schemaId === schema.id) {

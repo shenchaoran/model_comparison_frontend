@@ -13,6 +13,12 @@ export class ListBaseService {
         protected http: _HttpClient
     ) { }
 
+    getDetailPage(id, type: 'ARTICLE' | 'SIDER', mode: 'READ' | 'WRITE') {
+        return this.http.get(`${this.baseUrl}/${id}`, {
+            params: { type, mode }
+        })
+    }
+
     findAll(query?: any): Observable<any> {
         return this.http.get(`${this.baseUrl}`, {
             params: query

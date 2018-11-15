@@ -74,6 +74,7 @@ export class CreateTaskComponent extends OgmsBaseComponent implements OnInit {
     }
 
     submitTask(type) {
+        this.calcuTasks = [];
         if (type === 'save') {
             this.task.state = CmpState.INIT;
         }
