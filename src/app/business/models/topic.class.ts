@@ -25,7 +25,6 @@ export class Topic {
         end: number;
         scale: 'YEAR' | 'DAY';
     };
-    solutionIds: string[];
     cid: string;
     subscribed_uids: string[];
 
@@ -43,7 +42,6 @@ export class Topic {
             userName: user.username
         };
         this.subscribed_uids = [];
-        this.solutionIds = [];
         this.cid = cid;
     }
 }

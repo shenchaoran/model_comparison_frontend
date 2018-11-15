@@ -32,6 +32,7 @@ export class CmpDetailComponent extends OgmsBaseComponent implements OnInit {
     hadTriggeredConversation;
     echartDOMIndex = 0;
     @ViewChildren('echartDOM') echartDOM: QueryList<ElementRef>;
+    chartRecord = {};
 
     get user() { return this.userService.user; }
     get users() { return this.conversationService.users; }
@@ -88,13 +89,16 @@ export class CmpDetailComponent extends OgmsBaseComponent implements OnInit {
         setTimeout(() => {
             let cmpObj = this.task.cmpObjs[i]
             cmpObj.methods.map((method) => {
-                if (method.id === '5b713f39a4857f1ba4be23ff') {
+                if (method.id === '5b713f39a4857f1ba4be23ff' || method.id === '5b713f51a4857f1ba4be2404') {
                     if (method.result.state === CmpState.FINISHED_SUCCEED) {
+                        // console.log(this.echartDOM.toArray())
+
                         echarts
                             .init(this.echartDOM.toArray()[i].nativeElement)
                             .setOption(method.result);
+                        this.chartRecord[i] = 1;
+                        // this.echartDOMIndex++;
                     }
-                    this.echartDOMIndex++;
                 }
             })
         }, 10);
@@ -119,7 +123,8 @@ export class CmpDetailComponent extends OgmsBaseComponent implements OnInit {
             })
         }
         else {
-            this.buildChart(index);
+            if(this.chartRecord[index] !== 1)
+                this.buildChart(index);
         }
     }
 

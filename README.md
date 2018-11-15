@@ -77,9 +77,9 @@ type: optimization, feature, important, style
     - [x] Typography
     - [ ] remove simplemde, use primer-markdown
     - [ ] comment markdown
-- [ ] **feature**: ms detail
+- [x] **feature**: ms detail
     - [x] mat-tab: wiki, data description, conversation
-    - [ ] sider-bar: topic, solution, notification
+    - [x] sider-bar: topic, solution, notification
 - [ ] **feature**: calcu detail
     - [x] mat-tab: basic-info, data configuration, conversation
     - [ ] 结果打包下载
@@ -98,6 +98,7 @@ type: optimization, feature, important, style
 - [ ] **optimization**: angular universe, 服务端渲染
 - [ ] **feature**: search
 - [ ] **optimization**: 后台数据库 patch 局部更新
+- [ ] 路由复用：比如列表翻页的场景，当我在第三页找到想要的item，点到详情页后重新后退，发现回退到了第一页。两种解决方法，1) 把分页参数放在url中；2) 使用路由复用 RouteReuseStrategy
 
 ## Architecture
 

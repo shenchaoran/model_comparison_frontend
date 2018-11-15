@@ -22,7 +22,6 @@ export class Task {
     state: CmpState;
     progress: number;
     solutionId?: string;
-    topicId?: string;
     calcuTaskIds: {
         _id: string,
         progress: number
