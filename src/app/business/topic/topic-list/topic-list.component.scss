@@ -11,10 +11,19 @@
     height: 100%;
     .panel-item-header {
         padding: 0 0 10px;
-        font-weight: 400;
+        margin: 0 -16px; 
+        
+        a{
+            height: 50px;
+            display: -webkit-box;
+            overflow: hidden;
+        }
     }
     .panel-item-body {
-        flex: 1 1 auto;
+        flex: 1 1 auto; 
+        height: 80px;
+        overflow: hidden; 
+        line-height: 2em; 
     }
     .panel-item-footer {
         display: flex;
@@ -22,8 +31,7 @@
         justify-content: space-between;
         span{
             display: flex;
-            flex-flow: row nowrap;
-            align-items: center;
+            flex-flow: row nowrap; 
         }
     }
 }
@@ -37,4 +45,8 @@
     right: 30px;
     top: -28px;
     z-index: 100;
+}
+
+.lh-2{
+    line-height: 2em;
 }

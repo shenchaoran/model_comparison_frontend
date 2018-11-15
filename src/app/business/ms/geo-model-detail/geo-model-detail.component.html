@@ -23,7 +23,7 @@
                     <dd class='pb-1 mb-1 col-4 float-left'>{{ms.MDL.meta.time | date: 'yyyy-MM-dd'}}</dd>
                 </dl>
                 <div class='markdown-body'>
-                    {{ms.MDL.meta.abstract}}
+                    <p [innerHTML] = "ms.MDL.meta.wikiHTML"></p> 
                 </div>
             </mat-tab>
 

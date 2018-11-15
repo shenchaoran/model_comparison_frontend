@@ -17,6 +17,7 @@ import {
     MatInputModule,
     MatButtonModule,
     MatTabsModule,
+    MatCardModule,
 } from '@angular/material';
 import { TopicRoutingModule } from './index-routing.module';
 import { TopicListComponent } from './topic-list/topic-list.component';
@@ -31,6 +32,7 @@ const modules = [
     MatInputModule,
     MatButtonModule,
     MatTabsModule,
+    MatCardModule,
     ConversationModule,
     TopicRoutingModule,
     SimplemdeModule.forRoot(),

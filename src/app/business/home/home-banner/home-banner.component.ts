@@ -15,19 +15,19 @@ export class HomeBannerComponent{
     public carouselTileItems = [
         {
             h1: 'Run all kinds of model online',
-            desc: 'I am the detail information the detail information the detail information the detail information'
+            desc: 'Promote the development of opening geo-modeling and simulation theory and technology'
         }, 
         {
             h1: 'Provide your own Topic',
-            desc: 'I am the detail information the detail information the detail information the detail information'
+            desc: 'Improving our knowledge and understanding of global and regional climate variability and change'
         }, 
         {
             h1: 'Create solution to compare topic',
-            desc: 'I am the detail information the detail information the detail information the detail information'
+            desc: 'Comprehensive comparison of simulation capabilities from multiple perspectives'
         },
         {
             h1: 'Config and Compute the task user-defined',
-            desc: 'I am the detail information the detail information the detail information the detail information'
+            desc: 'Improve reusability of participating comparative models'
         }
     ];
     public carouselTileConfig: NguCarouselConfig = {
@@ -40,7 +40,7 @@ export class HomeBannerComponent{
         },
         touch: true,
         loop: true,
-        interval: { timing: 1500 },
+        interval: { timing: 3000 },
         animation: 'lazy'
     };
 }

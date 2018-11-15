@@ -1,22 +1,26 @@
 <ng-template #template let-item='item'>
-    <div class='list-item'>
-        <span class='panel-item-header'>
-            <a [routerLink]='"/topics/" + item._id'>{{item.meta.name}}</a>
-        </span>
-        <div class='panel-item-body'>
-            <p>{{item.meta.wikiMD | stringLimit: 180 | description}}</p>
-        </div>
-        <div class='panel-item-footer'>
-            <span>
-                <mat-icon>person</mat-icon>
-                <a [routerLink]='"/user/" + item.auth.userName'>{{item.auth.userName}}</a> 
-            </span>
-            <span>
-                <mat-icon>star</mat-icon>
-                <span>654</span>
-            </span>
-        </div>
-    </div>
+    <mat-card class="list-item">
+        <mat-card-header>
+            <mat-card-title class='panel-item-header f4'>
+                <a [routerLink]='"/topics/" + item._id' title="{{item.meta.name}}">{{item.meta.name}}</a>
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <p class='panel-item-body'>{{item.meta.wikiMD | stringLimit: 180 | description}}</p>
+        </mat-card-content>
+        <mat-card-actions>
+            <div class='panel-item-footer'>
+                <span>
+                    <mat-icon>person</mat-icon>
+                    <a class="lh-2" [routerLink]='"/user/" + item.auth.userName'>{{item.auth.userName}}</a>
+                </span>
+                <span>
+                    <mat-icon>star</mat-icon>
+                    <span class="lh-2">654</span>
+                </span>
+            </div>
+        </mat-card-actions>
+    </mat-card>
 </ng-template>
 
 <div ogms-rx-box *ngIf='topicList else loadingTemp'>

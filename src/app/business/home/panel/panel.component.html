@@ -8,6 +8,15 @@
             <ng-container *ngFor='let item of list.docs'>
                 <ng-container [ngTemplateOutlet]='template' [ngTemplateOutletContext]='{item: item}'></ng-container>
             </ng-container>
+            <div *ngIf='list.count==0'>
+                    <div class="blankslate ">
+                        <span octicon="alert" width="32" class="blankslate-icon"></span> 
+                        <h3>{{title.label}} is empty.</h3>
+                        <p>Looking forward to your joining.</p>
+                    </div>
+                </div>
         </ng-container>
+        <!-- 若列表为空则显示 blankslate -->
+        
     </div>
 </div>
