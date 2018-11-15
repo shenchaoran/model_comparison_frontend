@@ -32,7 +32,7 @@ export class Comment {
         time: number,
         html: string,
         md: string,
-        state: CommentState
+        state?: CommentState
     }[];
     // 版本号
     svid: number;
@@ -42,7 +42,6 @@ export class Comment {
     to_uid?: string;
     // @ 的用户
     notified_uids?: string[];
-    // cid: string;
     type: CommentType;
     hideReason?: string;
     // emoji react
@@ -50,7 +49,7 @@ export class Comment {
         name: string,
         count: number
     }[];
-    hadSaved: boolean;
+    hadSaved?: boolean;
 
     constructor(user: User, hadSaved: boolean = false, type: CommentType, to_uid?: string, state: CommentState = CommentState.WRITE) {
         this._id = ObjectID().toString();

@@ -1,4 +1,5 @@
 export * from './solution.class';
+export * from './computing-node.class';
 export * from './model-service.class';
 export * from './resource.enum';
 export * from './UDX-cfg.class';

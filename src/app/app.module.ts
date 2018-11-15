@@ -1,5 +1,6 @@
 import { NgModule, Component } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { LocationStrategy, PathLocationStrategy } from '@angular/common';
+import { Routes, RouterModule, } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CoreModule } from '@core';
@@ -88,6 +89,11 @@ export class AppRoutingModule { }
         CoreModule.forRoot(),
         NgxSharedModule,
     ],
-    providers: []
+    providers: [
+        {
+            provide: LocationStrategy,
+            useClass: PathLocationStrategy
+        }
+    ]
 })
 export class AppModule { }

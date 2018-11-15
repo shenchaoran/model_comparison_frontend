@@ -9,12 +9,12 @@
         <div class='Subhead-description'>Description: {{task?.meta.desc}}</div>
     </div>
     <article class='article'>
-        <h3 class='f3-light mb-2'>Comparison features</h3>
+        <!-- <h3 class='f3-light mb-2'>Comparison features</h3> -->
 
         <mat-tab-group (selectedIndexChange)='onTabChange($event)'>
-            <mat-tab *ngFor="let cmpObj of task?.cmpObjs; let i=index" [label]='i+1 + "." + cmpObj.name'>
+            <mat-tab *ngFor="let cmpObj of task?.cmpObjs; let i=index" [label]='"Feature " + (+i+1) + ": " + cmpObj.name'>
                 <p class='mt-3'>Description: {{cmpObj.desc}}</p>
-                <p>Data configuration:</p>
+                <!-- <p>Data configuration:</p> -->
                 <table class='col-12 mb-3' mat-table [dataSource]="cmpObj.dataRefers">
                     <ng-container matColumnDef="msName">
                         <th mat-header-cell *matHeaderCellDef>Model name</th>
@@ -40,7 +40,7 @@
                                     <mat-chip class='topic method-chip' *ngFor='let method of cmpObj.methods'>{{method.name}}</mat-chip>
                                 </mat-chip-list> -->
                     <p>{{method.name}}</p>
-                    <ng-container *ngIf='method.id === "5b713f39a4857f1ba4be23ff"'>
+                    <ng-container *ngIf='method?.id === "5b713f39a4857f1ba4be23ff" || method.id === "5b713f51a4857f1ba4be2404" || method?.meta?.name === "table series visualization"'>
                         <div #echartDOM class='echart-dom'></div>
                     </ng-container>
                 </div>

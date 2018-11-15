@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
-import { findIndex, get, } from 'lodash';
+import { findIndex, get, pull, indexOf, } from 'lodash';
 import {
     TopicService,
     ConversationService,
@@ -78,20 +78,15 @@ export class TopicDetailComponent implements OnInit {
         this.topicService.patch(this.topic._id, {
             ac,
             solutionId: sln._id,
-            originalTopicId: sln.topicId,
         }).subscribe(res => {
             if (!res.error) {
-                let i = this.topic.solutionIds.indexOf(sln._id);
                 if (ac === 'removeSolution') {
-                    if (i !== -1) {
-                        this.topic.solutionIds.splice(i, 1);
-                        sln.topicId = null;
-                    }
+                    pull(sln.topicIds, this.topic._id)
                 }
                 else {
-                    if (i === -1) {
-                        this.topic.solutionIds.push(sln._id);
-                        sln.topicId = this.topic._id;
+                    if(indexOf(sln.topicIds, this.topic._id) === -1) {
+                        !sln.topicIds && (sln.topicIds = [])
+                        sln.topicIds.push(this.topic._id)
                     }
                 }
             }
