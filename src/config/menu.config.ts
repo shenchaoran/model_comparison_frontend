@@ -39,10 +39,10 @@ export const HEADER_MENUS: MenuClass[] = [
             }
         ]
     },
-    {
-        path: '/test',
-        label: 'Test'
-    }
+    // {
+    //     path: '/test',
+    //     label: 'Test'
+    // }
 ];
 
 // 登录成功后的用户菜单
