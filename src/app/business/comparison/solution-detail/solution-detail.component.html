@@ -1,4 +1,4 @@
-<button id='create-btn' routerLink='../create' mat-fab color="primary">
+<button id='create-btn' (click)="createSolution()" mat-fab color="primary" title="Create a new comparison solution">
     <mat-icon>add</mat-icon>
 </button>
 
@@ -9,6 +9,7 @@
 </ng-template>
 
 <ogms-detail-layout *ngIf='solution else loadingTemp'>
+    <p class="top_title h1">Comparison Solution</p>
     <div class='header'>
         <ng-container *ngIf='_editMode === "WRITE" else readTemp'>
             <div class='header-title'>
@@ -116,7 +117,7 @@
                     </div>
                 </ng-template>
 
-                <button *ngIf='_cmpCfgMode === "WRITE"' mat-stroked-button color='primary' class='col-12 my-3' (click)='addCmpObj()' [disabled]='ptMSs.length === 0'>
+                <button *ngIf='_cmpCfgMode === "WRITE"' mat-stroked-button color='primary' class='col-12 my-3' (click)='addCmpObj()' [disabled]='ptMSs.length === 0' title="Create a new comparison solution">
                     <mat-icon>add</mat-icon>
                     <span>Add comparison feature</span>
                 </button>
@@ -138,7 +139,7 @@
                     Topic
                     <mat-icon inline>settings</mat-icon>
                 </div>
-                <div class='menu' #menu *ngIf='solution.auth.userId === user._id'>
+                <div class='menu' #menu *ngIf='user && solution.auth.userId === user._id'>
                     <div class='title'>Attach topic</div>
                     <div class='filter'>
                         <input placeholder='Filter topic' [(ngModel)]='topicFilter'>
@@ -146,7 +147,7 @@
                     <ul *ngIf='topicList && topicList.length' class='opt-list aside-ul'>
                         <li *ngFor='let topic of topicList' (click)='onAttachTopic(topic)'>
                             <div class='sln-select-spacer'>
-                                <mat-icon inline *ngIf='solution.topicId === topic._id'>clear</mat-icon>
+                                <mat-icon inline *ngIf='solution.topicIds.indexOf(topic._id) !== -1'>clear</mat-icon>
                             </div>
                             {{topic.auth.userName}} / {{topic.meta.name}}
                         </li>
@@ -156,9 +157,9 @@
                     </ul>
                 </div>
                 <div class='body'>
-                    <ng-container *ngIf='topic && topic.auth && topic.meta else noTopicTemp'>
+                    <ng-container *ngIf='attached_topics.length else noTopicTemp'>
                         <ul class='aside-ul with-route'>
-                            <li [routerLink]='["/topics", topic._id]'>
+                            <li *ngFor="let topic of attached_topics" [routerLink]='["/topics", topic._id]'>
                                 {{topic.auth.userName}} / {{topic.meta.name}}
                             </li>
                         </ul>
@@ -187,7 +188,7 @@
                     <ng-template #noTaskTemp>
                         <i>No related comparison task.</i>
                     </ng-template>
-                    <button mat-stroked-button class='create-btn' [routerLink]='["/comparison/solutions", solution._id, "invoke"]'>
+                    <button mat-stroked-button class='create-btn' (click)="createTask()" [routerLink]='["/comparison/solutions", solution._id, "invoke"]'>
                         <mat-icon inline>add</mat-icon>&nbsp;<span>Create one</span>
                     </button>
                 </div>

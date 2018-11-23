@@ -1,4 +1,4 @@
-<div ogms-rx-box id='container' *ngIf='list else spinTemplate'>
+<div ogms-rx-box id='container' *ngIf='list else spinTemplate'> 
     <div id='nav-filter-group'>
         <mat-button-toggle-group appearance="legacy" *ngIf='starFilters' [ngModel]='_ownerFilterV' (ngModelChange)='onChangeFilters($event, "owner")'>
             <mat-button-toggle *ngFor='let item of starFilters' [value]='item.value'>{{item.label}}</mat-button-toggle>

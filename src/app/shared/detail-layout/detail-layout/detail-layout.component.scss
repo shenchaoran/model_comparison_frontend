@@ -46,6 +46,8 @@
             }
         }
     }
+    
+
 
     /deep/ .body {
         .article {
@@ -90,4 +92,10 @@
             }
         }
     }
+}
+
+
+/deep/  .top_title{
+    margin-left: -50px;
+    margin-bottom: 20px;
 }

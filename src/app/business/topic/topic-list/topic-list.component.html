@@ -23,9 +23,11 @@
     </mat-card>
 </ng-template>
 
-<div ogms-rx-box *ngIf='topicList else loadingTemp'>
+<div class="list_container" ogms-rx-box *ngIf='topicList else loadingTemp'>
+    <p class="h1">Topic List <span class="h5">Geographic issues of concern</span></p> 
     <ogms-cards-template [template]='template' [list]='topicList' [count]='topicCount' (onPageChange)='onPageChange($event)'></ogms-cards-template>
-    <button id='create-btn' [routerLink]='"./create"' mat-fab color="primary">
+    <button id='create-btn' (click)="ceateTopic()" mat-fab color="primary" title="Create a new research topic">
+    <!-- <button id='create-btn' (click)="ceateTopic()" [routerLink]='"./create"' mat-fab color="primary" title="Create a new research topic"> -->
         <mat-icon>add</mat-icon>
     </button>
 </div>
