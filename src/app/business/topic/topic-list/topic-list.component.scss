@@ -1,5 +1,12 @@
 @import '../../../../assets/css/my/varyable';
 
+.list_container {
+    width: 1024px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px;
+}
+
 .list-item {
     border: 1px solid $cardBorderColor;
     border-radius: 5px;
@@ -9,32 +16,37 @@
     flex-flow: column nowrap;
     // align-items: stretch;
     height: 100%;
+
     .panel-item-header {
         padding: 0 0 10px;
-        margin: 0 -16px; 
-        
-        a{
+        margin: 0 -16px;
+
+        a {
             height: 50px;
             display: -webkit-box;
             overflow: hidden;
         }
     }
+
     .panel-item-body {
-        flex: 1 1 auto; 
+        flex: 1 1 auto;
         height: 80px;
-        overflow: hidden; 
-        line-height: 2em; 
+        overflow: hidden;
+        line-height: 2em;
     }
+
     .panel-item-footer {
         display: flex;
         flex-flow: row nowrap;
         justify-content: space-between;
-        span{
+
+        span {
             display: flex;
-            flex-flow: row nowrap; 
+            flex-flow: row nowrap;
         }
     }
 }
+
 .list-item:hover {
     border: 1px solid $cardHoverBorderColor;
     z-index: 1;
@@ -47,6 +59,6 @@
     z-index: 100;
 }
 
-.lh-2{
+.lh-2 {
     line-height: 2em;
 }

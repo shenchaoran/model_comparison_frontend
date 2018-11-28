@@ -37,10 +37,6 @@ export class ProfileComponent implements OnInit {
 
 
   ngOnInit() {
-    //*判断有没有登陆，没有则跳转至home页面
-    this.userService.redirectIfNotLogined();
-    //TODO 获取 user 数据  不要直接从user中取，要从后台重新获取一遍
-    //this.username = this.userService.user.username; 
     const url_userName = this.activatedRoute.snapshot.paramMap.get('userName');
     if (url_userName) {
       this.username = url_userName;

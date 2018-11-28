@@ -38,11 +38,7 @@ export const HEADER_MENUS: MenuClass[] = [
                 label: 'Comparison Result'
             }
         ]
-    },
-    // {
-    //     path: '/test',
-    //     label: 'Test'
-    // }
+    }
 ];
 
 // 登录成功后的用户菜单

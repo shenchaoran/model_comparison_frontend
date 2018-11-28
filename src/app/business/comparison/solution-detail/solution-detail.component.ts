@@ -7,7 +7,7 @@ import { ConversationService, SolutionService, UserService, MSService } from "@s
 import { Simplemde } from 'ng2-simplemde';
 import { Solution, Task, Topic, MS, CmpMethod, CmpObj } from "@models";
 import { MatSnackBar, MatSelectionList } from '@angular/material';
-import { cloneDeep, isEqual, get, pull, findIndex, indexOf} from 'lodash';
+import { cloneDeep, isEqual, get, pull, findIndex, indexOf } from 'lodash';
 
 @Component({
     selector: 'ogms-solution-detail',
@@ -35,7 +35,7 @@ export class SolutionDetailComponent implements OnInit {
 
     solution: Solution;
     tasks: Task[];              // { _id, meta, auth }
-    topic: Topic;               // { _id, meta, auth }
+    attached_topics: Topic[];               // { _id, meta, auth }
     mss: MS[] | any[];          // { _id, meta, auth }, 所有的 ms
     ptMSs: MS[];                // MS, 参与的 ms
     topicList: Topic[];         // { _id, meta, auth }[]
@@ -45,7 +45,7 @@ export class SolutionDetailComponent implements OnInit {
     get users() { return this.conversationService.users; }
     get couldEdit() { return this.user && this.solution && this.solution.auth.userId === this.user._id; }
     get conversation() { return this.conversationService.conversation; }
-    get includeUser() { return findIndex(get(this, 'solution.subscribed_uids'),  v => v === this.user._id) !== -1;}
+    get includeUser() { return findIndex(get(this, 'solution.subscribed_uids'), v => v === this.user._id) !== -1; }
     get cmpObjs() { return this.solution.cmpObjs; }
 
 
@@ -59,15 +59,17 @@ export class SolutionDetailComponent implements OnInit {
         public msService: MSService,
         private cdRef: ChangeDetectorRef,
         private renderer2: Renderer2,
+        public router: Router
     ) { }
 
     ngOnInit() {
         const solutionId = this.route.snapshot.paramMap.get('id');
         this.solutionService.findOne(solutionId).subscribe(res => {
-            if(!res.error) {
+            if (!res.error) {
                 this.solution = res.data.solution;
                 this.tasks = res.data.tasks;
-                this.topic = res.data.topic;
+                this.attached_topics = res.data.attached_topics;
+                // this.topic = res.data.topic;
                 this.mss = res.data.mss;
                 this.ptMSs = res.data.ptMSs;
                 this.cmpMethods = res.data.cmpMethods;
@@ -86,30 +88,32 @@ export class SolutionDetailComponent implements OnInit {
     }
 
     onAttachTopic(topic) {
-        let ac = indexOf(this.solution.topicIds, topic._id) !== -1? 'removeTopic': 'addTopic';
+        let ac = indexOf(this.solution.topicIds, topic._id) !== -1 ? 'removeTopic' : 'addTopic';
         this.solutionService.patch(this.solution._id, {
             topicId: topic._id,
             ac: ac,
         }).subscribe(res => {
-            if(!res.error) {
+            if (!res.error) {
                 this.renderer2.setStyle(this.menuRef.nativeElement, 'display', 'none');
-                if(ac === 'removeTopic') {
+                if (ac === 'removeTopic') {
                     pull(this.solution.topicIds, topic._id)
+                    pull(this.attached_topics, topic);
                 }
-                else if(ac === 'addTopic') {
-                    if(indexOf(this.solution.topicIds, topic._id) === -1) {
+                else if (ac === 'addTopic') {
+                    if (indexOf(this.solution.topicIds, topic._id) === -1) {
                         !this.solution.topicIds && (this.solution.topicIds = []);
                         this.solution.topicIds.push(topic._id)
+                        this.attached_topics.push(topic);
                     }
                 }
-                
+
             }
         })
         // ajax
     }
 
     onParticipantsChange() {
-
+        console.log("msIDs:"+ JSON.stringify(this.solution.msIds));
     }
 
     fetchCmpMethods() {
@@ -142,16 +146,16 @@ export class SolutionDetailComponent implements OnInit {
         this.solution.meta.name = this._originTitle;
         this._editMode = 'READ';
     }
-    
+
     onSubscribeToggle() {
         let ac = this.includeUser ? 'unsubscribe' : 'subscribe';
         this.userService.toggleSubscribe('solution', ac, this.solution._id).subscribe(res => {
-            if(!res.error) {
+            if (!res.error) {
                 let i = this.solution.subscribed_uids.findIndex(v => v === this.user._id);
-                if(ac === 'subscribe') {
+                if (ac === 'subscribe') {
                     i === -1 && this.solution.subscribed_uids.push(this.user._id);
                 }
-                else if(ac === 'unsubscribe') {
+                else if (ac === 'unsubscribe') {
                     i !== -1 && this.solution.subscribed_uids.splice(i, 1);
                 }
             }
@@ -169,10 +173,10 @@ export class SolutionDetailComponent implements OnInit {
     }
 
     onPtMSEditSave() {
-        if(isEqual(this._originPtMSIds, this.solution.msIds))
+        if (isEqual(this._originPtMSIds, this.solution.msIds))
             return;
         this.solutionService.updatePts(this.solution._id, this.solution.msIds).subscribe(res => {
-            if(!res.error) {
+            if (!res.error) {
                 this.ptMSs = res.data.docs;
                 this._ptMSEditMode = 'READ';
             }
@@ -189,11 +193,11 @@ export class SolutionDetailComponent implements OnInit {
     // }
 
     onCmpCfgEditSave() {
-        this.solutionService.patch(this.solution._id, { 
+        this.solutionService.patch(this.solution._id, {
             ac: 'updateCmpObjs',
-            solution: this.solution 
+            solution: this.solution
         }).subscribe(res => {
-            if(!res.error) {
+            if (!res.error) {
                 this._cmpCfgMode = 'READ';
             }
         })
@@ -203,7 +207,7 @@ export class SolutionDetailComponent implements OnInit {
         this._cmpCfgMode = 'READ';
         this.solution.cmpObjs = this._originCmpObjs;
     }
-    
+
     onTabChange(index) {
         if (index === 3 && !this.hadTriggeredConversation) {
             this.conversationService.findOneByWhere({
@@ -221,6 +225,22 @@ export class SolutionDetailComponent implements OnInit {
                     );
                 }
             })
+        }
+    }
+
+    createSolution() {
+        if (this.userService.isLogined) {
+            this.router.navigate(['/comparison/solutions/create']);
+        } else {
+            this.userService.redirectIfNotLogined();
+        }
+    }
+
+    createTask() {
+        if (this.userService.isLogined) {
+            this.router.navigate(["/comparison/solutions", this.solution._id, "invoke"]);
+        } else {
+            this.userService.redirectIfNotLogined();
         }
     }
 }

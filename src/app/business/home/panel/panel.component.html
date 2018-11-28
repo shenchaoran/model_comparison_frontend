@@ -8,6 +8,7 @@
             <ng-container *ngFor='let item of list.docs'>
                 <ng-container [ngTemplateOutlet]='template' [ngTemplateOutletContext]='{item: item}'></ng-container>
             </ng-container>
+            <!-- 若列表为空则显示 blankslate -->
             <div *ngIf='list.count==0'>
                     <div class="blankslate ">
                         <span octicon="alert" width="32" class="blankslate-icon"></span> 
@@ -16,7 +17,5 @@
                     </div>
                 </div>
         </ng-container>
-        <!-- 若列表为空则显示 blankslate -->
-        
     </div>
 </div>

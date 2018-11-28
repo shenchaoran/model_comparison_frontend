@@ -21,9 +21,9 @@
         </div>
     </section>
 </ng-template>
-
+<p class="top_title h1">Comparison Solutions List</p>
 <ogms-list-template [template]='modelTemplate' [service]='solutionService'></ogms-list-template>
 
-<button id='create-btn' routerLink='/comparison/solutions/create' mat-fab color="primary">
+<button id='create-btn' (click)="createSolution()"  mat-fab color="primary" title="Create a new comparison solution">
     <mat-icon>add</mat-icon>
 </button>

@@ -87,7 +87,7 @@ export class UserService {
         return (url === '/user/sign-in' || url === '/user/sign-up') ? '' : url;
     }
 
-    private get isLogined(): boolean {
+    public get isLogined(): boolean {
         return this.jwt && this.jwt.expires > Date.now();
     }
 
@@ -172,7 +172,8 @@ export class UserService {
      */
     redirectIfNotLogined() {
         if (!this.isLogined) {
-            this.router.navigate(['../..', 'login'], {
+            this.router.navigate(['/user/sign-in'], {
+            // this.router.navigate(['../..', 'login'], {
                 relativeTo: this.route,
                 queryParams: {
                     redirect: this.redirect

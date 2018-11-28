@@ -1,4 +1,4 @@
-<button id='create-btn' routerLink='../create' mat-fab color="primary">
+<button id='create-btn' (click)="ceateTopic()" mat-fab color="primary" title="Create a new research topic">
     <mat-icon>add</mat-icon>
 </button>
 <ng-template #topicLoading>
@@ -6,7 +6,8 @@
         <mat-spinner></mat-spinner>
     </div>
 </ng-template>
-<ogms-detail-layout *ngIf='topic else topicLoading'>
+<ogms-detail-layout *ngIf='topic else topicLoading'> 
+    <p class="top_title h1">Topic Info</p>
     <div class='header'>
         <ng-container *ngIf='editMode === "WRITE" else readTemplate'>
             <div class='header-title'>
@@ -77,7 +78,7 @@
                     Solutions
                     <mat-icon inline>settings</mat-icon>
                 </div>
-                <div class='menu' #menu *ngIf='topic.auth.userId === user._id'>
+                <div class='menu' #menu *ngIf='user && topic.auth.userId === user._id'>
                     <div class='title'>Add solutions</div>
                     <div class='filter'>
                         <input placeholder='Filter solution' [(ngModel)]='slnFilter'>
@@ -85,7 +86,7 @@
                     <ul *ngIf='solutionList && solutionList.length' class='opt-list aside-ul'>
                         <li *ngFor='let sln of solutionList' (click)='onAttachSolution(sln)'>
                             <div class='sln-select-spacer'>
-                                <mat-icon inline *ngIf='sln.topicId === topic._id'>clear</mat-icon>
+                                <mat-icon inline *ngIf='sln.topicIds.indexOf(this.topic._id) !== -1'>clear</mat-icon>
                             </div>
                             {{sln.auth.userName}} / {{sln.meta.name}}
                         </li>
@@ -105,7 +106,7 @@
                     <ng-template #noSlnTemp>
                         <i>No related Solution.</i>
                     </ng-template>
-                    <button mat-stroked-button class='create-btn' routerLink='/comparison/solutions/create'>
+                    <button mat-stroked-button class='create-btn' (click)="createSolution()">
                         <mat-icon inline>add</mat-icon>&nbsp;<span>Create one</span>
                     </button>
                 </div>

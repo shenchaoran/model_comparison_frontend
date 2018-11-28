@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
-import { findIndex, get, pull, indexOf, } from 'lodash';
+import { findIndex, get, pull, indexOf, includes } from 'lodash';
 import {
     TopicService,
     ConversationService,
@@ -40,7 +40,7 @@ export class TopicDetailComponent implements OnInit {
     get user() { return this.userService.user; }
     get users() { return this.conversationService.users; }
     get conversation(): Conversation { return this.conversationService.conversation; }
-    get selectedSolutions(): Solution[] { return this.solutionList.filter(v => v.topicId === this.topic._id); }
+    get selectedSolutions(): Solution[] { return this.solutionList.filter(v => includes(v.topicIds,this.topic._id)); }
     get includeUser() { return findIndex(get(this, 'topic.subscribed_uids'), v => v === this.user._id) !== -1;}
 
     constructor(
@@ -50,6 +50,7 @@ export class TopicDetailComponent implements OnInit {
         private solutionService: SolutionService,
         private route: ActivatedRoute,
         private snackBar: MatSnackBar,
+        private router: Router
     ) { }
 
     ngOnInit() {
@@ -74,7 +75,8 @@ export class TopicDetailComponent implements OnInit {
     }
 
     onAttachSolution(sln) {
-        let ac = sln.topicId === this.topic._id ? 'removeSolution' : 'addSolution';
+        // let ac = sln.topicId === this.topic._id ? 'removeSolution' : 'addSolution';
+        let ac = includes(sln.topicIds,this.topic._id)? 'removeSolution' : 'addSolution';
         this.topicService.patch(this.topic._id, {
             ac,
             solutionId: sln._id,
@@ -148,6 +150,22 @@ export class TopicDetailComponent implements OnInit {
                     );
                 }
             })
+        }
+    }
+
+    ceateTopic(){
+        if(this.userService.isLogined){
+            this.router.navigate(['/topics/create']);
+        }else{
+            this.userService.redirectIfNotLogined();
+        }
+    }
+
+    createSolution(){
+        if(this.userService.isLogined){
+            this.router.navigate(['/comparison/solutions/create']);
+        }else{
+            this.userService.redirectIfNotLogined();
         }
     }
 }

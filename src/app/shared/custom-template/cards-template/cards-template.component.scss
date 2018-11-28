@@ -17,7 +17,7 @@
             @include reactive(3)
         }
         @media (min-width: 1600px) {
-            @include reactive(4)
+            @include reactive(3)
         }
     }
 }

@@ -86,12 +86,14 @@ export class CommentComponent implements ControlValueAccessor, OnInit, AfterView
     ngAfterViewInit() { }
 
     onSubmit() {
+        //todo 评论为空是不发送请求
         this.currentComment.html = this.simpleMDE.simplemde.markdown(this.currentComment.md);
         this.currentComment.state = CommentState.READ;
         this.conversationService.upsertComment(this.comment).subscribe(res => {
             if (!res.error) {
             }
         })
+        
     }
 
     onEdit() {

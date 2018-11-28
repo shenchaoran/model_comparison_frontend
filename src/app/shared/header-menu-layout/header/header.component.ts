@@ -44,7 +44,10 @@ export class HeaderComponent implements OnInit {
 
         this.userService.logined$.subscribe(logined => {
             this.logined = logined;
-            this.replaceMenuConfig(this.user_menus,/:userName/g,this.userService.user.username);
+            if(this.userService.user){
+                this.replaceMenuConfig(this.user_menus,/:userName/g,this.userService.user.username);
+            }
+            
         });
     }
 

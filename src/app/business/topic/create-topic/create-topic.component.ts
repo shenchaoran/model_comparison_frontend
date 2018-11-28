@@ -1,3 +1,4 @@
+import { UserService } from '@services';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TopicService, ConversationService } from '@services';
@@ -18,8 +19,13 @@ export class CreateTopicComponent implements OnInit {
         private topicService: TopicService,
         private router: Router,
         private conversationService: ConversationService,
+        private userService: UserService
     ) {
-        this.topic = this.topicService.create();
+        if(this.userService.isLogined){
+            this.topic = this.topicService.create();
+        }else{
+            this.userService.redirectIfNotLogined();
+        }
     }
 
     ngOnInit() {}
