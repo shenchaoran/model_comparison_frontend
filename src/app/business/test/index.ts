@@ -9,6 +9,7 @@ import {
  } from '@shared';
 import {
     MatTableModule,
+    MatSliderModule,
 } from '@angular/material';
 import { TestRoutingModule } from './index-routing.module';
 
@@ -28,6 +29,7 @@ const modules = [
     MatTableModule,
     HeaderMenuLayoutModule,
     DirectivesModule,
+    MatSliderModule,
 ];
 const components = [
     TestComponent,

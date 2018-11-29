@@ -1,8 +1,8 @@
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule, Component } from '@angular/core';
 import { LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { Routes, RouterModule, } from '@angular/router';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CoreModule } from '@core';
 import { NgxSharedModule } from '@shared';
 import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';

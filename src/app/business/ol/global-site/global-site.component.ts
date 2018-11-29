@@ -18,8 +18,7 @@ import TileWMS from 'ol/source/TileWMS';
     styleUrls: ['./global-site.component.scss']
 })
 export class GlobalSiteComponent implements OnInit, AfterViewInit {
-    @Input() width = '550px';
-    @Input() height = '400px';
+    @Input() dataset;
     @Output() onSiteSelected = new EventEmitter<any>();
 
     targetId;
@@ -30,7 +29,7 @@ export class GlobalSiteComponent implements OnInit, AfterViewInit {
 
     constructor(
         private olService: OlService,
-        @Inject('API') private api,
+        @Inject('LAYERS') private layers,
     ) {
         this.targetId = uuidv1();
     }
@@ -58,14 +57,14 @@ export class GlobalSiteComponent implements OnInit, AfterViewInit {
         this.siteSource = new TileWMS({
             crossOrigin: 'anonymous',
             serverType: 'geoserver',
-            url: `${this.api.geoserver}/Carbon_Cycle/wms`,
+            url: this.layers.url,
             params: {
                 // request : 'GetMap',
                 // service : 'WMS',
                 // version : '1.1.0',
-                layers: 'Carbon_Cycle:IBIS_site',
+                layers: this.dataset.schema$.layerId,
                 styles: '',
-                bbox: [-179.75, -54.75, 179.75, 82.25],
+                bbox: this.layers.bbox,
                 // 加长宽会变形
                 // width : '768',
                 // height : '330',
@@ -75,7 +74,7 @@ export class GlobalSiteComponent implements OnInit, AfterViewInit {
             }
         });
         this.siteLayer = new Tile({
-            title: 'Site',
+            title: this.dataset.meta.name,
             source: this.siteSource
         } as any);
 
@@ -104,7 +103,7 @@ export class GlobalSiteComponent implements OnInit, AfterViewInit {
                 'EPSG:3857',
                 {
                     INFO_FORMAT: 'text/html',   //geoserver支持jsonp才能输出为jsonp的格式
-                    QUERY_LAYERS: 'Carbon_Cycle:IBIS_site'
+                    QUERY_LAYERS: this.dataset.schema.layerId
                     // FEATURE_COUNT: 1     //点击查询能返回的数量上限
                     // format_options: ()
                 }
@@ -133,7 +132,6 @@ export class GlobalSiteComponent implements OnInit, AfterViewInit {
         })
 
         this.resize();
-        this.map.updateSize();
     }
 
     @HostListener('window:resize')

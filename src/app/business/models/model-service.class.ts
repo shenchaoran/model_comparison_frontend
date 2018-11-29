@@ -27,7 +27,6 @@ export class MS {
         runtime: any;
     };
     nodeIds: string;
-    stdIds: string[];
     tag: string;
     topicId: string;
     topicName: string;

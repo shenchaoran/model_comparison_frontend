@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { DatasetService } from '../../services';
 import { Router } from '@angular/router';
-import { cloneDeep } from 'lodash';
 
 @Component({
     selector: 'ogms-datasets',
@@ -9,13 +8,14 @@ import { cloneDeep } from 'lodash';
     styleUrls: ['./datasets.component.scss']
 })
 export class DatasetsComponent implements OnInit {
+    _keys = Object.keys;
     stdList: any[];
     stdCount: number;
     selectedSTD: any;
-
-    selectedEvent: any;
+    stdTags: { [label: string]: any[] } = {};
 
     constructor(
+        @Inject('API') private api,
         private datasetService: DatasetService,
         private router: Router,
     ) { }
@@ -25,20 +25,26 @@ export class DatasetsComponent implements OnInit {
             if (!res.error) {
                 this.stdList = res.data.docs;
                 this.stdCount = res.data.count;
+                _.map(this.stdList, std => {
+                    _.map(std.tags, tag => {
+                        if (!this.stdTags.hasOwnProperty(tag))
+                            this.stdTags[tag] = []
+                        this.stdTags[tag].push(std)
+                    })
+                });
 
                 if (this.stdCount > 0) {
-                    this.selectedSTD = this.stdList[0];
+                    this.onDatasetSelected(this.stdList[0])
                 }
             }
         });
     }
 
-    onEventSelected(event) {
-        this.selectedEvent = cloneDeep(event);
+    onDatasetSelected(std) {
+        this.selectedSTD = std;
     }
 
-    onClassSelected(std) {
-        this.selectedSTD = std;
-        this.selectedEvent = undefined;
+    onDataClick(dataset, entry) {
+        window.open(`${this.api.backend}/std-data/${dataset._id}/${entry.name}`);
     }
 }

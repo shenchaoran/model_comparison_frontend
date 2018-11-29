@@ -1,7 +1,6 @@
 import { ResourceSrc } from './resource.enum';
 
-
-class STDData {
+export class STDData {
     _id: any;
     meta: {
         desc?: string,
@@ -10,10 +9,16 @@ class STDData {
         name: string
     };
     models: string[];
-    inputPath: string;
-    outputPath: string;
+    tags: string[];
+    schema$: {
+        type: string,
+        dimensions?: any[],
+        variables?: any[]
+    }
+    // inputPath: string;
+    // outputPath: string;
     // stdClass: string;
-    content: {
-        [key: string]: any
-    };
+    // content: {
+    //     [key: string]: any
+    // };
 }

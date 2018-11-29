@@ -13,7 +13,6 @@ import {
 import { DatasetsRoutingModule } from './index-routing.module';
 import { DatasetsComponent } from './datasets/datasets.component';
 import { OlModule } from '../ol';
-import { SiteDataComponent } from './site-data/site-data.component'
 
 const modules = [
     NgxSharedModule,
@@ -28,7 +27,7 @@ const components = [
     // GeoDataComponent,
     DatasetsComponent,
     // IbisStdDataComponent,
-    SiteDataComponent,
+    // SiteDataComponent,
 ];
 const services = [];
 var exportComponents = [];

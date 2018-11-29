@@ -1,25 +1,34 @@
 <div ogms-rx-box class="flex-box-row-nowrap">
     <div class="ogms-left">
-        <nav class="menu" aria-labelledby="menu-heading">
-            <span class="menu-heading" id="menu-heading">Standard dataset</span>
-            <a matRipple *ngFor='let item of stdList'
-             [class.selected]='selectedSTD === item' 
-             (click)='onClassSelected(item)' 
-             class="menu-item">{{item.meta.name}}</a>
-        </nav>
+        <ng-container *ngFor='let stdTag of _keys(stdTags)'>
+            <nav class="menu" aria-labelledby="menu-heading">
+                <span class="menu-heading" id="menu-heading">{{stdTag}}</span>
+                <a matRipple *ngFor='let item of stdTags[stdTag]'
+                 [class.selected]='selectedSTD === item' 
+                 (click)='onDatasetSelected(item)' 
+                 class="menu-item">{{item.meta.name}}</a>
+            </nav>
+        </ng-container>
     </div>
     <div class="ogms-right flex-spacer">
-        <!-- <router-outlet></router-outlet> -->
+        <ng-container *ngIf='selectedSTD?.meta?.name === "Southeast Asia Carbon Datasets"'>
 
-        <!-- TODO: 隐藏还是只显示一个 -->
-        <!-- <ng-container *ngIf='selectedSTD?.stdClass === "IBIS_STD_DATA"'>
-            <ogms-ibis-std-data [selectedEvent]='selectedEvent' (onEventCleared)='selectedEvent=undefined;' [std]='selectedSTD' (onSiteSelected)='_eventMenuVisiable = $event;'></ogms-ibis-std-data>
         </ng-container>
-        <ng-container *ngIf='selectedSTD?.stdClass === "BIOME_BGC_STD_DATA"'>
-            <ogms-biome-std-data [selectedEvent]='selectedEvent' [std]='selectedSTD'></ogms-biome-std-data>
+        <ng-container *ngIf='selectedSTD?.meta?.name === "Global Site Datasets"'>
+            <ogms-global-site [dataset]='selectedSTD'></ogms-global-site>
+        </ng-container>
+        <ng-container *ngIf='selectedSTD?.meta?.name === "Biome-BGC global annual output" || selectedSTD?.meta?.name === "IBIS global annual output" || selectedSTD?.meta?.name === "Global Meteorological NetCDF Datasets"'>
+            <ogms-nc-dataset [dataset]='selectedSTD'></ogms-nc-dataset>
+            <h3>Download: </h3>
+            <ul class='ml-4 mb-3'>
+                <li *ngFor='let entry of selectedSTD.entries' (click)='onDataClick(selectedSTD, entry)'><a>{{entry.name}}</a></li>
+            </ul>
+        </ng-container>
+        <!-- <ng-container *ngIf='selectedSTD?.meta?.name === "IBIS global annual output"'>
+
+        </ng-container>
+        <ng-container *ngIf='selectedSTD?.meta?.name === "Global Meteorological NetCDF Datasets"'>
+
         </ng-container> -->
-        <ng-container *ngIf='selectedSTD?.meta?.name === "Global Meteorological Datasets"'>
-            <ogms-site-data></ogms-site-data>
-        </ng-container>
     </div>
 </div>

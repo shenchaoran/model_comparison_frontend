@@ -34,3 +34,5 @@ interface NodeModule {
     id: string;
     hot: any;
 }
+
+declare var _: any;

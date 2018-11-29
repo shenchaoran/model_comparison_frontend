@@ -1,4 +1,3 @@
-import { getFakeList } from './../test/data/mock-user-issues';
 import { Injectable } from '@angular/core';
 import { Location } from '@angular/common';
 import { _HttpClient } from '@core/services/http.client';

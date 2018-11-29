@@ -8,10 +8,12 @@ import { NgxSharedModule } from '@shared';
 import { HttpClientModule } from '@angular/common/http';
 import { HEADER_MENUS, USER_MENUS, API } from '@config';
 import { DynamicTitleService } from '@core/services';
+import { BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { _HttpClient } from '@core/services/http.client';
 import { 
     MatSnackBar,
     MAT_PROGRESS_SPINNER_DEFAULT_OPTIONS,
+    GestureConfig,
 } from '@angular/material';
 import { OverlayModule } from '@angular/cdk/overlay';
 import {
@@ -38,6 +40,10 @@ const services = [
     AuthGuard,
     DynamicTitleService,
     _HttpClient,
+    { 
+        provide: HAMMER_GESTURE_CONFIG, 
+        useClass: GestureConfig 
+    },
     {
         provide: 'MAT_PROGRESS_SPINNER_DEFAULT_OPTIONS',
         useValue: {

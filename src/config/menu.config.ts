@@ -38,6 +38,10 @@ export const HEADER_MENUS: MenuClass[] = [
                 label: 'Comparison Result'
             }
         ]
+    }, 
+    {
+        path: '/test',
+        label: 'Test'
     }
 ];
 
