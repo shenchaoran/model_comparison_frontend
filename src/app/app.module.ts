@@ -41,6 +41,10 @@ const routes: Routes = [
         loadChildren: './business/ms/index#ModelsModule'
     },
     {
+        path: 'cmp-methods',
+        loadChildren: './business/cmp-methods/index#CmpMethodsModule'
+    },
+    {
         path: 'comparison',
         loadChildren: './business/comparison/index#ComparisonModule'
     },

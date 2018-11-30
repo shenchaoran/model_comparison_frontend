@@ -31,8 +31,6 @@ import {
 
 import { SolutionListComponent } from './solution-list/solution-list.component';
 import { SolutionDetailComponent } from './solution-detail/solution-detail.component';
-import { MethodDetailComponent } from './method-detail/method-detail.component';
-import { MethodListComponent } from './method-list/method-list.component';
 import { CreateSlnComponent } from './create-sln/create-sln.component';
 import { CreateTaskComponent } from './create-task/create-task.component';
 import { CmpObjCfgComponent } from './cmp-obj-cfg/cmp-obj-cfg.component';
@@ -41,8 +39,6 @@ const components = [
     SolutionListComponent,
     SolutionDetailComponent,
     CreateTaskComponent,
-    MethodDetailComponent,
-    MethodListComponent,
     CreateSlnComponent,
     CmpObjCfgComponent,
 ];
