@@ -41,7 +41,8 @@ export class DatasetsComponent implements OnInit {
     }
 
     onDatasetSelected(std) {
-        this.selectedSTD = std;
+        if(!_.isEqual(this.selectedSTD, std))
+            this.selectedSTD = _.cloneDeep(std);
     }
 
     onDataClick(dataset, entry) {

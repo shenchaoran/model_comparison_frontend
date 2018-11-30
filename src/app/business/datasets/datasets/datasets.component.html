@@ -4,7 +4,7 @@
             <nav class="menu" aria-labelledby="menu-heading">
                 <span class="menu-heading" id="menu-heading">{{stdTag}}</span>
                 <a matRipple *ngFor='let item of stdTags[stdTag]'
-                 [class.selected]='selectedSTD === item' 
+                 [class.selected]='selectedSTD._id === item._id' 
                  (click)='onDatasetSelected(item)' 
                  class="menu-item">{{item.meta.name}}</a>
             </nav>
@@ -17,18 +17,12 @@
         <ng-container *ngIf='selectedSTD?.meta?.name === "Global Site Datasets"'>
             <ogms-global-site [dataset]='selectedSTD'></ogms-global-site>
         </ng-container>
-        <ng-container *ngIf='selectedSTD?.meta?.name === "Biome-BGC global annual output" || selectedSTD?.meta?.name === "IBIS global annual output" || selectedSTD?.meta?.name === "Global Meteorological NetCDF Datasets"'>
+        <ng-container *ngIf='selectedSTD?.schema$?.type === "NETCDF4"'>
             <ogms-nc-dataset [dataset]='selectedSTD'></ogms-nc-dataset>
             <h3>Download: </h3>
             <ul class='ml-4 mb-3'>
                 <li *ngFor='let entry of selectedSTD.entries' (click)='onDataClick(selectedSTD, entry)'><a>{{entry.name}}</a></li>
             </ul>
         </ng-container>
-        <!-- <ng-container *ngIf='selectedSTD?.meta?.name === "IBIS global annual output"'>
-
-        </ng-container>
-        <ng-container *ngIf='selectedSTD?.meta?.name === "Global Meteorological NetCDF Datasets"'>
-
-        </ng-container> -->
     </div>
 </div>

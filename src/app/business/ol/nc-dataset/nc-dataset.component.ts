@@ -30,7 +30,12 @@ export class NcDatasetComponent implements OnInit, AfterViewInit {
     selectedTime;
     showAnimation = false;
     timer;
-    get selectedDate() { return this.ISOTime(this.selectedTime, this.timeVariable.unit); }
+    get selectedDate() { 
+        if(_.get(this, 'timeVariable.unit')) 
+            return this.ISOTime(this.selectedTime, this.timeVariable.unit); 
+        else 
+            return null;
+    }
     get selectedDateStr() { return format(this.selectedDate, 'YYYY-MM-DD hh:mm'); }
     @Input() 
     set dataset(v: STDData) {
@@ -41,7 +46,7 @@ export class NcDatasetComponent implements OnInit, AfterViewInit {
             .value();
         this.selectedVariable = _.first(this.variables);
         this.timeVariable = _.chain(v).get('schema$.variables').find(variable => variable.name === 'time').value();
-        this.selectedTime = this.timeVariable.start;
+        this.selectedTime = _.get(this, 'timeVariable.start');
         
         if(this.map) {
             this.updateMapSource();
@@ -120,7 +125,7 @@ export class NcDatasetComponent implements OnInit, AfterViewInit {
                 layers: this.selectedVariable.layerId,
                 styles: '',
                 bbox: this.layers.bbox,
-                time: this.ISOTime(this.selectedTime, this.timeVariable.unit),
+                time: this.selectedDate,
                 // 加长宽会变形
                 // width : '768',
                 // height : '330',

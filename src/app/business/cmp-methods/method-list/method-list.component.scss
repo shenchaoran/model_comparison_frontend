@@ -3,24 +3,46 @@
     flex-flow: row wrap;
     justify-content: flex-start;
     align-items: stretch;
-    .card{
+
+    .card {
         box-sizing: border-box;
         padding: 8px;
+
         @mixin reactive($columnNum) {
             flex: 0 0 calc(100%/#{$columnNum});
         }
+
         @media (max-width: 979px) {
             @include reactive(2)
         }
+
         @media (min-width: 980px) {
             @include reactive(3)
         }
+
         @media (min-width: 1200px) {
             @include reactive(3)
         }
+
         @media (min-width: 1600px) {
             @include reactive(3)
         }
+        .mat-card {
+            padding: 0 0;
+            transition: transform 0.3s, box-shadow 0.3s;
+            &:hover {
+                box-shadow: 0 1px 15px rgba(27, 31, 35, 0.3) !important;
+                transform: scale(1.02);
+            }
+            .mat-card-header {
+                margin-top: 10px;
+            }
+            .mat-card-actions {
+                margin-left: 0;
+                margin-right: 0;
+            }
+        }
+
         img {
             width: 100%;
             // max-height: 300px;
