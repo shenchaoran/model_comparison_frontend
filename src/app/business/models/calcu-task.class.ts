@@ -42,7 +42,6 @@ export class CalcuTask {
         cached: boolean,
         dataId: string
     };
-    stdId: string;
     state: CalcuTaskState;
     progress: number;
     subscribed_uids: string[];

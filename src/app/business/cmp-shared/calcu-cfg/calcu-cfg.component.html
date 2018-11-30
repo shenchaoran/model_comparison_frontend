@@ -1,6 +1,7 @@
 <form *ngIf='IOForm' [formGroup]='IOForm'>
     <mat-accordion multi>
-        <mat-expansion-panel *ngIf='IOForm.controls["std"].controls.length || IOForm.controls["inputs"].controls.length' expanded>
+        <mat-expansion-panel *ngIf='IOForm.controls["std"].controls.length || IOForm.controls["inputs"].controls.length'
+            expanded>
             <mat-expansion-panel-header>
                 <mat-panel-title>Inputs</mat-panel-title>
                 <mat-panel-description>configure the input data</mat-panel-description>
@@ -13,41 +14,40 @@
                     </mat-button-toggle-group>
                 </div>
 
-                <ng-container *ngIf='IOForm.controls["dataSrc"].value === "STD" else uploadTemplate'>
-                    <mat-form-field class='form-item std-src-group'>
-                        <mat-select *ngIf='calcuTask.stds' placeholder='Select standard data source' formControlName='STD' #dataSrc>
-                            <mat-option *ngFor='let item of calcuTask.stds' [value]='item'>{{item.meta.name}}</mat-option>
-                        </mat-select>
-                        <button id='preview-btn' (click)='onSuffixClick($event)' mat-button matSuffix mat-icon-button *ngIf="IOForm.controls['STD'].value" target='_blank' [routerLink]='["../../../datasets", IOForm.controls["STD"].value._id]'>
-                            <mat-icon>call_made</mat-icon>
-                        </button>
-                    </mat-form-field>
-
-                    <div formArrayName='std' *ngIf='IOForm.get("STD").value'>
-                        <ng-container *ngFor='let item of IOForm.controls["std"].controls;let i=index;'>
-                            <div [formGroupName]='i'>
-                                <div *ngIf='item.value?.schema?.structure?.type === "coordinate-index"' class='form-item select-pt-group'>
-                                    <button mat-button color='primary' (click)='showSiteDialog()'>
-                                        <mat-icon>location_on</mat-icon>Select simulation point
-                                    </button>
-                                    <mat-form-field>
-                                        <input matInput [value]='item.value.temp?.coor' placeholder='Coordinate' disabled>
-                                        <!-- <mat-error *ngIf='item.get("value").hasError("required")'>please select point</mat-error> -->
-                                    </mat-form-field>
-                                </div>
-                            </div>
-                        </ng-container>
+                <div *ngIf='IOForm.controls["dataSrc"].value === "STD" else uploadTemplate' formArrayName='std'>
+                    <div *ngFor='let item of IOForm.controls["std"].controls;let i=index;' [formGroupName]='i' class='form-item std-src-group'>
+                        <label>{{item.value.name}}</label>
+                        <!-- 选择站点 -->
+                        <mat-form-field *ngIf='item.value?.schema?.structure?.type === "coordinate-index" else stdTemp'>
+                            <input matInput [value]='item.value.temp?.coor' placeholder='Coordinate'>
+                            <!-- suffix button -->
+                            <button mat-icon-button matSuffix (click)='showSiteDialog()'>
+                                <mat-icon>location_on</mat-icon>
+                            </button>
+                        </mat-form-field>
+                        <!-- 选择标准数据集 -->
+                        <ng-template #stdTemp>
+                            <mat-form-field class='std-form-item'>
+                                <mat-select *ngIf='calcuTask.stds' formControlName='value' placeholder='Select standard dataset'>
+                                    <mat-option *ngFor='let item of calcuTask.stds' [value]='item._id'>{{item.meta.name}}</mat-option>
+                                </mat-select>
+                                <button id='preview-btn' (click)='onSuffixClick($event)' mat-button matSuffix
+                                    mat-icon-button *ngIf="IOForm.controls['std'].controls[i].value" target='_blank'
+                                    [routerLink]='["../../../datasets", IOForm.controls["std"].controls[i].value._id]'>
+                                    <mat-icon>call_made</mat-icon>
+                                </button>
+                            </mat-form-field>
+                        </ng-template>
                     </div>
-                </ng-container>
+                </div>
 
                 <ng-template #uploadTemplate>
                     <div formArrayName='inputs'>
-                        <ng-container *ngFor='let item of IOForm.controls["inputs"].controls;let i=index;'>
-                            <div [formGroupName]='i' class='form-item file-uploader-group'>
-                                <label>{{item.value.name}}</label>
-                                <ogms-file-uploader-form-item formControlName='file' [width]='width' [uploadInput]="uploadInput"></ogms-file-uploader-form-item>
-                            </div>
-                        </ng-container>
+                        <div *ngFor='let item of IOForm.controls["inputs"].controls;let i=index;' [formGroupName]='i'
+                            class='form-item file-uploader-group'>
+                            <label>{{item.value.name}}</label>
+                            <ogms-file-uploader-form-item formControlName='file' [width]='width' [uploadInput]="uploadInput"></ogms-file-uploader-form-item>
+                        </div>
                     </div>
                 </ng-template>
             </section>
@@ -59,24 +59,22 @@
                 <mat-panel-description>configure the invoke parameters</mat-panel-description>
             </mat-expansion-panel-header>
             <section formArrayName='parameters'>
-                <ng-container *ngFor='let item of IOForm.controls["parameters"].controls;let i=index;'>
-                    <div [formGroupName]='i' class='form-item output-group'>
-                        <label>{{item.value.name}}</label>
-                        <ng-container *ngIf='item.value.schema.structure.type === "radio"'>
-                            <mat-form-field class='form-item'>
-                                <mat-select placeholder='' formControlName='value'>
-                                    <mat-option *ngFor='let opt of item.value.schema.structure.options' [value]="opt">{{opt}}</mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                        </ng-container>
-                        <!-- <ng-container *ngIf='item.value.schema.structure.type === "checkbox"'>
+                <div *ngFor='let item of IOForm.controls["parameters"].controls;let i=index;' [formGroupName]='i' class='form-item output-group'>
+                    <label>{{item.value.name}}</label>
+                    <ng-container *ngIf='item.value.schema.structure.type === "radio"'>
+                        <mat-form-field class='form-item'>
+                            <mat-select placeholder='' formControlName='value'>
+                                <mat-option *ngFor='let opt of item.value.schema.structure.options' [value]="opt">{{opt}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </ng-container>
+                    <!-- <ng-container *ngIf='item.value.schema.structure.type === "checkbox"'>
                             <ogms-check-box-form-item formControlName='value' [checkOpts]='item.value.schema.structure.options' [width]='width'></ogms-check-box-form-item>
                         </ng-container> -->
-                        <ng-container *ngIf='item.value.schema.structure.type === "value"'>
-                            <input matInput formControlName='value'>
-                        </ng-container>
-                    </div>
-                </ng-container>
+                    <ng-container *ngIf='item.value.schema.structure.type === "value"'>
+                        <input matInput formControlName='value'>
+                    </ng-container>
+                </div>
             </section>
         </mat-expansion-panel>
 
@@ -86,24 +84,22 @@
                 <mat-panel-description>configure the output data</mat-panel-description>
             </mat-expansion-panel-header>
             <section formArrayName='outputs'>
-                <ng-container *ngFor='let item of IOForm.controls["outputs"].controls;let i=index;'>
-                    <div [formGroupName]='i' class='form-item'>
-                        <label>{{item.value.name}}</label>
-                        <ng-container *ngIf='item.value.optional else inputTemplate'>
-                            <mat-form-field>
-                                <mat-select placeholder='' formControlName='value'>
-                                    <mat-option value='off'>off</mat-option>
-                                    <mat-option [value]='item.value.value'>{{item.value.value}}</mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                        </ng-container>
-                        <ng-template #inputTemplate>
-                            <mat-form-field>
-                                <input matInput formControlName='fname' placeholder="output file name">
-                            </mat-form-field>
-                        </ng-template>
-                    </div>
-                </ng-container>
+                <div *ngFor='let item of IOForm.controls["outputs"].controls;let i=index;' [formGroupName]='i' class='form-item'>
+                    <label>{{item.value.name}}</label>
+                    <ng-container *ngIf='item.value.optional else inputTemplate'>
+                        <mat-form-field>
+                            <mat-select placeholder='' formControlName='value'>
+                                <mat-option value='off'>off</mat-option>
+                                <mat-option [value]='item.value.value'>{{item.value.value}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </ng-container>
+                    <ng-template #inputTemplate>
+                        <mat-form-field>
+                            <input matInput formControlName='fname' placeholder="output file name">
+                        </mat-form-field>
+                    </ng-template>
+                </div>
             </section>
         </mat-expansion-panel>
     </mat-accordion>

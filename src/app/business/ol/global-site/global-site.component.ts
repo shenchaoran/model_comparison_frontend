@@ -62,7 +62,7 @@ export class GlobalSiteComponent implements OnInit, AfterViewInit {
                 // request : 'GetMap',
                 // service : 'WMS',
                 // version : '1.1.0',
-                layers: this.dataset.schema$.layerId,
+                layers: _.get(this, 'dataset.schema$.layerId') || 'Carbon_Cycle:site',
                 styles: '',
                 bbox: this.layers.bbox,
                 // 加长宽会变形
@@ -74,7 +74,7 @@ export class GlobalSiteComponent implements OnInit, AfterViewInit {
             }
         });
         this.siteLayer = new Tile({
-            title: this.dataset.meta.name,
+            title: _.get(this, 'dataset.meta.name') || 'Site',
             source: this.siteSource
         } as any);
 
@@ -103,7 +103,7 @@ export class GlobalSiteComponent implements OnInit, AfterViewInit {
                 'EPSG:3857',
                 {
                     INFO_FORMAT: 'text/html',   //geoserver支持jsonp才能输出为jsonp的格式
-                    QUERY_LAYERS: this.dataset.schema.layerId
+                    QUERY_LAYERS: _.get(this, 'dataset.schema$.layerId') || 'Carbon_Cycle:site',
                     // FEATURE_COUNT: 1     //点击查询能返回的数量上限
                     // format_options: ()
                 }

@@ -117,7 +117,7 @@ export class CalcuCfgComponent extends NgModelBase implements OnInit, AfterViewI
 
     buildForm() {
         let myFormGroup = (event, type?) => {
-            let gp = {
+            let eventFG = {
                 id: [event.id],
                 name: [event.name],
                 description: [event.description],
@@ -129,7 +129,7 @@ export class CalcuCfgComponent extends NgModelBase implements OnInit, AfterViewI
                 temp: [event.value, undefined],
                 ext: [event.ext]
             };
-            return this.fb.group(gp);
+            return this.fb.group(eventFG);
         }
         let inputCtrls = map(this.calcuTask.IO.inputs, item => myFormGroup(item, 'inputs'));
         let outputCtrls = map(this.calcuTask.IO.outputs, item => myFormGroup(item, 'outputs'));
@@ -142,7 +142,6 @@ export class CalcuCfgComponent extends NgModelBase implements OnInit, AfterViewI
             outputs: this.fb.array(outputCtrls),
             std: this.fb.array(stdCtrls),
             parameters: this.fb.array(paraCtrls),
-            STD: ['', [Validators.required]]
         });
         this.changeValidate(dataSrc);
         this.IOForm.statusChanges
@@ -154,27 +153,25 @@ export class CalcuCfgComponent extends NgModelBase implements OnInit, AfterViewI
                 // console.log(status);
                 if (status === 'VALID') {
                     const dataSrc = this.calcuTask.IO.dataSrc = this.IOForm.value.dataSrc;
-                    let setV = (tag) => {
-                        this.calcuTask.IO[tag] = map(this.IOForm.value[tag] as any[], item => {
+                    let keys = ['inputs', 'outputs', 'parameters', 'std']
+                    for(let key of keys) {
+                        this.calcuTask.IO[key] = _.map(this.IOForm.value[key] as any[], event => {
+                            // if(key === 'std')
+                            //     event
                             return {
-                                id: item.id,
-                                name: item.name,
-                                description: item.description,
-                                schemaId: get(item, 'schema.id'),
-                                optional: item.optional,
-                                cached: item.file ? true : false,
-                                value: (dataSrc === 'UPLOAD' && tag === 'inputs') ? get(item, 'file.value') :
-                                    (tag === 'std' && item.id === '--index') ? item.value : undefined,
-                                fname: (dataSrc === 'UPLOAD' && tag === 'inputs') ? get(item, 'file.fname') : item.fname,
-                                ext: item.ext
-                            };
-                        });
+                                id: event.id,
+                                name: event.name,
+                                description: event.description,
+                                schemaId: get(event, 'schema.id'),
+                                optional: event.optional,
+                                cached: event.file ? true : false,
+                                value: (dataSrc === 'UPLOAD' && key === 'inputs') ? get(event, 'file.value') :
+                                    key === 'std' ? event.value : undefined,
+                                fname: (dataSrc === 'UPLOAD' && key === 'inputs') ? get(event, 'file.fname') : event.fname,
+                                ext: event.ext
+                            }
+                        })
                     }
-                    setV('inputs');
-                    setV('outputs');
-                    setV('std');
-                    setV('parameters');
-                    this.calcuTask.stdId = get(this, 'IOForm.value.STD._id');
                     this.propagateChange(this.calcuTask);
                 }
                 else {
@@ -312,7 +309,10 @@ export class CalcuCfgComponent extends NgModelBase implements OnInit, AfterViewI
                 <button mat-button color='primary' (click)='onYesClick()' cdkFocusInitial [disabled]='!site'>OK</button>
             </div>
         </mat-dialog-actions>
-    `
+    `,
+    styles: [
+        `:host { width: 650px; } >*{width: 650px; }`
+    ]
 })
 export class SiteDialog {
     site;

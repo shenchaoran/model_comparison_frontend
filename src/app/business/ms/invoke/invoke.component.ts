@@ -58,7 +58,6 @@ export class InvokeComponent extends OgmsBaseComponent implements OnInit {
                             this.calcuTask.meta.name = this.msiForm.value['name'];
                             this.calcuTask.meta.desc = this.msiForm.value['desc'];
                             this.calcuTask.auth.src = this.msiForm.value.src;
-                            this.calcuTask.stdId = this.msiForm.value['calcuTask'].stdId;
                             this.calcuTask.IO = this.msiForm.value['calcuTask'].IO;
                         }
                     });
@@ -100,7 +99,7 @@ export class InvokeComponent extends OgmsBaseComponent implements OnInit {
             isValid = false;
             return {};
         }
-        if (calcuTask.stdId && calcuTask) {
+        if (calcuTask) {
             let dataSrc = calcuTask.IO.dataSrc;
             for (let key in calcuTask.IO) {
                 if (!isValid)

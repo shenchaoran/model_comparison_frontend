@@ -31,9 +31,9 @@ $form-item-width: 600px;
         }
     }
     
-    &.std-src-group {
+    .std-form-item {
         display: inline-block !important;
-        width: $form-item-width;
+        // width: $form-item-width;
         #preview-btn {
             margin-left: 10px;
         }
