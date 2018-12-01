@@ -69,6 +69,8 @@ export class CmpObj {
         // 保存结果文件路径
         result: string
     }[];
+    // 先放这里，其实应该放在最外层，所有的 cmpObj 共用同一套 sub-regions
+    regions?: [][]
     progress?: number;
 
     constructor() {

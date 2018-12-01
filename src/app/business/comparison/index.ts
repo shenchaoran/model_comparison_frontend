@@ -8,6 +8,7 @@ import {
     CreateDocModule,
     DirectivesModule,
 } from '@shared';
+import { OlModule } from '../ol';
 import { CmpSharedModule } from '../cmp-shared';
 import { ComparisonRoutingModule } from './index-routing.module';
 import { ConversationModule } from '../conversation';
@@ -69,6 +70,7 @@ const modules = [
     DirectivesModule,
     MatCascaderModule,
     MatTableModule,
+    OlModule,
 ];
 const services = [];
 @NgModule({

@@ -7,6 +7,7 @@
     .card {
         box-sizing: border-box;
         padding: 8px;
+        margin-bottom: 20px;
 
         @mixin reactive($columnNum) {
             flex: 0 0 calc(100%/#{$columnNum});

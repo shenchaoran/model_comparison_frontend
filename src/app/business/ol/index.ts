@@ -5,6 +5,8 @@ import { API } from '@config';
 import { OlService } from './services/ol.service';
 import { GlobalSiteComponent } from './global-site/global-site.component';
 import { NcDatasetComponent } from './nc-dataset/nc-dataset.component';
+import { SubRegionsComponent } from './sub-regions/sub-regions.component';
+
 import {
     MatRadioModule,
     MatFormFieldModule,
@@ -31,6 +33,7 @@ const modules = [
 const components = [
     GlobalSiteComponent,
     NcDatasetComponent,
+    SubRegionsComponent,
 ];
 var entryComponents = [];
 const services = [

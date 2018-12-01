@@ -21,7 +21,7 @@
         <div formArrayName='dataRefers' class='form-container dataRefer-group'>
             <div class='dataRefer-item form-item' *ngFor='let ms of participants; let i=index;' [formGroupName]='i'>
                 <ngx-mat-cascader formControlName='selected' #dfs placeholder='{{ms.MDL.meta.name}} data reference'
-                                    [data]='_dataReferOptions[i]' (valueChange)='onDFChange($event, i)'></ngx-mat-cascader>
+                                    [data]='_dataReferOptions[i]'></ngx-mat-cascader>
             </div>
         </div>
         
@@ -35,7 +35,23 @@
         <p class='title'><i>Comparison Method</i></p>
         <div class='form-container'>
             <br>
-            <mat-form-field class='form-item method-select-group'>
+            <h4 class='f3-light'>Click to add comparison method: </h4>
+            <mat-chip-list multiple>
+                <mat-chip 
+                    *ngFor='let method of methods; let i=index;' 
+                    (click)='addCmpMethod(method)' 
+                    [color]='method.selected? "primary": ""' 
+                    [selected]='method.selected'
+                    [value]='method._id'>
+                    {{method.meta.name}}
+                </mat-chip>
+            </mat-chip-list>
+
+            <ng-container *ngIf='hasSubRegion'>
+                <ogms-sub-regions class='mt-3' (onRegionsChange)='onRegionsChange($event)'></ogms-sub-regions>
+            </ng-container>
+            
+            <!-- <mat-form-field class='form-item method-select-group'>
                 <mat-select placeholder='Comparison methods' formControlName='methods' multiple>
                     <mat-option *ngFor="let method of methods; let i=index" [value]='method._id'>
                         {{method.meta.name}}
@@ -44,7 +60,7 @@
                 <button id='view-method-all' mat-button matSuffix mat-icon-button target='_blank' routerLink='/comparison/methods'>
                     <mat-icon>call_made</mat-icon>
                 </button>
-            </mat-form-field>
+            </mat-form-field> -->
         </div>
     </form>
 </ng-container>

@@ -1,7 +1,6 @@
 import { Observable, Subject, from, of, combineLatest } from 'rxjs';
 import { debounce, debounceTime, throttleTime, filter, } from 'rxjs/operators';
 import { CmpMethodService } from '../../services/cmp-method.service';
-import { cloneDeep, chain, map, find, get } from 'lodash';
 import {
     Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChange,
     ChangeDetectionStrategy,
@@ -45,6 +44,7 @@ export class CmpObjCfgComponent extends NgModelBase implements ControlValueAcces
     _participants;
     cmpObjFG: FormGroup;
     displayedColumns = ['msName', 'eventName', 'field'];
+    hasSubRegion;
 
     @Input() set mode(v) {
         // console.log('cmpObj mode:', v)
@@ -55,23 +55,44 @@ export class CmpObjCfgComponent extends NgModelBase implements ControlValueAcces
     set participants(v) {
         this._participants = v;
         function getCasCaderData(type, ms) {
-            return map(ms.MDL.IO[type] as any[], event => {
-                let schema = find(ms.MDL.IO.schemas, { id: event.schemaId });
-                let cols = get(schema, 'structure.columns');
-                let children = map(cols, col => {
+            return _.map(ms.MDL.IO[type] as any[], event => {
+                let schema = _.find(ms.MDL.IO.schemas, { id: event.schemaId });
+                let schemaType = _.get(schema, 'structure.type')
+                if( schemaType === 'table') {
+                    let cols = _.get(schema, 'structure.columns');
                     return {
-                        text: (col as any).id,
-                        value: (col as any).id
+                        text: event.name,
+                        value: event.id,
+                        children: _.map(cols, col => {
+                            return {
+                                text: (col as any).id,
+                                value: (col as any).id
+                            };
+                        })
                     };
-                });
-                return {
-                    text: event.name,
-                    value: event.id,
-                    children: children
-                };
+                }
+                else if(schemaType === 'NETCDF4') {
+                    let variables = _.chain(schema).get('structure.variables').keys().value()
+                    return {
+                        text: event.name,
+                        value: event.id,
+                        children: _.map(variables, variable => {
+                            return {
+                                text: (variable as any).id,
+                                value: (variable as any).id
+                            };
+                        })
+                    };
+                }
+                else {
+                    return {
+                        text: event.name,
+                        value: event.id,
+                    }
+                }
             });
         }
-        this._dataReferOptions = map(this.participants as any[], ms => {
+        this._dataReferOptions = _.map(this.participants as any[], ms => {
             return [
                 {
                     text: 'Input',
@@ -115,19 +136,19 @@ export class CmpObjCfgComponent extends NgModelBase implements ControlValueAcces
 
     ngOnInit() {}
 
-    onDFChange(dfs, i) {
-        let ctrl = this.cmpObjFG.get(`dataRefers.${i}.selected`);
+    // onDFChange(dfs, i) {
+    //     let ctrl = this.cmpObjFG.get(`dataRefers.${i}.selected`);
         // ctrl.setValue = dfs;
         // ctrl.updateValueAndValidity();
         // this.cdRef.markForCheck();
-    }
+    // }
 
     private initWriteMode() {
         if (this.cmpObj) {
             this._mode = 'WRITE';
 
-            this._dfs = map(this.participants as any[], ms => {
-                let df = find(this.cmpObj.dataRefers, { msId: ms._id }) as any;
+            this._dfs = _.map(this.participants as any[], ms => {
+                let df = _.find(this.cmpObj.dataRefers, { msId: ms._id }) as any;
                 let selectedCasOpts = [];
                 df && (selectedCasOpts = [
                     df.eventType,
@@ -140,8 +161,8 @@ export class CmpObjCfgComponent extends NgModelBase implements ControlValueAcces
                 id: this.cmpObj.id,
                 name: [this.cmpObj.name, [Validators.required, Validators.minLength(1)]],
                 desc: [this.cmpObj.desc, [Validators.required, Validators.minLength(2)]],
-                dataRefers: this.fb.array(map(this.participants as any[], ms => {
-                    let df = find(this.cmpObj.dataRefers, { msId: ms._id }) as any;
+                dataRefers: this.fb.array(_.map(this.participants as any[], ms => {
+                    let df = _.find(this.cmpObj.dataRefers, { msId: ms._id }) as any;
                     let selectedCasOpts = [];
                     df && (selectedCasOpts = [
                         df.eventType,
@@ -155,7 +176,7 @@ export class CmpObjCfgComponent extends NgModelBase implements ControlValueAcces
                         selected: [selectedCasOpts, [Validators.required]]
                     });
                 })),
-                methods: [map(this.cmpObj.methods as any[], v => v.id), [Validators.required]]
+                methods: [[], [Validators.required]]
             });
             // this.cmpObjFG.valueChanges.subscribe(v => {
             //     console.log('cmpObj changed');
@@ -164,9 +185,9 @@ export class CmpObjCfgComponent extends NgModelBase implements ControlValueAcces
                 // console.log('cmpObj changed');
                 this.cmpObj.name = this.cmpObjFG.value.name;
                 this.cmpObj.desc = this.cmpObjFG.value.desc;
-                this.cmpObj.dataRefers = map(this.cmpObjFG.value.dataRefers as any[], dataRefer => {
-                    let ms = find(this.participants, { _id: dataRefer.msId }) as any;
-                    let event = find(ms.MDL.IO[dataRefer.selected[0]], item => item.id === dataRefer.selected[1]);
+                this.cmpObj.dataRefers = _.map(this.cmpObjFG.value.dataRefers as any[], dataRefer => {
+                    let ms = _.find(this.participants, { _id: dataRefer.msId }) as any;
+                    let event = _.find(ms.MDL.IO[dataRefer.selected[0]], item => item.id === dataRefer.selected[1]);
                     return {
                         msId: dataRefer.msId,
                         msName: dataRefer.msName,
@@ -177,15 +198,37 @@ export class CmpObjCfgComponent extends NgModelBase implements ControlValueAcces
                         schemaId: event.schemaId
                     };
                 });
-                this.cmpObj.methods = map(this.cmpObjFG.value.methods as any[], methodId => {
-                    let method = find(this.methods, { _id: methodId }) as any;
-                    return method ? {
-                        id: method._id,
-                        name: method.meta.name
-                    } : null;
-                });
+                let methodsCtrl = this.cmpObjFG.get('methods')
+                this.cmpObj.methods = methodsCtrl.value;
+                // this.cmpObj.methods = _.map(this.cmpObjFG.value.methods as any[], methodId => {
+                //     let method = _.find(this.methods, { _id: methodId }) as any;
+                //     return method ? {
+                //         id: method._id,
+                //         name: method.meta.name
+                //     } : null;
+                // });
                 return this.propagateChange(this.cmpObj);
             });
         }
+    }
+
+    addCmpMethod(method) {
+        method.selected = !method.selected;
+        let methodsCtrl = this.cmpObjFG.get('methods')
+        if(method.selected) {
+            methodsCtrl.value.push({id: method._id, name: method.meta.name});
+        }
+        else {
+            _.remove(methodsCtrl.value, {id: method._id})
+        }
+        this.hasSubRegion = !!_.find(methodsCtrl.value, method => {
+            return method.name === 'Sub-region bias contour map' || method.name === 'Heat map' || method.name === 'Sub-region line chart'
+        })
+        this.cmpObj.methods = methodsCtrl.value;
+    }
+
+    onRegionsChange(regions) {
+        // console.log(regions)
+        this.cmpObj.regions = regions;
     }
 }

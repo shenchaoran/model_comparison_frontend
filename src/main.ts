@@ -11,8 +11,8 @@ const bootstrap = () => {
     return platformBrowserDynamic().bootstrapModule(AppModule);
 };
 
-console.log(environment);
-console.log('is hot:', module.hot);
+// console.log(environment);
+// console.log('is hot:', module.hot);
 
 if (environment.hmr) {
     if (module.hot) {

@@ -109,6 +109,7 @@
                 </ng-container>
 
                 <ng-template #cmpObjTemp>
+                    <!-- TODO 改为二维矩阵的形式展示，简洁明了 -->
                     <div *ngFor='let cmpObj of cmpObjs; let i=index;' class='cmpObj-container'>
                         <ogms-cmp-obj-cfg [mode]='_cmpCfgMode' [methods]='cmpMethods' [participants]='ptMSs' [(ngModel)]='cmpObj'></ogms-cmp-obj-cfg>
                         <span *ngIf='_cmpCfgMode === "WRITE"' class='close-tag' (click)='removeCmpObj(i)'>
