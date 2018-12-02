@@ -10,7 +10,7 @@ import View from 'ol/View';
 import { Group, Tile as TileLayer, Vector as VectorLayer } from 'ol/layer';
 import { Vector as VectorSource, OSM, TileWMS } from 'ol/source';
 import Draw, { createBox } from 'ol/interaction/Draw';
-import { fromLonLat } from 'ol/proj'
+// import { fromLonLat } from 'ol/proj'
 import * as proj from 'ol/proj';
 // declare var createBox: any;
 

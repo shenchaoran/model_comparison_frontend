@@ -93,10 +93,7 @@ export class CreateTaskComponent extends OgmsBaseComponent implements OnInit {
             this.task.schemas.push(schema);
         }));
         map(this.cmpTaskFG.value.calcuTasks as any[], (calcuTask, i) => {
-            this.task.calcuTaskIds.push({
-                _id: calcuTask._id,
-                progress: 0
-            });
+            this.task.calcuTaskIds.push(calcuTask._id);
 
             calcuTask.meta.name = this._tabLabelCfg[i].label;
             if (type === 'save') {

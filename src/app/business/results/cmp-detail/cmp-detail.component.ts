@@ -30,7 +30,6 @@ export class CmpDetailComponent extends OgmsBaseComponent implements OnInit {
     ptMSs;
     solution;
     hadTriggeredConversation;
-    echartDOMIndex = 0;
     @ViewChildren('echartDOM') echartDOM: QueryList<ElementRef>;
     chartRecord = {};
 
@@ -57,8 +56,8 @@ export class CmpDetailComponent extends OgmsBaseComponent implements OnInit {
                 this.task = res.data.task;
                 this.ptMSs = res.data.ptMSs;
                 this.solution = res.data.solution;
-
-                this.fetchInterval();
+                this.buildChart(0);
+                // this.fetchInterval();
             }
         });
     }
@@ -88,16 +87,22 @@ export class CmpDetailComponent extends OgmsBaseComponent implements OnInit {
     private buildChart(i) {
         setTimeout(() => {
             let cmpObj = this.task.cmpObjs[i]
-            cmpObj.methods.map((method) => {
-                if (method.id === '5b713f39a4857f1ba4be23ff' || method.id === '5b713f51a4857f1ba4be2404') {
+            _.map(cmpObj.methods, (method, j) => {
+                if (
+                    method.name === 'Sub-region line chart' ||
+                    method.name === 'Heat map' ||
+                    method.name === 'table series visualization' ||
+                    method.name === 'Line chart'
+                ) {
                     if (method.result.state === CmpState.FINISHED_SUCCEED) {
                         // console.log(this.echartDOM.toArray())
-
-                        echarts
-                            .init(this.echartDOM.toArray()[i].nativeElement)
-                            .setOption(method.result);
-                        this.chartRecord[i] = 1;
-                        // this.echartDOMIndex++;
+                        let echartDOM = _.find(this.echartDOM.toArray(), echartDOM => echartDOM.nativeElement.id === `${cmpObj.id}-${method.id}`)
+                        if(echartDOM) {
+                            echarts
+                                .init(echartDOM.nativeElement)
+                                .setOption(method.result);
+                            this.chartRecord[i] = true;
+                        }
                     }
                 }
             })
@@ -123,7 +128,7 @@ export class CmpDetailComponent extends OgmsBaseComponent implements OnInit {
             })
         }
         else {
-            if(this.chartRecord[index] !== 1)
+            if(this.chartRecord[index] !== true)
                 this.buildChart(index);
         }
     }

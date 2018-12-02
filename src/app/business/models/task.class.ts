@@ -22,10 +22,7 @@ export class Task {
     state: CmpState;
     progress: number;
     solutionId?: string;
-    calcuTaskIds: {
-        _id: string,
-        progress: number
-    }[];
+    calcuTaskIds: string[];
     cmpObjs: Array<CmpObj>;
     schemas: UDXSchema[];
     cid: string;

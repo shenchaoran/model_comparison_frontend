@@ -72,14 +72,14 @@ export class CmpObjCfgComponent extends NgModelBase implements ControlValueAcces
                     };
                 }
                 else if(schemaType === 'NETCDF4') {
-                    let variables = _.chain(schema).get('structure.variables').keys().value()
+                    let variables = _.chain(schema).get('structure.variables').map(variable => variable.name).value()
                     return {
                         text: event.name,
                         value: event.id,
                         children: _.map(variables, variable => {
                             return {
-                                text: (variable as any).id,
-                                value: (variable as any).id
+                                text: variable,
+                                value: variable
                             };
                         })
                     };
@@ -225,6 +225,7 @@ export class CmpObjCfgComponent extends NgModelBase implements ControlValueAcces
             return method.name === 'Sub-region bias contour map' || method.name === 'Heat map' || method.name === 'Sub-region line chart'
         })
         this.cmpObj.methods = methodsCtrl.value;
+        methodsCtrl.updateValueAndValidity();
     }
 
     onRegionsChange(regions) {
