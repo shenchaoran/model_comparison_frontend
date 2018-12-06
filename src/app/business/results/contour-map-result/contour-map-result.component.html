@@ -1,0 +1,11 @@
+<div>
+    <h3>Show animation: </h3>
+    <mat-checkbox [(ngModel)]='showAnimation' (ngModelChange)='onShowAnimationChange()'>Show animation</mat-checkbox>
+    
+    <h3>Times: </h3>
+    <mat-slider style='width: 500px;' #slider class='time-slider' thumbLabel [disabled]='showAnimation' [min]='1' [max]='data.timeLabels.length' [step]='1' [(value)]='selectedTime'></mat-slider>{{data.timeLabels[selectedTime-1]}}
+    
+    <div class='my-3'>
+        <img *ngFor='let region of regions; let i=index' [src]='imgSrc + region + ".png"'>
+    </div>
+</div>

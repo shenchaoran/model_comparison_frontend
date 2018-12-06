@@ -94,10 +94,18 @@ export class CmpDetailComponent extends OgmsBaseComponent implements OnInit {
                     method.name === 'table series visualization' ||
                     method.name === 'Line chart'
                 ) {
-                    if (method.result.state === CmpState.FINISHED_SUCCEED) {
+                    if (_.get(method, 'result.state') === CmpState.FINISHED_SUCCEED) {
                         // console.log(this.echartDOM.toArray())
                         let echartDOM = _.find(this.echartDOM.toArray(), echartDOM => echartDOM.nativeElement.id === `${cmpObj.id}-${method.id}`)
                         if(echartDOM) {
+                            if(method.name === 'Sub-region line chart') {
+                                let height = 200 * Math.ceil(cmpObj.regions.length/4) + 'px'
+                                this.renderer2.setStyle(echartDOM.nativeElement, 'height', height)
+                            }
+                            else if(method.name === 'Heat map') {
+                                let height = 120 * _.get(method, 'result.grid.length') + 'px'
+                                this.renderer2.setStyle(echartDOM.nativeElement, 'height', height)
+                            }
                             echarts
                                 .init(echartDOM.nativeElement)
                                 .setOption(method.result);

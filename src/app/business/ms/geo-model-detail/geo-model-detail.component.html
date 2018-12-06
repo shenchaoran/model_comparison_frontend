@@ -132,19 +132,19 @@
         <div>
             <ogms-sidebar-section>
                 <div class='title'>
-                    Topic
+                    Calculation records
                     <mat-icon inline>settings</mat-icon>
                 </div>
                 <div class='body'>
-                    <ng-container *ngIf='topic && topic.auth && topic.meta else noTopicTemp'>
+                    <ng-container *ngIf='calcuTasks && calcuTasks.length else noTopicTemp'>
                         <ul class='aside-ul with-route'>
-                            <li [routerLink]='["/topics", topic._id]'>
-                                {{topic.auth.userName}} / {{topic.meta.name}}
+                            <li *ngFor='let calcuTask of calcuTasks' [routerLink]='["../../results/calculation", calcuTask._id]'>
+                                {{calcuTask?.auth?.userName}} / {{calcuTask.meta.name}}
                             </li>
-                        </ul>
+                        </ul> 
                     </ng-container>
                     <ng-template #noTopicTemp>
-                        <i>No related Topic.</i>
+                        <i>No related calculation record.</i>
                     </ng-template>
                 </div>
             </ogms-sidebar-section>
@@ -158,8 +158,8 @@
                 </div>
                 <div class='body'>
                     <ul *ngIf='solutions' class='aside-ul with-route'>
-                        <li *ngFor='let solution of solutions'>
-                            {{sln.auth.userName}} / {{sln.meta.name}}
+                        <li *ngFor='let sln of solutions' [routerLink]='["../../comparison/solutions", sln._id]'>
+                            {{sln?.auth?.userName}} / {{sln.meta.name}}
                         </li>
                     </ul>
                     <ng-container *ngIf='!solutions'>

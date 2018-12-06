@@ -26,18 +26,8 @@ export const HEADER_MENUS: MenuClass[] = [
         label: 'Comparison'
     },
     {
-        path: '/results',
-        label: 'Results & Diagnostics',
-        children: [
-            {
-                path: '/results/calculation',
-                label: 'Calculation Result',
-            },
-            {
-                path: '/results/comparison',
-                label: 'Comparison Result'
-            }
-        ]
+        path: '/results/comparison',
+        label: 'Results & Diagnostics'
     }, 
     {
         path: '/test',

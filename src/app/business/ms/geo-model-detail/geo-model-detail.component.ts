@@ -4,7 +4,7 @@ import { DynamicTitleService } from "@core/services/dynamic-title.service";
 import { OgmsBaseComponent } from '@shared';
 import { get, findIndex } from 'lodash';
 import { ConversationService, MSService, UserService } from "@services";
-import { Topic, Solution, } from '@models';
+import { Topic, Solution, CalcuTask, } from '@models';
 
 @Component({
     selector: 'ogms-geo-model-detail',
@@ -13,7 +13,8 @@ import { Topic, Solution, } from '@models';
 })
 export class GeoModelDetailComponent extends OgmsBaseComponent implements OnInit {
     ms: any;
-    topic: Topic;
+    calcuTasks: CalcuTask[];
+    // topic: Topic;
     solutions: Solution[];
     displayedColumns = ["name", "description", "schemaId", "ext"];
     hadTriggeredConversation: boolean = false;
@@ -40,6 +41,8 @@ export class GeoModelDetailComponent extends OgmsBaseComponent implements OnInit
         this.msService.findOne(msId).subscribe(res => {
             if(!res.error) {
                 this.ms = res.data.ms;
+                this.solutions = res.data.solutions;
+                this.calcuTasks = res.data.calcuTasks;
 
                 this.title.setTitle(this.ms.MDL.meta.name);
             }

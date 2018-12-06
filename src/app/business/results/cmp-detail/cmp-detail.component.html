@@ -34,6 +34,9 @@
                     <tr mat-header-row *matHeaderRowDef="['msName', 'eventName', 'field']"></tr>
                     <tr mat-row *matRowDef="let row; columns: ['msName', 'eventName', 'field'];"></tr>
                 </table>
+
+                <ogms-sub-regions *ngIf='cmpObj.regions' [regions]='cmpObj.regions'></ogms-sub-regions>
+
                 <p>Comparison methods:</p>
                 <div *ngFor='let method of cmpObj.methods'>
                     <!-- <mat-chip-list>
@@ -41,22 +44,26 @@
                                 </mat-chip-list> -->
                     <p>{{method?.name}}</p>
                     <ng-container *ngIf='method?.name === "table series visualization" || method?.name === "Line chart"'>
-                        <div [attr.id]='cmpObj.id + "-" + method.id' #echartDOM class='echart-dom'></div>
+                        <div *ngIf='method?.result?.state === "FINISHED_SUCCEED"' 
+                            [attr.id]='cmpObj.id + "-" + method.id' #echartDOM class='echart-dom'></div>
                     </ng-container>
                     <ng-container *ngIf='method?.name === "Taylor diagram"'>
 
                     </ng-container>
                     <ng-container *ngIf='method?.name === "Sub-region line chart"'>
-                        <div [attr.id]='cmpObj.id + "-" + method.id' #echartDOM class='echart-dom'></div>
+                        <div *ngIf='method?.result?.state === "FINISHED_SUCCEED"' 
+                            [attr.id]='cmpObj.id + "-" + method.id' #echartDOM class='echart-dom'></div>
                     </ng-container>
                     <ng-container *ngIf='method?.name === "Bias contour map"'>
 
                     </ng-container>
                     <ng-container *ngIf='method?.name === "Sub-region bias contour map"'>
-                        
+                        <ogms-contour-map-result *ngIf='method?.result?.state === "FINISHED_SUCCEED"' 
+                            [data]='method.result'></ogms-contour-map-result>
                     </ng-container>
                     <ng-container *ngIf='method?.name === "Heat map"'>
-                        <div [attr.id]='cmpObj.id + "-" + method.id' #echartDOM class='echart-dom'></div>
+                        <div *ngIf='method?.result?.state === "FINISHED_SUCCEED"' 
+                            [attr.id]='cmpObj.id + "-" + method.id' #echartDOM class='echart-dom'></div>
                     </ng-container>
                 </div>
             </mat-tab>
