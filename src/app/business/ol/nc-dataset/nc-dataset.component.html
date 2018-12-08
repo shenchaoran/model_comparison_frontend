@@ -1,18 +1,33 @@
+<div class='mb-3' *ngIf='dimensions'>
+    <h4 class='mb-2'>Dimensions: </h4>
+    <mat-chip-list>
+        <mat-chip *ngFor='let dimension of dimensions' selected color="accent">{{dimension.name}}</mat-chip>
+    </mat-chip-list>
+</div>
+
 <div class='mb-3' *ngIf='couldSwitchVariable'>
-    <h3>Variables: </h3>
+    <h4 class='mb-2'>Variables: </h4>
     <mat-radio-group [(ngModel)]='selectedVariable' (ngModelChange)='updateMapSource()'>
         <mat-radio-button class='variable-radio' *ngFor='let variable of variables' [value]='variable'>{{variable.name}}</mat-radio-button>
     </mat-radio-group>
 </div>
 
 <div *ngIf='timeVariable' class='mb-3'>
-    <h3>Show animation:</h3>
+    <h4 class='mb-2'>Show animation:</h4>
     <mat-checkbox [(ngModel)]='showAnimation' (ngModelChange)='onShowAnimationChange()'>Show animation</mat-checkbox>
 </div>
 
 <div *ngIf='timeVariable' class='mb-3'>
-    <h3>Times: {{selectedDateStr}}</h3>
-    <mat-slider class='time-slider' thumbLabel [tickInterval]='timeVariable?.step' [disabled]='showAnimation' [min]='timeVariable?.start' [max]='timeVariable?.end' [step]='timeVariable?.step' [(value)]='selectedTime' (change)='updateMapSource()'></mat-slider>{{selectedTime}} {{timeVariable.unit}}
+    <h4 class='mb-2'>Times: </h4>
+    <p>Start: {{startTime}}</p>
+    <p>End: {{endTime}}</p>
+    <p>Resolution: {{timeResolution}}</p>
+    <mat-slider class='time-slider' thumbLabel [tickInterval]='timeVariable?.step' [disabled]='showAnimation' [min]='timeVariable?.start' [max]='timeVariable?.end' [step]='timeVariable?.step' [(value)]='selectedTime' (change)='updateMapSource()'></mat-slider>{{selectedDateStr}}
+</div>
+
+<div>
+    <h4 class='mb-2'>Spatial</h4>
+    <p>Resolution: {{spatialResolution}}</p>
 </div>
 
 <div id={{targetId}} class='map-container mb-3' #mapEl></div>

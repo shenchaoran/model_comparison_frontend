@@ -35,7 +35,7 @@
                     <tr mat-row *matRowDef="let row; columns: ['msName', 'eventName', 'field'];"></tr>
                 </table>
 
-                <ogms-sub-regions *ngIf='cmpObj.regions' [regions]='cmpObj.regions'></ogms-sub-regions>
+                <ogms-sub-regions *ngIf='task.regions' [regions]='task.regions'></ogms-sub-regions>
 
                 <p>Comparison methods:</p>
                 <div *ngFor='let method of cmpObj.methods'>

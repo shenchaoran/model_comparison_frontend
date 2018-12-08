@@ -46,10 +46,6 @@
                     {{method.meta.name}}
                 </mat-chip>
             </mat-chip-list>
-
-            <ng-container *ngIf='hasSubRegion'>
-                <ogms-sub-regions class='mt-3' (onRegionsChange)='onRegionsChange($event)'></ogms-sub-regions>
-            </ng-container>
             
             <!-- <mat-form-field class='form-item method-select-group'>
                 <mat-select placeholder='Comparison methods' formControlName='methods' multiple>

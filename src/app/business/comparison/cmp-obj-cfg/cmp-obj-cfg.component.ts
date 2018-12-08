@@ -44,7 +44,6 @@ export class CmpObjCfgComponent extends NgModelBase implements ControlValueAcces
     _participants;
     cmpObjFG: FormGroup;
     displayedColumns = ['msName', 'eventName', 'field'];
-    hasSubRegion;
 
     @Input() set mode(v) {
         // console.log('cmpObj mode:', v)
@@ -221,15 +220,7 @@ export class CmpObjCfgComponent extends NgModelBase implements ControlValueAcces
         else {
             _.remove(methodsCtrl.value, {id: method._id})
         }
-        this.hasSubRegion = !!_.find(methodsCtrl.value, method => {
-            return method.name === 'Sub-region bias contour map' || method.name === 'Heat map' || method.name === 'Sub-region line chart'
-        })
         this.cmpObj.methods = methodsCtrl.value;
         methodsCtrl.updateValueAndValidity();
-    }
-
-    onRegionsChange(regions) {
-        // console.log(regions)
-        this.cmpObj.regions = regions;
     }
 }

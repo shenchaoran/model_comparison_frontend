@@ -15,6 +15,8 @@ import {
     MatInputModule,
     MatSliderModule,
     MatCheckboxModule,
+    MatListModule,
+    MatChipsModule,
 } from '@angular/material';
 ////////////////////////////////////////////////////////////////////////////////
 export * from './services/ol.service'
@@ -27,6 +29,8 @@ const modules = [
     MatIconModule,
     MatInputModule,
     MatSliderModule,
+    MatListModule,
+    MatChipsModule,
     MatCheckboxModule,
     NgxSharedModule,
 ];

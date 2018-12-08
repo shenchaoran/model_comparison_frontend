@@ -11,8 +11,8 @@ import Feature from 'ol/Feature';
 import { Group, Tile as TileLayer, Vector as VectorLayer } from 'ol/layer';
 import { Vector as VectorSource, OSM, TileWMS } from 'ol/source';
 import { Circle, Stroke, Style, Fill, Text } from 'ol/style';
-// import Draw, { createBox } from 'ol/interaction/Draw';
 import * as Draw from 'ol/interaction/Draw';
+// import Draw, { createBox } from 'ol/interaction/Draw';           // 两种方法都可以引入
 import * as Polygon from 'ol/geom/Polygon';
 import * as proj from 'ol/proj';
 import * as OlEventCondition from 'ol/events/condition';
@@ -24,7 +24,7 @@ import Select from 'ol/interaction/Select';
     styleUrls: ['./sub-regions.component.scss']
 })
 export class SubRegionsComponent implements OnInit, AfterViewInit {
-    _regions;
+    _regions = [];
     mode: 'READ' | 'WRITE' = 'WRITE';
     @Input()
     set regions(v: any[]) {
@@ -115,7 +115,7 @@ export class SubRegionsComponent implements OnInit, AfterViewInit {
         } as any);
 
         if (this.mode === 'WRITE') {
-            let draw = new (Draw as any)({
+            let draw = new Draw.default({
                 source: this.vectorSource,
                 type: 'Circle',
                 geometryFunction: (Draw as any).createBox(),

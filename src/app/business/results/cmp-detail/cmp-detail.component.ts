@@ -99,7 +99,7 @@ export class CmpDetailComponent extends OgmsBaseComponent implements OnInit {
                         let echartDOM = _.find(this.echartDOM.toArray(), echartDOM => echartDOM.nativeElement.id === `${cmpObj.id}-${method.id}`)
                         if(echartDOM) {
                             if(method.name === 'Sub-region line chart') {
-                                let height = 200 * Math.ceil(cmpObj.regions.length/4) + 'px'
+                                let height = 200 * Math.ceil(this.task.regions.length/4) + 'px'
                                 this.renderer2.setStyle(echartDOM.nativeElement, 'height', height)
                             }
                             else if(method.name === 'Heat map') {

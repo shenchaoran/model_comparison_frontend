@@ -1,15 +1,33 @@
-<ng-template #slnTemplate let-sln='item'>
+<ng-template #slnTemplate let-task='item'>
     <section class='list-item'>
         <div class='detail-group'>
-            <h3><a [routerLink]='sln._id'>{{sln.auth.userName}} / {{sln.meta.name}}</a></h3>
-            <p class='text-gray mb-2 pr-4'>{{sln.meta.desc | stringLimit: 180 | description}}</p>
-            <div>{{sln.meta.time | date: 'yyyy-MM-dd hh:mm'}}</div>
+            <h3><a [routerLink]='task._id'>{{task.auth.userName}} / {{task.meta.name}}</a></h3>
+            <p class='text-gray mb-2 pr-4'>{{task.meta.desc | stringLimit: 180 | description}}</p>
+            <div>{{task.meta.time | date: 'yyyy-MM-dd hh:mm'}}</div>
         </div>
         <div class='tag-group'>
-            <mat-chip-list>
-                <!-- <mat-chip *ngIf='sln.topicId'></mat-chip> -->
-                <mat-chip *ngFor='let ms of sln.participants' [routerLink]='["/geo-models", ms._id]' class='ms-chip'>{{ms.msName}}</mat-chip>
-            </mat-chip-list>
+            <div class='task-progress-container'>
+                <div class='progress-group'>
+                    <div class='status-badge ogms-accent'></div>
+                    <span>Unstarted: </span><span style='font-weight: 500;' class='ogms-accent'>{{task.initCmp}}</span>
+                    <!-- <mat-progress-bar class='task-progress' mode='determinate' [value]='task.initCmp*100/(task.totalCmp === 0? 1: task.totalCmp)'></mat-progress-bar> -->
+                </div>
+                <div class='progress-group'>
+                    <div class='status-badge ogms-success'></div>
+                    <span>Succeed: </span><span style='font-weight: 500;' class='ogms-success'>{{task.succeedCmp}}</span>
+                    <!-- <mat-progress-bar class='task-progress' mode='determinate' [value]='task.succeedCmp*100/(task.totalCmp === 0? 1: task.totalCmp)'></mat-progress-bar> -->
+                </div>
+                <div class='progress-group'>
+                    <div class='status-badge ogms-primary'></div>
+                    <span>Running: </span><span style='font-weight: 500;' class='ogms-primary'>{{task.runningCmp}}</span>
+                    <!-- <mat-progress-bar class='task-progress' mode='determinate' [value]='task.runningCmp*100/(task.totalCmp === 0? 1: task.totalCmp)'></mat-progress-bar> -->
+                </div>
+                <div class='progress-group'>
+                    <div class='status-badge ogms-warn'></div>
+                    <span>Failed: </span><span style='font-weight: 500;' class='ogms-warn'>{{task.failedCmp}}</span>
+                    <!-- <mat-progress-bar class='task-progress' mode='determinate' [value]='task.failedCmp*100/(task.totalCmp === 0? 1: task.totalCmp)'></mat-progress-bar> -->
+                </div>
+            </div>
         </div>
         <div class='actions-group'>
             <a>
@@ -20,5 +38,4 @@
     </section>
 </ng-template>
 
-<ogms-list-template [template]='slnTemplate' [service]='service'>
-</ogms-list-template>
+<ogms-list-template [template]='slnTemplate' [service]='service' [listAdaptor]='listAdaptor'></ogms-list-template>

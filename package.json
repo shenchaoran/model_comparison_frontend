@@ -45,6 +45,7 @@
     "install": "^0.12.2",
     "jquery": "3.2.1",
     "lodash": "^4.17.4",
+    "ng-zorro-antd": "^7.0.0-rc.0",
     "ng2-go-top-button": "^6.0.0",
     "ng2-simplemde": "^2.1.0",
     "ng2-slim-loading-bar": "^4.0.0",

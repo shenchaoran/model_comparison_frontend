@@ -21,6 +21,7 @@ export class CreateTaskComponent extends OgmsBaseComponent implements OnInit {
     task;
     calcuTasks = [];
     cmpTaskFG;
+    hasSubRegion = false;
 
     _selectedTabIndex = 0;
     _tabLabelCfg: {
@@ -69,6 +70,14 @@ export class CreateTaskComponent extends OgmsBaseComponent implements OnInit {
                 this.sln = res.data.solution;
                 this.ptMSs = res.data.ptMSs;
                 this.stds = res.data.stds;
+        
+                _.map(this.sln.cmpObjs, cmpObj => {
+                    _.map(cmpObj.methods, method => {
+                        if(method.name === 'Sub-region bias contour map' || method.name === 'Heat map' || method.name === 'Sub-region line chart') {
+                            this.hasSubRegion = true;
+                        }
+                    })
+                })
             }
         });
     }
@@ -156,6 +165,11 @@ export class CreateTaskComponent extends OgmsBaseComponent implements OnInit {
             label: ''
         });
         this.updateTabLabel();
+    }
+
+    onRegionsChange(regions) {
+        // console.log(regions)
+        this.task.regions = regions;
     }
 
     onSiteSelected(site, i) {

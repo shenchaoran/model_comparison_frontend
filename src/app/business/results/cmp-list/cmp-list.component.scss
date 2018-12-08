@@ -1,0 +1,37 @@
+@import 'assets/css/my/material-theme.scss';
+
+.task-progress-container {
+    height: 100%;
+    padding: 20px 0;
+    display: flex;
+    flex-flow: row wrap;
+    .progress-group {
+        flex: 50%;
+        color: #586069;
+        font-size: 12px;
+        float: right;
+        padding-right: 30px;
+        .status-badge {
+            width: 8px;
+            height: 8px;
+            border-radius: 8px;
+            display: inline-block;
+            margin-right: 8px;
+        }
+        // display: flex;
+        // flex-flow: row nowrap;
+        // align-items: center;
+        // span {
+        //     text-align: right;
+        //     width: 80px;
+        //     color: #586069;
+        //     font-size: 12px;
+        // }
+        // .task-progress {
+        //     flex: 1;
+        //     height: 8px;
+        //     margin-left: 5px;
+        //     border-radius: 5px;
+        // }
+    }
+}

@@ -18,6 +18,7 @@ import {
     MatButtonModule,
     MatSliderModule,
     MatCheckboxModule,
+    MatListModule,
 } from '@angular/material';
 import { OlModule } from '../ol';
 import { ConversationModule } from '../conversation';
@@ -41,6 +42,7 @@ const modules = [
     MatTabsModule,
     MatSliderModule,
     MatCheckboxModule,
+    MatListModule,
     ResultsRoutingModule,
     CmpSharedModule,
     HeaderMenuLayoutModule,

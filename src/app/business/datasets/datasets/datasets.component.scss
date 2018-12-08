@@ -1,4 +1,4 @@
-@import "../../../../assets/css/my/varyable";
+@import "assets/css/my/material-theme.scss";
 
 .ogms-left {
     width: 300px !important;
@@ -23,7 +23,7 @@
         >a {
             cursor: pointer;
             &:before {
-                background-color: $primaryColor;
+                background-color: $primary;
             }
         }
     }

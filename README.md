@@ -46,13 +46,13 @@ npm run debug
 ## TODO
 type: optimization, feature, important, style
 - [ ] **feature**: docking layout
-- [x] **optimization**: 页面加载速度
-- [x] **feature**: 评论系统
+- [x] ~~**optimization**: 页面加载速度~~
+- [x] ~~**feature**: 评论系统~~
 - [x] ~~**feature**: 和bootstrap结合~~
-- [x] **optimization**: 分割 common module ，打包后太大
+- [x] ~~**optimization**: 分割 common module ，打包后太大~~
 - [ ] **optimization**: echarts tree-shaking
-- [x] **optimization**: zorro tree-shaking
-- [ ] **optimization**: custom material theme
+- [x] ~~**optimization**: zorro tree-shaking~~
+- [x] ~~**optimization**: custom material theme~~
 - [ ] 用户个人空间相关
     - [ ] 路由 RESTful 风格化：user/:username
     - [ ] 关注、收藏的 topic, sln, task
@@ -63,8 +63,7 @@ type: optimization, feature, important, style
 - [ ] **optimization**: remove disabled-button, use snackbar to alert valid state
 - [ ] **optimization**: remove header, use mat-toolbar
 - [ ] **optimization**: remove custom card, use mat-card
-- [x] **important**: remove ng-zorro-antd !!!
-    - [x] 样式和组件冲突，首先移除
+- [x] ~~**important**: remove ng-zorro-antd, 样式和组件冲突，首先移除 !!!~~
 - [ ] **important**: 首页重新设计，展现的元素尽量少，首页去除 ajax
 - [ ] **optimization**: 动态设置 title
 - [ ] **style**: primer style
@@ -84,7 +83,7 @@ type: optimization, feature, important, style
     - [x] mat-tab: basic-info, data configuration, conversation
     - [ ] 结果打包下载
 - [ ] **optimization**: auth guard
-- [ ] **optimization**: mongodb 大文档的查询效率
+- [x] ~~**optimization**: mongodb 大文档的查询效率~~
 - [ ] **optimization**: build-optimizer 入口代码被当做 dead code 删掉了？
 - [ ] **optimization**: lazy-loading:
     - [x] conversation
@@ -93,13 +92,25 @@ type: optimization, feature, important, style
     - [ ] 结算节点的注册
     - [ ] 模型调用接口相同，用户并不知道是否使用了并行，但同时要暴露并行调用的参数
     - [ ] 并行结果/效率的查看，转到并行服务管理器
-- [ ] **optimization**: RESTful API
-- [ ] **optimization**: 数据库重新设计，尽量使数据库操作最小化
+- [x] **optimization**: RESTful API
+- [x] **optimization**: 数据库重新设计，尽量使数据库操作最小化
 - [ ] **optimization**: angular universe, 服务端渲染
 - [ ] **feature**: search
 - [ ] **optimization**: 后台数据库 patch 局部更新
 - [ ] 路由复用：比如列表翻页的场景，当我在第三页找到想要的item，点到详情页后重新后退，发现回退到了第一页。两种解决方法，1) 把分页参数放在url中；2) 使用路由复用 RouteReuseStrategy
-- [ ] datasets: 左侧栏分类筛选（观测数据集，模拟数据集，时间范围，空间范围），右侧预览和下载
+- [ ] datasets: 
+    - [ ] 左侧栏分类筛选（观测数据集，模拟数据集，时间范围，空间范围，支持的模型，时间频率，实验的名字，变量的名字），右侧预览和下载
+    - [x] 数据集的元数据描述：时间范围、空间范围、时间分辨率、空间分辨率、变量、维度
+- [ ] solution: 
+    - [ ] cmpObj 的配置项更加简洁明了
+    - [ ] model input 非常细致的对比
+    - [x] 把选择数据范围去掉。所有数据配置项都放在 task 的创建上
+    - [ ] 统计信息的显示：半年内的热度、收藏数、关注者
+- [ ] task: 
+    - [ ] 统计信息：任务进度、执行耗时统计
+    - [ ] 页面的层级结构设计
+- [ ] model:
+    - [ ] 调参，各种参数的详细暴露
 
 ## Architecture
 

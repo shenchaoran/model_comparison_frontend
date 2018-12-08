@@ -19,6 +19,7 @@ export class ListTemplateComponent extends OgmsBaseComponent implements OnInit, 
     list: any[];
     count: number;
 
+    @Input() public listAdaptor: Function = list => list;
     @Input() public service: any;
     @Input() public searchFilters: {
         q?: string,
@@ -113,7 +114,7 @@ export class ListTemplateComponent extends OgmsBaseComponent implements OnInit, 
             this._subscriptions.push(this.service.findAll(searchFilters).subscribe(res => {
                 this._loading = false;
                 if (!res.error) {
-                    this.list = res.data.docs;
+                    this.list = this.listAdaptor(res.data.docs);
                     this.count = res.data.count;
                 } else {
 

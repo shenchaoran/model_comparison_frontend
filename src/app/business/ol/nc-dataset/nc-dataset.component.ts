@@ -25,14 +25,20 @@ import { parseFromTimeZone, formatToTimeZone } from 'date-fns-timezone';
 export class NcDatasetComponent implements OnInit, AfterViewInit {
     _v;
     variables;
+    dimensions;
     selectedVariable;
     timeVariable;
+    startTime;
+    endTime;
+    timeResolution;
+    spatialResolution;
     selectedTime;
     showAnimation = false;
     timer;
     get selectedDate() { 
-        if(_.get(this, 'timeVariable.unit')) 
-            return this.ISOTime(this.selectedTime, this.timeVariable.unit); 
+        let timeUnit = _.get(this, 'timeVariable.unit')
+        if(timeUnit) 
+            return this.ISOTime(this.selectedTime, timeUnit); 
         else 
             return null;
     }
@@ -44,9 +50,36 @@ export class NcDatasetComponent implements OnInit, AfterViewInit {
             .get('schema$.variables')
             .filter(variable => !!variable.layerId)
             .value();
+        this.dimensions = _.chain(v)
+            .get('schema$.dimensions')
+            .value();
         this.selectedVariable = _.first(this.variables);
-        this.timeVariable = _.chain(v).get('schema$.variables').find(variable => variable.name === 'time').value();
+        let variables = _.get(v, 'schema$.variables'),
+            latVariable = _.find(variables, variable => variable.name === 'lat'),
+            longVariable = _.find(variables, variable => variable.name === 'long');
+        this.timeVariable = _.find(variables, variable => variable.name === 'time');
+
+        this.spatialResolution = `${latVariable.step} ° * ${longVariable.step} °`;
+
         this.selectedTime = _.get(this, 'timeVariable.start');
+        let timeUnit = _.get(this, 'timeVariable.unit'),
+            timeStep = _.get(this, 'timeVariable.step');
+        this.startTime = this.ISOTime(_.get(this, 'timeVariable.start'), timeUnit)
+        this.endTime = this.ISOTime(_.get(this, 'timeVariable.end'), timeUnit)
+        if(timeStep) {
+            if(_.startsWith(timeUnit, 'days since')) {
+                let yearStep = timeStep/365
+                if(yearStep%1 === 0) {
+                    this.timeResolution = yearStep + (yearStep>1? ' years': ' year')
+                }
+                else {
+                    this.timeResolution = timeStep + (timeStep>1? ' days': ' day')
+                }
+            }
+            else if(_.startsWith(timeUnit, 'hours since')) {
+                this.timeResolution = timeStep + (timeStep>1?' hours': ' hour');
+            }
+        }
         
         if(this.map) {
             this.updateMapSource();
