@@ -35,3 +35,7 @@
         border-bottom: 1px dashed #ccc;
     }
 }
+
+.jexcel > tbody > tr > td {
+    white-space: pre-wrap;
+}

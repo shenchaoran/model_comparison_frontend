@@ -35,6 +35,7 @@
                         "scripts": [
                             "node_modules/lodash/lodash.min.js",
                             "node_modules/jquery/dist/jquery.min.js",
+                            "node_modules/jexcel/dist/js/jquery.jexcel.js",
                             "src/assets/js/jquery-ui-1.12.1/jquery-ui.min.js",
                             "src/assets/js/grid-2.4.1/pqgrid.dev.js",
                             "src/assets/js/handsontable-pro-2.0.0/handsontable.full.js"

@@ -9,6 +9,7 @@ import {
     DirectivesModule,
 } from '@shared';
 import { OlModule } from '../ol';
+// import { HotTableModule } from '@handsontable-pro/angular';
 import { CmpSharedModule } from '../cmp-shared';
 import { ComparisonRoutingModule } from './index-routing.module';
 import { ConversationModule } from '../conversation';
@@ -28,6 +29,7 @@ import {
     MatListModule,
     MatTableModule,
     MatSnackBarModule,
+    MatStepperModule,
 } from '@angular/material';
 
 import { SolutionListComponent } from './solution-list/solution-list.component';
@@ -35,6 +37,7 @@ import { SolutionDetailComponent } from './solution-detail/solution-detail.compo
 import { CreateSlnComponent } from './create-sln/create-sln.component';
 import { CreateTaskComponent } from './create-task/create-task.component';
 import { CmpObjCfgComponent } from './cmp-obj-cfg/cmp-obj-cfg.component';
+import { CmpCfgComponent } from './cmp-cfg/cmp-cfg.component';
 
 const components = [
     SolutionListComponent,
@@ -42,7 +45,11 @@ const components = [
     CreateTaskComponent,
     CreateSlnComponent,
     CmpObjCfgComponent,
+    CmpCfgComponent,
 ];
+const exportComponents = [
+    CmpCfgComponent,
+]
 var entryComponents = [];
 const modules = [
     NgxSharedModule,
@@ -50,6 +57,7 @@ const modules = [
     MatProgressSpinnerModule,
     MatFormFieldModule,
     MatInputModule,
+    MatStepperModule,
     MatButtonModule,
     MatChipsModule,
     MatTabsModule,
@@ -71,12 +79,14 @@ const modules = [
     MatCascaderModule,
     MatTableModule,
     OlModule,
+    // HotTableModule.forRoot(),
 ];
 const services = [];
 @NgModule({
     imports: [...modules],
     declarations: [...components],
     entryComponents: [...entryComponents],
-    providers: [...services]
+    providers: [...services],
+    exports: [...exportComponents],
 })
 export class ComparisonModule { }

@@ -1,11 +1,11 @@
-import { Component, OnInit, HostListener, OnDestroy, ViewChild, ChangeDetectorRef, Renderer2, ElementRef, } from "@angular/core";
+import { Component, OnInit, AfterViewInit, HostListener, OnDestroy, ViewChild, ChangeDetectorRef, Renderer2, ElementRef, } from "@angular/core";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { DynamicTitleService } from "@core/services/dynamic-title.service";
-import { ReactiveFormsModule } from "@angular/forms";
+import { FormBuilder, Validators, FormGroup, FormArray, FormControl } from '@angular/forms';
 import * as uuidv1 from 'uuid/v1';
 import { ConversationService, SolutionService, UserService, MSService } from "@services";
-import { Simplemde } from 'ng2-simplemde';
 import { Solution, Task, Topic, MS, CmpMethod, CmpObj } from "@models";
+import { Simplemde } from 'ng2-simplemde';
 import { MatSnackBar, MatSelectionList } from '@angular/material';
 import { cloneDeep, isEqual, get, pull, findIndex, indexOf } from 'lodash';
 
@@ -18,7 +18,7 @@ import { cloneDeep, isEqual, get, pull, findIndex, indexOf } from 'lodash';
 export class SolutionDetailComponent implements OnInit {
     _editMode: 'READ' | 'WRITE' = 'READ';
     _ptMSEditMode: 'READ' | 'WRITE' = 'READ';
-    _cmpCfgMode: 'READ' | 'WRITE' = 'READ';
+    _cmpCfgMode: 'READ' | 'WRITE' = 'WRITE';
     _originCmpObjs: any[];
     _originPtMSIds: string[];
     _originTitle: string;
@@ -37,9 +37,11 @@ export class SolutionDetailComponent implements OnInit {
     tasks: Task[];              // { _id, meta, auth }
     attached_topics: Topic[];               // { _id, meta, auth }
     mss: MS[] | any[];          // { _id, meta, auth }, 所有的 ms
-    ptMSs: MS[];                // MS, 参与的 ms
     topicList: Topic[];         // { _id, meta, auth }[]
     cmpMethods: CmpMethod[];
+    ptMsFC;
+    cmpCfgFC;
+    cmpMethodsFC;
 
     get user() { return this.userService.user; }
     get users() { return this.conversationService.users; }
@@ -47,7 +49,11 @@ export class SolutionDetailComponent implements OnInit {
     get conversation() { return this.conversationService.conversation; }
     get includeUser() { return findIndex(get(this, 'solution.subscribed_uids'), v => v === this.user._id) !== -1; }
     get cmpObjs() { return this.solution.cmpObjs; }
-
+    get myPgGrid() { return $('#grid-table').pqGrid; }
+    get ptMSs() { return _.chain(this.mss).filter(ms => !!ms.selected).value(); }
+    get isPtMsFCInvalid() { return !this.ptMsFC.get('msIds').pristine && this.ptMsFC.get('msIds').invalid;}
+    get isCmpCfgInvalid() { return !this.cmpCfgFC.get('cmpCfg').pristine && this.cmpCfgFC.get('cmpCfg').invalid;}
+    
 
     constructor(
         public route: ActivatedRoute,
@@ -59,8 +65,19 @@ export class SolutionDetailComponent implements OnInit {
         public msService: MSService,
         private cdRef: ChangeDetectorRef,
         private renderer2: Renderer2,
-        public router: Router
-    ) { }
+        public router: Router,
+        public fb: FormBuilder,
+    ) {
+        this.ptMsFC = this.fb.group({
+            msIds: [[], [Validators.required]]
+        });
+        this.cmpCfgFC = this.fb.group({
+            cmpCfg: [[], [Validators.required]]
+        });
+        this.cmpMethodsFC = this.fb.group({
+            methods: [[], [Validators.required]]
+        });
+    }
 
     ngOnInit() {
         const solutionId = this.route.snapshot.paramMap.get('id');
@@ -71,9 +88,11 @@ export class SolutionDetailComponent implements OnInit {
                 this.attached_topics = res.data.attached_topics;
                 // this.topic = res.data.topic;
                 this.mss = res.data.mss;
-                this.ptMSs = res.data.ptMSs;
                 this.cmpMethods = res.data.cmpMethods;
                 this.topicList = res.data.topicList;
+
+                this.onParticipantsChange(this.mss[3])
+                this.onParticipantsChange(this.mss[4])
 
                 if (this.couldEdit && !this.solution.meta.wikiMD) {
                     this._editMode = 'WRITE';
@@ -112,8 +131,39 @@ export class SolutionDetailComponent implements OnInit {
         // ajax
     }
 
-    onParticipantsChange() {
-        console.log("msIDs:"+ JSON.stringify(this.solution.msIds));
+    onParticipantsChange(ms) {
+        ms.selected = !ms.selected;
+        let ptMSIds = _.chain(this.mss).filter(ms => !!ms.selected).map(ms => ms._id ).value();
+        this.ptMsFC.get('msIds').value = ptMSIds;
+        this.ptMsFC.get('msIds').updateValueAndValidity();
+    }
+
+    onCmpCfgChange(cmpObjs) {
+        this.solution.cmpObjs = cmpObjs;
+        this.cmpCfgFC.get('cmpCfg').value = cmpObjs;
+        this.cmpCfgFC.get('cmpCfg').updateValueAndValidity();
+    }
+
+    onCmpCfgValidChange(valid) {
+        if(!valid) {
+            this.cmpCfgFC.get('cmpCfg').markAsTouched();
+            this.cmpCfgFC.get('cmpCfg').markAsDirty();
+        }
+    }
+
+    onStepperNext(stepIndex) {
+        if(stepIndex === 0) {
+            this.ptMsFC.get('msIds').markAsTouched();
+            this.ptMsFC.get('msIds').markAsDirty();
+        }
+        else if(stepIndex === 1) {
+            this.cmpCfgFC.get('cmpCfg').markAsTouched();
+            this.cmpCfgFC.get('cmpCfg').markAsDirty();
+
+        }
+        else if(stepIndex === 2) {
+
+        }
     }
 
     fetchCmpMethods() {
@@ -160,27 +210,6 @@ export class SolutionDetailComponent implements OnInit {
                 }
             }
         });
-    }
-
-    onPtMSEditClick() {
-        this._ptMSEditMode = 'WRITE';
-        this._originPtMSIds = cloneDeep(this.solution.msIds);
-    }
-
-    onPtMSEditCancel() {
-        this._ptMSEditMode = 'READ';
-        this.solution.msIds = cloneDeep(this._originPtMSIds);
-    }
-
-    onPtMSEditSave() {
-        if (isEqual(this._originPtMSIds, this.solution.msIds))
-            return;
-        this.solutionService.updatePts(this.solution._id, this.solution.msIds).subscribe(res => {
-            if (!res.error) {
-                this.ptMSs = res.data.docs;
-                this._ptMSEditMode = 'READ';
-            }
-        })
     }
 
     onCmpCfgEditClick() {
