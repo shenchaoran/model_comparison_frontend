@@ -37,3 +37,6 @@ interface NodeModule {
 
 declare var _: any;
 declare var proj: any;
+declare var $: any;
+declare var jQuery: any;
+declare var Handsontable: any;

@@ -3,6 +3,10 @@ $fa-font-path: '~font-awesome/fonts';
 @import "~ng2-slim-loading-bar/style.css";
 @import "~ol/ol.css";
 @import "~octicons/index.scss";
+// @import '~handsontable-pro/dist/handsontable.full.css';
+@import "./assets/js/handsontable-pro-2.0.0/handsontable.full.css";
+// @import "./assets/js/jquery-ui-1.12.1/jquery-ui.min";
+@import "./assets/js/grid-2.4.1/pqgrid.dev.css";
 
 @import "./assets/css/my/global.scss";
 @import "./assets/css/my/scrollbar.scss";
