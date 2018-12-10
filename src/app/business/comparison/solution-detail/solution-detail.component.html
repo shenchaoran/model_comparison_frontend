@@ -21,8 +21,8 @@
                     </mat-form-field>
                 </span>
                 <div class='title-btn-group'>
-                    <button mat-button color='primary' (click)='onEditSave()'>Save</button>
-                    <button mat-button color='primary' (click)='onEditCancel()'>Cancel</button>
+                    <button mat-button color='primary' (click)='onEditSave()'><mat-icon inline>save</mat-icon>Save</button>
+                    <button mat-button color='accent' (click)='onEditCancel()'><mat-icon inline>undo</mat-icon>Cancel</button>
                 </div>
             </div>
             <div class='header-meta'>
@@ -37,7 +37,7 @@
             <div class='header-title read Subhead mt-0 mb-0'>
                 <h2 class='Subhead-heading'>{{solution.meta.name}}</h2>
                 <div class='title-btn-group'>
-                    <button mat-button color='primary' *ngIf='couldEdit' (click)='onEditClick()'>Edit</button>
+                    <button mat-button color='primary' *ngIf='couldEdit' (click)='onEditClick()'><mat-icon inline>edit</mat-icon>Edit</button>
                     <!-- <button mat-flat-button color='primary' *ngIf='couldEdit' [routerLink]='["../create"]'>New Topic</button> -->
                 </div>
             </div>
@@ -51,35 +51,9 @@
     </div>
 
     <div class='article'>
-        <mat-tab-group [selectedIndex]='1' (selectedIndexChange)='onTabChange($event)'>
-            <mat-tab label='Wiki'>
-                <div class='wiki-tab' *ngIf='_editMode === "WRITE"'>
-                    <simplemde [(ngModel)]='solution.meta.wikiMD' [options]='mdeOption'></simplemde>
-                    <!-- <div class='desc-btn-group'>
-                        <button mat-button color='primary' (click)='onEditCancel()'>Cancel</button>
-                        <button mat-button color='primary' (click)='onEditSave()'>Save</button>
-                    </div> -->
-                </div>
-                <div class='wiki-tab' *ngIf='_editMode === "READ"'>
-                    <div class='markdown-body' [innerHTML]='solution.meta.wikiHTML'></div>
-                    <!-- <div class='desc-btn-group'>
-                        <button mat-button color='primary' *ngIf='couldEdit' (click)='onEditClick()'>Edit</button>
-                    </div> -->
-                </div>
-            </mat-tab>
-
+        <mat-tab-group [selectedIndex]='0' (selectedIndexChange)='onTabChange($event)'>
             <mat-tab label='Configuration'>
-                <div *ngIf='couldEdit' class='my-3'>
-                    <ng-container *ngIf='_cmpCfgMode === "READ"'>
-                        <button mat-stroked-button color='primary' (click)='onCmpCfgEditClick()'>Edit</button>
-                    </ng-container>
-
-                    <ng-container *ngIf='_cmpCfgMode === "WRITE"'>
-                        <button mat-stroked-button color='primary' (click)='onCmpCfgEditCancel()' class='mr-3'>Cancel</button>
-                        <button mat-stroked-button color='primary' (click)='onCmpCfgEditSave()'>Save</button>
-                    </ng-container>
-                </div>
-                <mat-vertical-stepper *ngIf='_cmpCfgMode === "WRITE"' linear='true' #stepper [selectedIndex]='1'>
+                <mat-vertical-stepper *ngIf='_editMode === "WRITE"' linear='true' #stepper [selectedIndex]='0'>
                     <mat-step label='Select participant model' [stepControl]='ptMsFC'>
                         <div class='my-2'>
                             <mat-chip-list multiple>
@@ -92,10 +66,9 @@
                             </div>
                         </div>
                     </mat-step>
-                    <mat-step label='Comparison data configuration' [stepControl]='cmpCfgFC'>
-                        <ogms-cmp-cfg [mss]='mss | filter: "selected"' [mode]='"WRITE"' 
-                            (valueChange)='onCmpCfgChange($event)'
-                            (validChange)='onCmpCfgValidChange($event)'></ogms-cmp-cfg>
+                    <mat-step label='Comparison data configuration' [stepControl]='cmpObjsFG'>
+                        <ogms-cmp-cfg [mss]='mss | filter: "selected"' [cmpObjs]='solution.cmpObjs' [mode]='"WRITE"' 
+                            (validChange)='onCmpCfgChange($event)'></ogms-cmp-cfg>
                         <p class='mt-2 ml-2'><mat-error *ngIf='isCmpCfgInvalid'>Invalid comparison feature configuration.</mat-error></p>
                         
                         <div class='mt-3'>
@@ -104,7 +77,8 @@
                         </div>
                     </mat-step>
                     <mat-step label='Select comparison methods' [stepControl]='cmpMethodsFC'>
-                        
+                        <ogms-masonry-methods-list [couldSelect]='true' (validChange)='onMethodsChange($event)'></ogms-masonry-methods-list>
+                        <p class='mt-2 ml-2'><mat-error *ngIf='isCmpMethodsInvalid'>Please select at least one model to compare.</mat-error></p>
                         
                         <div class='mt-3'>
                             <button mat-button matStepperPrevious>Previous</button>
@@ -114,46 +88,40 @@
                     <mat-step label='Submit'>
                         <div class='mt-2'>
                             <button mat-button matStepperPrevious>Previous</button>
-                            <button mat-button color='primary'>Save</button>
+                            <button mat-button color='primary' (click)='onEditSave()'><mat-icon inline>save</mat-icon>Save</button>
+                            <button mat-button color='accent' (click)='onEditCancel()'><mat-icon inline>undo</mat-icon>Cancel</button>
                         </div>
                     </mat-step>
                 </mat-vertical-stepper>
 
-                <ng-container *ngIf='_cmpCfgMode === "READ"'>
-                    <h4 class='mb-2'>Participant models: </h4>
-                    <mat-chip-list multiple class='mb-2'>
-                        <mat-chip *ngFor='let ms of mss | filter: "selected"' color='accent' selected>{{ms.MDL.meta.name}}</mat-chip>
-                    </mat-chip-list>
+                <ng-container *ngIf='_editMode === "READ"'>
+                    <p class='f3-light my-2'>Participant models: </p>
+                    <div *ngIf='ptMSs?.length else noPtMsTemp' class='my-2' style='width: 95%;'>
+                        <mat-chip-list multiple class='my-2'>
+                            <mat-chip *ngFor='let ms of ptMSs' color='accent' selected>{{ms.MDL.meta.name}}</mat-chip>
+                        </mat-chip-list>
+                    </div>
+                    <ng-template #noPtMsTemp>
+                        <i>No models participant, please select one!</i>
+                    </ng-template>
 
-                    <h4 class='mb-2'>Comparison data configuration:</h4>
-                    <div id='grid-table' #gridTable></div>
+                    <p class='f3-light my-2'>Comparison data configuration:</p>
+                    <ogms-cmp-cfg class='my-2' [cmpObjs]='solution.cmpObjs' [mode]='"READ"'></ogms-cmp-cfg>
 
-                    <h4 class='mb-2'>Comparison methods:</h4>
+                    <p class='f3-light my-2'>Comparison methods:</p>
+                    <ogms-masonry-methods-list [couldSelect]='false' [methods]='methods'></ogms-masonry-methods-list>
+                    
                 </ng-container>
             </mat-tab>
 
-            <mat-tab label='Data configuration'>
-
-                <!-- <ng-container *ngIf='cmpObjs.length === 0 else cmpObjTemp'>
-                    <p><i>No comparison configuration.</i></p>
-                </ng-container> -->
-
-                <!-- TODO 改为二维矩阵的形式展示，简洁明了 -->
-                <!-- <ng-template #cmpObjTemp>
-                    <div *ngFor='let cmpObj of cmpObjs; let i=index;' class='cmpObj-container'>
-                        <ogms-cmp-obj-cfg [mode]='_cmpCfgMode' [methods]='cmpMethods' [participants]='ptMSs'
-                            [(ngModel)]='cmpObj'></ogms-cmp-obj-cfg>
-                        <span *ngIf='_cmpCfgMode === "WRITE"' class='close-tag' (click)='removeCmpObj(i)'>
-                            <mat-icon>cancel</mat-icon>
-                        </span>
-                    </div>
-                </ng-template> -->
-
-                <!-- <button *ngIf='_cmpCfgMode === "WRITE"' mat-stroked-button color='primary' class='col-12 my-3' (click)='addCmpObj()'
-                    [disabled]='ptMSs.length === 0' title="Create a new comparison solution">
-                    <mat-icon>add</mat-icon>
-                    <span>Add comparison feature</span>
-                </button> -->
+            
+            <mat-tab label='Wiki'>
+                <div class='wiki-tab' *ngIf='_editMode === "WRITE"'>
+                    <simplemde [(ngModel)]='solution.meta.wikiMD' [options]='mdeOption'></simplemde>
+                </div>
+                <div class='wiki-tab' *ngIf='_editMode === "READ"'>
+                    <div class='markdown-body' [innerHTML]='solution.meta.wikiHTML'></div>
+                </div>
             </mat-tab>
 
             <mat-tab label='Conversation'>
@@ -222,7 +190,7 @@
                         <i>No related comparison task.</i>
                     </ng-template>
                     <button mat-stroked-button class='create-btn' (click)="createTask()" [routerLink]='["/comparison/solutions", solution._id, "invoke"]'>
-                        <mat-icon inline>add</mat-icon>&nbsp;<span>Create one</span>
+                        <mat-icon inline>add</mat-icon><span>Create one</span>
                     </button>
                 </div>
             </ogms-sidebar-section>
@@ -270,10 +238,10 @@
                 <div class='body notification'>
                     <button mat-stroked-button (click)='onSubscribeToggle()'>
                         <ng-container *ngIf='includeUser else noticeTemp'>
-                            <mat-icon inline>notifications_off</mat-icon>&nbsp;<span>Unsubscribe</span>
+                            <mat-icon inline>notifications_off</mat-icon><span>Unsubscribe</span>
                         </ng-container>
                         <ng-template #noticeTemp>
-                            <mat-icon inline>notifications</mat-icon>&nbsp;<span>Subscribe</span>
+                            <mat-icon inline>notifications</mat-icon><span>Subscribe</span>
                         </ng-template>
                     </button>
                 </div>

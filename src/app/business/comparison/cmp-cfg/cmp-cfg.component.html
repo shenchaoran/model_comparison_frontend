@@ -1,1 +1,7 @@
-<div id='grid-table' class='my-3 mx-1' #gridTable></div>
+<div *ngIf='data.length === 0 else temp'>
+    <i>No comparison data configurations, please edit and configure!</i>
+</div>
+<ng-template #temp>
+    <div id='grid-table' class='my-3' #gridTable></div>
+</ng-template>
+

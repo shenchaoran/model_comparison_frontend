@@ -7,7 +7,7 @@
     .card {
         box-sizing: border-box;
         padding: 8px;
-        margin-bottom: 20px;
+        margin-bottom: 8px;
 
         @mixin reactive($columnNum) {
             flex: 0 0 calc(100%/#{$columnNum});
@@ -35,7 +35,7 @@
                 box-shadow: 0 1px 15px rgba(27, 31, 35, 0.3) !important;
                 transform: scale(1.02);
             }
-            .mat-card-header {
+            .card-header {
                 margin-top: 10px;
             }
             .mat-card-actions {
@@ -51,3 +51,7 @@
         }
     }
 }
+
+// .mat-card-header-text {
+//     width: 100% !important;
+// }

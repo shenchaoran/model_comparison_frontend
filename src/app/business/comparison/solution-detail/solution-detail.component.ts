@@ -17,13 +17,7 @@ import { cloneDeep, isEqual, get, pull, findIndex, indexOf } from 'lodash';
 })
 export class SolutionDetailComponent implements OnInit {
     _editMode: 'READ' | 'WRITE' = 'READ';
-    _ptMSEditMode: 'READ' | 'WRITE' = 'READ';
-    _cmpCfgMode: 'READ' | 'WRITE' = 'WRITE';
-    _originCmpObjs: any[];
-    _originPtMSIds: string[];
-    _originTitle: string;
-    _originWiki: string;
-    _originDesc: string;
+    _oldSolution: Solution;
     hadTriggeredConversation: boolean = false;
 
     topicFilter;
@@ -33,14 +27,14 @@ export class SolutionDetailComponent implements OnInit {
     @ViewChild(MatSelectionList) ptSelect: MatSelectionList;
     @ViewChild('menu') menuRef: ElementRef;
 
+    cmpMethods: CmpMethod[];
     solution: Solution;
     tasks: Task[];              // { _id, meta, auth }
     attached_topics: Topic[];               // { _id, meta, auth }
     mss: MS[] | any[];          // { _id, meta, auth }, 所有的 ms
     topicList: Topic[];         // { _id, meta, auth }[]
-    cmpMethods: CmpMethod[];
     ptMsFC;
-    cmpCfgFC;
+    cmpObjsFG;
     cmpMethodsFC;
 
     get user() { return this.userService.user; }
@@ -52,8 +46,17 @@ export class SolutionDetailComponent implements OnInit {
     get myPgGrid() { return $('#grid-table').pqGrid; }
     get ptMSs() { return _.chain(this.mss).filter(ms => !!ms.selected).value(); }
     get isPtMsFCInvalid() { return !this.ptMsFC.get('msIds').pristine && this.ptMsFC.get('msIds').invalid;}
-    get isCmpCfgInvalid() { return !this.cmpCfgFC.get('cmpCfg').pristine && this.cmpCfgFC.get('cmpCfg').invalid;}
-    
+    get isCmpCfgInvalid() { return !this.cmpObjsFG.get('cmpCfg').pristine && this.cmpObjsFG.get('cmpCfg').invalid;}
+    get isCmpMethodsInvalid() { return !this.cmpMethodsFC.get('methods').pristine && this.cmpMethodsFC.get('methods').invalid;}
+    get methods() {
+        let selectedMethods = _.get(this, 'solution.cmpObjs[0].methods');
+        if(selectedMethods)
+            return _.filter(this.cmpMethods, method => {
+                return _.find(selectedMethods, selected => selected.id === method._id)
+            })
+        else 
+            return []
+    }
 
     constructor(
         public route: ActivatedRoute,
@@ -71,7 +74,7 @@ export class SolutionDetailComponent implements OnInit {
         this.ptMsFC = this.fb.group({
             msIds: [[], [Validators.required]]
         });
-        this.cmpCfgFC = this.fb.group({
+        this.cmpObjsFG = this.fb.group({
             cmpCfg: [[], [Validators.required]]
         });
         this.cmpMethodsFC = this.fb.group({
@@ -86,21 +89,121 @@ export class SolutionDetailComponent implements OnInit {
                 this.solution = res.data.solution;
                 this.tasks = res.data.tasks;
                 this.attached_topics = res.data.attached_topics;
+                this.cmpMethods = res.data.cmpMethods;
                 // this.topic = res.data.topic;
                 this.mss = res.data.mss;
-                this.cmpMethods = res.data.cmpMethods;
                 this.topicList = res.data.topicList;
 
-                this.onParticipantsChange(this.mss[3])
-                this.onParticipantsChange(this.mss[4])
+                _.map(this.mss, ms => {
+                    if(_.find(this.solution.msIds, id => id === ms._id)) {
+                        ms.selected = true
+                    }
+                })
 
-                if (this.couldEdit && !this.solution.meta.wikiMD) {
-                    this._editMode = 'WRITE';
-                    this.snackBar.open('please improve the wiki documentation as soon as possible!', null, {
-                        duration: 2000,
-                        verticalPosition: 'top',
-                        horizontalPosition: 'end',
-                    });
+                // this.onParticipantsChange(this.mss[3])
+                // this.onParticipantsChange(this.mss[4])
+
+                // if (this.couldEdit && !this.solution.meta.wikiMD) {
+                //     this._editMode = 'WRITE';
+                //     this.snackBar.open('please improve the wiki documentation as soon as possible!', null, {
+                //         duration: 2000,
+                //         verticalPosition: 'top',
+                //         horizontalPosition: 'end',
+                //     });
+                // }
+            }
+        });
+    }
+
+    onParticipantsChange(ms) {
+        ms.selected = !ms.selected;
+        let ptMSIds = _.chain(this.mss).filter(ms => !!ms.selected).map(ms => ms._id ).value();
+        this.ptMsFC.get('msIds').value = ptMSIds;
+        this.ptMsFC.get('msIds').updateValueAndValidity();
+        this.solution.cmpObjs = [];
+    }
+
+    onCmpCfgChange(cmpObjsFC) {
+        if(cmpObjsFC.valid) {
+            this.cmpObjsFG.get('cmpCfg').value = cmpObjsFC.value;
+            this.cmpObjsFG.get('cmpCfg').updateValueAndValidity();
+        }
+        else {
+            let cmpCfgFC = this.cmpObjsFG.get('cmpCfg');
+            cmpCfgFC.markAsTouched();
+            cmpCfgFC.markAsDirty();
+            cmpCfgFC.setErrors({
+                invalid: true
+            });
+        }
+    }
+
+    onMethodsChange(cmpMethodsFC) {
+        if(cmpMethodsFC.valid) {
+            this.cmpMethodsFC.get('methods').value = cmpMethodsFC.value;
+            this.cmpMethodsFC.get('methods').updateValueAndValidity();
+        }
+        else {
+            let cmpMethodsFC = this.cmpMethodsFC.get('methods');
+            cmpMethodsFC.markAsTouched();
+            cmpMethodsFC.markAsDirty();
+            cmpMethodsFC.setErrors({
+                invalid: true
+            });
+        }
+    }
+
+    onStepperNext(stepIndex) {
+        if(stepIndex === 0) {
+            this.ptMsFC.get('msIds').markAsTouched();
+            this.ptMsFC.get('msIds').markAsDirty();
+        }
+        else if(stepIndex === 1) {
+            this.cmpObjsFG.get('cmpCfg').markAsTouched();
+            this.cmpObjsFG.get('cmpCfg').markAsDirty();
+        }
+        else if(stepIndex === 2) {
+            this.cmpMethodsFC.get('methods').markAsTouched();
+            this.cmpMethodsFC.get('methods').markAsDirty();
+        }
+    }
+
+    onEditClick() {
+        this._editMode = 'WRITE';
+        this._oldSolution = _.cloneDeep(this.solution)
+    }
+
+    onEditSave() {
+        this.solution.meta.wikiHTML = this.simpleMDE.simplemde.markdown(this.solution.meta.wikiMD || '');
+        this.solution.msIds = this.ptMsFC.get('msIds').value;
+        this.solution.cmpObjs = this.cmpObjsFG.get('cmpCfg').value;
+        let methods = this.cmpMethodsFC.get('methods').value
+        _.map(this.solution.cmpObjs, cmpObj => {
+            cmpObj.methods = methods.map(method => {
+                return {
+                    id: method._id,
+                    name: method.meta.name,
+                }
+            })
+        })
+        this.solutionService.patch(this.solution._id, { solution: this.solution }).subscribe(res => { this._editMode = 'READ'; });
+    }
+
+    onEditCancel() {
+        this.solution = this._oldSolution;
+        this._editMode = 'READ';
+    }
+
+    onSubscribeToggle() {
+        let ac = this.includeUser ? 'unsubscribe' : 'subscribe';
+        this.userService.toggleSubscribe('solution', ac, this.solution._id).subscribe(res => {
+            if (!res.error) {
+                let i = this.solution.subscribed_uids.findIndex(v => v === this.user._id);
+                if (ac === 'subscribe') {
+                    i === -1 && this.solution.subscribed_uids.push(this.user._id);
+                }
+                else if (ac === 'unsubscribe') {
+                    i !== -1 && this.solution.subscribed_uids.splice(i, 1);
                 }
             }
         });
@@ -131,114 +234,8 @@ export class SolutionDetailComponent implements OnInit {
         // ajax
     }
 
-    onParticipantsChange(ms) {
-        ms.selected = !ms.selected;
-        let ptMSIds = _.chain(this.mss).filter(ms => !!ms.selected).map(ms => ms._id ).value();
-        this.ptMsFC.get('msIds').value = ptMSIds;
-        this.ptMsFC.get('msIds').updateValueAndValidity();
-    }
-
-    onCmpCfgChange(cmpObjs) {
-        this.solution.cmpObjs = cmpObjs;
-        this.cmpCfgFC.get('cmpCfg').value = cmpObjs;
-        this.cmpCfgFC.get('cmpCfg').updateValueAndValidity();
-    }
-
-    onCmpCfgValidChange(valid) {
-        if(!valid) {
-            this.cmpCfgFC.get('cmpCfg').markAsTouched();
-            this.cmpCfgFC.get('cmpCfg').markAsDirty();
-        }
-    }
-
-    onStepperNext(stepIndex) {
-        if(stepIndex === 0) {
-            this.ptMsFC.get('msIds').markAsTouched();
-            this.ptMsFC.get('msIds').markAsDirty();
-        }
-        else if(stepIndex === 1) {
-            this.cmpCfgFC.get('cmpCfg').markAsTouched();
-            this.cmpCfgFC.get('cmpCfg').markAsDirty();
-
-        }
-        else if(stepIndex === 2) {
-
-        }
-    }
-
-    fetchCmpMethods() {
-
-    }
-
-    addCmpObj() {
-        this.solution.cmpObjs.push(new CmpObj());
-    }
-
-    removeCmpObj(i) {
-        this.solution.cmpObjs.splice(i, 1);
-    }
-
-    onEditClick() {
-        this._editMode = 'WRITE';
-        this._originDesc = this.solution.meta.desc;
-        this._originWiki = this.solution.meta.wikiMD;
-        this._originTitle = this.solution.meta.name;
-    }
-
-    onEditSave() {
-        this.solution.meta.wikiHTML = this.simpleMDE.simplemde.markdown(this.solution.meta.wikiMD || '');
-        this.solutionService.patch(this.solution._id, { solution: this.solution }).subscribe(res => { this._editMode = 'READ'; });
-    }
-
-    onEditCancel() {
-        this.solution.meta.wikiMD = this._originWiki;
-        this.solution.meta.desc = this._originDesc;
-        this.solution.meta.name = this._originTitle;
-        this._editMode = 'READ';
-    }
-
-    onSubscribeToggle() {
-        let ac = this.includeUser ? 'unsubscribe' : 'subscribe';
-        this.userService.toggleSubscribe('solution', ac, this.solution._id).subscribe(res => {
-            if (!res.error) {
-                let i = this.solution.subscribed_uids.findIndex(v => v === this.user._id);
-                if (ac === 'subscribe') {
-                    i === -1 && this.solution.subscribed_uids.push(this.user._id);
-                }
-                else if (ac === 'unsubscribe') {
-                    i !== -1 && this.solution.subscribed_uids.splice(i, 1);
-                }
-            }
-        });
-    }
-
-    onCmpCfgEditClick() {
-        this._cmpCfgMode = 'WRITE';
-        this._originCmpObjs = cloneDeep(this.solution.cmpObjs);
-    }
-
-    // onCmpCfgChange(cmpCfg) {
-    //     console.log(this.cmpObjs === cmpCfg, cmpCfg, this.cmpObjs);   
-    // }
-
-    onCmpCfgEditSave() {
-        this.solutionService.patch(this.solution._id, {
-            ac: 'updateCmpObjs',
-            solution: this.solution
-        }).subscribe(res => {
-            if (!res.error) {
-                this._cmpCfgMode = 'READ';
-            }
-        })
-    }
-
-    onCmpCfgEditCancel() {
-        this._cmpCfgMode = 'READ';
-        this.solution.cmpObjs = this._originCmpObjs;
-    }
-
     onTabChange(index) {
-        if (index === 3 && !this.hadTriggeredConversation) {
+        if (index === 2 && !this.hadTriggeredConversation) {
             this.conversationService.findOneByWhere({
                 pid: this.solution._id
             }).subscribe(res => {

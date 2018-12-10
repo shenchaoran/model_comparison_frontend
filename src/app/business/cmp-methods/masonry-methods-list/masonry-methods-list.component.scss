@@ -1,0 +1,27 @@
+@import "@material/image-list/mdc-image-list";
+
+.my-masonry-image-list {
+    @media (max-width: 979px) {
+        @include mdc-image-list-masonry-columns(2);
+    }
+
+    @media (min-width: 980px) {
+        @include mdc-image-list-masonry-columns(3);
+    }
+
+    @media (min-width: 1200px) {
+        @include mdc-image-list-masonry-columns(3);
+    }
+
+    @media (min-width: 1600px) {
+        @include mdc-image-list-masonry-columns(4);
+    }
+    li {
+        border-radius: 5px;
+        border: 1px solid #e8e8e8;
+::ng-deep .mat-checkbox .mat-checkbox-frame {
+    border-color: rgba(255, 255, 255, 0.75);
+}
+    }
+}
+

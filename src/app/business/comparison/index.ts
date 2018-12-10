@@ -15,6 +15,7 @@ import { ComparisonRoutingModule } from './index-routing.module';
 import { ConversationModule } from '../conversation';
 import { SimplemdeModule, SIMPLEMDE_CONFIG } from 'ng2-simplemde';
 import { MatCascaderModule } from '@shared/cascader';
+import { CmpMethodsModule } from '../cmp-methods';
 import {
     MatProgressSpinnerModule,
     MatFormFieldModule,
@@ -79,6 +80,7 @@ const modules = [
     MatCascaderModule,
     MatTableModule,
     OlModule,
+    CmpMethodsModule,
     // HotTableModule.forRoot(),
 ];
 const services = [];

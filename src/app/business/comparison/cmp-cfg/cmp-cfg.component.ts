@@ -15,53 +15,65 @@ export class CmpCfgComponent implements OnInit, AfterViewInit {
     @Input() cmpObjs: CmpObj[];
     @Input() mode: 'WRITE' | 'READ' = 'WRITE';
     @Input() mss: MS[];
-    @Output() valueChange = new EventEmitter<any>();
-    @Output() validChange = new EventEmitter<boolean>();
+    @Output() validChange = new EventEmitter<{
+        value?: any,
+        valid: boolean
+    }>();
+    rowIndexColWidth = 30;
+    msColWidth = 100;
+    featureNameColWidth = 70;
+    featureDescColWidth = 100;
+    colHeaders = ['Name', 'Description'];
+    colWidths = [this.featureNameColWidth, this.featureDescColWidth];
+    data = [['', '']];
+    nestedHeaders = `
+        <td class='jexcel_label' width='${this.rowIndexColWidth}'></td>
+        <td class='jexcel_label' width='${this.featureNameColWidth}'></td>
+        <td class='jexcel_label' width='${this.featureDescColWidth}'></td>
+    `;
+    columns: any[] = [
+        {
+            type: 'text',
+        },
+        {
+            type: 'text',
+        }
+    ];
 
     @ViewChild('gridTable') gridTableRef: ElementRef;
     readModeData: any[];
+    get hasNoCmpCfg() { 
+        return this.mode === "READ" && (!this.cmpObjs || this.cmpObjs.length === 0);
+    }
 
     constructor() { }
 
     ngOnInit() {
-        if(this.mode === 'READ') {
-            this.readModeData = this.cmpObjs.map(cmpObj => {
-                let row = [cmpObj.name, cmpObj.desc]
+        this.data = [];
+        this.cmpObjs.map((cmpObj, i) => {
+            if(i === 0 && this.mode === 'READ') {
                 cmpObj.dataRefers.map(dataRefer => {
-                    row.push(dataRefer.eventName, dataRefer.field)
+                    this.nestedHeaders += `<td colspan='2' width='${this.msColWidth*2}' align='center'>${dataRefer.msName}</td>`;
+                    this.columns.push({type: 'text'}, {type: 'text'});
+                    this.colWidths.push(this.msColWidth, this.msColWidth);
+                    this.colHeaders.push(`Output`, `Variable`);
                 })
-                return row;
+            }
+            let row = [cmpObj.name, cmpObj.desc]
+            cmpObj.dataRefers.map(dataRefer => {
+                row.push(dataRefer.eventName, dataRefer.field)
             })
-        }
-    }
-
-    ngAfterViewInit() {
-        setTimeout(() => {
-            let rowIndexColWidth = 30,
-                msColWidth = 100,
-                featureNameColWidth = 70,
-                featureDescColWidth = 100,
-                colHeaders = ['Name', 'Description'],
-                colWidths = [featureNameColWidth, featureDescColWidth],
-                data = [['', '']],
-                nestedHeaders = `
-                <td class='jexcel_label' width='${rowIndexColWidth}'></td>
-                <td class='jexcel_label' width='${featureNameColWidth}'></td>
-                <td class='jexcel_label' width='${featureDescColWidth}'></td>
-                `,
-                columns: any[] = [
-                    {
-                        type: 'text',
-                    },
-                    {
-                        type: 'text',
-                    }
-                ]
+            this.data.push(row);
+        })
+        if(this.mode === 'WRITE') {
+            // if(this.data.length === 0)
+            //     this.data.push(['', '']);
             this.mss.forEach((ms, i) => {
-                data[0].push('', '');
-                colHeaders.push(`Output`, `Variable`);
-                colWidths.push(msColWidth, msColWidth);
-                columns.push(
+                // if(this.data.length === 1)
+                //     this.data[0].push('', '');
+                this.colHeaders.push(`Output`, `Variable`);
+                this.colWidths.push(this.msColWidth, this.msColWidth);
+                this.columns.push(
                     {
                         type: 'dropdown',
                         source: ms.MDL.IO.outputs.map((output, i) => {
@@ -82,7 +94,7 @@ export class CmpCfgComponent implements OnInit, AfterViewInit {
                                     });
                                 }
                                 else if(schema.structure.type === 'table') {
-                                    schema.structure.columns.map((column, i) => {
+                                    schema.structure.this.columns.map((column, i) => {
                                         source.add(column.id)
                                     })
                                 }
@@ -125,13 +137,22 @@ export class CmpCfgComponent implements OnInit, AfterViewInit {
                         }
                     }
                 );
-                nestedHeaders += `<td colspan='2' width='${msColWidth*2}' align='center'>${ms.MDL.meta.name}</td>`;
+                this.nestedHeaders += `<td colspan='2' width='${this.msColWidth*2}' align='center'>${ms.MDL.meta.name}</td>`;
             });
+        }
+    }
+
+    ngAfterViewInit() {
+        if(this.hasNoCmpCfg)
+            return ;
+        setTimeout(() => {
             let excelOpt = {
-                colHeaders: colHeaders,
-                colWidths: colWidths,
-                columns: columns,
-                data: this.mode === 'WRITE'? data: this.readModeData,
+                colHeaders: this.colHeaders,
+                colWidths: this.colWidths,
+                columns: this.columns,
+                allowDeleteColumn: false,
+                allowDeleteRow: this.mode === 'WRITE'? true: false,
+                data: this.data,
                 minSpareRows: this.mode === 'WRITE'? 1: 0,
                 editable: this.mode === 'WRITE'? true: false,
                 onchange: (instance, cell, value) => {
@@ -148,13 +169,10 @@ export class CmpCfgComponent implements OnInit, AfterViewInit {
                 },
             };
             $(this.gridTableRef.nativeElement).jexcel(excelOpt);
-            $(this.gridTableRef.nativeElement).find('thead').before(`
-                <thead class='jexcel_label'>
-                    <tr>
-                        ${nestedHeaders}
-                    </tr>
-                </thead>
-            `);
+            $(this.gridTableRef.nativeElement).find('thead').before(`<thead class='jexcel_label'><tr>${this.nestedHeaders}</tr></thead>`);
+            
+            let table = $(this.gridTableRef.nativeElement).jexcel('getData', false);
+            this.validate(table);
         }, 10);
     }
 
@@ -194,148 +212,17 @@ export class CmpCfgComponent implements OnInit, AfterViewInit {
                 } as any)
             })
             if(table.length) {
-                this.valueChange.emit(this.cmpObjs);
+                this.validChange.emit({
+                    valid: true,
+                    value: this.cmpObjs,
+                });
             }
             else {
-                this.validChange.emit(false);
+                this.validChange.emit({valid: false});
             }
         }
         else {
-            this.validChange.emit(false);
+            this.validChange.emit({valid: false});
         }
     }
-
-    buildTable() {
-// this.buildTable();
-            // let preservedData = [['', '']],
-            //     colHeaders = ['name', 'desc'],
-            //     columns: any[] = [
-            //         {
-            //             data: 0,
-            //             type: 'text',
-            //             width: 70,
-            //         },
-            //         {
-            //             data: 1,
-            //             type: 'text',
-            //             width: 100,
-            //         }
-            //     ]
-            // this.mss.forEach((ms, i) => {
-            //     preservedData[0].push('', '');
-            //     colHeaders.push(`${ms.MDL.meta.name}-output`, `${ms.MDL.meta.name}-variable`);
-            //     columns.push(
-            //         {
-            //             data: i*2 + 1,
-            //             type: 'text',
-            //             width: 70,
-            //         },
-            //         {
-            //             data: i*2 + 2,
-            //             type: 'text',
-            //             width: 70,
-            //         }
-            //     )
-            // });
-            // this.hotTable = new Handsontable(this.gridTableRef.nativeElement, {
-            //     rowHeaders: true,
-            //     width: '100%',
-            //     autoWrapRow: true,
-            //     autoRowSize: true,
-            //     wordWrap: true,
-            //     allowHtml: true,
-            //     height: 487,
-            //     minSpareRows: 1,
-            //     manualRowResize: true,
-            //     manualColumnResize: true,
-            //     manualRowMove: true,
-            //     manualColumnMove: true,
-            //     nestedHeaders: (() => {
-            //         let cols: any[] = [
-            //             ['Comparison feature', 'Description'],
-            //             ['', '']
-            //         ];
-            //         this.mss.forEach((ms, i) => {
-            //             cols[0].push({ label: ms.MDL.meta.name, colspan: 2});
-            //             cols[1].push('Output', 'Variable')
-            //         });
-            //         return cols;
-            //     })(),
-            //     colHeaders: colHeaders,
-            //     data: preservedData,
-            //     columns: columns,
-            // });
-            // const plugin = this.hotTable.getPlugin('autoRowSize');
-            // console.log('plugin.isEnabled: ', plugin.isEnabled())
-
-        // let self = this;
-        // let option = {
-        //     height: 'flex',
-        //     width: 'flex',
-        //     // fixedRowsTop: 1,
-        //     // minSpareRows: 1,
-        //     showTop: false,
-        //     showHeader: true,
-        //     stripeRows: true,
-        //     columnBorders: true,
-        //     rowBorders: true,
-        //     resizable: true,
-        //     numberCell: { show: true },
-        //     dataModel: [],
-        //     editable: this.mode === 'WRITE' ? true : false,
-        //     colModel: function () {
-        //         let cols = [
-        //             {
-        //                 title: 'Comparison feature',
-        //                 dataType: 'string',
-        //                 dataindx: 'name',
-        //                 colModel: []
-        //             },
-        //             {
-        //                 title: 'Description',
-        //                 dataType: 'string',
-        //                 dataindx: 'desc',
-        //                 colModel: []
-        //             },
-        //         ];
-        //         let msCols = this.ptMSs.map((ms, i) => {
-        //             return {
-        //                 title: ms.MDL.meta.name,
-        //                 colModel: [
-        //                     {
-        //                         title: 'Output data',
-        //                         editor: {
-        //                             type: 'select',
-        //                             options: ms.MDL.IO.outputs,
-        //                             labelIndx: 'name',
-        //                             valueIndx: 'id',
-        //                         }
-        //                     },
-        //                     {
-        //                         title: 'Output variable',
-        //                         editor: {
-        //                             type: 'select',
-        //                             options: function (ui) {
-        //                                 let rowData = ui.rowData,
-        //                                     colIndx = ui.column.leftPos,
-        //                                     rowIndx = $('#grid-table').pqGrid('getRowIndx', { rowData: rowData }),
-        //                                     prevCell = $('#grid-table').pqGrid('getCell', {
-        //                                         rowIndx: rowIndx,
-        //                                         colIndx: colIndx - 1,
-        //                                     });
-        //                                 prevCell;
-        //                                 return []
-        //                             }
-        //                         }
-        //                     }
-        //                 ]
-        //             }
-        //         })
-        //         return _.concat(cols, msCols)
-        //     },
-        // };
-        // this.gridTable = $('#grid-table').pqGrid(option)
-        // this.gridTable.pgGrid('option', 'dataModel.data', data)
-    }
-
 }

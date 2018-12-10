@@ -11,17 +11,24 @@ import {
     MatCardModule,
     MatRippleModule,
     MatButtonModule,
+    MatCheckboxModule,
  } from '@angular/material';
 import { SimplemdeModule, SIMPLEMDE_CONFIG } from 'ng2-simplemde';
 import { CmpMethodsRoutingModule } from './cmp-methods-routing.module';
 import { MethodDetailComponent } from './method-detail/method-detail.component';
 import { MethodListComponent } from './method-list/method-list.component';
+import { MasonryMethodsListComponent } from './masonry-methods-list/masonry-methods-list.component';
 
 const components = [
     MethodDetailComponent,
     MethodListComponent,
+    MasonryMethodsListComponent,
 ];
-var entryComponents = [];
+const entryComponents = [];
+const exportComponents = [
+    MethodListComponent,
+    MasonryMethodsListComponent,
+];
 const modules = [
     NgxSharedModule,
     HeaderMenuLayoutModule,
@@ -33,12 +40,14 @@ const modules = [
     CustomTemplateModule,
     MatRippleModule,
     MatButtonModule,
+    MatCheckboxModule,
 ];
 const services = [];
 @NgModule({
     imports: [...modules],
     declarations: [...components],
     entryComponents: [...entryComponents],
-    providers: [...services]
+    providers: [...services],
+    exports: [...exportComponents],
 })
 export class CmpMethodsModule { }

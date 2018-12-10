@@ -1,44 +1,69 @@
-// @import '~@angular/material/prebuilt-themes/indigo-pink.css';
+// @import '@angular/material/prebuilt-themes/indigo-pink.css';
 // @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 @import './varyable';
-@import '~@angular/material/_theming.scss';
+@import '@angular/material/theming.scss';
+@import "material-components-web/material-components-web";
 
 @include mat-core();
+// $app-primary: mat-palette($mat-blue);
+// $app-accent:  mat-palette($mat-amber);
+// $app-warn:    mat-palette($mat-red);
+// $app-success: mat-palette($mat-green);
+
 $app-primary: mat-palette($mat-blue);
-$app-accent:  mat-palette($mat-amber);
-$app-warn:    mat-palette($mat-red);
+$app-accent: mat-palette($mat-pink, A200, A100, A400);
+$app-warn: mat-palette($mat-red);
 $app-success: mat-palette($mat-green);
 
-$primary:     mat-color($app-primary);
-$accent:      mat-color($app-accent);
-$warn:        mat-color($app-warn);
-$success:     mat-color($app-success);
-     
+$primary: mat-color($app-primary);
+$accent: mat-color($app-accent);
+$warn: mat-color($app-warn);
+$success: mat-color($app-success);
 
-$app-theme:   mat-light-theme($app-primary, $app-accent, $app-warn);
+$foreground-base: mat-color(mat-palette($mat-blue));
+$ripple-color: rgba($foreground-base, $mat-ripple-color-opacity);
+$app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
+
+@mixin mat-ripple-theme($app-theme) {
+    .mat-ripple-element {
+        background-color: $ripple-color;
+    }
+}
+
 @include angular-material-theme($app-theme);
+
+.mat-button-toggle-checked {
+    background-color: $ripple-color;
+}
 
 div.ogms-primary {
     background: $primary;
 }
+
 div.ogms-accent {
     background: $accent;
 }
+
 div.ogms-warn {
     background: $warn;
 }
+
 div.ogms-success {
     background: $success;
 }
+
 span.ogms-primary {
     color: $primary;
 }
+
 span.ogms-accent {
     color: $accent;
 }
+
 span.ogms-warn {
     color: $warn;
 }
+
 span.ogms-success {
     color: $success;
 }
@@ -51,6 +76,7 @@ span.ogms-success {
 
 mat-button-toggle {
     display: flex;
+
     button {
         flex: 1;
     }
@@ -60,8 +86,22 @@ mat-icon {
     vertical-align: middle;
 }
 
+.mat-icon-inline {
+    margin-left: -4px;
+    margin-right: 8px;
+}
+
 
 .pop-menu-item.selected {
     font-weight: 600;
     background: rgba(0, 0, 0, 0.04)
+}
+
+.cmp-method-card-header {
+    margin-top: 8px;
+
+    >div {
+        // width: 100% !important;
+        flex: 1 !important;
+    }
 }
