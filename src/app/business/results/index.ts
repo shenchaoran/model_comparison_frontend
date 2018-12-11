@@ -19,6 +19,7 @@ import {
     MatSliderModule,
     MatCheckboxModule,
     MatListModule,
+    MatSlideToggleModule,
 } from '@angular/material';
 import { OlModule } from '../ol';
 import { ConversationModule } from '../conversation';
@@ -29,6 +30,7 @@ import { CalcuDetailComponent } from './calcu-detail/calcu-detail.component';
 import { CmpDetailComponent } from './cmp-detail/cmp-detail.component';
 import { CmpSharedModule } from '../cmp-shared';
 import { ContourMapResultComponent } from './contour-map-result/contour-map-result.component';
+import { ComparisonModule } from '../comparison';
 
 const modules = [
     NgxSharedModule,
@@ -43,6 +45,7 @@ const modules = [
     MatSliderModule,
     MatCheckboxModule,
     MatListModule,
+    MatSlideToggleModule,
     ResultsRoutingModule,
     CmpSharedModule,
     HeaderMenuLayoutModule,
@@ -52,6 +55,7 @@ const modules = [
     DirectivesModule,
     PipesModule,
     OlModule,
+    ComparisonModule,
 ];
 const components = [
     CalcuListComponent,

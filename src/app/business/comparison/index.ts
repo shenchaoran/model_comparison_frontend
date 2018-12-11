@@ -37,19 +37,20 @@ import { SolutionListComponent } from './solution-list/solution-list.component';
 import { SolutionDetailComponent } from './solution-detail/solution-detail.component';
 import { CreateSlnComponent } from './create-sln/create-sln.component';
 import { CreateTaskComponent } from './create-task/create-task.component';
-import { CmpObjCfgComponent } from './cmp-obj-cfg/cmp-obj-cfg.component';
 import { CmpCfgComponent } from './cmp-cfg/cmp-cfg.component';
+import { TaskInputCfgComponent } from './task-input-cfg/task-input-cfg.component';
 
 const components = [
     SolutionListComponent,
     SolutionDetailComponent,
     CreateTaskComponent,
     CreateSlnComponent,
-    CmpObjCfgComponent,
     CmpCfgComponent,
+    TaskInputCfgComponent,
 ];
 const exportComponents = [
     CmpCfgComponent,
+    TaskInputCfgComponent,
 ]
 var entryComponents = [];
 const modules = [

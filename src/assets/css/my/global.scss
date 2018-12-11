@@ -1,3 +1,5 @@
+@import './material-theme';
+
 .topic-chip {
     cursor: pointer !important;
     background: #a5d6a7 !important;
@@ -36,6 +38,21 @@
     }
 }
 
-.jexcel > tbody > tr > td {
-    white-space: pre-wrap;
+.jexcel {
+    td {
+        white-space: pre-wrap !important;
+    }
+    td.readonly {
+        color: $accent !important;
+        font-weight: 500 !important;
+    }
+    thead {
+        td {
+            color: #000 !important;
+        }
+    }
+    .h1,.h2,.h3,.h4,.h5,.h6,.h7,.h8,.h9,.h10,.h11 {
+        font-weight: unset !important;
+        font-size: unset !important;
+    }
 }

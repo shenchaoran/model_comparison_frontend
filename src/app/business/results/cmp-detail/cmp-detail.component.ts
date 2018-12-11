@@ -27,6 +27,7 @@ import { findIndex, get } from 'lodash';
 export class CmpDetailComponent extends OgmsBaseComponent implements OnInit {
     taskId;
     task;
+    calcuTasks;
     ptMSs;
     solution;
     hadTriggeredConversation;
@@ -35,7 +36,7 @@ export class CmpDetailComponent extends OgmsBaseComponent implements OnInit {
 
     get user() { return this.userService.user; }
     get users() { return this.conversationService.users; }
-    get couldEdit() { return this.user && this.solution && this.solution.auth.userId === this.user._id; }
+    get couldEdit() { return this.user && this.task && this.task.auth.userId === this.user._id; }
     get conversation() { return this.conversationService.conversation; }
     get includeUser() { return findIndex(get(this, 'solution.subscribed_uids'), v => v === this.user._id) !== -1; }
     constructor(
@@ -45,18 +46,21 @@ export class CmpDetailComponent extends OgmsBaseComponent implements OnInit {
         private conversationService: ConversationService,
         public title: DynamicTitleService,
         public renderer2: Renderer2,
+        public router: Router,
     ) {
         super();
     }
 
     ngOnInit() {
+        // TODO 懒加载
         this.taskId = this.route.snapshot.paramMap.get('id')
         this.taskService.findOne(this.taskId).subscribe(res => {
             if (!res.error) {
                 this.task = res.data.task;
                 this.ptMSs = res.data.ptMSs;
                 this.solution = res.data.solution;
-                this.buildChart(0);
+                this.calcuTasks = res.data.calcuTasks;
+                // this.buildChart(0);
                 // this.fetchInterval();
             }
         });
@@ -118,7 +122,7 @@ export class CmpDetailComponent extends OgmsBaseComponent implements OnInit {
     }
 
     onTabChange(index) {
-        if (index === this.task.cmpObjs.length && !this.hadTriggeredConversation) {
+        if (index === this.task.cmpObjs.length+1 && !this.hadTriggeredConversation) {
             this.conversationService.findOneByWhere({
                 pid: this.task._id
             }).subscribe(res => {
@@ -135,9 +139,9 @@ export class CmpDetailComponent extends OgmsBaseComponent implements OnInit {
                 }
             })
         }
-        else {
-            if(this.chartRecord[index] !== true)
-                this.buildChart(index);
+        else if(index> 0 && index< this.task.cmpObjs.length+1) {
+            if(this.chartRecord[index-1] !== true)
+                this.buildChart(index-1);
         }
     }
 
@@ -155,4 +159,17 @@ export class CmpDetailComponent extends OgmsBaseComponent implements OnInit {
             }
         });
     }
+
+    onDeleteClick() {
+        this.taskService.delete(this.task._id).subscribe(res => {
+            if(!res.error) {
+                this.router.navigate(["/results/comparison"]);
+            }
+        });
+    }
+
+    onEditClick() {
+
+    }
+
 }

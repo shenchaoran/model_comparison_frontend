@@ -33,7 +33,7 @@ export class SolutionDetailComponent implements OnInit {
     attached_topics: Topic[];               // { _id, meta, auth }
     mss: MS[] | any[];          // { _id, meta, auth }, 所有的 ms
     topicList: Topic[];         // { _id, meta, auth }[]
-    ptMsFC;
+    ptMsFG;
     cmpObjsFG;
     cmpMethodsFC;
 
@@ -45,7 +45,7 @@ export class SolutionDetailComponent implements OnInit {
     get cmpObjs() { return this.solution.cmpObjs; }
     get myPgGrid() { return $('#grid-table').pqGrid; }
     get ptMSs() { return _.chain(this.mss).filter(ms => !!ms.selected).value(); }
-    get isPtMsFCInvalid() { return !this.ptMsFC.get('msIds').pristine && this.ptMsFC.get('msIds').invalid;}
+    get isPtMsFCInvalid() { return !this.ptMsFG.get('msIds').pristine && this.ptMsFG.get('msIds').invalid;}
     get isCmpCfgInvalid() { return !this.cmpObjsFG.get('cmpCfg').pristine && this.cmpObjsFG.get('cmpCfg').invalid;}
     get isCmpMethodsInvalid() { return !this.cmpMethodsFC.get('methods').pristine && this.cmpMethodsFC.get('methods').invalid;}
     get methods() {
@@ -71,7 +71,7 @@ export class SolutionDetailComponent implements OnInit {
         public router: Router,
         public fb: FormBuilder,
     ) {
-        this.ptMsFC = this.fb.group({
+        this.ptMsFG = this.fb.group({
             msIds: [[], [Validators.required]]
         });
         this.cmpObjsFG = this.fb.group({
@@ -94,14 +94,25 @@ export class SolutionDetailComponent implements OnInit {
                 this.mss = res.data.mss;
                 this.topicList = res.data.topicList;
 
+
                 _.map(this.mss, ms => {
                     if(_.find(this.solution.msIds, id => id === ms._id)) {
-                        ms.selected = true
+                        ms.selected = true;
+                        this.ptMsFG.get('msIds').value.push(ms._id);
+                        this.ptMsFG.get('msIds').updateValueAndValidity()
                     }
                 })
-
-                // this.onParticipantsChange(this.mss[3])
-                // this.onParticipantsChange(this.mss[4])
+                let methods = _.get(this, 'solution.cmpObjs[0].methods')
+                if(methods) {
+                    methods.forEach((method) => {
+                        let cmpMethod = _.find(this.cmpMethods, cmpMethod => cmpMethod._id === method.id)
+                        if(cmpMethod) {
+                            cmpMethod.checked = true;
+                        }
+                    })
+                    this.cmpMethodsFC.get('methods').value = _.filter(this.cmpMethods, cmpMethod => cmpMethod.checked);
+                    this.cmpMethodsFC.get('methods').updateValueAndValidity();
+                }
 
                 // if (this.couldEdit && !this.solution.meta.wikiMD) {
                 //     this._editMode = 'WRITE';
@@ -118,8 +129,8 @@ export class SolutionDetailComponent implements OnInit {
     onParticipantsChange(ms) {
         ms.selected = !ms.selected;
         let ptMSIds = _.chain(this.mss).filter(ms => !!ms.selected).map(ms => ms._id ).value();
-        this.ptMsFC.get('msIds').value = ptMSIds;
-        this.ptMsFC.get('msIds').updateValueAndValidity();
+        this.ptMsFG.get('msIds').value = ptMSIds;
+        this.ptMsFG.get('msIds').updateValueAndValidity();
         this.solution.cmpObjs = [];
     }
 
@@ -130,8 +141,6 @@ export class SolutionDetailComponent implements OnInit {
         }
         else {
             let cmpCfgFC = this.cmpObjsFG.get('cmpCfg');
-            cmpCfgFC.markAsTouched();
-            cmpCfgFC.markAsDirty();
             cmpCfgFC.setErrors({
                 invalid: true
             });
@@ -145,8 +154,6 @@ export class SolutionDetailComponent implements OnInit {
         }
         else {
             let cmpMethodsFC = this.cmpMethodsFC.get('methods');
-            cmpMethodsFC.markAsTouched();
-            cmpMethodsFC.markAsDirty();
             cmpMethodsFC.setErrors({
                 invalid: true
             });
@@ -154,18 +161,22 @@ export class SolutionDetailComponent implements OnInit {
     }
 
     onStepperNext(stepIndex) {
+        let fg;
         if(stepIndex === 0) {
-            this.ptMsFC.get('msIds').markAsTouched();
-            this.ptMsFC.get('msIds').markAsDirty();
+            fg = this.ptMsFG.get('msIds');
         }
         else if(stepIndex === 1) {
-            this.cmpObjsFG.get('cmpCfg').markAsTouched();
-            this.cmpObjsFG.get('cmpCfg').markAsDirty();
+            fg = this.cmpObjsFG.get('cmpCfg');
         }
         else if(stepIndex === 2) {
-            this.cmpMethodsFC.get('methods').markAsTouched();
-            this.cmpMethodsFC.get('methods').markAsDirty();
+            fg = this.cmpMethodsFC.get('methods');
         }
+        fg.markAsTouched();
+        fg.markAsDirty();
+        if(fg.invalid)
+            fg.setErrors({
+                invalid: true
+            });
     }
 
     onEditClick() {
@@ -175,7 +186,7 @@ export class SolutionDetailComponent implements OnInit {
 
     onEditSave() {
         this.solution.meta.wikiHTML = this.simpleMDE.simplemde.markdown(this.solution.meta.wikiMD || '');
-        this.solution.msIds = this.ptMsFC.get('msIds').value;
+        this.solution.msIds = this.ptMsFG.get('msIds').value;
         this.solution.cmpObjs = this.cmpObjsFG.get('cmpCfg').value;
         let methods = this.cmpMethodsFC.get('methods').value
         _.map(this.solution.cmpObjs, cmpObj => {
@@ -268,5 +279,13 @@ export class SolutionDetailComponent implements OnInit {
         } else {
             this.userService.redirectIfNotLogined();
         }
+    }
+
+    onDeleteClick() {
+        this.solutionService.delete(this.solution._id).subscribe(res => {
+            if(!res.error) {
+                this.router.navigate(['/comparison/solutions']);
+            }
+        })
     }
 }

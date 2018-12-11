@@ -15,11 +15,10 @@ export class MasonryMethodsListComponent implements OnInit {
     @Input() 
     set methods(v: CmpMethod[]) {
         this.list = v;
-        this.couldSelect = false;
         this._withAjax = false;
     }
-    @Input() couldSelect: boolean = false;
-    @Output() validChange = new EventEmitter<{
+    @Input() mode: 'WRITE' | 'READ' = 'READ';
+    @Output() valueChange = new EventEmitter<{
         value?: any,
         valid: boolean,
     }>();
@@ -44,13 +43,13 @@ export class MasonryMethodsListComponent implements OnInit {
         method.checked = msg.checked;
         let selected = _.filter(this.list, method => !!method.checked);
         if(selected && selected.length) {
-            this.validChange.emit({
+            this.valueChange.emit({
                 valid: true,
                 value: selected
             });
         }
         else {
-            this.validChange.emit({
+            this.valueChange.emit({
                 valid: false
             });
         }

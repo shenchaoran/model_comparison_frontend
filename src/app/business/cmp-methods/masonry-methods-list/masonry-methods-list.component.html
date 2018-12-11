@@ -3,7 +3,7 @@
         <img class="mdc-image-list__image" [src]='method.meta.img'>
         <div class="mdc-image-list__supporting" style='width: 100%;'>
             <span class="mdc-image-list__label">{{method.meta.name}}</span>
-            <mat-checkbox *ngIf='couldSelect' (change)='onMethodChecked($event, method)' class='float-right'></mat-checkbox>
+            <mat-checkbox *ngIf='mode === "WRITE"' [checked]='method.checked' (change)='onMethodChecked($event, method)' class='float-right'></mat-checkbox>
         </div>
     </li>
 </ul>

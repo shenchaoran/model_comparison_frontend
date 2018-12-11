@@ -36,6 +36,7 @@ export class MS {
 
 export class Event {
     id: string;
+    stdName: string;
     name: string;
     description: string;
     schemaId: string;

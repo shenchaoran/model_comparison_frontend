@@ -1,6 +1,5 @@
 <div>
-    <h3>Show animation: </h3>
-    <mat-checkbox [(ngModel)]='showAnimation' (ngModelChange)='onShowAnimationChange()'>Show animation</mat-checkbox>
+    <mat-slide-toggle class='my-2' [(ngModel)]='showAnimation' (ngModelChange)='onShowAnimationChange()'>Show animation</mat-slide-toggle>
     
     <!-- <h3>Times: </h3>
     <mat-slider style='width: 500px;' #slider class='time-slider' 

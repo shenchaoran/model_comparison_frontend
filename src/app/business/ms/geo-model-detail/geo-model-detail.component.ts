@@ -21,6 +21,7 @@ export class GeoModelDetailComponent extends OgmsBaseComponent implements OnInit
 
     get user() { return this.conversationService.user; }
     get users() { return this.conversationService.users; }
+    get couldEdit() { return this.user && this.ms && this.ms.auth.userId === this.user._id; }
     get inputs() { return get(this, 'ms.MDL.IO.inputs'); }
     get parameters() { return get(this, 'ms.MDL.IO.parameters'); }
     get outputs() { return get(this, 'ms.MDL.IO.outputs'); }
@@ -80,5 +81,9 @@ export class GeoModelDetailComponent extends OgmsBaseComponent implements OnInit
                     i !== -1 && this.ms.subscribed_uids.splice(i, 1);
             }
         });
+    }
+
+    onEditClick() {
+        
     }
 }

@@ -19,22 +19,13 @@ export class CreateTaskComponent extends OgmsBaseComponent implements OnInit {
     stds;
 
     task;
-    calcuTasks = [];
     cmpTaskFG;
     hasSubRegion = false;
 
-    _selectedTabIndex = 0;
-    _tabLabelCfg: {
-        id: any,
-        name: string,
-        index: number,
-        useDefault?: boolean,
-        label: string
-    }[] = [];
-
-    get calTasksCtrl() {
-        return (this.cmpTaskFG.get('calcuTasks') as FormArray);
-    }
+    get metaFG() { return this.cmpTaskFG.get('meta'); }
+    get authFC() { return this.cmpTaskFG.get('auth'); }
+    get calcuTasksFG() { return this.cmpTaskFG.get('calcuTasks'); }
+    get regionsFG() { return this.cmpTaskFG.get('regions'); }
 
     constructor(
         public route: ActivatedRoute,
@@ -50,18 +41,16 @@ export class CreateTaskComponent extends OgmsBaseComponent implements OnInit {
         this.task = this.taskService.create();
 
         this.cmpTaskFG = this.fb.group({
-            name: [null, [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
-            desc: [null, [Validators.required, Validators.minLength(2), Validators.maxLength(140)]],
+            meta: this.fb.group({
+                name: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50)]],
+                desc: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(140)]],
+            }),
             auth: [ResourceSrc.PUBLIC, [Validators.required]],
-            // TODO validator
-            calcuTasks: this.fb.array([], Validators.required)
+            calcuTasks: [[], Validators.required],
+            regions: [[], Validators.required],
         });
 
-        this.cmpTaskFG.statusChanges.subscribe(status => {
-            if (status === 'VALID') {
-                // console.log(this.taskFG.value);
-            }
-        })
+        // this.cmpTaskFG.statusChanges.subscribe(status => {})
     }
 
     ngOnInit() {
@@ -70,7 +59,13 @@ export class CreateTaskComponent extends OgmsBaseComponent implements OnInit {
                 this.sln = res.data.solution;
                 this.ptMSs = res.data.ptMSs;
                 this.stds = res.data.stds;
-        
+
+                this.calcuTasksFG.value = this.ptMSs.map(ms => {
+                    return new CalcuTask(this.userService.user, ms)
+                });
+                this.calcuTasksFG.updateValueAndValidity();
+                this.calcuTasksFG.markAsPristine();
+
                 _.map(this.sln.cmpObjs, cmpObj => {
                     _.map(cmpObj.methods, method => {
                         if(method.name === 'Sub-region bias contour map' || method.name === 'Heat map' || method.name === 'Sub-region line chart') {
@@ -82,42 +77,102 @@ export class CreateTaskComponent extends OgmsBaseComponent implements OnInit {
         });
     }
 
+    onInputTableChange(calcuTasksChange: {
+        value?: CalcuTask[],
+        valid: boolean,
+    }) {
+        if(calcuTasksChange.valid) {
+            this.calcuTasksFG.value = calcuTasksChange.value;
+            this.calcuTasksFG.updateValueAndValidity();
+        }
+        else {
+            this.calcuTasksFG.setErrors({
+                invalid: true,
+            })
+        }
+    }
+
+    onStepperNext(step) {
+        let fg;
+        if(step === 0) {
+            fg = this.metaFG;
+        }
+        else if(step === 1) {
+            fg = this.calcuTasksFG;
+        }
+        else if(step === 2) {
+            fg = this.regionsFG;
+        }
+        fg.markAsTouched();
+        fg.markAsDirty();
+        if(fg.invalid) {
+            fg.setErrors({
+                invalid: true
+            });
+        }
+    }
+
+    onCalcuValidChange(valid) {
+        if (!valid)
+            this.cmpTaskFG.setErrors({});
+    }
+
+    onRegionsChange(regions) {
+        if(regions.length) {
+            this.regionsFG.value = regions;
+            this.regionsFG.updateValueAndValidity();
+        }
+        else {
+            this.regionsFG.setErrors({
+                invalid: true
+            });
+        }
+    }
+
+    onSiteSelected(site, i) {
+    }
+
     submitTask(type) {
-        this.calcuTasks = [];
         if (type === 'save') {
             this.task.state = CmpState.INIT;
         }
         else if (type === 'run') {
             this.task.state = CmpState.COULD_START;
         }
-        this.task.meta.name = this.cmpTaskFG.value.name;
-        this.task.meta.desc = this.cmpTaskFG.value.desc;
-        this.task.auth.src = this.cmpTaskFG.value.auth;
+        let formData = this.cmpTaskFG.value;
+        this.task.meta.name = formData.meta.name;
+        this.task.meta.desc = formData.meta.desc;
+        this.task.auth.src = formData.auth;
+        this.task.regions = formData.regions;
         this.task.solutionId = this.sln._id;
         this.task.topicId = this.sln.topicId;
         this.task.calcuTaskIds = [];
+        
         this.task.schemas = [];
         this.ptMSs.map(ms => ms.MDL.IO.schemas.map(schema => {
             schema.msId = ms._id;
             this.task.schemas.push(schema);
         }));
-        map(this.cmpTaskFG.value.calcuTasks as any[], (calcuTask, i) => {
+
+        let calcuTasks = [];
+        map(formData.calcuTasks as any[], (calcuTask, i) => {
             this.task.calcuTaskIds.push(calcuTask._id);
 
-            calcuTask.meta.name = this._tabLabelCfg[i].label;
+            calcuTask.meta.name = '';
             if (type === 'save') {
                 calcuTask.state = CalcuTaskState.INIT;
             }
             else {
                 calcuTask.state = CalcuTaskState.COULD_START;
             }
-            this.calcuTasks.push(calcuTask);
+            calcuTasks.push(calcuTask);
         });
+        
         this.task.cmpObjs = this.sln.cmpObjs
         this.task.cmpObjs.map(cmpObj => {
             let slnDataRefers = cmpObj.dataRefers;
             cmpObj.dataRefers = [];
-            this.calcuTasks.map(msr => {
+            calcuTasks.map(msr => {
                 let dr = slnDataRefers.find(dr => dr.msId === msr.msId);
                 cmpObj.dataRefers.push({
                     ...dr,
@@ -125,13 +180,10 @@ export class CreateTaskComponent extends OgmsBaseComponent implements OnInit {
                     msrName: msr.meta.name
                 })
             });
-            // cmpObj.dataRefers.map((dataRefer, i) => {
-            //     dataRefer.msrName = this.calcuTasks[i].meta.name;
-            // })
         });
         this.taskService.insert({
             task: this.task,
-            calcuTasks: this.calcuTasks,
+            calcuTasks: calcuTasks,
             conversation: this.taskService.conversation
         }).subscribe(res => {
             if (!res.error) {
@@ -141,68 +193,5 @@ export class CreateTaskComponent extends OgmsBaseComponent implements OnInit {
                 this.router.navigate(['/results/comparison', res.data._id]);
             }
         })
-    }
-
-    onCalcuValidChange(valid) {
-        if (!valid)
-            this.cmpTaskFG.setErrors({});
-    }
-
-    addInstance(ms) {
-        let newCalTask = new CalcuTask(this.userService.user, ms);
-        let matchedSTDs = filter(this.stds as any[], std => {
-            return includes(std.models, newCalTask.msId);
-        });
-        newCalTask.stds = matchedSTDs;
-        this.calTasksCtrl.push(new FormControl(newCalTask, Validators.required))
-        this.calTasksCtrl.updateValueAndValidity();
-
-        this._selectedTabIndex = this.calTasksCtrl.controls.length - 1;
-        this._tabLabelCfg.push({
-            id: ms._id,
-            name: ms.MDL.meta.name,
-            index: 0,
-            label: ''
-        });
-        this.updateTabLabel();
-    }
-
-    onRegionsChange(regions) {
-        // console.log(regions)
-        this.task.regions = regions;
-    }
-
-    onSiteSelected(site, i) {
-        let tabLabel = this._tabLabelCfg[i];
-        if (tabLabel.useDefault !== false) {
-            tabLabel.useDefault = false;
-            tabLabel.label = `${tabLabel.name}: ${site.coor}`;
-        }
-    }
-
-    changeTabName(v, i) {
-        this._tabLabelCfg[i].useDefault = false;
-        this._tabLabelCfg[i].label = v;
-    }
-
-    updateTabLabel() {
-        let tmp = {};
-        map(this._tabLabelCfg as any[], tabLabel => {
-            if (!tmp[tabLabel.id])
-                tmp[tabLabel.id] = 1;
-            else {
-                tmp[tabLabel.id]++;
-            }
-            tabLabel.index = tmp[tabLabel.id];
-            if (tabLabel.useDefault !== false)
-                tabLabel.label = `${tabLabel.name} (instance ${tabLabel.index})`;
-        });
-    }
-
-    delInstance(i) {
-        this.calTasksCtrl.removeAt(i);
-        this.calTasksCtrl.updateValueAndValidity();
-        this._tabLabelCfg.splice(i, 1);
-        this.updateTabLabel();
     }
 }

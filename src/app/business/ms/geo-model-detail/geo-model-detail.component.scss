@@ -1,0 +1,12 @@
+
+.customHeader {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    .action-group {
+        button:not(:last-child) {
+            margin-right: 8px;
+        }
+    }
+}

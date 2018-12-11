@@ -2,3 +2,27 @@
     width: 100%;
     height: 500px;
 }
+
+.customHeader {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    .action-group {
+        button:not(:last-child) {
+            margin-right: 8px;
+        }
+    }
+}
+
+.progress-div {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    span {
+        flex: 0 0 150px;
+    }
+    .calcuTask-progress-bar {
+        flex: 0 0 450px;
+    }
+}

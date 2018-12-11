@@ -4,70 +4,95 @@
     </div>
 </ng-template>
 <ogms-detail-layout *ngIf='task else loadingTemp'>
-    <div class='header Subhead mt-0 mb-3'>
-        <h2 class='Subhead-heading'>{{task?.meta?.name}}</h2>
-        <div class='Subhead-description'>Description: {{task?.meta.desc}}</div>
+    <div class='customHeader header Subhead mt-0 mb-3'>
+        <div>
+            <h2 class='Subhead-heading'>{{task?.meta?.name}}</h2>
+            <div class='Subhead-description'>{{task?.meta.desc}}</div>
+            <p class='Subhead-description'>
+                <a class='author' routerLink='/user'>{{task?.auth?.userName}}</a>
+                created this task at {{task.meta.time | date: 'yyyy.MM.dd'}}
+            </p>
+        </div>
+
+        <div class='action-group'>
+            <button mat-button color='warn' *ngIf='couldEdit' (click)='onDeleteClick()'>
+                <mat-icon inline>delete</mat-icon>Delete
+            </button>
+            <button mat-button color='primary' *ngIf='couldEdit' (click)='onEditClick()'>
+                <mat-icon inline>edit</mat-icon>Edit
+            </button>
+        </div>
     </div>
+
     <article class='article'>
-        <!-- <h3 class='f3-light mb-2'>Comparison features</h3> -->
-
         <mat-tab-group (selectedIndexChange)='onTabChange($event)' [@.disabled]="true">
+            <mat-tab label='Data configuration'>
+                <p class='f3-light my-3'>Comparison configuration:</p>
+                <ogms-cmp-cfg mode='READ' [cmpObjs]='task.cmpObjs'></ogms-cmp-cfg>
+
+                <p class='f3-light my-3'>Input data configuration:</p>
+                <ogms-task-input-cfg [calcuTasks]='calcuTasks' showOutput='True' mode='READ'></ogms-task-input-cfg>
+
+
+                <div *ngIf='task.regions' class='my-3'>
+                    <p class='f3-light my-2'>Selected sub-regions:</p>
+                    <ogms-sub-regions [regions]='task.regions'></ogms-sub-regions>
+                </div>
+
+                <p class='f3-light my-3'>Model running progress:</p>
+                <div *ngFor='let calcuTask of calcuTasks' class='progress-div px-2 py-1'>
+                    <span>{{calcuTask.msName}}:</span>
+                    <mat-progress-bar class='calcuTask-progress-bar' [value]='calcuTask.progress' mode='determinate'></mat-progress-bar>
+                    <span class='pl-2'>{{calcuTask.progress? calcuTask.progress: 0}}%</span>
+                </div>
+            </mat-tab>
+
             <mat-tab *ngFor="let cmpObj of task?.cmpObjs; let i=index" [label]='"Feature " + (+i+1) + ": " + cmpObj.name'>
-                <p class='mt-3'>Description: {{cmpObj.desc}}</p>
-                <!-- <p>Data configuration:</p> -->
-                <table class='col-12 mb-3' mat-table [dataSource]="cmpObj.dataRefers">
-                    <ng-container matColumnDef="msName">
-                        <th mat-header-cell *matHeaderCellDef>Model name</th>
-                        <td mat-cell *matCellDef="let element"> {{element.msName}} </td>
-                    </ng-container>
+                <p class='mt-3'>{{cmpObj.desc}}</p>
 
-                    <ng-container matColumnDef="eventName">
-                        <th mat-header-cell *matHeaderCellDef>Data name</th>
-                        <td mat-cell *matCellDef="let element"> {{element.eventName}}</td>
-                    </ng-container>
+                <!-- <p class='f3-light my-2'>Comparison methods:</p> -->
+                <div *ngFor='let method of cmpObj.methods; let i=index;'>
+                    <p class='f3-light my-3'>{{i+1}}. {{method?.name}}:</p>
 
-                    <ng-container matColumnDef="field">
-                        <th mat-header-cell *matHeaderCellDef>Data field name</th>
-                        <td mat-cell *matCellDef="let element"> {{element.field}} </td>
-                    </ng-container>
-
-                    <tr mat-header-row *matHeaderRowDef="['msName', 'eventName', 'field']"></tr>
-                    <tr mat-row *matRowDef="let row; columns: ['msName', 'eventName', 'field'];"></tr>
-                </table>
-
-                <ogms-sub-regions *ngIf='task.regions' [regions]='task.regions'></ogms-sub-regions>
-
-                <p>Comparison methods:</p>
-                <div *ngFor='let method of cmpObj.methods'>
-                    <!-- <mat-chip-list>
-                                    <mat-chip class='topic method-chip' *ngFor='let method of cmpObj.methods'>{{method?.name}}</mat-chip>
-                                </mat-chip-list> -->
-                    <p>{{method?.name}}</p>
                     <ng-container *ngIf='method?.name === "table series visualization" || method?.name === "Line chart"'>
-                        <div *ngIf='method?.result?.state === "FINISHED_SUCCEED"' 
-                            [attr.id]='cmpObj.id + "-" + method.id' #echartDOM class='echart-dom'></div>
+
+                        <div *ngIf='method?.result?.state === "FINISHED_SUCCEED"' [attr.id]='cmpObj.id + "-" + method.id'
+                            #echartDOM class='echart-dom'></div>
                     </ng-container>
+
                     <ng-container *ngIf='method?.name === "Taylor diagram"'>
 
                     </ng-container>
+
                     <ng-container *ngIf='method?.name === "Sub-region line chart"'>
-                        <div *ngIf='method?.result?.state === "FINISHED_SUCCEED"' 
-                            [attr.id]='cmpObj.id + "-" + method.id' #echartDOM class='echart-dom'></div>
+                        <div *ngIf='method?.result?.state === "FINISHED_SUCCEED"' [attr.id]='cmpObj.id + "-" + method.id'
+                            #echartDOM class='echart-dom'></div>
                     </ng-container>
+
                     <ng-container *ngIf='method?.name === "Bias contour map"'>
 
                     </ng-container>
+
                     <ng-container *ngIf='method?.name === "Sub-region bias contour map"'>
-                        <ogms-contour-map-result *ngIf='method?.result?.state === "FINISHED_SUCCEED"' 
-                            [data]='method.result'></ogms-contour-map-result>
+                        <div class='ml-2'>
+                            <ogms-contour-map-result *ngIf='method?.result?.state === "FINISHED_SUCCEED"' [data]='method.result'></ogms-contour-map-result>
+                        </div>
+                        <div *ngIf='method?.result?.state !== "FINISHED_SUCCEED"'>
+                            <p>The comparison hasn't finished!</p>
+                            <p class='my-2' *ngIf='method?.progress'>
+                                Progress:
+                                <mat-progress-bar [value]='method?.progress' mode='determinate'></mat-progress-bar>
+                            </p>
+                        </div>
                     </ng-container>
+
                     <ng-container *ngIf='method?.name === "Heat map"'>
-                        <div *ngIf='method?.result?.state === "FINISHED_SUCCEED"' 
-                            [attr.id]='cmpObj.id + "-" + method.id' #echartDOM class='echart-dom'></div>
+                        <div *ngIf='method?.result?.state === "FINISHED_SUCCEED"' [attr.id]='cmpObj.id + "-" + method.id'
+                            #echartDOM class='echart-dom'></div>
                     </ng-container>
                 </div>
             </mat-tab>
-            
+
             <mat-tab label='Conversation'>
                 <div *ngIf='!conversation' class='col-12 d-flex flex-justify-center flex-items-center' style='height: 350px'>
                     <mat-spinner></mat-spinner>

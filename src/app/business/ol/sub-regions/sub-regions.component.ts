@@ -53,7 +53,7 @@ export class SubRegionsComponent implements OnInit, AfterViewInit {
     ngAfterViewInit() {
         setTimeout(() => {
             this.buildMap();
-        }, 0);
+        }, 10);
     }
 
     buildMap() {

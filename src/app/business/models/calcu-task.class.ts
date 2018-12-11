@@ -5,6 +5,7 @@ import { User } from './user.class';
  */
 
 import { ResourceSrc } from './resource.enum';
+import { Event } from './model-service.class';
 import * as ObjectID from 'objectid';
 import { cloneDeep, map } from 'lodash';
 

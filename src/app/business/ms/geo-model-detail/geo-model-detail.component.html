@@ -6,8 +6,17 @@
 
 <ogms-detail-layout *ngIf='ms else loadingTemp'>
     <!-- <p class="top_title h1">Model Info</p> -->
-    <div class='header Subhead mt-0 mb-3'>
-        <h2 class='Subhead-heading'>{{ms.MDL.meta.name}}</h2>
+    <div class='customHeader header Subhead mt-0 mb-3'>
+        <div>
+            <h2 class='Subhead-heading'>{{ms.MDL.meta.name}}</h2>
+            <p class='Subhead-description'>
+                <a class='author' routerLink='/user'>{{ms.auth.userName}}</a> 
+                created this record at {{ms.MDL.meta.time | date: 'yyyy.MM.dd'}}
+            </p>
+        </div>
+        <div class='action-group'>
+            <button mat-button color='primary' *ngIf='couldEdit' (click)='onEditClick()'><mat-icon inline>edit</mat-icon>Edit</button>
+        </div>
     </div>
 
     <div class="article">
