@@ -35,6 +35,9 @@ class NETCDF4_Schema {
     variables: {
         name: string,
         layerId?: string,
+        metricName: string,
+        scale?: number,
+        offset?: number,
         start?: number,
         end?: number,
         step?: number,

@@ -2,12 +2,10 @@ import { Component, OnInit, AfterViewInit, HostListener, OnDestroy, ViewChild, C
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { DynamicTitleService } from "@core/services/dynamic-title.service";
 import { FormBuilder, Validators, FormGroup, FormArray, FormControl } from '@angular/forms';
-import * as uuidv1 from 'uuid/v1';
 import { ConversationService, SolutionService, UserService, MSService } from "@services";
-import { Solution, Task, Topic, MS, CmpMethod, CmpObj } from "@models";
+import { Solution, Task, Topic, MS, CmpMethod, CmpObj, Metric } from "@models";
 import { Simplemde } from 'ng2-simplemde';
 import { MatSnackBar, MatSelectionList } from '@angular/material';
-import { cloneDeep, isEqual, get, pull, findIndex, indexOf } from 'lodash';
 
 @Component({
     selector: 'ogms-solution-detail',
@@ -30,6 +28,7 @@ export class SolutionDetailComponent implements OnInit {
     cmpMethods: CmpMethod[];
     solution: Solution;
     tasks: Task[];              // { _id, meta, auth }
+    metrics: Metric[];
     attached_topics: Topic[];               // { _id, meta, auth }
     mss: MS[] | any[];          // { _id, meta, auth }, 所有的 ms
     topicList: Topic[];         // { _id, meta, auth }[]
@@ -41,7 +40,7 @@ export class SolutionDetailComponent implements OnInit {
     get users() { return this.conversationService.users; }
     get couldEdit() { return this.user && this.solution && this.solution.auth.userId === this.user._id; }
     get conversation() { return this.conversationService.conversation; }
-    get includeUser() { return findIndex(get(this, 'solution.subscribed_uids'), v => v === this.user._id) !== -1; }
+    get includeUser() { return _.findIndex(_.get(this, 'solution.subscribed_uids'), v => v === this.user._id) !== -1; }
     get cmpObjs() { return this.solution.cmpObjs; }
     get myPgGrid() { return $('#grid-table').pqGrid; }
     get ptMSs() { return _.chain(this.mss).filter(ms => !!ms.selected).value(); }
@@ -93,6 +92,7 @@ export class SolutionDetailComponent implements OnInit {
                 // this.topic = res.data.topic;
                 this.mss = res.data.mss;
                 this.topicList = res.data.topicList;
+                this.metrics = res.data.metrics;
 
 
                 _.map(this.mss, ms => {
@@ -221,7 +221,7 @@ export class SolutionDetailComponent implements OnInit {
     }
 
     onAttachTopic(topic) {
-        let ac = indexOf(this.solution.topicIds, topic._id) !== -1 ? 'removeTopic' : 'addTopic';
+        let ac = _.indexOf(this.solution.topicIds, topic._id) !== -1 ? 'removeTopic' : 'addTopic';
         this.solutionService.patch(this.solution._id, {
             topicId: topic._id,
             ac: ac,
@@ -229,11 +229,11 @@ export class SolutionDetailComponent implements OnInit {
             if (!res.error) {
                 this.renderer2.setStyle(this.menuRef.nativeElement, 'display', 'none');
                 if (ac === 'removeTopic') {
-                    pull(this.solution.topicIds, topic._id)
-                    pull(this.attached_topics, topic);
+                    _.pull(this.solution.topicIds, topic._id)
+                    _.pull(this.attached_topics, topic);
                 }
                 else if (ac === 'addTopic') {
-                    if (indexOf(this.solution.topicIds, topic._id) === -1) {
+                    if (_.indexOf(this.solution.topicIds, topic._id) === -1) {
                         !this.solution.topicIds && (this.solution.topicIds = []);
                         this.solution.topicIds.push(topic._id)
                         this.attached_topics.push(topic);

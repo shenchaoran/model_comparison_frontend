@@ -45,28 +45,28 @@ npm run debug
 
 ## TODO
 type: optimization, feature, important, style
-- [ ] **feature**: docking layout
-- [x] ~~**optimization**: 页面加载速度~~
-- [x] ~~**feature**: 评论系统~~
-- [x] ~~**feature**: 和bootstrap结合~~
-- [x] ~~**optimization**: 分割 common module ，打包后太大~~
-- [ ] **optimization**: echarts tree-shaking
-- [x] ~~**optimization**: zorro tree-shaking~~
-- [x] ~~**optimization**: custom material theme~~
+- [ ] ~~L2: docking layout~~
+- [x] ~~L3: 页面加载速度~~
+- [x] ~~L2: 评论系统~~
+- [x] ~~L2: 和bootstrap结合~~
+- [x] ~~L3: 分割 common module ，打包后太大~~
+- [ ] L3: echarts tree-shaking
+- [x] ~~L3: zorro tree-shaking~~
+- [x] ~~L3: custom material theme~~
 - [ ] 用户个人空间相关
     - [ ] 路由 RESTful 风格化：user/:username
     - [ ] 关注、收藏的 topic, sln, task
     - [ ] 消息订阅与通知：subscribeToggle 统一处理所有资源，而不是分别处理
     - [ ] 页面右下角加后台运行列表
-- [ ] **optimization**: remove slim-loading-bar, use mat-progress-bar
-- [ ] **optimization**: remove list-template, use mat-list
-- [ ] **optimization**: remove disabled-button, use snackbar to alert valid state
-- [ ] **optimization**: remove header, use mat-toolbar
-- [ ] **optimization**: remove custom card, use mat-card
-- [x] ~~**important**: remove ng-zorro-antd, 样式和组件冲突，首先移除 !!!~~
-- [ ] **important**: 首页重新设计，展现的元素尽量少，首页去除 ajax
-- [ ] **optimization**: 动态设置 title
-- [ ] **style**: primer style
+- [ ] L3: remove slim-loading-bar, use mat-progress-bar
+- [ ] L3: remove list-template, use mat-list
+- [ ] L3: remove disabled-button, use snackbar to alert valid state
+- [ ] L3: remove header, use mat-toolbar
+- [ ] L3: remove custom card, use mat-card
+- [x] ~~L1: remove ng-zorro-antd, 样式和组件冲突，首先移除 !!!~~
+- [ ] L1: 首页重新设计，展现的元素尽量少，首页去除 ajax
+- [ ] L3: 动态设置 title
+- [ ] L3: primer style
     - [ ] colorful label/tag
     - [ ] navigation component/filter/menu
     - [ ] popover
@@ -76,27 +76,27 @@ type: optimization, feature, important, style
     - [x] Typography
     - [ ] remove simplemde, use primer-markdown
     - [ ] comment markdown
-- [x] **feature**: ms detail
+- [x] L2: ms detail
     - [x] mat-tab: wiki, data description, conversation
     - [x] sider-bar: topic, solution, notification
-- [ ] **feature**: calcu detail
+- [ ] L2: calcu detail
     - [x] mat-tab: basic-info, data configuration, conversation
     - [ ] 结果打包下载
-- [ ] **optimization**: auth guard
-- [x] ~~**optimization**: mongodb 大文档的查询效率~~
-- [ ] **optimization**: build-optimizer 入口代码被当做 dead code 删掉了？
-- [ ] **optimization**: lazy-loading:
+- [ ] L3: auth guard
+- [x] L3: mongodb 大文档的查询效率
+- [ ] L3: build-optimizer 入口代码被当做 dead code 删掉了？
+- [ ] L3: lazy-loading:
     - [x] conversation
     - [ ] sider-section
-- [ ] **feature**: 并行计算接入
+- [ ] L2: 并行计算接入
     - [ ] 结算节点的注册
     - [ ] 模型调用接口相同，用户并不知道是否使用了并行，但同时要暴露并行调用的参数
     - [ ] 并行结果/效率的查看，转到并行服务管理器
-- [x] **optimization**: RESTful API
-- [x] **optimization**: 数据库重新设计，尽量使数据库操作最小化
-- [ ] **optimization**: angular universe, 服务端渲染
-- [ ] **feature**: search
-- [ ] **optimization**: 后台数据库 patch 局部更新
+- [x] L3: RESTful API
+- [x] L3: 数据库重新设计，尽量使数据库操作最小化
+- [ ] L3: angular universe, 服务端渲染
+- [ ] L2: search
+- [ ] L3: 后台数据库 patch 局部更新
 - [ ] 路由复用：比如列表翻页的场景，当我在第三页找到想要的item，点到详情页后重新后退，发现回退到了第一页。两种解决方法，1) 把分页参数放在url中；2) 使用路由复用 RouteReuseStrategy
 - [ ] datasets: 
     - [ ] 左侧栏分类筛选（观测数据集，模拟数据集，时间范围，空间范围，支持的模型，时间频率，实验的名字，变量的名字），右侧预览和下载
@@ -106,6 +106,7 @@ type: optimization, feature, important, style
     - [x] model input 非常细致的对比
     - [x] 把选择数据范围去掉。所有数据配置项都放在 task 的创建上
     - [ ] 统计信息的显示：半年内的热度、收藏数、关注者
+    - [ ] 对比方案以勾选的形式创建
 - [ ] task: 
     - [ ] 统计信息：任务进度、执行耗时统计
     - [ ] 运行日志的显示
@@ -114,6 +115,15 @@ type: optimization, feature, important, style
     - [ ] 调参，各种参数的详细暴露
     - [ ] 可选参数的配置
 - [ ] linux 上的部署
+- [ ] 标准变量表，对比方案、对比任务、
+    - [ ] 字段：name, long_name, unit, description, category, scale, offset, min, max, couldCMP
+    - [ ] event 里加 scale, offset 字段
+- [ ] 将实验列表、介绍放在 wiki 中
+- [ ] 可以对比的 metric 需要满足两个条件：metric name 相同；event 的 time variable 和 lat variable, long variable 一致（时间上必须一致，空间上有重叠就行）
+- [ ] cmp-methods:
+    - [ ] taylor diagram
+    - [ ] 箱图
+    - [ ] 散点图
 
 ## Architecture
 

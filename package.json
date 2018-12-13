@@ -7,7 +7,7 @@
     "debug": "node --nolazy node_modules/@angular/cli/bin/ng serve --base-href=/CMIP/ --proxy-config proxy.conf.json --port 8888 --hmr --configuration=hmr --common-chunk --vendor-chunk --source-map",
     "aot": "node --max_old_space_size=5120 node_modules/@angular/cli/bin/ng serve --proxy-config proxy.conf.json --port 8888 --aot --hmr --configuration=hmr --source-map",
     "build:prod:optimizer": "node --max_old_space_size=5120 node_modules/@angular/cli/bin/ng build --output-path=build-prod-optimizer --delete-output-path --prod --build-optimizer --watch --common-chunk --vendor-chunk --stats-json",
-    "build:prod": "node --max_old_space_size=5120 node_modules/@angular/cli/bin/ng build --output-path=build-prod --delete-output-path --prod --build-optimizer=false --watch --common-chunk --vendor-chunk --stats-json",
+    "build:prod": "node --max_old_space_size=5120 node_modules/@angular/cli/bin/ng build --base-href=/CMIP/ --output-path=build-prod --delete-output-path --prod --build-optimizer=false --watch --common-chunk --vendor-chunk --stats-json",
     "build:aot": "node --max_old_space_size=5120 node_modules/@angular/cli/bin/ng  build --aot --output-path=build-aot --delete-output-path --watch --common-chunk --vendor-chunk --stats-json",
     "stats:prod:optimizer": "npx webpack-bundle-analyzer build-prod-optimizer/stats.json --port 8889",
     "stats:prod": "npx webpack-bundle-analyzer build-prod/stats.json --port 8889",

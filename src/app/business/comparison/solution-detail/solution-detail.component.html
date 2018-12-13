@@ -56,7 +56,7 @@
         <mat-tab-group [selectedIndex]='0' (selectedIndexChange)='onTabChange($event)'>
             <mat-tab label='Configuration'>
                 <mat-vertical-stepper *ngIf='_editMode === "WRITE"' linear='true' #stepper [selectedIndex]='0'>
-                    <mat-step label='Select participant model' [stepControl]='ptMsFC'>
+                    <mat-step label='Select participant model' [stepControl]='ptMsFG'>
                         <div class='my-2'>
                             <mat-chip-list multiple>
                                 <mat-chip *ngFor='let ms of mss' [color]='ms.selected? "accent": ""' [selected]='ms.selected'
@@ -69,7 +69,7 @@
                         </div>
                     </mat-step>
                     <mat-step label='Comparison data configuration' [stepControl]='cmpObjsFG'>
-                        <ogms-cmp-cfg [mss]='mss | filter: "selected"' [cmpObjs]='solution.cmpObjs' [mode]='"WRITE"' 
+                        <ogms-cmp-cfg [metrics]='metrics' [mss]='mss | filter: "selected"' [cmpObjs]='solution.cmpObjs' [mode]='"WRITE"' 
                             (valueChange)='onCmpCfgChange($event)'></ogms-cmp-cfg>
                         <p class='mt-2 ml-2'><mat-error *ngIf='isCmpCfgInvalid'>Invalid comparison feature configuration.</mat-error></p>
                         

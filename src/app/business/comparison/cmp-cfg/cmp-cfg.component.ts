@@ -3,7 +3,7 @@ import { Router, ActivatedRoute, Params } from "@angular/router";
 import { DynamicTitleService } from "@core/services/dynamic-title.service";
 import { FormBuilder, Validators, FormGroup, FormArray, FormControl } from '@angular/forms';
 import { ConversationService, SolutionService, UserService, MSService } from "@services";
-import { Solution, Task, Topic, MS, CmpMethod, CmpObj, UDXSchema, } from "@models";
+import { Solution, Task, Topic, MS, CmpMethod, CmpObj, UDXSchema, Metric, } from "@models";
 import * as ObjectId from 'objectid';
 import * as uuidv1 from 'uuid/v1';
 
@@ -16,6 +16,7 @@ export class CmpCfgComponent implements OnInit, AfterViewInit {
     @Input() cmpObjs: CmpObj[];
     @Input() mode: 'WRITE' | 'READ' = 'WRITE';
     @Input() mss: MS[];
+    @Input() metrics: Metric[];
     @Output() valueChange = new EventEmitter<{
         value?: CmpObj[],
         valid: boolean

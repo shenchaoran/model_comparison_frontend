@@ -13,3 +13,4 @@ export * from './conversation.class';
 export * from './topic.class';
 export * from './cmp-methods.class';
 export * from './std-data.class';
+export * from './metric.class';
