@@ -39,12 +39,6 @@
             "@ngx-shared": [
                 "app/shared/ngx-shared"
             ],
-            "@feature": [
-                "app/feature"
-            ],
-            "@feature/*": [
-                "app/feature/*"
-            ],
             "@config": [
                 "config"
             ],
@@ -58,16 +52,16 @@
                 "app/utils/*"
             ],
             "@models": [
-                "app/business/models"
+                "app/business/@models"
             ],
             "@models/*": [
-                "app/business/models/*"
+                "app/business/@models/*"
             ],
             "@services": [
-                "app/business/services"
+                "app/business/@services"
             ],
             "@services/*": [
-                "app/business/services/*"
+                "app/business/@services/*"
             ],
             "@mat-shared": [
                 "app/mat-shared"

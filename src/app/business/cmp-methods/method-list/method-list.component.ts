@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { CmpMethodService } from '../../services/cmp-method.service';
 import { CmpMethod } from '@models';
 
 @Component({

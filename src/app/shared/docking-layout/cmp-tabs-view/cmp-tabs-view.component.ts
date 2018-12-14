@@ -52,7 +52,7 @@ export class CmpTabsViewComponent implements OnInit, OnChanges, AfterViewInit {
 
     ngOnChanges(changes: { [key: string]: SimpleChange }) {
         let hadChanged;
-        forIn(changes, (v, k) => {
+        _.forIn(changes, (v, k) => {
             if (v.previousValue) {
                 if (!isEqual(v.currentValue, v.previousValue)) {
                     hadChanged = true;

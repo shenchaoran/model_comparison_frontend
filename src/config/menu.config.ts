@@ -22,11 +22,11 @@ export const HEADER_MENUS: MenuClass[] = [
         label: 'Models',
     },
     {
-        path: '/comparison/solutions',
+        path: '/solutions',
         label: 'Comparison'
     },
     {
-        path: '/results/comparison',
+        path: '/results',
         label: 'Results & Diagnostics'
     }, 
     // {

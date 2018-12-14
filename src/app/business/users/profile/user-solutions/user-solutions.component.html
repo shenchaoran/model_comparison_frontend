@@ -1,0 +1,30 @@
+<mat-button-toggle-group appearance="legacy">
+    <mat-button-toggle>Created</mat-button-toggle>
+    <mat-button-toggle>Followed</mat-button-toggle>
+</mat-button-toggle-group>
+
+<div >
+  <section *ngFor="let sln of slnList" class="list-item">
+    <div class="detail-group">
+      <h3>
+          <a [routerLink]='["solutions", sln._id]'>{{sln.auth.userName}} / {{sln.meta.name}}</a>
+      </h3>
+      <p>{{sln.meta.desc | stringLimit: 180 | description}}</p>
+      <p>
+        <mat-chip-list>
+          <mat-chip *ngFor='let ms of sln.participants' [routerLink]='["/models",ms._id]' class="topic ms-chip">{{ms.MDL.meta.name}}</mat-chip>
+        </mat-chip-list>
+      </p>
+      <div>{{sln.meta.time | date: 'yyyy-MM-dd'}}</div>
+    </div>
+    <div class="actions-group">
+      <a [routerLink]='["solutions", sln._id, "invoke"]'>
+        <mat-icon>play_arrow</mat-icon>
+      </a>
+      <a>
+        <mat-icon>start</mat-icon>
+        <span>999+</span>
+      </a>
+    </div>
+  </section>
+</div>

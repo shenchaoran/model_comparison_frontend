@@ -16,7 +16,7 @@ import { TestRoutingModule } from './index-routing.module';
 import { TestComponent } from './test.component';
 import { ReactiveFormComponent } from './reactive-form/reactive-form.component';
 import { FileUploaderTestComponent } from './file-uploader-test/file-uploader-test.component';
-import { ConversationModule } from '../conversation';
+import { ConversationsModule } from '../conversations';
 import { TestTableComponent } from './test-table/test-table.component';
 
 const modules = [
@@ -24,7 +24,7 @@ const modules = [
     FileUploaderModule,
     TestRoutingModule,
     OlModule,
-    ConversationModule,
+    ConversationsModule,
     MatCascaderModule,
     MatTableModule,
     HeaderMenuLayoutModule,

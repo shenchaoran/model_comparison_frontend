@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { DatasetService } from '../../services';
+import { DatasetService } from '@services';
 import { Router } from '@angular/router';
 
 @Component({

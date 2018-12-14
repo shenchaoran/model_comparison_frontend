@@ -6,7 +6,7 @@ import {
     DatasetService,
     MSService,
     TopicService,
-} from '../services';
+} from '@services';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 
@@ -25,13 +25,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
     
     slnTitle = {
         label: 'Comparison solutions',
-        url: '/comparison/solutions'
+        url: '/solutions'
     };
     slnList;
     
     taskTitle = {
         label: 'Results & Diagnostics',
-        url: '/results/comparison'
+        url: '/results'
     };
     taskList;
     

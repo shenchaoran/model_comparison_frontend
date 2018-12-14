@@ -1,0 +1,18 @@
+<div *ngIf='mode === "READ" && data.length === 0 else temp'>
+    <i>No comparison data configurations, please edit and configure!</i>
+</div>
+<ng-template #temp>
+    <div *ngIf='mode === "WRITE"'>
+        <p class='f4-light my-2'>Time interval:</p>
+        <mat-radio-group class='my-2' [(ngModel)]='timeInterval' (change)='onTimeIntervalChange()'>
+            <mat-radio-button class='mr-3' value='daily'>Daily</mat-radio-button>
+            <mat-radio-button class='mr-3' value='monthly'>Monthly</mat-radio-button>
+            <mat-radio-button class='mr-3' value='annual'>Annual</mat-radio-button>
+        </mat-radio-group>
+    </div>
+    <div *ngIf='mode === "READ"'>
+        <p class='f4-light my-2'>Time interval: {{cmpObjs[0].temporal}}</p>
+    </div>
+
+    <div [id]='targetId' class='my-3 jexcel-table' #gridTable></div>
+</ng-template>

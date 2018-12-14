@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
-import { MSService } from "../../services/ms.service";
+import { MSService } from "@services";
 import { DynamicTitleService } from '@core/services/dynamic-title.service';
 
 @Component({

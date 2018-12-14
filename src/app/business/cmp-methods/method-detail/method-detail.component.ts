@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit, ElementRef, ViewChild, ViewContainerRef, Renderer2 } from '@angular/core';
-import { CmpMethodService } from '../../services/cmp-method.service';
+import { CmpMethodService } from '@services';
 import { OgmsBaseComponent } from '@shared'
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { DynamicTitleService } from "@core/services/dynamic-title.service";

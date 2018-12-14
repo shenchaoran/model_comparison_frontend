@@ -1,6 +1,6 @@
 import { OlModule } from '../ol';
 import { NgModule } from '@angular/core';
-import { ConversationModule } from '../conversation';
+import { ConversationsModule } from '../conversations';
 import { 
     HeaderMenuLayoutModule,
     NgxSharedModule,
@@ -34,7 +34,7 @@ const services = [];
 const modules = [
     NgxSharedModule,
     ModelsRoutingModule,
-    ConversationModule,
+    ConversationsModule,
     CmpSharedModule,
     DetailLayoutModule,
     OlModule,

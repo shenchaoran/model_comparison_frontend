@@ -147,7 +147,7 @@
                 <div class='body'>
                     <ng-container *ngIf='calcuTasks && calcuTasks.length else noTopicTemp'>
                         <ul class='aside-ul with-route'>
-                            <li *ngFor='let calcuTask of calcuTasks' [routerLink]='["../../results/calculation", calcuTask._id]'>
+                            <li *ngFor='let calcuTask of calcuTasks' [routerLink]='["/calculations", calcuTask._id]'>
                                 {{calcuTask?.auth?.userName}} / {{calcuTask.meta.name}}
                             </li>
                         </ul> 
@@ -167,7 +167,7 @@
                 </div>
                 <div class='body'>
                     <ul *ngIf='solutions' class='aside-ul with-route'>
-                        <li *ngFor='let sln of solutions' [routerLink]='["../../comparison/solutions", sln._id]'>
+                        <li *ngFor='let sln of solutions' [routerLink]='["/solutions", sln._id]'>
                             {{sln?.auth?.userName}} / {{sln.meta.name}}
                         </li>
                     </ul>

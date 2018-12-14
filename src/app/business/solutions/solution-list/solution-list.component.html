@@ -1,0 +1,29 @@
+<ng-template #modelTemplate let-sln='item'>
+    <section class='list-item'>
+        <div class='detail-group'>
+            <h3><a class='v-align-middle' [routerLink]='sln._id'>{{sln.auth.userName}} / {{sln.meta.name}}</a></h3>
+            <p class='text-gray mb-2 pr-4'>{{sln.meta.desc | stringLimit: 180 | description}}</p>
+            <p class='f6 text-gray mr-3 mb-0 mt-2'>{{sln.meta.time | date: 'yyyy-MM-dd'}}</p>
+        </div>
+        <div class='tag-group'>
+            <mat-chip-list>
+                <mat-chip *ngFor='let ms of sln.mss' [routerLink]='["/models", ms._id]' class='ms-chip'>{{ms.MDL.meta.name}}</mat-chip>
+            </mat-chip-list>
+        </div>
+        <div class='actions-group'>
+            <a class='actions muted-link' [routerLink]='[sln._id, "invoke"]'>
+                <mat-icon>play_arrow</mat-icon>
+            </a>
+            <a class='actions muted-link'>
+                <mat-icon>star</mat-icon>
+                <span>654</span>
+            </a>
+        </div>
+    </section>
+</ng-template>
+<!-- <p ogms-rx-box class="h1">Comparison Solutions List</p> -->
+<ogms-list-template [template]='modelTemplate' [service]='solutionService'></ogms-list-template>
+
+<button id='create-btn' (click)="createSolution()"  mat-fab color="primary" title="Create a new comparison solution">
+    <mat-icon>add</mat-icon>
+</button>

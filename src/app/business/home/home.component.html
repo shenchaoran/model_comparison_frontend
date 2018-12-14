@@ -10,7 +10,7 @@
 <ng-template #topicTemplate let-item='item'>
     <div class='list-item'>
         <span class='panel-item-header'>
-            <a [routerLink]='"/topics/" + item._id'>{{item.meta.name}}</a>
+            <a [routerLink]='["/topics/", item._id]'>{{item.meta.name}}</a>
         </span>
         <div class='panel-item-body'>
             <p>{{item.meta.desc | stringLimit: 180 | description}}</p>
@@ -18,7 +18,7 @@
         <div class='panel-item-footer'>
             <span>
                 <mat-icon>person</mat-icon>
-                <a [routerLink]='"/user/" + item.auth.userName'>{{item.auth.userName}}</a>
+                <a [routerLink]='["/user/", item.auth.userName]'>{{item.auth.userName}}</a>
             </span>
             <span>
                 <mat-icon>star</mat-icon>
@@ -30,7 +30,7 @@
 
 <ng-template #slnTemplate let-item='item'>
     <div class='list-item'>
-        <a class='panel-item-header' [routerLink]='"/comparison/solutions/" + item._id'>
+        <a class='panel-item-header' [routerLink]='["/solutions", item._id]'>
             {{item.meta.name}}
         </a>
         <div class='panel-item-body'>
@@ -51,7 +51,7 @@
 
 <ng-template #taskTemplate let-item='item'>
     <div class='list-item'>
-        <a class='panel-item-header' [routerLink]='"/results/comparison/" + item._id'>
+        <a class='panel-item-header' [routerLink]='["results", item._id]'>
             {{item.meta.name}}
         </a>
         <div class='panel-item-body'>

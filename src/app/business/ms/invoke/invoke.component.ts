@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, HostListener } from "@angular/core";
-import { MSService, UserService } from "../../services";
+import { MSService, UserService } from "@services";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { DynamicTitleService } from "@core/services/dynamic-title.service";
 import { ResourceSrc, CalcuTaskState, CalcuTask } from '@models';
@@ -77,7 +77,7 @@ export class InvokeComponent extends OgmsBaseComponent implements OnInit {
                 if (!response.error) {
                     let res = response.data;
                     if (res.code === 200)
-                        this.router.navigate(['/results/calculation', res.msrId])
+                        this.router.navigate(['/calculations', res.msrId])
                 }
             }));
     }

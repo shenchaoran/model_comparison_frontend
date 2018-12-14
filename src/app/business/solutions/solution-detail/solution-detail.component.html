@@ -1,0 +1,253 @@
+<button id='create-btn' (click)="createSolution()" mat-fab color="primary" title="Create a new comparison solution">
+    <mat-icon>add</mat-icon>
+</button>
+
+<ng-template #loadingTemp>
+    <div ogms-loading>
+        <mat-spinner></mat-spinner>
+    </div>
+</ng-template>
+
+<ogms-detail-layout *ngIf='solution else loadingTemp'>
+    <!-- <p class="top_title h1">Comparison Solution</p> -->
+    <div class='header'>
+        <ng-container *ngIf='_editMode === "WRITE" else readTemp'>
+            <div class='header-title'>
+                <span class='topic-name'>
+                    <mat-form-field>
+                        <input matInput placeholder='Topic Name' [(ngModel)]='solution.meta.name' required minlength="5">
+                        <mat-error *ngIf='"required"'>必填</mat-error>
+                        <mat-error *ngIf='"minlength"'>长度不够</mat-error>
+                    </mat-form-field>
+                </span>
+                <div class='title-btn-group'>
+                    <button mat-button color='primary' (click)='onEditSave()'><mat-icon inline>save</mat-icon>Save</button>
+                    <button mat-button color='accent' (click)='onEditCancel()'><mat-icon inline>undo</mat-icon>Cancel</button>
+                </div>
+            </div>
+            <div class='header-meta'>
+                <mat-form-field>
+                    <textarea matInput placeholder="" [(ngModel)]='solution.meta.desc' required minlength="5"></textarea>
+                    <mat-error *ngIf='"required"'>必填</mat-error>
+                    <mat-error *ngIf='"minlength"'>长度不够</mat-error>
+                </mat-form-field>
+            </div>
+        </ng-container>
+        <ng-template #readTemp>
+            
+            <div class='customHeader header-title read Subhead mt-0 mb-0'>
+                <div>
+                    <h2 class='Subhead-heading'>{{solution.meta.name}}</h2>
+                    <p class='Subhead-description'>{{solution.meta.desc | description}}</p>
+                    <p class='Subhead-description'>
+                        <a class='author' routerLink='/user'>{{solution.auth.userName}}</a> 
+                        created this solution at {{solution.meta.time | date: 'yyyy.MM.dd'}}
+                    </p>
+                </div>
+                <div class='action-group'>
+                    <button mat-button color='warn' *ngIf='couldEdit' (click)='onDeleteClick()'><mat-icon inline>delete</mat-icon>Delete</button>
+                    <button mat-button color='primary' *ngIf='couldEdit' (click)='onEditClick()'><mat-icon inline>edit</mat-icon>Edit</button>
+                </div>
+            </div>
+        </ng-template>
+    </div>
+
+    <div class='article'>
+        <mat-tab-group [selectedIndex]='0' (selectedIndexChange)='onTabChange($event)'>
+            <mat-tab label='Configuration'>
+                <mat-vertical-stepper *ngIf='_editMode === "WRITE"' linear='true' #stepper [selectedIndex]='0'>
+                    <mat-step label='Select participant model' [stepControl]='ptMsFG'>
+                        <div class='my-2'>
+                            <mat-chip-list multiple>
+                                <mat-chip *ngFor='let ms of mss' [color]='ms.selected? "accent": ""' [selected]='ms.selected'
+                                    (click)='onParticipantsChange(ms)'>{{ms.MDL.meta.name}}</mat-chip>
+                            </mat-chip-list>
+                            <p class='mt-2 ml-2'><mat-error *ngIf='isPtMsFCInvalid'>Please select at least one model to compare.</mat-error></p>
+                            <div class='mt-3'>
+                                <button mat-button matStepperNext (click)='onStepperNext(0)'>Next</button>
+                            </div>
+                        </div>
+                    </mat-step>
+                    <mat-step label='Comparison data configuration' [stepControl]='cmpObjsFG'>
+                        <ogms-cmp-cfg [metrics]='metrics' [mss]='ptMSs' [cmpObjs]='solution.cmpObjs' [mode]='"WRITE"' 
+                            (valueChange)='onCmpCfgChange($event)'></ogms-cmp-cfg>
+                        <p class='mt-2 ml-2'><mat-error *ngIf='isCmpCfgInvalid'>Invalid comparison feature configuration.</mat-error></p>
+                        
+                        <div class='mt-3'>
+                            <button mat-button matStepperPrevious>Previous</button>
+                            <button mat-button matStepperNext (click)='onStepperNext(1)'>Next</button>
+                        </div>
+                    </mat-step>
+                    <mat-step label='Select comparison methods' [stepControl]='cmpMethodsFC'>
+                        <ogms-masonry-methods-list mode='WRITE' [methods]='cmpMethods' (valueChange)='onMethodsChange($event)'></ogms-masonry-methods-list>
+                        <p class='mt-2 ml-2'><mat-error *ngIf='isCmpMethodsInvalid'>Please select at least one model to compare.</mat-error></p>
+                        
+                        <div class='mt-3'>
+                            <button mat-button matStepperPrevious>Previous</button>
+                            <button mat-button matStepperNext (click)='onStepperNext(2)'>Next</button>
+                        </div>
+                    </mat-step>
+                    <mat-step label='Submit'>
+                        <div class='mt-2'>
+                            <button mat-button matStepperPrevious>Previous</button>
+                            <button mat-button color='primary' (click)='onEditSave()'><mat-icon inline>save</mat-icon>Save</button>
+                            <button mat-button color='accent' (click)='onEditCancel()'><mat-icon inline>undo</mat-icon>Cancel</button>
+                        </div>
+                    </mat-step>
+                </mat-vertical-stepper>
+
+                <ng-container *ngIf='_editMode === "READ"'>
+                    <p class='f3-light mb-2 mt-3'>Participanted models: </p>
+                    <div *ngIf='ptMSs?.length else noPtMsTemp' class='my-2' style='width: 95%;'>
+                        <mat-chip-list multiple class='my-2'>
+                            <mat-chip *ngFor='let ms of ptMSs' color='accent' selected>{{ms.MDL.meta.name}}</mat-chip>
+                        </mat-chip-list>
+                    </div>
+                    <ng-template #noPtMsTemp>
+                        <i>No models participant, please select one!</i>
+                    </ng-template>
+
+                    <p class='f3-light mb-2 mt-3'>Comparison data configuration:</p>
+                    <ogms-cmp-cfg class='my-2' [metrics]='metrics' [cmpObjs]='solution.cmpObjs' [mode]='"READ"'></ogms-cmp-cfg>
+
+                    <p class='f3-light mb-2 mt-3'>Comparison methods:</p>
+                    <ogms-masonry-methods-list mode='READ' [methods]='methods'></ogms-masonry-methods-list>
+                    
+                </ng-container>
+            </mat-tab>
+
+            
+            <mat-tab label='Wiki'>
+                <div class='wiki-tab' *ngIf='_editMode === "WRITE"'>
+                    <simplemde [(ngModel)]='solution.meta.wikiMD' [options]='mdeOption'></simplemde>
+                </div>
+                <div class='wiki-tab' *ngIf='_editMode === "READ"'>
+                    <div class='markdown-body' [innerHTML]='solution.meta.wikiHTML'></div>
+                </div>
+            </mat-tab>
+
+            <mat-tab label='Conversation'>
+                <div *ngIf='!conversation' class='col-12 d-flex flex-justify-center flex-items-center' style='height: 350px'>
+                    <mat-spinner></mat-spinner>
+                </div>
+                <ogms-conversation *ngIf='conversation' [ngModel]='conversation'></ogms-conversation>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+
+    <div class='aside'>
+        <div>
+            <ogms-sidebar-section>
+                <div class='title'>
+                    Topic
+                    <mat-icon inline>settings</mat-icon>
+                </div>
+                <div class='menu' #menu *ngIf='user && solution.auth.userId === user._id'>
+                    <div class='title'>Attach topic</div>
+                    <div class='filter'>
+                        <input placeholder='Filter topic' [(ngModel)]='topicFilter'>
+                    </div>
+                    <ul *ngIf='topicList && topicList.length' class='opt-list aside-ul'>
+                        <li *ngFor='let topic of topicList' (click)='onAttachTopic(topic)'>
+                            <div class='sln-select-spacer'>
+                                <mat-icon inline *ngIf='solution.topicIds.indexOf(topic._id) !== -1'>clear</mat-icon>
+                            </div>
+                            {{topic.auth.userName}} / {{topic.meta.name}}
+                        </li>
+                        <li routerLink='/topics'>
+                            <div class='sln-select-spacer'></div>more
+                        </li>
+                    </ul>
+                </div>
+                <div class='body'>
+                    <ng-container *ngIf='attached_topics.length else noTopicTemp'>
+                        <ul class='aside-ul with-route'>
+                            <li *ngFor="let topic of attached_topics" [routerLink]='["/topics", topic._id]'>
+                                {{topic.auth.userName}} / {{topic.meta.name}}
+                            </li>
+                        </ul>
+                    </ng-container>
+                    <ng-template #noTopicTemp>
+                        <i>No related Topic.</i>
+                    </ng-template>
+                </div>
+            </ogms-sidebar-section>
+        </div>
+
+        <div>
+            <ogms-sidebar-section>
+                <div class='title'>
+                    Tasks
+                    <mat-icon inline>settings</mat-icon>
+                </div>
+                <div class='body'>
+                    <ng-container *ngIf='tasks.length else noTaskTemp'>
+                        <ul class='aside-ul with-route'>
+                            <li *ngFor='let task of tasks' [routerLink]='["/results", task._id]'>
+                                {{task.auth.userName}} / {{task.meta.name}}
+                            </li>
+                        </ul>
+                    </ng-container>
+                    <ng-template #noTaskTemp>
+                        <i>No related comparison task.</i>
+                    </ng-template>
+                    <button mat-stroked-button class='create-btn' (click)="createTask()" [routerLink]='[".", solution._id, "invoke"]'>
+                        <mat-icon inline>add</mat-icon><span>Create one</span>
+                    </button>
+                </div>
+            </ogms-sidebar-section>
+        </div>
+
+        <div>
+            <ogms-sidebar-section>
+                <div class='title'>
+                    Models
+                    <mat-icon inline>settings</mat-icon>
+                </div>
+                <div class='body'>
+                    <ng-container *ngIf='ptMSs?.length else noMSTemp'>
+                        <ul class='aside-ul with-route'>
+                            <li *ngFor='let ms of ptMSs' [routerLink]='["/models", ms._id]'>
+                                {{ms.auth.nodeName}} / {{ms.MDL.meta.name}}
+                            </li>
+                        </ul>
+                    </ng-container>
+                    <ng-template #noMSTemp>
+                        <i>No related models.</i>
+                    </ng-template>
+                </div>
+            </ogms-sidebar-section>
+        </div>
+
+        <div>
+            <ogms-sidebar-section>
+                <div class='title'>
+                    {{users.length}} participants
+                </div>
+                <div class='body participants'>
+                    <ng-container *ngFor='let user of users'>
+                        <img [attr.src]='user.avator' [routerLink]='"/user/" + user.username'>
+                    </ng-container>
+                </div>
+            </ogms-sidebar-section>
+        </div>
+
+        <div *ngIf='user'>
+            <ogms-sidebar-section>
+                <div class='title'>
+                    Notifications
+                </div>
+                <div class='body notification'>
+                    <button mat-stroked-button (click)='onSubscribeToggle()'>
+                        <ng-container *ngIf='includeUser else noticeTemp'>
+                            <mat-icon inline>notifications_off</mat-icon><span>Unsubscribe</span>
+                        </ng-container>
+                        <ng-template #noticeTemp>
+                            <mat-icon inline>notifications</mat-icon><span>Subscribe</span>
+                        </ng-template>
+                    </button>
+                </div>
+            </ogms-sidebar-section>
+        </div>
+    </div>
+</ogms-detail-layout>

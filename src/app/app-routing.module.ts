@@ -13,7 +13,7 @@ const routes: Routes = [
     },
     {
         path: 'user',
-        loadChildren: './business/user/index#UserModule'
+        loadChildren: './business/users/index#UsersModule'
     },
     {
         path: 'datasets',
@@ -28,12 +28,16 @@ const routes: Routes = [
         loadChildren: './business/cmp-methods/index#CmpMethodsModule'
     },
     {
-        path: 'comparison',
-        loadChildren: './business/comparison/index#ComparisonModule'
+        path: 'solutions',
+        loadChildren: './business/solutions/index#SolutionsModule'
     },
     {
         path: 'results',
-        loadChildren: './business/results/index#ResultsModule'
+        loadChildren: './business/tasks/index#TasksModule'
+    },
+    {
+        path: 'calculations',
+        loadChildren: './business/calculations/index#CalculationsModule'
     },
     {
         path: 'search',
@@ -45,7 +49,7 @@ const routes: Routes = [
     },
     {
         path: 'topics',
-        loadChildren: './business/topic/index#TopicModule'
+        loadChildren: './business/topics/index#TopicsModule'
     },
     {
         path: '**',
