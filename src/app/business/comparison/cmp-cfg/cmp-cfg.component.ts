@@ -6,13 +6,14 @@ import { ConversationService, SolutionService, UserService, MSService } from "@s
 import { Solution, Task, Topic, MS, CmpMethod, CmpObj, UDXSchema, Metric, } from "@models";
 import * as ObjectId from 'objectid';
 import * as uuidv1 from 'uuid/v1';
+// import $ from 'jquery';
 
 @Component({
     selector: 'ogms-cmp-cfg',
     templateUrl: './cmp-cfg.component.html',
     styleUrls: ['./cmp-cfg.component.scss']
 })
-export class CmpCfgComponent implements OnInit, AfterViewInit {
+export class CmpCfgComponent implements OnInit, AfterViewInit, OnDestroy {
     @Input() cmpObjs: CmpObj[];
     @Input() mode: 'WRITE' | 'READ' = 'WRITE';
     @Input() mss: MS[];
@@ -75,7 +76,7 @@ export class CmpCfgComponent implements OnInit, AfterViewInit {
         if(this.mode === 'WRITE') {
             // if(this.data.length === 0)
             //     this.data.push(['', '']);
-            this.mss.forEach((ms, i) => {
+            _.forEach(this.mss, (ms, i) => {
                 // if(this.data.length === 1)
                 //     this.data[0].push('', '');
                 this.colHeaders.push(`Output`, `Variable`);
@@ -103,7 +104,7 @@ export class CmpCfgComponent implements OnInit, AfterViewInit {
                                     });
                                 }
                                 else if(schema.structure.type === 'table') {
-                                    schema.structure.this.columns.map((column, i) => {
+                                    schema.structure.columns.map((column, i) => {
                                         source.add(column.id)
                                     })
                                 }
@@ -152,29 +153,27 @@ export class CmpCfgComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit() {
-        let self = this;
-        if(self.hasNoCmpCfg)
+        if(this.hasNoCmpCfg)
             return ;
-        setTimeout(function() {
-            // TODO this 指向混乱
-            $(self.gridTableRef.nativeElement).jexcel({
+        setTimeout(() => {
+            $(this.gridTableRef.nativeElement).jexcel({
                 wordWrap: true,
-                contextMenu: function() {
+                contextMenu: () => {
                     event.stopPropagation();
                     event.preventDefault();
                     return false;
                 },
-                colHeaders: self.colHeaders,
-                colWidths: self.colWidths,
-                columns: self.columns,
+                colHeaders: this.colHeaders,
+                colWidths: this.colWidths,
+                columns: this.columns,
                 allowInsertColumn: false,
                 allowDeleteColumn: false,
-                allowInsertRow: self.mode === 'WRITE'? true: false,
-                allowDeleteRow: self.mode === 'WRITE'? true: false,
-                data: self.data,
-                minSpareRows: self.mode === 'WRITE'? 1: 0,
-                editable: self.mode === 'WRITE'? true: false,
-                onchange: function (instance, cell, value) {
+                allowInsertRow: this.mode === 'WRITE'? true: false,
+                allowDeleteRow: this.mode === 'WRITE'? true: false,
+                data: this.data,
+                minSpareRows: this.mode === 'WRITE'? 1: 0,
+                editable: this.mode === 'WRITE'? true: false,
+                onchange:  (instance, cell, value) => {
                     let cellName = $(instance).jexcel('getColumnNameFromId', $(cell).prop('id'));
                     let colIndex = cellName[0].charCodeAt() - 'A'.charCodeAt(0);
                     if(colIndex > 1 && colIndex%2 === 0) {
@@ -182,15 +181,15 @@ export class CmpCfgComponent implements OnInit, AfterViewInit {
                         $(instance).jexcel('setValue', variableCell, '')
                     }
                 },
-                onafterchange: function () {
-                    let table = $(self.gridTableRef.nativeElement).jexcel('getData', false);
-                    self.validate(table);
-                },
+                onafterchange: () => {
+                    let table = $(this.gridTableRef.nativeElement).jexcel('getData', false);
+                    this.validate(table);
+                }
             });
-            $(self.gridTableRef.nativeElement).find('thead').before(`<thead class='jexcel_label'><tr>${self.nestedHeaders}</tr></thead>`);
+            $(this.gridTableRef.nativeElement).find('thead').before(`<thead class='jexcel_label'><tr>${this.nestedHeaders}</tr></thead>`);
             
-            let table = $(self.gridTableRef.nativeElement).jexcel('getData', false);
-            self.validate(table);
+            let table = $(this.gridTableRef.nativeElement).jexcel('getData', false);
+            this.validate(table);
         }, 10);
     }
 
@@ -254,5 +253,11 @@ export class CmpCfgComponent implements OnInit, AfterViewInit {
         else {
             this.valueChange.emit({valid: false});
         }
+    }
+
+    ngOnDestroy() {
+        let dom = _.get(this, 'gridTableRef.nativeElement')
+        if(dom)
+            $(dom).jexcel('destroy');
     }
 }

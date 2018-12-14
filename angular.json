@@ -40,8 +40,7 @@
                         "scripts": [
                             "node_modules/lodash/lodash.min.js",
                             "node_modules/jquery/dist/jquery.min.js",
-                            "node_modules/jexcel/dist/js/jquery.jexcel.js",
-                            "src/assets/js/jquery-ui-1.12.1/jquery-ui.min.js",
+                            "src/assets/js/jexcel/js/jquery.jexcel.js",
                             "node_modules/material-components-web/dist/material-components-web.min.js"
                         ]
                     },

@@ -69,7 +69,7 @@
                         </div>
                     </mat-step>
                     <mat-step label='Comparison data configuration' [stepControl]='cmpObjsFG'>
-                        <ogms-cmp-cfg [metrics]='metrics' [mss]='mss | filter: "selected"' [cmpObjs]='solution.cmpObjs' [mode]='"WRITE"' 
+                        <ogms-cmp-cfg [metrics]='metrics' [mss]='ptMSs' [cmpObjs]='solution.cmpObjs' [mode]='"WRITE"' 
                             (valueChange)='onCmpCfgChange($event)'></ogms-cmp-cfg>
                         <p class='mt-2 ml-2'><mat-error *ngIf='isCmpCfgInvalid'>Invalid comparison feature configuration.</mat-error></p>
                         
@@ -97,7 +97,7 @@
                 </mat-vertical-stepper>
 
                 <ng-container *ngIf='_editMode === "READ"'>
-                    <p class='f3-light my-2'>Participant models: </p>
+                    <p class='f3-light mb-2 mt-3'>Participanted models: </p>
                     <div *ngIf='ptMSs?.length else noPtMsTemp' class='my-2' style='width: 95%;'>
                         <mat-chip-list multiple class='my-2'>
                             <mat-chip *ngFor='let ms of ptMSs' color='accent' selected>{{ms.MDL.meta.name}}</mat-chip>
@@ -107,10 +107,10 @@
                         <i>No models participant, please select one!</i>
                     </ng-template>
 
-                    <p class='f3-light my-2'>Comparison data configuration:</p>
+                    <p class='f3-light mb-2 mt-3'>Comparison data configuration:</p>
                     <ogms-cmp-cfg class='my-2' [cmpObjs]='solution.cmpObjs' [mode]='"READ"'></ogms-cmp-cfg>
 
-                    <p class='f3-light my-2'>Comparison methods:</p>
+                    <p class='f3-light mb-2 mt-3'>Comparison methods:</p>
                     <ogms-masonry-methods-list mode='READ' [methods]='methods'></ogms-masonry-methods-list>
                     
                 </ng-container>
