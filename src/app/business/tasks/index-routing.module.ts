@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { CmpDetailComponent } from './cmp-detail/cmp-detail.component';
-import { CmpListComponent } from './cmp-list/cmp-list.component';
+import { CmpDetailComponent } from './task-detail/task-detail.component';
+import { CmpListComponent } from './task-list/task-list.component';
 import { HeaderMenuLayoutComponent } from '@shared';
 
 const routes: Routes = [

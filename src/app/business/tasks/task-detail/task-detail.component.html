@@ -48,6 +48,12 @@
             </mat-tab>
 
             <mat-tab *ngFor="let cmpObj of task?.cmpObjs; let i=index" [label]='"Feature " + (+i+1) + ": " + cmpObj.name'>
+                <p class='my-3 f3-light'>Comparison progress:</p>
+                <div class='my-3'>
+                    <ogms-cmp-progress [data]='cmpObj.methods'></ogms-cmp-progress>
+                </div>
+                
+                
                 <p class='mt-3'>{{cmpObj.desc}}</p>
 
                 <!-- <p class='f3-light my-2'>Comparison methods:</p> -->

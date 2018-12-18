@@ -4,9 +4,9 @@ import { TaskService } from '@services';
 import { DynamicTitleService } from '@core/services/dynamic-title.service';
 
 @Component({
-  selector: 'ogms-cmp-list',
-  templateUrl: './cmp-list.component.html',
-  styleUrls: ['./cmp-list.component.scss']
+  selector: 'ogms-task-list',
+  templateUrl: './task-list.component.html',
+  styleUrls: ['./task-list.component.scss']
 })
 export class CmpListComponent {
     

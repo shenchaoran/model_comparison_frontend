@@ -24,12 +24,13 @@ import {
 import { OlModule } from '../ol';
 import { ConversationsModule } from '../conversations';
 import { ResultsRoutingModule } from './index-routing.module';
-import { CmpListComponent } from './cmp-list/cmp-list.component';
-import { CmpDetailComponent } from './cmp-detail/cmp-detail.component';
+import { CmpListComponent } from './task-list/task-list.component';
+import { CmpDetailComponent } from './task-detail/task-detail.component';
 import { CmpSharedModule } from '../cmp-shared';
 import { ContourMapResultComponent } from './contour-map-result/contour-map-result.component';
 import { SolutionsModule } from '../solutions';
 import { ServerSideDiagramComponent } from './server-side-diagram/server-side-diagram.component';
+import { CmpProgressComponent } from './cmp-progress/cmp-progress.component'
 
 const modules = [
     NgxSharedModule,
@@ -61,6 +62,7 @@ const components = [
     CmpDetailComponent,
     ContourMapResultComponent,
     ServerSideDiagramComponent,
+    CmpProgressComponent,
 ];
 const services = [];
 @NgModule({

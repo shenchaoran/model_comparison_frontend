@@ -19,9 +19,9 @@ import echarts from 'echarts';
 import { findIndex, get } from 'lodash';
 
 @Component({
-    selector: 'ogms-cmp-detail',
-    templateUrl: './cmp-detail.component.html',
-    styleUrls: ['./cmp-detail.component.scss'],
+    selector: 'ogms-task-detail',
+    templateUrl: './task-detail.component.html',
+    styleUrls: ['./task-detail.component.scss'],
     providers: [ConversationService]
 })
 export class CmpDetailComponent extends OgmsBaseComponent implements OnInit {

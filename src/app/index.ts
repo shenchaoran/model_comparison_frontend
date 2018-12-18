@@ -6,7 +6,7 @@ import { CoreModule } from '@core';
 import { NgxSharedModule } from '@shared';
 import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
 import { OverlayModule } from '@angular/cdk/overlay';
-import { AppRoutingModule } from './app-routing.module';
+import { AppRoutingModule } from './index-routing.module';
 
 @Component({
     selector: 'ogms-app',

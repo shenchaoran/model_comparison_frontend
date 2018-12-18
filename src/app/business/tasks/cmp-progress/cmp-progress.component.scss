@@ -1,0 +1,42 @@
+.cmp-progress-table {
+    width: 100%;
+    overflow: auto;
+}
+
+.status-badge {
+    width: 8px;
+    height: 8px;
+    border-radius: 8px;
+    display: inline-block;
+    margin-right: 8px;
+}
+
+table {
+    .mat-column-name {
+        width: 25%;
+    }
+    .mat-column-state {
+        width: 15%;
+    }
+    .mat-column-progress {
+        width: 40%;
+        .cmp-progress-td {
+            display: flex;
+            align-items: center;
+            span{
+                flex: 0 0 50px;
+                margin: 0 15px;
+                text-align: right;
+            }
+            .cmp-progress-bar {
+                flex: 1 1;
+            }
+        }
+    }
+    .mat-column-actions {
+        width: 20%;
+        button {
+            display: inline;
+        }
+    }
+}
