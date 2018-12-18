@@ -11,7 +11,7 @@
         </mat-radio-group>
     </div>
     <div *ngIf='mode === "READ"'>
-        <p class='f4-light my-2'>Time interval: {{cmpObjs[0].temporal}}</p>
+        <p class='f4-light my-2'>Time interval: {{cmpObjs[0]?.temporal}}</p>
     </div>
 
     <div [id]='targetId' class='my-3 jexcel-table' #gridTable></div>

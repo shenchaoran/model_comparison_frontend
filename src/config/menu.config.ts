@@ -23,7 +23,7 @@ export const HEADER_MENUS: MenuClass[] = [
     },
     {
         path: '/solutions',
-        label: 'Comparison'
+        label: 'Solutions'
     },
     {
         path: '/results',

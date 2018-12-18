@@ -29,6 +29,7 @@ import { CmpDetailComponent } from './cmp-detail/cmp-detail.component';
 import { CmpSharedModule } from '../cmp-shared';
 import { ContourMapResultComponent } from './contour-map-result/contour-map-result.component';
 import { SolutionsModule } from '../solutions';
+import { ServerSideDiagramComponent } from './server-side-diagram/server-side-diagram.component';
 
 const modules = [
     NgxSharedModule,
@@ -59,6 +60,7 @@ const components = [
     CmpListComponent,
     CmpDetailComponent,
     ContourMapResultComponent,
+    ServerSideDiagramComponent,
 ];
 const services = [];
 @NgModule({

@@ -1,9 +1,11 @@
 <ul *ngIf='list' class="mdc-image-list mdc-image-list--masonry my-masonry-image-list mdc-image-list--with-text-protection">
-    <li matRipple *ngFor='let method of list' class="mdc-image-list__item">
-        <img class="mdc-image-list__image" [src]='method.meta.img'>
-        <div class="mdc-image-list__supporting" style='width: 100%;'>
-            <span class="mdc-image-list__label">{{method.meta.name}}</span>
-            <mat-checkbox *ngIf='mode === "WRITE"' [checked]='method.checked' (change)='onMethodChecked($event, method)' class='float-right'></mat-checkbox>
+    <li *ngFor='let method of list' class="mdc-image-list__item">
+        <div matRipple>
+            <img class="mdc-image-list__image" [src]='method.meta.img'>
+            <div class="mdc-image-list__supporting" style='width: 100%;'>
+                <span class="mdc-image-list__label">{{method.meta.name}}</span>
+                <mat-checkbox *ngIf='mode === "WRITE"' [checked]='method.checked' (change)='onMethodChecked($event, method)' class='float-right'></mat-checkbox>
+            </div>
         </div>
     </li>
 </ul>

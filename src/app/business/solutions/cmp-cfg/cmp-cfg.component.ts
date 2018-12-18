@@ -233,6 +233,7 @@ export class CmpCfgComponent implements OnInit, AfterViewInit, OnChanges, OnDest
             return ;
         setTimeout(() => {
             this.buildTable();
+            this.validate();
         }, 10);
     }
 

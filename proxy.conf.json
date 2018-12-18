@@ -1,11 +1,11 @@
 {
-    "/api": {
-        "target": "http://192.168.139.128:9999",
-        "target-": "http://localhost:9999",
+    "/CMIP-backend/api": {
+        "target": "http://223.2.37.76:9999",
         "secure": false
     }, 
-    "/geoserver": {
+    "/CMIP-backend/geoserver": {
         "target": "http://localhost:8787",
+        "pathRewrite": {"^/CMIP-backend/geoserver": "geoserver"},
         "secure": false
     }
 }

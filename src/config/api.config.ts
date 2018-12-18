@@ -1,4 +1,4 @@
 export const API = {
-    backend: '/api',
-    geoserver: '/geoserver',
+    backend: '/CMIP-backend/api',
+    geoserver: '/CMIP-backend/geoserver',
 }

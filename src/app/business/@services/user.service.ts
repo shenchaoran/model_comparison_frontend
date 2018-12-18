@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { Location } from '@angular/common';
 import { _HttpClient } from '@core/services/http.client';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -16,13 +16,14 @@ export class UserService {
     public logined$: BehaviorSubject<boolean>;
 
     constructor(
-        private http?: _HttpClient,
-        private route?: ActivatedRoute,
-        private router?: Router,
-        private location?: Location,
+        private http: _HttpClient,
+        private route: ActivatedRoute,
+        private router: Router,
+        private location: Location,
+        @Inject('API') private api,
     ) {
         console.log('******** UserService constructor', counter++);
-        this.baseUrl = '/api/user';
+        this.baseUrl = `${this.api.backend}/user`;
         var jwt = localStorage.getItem('jwt');
         if (jwt) {
             jwt = JSON.parse(jwt);
@@ -151,7 +152,7 @@ export class UserService {
     }
 
     getUserInfo(userName): Observable<any> { 
-        return this.http.get('/api/user'+`/${userName}`).pipe(
+        return this.http.get(`${this.api.backend}/user/${userName}`).pipe(
             map(res => {
                 if (res.error) {
                     console.error('error in user.service: ', `${res.error.code} - ${res.error.desc}`);

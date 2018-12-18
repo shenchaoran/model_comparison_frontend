@@ -55,13 +55,12 @@
                     <p class='f3-light my-3'>{{i+1}}. {{method?.name}}:</p>
 
                     <ng-container *ngIf='method?.name === "table series visualization" || method?.name === "Line chart"'>
-
                         <div *ngIf='method?.result?.state === "FINISHED_SUCCEED"' [attr.id]='cmpObj.id + "-" + method.id'
                             #echartDOM class='echart-dom'></div>
                     </ng-container>
 
-                    <ng-container *ngIf='method?.name === "Taylor diagram"'>
-
+                    <ng-container *ngIf='method?.name === "Taylor diagram" || method?.name === "Box diagram" || method?.name === "Scatter diagram"'>
+                        <ogms-server-side-diagram *ngIf='method?.result?.state === "FINISHED_SUCCEED"' [data]='method.result'></ogms-server-side-diagram>
                     </ng-container>
 
                     <ng-container *ngIf='method?.name === "Sub-region line chart"'>
@@ -70,10 +69,6 @@
                     </ng-container>
 
                     <ng-container *ngIf='method?.name === "Bias contour map"'>
-
-                    </ng-container>
-
-                    <ng-container *ngIf='method?.name === "Sub-region bias contour map"'>
                         <div class='ml-2'>
                             <ogms-contour-map-result *ngIf='method?.result?.state === "FINISHED_SUCCEED"' [data]='method.result'></ogms-contour-map-result>
                         </div>
@@ -103,6 +98,28 @@
     </article>
 
     <aside class='aside'>
+
+        <div>
+            <ogms-sidebar-section>
+                <div class='title'>
+                    Solution
+                    <mat-icon inline>settings</mat-icon>
+                </div>
+                <div class='body'>
+                    <ng-container *ngIf='solution else noSlnTemp'>
+                        <ul class='aside-ul with-route'>
+                            <li [routerLink]='["/solutions", solution._id]'>
+                                {{solution.auth.userName}} / {{solution.meta.name}}
+                            </li>
+                        </ul>
+                    </ng-container>
+                    <ng-template #noSlnTemp>
+                        <i>Can't find related solution.</i>
+                    </ng-template>
+                </div>
+            </ogms-sidebar-section>
+        </div>
+
         <div>
             <ogms-sidebar-section>
                 <div class='title'>
@@ -118,6 +135,27 @@
                         </ul>
                     </ng-container>
                     <ng-template #noMSTemp>
+                        <i>No related models.</i>
+                    </ng-template>
+                </div>
+            </ogms-sidebar-section>
+        </div>
+
+        <div>
+            <ogms-sidebar-section>
+                <div class='title'>
+                    Calculation records
+                    <mat-icon inline>settings</mat-icon>
+                </div>
+                <div class='body'>
+                    <ng-container *ngIf='calcuTasks.length else noCalcuTemp'>
+                        <ul class='aside-ul with-route'>
+                            <li *ngFor='let calcuTask of calcuTasks' [routerLink]='["/calculations", calcuTask._id]'>
+                                {{calcuTask.auth.userName}} / {{calcuTask.meta.name}}
+                            </li>
+                        </ul>
+                    </ng-container>
+                    <ng-template #noCalcuTemp>
                         <i>No related models.</i>
                     </ng-template>
                 </div>

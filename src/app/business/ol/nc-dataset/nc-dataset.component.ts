@@ -61,11 +61,14 @@ export class NcDatasetComponent implements OnInit, AfterViewInit {
 
         this.spatialResolution = `${latVariable.step} ° * ${longVariable.step} °`;
 
-        this.selectedTime = _.get(this, 'timeVariable.start');
+        let startTime = _.get(this, 'timeVariable.start')
+        this.selectedTime = startTime;
         let timeUnit = _.get(this, 'timeVariable.unit'),
             timeStep = _.get(this, 'timeVariable.step');
-        this.startTime = this.ISOTime(_.get(this, 'timeVariable.start'), timeUnit)
-        this.endTime = this.ISOTime(_.get(this, 'timeVariable.end'), timeUnit)
+        if(startTime) {
+            this.startTime = this.ISOTime(_.get(this, 'timeVariable.start'), timeUnit)
+            this.endTime = this.ISOTime(_.get(this, 'timeVariable.end'), timeUnit)
+        }
         if(timeStep) {
             if(_.startsWith(timeUnit, 'days since')) {
                 let yearStep = timeStep/365

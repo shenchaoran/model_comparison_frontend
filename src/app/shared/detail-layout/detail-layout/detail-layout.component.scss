@@ -50,6 +50,9 @@
 
 
     /deep/ .body {
+        >article {
+            overflow: hidden;
+        }
         .article {
             overflow: hidden;
 

@@ -15,7 +15,7 @@
             <div class='header-title'>
                 <span class='topic-name'>
                     <mat-form-field>
-                        <input matInput placeholder='Topic Name' [(ngModel)]='solution.meta.name' required minlength="5">
+                        <input matInput placeholder='Solution Name' [(ngModel)]='solution.meta.name' required minlength="5">
                         <mat-error *ngIf='"required"'>必填</mat-error>
                         <mat-error *ngIf='"minlength"'>长度不够</mat-error>
                     </mat-form-field>
@@ -189,7 +189,7 @@
                         </ul>
                     </ng-container>
                     <ng-template #noTaskTemp>
-                        <i>No related comparison task.</i>
+                        <p><i>No related comparison task.</i></p>
                     </ng-template>
                     <button mat-stroked-button class='create-btn' (click)="createTask()" [routerLink]='[".", solution._id, "invoke"]'>
                         <mat-icon inline>add</mat-icon><span>Create one</span>
