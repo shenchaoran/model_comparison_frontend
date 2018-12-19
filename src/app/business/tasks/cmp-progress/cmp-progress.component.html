@@ -22,6 +22,10 @@
                 <div class='status-badge ogms-accent'></div>
                 <span>Unstarted</span>
             </span>
+            <span *ngIf='row.state === "PENDING"'>
+                <div class='status-badge ogms-accent'></div>
+                <span>Pending</span>
+            </span>
         </td>
     </ng-container>
 
@@ -29,7 +33,7 @@
         <th mat-header-cell *matHeaderCellDef> Progress </th>
         <td mat-cell *matCellDef="let row">
             <div class='cmp-progress-td'>
-                <mat-progress-bar class='cmp-progress-bar' mode="determinate" color='primary' [value]="row?.progress"></mat-progress-bar>
+                <mat-progress-bar class='cmp-progress-bar' [mode]="row.state === 'RUNNING'? 'indeterminate': 'determinate'" color='primary' [value]="row?.progress"></mat-progress-bar>
                 <span>{{row.progress? row.progress: 0}}%</span>
             </div>
         </td>
@@ -38,13 +42,13 @@
     <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef> Actions </th>
         <td mat-cell *matCellDef="let row">
-            <button mat-icon-button color='primary'>
+            <button mat-icon-button color='primary' (click)='onActionsChange(row, "start")'>
                 <mat-icon>play_arrow</mat-icon>
             </button>
-            <button mat-icon-button color='warn'>
+            <button mat-icon-button color='warn' (click)='onActionsChange(row, "stop")'>
                 <mat-icon>stop</mat-icon>
             </button>
-            <button mat-icon-button color='accent'>
+            <button mat-icon-button color='accent' (click)='onActionsChange(row, "restart")'>
                 <mat-icon>refresh</mat-icon>
             </button>
         </td>

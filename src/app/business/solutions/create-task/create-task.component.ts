@@ -1,6 +1,6 @@
 import { Component, OnInit, HostListener } from "@angular/core";
 import { SolutionService, TaskService, UserService, } from "@services";
-import { Task, CalcuTask, ResourceSrc, CmpState, CalcuTaskState, MS, Solution,  } from '@models';
+import { Task, CalcuTask, ResourceSrc, OGMSState, OGMSState, MS, Solution,  } from '@models';
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { DynamicTitleService } from "@core/services/dynamic-title.service";
 import { OgmsBaseComponent } from '@shared';
@@ -134,10 +134,10 @@ export class CreateTaskComponent extends OgmsBaseComponent implements OnInit {
 
     submitTask(type) {
         if (type === 'save') {
-            this.task.state = CmpState.INIT;
+            this.task.state = OGMSState.INIT;
         }
         else if (type === 'run') {
-            this.task.state = CmpState.COULD_START;
+            this.task.state = OGMSState.COULD_START;
         }
         let formData = this.cmpTaskFG.value;
         this.task.meta.name = formData.meta.name;
@@ -160,10 +160,10 @@ export class CreateTaskComponent extends OgmsBaseComponent implements OnInit {
 
             calcuTask.meta.name = '';
             if (type === 'save') {
-                calcuTask.state = CalcuTaskState.INIT;
+                calcuTask.state = OGMSState.INIT;
             }
             else {
-                calcuTask.state = CalcuTaskState.COULD_START;
+                calcuTask.state = OGMSState.COULD_START;
             }
             calcuTasks.push(calcuTask);
         });

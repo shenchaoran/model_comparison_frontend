@@ -3,7 +3,7 @@ import { Router, ActivatedRoute, Params } from "@angular/router";
 import { DynamicTitleService } from "@core/services/dynamic-title.service";
 import { ReactiveFormsModule } from "@angular/forms";
 import { OgmsBaseComponent } from '@shared';
-import { CalcuTaskState, Conversation } from '@models'
+import { OGMSState, Conversation } from '@models'
 import { Observable, interval } from 'rxjs'
 import { map, switchMap, filter, tap, startWith } from 'rxjs/operators';
 import { ConversationService, MSRService, MSService, UserService } from "@services";
@@ -53,7 +53,7 @@ export class CalcuDetailComponent extends OgmsBaseComponent implements OnInit {
         const subscription = record$.subscribe(res => {
             if(!res.error) {
                 this.msRecord = res.data.msr;
-                if(this.msRecord.state === 'COULD_START' || this.msRecord.state !== CalcuTaskState.RUNNING) {
+                if(this.msRecord.state === 'COULD_START' || this.msRecord.state !== OGMSState.RUNNING) {
                     subscription.unsubscribe();
                 }
             }

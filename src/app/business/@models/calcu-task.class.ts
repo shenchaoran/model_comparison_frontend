@@ -8,6 +8,7 @@ import { ResourceSrc } from './resource.enum';
 import { Event } from './model-service.class';
 import * as ObjectID from 'objectid';
 import { cloneDeep, map } from 'lodash';
+import { OGMSState } from './task.class';
 
 
 export class CalcuTask {
@@ -43,7 +44,7 @@ export class CalcuTask {
         cached: boolean,
         dataId: string
     };
-    state: CalcuTaskState;
+    state: OGMSState;
     progress: number;
     subscribed_uids: string[];
     cid: string;
@@ -81,7 +82,7 @@ export class CalcuTask {
             time: new Date().getTime()
         };
         this.subscribed_uids = [];
-        this.state = CalcuTaskState.INIT;
+        this.state = OGMSState.INIT;
         if(user) {
             this.auth = {
                 userId: user._id,
@@ -98,13 +99,3 @@ export class CalcuTask {
         }
     }
 }
-
-export enum CalcuTaskState {
-    INIT = 'INIT',
-    COULD_START = 'COULD_START',
-    START_PENDING = 'START_PENDING',
-    START_FAILED = 'START_FAILED',
-    RUNNING = 'RUNNING',
-    FINISHED_FAILED = 'FINISHED_FAILED',
-    FINISHED_SUCCEED = 'FINISHED_SUCCEED'
-};

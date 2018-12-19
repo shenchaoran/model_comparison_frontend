@@ -14,7 +14,7 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { OgmsBaseComponent, } from '@shared';
 import { Observable, interval } from 'rxjs'
 import { map, switchMap, filter, tap, startWith } from 'rxjs/operators';
-import { CmpState } from '@models';
+import { OGMSState } from '@models';
 import echarts from 'echarts';
 import { findIndex, get } from 'lodash';
 
@@ -80,10 +80,10 @@ export class CmpDetailComponent extends OgmsBaseComponent implements OnInit {
             this.ptMSs = res.data.ptMSs;
             this.solution = res.data.solution;
 
-            if (this.task.state !== CmpState.RUNNING) {
+            if (this.task.state !== OGMSState.RUNNING) {
                 subscription.unsubscribe();
-                if (this.task.state === CmpState.FINISHED_SUCCEED ||
-                    this.task.state === CmpState.FINISHED_FAILED)
+                if (this.task.state === OGMSState.FINISHED_SUCCEED ||
+                    this.task.state === OGMSState.FINISHED_FAILED)
                     this.buildChart(0);
             }
         });
@@ -100,7 +100,7 @@ export class CmpDetailComponent extends OgmsBaseComponent implements OnInit {
                     method.name === 'table series visualization' ||
                     method.name === 'Line chart'
                 ) {
-                    if (_.get(method, 'result.state') === CmpState.FINISHED_SUCCEED) {
+                    if (_.get(method, 'result.state') === OGMSState.FINISHED_SUCCEED) {
                         // console.log(this.echartDOM.toArray())
                         let echartDOM = _.find(this.echartDOM.toArray(), echartDOM => echartDOM.nativeElement.id === `${cmpObj.id}-${method.id}`)
                         if(echartDOM) {
@@ -173,5 +173,4 @@ export class CmpDetailComponent extends OgmsBaseComponent implements OnInit {
     onEditClick() {
 
     }
-
 }

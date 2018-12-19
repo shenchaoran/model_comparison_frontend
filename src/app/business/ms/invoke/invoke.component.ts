@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, HostListener } from "@angular/core";
 import { MSService, UserService } from "@services";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { DynamicTitleService } from "@core/services/dynamic-title.service";
-import { ResourceSrc, CalcuTaskState, CalcuTask } from '@models';
+import { ResourceSrc, OGMSState, CalcuTask } from '@models';
 import { filter } from 'rxjs/operators';
 import {
     AbstractControl,
@@ -67,10 +67,10 @@ export class InvokeComponent extends OgmsBaseComponent implements OnInit {
 
     invoke(type) {
         if (type === 'save') {
-            this.calcuTask.state = CalcuTaskState.INIT;
+            this.calcuTask.state = OGMSState.INIT;
         }
         else if (type === 'invoke') {
-            this.calcuTask.state = CalcuTaskState.COULD_START;
+            this.calcuTask.state = OGMSState.COULD_START;
         }
         this._subscriptions.push(this.msService.invoke(this.ms._id, this.calcuTask)
             .subscribe(response => {

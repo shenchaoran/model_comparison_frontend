@@ -26,7 +26,7 @@
                         <span>
                             {{ msRecord.state === 'INIT'? 'To configured' : msRecord.state === 'RUNNING'?
                             'Running' : msRecord.state === 'COULD_START'?
-                            'Ready to start' : msRecord.state === 'START_PENDING'? 'Starting' :
+                            'Ready to start' : msRecord.state === 'PENDING'? 'Starting' :
                             msRecord.state === 'START_FAILED'?
                             'Invoking failed' : msRecord.state === 'FINISHED_FAILED'? 'Run failed' :
                             msRecord.state
