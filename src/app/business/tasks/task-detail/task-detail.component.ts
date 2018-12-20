@@ -32,6 +32,7 @@ export class CmpDetailComponent extends OgmsBaseComponent implements OnInit {
     solution;
     metrics;
     hadTriggeredConversation;
+    spatialType: 'site' | 'region';
     @ViewChildren('echartDOM') echartDOM: QueryList<ElementRef>;
     chartRecord = {};
 
@@ -62,6 +63,18 @@ export class CmpDetailComponent extends OgmsBaseComponent implements OnInit {
                 this.solution = res.data.solution;
                 this.calcuTasks = res.data.calcuTasks;
                 this.metrics = res.data.metrics;
+
+                _.map(this.solution.cmpObjs, cmpObj => {
+                    _.map(cmpObj.methods, method => {
+                        if(method.name === 'Sub-region bias contour map' || method.name === 'Heat map' || method.name === 'Sub-region line chart') {
+                            this.spatialType = 'region';
+                        }
+                        else if(method.name === "table series visualization" || method.name === "Line chart") {
+                            this.spatialType = 'site';
+                        }
+                    })
+                })
+
                 // this.buildChart(0);
                 // this.fetchInterval();
             }

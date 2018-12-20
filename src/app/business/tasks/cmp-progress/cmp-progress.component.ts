@@ -51,7 +51,7 @@ export class CmpProgressComponent implements OnInit, AfterViewInit, OnDestroy {
                 shouldAlert = true;
             }
         }
-        if(method.state === OGMSState.INIT) {
+        if(method.state === OGMSState.INIT || method.state === OGMSState.FINISHED_FAILED) {
             if(message === 'stop') {
                 alertInfo = 'the task hasn\'t start!'
                 shouldAlert = true;

@@ -1,12 +1,13 @@
 import { Component, OnInit, HostListener } from "@angular/core";
 import { SolutionService, TaskService, UserService, } from "@services";
-import { Task, CalcuTask, ResourceSrc, OGMSState, OGMSState, MS, Solution,  } from '@models';
+import { Task, CalcuTask, ResourceSrc, OGMSState, MS, Solution,  } from '@models';
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { DynamicTitleService } from "@core/services/dynamic-title.service";
 import { OgmsBaseComponent } from '@shared';
 import { FormBuilder, Validators, FormGroup, FormArray, FormControl } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { map, filter, includes,  } from 'lodash';
+import * as ObjectID from 'objectid';
 
 @Component({
     selector: 'ogms-create-task',
@@ -20,12 +21,19 @@ export class CreateTaskComponent extends OgmsBaseComponent implements OnInit {
 
     task;
     cmpTaskFG;
-    hasSubRegion = false;
-
+    spatialType: 'site' | 'region';
+    
+    get siteDataset() {
+        return _.find(this.stds, {_id: '5b9012e4c29ca433443dcfab'})
+    }
+    get multipleSite() {
+        return !(this.ptMSs.length>1)
+    }
     get metaFG() { return this.cmpTaskFG.get('meta'); }
     get authFC() { return this.cmpTaskFG.get('auth'); }
-    get calcuTasksFG() { return this.cmpTaskFG.get('calcuTasks'); }
-    get regionsFG() { return this.cmpTaskFG.get('regions'); }
+    get calcuTasksFC() { return this.cmpTaskFG.get('calcuTasks'); }
+    get regionsFC() { return this.cmpTaskFG.get('regions'); }
+    get sitesFC() { return this.cmpTaskFG.get('sites'); }
 
     constructor(
         public route: ActivatedRoute,
@@ -48,6 +56,7 @@ export class CreateTaskComponent extends OgmsBaseComponent implements OnInit {
             auth: [ResourceSrc.PUBLIC, [Validators.required]],
             calcuTasks: [[], Validators.required],
             regions: [[], Validators.required],
+            sites: [[], Validators.required],
         });
 
         // this.cmpTaskFG.statusChanges.subscribe(status => {})
@@ -60,19 +69,32 @@ export class CreateTaskComponent extends OgmsBaseComponent implements OnInit {
                 this.ptMSs = res.data.ptMSs;
                 this.stds = res.data.stds;
 
-                this.calcuTasksFG.value = this.ptMSs.map(ms => {
+                this.calcuTasksFC.value = this.ptMSs.map(ms => {
                     return new CalcuTask(this.userService.user, ms)
                 });
-                this.calcuTasksFG.updateValueAndValidity();
-                this.calcuTasksFG.markAsPristine();
+                this.calcuTasksFC.updateValueAndValidity();
+                this.calcuTasksFC.markAsPristine();
 
                 _.map(this.sln.cmpObjs, cmpObj => {
                     _.map(cmpObj.methods, method => {
                         if(method.name === 'Sub-region bias contour map' || method.name === 'Heat map' || method.name === 'Sub-region line chart') {
-                            this.hasSubRegion = true;
+                            this.spatialType = 'region';
+                        }
+                        else if(method.name === "table series visualization" || method.name === "Line chart") {
+                            this.spatialType = 'site';
                         }
                     })
                 })
+                if(this.spatialType === 'region') {
+                    this.sitesFC.clearValidators();
+                    this.regionsFC.setValidators(Validators.required);
+                }
+                else if(this.spatialType === 'site') {
+                    this.regionsFC.clearValidators();
+                    this.sitesFC.setValidators(Validators.required);
+                }
+                this.sitesFC.updateValueAndValidity();
+                this.regionsFC.updateValueAndValidity();
             }
         });
     }
@@ -82,11 +104,11 @@ export class CreateTaskComponent extends OgmsBaseComponent implements OnInit {
         valid: boolean,
     }) {
         if(calcuTasksChange.valid) {
-            this.calcuTasksFG.value = calcuTasksChange.value;
-            this.calcuTasksFG.updateValueAndValidity();
+            this.calcuTasksFC.value = calcuTasksChange.value;
+            this.calcuTasksFC.updateValueAndValidity();
         }
         else {
-            this.calcuTasksFG.setErrors({
+            this.calcuTasksFC.setErrors({
                 invalid: true,
             })
         }
@@ -98,10 +120,10 @@ export class CreateTaskComponent extends OgmsBaseComponent implements OnInit {
             fg = this.metaFG;
         }
         else if(step === 1) {
-            fg = this.calcuTasksFG;
+            fg = this.calcuTasksFC;
         }
         else if(step === 2) {
-            fg = this.regionsFG;
+            fg = this.regionsFC;
         }
         fg.markAsTouched();
         fg.markAsDirty();
@@ -112,24 +134,28 @@ export class CreateTaskComponent extends OgmsBaseComponent implements OnInit {
         }
     }
 
-    onCalcuValidChange(valid) {
-        if (!valid)
-            this.cmpTaskFG.setErrors({});
-    }
-
     onRegionsChange(regions) {
-        if(regions.length) {
-            this.regionsFG.value = regions;
-            this.regionsFG.updateValueAndValidity();
+        if(regions.valid) {
+            this.regionsFC.value = regions.value;
+            this.regionsFC.updateValueAndValidity();
         }
         else {
-            this.regionsFG.setErrors({
+            this.regionsFC.setErrors({
                 invalid: true
             });
         }
     }
 
-    onSiteSelected(site, i) {
+    onSitesChange(sites) {
+        if(sites.valid) {
+            this.sitesFC.value = sites.value;
+            this.sitesFC.updateValueAndValidity();
+        }
+        else {
+            this.sitesFC.setErrors({
+                invalid: true
+            });
+        }
     }
 
     submitTask(type) {
@@ -144,6 +170,7 @@ export class CreateTaskComponent extends OgmsBaseComponent implements OnInit {
         this.task.meta.desc = formData.meta.desc;
         this.task.auth.src = formData.auth;
         this.task.regions = formData.regions;
+        this.task.sites = formData.sites;
         this.task.solutionId = this.sln._id;
         this.task.topicId = this.sln.topicId;
         this.task.calcuTaskIds = [];
@@ -155,18 +182,45 @@ export class CreateTaskComponent extends OgmsBaseComponent implements OnInit {
         }));
 
         let calcuTasks = [];
-        map(formData.calcuTasks as any[], (calcuTask, i) => {
-            this.task.calcuTaskIds.push(calcuTask._id);
-
-            calcuTask.meta.name = '';
-            if (type === 'save') {
-                calcuTask.state = OGMSState.INIT;
-            }
-            else {
-                calcuTask.state = OGMSState.COULD_START;
-            }
-            calcuTasks.push(calcuTask);
-        });
+        if(formData.calcuTasks.length > 1) {
+            // n 个模型，1 个站点
+            map(formData.calcuTasks as any[], (calcuTask, i) => {
+                if(this.spatialType === 'site') {
+                    // 把 site input 给 std data
+                    let site = formData.sites[0]
+                    let event = _.find(calcuTask.IO.std, {id: '--index'})
+                    event.value = site.index
+                }
+                else {
+                    // 不用选 regions
+                }
+                
+                calcuTask.meta.name = '';
+                if (type === 'save') {
+                    calcuTask.state = OGMSState.INIT;
+                }
+                else {
+                    calcuTask.state = OGMSState.COULD_START;
+                }
+                this.task.calcuTaskIds.push(calcuTask._id);
+                calcuTasks.push(calcuTask);
+            });
+        }
+        else {
+            // 1 个模型，n 个站点
+            let calcuTask = formData.calcuTasks[0]
+            formData.sites.map(site => {
+                let tmp = _.cloneDeep(calcuTask)
+                if(this.spatialType === 'site') {
+                    let event = _.find(tmp.IO.std, {id: '--index'})
+                    event.value = site.index;
+                }
+                tmp._id = ObjectID().toString()
+                this.task.calcuTaskIds.push(calcuTask._id);
+                calcuTasks.push(tmp)
+            })
+        }
+        
         
         this.task.cmpObjs = this.sln.cmpObjs
         this.task.cmpObjs.map(cmpObj => {

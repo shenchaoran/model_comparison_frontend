@@ -124,8 +124,12 @@ export class SubRegionsComponent implements OnInit, AfterViewInit {
                 let bbox = e.feature.getGeometry().getExtent();
                 bbox = (proj as any).transformExtent(bbox, 'EPSG:3857', 'EPSG:4326')
                 this.regions.push(bbox);
-                this.onRegionsChange.emit(this.regions);
+                this.onRegionsChange.emit({
+                    valid: true,
+                    value: this.regions
+                });
             })
+            // TODO add remove action
             this.map.addInteraction(draw);
         }
         else {

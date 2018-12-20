@@ -45,7 +45,6 @@ import { NgModelBase } from '@shared';
 })
 export class CalcuCfgComponent extends NgModelBase implements OnInit, AfterViewInit {
     get calcuTask() { return this.value; }
-    selectedSTD;
 
     IOForm: FormGroup;
     @Input() set calcuTask(v) {
@@ -54,7 +53,6 @@ export class CalcuCfgComponent extends NgModelBase implements OnInit, AfterViewI
     }
     @Input() width = '350px';
     @Output() onValidChange = new EventEmitter<boolean>();
-    @Output() onSiteSelected = new EventEmitter<boolean>();
     uploadInput: UploadInput;
 
     constructor(
@@ -200,8 +198,11 @@ export class CalcuCfgComponent extends NgModelBase implements OnInit, AfterViewI
     showSiteDialog() {
         this.dialog.open(SiteDialog)
             .afterClosed()
-            .subscribe(site => {
-                if (site) {
+            .subscribe(sitesForm => {
+                if(!sitesForm || !sitesForm.valid)
+                    return;
+                let sites = sitesForm.value
+                if (sites) {
                     let siteCtrl = chain((this.IOForm.get('std') as any).controls)
                         .find(control => {
                             return get(control, 'value.schema.structure.type') === 'coordinate-index';
@@ -211,17 +212,16 @@ export class CalcuCfgComponent extends NgModelBase implements OnInit, AfterViewI
                     // 手动设置表单项的值，并标记为脏的，触发验证
                     // 注意，此处直接设置父表单项的值并触发验证不行，必须从叶节点开始
                     let siteValueCtrl = siteCtrl.get('value')
-                    siteValueCtrl.setValue(site.index);
+                    siteValueCtrl.setValue(sites[0].index);
                     // siteValueCtrl.markAsDirty();
                     siteValueCtrl.updateValueAndValidity();
 
                     let tmpCtrl = siteCtrl.get('temp')
-                    tmpCtrl.setValue(site);
+                    tmpCtrl.setValue(sites[0]);
                     // tmpCtrl.markAsDirty();
                     tmpCtrl.updateValueAndValidity();
                     // 手动更新，否则 label 总是不显示值
                     this.cdRef.markForCheck();
-                    this.onSiteSelected.emit(site)
                 }
             });
     }
@@ -301,12 +301,12 @@ export class CalcuCfgComponent extends NgModelBase implements OnInit, AfterViewI
     template: `
         <h2 mat-dialog-title>Select site to simulation</h2>
         <mat-dialog-content>
-            <ogms-global-site (onSiteSelected)='onSiteSelected($event)'></ogms-global-site>
+            <ogms-global-site [onlyMap]='true' [multiple]='false' [couldSelect]='true' (onSitesChange)='onSitesChange($event)'></ogms-global-site>
         </mat-dialog-content>
         <mat-dialog-actions align='end'>
             <div>
                 <button mat-button (click)='onNoClick()'>Cancel</button>
-                <button mat-button color='primary' (click)='onYesClick()' cdkFocusInitial [disabled]='!site'>OK</button>
+                <button mat-button color='primary' (click)='onYesClick()' cdkFocusInitial [disabled]='!sitesForm || !sitesForm.valid'>OK</button>
             </div>
         </mat-dialog-actions>
     `,
@@ -315,18 +315,18 @@ export class CalcuCfgComponent extends NgModelBase implements OnInit, AfterViewI
     ]
 })
 export class SiteDialog {
-    site;
+    sitesForm;
     constructor(public dialogRef: MatDialogRef<SiteDialog>) {
         this.dialogRef.beforeClose()
             .subscribe(v => {
-                if (this.site) {
-                    this.dialogRef.close(this.site);
+                if (this.sitesForm) {
+                    this.dialogRef.close(this.sitesForm);
                 }
             })
     }
 
-    onSiteSelected(e) {
-        this.site = e;
+    onSitesChange(e) {
+        this.sitesForm = e;
     }
 
     onNoClick() {
@@ -334,6 +334,6 @@ export class SiteDialog {
     }
 
     onYesClick() {
-        this.dialogRef.close(this.site)
+        this.dialogRef.close(this.sitesForm)
     }
 }

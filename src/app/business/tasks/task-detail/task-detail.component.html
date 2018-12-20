@@ -34,16 +34,21 @@
                 <ogms-task-input-cfg [calcuTasks]='calcuTasks' showOutput='True' mode='READ'></ogms-task-input-cfg>
 
 
-                <div *ngIf='task.regions' class='my-3'>
+                <div *ngIf='spatialType === "region"' class='my-3'>
                     <p class='f3-light my-2'>Selected sub-regions:</p>
                     <ogms-sub-regions [regions]='task.regions'></ogms-sub-regions>
+                </div>
+                <div *ngIf='spatialType === "site" && task?.sites?.length' class='my-3'>
+                    <p class='f3-light my-2'>Selected sites:</p>
+                    <!-- <ogms-sub-regions [regions]='task.regions'></ogms-sub-regions> -->
+                    <ogms-selected-sites [sites]='task.sites'></ogms-selected-sites>
                 </div>
 
                 <p class='f3-light my-3'>Model running progress:</p>
                 <div *ngFor='let calcuTask of calcuTasks' class='progress-div px-2 py-1'>
-                    <span>{{calcuTask.msName}}:</span>
-                    <mat-progress-bar class='calcuTask-progress-bar' [value]='calcuTask.progress' mode='determinate'></mat-progress-bar>
-                    <span class='pl-2'>{{calcuTask.progress? calcuTask.progress: 0}}%</span>
+                    <span>{{calcuTask?.msName}}:</span>
+                    <mat-progress-bar class='calcuTask-progress-bar' [value]='calcuTask?.progress' mode='determinate'></mat-progress-bar>
+                    <span class='pl-2'>{{calcuTask?.progress}}%</span>
                 </div>
             </mat-tab>
 
@@ -156,8 +161,8 @@
                 <div class='body'>
                     <ng-container *ngIf='calcuTasks.length else noCalcuTemp'>
                         <ul class='aside-ul with-route'>
-                            <li *ngFor='let calcuTask of calcuTasks' [routerLink]='["/calculations", calcuTask._id]'>
-                                {{calcuTask.auth.userName}} / {{calcuTask.meta.name}}
+                            <li *ngFor='let calcuTask of calcuTasks' [routerLink]='["/calculations", calcuTask?._id]'>
+                                {{calcuTask?.auth?.userName}} / {{calcuTask?.meta?.name}}
                             </li>
                         </ul>
                     </ng-container>

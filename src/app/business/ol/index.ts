@@ -6,7 +6,7 @@ import { OlService } from './services/ol.service';
 import { GlobalSiteComponent } from './global-site/global-site.component';
 import { NcDatasetComponent } from './nc-dataset/nc-dataset.component';
 import { SubRegionsComponent } from './sub-regions/sub-regions.component';
-
+import { SelectedSitesComponent } from './selected-sites/selected-sites.component';
 import {
     MatRadioModule,
     MatFormFieldModule,
@@ -38,6 +38,7 @@ const components = [
     GlobalSiteComponent,
     NcDatasetComponent,
     SubRegionsComponent,
+    SelectedSitesComponent,
 ];
 var entryComponents = [];
 const services = [

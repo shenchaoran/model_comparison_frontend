@@ -7,10 +7,17 @@ import ScaleLine from 'ol/control/ScaleLine';
 import FullScreen from 'ol/control/FullScreen';
 import Map from 'ol/Map';
 import View from 'ol/View';
-import Group from 'ol/layer/Group';
 import Tile from 'ol/layer/Tile';
-import OSM from 'ol/source/OSM';
-import TileWMS from 'ol/source/TileWMS';
+import Select from 'ol/interaction/Select';
+import * as condition from 'ol/events/condition';
+import { Group, Tile as TileLayer, Vector as VectorLayer } from 'ol/layer';
+import { Vector as VectorSource, OSM, TileWMS } from 'ol/source';
+import { Circle, Stroke, Style, Fill, Text } from 'ol/style';
+import WMSGetFeatureInfo from 'ol/format/WMSGetFeatureInfo';
+import Point from 'ol/geom/Point'
+import * as proj from 'ol/proj';
+import Feature from 'ol/Feature';
+import * as Draw from 'ol/interaction/Draw';
 
 @Component({
     selector: 'ogms-global-site',
@@ -18,14 +25,30 @@ import TileWMS from 'ol/source/TileWMS';
     styleUrls: ['./global-site.component.scss']
 })
 export class GlobalSiteComponent implements OnInit, AfterViewInit {
-    @Input() dataset;
-    @Output() onSiteSelected = new EventEmitter<any>();
+    @Input() onlyMap: boolean = false;
+    @Input() couldSelect: boolean = true;
+    @Input() multiple: boolean = true;
+    @Output() onSitesChange = new EventEmitter<{
+        value?: any,
+        valid: boolean,
+    }>();
 
+    layerId = 'Carbon_Cycle:site';
     targetId;
     map;
     baseLayerGroup;
     siteLayer;
     siteSource;
+
+    highlightSource;
+    highlightLayer;
+
+    sites: {
+        index: number,
+        lat: number,
+        long: number,
+        coor: number[],
+    }[] = [];
 
     constructor(
         private olService: OlService,
@@ -62,7 +85,7 @@ export class GlobalSiteComponent implements OnInit, AfterViewInit {
                 // request : 'GetMap',
                 // service : 'WMS',
                 // version : '1.1.0',
-                layers: _.get(this, 'dataset.schema$.layerId') || 'Carbon_Cycle:site',
+                layers: this.layerId,
                 styles: '',
                 bbox: this.layers.bbox,
                 // 加长宽会变形
@@ -74,9 +97,22 @@ export class GlobalSiteComponent implements OnInit, AfterViewInit {
             }
         });
         this.siteLayer = new Tile({
-            title: _.get(this, 'dataset.meta.name') || 'Site',
+            title: 'Site',
             source: this.siteSource
         } as any);
+        this.highlightSource = new VectorSource();
+        this.highlightLayer = new VectorLayer({
+            title: 'highlight features',
+            source: this.highlightSource,
+            style: new Style({
+                image: new Circle({
+                    radius: 4,
+                    fill: new Fill({
+                        color: [255, 0, 0, 1]
+                    })
+                }),
+            })
+        })
 
         let view = new View({
             center: [0, 0],
@@ -86,7 +122,8 @@ export class GlobalSiteComponent implements OnInit, AfterViewInit {
             target: this.targetId,
             layers: [
                 this.baseLayerGroup,
-                this.siteLayer
+                this.siteLayer,
+                this.highlightLayer,
             ],
             view: view,
             controls: new defaultControls({
@@ -96,6 +133,14 @@ export class GlobalSiteComponent implements OnInit, AfterViewInit {
             }).extend([new FullScreen(), new ScaleLine()])
         } as any);
 
+        // let draw = new Draw.default({
+        //     source: this.highlightSource,
+        //     type: 'Point',
+        // })
+        // this.map.addInteraction(draw);
+
+        if(!this.couldSelect)
+            return;
         this.map.on('singleclick', evt => {
             let url = this.siteSource.getGetFeatureInfoUrl(
                 evt.coordinate,
@@ -103,21 +148,61 @@ export class GlobalSiteComponent implements OnInit, AfterViewInit {
                 'EPSG:3857',
                 {
                     INFO_FORMAT: 'text/html',   //geoserver支持jsonp才能输出为jsonp的格式
-                    QUERY_LAYERS: _.get(this, 'dataset.schema$.layerId') || 'Carbon_Cycle:site',
+                    QUERY_LAYERS: this.layerId,
                     // FEATURE_COUNT: 1     //点击查询能返回的数量上限
                     // format_options: ()
                 }
             );
             if (url) {
                 this.olService.getFeatureInfo(url).subscribe(response => {
-                    console.log('selected site index: ' + response[0].index);
-                    let coor = JSON.parse(response[0].coor);
-                    this.onSiteSelected.emit({
-                        index: response[0].index,
-                        lat: coor[0],
-                        long: coor[1],
-                        coor: response[0].coor
-                    });
+                    try {
+                        console.log('selected site index: ' + response[0].index);
+                        // console.log(response)
+                        let coor = JSON.parse(response[0].coor);
+                        let xy = (proj as any).fromLonLat(coor, 'EPSG:3857')
+                        let geom = new Point(xy)
+                        let feature = new Feature({ 
+                            id: response[0].index,
+                            geometry: geom 
+                        })
+                        
+                        console.log(this.sites)
+                        let siteIndex = _.findIndex(this.sites, site => site.index === response[0].index)
+                        if(siteIndex !== -1) {
+                            this.sites.splice(siteIndex, 1)
+                            this.highlightSource.getFeatures().map(feature => {
+                                if (feature.get('id') === response[0].index) {
+                                    this.highlightSource.removeFeature(feature);
+                                }
+                            })
+                        }
+                        else {
+                            if(!this.multiple) {
+                                this.highlightSource.clear(true);
+                                this.sites = [];
+                            }
+                            this.highlightSource.addFeature(feature);
+                            this.sites.push({
+                                index: response[0].index,
+                                lat: coor[0],
+                                long: coor[1],
+                                coor: response[0].coor
+                            })
+                        }
+
+                        if(this.sites.length) {
+                            this.onSitesChange.emit({
+                                valid: true,
+                                value: this.sites
+                            });
+                        }
+                        else {
+                            this.onSitesChange.emit({ valid: false });
+                        }
+                    }
+                    catch (e) {
+
+                    }
                 })
             }
         })

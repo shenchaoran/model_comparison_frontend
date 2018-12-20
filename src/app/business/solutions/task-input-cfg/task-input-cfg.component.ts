@@ -56,7 +56,9 @@ export class TaskInputCfgComponent implements OnInit, AfterViewInit {
                     key === 'parameters'
                 ) {
                     calcuTask.IO[key].forEach(event => {
-                        this.stdEventNames.add(event.stdName);
+                        // 坐标在选择站点时配置
+                        if(event.stdName !== 'coordinate') 
+                            this.stdEventNames.add(event.stdName);
                     })
                 }
             }

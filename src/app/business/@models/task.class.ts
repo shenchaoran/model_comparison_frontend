@@ -25,6 +25,7 @@ export class Task {
     calcuTaskIds: string[];
     cmpObjs: Array<CmpObj>;
     regions?: [][];
+    sites?: number[];
     schemas: UDXSchema[];
     cid: string;
     subscribed_uids: string[];
@@ -41,6 +42,7 @@ export class Task {
         this.schemas = [];
         this.subscribed_uids = [];
         this.regions = [];
+        this.sites = [];
         
         if(user) {
             this.auth = {

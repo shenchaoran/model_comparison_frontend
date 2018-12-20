@@ -15,7 +15,7 @@
 
         </ng-container>
         <ng-container *ngIf='selectedSTD?.meta?.name === "Global Site Datasets"'>
-            <ogms-global-site [dataset]='selectedSTD'></ogms-global-site>
+            <ogms-global-site [onlyMap]='false' [multiple]='false' [couldSelect]='false'></ogms-global-site>
         </ng-container>
         <ng-container *ngIf='selectedSTD?.schema$?.type === "NETCDF4"'>
             <ogms-nc-dataset [dataset]='selectedSTD'></ogms-nc-dataset>
