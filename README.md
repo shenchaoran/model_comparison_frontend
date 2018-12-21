@@ -45,7 +45,7 @@ npm run debug
 
 ## TODO
 type: optimization, feature, important, style
-- [ ] ~~L2: docking layout~~
+- [x] ~~L2: docking layout~~
 - [x] ~~L3: 页面加载速度~~
 - [x] ~~L2: 评论系统~~
 - [x] ~~L2: 和bootstrap结合~~
@@ -53,11 +53,6 @@ type: optimization, feature, important, style
 - [ ] L3: echarts tree-shaking
 - [x] ~~L3: zorro tree-shaking~~
 - [x] ~~L3: custom material theme~~
-- [ ] 用户个人空间相关
-    - [ ] 路由 RESTful 风格化：user/:username
-    - [ ] 关注、收藏的 topic, sln, task
-    - [ ] 消息订阅与通知：subscribeToggle 统一处理所有资源，而不是分别处理
-    - [ ] 页面右下角加后台运行列表
 - [ ] L3: remove slim-loading-bar, use mat-progress-bar
 - [ ] L3: remove list-template, use mat-list
 - [ ] L3: remove disabled-button, use snackbar to alert valid state
@@ -76,9 +71,6 @@ type: optimization, feature, important, style
     - [x] Typography
     - [ ] remove simplemde, use primer-markdown
     - [ ] comment markdown
-- [x] L2: ms detail
-    - [x] mat-tab: wiki, data description, conversation
-    - [x] sider-bar: topic, solution, notification
 - [ ] L2: calcu detail
     - [x] mat-tab: basic-info, data configuration, conversation
     - [ ] 结果打包下载
@@ -106,7 +98,7 @@ type: optimization, feature, important, style
     - [x] model input 非常细致的对比
     - [x] 把选择数据范围去掉。所有数据配置项都放在 task 的创建上
     - [ ] 统计信息的显示：半年内的热度、收藏数、关注者
-    - [ ] 对比方案以勾选的形式创建
+    - [x] 对比方案以勾选的形式创建
 - [ ] task: 
     - [ ] 统计信息：任务进度、执行耗时统计
     - [ ] 运行日志的显示
@@ -114,16 +106,24 @@ type: optimization, feature, important, style
 - [ ] model:
     - [ ] 调参，各种参数的详细暴露
     - [ ] 可选参数的配置
+    - [x] mat-tab: wiki, data description, conversation
+    - [x] sider-bar: topic, solution, notification
+- [ ] user
+    - [ ] 路由 RESTful 风格化：user/:username
+    - [ ] 关注、收藏的 topic, sln, task
+    - [ ] 消息订阅与通知：subscribeToggle 统一处理所有资源，而不是分别处理
+    - [ ] 页面右下角加后台运行列表
+    - [ ] 正在运行的任务
 - [ ] linux 上的部署
 - [ ] 标准变量表，对比方案、对比任务、
-    - [ ] 字段：name, long_name, unit, description, category, scale, offset, min, max, couldCMP
+    - [x] 字段：name, long_name, unit, description, category, scale, offset, min, max, couldCMP
     - [ ] event 里加 scale, offset 字段
-- [ ] 将实验列表、介绍放在 wiki 中
-- [ ] 可以对比的 metric 需要满足两个条件：metric name 相同；event 的 time variable 和 lat variable, long variable 一致（时间上必须一致，空间上有重叠就行）
-- [ ] cmp-methods:
-    - [ ] taylor diagram
-    - [ ] 箱图
-    - [ ] 散点图
+- [x] 将实验列表、介绍放在 wiki 中
+- [x] 可以对比的 metric 需要满足两个条件：metric name 相同；event 的 time variable 和 lat variable, long variable 一致（时间上必须一致，空间上有重叠就行）
+- [x] cmp-methods:
+    - [x] taylor diagram
+    - [x] 箱图
+    - [x] 散点图
 
 ## Architecture
 

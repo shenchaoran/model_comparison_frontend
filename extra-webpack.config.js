@@ -7,8 +7,12 @@ module.exports = {
     //         use: ['css-loader', 'resolve-url-loader', 'sass-loader']
     //     }]
     // },
-    // plugins: [
-    //     new webpack.BannerPlugin('created by scr.')
-    // ],
+    plugins: [
+        // new webpack.BannerPlugin({
+        //     banner: 'created by scr.',
+        //     raw: false,
+        //     entryOnly: true
+        // })
+    ],
     // devtool: 'cheap-eval-source-map'  //PD added this
 };

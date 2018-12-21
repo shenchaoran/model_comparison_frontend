@@ -11,7 +11,7 @@ const bootstrap = () => {
     return platformBrowserDynamic().bootstrapModule(AppModule);
 };
 
-// console.log(environment);
+console.log(environment);
 // console.log('is hot:', module.hot);
 
 if (environment.hmr) {
@@ -22,5 +22,8 @@ if (environment.hmr) {
         console.info('Are you using the --hmr flag for ng serve?');
     }
 } else {
+    if(environment.production) {
+        enableProdMode();
+    }
     bootstrap();
 }

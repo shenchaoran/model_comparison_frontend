@@ -1,5 +1,19 @@
-import { Routes, RouterModule, } from '@angular/router';
+import { Routes, RouterModule, PreloadAllModules, } from '@angular/router';
 import { NgModule } from '@angular/core';
+import { environment } from '../environments/environment';
+import { HomeModule } from './business/home';
+import { CalculationsModule } from './business/calculations'
+import { CmpMethodsModule } from './business/cmp-methods'
+import { CmpSharedModule } from './business/cmp-shared'
+import { ConversationsModule } from './business/conversations'
+import { DatasetsModule } from './business/datasets'
+import { ModelsModule } from './business/ms'
+import { OlModule } from './business/ol'
+import { SearchModule } from './business/search'
+import { SolutionsModule } from './business/solutions'
+import { TasksModule } from './business/tasks'
+import { TopicsModule } from './business/topics'
+import { UsersModule } from './business/users'
 
 const routes: Routes = [
     {
@@ -9,7 +23,7 @@ const routes: Routes = [
     },
     {
         path: 'home',
-        loadChildren: './business/home/index#HomeModule'
+        loadChildren: () => HomeModule
     },
     {
         path: 'user',
@@ -21,7 +35,7 @@ const routes: Routes = [
     },
     {
         path: 'models',
-        loadChildren: './business/ms/index#ModelsModule'
+        loadChildren: () => ModelsModule
     },
     {
         path: 'cmp-methods',
@@ -57,6 +71,11 @@ const routes: Routes = [
         pathMatch: 'full'
     }
 ];
+
+let opt = {
+    preloadingStrategy: PreloadAllModules,
+    useHash: true
+}
 
 @NgModule({
     imports: [

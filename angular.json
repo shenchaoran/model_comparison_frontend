@@ -3,7 +3,7 @@
     "version": 1,
     "newProjectRoot": "projects",
     "projects": {
-        "web-njgis": {
+        "CMIP-frontend": {
             "root": "",
             "sourceRoot": "src",
             "projectType": "application",
@@ -18,7 +18,12 @@
                             },
                             "replaceDuplicatePlugins": true
                         },
-                        "outputPath": "prod",
+                        "deleteOutputPath": true,
+                        "outputPath": "build-prod",
+                        "watch": true,
+                        "vendorChunk": true,
+                        "commonChunk": true,
+                        "statsJson": true,
                         "index": "src/index.html",
                         "main": "src/main.ts",
                         "tsConfig": "src/tsconfig.app.json",
@@ -51,7 +56,23 @@
                                 "with": "src/environments/environment.hmr.ts"
                             }]
                         },
-                        "production": {
+                        "prod": {
+                            "outputPath": "build-prod",
+                            "optimization": false,
+                            "buildOptimizer": false,
+                            "outputHashing": "all",
+                            "sourceMap": true,
+                            "extractCss": true,
+                            "namedChunks": false,
+                            "aot": true,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "fileReplacements": [{
+                                "replace": "src/environments/environment.ts",
+                                "with": "src/environments/environment.prod.ts"
+                            }]
+                        },
+                        "prod-optimizer": {
                             "optimization": true,
                             "outputHashing": "all",
                             "sourceMap": false,
@@ -61,9 +82,22 @@
                             "extractLicenses": true,
                             "vendorChunk": false,
                             "buildOptimizer": true,
+                            "outputPath": "build-prod-optimizer",
                             "fileReplacements": [{
                                 "replace": "src/environments/environment.ts",
                                 "with": "src/environments/environment.prod.ts"
+                            }]
+                        },
+                        "aot": {
+                            "browserTarget": "CMIP-frontend:build:prod",
+                            "outputPath": "build-aot",
+                            "aot": true,
+                            "sourceMap": true,
+                            "extractCss": true,
+                            "namedChunks": true,
+                            "fileReplacements": [{
+                                "replace": "src/environments/environment.ts",
+                                "with": "src/environments/environment.hmr.ts"
                             }]
                         }
                     }
@@ -71,22 +105,31 @@
                 "serve": {
                     "builder": "@angular-builders/dev-server:generic",
                     "options": {
-                        "browserTarget": "web-njgis:build"
+                        "proxyConfig": "proxy.conf.json",
+                        "open": false,
+                        "liveReload": true,
+                        "hmrWarning": false,
+                        "baseHref": "/CMIP/",
+                        "port": 8888,
+                        "host": "localhost",
+                        "hmr": true,
+                        "browserTarget": "CMIP-frontend:build:hmr"
                     },
                     "configurations": {
-                        "hmr": {
-                            "hmr": true,
-                            "browserTarget": "web-njgis:build:hmr"
-                        },
-                        "production": {
-                            "browserTarget": "web-njgis:build:production"
+                        "aot": {
+                            "browserTarget":"CMIP-frontend:build",
+                            "aot": true,
+                            "optimization": true,
+                            "open": true,
+                            "hmr": false,
+                            "sourceMap": true
                         }
                     }
                 },
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "browserTarget": "web-njgis:build"
+                        "browserTarget": "CMIP-frontend:build"
                     }
                 },
                 "test": {
@@ -115,7 +158,7 @@
                 }
             }
         },
-        "web-njgis-e2e": {
+        "CMIP-frontend-e2e": {
             "root": "",
             "sourceRoot": "e2e",
             "projectType": "application",
@@ -124,7 +167,7 @@
                     "builder": "@angular-devkit/build-angular:protractor",
                     "options": {
                         "protractorConfig": "./protractor.conf.js",
-                        "devServerTarget": "web-njgis:serve"
+                        "devServerTarget": "CMIP-frontend:serve"
                     }
                 },
                 "lint": {
@@ -141,7 +184,7 @@
             }
         }
     },
-    "defaultProject": "web-njgis",
+    "defaultProject": "CMIP-frontend",
     "schematics": {
         "@schematics/angular:class": {
             "spec": false
