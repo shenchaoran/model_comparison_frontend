@@ -57,6 +57,7 @@
                             }]
                         },
                         "prod": {
+                            "statsJson": false,
                             "outputPath": "build-prod",
                             "optimization": false,
                             "buildOptimizer": false,

@@ -291,7 +291,7 @@ export class SolutionDetailComponent implements OnInit {
     onDeleteClick() {
         this.solutionService.delete(this.solution._id).subscribe(res => {
             if(!res.error) {
-                this.router.navigate(['..']);
+                this.router.navigate(['/solutions']);
             }
         })
     }

@@ -216,7 +216,8 @@ export class CreateTaskComponent extends OgmsBaseComponent implements OnInit {
                     event.value = site.index;
                 }
                 tmp._id = ObjectID().toString()
-                this.task.calcuTaskIds.push(calcuTask._id);
+                this.task.calcuTaskIds.push(tmp._id);
+                console.log(this.task.calcuTaskIds)
                 calcuTasks.push(tmp)
             })
         }

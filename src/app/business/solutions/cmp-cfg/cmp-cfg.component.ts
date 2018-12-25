@@ -186,12 +186,17 @@ export class CmpCfgComponent implements OnInit, AfterViewInit, OnChanges, OnDest
                 row.push(cmpObj.name)
                 row.push(cmpObj.desc)
                 cmpObj.dataRefers.map((dataRefer, j) => {
+                    let colIndex = _.findIndex(this.colHeaders, msName => msName === dataRefer.msName)
                     if(i === 0) {
-                        this.colHeaders.push(dataRefer.msName)
-                        this.colWidths.push(this.msColWidth)
-                        this.columns.push({type: 'text'})
+                        if(colIndex === -1) {
+                            this.colHeaders.push(dataRefer.msName)
+                            this.colWidths.push(this.msColWidth)
+                            this.columns.push({type: 'text'})
+                            colIndex = this.colHeaders.length + 1;
+                        }
                     }
-                    row.push(`${dataRefer.eventName} -> ${dataRefer.field}`)
+                    if(row.length < this.colHeaders.length)
+                        row.push(`${dataRefer.eventName} -> ${dataRefer.field}`)
                 })
                 this.data.push(row);
             })
