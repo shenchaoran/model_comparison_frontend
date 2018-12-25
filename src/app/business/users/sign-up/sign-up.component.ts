@@ -32,7 +32,7 @@ export class SignUpComponent implements OnInit {
     constructor(
         private fb: FormBuilder,
         private service: UserService
-    ) {}
+    ) { }
 
     ngOnInit() {
         this.signUpFG = this.fb.group({
@@ -54,20 +54,19 @@ export class SignUpComponent implements OnInit {
         this.errorInfo = { show: false };
         var signUpData = this.signUpFG.value;
         signUpData.password = this.signUpFG.get('password').get('value').value;
-        this.service.signUp(signUpData)
-            .subscribe({
-                next: res => {
-                    if (res.error) {
-                        this.errorInfo = {
-                            show: true,
-                            message: res.error.desc
-                        };
-                    }
-                },
-                error: e => {
-                    console.log(e);
+        this.service.signUp(signUpData).subscribe({
+            next: res => {
+                if (res.error) {
+                    this.errorInfo = {
+                        show: true,
+                        message: res.error.desc
+                    };
                 }
-            })
+            },
+            error: e => {
+                console.log(e);
+            }
+        })
     }
 
     equalValidator(ctrl) {

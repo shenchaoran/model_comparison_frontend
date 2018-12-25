@@ -122,7 +122,7 @@ export class CmpDetailComponent extends OgmsBaseComponent implements OnInit {
                                 this.renderer2.setStyle(echartDOM.nativeElement, 'height', height)
                             }
                             else if(method.name === 'Heat map') {
-                                let height = 120 * _.get(method, 'result.grid.length') + 'px'
+                                let height = 100 * _.get(method, 'result.grid.length') + 'px'
                                 this.renderer2.setStyle(echartDOM.nativeElement, 'height', height)
                             }
                             echarts

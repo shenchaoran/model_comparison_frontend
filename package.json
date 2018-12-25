@@ -31,6 +31,7 @@
     "@angular/platform-browser-dynamic": "^7.0.2",
     "@angular/router": "^7.0.2",
     "@material/image-list": "^0.42.0",
+    "@material/ripple": "^0.42.0",
     "@ngu/carousel": "^1.5.4",
     "@types/echarts": "^4.1.1",
     "@types/ol": "^4.6.2",

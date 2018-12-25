@@ -124,6 +124,7 @@ type: optimization, feature, important, style
     - [x] taylor diagram
     - [x] 箱图
     - [x] 散点图
+- [x] 玄武盾
 
 ## Architecture
 

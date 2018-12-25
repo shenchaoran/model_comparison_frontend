@@ -22,13 +22,10 @@ export class _HttpClient {
         private loading: SlimLoadingBarService,
         @Inject('API') public api,
     ) {
-        const jwtStr = localStorage.getItem('jwt');
-        if (jwtStr) {
-            this.headers = new HttpHeaders().append('Authorization', `bearer ${JSON.parse(jwtStr).token}`);
-        }
+        this.setAuthHeaders();
     }
 
-    resetHeaders() {
+    setAuthHeaders() {
         const jwtStr = localStorage.getItem('jwt');
         if (jwtStr) {
             this.headers = new HttpHeaders().append('Authorization', `bearer ${JSON.parse(jwtStr).token}`);
@@ -73,6 +70,7 @@ export class _HttpClient {
         parseRes?: boolean,
         withRequestProgress?: boolean
     ): Observable<any> {
+        this.headers = this.headers.delete('X-HTTP-Method-Override')
         return this.resInterceptor(this.http.get(url, {
             ...options, 
             headers: this.headers
@@ -87,6 +85,7 @@ export class _HttpClient {
         parseRes?: boolean,
         withRequestProgress?: boolean
     ): Observable<any> {
+        this.headers = this.headers.delete('X-HTTP-Method-Override')
         return this.resInterceptor(this.http.post(url, body, {
             ...options, 
             headers: this.headers
@@ -99,7 +98,8 @@ export class _HttpClient {
         appendJWT?: boolean,
         parseRes?: boolean
     ): Observable<any> {
-        return this.resInterceptor(this.http.delete(url, {
+        this.headers = this.headers.append("X-HTTP-Method-Override", "delete");
+        return this.resInterceptor(this.http.post(url, null, {
             ...options,
             headers: this.headers
         }), parseRes);
@@ -112,7 +112,8 @@ export class _HttpClient {
         appendJWT?: boolean,
         parseRes?: boolean
     ): Observable<any> {
-        return this.resInterceptor(this.http.put(url, body, {
+        this.headers = this.headers.append("X-HTTP-Method-Override", "put");
+        return this.resInterceptor(this.http.post(url, body, {
             ...options,
             headers: this.headers
         }), parseRes);
@@ -125,7 +126,8 @@ export class _HttpClient {
         appendJWT?: boolean,
         parseRes?: boolean
     ): Observable<any> {
-        return this.resInterceptor(this.http.patch(url, body, {
+        this.headers = this.headers.append("X-HTTP-Method-Override", "patch");
+        return this.resInterceptor(this.http.post(url, body, {
             ...options,
             headers: this.headers
         }), parseRes);

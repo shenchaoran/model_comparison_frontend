@@ -1,5 +1,3 @@
-// header menu 的图标库使用的是 zorro 的
-// sider menu 的图标库使用的是 ngx-admin 的
 export class MenuClass {
     path?: string;
     label: string;
@@ -34,23 +32,3 @@ export const HEADER_MENUS: MenuClass[] = [
     //     label: 'Test'
     // }
 ];
-
-// 登录成功后的用户菜单
-export const USER_MENUS: MenuClass = {
-    path: '/user',
-    label: 'User',
-    children: [
-        {
-            path: '/user/:userName',
-            label: 'Profile'
-        },
-        {
-            path: '/user/:userName/set-up',
-            label: 'Setting'
-        },
-        { 
-            path: '/user/sign-out',
-            label: 'Sign Out'
-        }
-    ]
-};

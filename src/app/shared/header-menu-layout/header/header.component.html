@@ -32,9 +32,9 @@
                 <mat-icon>arrow_drop_down</mat-icon>
             </button>
             <mat-menu #userMenuTemp='matMenu'>
-                <button mat-menu-item *ngFor='let subMenu of user_menus.children' [routerLink]='subMenu.path'>
-                    {{subMenu.label}}
-                </button>
+                <button mat-menu-item [routerLink]='["/user", username]'>Profile</button>
+                <button mat-menu-item [routerLink]='["/user", username, "set-up"]'>Setting</button>
+                <button mat-menu-item (click)='signOut()'>Sign Out</button>
             </mat-menu>
         </div>
         <ng-template #gotoLogin>

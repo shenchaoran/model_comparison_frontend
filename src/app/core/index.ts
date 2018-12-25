@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { NgxSharedModule } from '@shared';
 import { HttpClientModule } from '@angular/common/http';
-import { HEADER_MENUS, USER_MENUS, API } from '@config';
+import { HEADER_MENUS, API } from '@config';
 import { DynamicTitleService } from '@core/services';
 import { BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { _HttpClient } from '@core/services/http.client';
@@ -57,10 +57,6 @@ const services = [
     {
         provide: 'HEADER_MENUS',
         useValue: HEADER_MENUS
-    },
-    {
-        provide: 'USER_MENUS',
-        useValue: USER_MENUS
     },
     {
         provide: 'SIMPLEMDE_CONFIG',

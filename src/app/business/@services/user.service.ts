@@ -102,7 +102,7 @@ export class UserService {
                     else {
                         res.data.user.rememberAccount = user.rememberAccount;
                         this.jwt = res.data;
-                        this.http.resetHeaders();
+                        this.http.setAuthHeaders();
                         return res;
                     }
                 })
@@ -124,6 +124,7 @@ export class UserService {
                     else {
                         res.data.user.rememberAccount = user.rememberAccount;
                         this.jwt = res.data;
+                        this.http.setAuthHeaders();
                         return res;
                     }
                 })
