@@ -23,7 +23,7 @@ const routes: Routes = [
     },
     {
         path: 'home',
-        loadChildren: () => HomeModule
+        loadChildren: './business/home/index#HomeModule'
     },
     {
         path: 'user',
@@ -35,7 +35,7 @@ const routes: Routes = [
     },
     {
         path: 'models',
-        loadChildren: () => ModelsModule
+        loadChildren: './business/ms/index#ModelsModule'
     },
     {
         path: 'cmp-methods',

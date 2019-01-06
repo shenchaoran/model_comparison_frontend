@@ -1,6 +1,6 @@
 {
     "/CMIP-backend/api": {
-        "target": "http://223.2.37.76:9999",
+        "target": "http://172.21.213.253:9999",
         "secure": false
     }, 
     "/CMIP-backend/geoserver": {

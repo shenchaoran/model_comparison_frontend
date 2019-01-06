@@ -51,7 +51,7 @@
 
 <ng-template #taskTemplate let-item='item'>
     <div class='list-item'>
-        <a class='panel-item-header' [routerLink]='["results", item._id]'>
+        <a class='panel-item-header' [routerLink]='["/results", item._id]'>
             {{item.meta.name}}
         </a>
         <div class='panel-item-body'>

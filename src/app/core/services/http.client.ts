@@ -4,6 +4,7 @@ import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { API } from '@config';
 import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
+import AES from 'crypto-js/aes';
 
 /**
  * 封装HttpClient，主要解决：
