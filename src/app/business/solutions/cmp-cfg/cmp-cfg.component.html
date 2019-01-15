@@ -4,10 +4,10 @@
 <ng-template #temp>
     <div *ngIf='mode === "WRITE"'>
         <p class='f4-light my-2'>Time interval:</p>
-        <mat-radio-group class='my-2' [(ngModel)]='timeInterval' (change)='onTimeIntervalChange()'>
-            <mat-radio-button class='mr-3' value='daily'>Daily</mat-radio-button>
-            <mat-radio-button class='mr-3' value='monthly'>Monthly</mat-radio-button>
-            <mat-radio-button class='mr-3' value='annual'>Annual</mat-radio-button>
+        <mat-radio-group class='my-2' [(ngModel)]='temporal' (change)='onTimeIntervalChange()'>
+            <mat-radio-button class='mr-3' value='1 day'>1 Day</mat-radio-button>
+            <mat-radio-button class='mr-3' value='8 day'>8 Day</mat-radio-button>
+            <mat-radio-button class='mr-3' value='1 year'>1 Year</mat-radio-button>
         </mat-radio-group>
     </div>
     <div *ngIf='mode === "READ"'>

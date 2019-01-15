@@ -1,4 +1,5 @@
 import { ResourceSrc } from './resource.enum';
+import { NETCDF4_Schema, Table_Schema } from './UDX-schema.class';
 
 export class STDData {
     _id: any;
@@ -10,11 +11,7 @@ export class STDData {
     };
     models: string[];
     tags: string[];
-    schema$: {
-        type: string,
-        dimensions?: any[],
-        variables?: any[]
-    }
+    schemaId: string;
     // inputPath: string;
     // outputPath: string;
     // stdClass: string;

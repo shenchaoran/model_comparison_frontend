@@ -42,7 +42,6 @@ export class InvokeComponent extends OgmsBaseComponent implements OnInit {
             if (!res.error) {
                 this.ms = res.data.ms;
                 this.calcuTask = new CalcuTask(this.userService.user, this.ms);
-                this.calcuTask.stds = res.data.stds;
 
                 this.msiForm = this.fb.group({
                     _id: this.calcuTask._id,
@@ -66,6 +65,7 @@ export class InvokeComponent extends OgmsBaseComponent implements OnInit {
     }
 
     invoke(type) {
+        // TODO cachePosition
         if (type === 'save') {
             this.calcuTask.state = OGMSState.INIT;
         }

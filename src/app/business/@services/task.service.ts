@@ -47,10 +47,10 @@ export class TaskService extends ListBaseService {
         }
     }
 
-    public startOneCmpMethod(taskId, cmpObjId, methodId, message): Observable<any> {
+    public startOneCmpMethod(taskId, metricName, methodName, message): Observable<any> {
         return this.http.post(`${this.baseUrl}/${taskId}/cmpMethod`, {
-            cmpObjId,
-            methodId,
+            metricName,
+            methodName,
             message,
         })
     }

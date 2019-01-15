@@ -1,9 +1,11 @@
 import { Component, OnInit, Input, Output, EventEmitter, AfterViewInit, OnChanges, SimpleChange, HostListener, 
     OnDestroy, ViewChild, ChangeDetectorRef, Renderer2, ElementRef, } from "@angular/core";
-import { Solution, Task, Topic, MS, CmpMethod, CmpObj, UDXSchema, Metric, } from "@models";
+import { Solution, Task, Topic, MS, CmpMethod, 
+    CmpObj, UDXSchema, Metric, STDData, } from "@models";
+import { SchemaService } from '@services';
 import * as ObjectId from 'objectid';
 import * as uuidv1 from 'uuid/v1';
-import { Observable } from 'rxjs';
+import { Observable, observable } from 'rxjs';
 
 @Component({
     selector: 'ogms-cmp-cfg',
@@ -11,23 +13,24 @@ import { Observable } from 'rxjs';
     styleUrls: ['./cmp-cfg.component.scss']
 })
 export class CmpCfgComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy {
+    @Input() temporal: '1 day' | '8 day' | '1 year';
     @Input() cmpObjs: CmpObj[];
     @Input() mode: 'WRITE' | 'READ' = 'WRITE';
     @Input() mss: MS[];
+    @Input() observations: STDData[];
     @Input() metrics: Metric[];
     @Output() valueChange = new EventEmitter<{
         value?: CmpObj[],
         valid: boolean
     }>();
-
-    timeInterval: 'annual' | 'daily' | 'monthly' = 'annual';
+    @Output() temporalChange = new EventEmitter<string>();
 
     targetId;
     rowIndexColWidth = 30;
     checkboxCOlWidth = 30;
     featureNameColWidth = 70;
     featureDescColWidth = 150;
-    msColWidth = 200;
+    msColWidth = 80;
     colHeaders = ['', 'Name', 'Description'];
     colWidths = [this.checkboxCOlWidth, this.featureNameColWidth, this.featureDescColWidth];
     columns: any[] = [{type: 'checkbox'}, {type: 'text',},{type: 'text',}];
@@ -40,7 +43,7 @@ export class CmpCfgComponent implements OnInit, AfterViewInit, OnChanges, OnDest
         return this.mode === "READ" && (!this.cmpObjs || this.cmpObjs.length === 0);
     }
 
-    constructor() {
+    constructor(private schemaService: SchemaService) {
         this.targetId = uuidv1();
     }
 
@@ -48,10 +51,23 @@ export class CmpCfgComponent implements OnInit, AfterViewInit, OnChanges, OnDest
         this.getTableOption();
     }
 
+    ngAfterViewInit() {
+        if(this.hasNoCmpCfg)
+            return ;
+        setTimeout(() => {
+            this.buildTable();
+            this.validate();
+        }, 10);
+    }
+
     ngOnChanges(changes: { [key: string]: SimpleChange }) {
-        let mssChange = changes.mss;
-        if(mssChange && !mssChange.firstChange) {
-            let { currentValue, previousValue } = mssChange;
+        let mssChange = changes.mss,
+            obsChange = changes.observations;
+        if(
+            (mssChange && !mssChange.firstChange) ||
+            (obsChange && !obsChange.firstChange)    
+        ) {
+            // let { currentValue, previousValue } = mssChange;
             this.getTableOption();
             this.buildTable();
             this.validate();
@@ -59,6 +75,7 @@ export class CmpCfgComponent implements OnInit, AfterViewInit, OnChanges, OnDest
     }
 
     onTimeIntervalChange() {
+        this.temporalChange.emit(this.temporal);
         let dom = _.get(this, 'gridTableRef.nativeElement')
         if(dom) {
             $(dom).jexcel('destroy')
@@ -85,16 +102,18 @@ export class CmpCfgComponent implements OnInit, AfterViewInit, OnChanges, OnDest
             if(!this.mss)
                 return;
 
+            // get all metric name
             this.mss.map((ms, i) => {
                 this.colHeaders.push(ms.MDL.meta.name)
                 this.colWidths.push(this.msColWidth)
                 this.columns.push({type: 'text'})
                 
                 ms.MDL.IO.outputs.map(output => {
-                    if(output.temporal !== this.timeInterval) 
+                    // if(output.temporal !== this.temporal) 
+                    if(output.temporal !== 'daily') 
                         return;
-    
-                    let schema: UDXSchema = _.find(ms.MDL.IO.schemas, schema => schema.id === output.schemaId)
+
+                    let schema: UDXSchema = this.schemaService.getById(output.schemaId)
                     if(!schema)
                         return;
                     if(schema.structure.type === 'table') {
@@ -113,6 +132,11 @@ export class CmpCfgComponent implements OnInit, AfterViewInit, OnChanges, OnDest
                     }
                 })
             });
+            this.observations.map(obs => {
+                this.colHeaders.push(obs.meta.name)
+                this.colWidths.push(this.msColWidth)
+                this.columns.push({type: 'text'})
+            })
 
             for(let metricName of Array.from(metricNames)) {
                 let row = [],
@@ -125,14 +149,15 @@ export class CmpCfgComponent implements OnInit, AfterViewInit, OnChanges, OnDest
                 row.push(checkRow, metric.long_name, metric.description)
                 this.mss.map((ms, i) => {
                     let cellData;
-                    let output = _.find(ms.MDL.IO.outputs, output => output.temporal === this.timeInterval)
+                    let output = _.find(ms.MDL.IO.outputs, output => output.temporal === 'daily')
                     if(output) {
-                        let schema: UDXSchema = _.find(ms.MDL.IO.schemas, schema => schema.id === output.schemaId);
+                        let schema: UDXSchema = this.schemaService.getById(output.schemaId)
                         if(schema) {
                             if(schema.structure.type === 'NETCDF4') {
                                 let variable = _.find(schema.structure.variables, variable => variable.metricName === metricName)
                                 if(variable) {
                                     let dataRefer = {
+                                        type: 'simulation',
                                         msId: ms._id,
                                         msName: ms.MDL.meta.name,
                                         eventType: 'outputs',
@@ -142,13 +167,14 @@ export class CmpCfgComponent implements OnInit, AfterViewInit, OnChanges, OnDest
                                         schemaId: output.schemaId
                                     };
                                     dataRefers.push(dataRefer);
-                                    cellData = `${output.name} -> ${variable.name}`
+                                    cellData = `<span style='color: green;'>&radic;</span>`
                                 }
                             }
                             else if(schema.structure.type === 'table') {
                                 let column = _.find(schema.structure.columns, column => column.metricName === metricName)
                                 if(column) {
                                     let dataRefer = {
+                                        type: 'simulation',
                                         msId: ms._id,
                                         msName: ms.MDL.meta.name,
                                         eventType: 'outputs',
@@ -158,16 +184,54 @@ export class CmpCfgComponent implements OnInit, AfterViewInit, OnChanges, OnDest
                                         schemaId: output.schemaId
                                     };
                                     dataRefers.push(dataRefer);
-                                    cellData = `${output.name} -> ${column.id}`
+                                    cellData = `<span style='color: green;'>&radic;</span>`
                                 }
                             }
                         }
                     }
                     if(!cellData) {
-                        cellData = '-';
+                        cellData = `<span style='color: red;'>&times;</mat-icon>`
                         dataRefers.push(null);
                     }
 
+                    row.push(cellData);
+                })
+
+                this.observations.map(obs => {
+                    let cellData;
+                    let schema = this.schemaService.getById(obs.schemaId)
+                    if(schema.structure.type === 'NETCDF4') {
+                        let variable = _.find(schema.structure.variables, variable => variable.metricName === metricName)
+                        if(variable) {
+                            let dataRefer = {
+                                type: 'observation',
+                                stdId: obs._id.toString(),
+                                stdName: obs.meta.name,
+                                field: variable.name,
+                                schemaId: obs.schemaId,
+                            };
+                            dataRefers.push(dataRefer);
+                            cellData = `<span style='color: green;'>&radic;</span>`
+                        }
+                    }
+                    else if(schema.structure.type === 'obs-table') {
+                        let column = _.find(schema.structure.columns, column => column.metricName === metricName)
+                        if(column) {
+                            let dataRefer = {
+                                type: 'observation',
+                                stdId: obs._id.toString(),
+                                stdName: obs.meta.name,
+                                field: column.id,
+                                schemaId: obs.schemaId,
+                            };
+                            dataRefers.push(dataRefer);
+                            cellData = `<span style='color: green;'>&radic;</span>`
+                        }
+                    }
+                    
+                    if(!cellData) {
+                        cellData = `<span style='color: red;'>&times;</span>`
+                    }
                     row.push(cellData);
                 })
     
@@ -183,20 +247,34 @@ export class CmpCfgComponent implements OnInit, AfterViewInit, OnChanges, OnDest
 
             this.cmpObjs.map((cmpObj, i) => {
                 let row = [];
-                row.push(cmpObj.name)
-                row.push(cmpObj.desc)
-                cmpObj.dataRefers.map((dataRefer, j) => {
-                    let colIndex = _.findIndex(this.colHeaders, msName => msName === dataRefer.msName)
-                    if(i === 0) {
-                        if(colIndex === -1) {
-                            this.colHeaders.push(dataRefer.msName)
-                            this.colWidths.push(this.msColWidth)
-                            this.columns.push({type: 'text'})
-                            colIndex = this.colHeaders.length + 1;
-                        }
+                row.push(cmpObj.name, cmpObj.desc)
+                cmpObj.dataRefers.map(dataRefer => {
+                    if(dataRefer.type === 'simulation') {
+                        if(this.colHeaders.find(str => str === dataRefer.msName))
+                            return
+                        this.colHeaders.push(dataRefer.msName)
+                        this.colWidths.push(this.msColWidth)
+                        this.columns.push({type: 'text'})
                     }
-                    if(row.length < this.colHeaders.length)
-                        row.push(`${dataRefer.eventName} -> ${dataRefer.field}`)
+                    else if(dataRefer.type === 'observation') {
+                        if(this.colHeaders.find(str => str === dataRefer.stdName))
+                            return
+                        this.colHeaders.push(dataRefer.stdName)
+                        this.colWidths.push(this.msColWidth)
+                        this.columns.push({type: 'text'})
+                    }
+                })
+                this.colHeaders.map((colHeader, j) => {
+                    if(j > 1) {
+                        let dataRefer = _.find(cmpObj.dataRefers, dataRefer => {
+                            return dataRefer.msName === colHeader || dataRefer.stdName === colHeader;
+                        })
+                        if(dataRefer) {
+                            row.push(`<span style='color: green;'>&radic;</span>`)
+                        }
+                        else 
+                            row.push(`<span style='color: red;'>&times;</span>`)
+                    }
                 })
                 this.data.push(row);
             })
@@ -233,15 +311,6 @@ export class CmpCfgComponent implements OnInit, AfterViewInit, OnChanges, OnDest
         });
     }
 
-    ngAfterViewInit() {
-        if(this.hasNoCmpCfg)
-            return ;
-        setTimeout(() => {
-            this.buildTable();
-            this.validate();
-        }, 10);
-    }
-
     validate() {
         this.cmpObjs = [];
 
@@ -265,6 +334,7 @@ export class CmpCfgComponent implements OnInit, AfterViewInit, OnChanges, OnDest
         else {
             this.valueChange.emit({valid: false});
         }
+        this.temporalChange.emit(this.temporal);
     }
 
     ngOnDestroy() {

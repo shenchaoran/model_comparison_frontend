@@ -4,29 +4,15 @@
 
 import { ResourceSrc } from '@models/resource.enum';
 
-export enum SchemaName {
-    TABLE_RAW = 0,
-    SHAPEFILE_RAW,
-    ASCII_GRID_RAW,
-    ASCII_GRID_RAW_BATCH
-};
-
 export class UDXSchema {
-    msId?: string;
     id: string;
+    name: string;
+    description: string;
     src: ResourceSrc;
-    name?: string;
-    description?: string;
-    structure: NETCDF4_Schema | Table_Schema | Binary_Schema | Coordinate_Schama;
-    semantic?: {
-        concepts: any[],
-        spatialRefs: any[],
-        units: any[],
-        dataTemplates: any[]
-    };
+    structure: NETCDF4_Schema & Table_Schema & Binary_Schema & Coordinate_Schama;
 }
 
-class NETCDF4_Schema {
+export class NETCDF4_Schema {
     type: 'NETCDF4';
     dimensions: {
         name: string,
@@ -43,28 +29,31 @@ class NETCDF4_Schema {
         step?: number,
         unit?: string,
         dimensions?: string[],
+        missing_value?: number,
     }[];
 }
 
-class Table_Schema {
-    type: 'table';
-    headers: number;
-    rowStart: number;
+export class Table_Schema {
+    type: 'table' | 'obs-table';
+    header: number;
+    skiprows: number;
     seperator: string;
     columns: {
         id: string,
         type: string,
         description: string,
+        metricName: string,
         unit: string,
         scale: number,
         offset: number,
+        missing_value?: number,
     }[]
 }
 
-class Binary_Schema {
+export class Binary_Schema {
     type: 'binary';
 }
 
-class Coordinate_Schama {
+export class Coordinate_Schama {
     type: 'coordinate-index';
 }

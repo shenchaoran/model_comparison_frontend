@@ -1,9 +1,10 @@
-import { Component, OnInit, AfterViewInit, Input, Output, EventEmitter, HostListener, Inject, ElementRef, ViewChild, } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Input, Output, 
+    EventEmitter, HostListener, Inject, ElementRef, ViewChild, } from '@angular/core';
 import * as uuidv1 from 'uuid/v1';
 import { API } from '@config';
 import { OlService } from '../services/ol.service';
 import { defaults as defaultControls } from 'ol/control/util';
-import { STDData } from '@models';
+import { STDData, ObsSite } from '@models';
 import ScaleLine from 'ol/control/ScaleLine';
 import FullScreen from 'ol/control/FullScreen';
 import Map from 'ol/Map';
@@ -47,14 +48,14 @@ export class NcDatasetComponent implements OnInit, AfterViewInit {
     set dataset(v: STDData) {
         this._v = v;
         this.variables = _.chain(v)
-            .get('schema$.variables')
+            .get('schema.variables')
             .filter(variable => !!variable.layerId)
             .value();
         this.dimensions = _.chain(v)
-            .get('schema$.dimensions')
+            .get('schema.dimensions')
             .value();
         this.selectedVariable = _.first(this.variables);
-        let variables = _.get(v, 'schema$.variables'),
+        let variables = _.get(v, 'schema.variables'),
             latVariable = _.find(variables, variable => variable.name === 'lat'),
             longVariable = _.find(variables, variable => variable.name === 'long');
         this.timeVariable = _.find(variables, variable => variable.name === 'time');

@@ -11,7 +11,7 @@ export class ServerSideDiagramComponent implements OnInit {
     @Input()
     set data(v) {
         this._v = v;
-        this.imgSrc = `${this.api.backend}/images/plots/${v.img}`
+        this.imgSrc = `${this.api.backend}/images/std-plots/${v.img}`
     };
     get data() { return this._v; }
     constructor(

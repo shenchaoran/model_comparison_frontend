@@ -88,7 +88,6 @@ export class CalcuCfgComponent extends NgModelBase implements OnInit, AfterViewI
     }
 
     init() {
-        this.appendSchema();
         this.buildForm();
         this.onValidChange.emit(false);
     }
@@ -97,29 +96,13 @@ export class CalcuCfgComponent extends NgModelBase implements OnInit, AfterViewI
 
     ngOnInit() { }
 
-    appendSchema() {
-        let appendSchema = (type, schema) => {
-            map(this.calcuTask.IO[type] as any[], event => {
-                if (event.schemaId === schema.id) {
-                    event.schema = schema;
-                }
-            });
-        }
-        map(this.calcuTask.IO.schemas, schema => {
-            appendSchema('inputs', schema);
-            appendSchema('std', schema);
-            appendSchema('parameters', schema);
-            appendSchema('outputs', schema);
-        });
-    }
-
     buildForm() {
         let myFormGroup = (event, type?) => {
             let eventFG = {
                 id: [event.id],
                 name: [event.name],
                 description: [event.description],
-                schema: [event.schema],
+                schemaId: [event.schemaId],
                 optional: [event.optional],
                 value: [type === 'outputs' ? undefined : event.value, null],
                 file: [undefined],
@@ -160,7 +143,7 @@ export class CalcuCfgComponent extends NgModelBase implements OnInit, AfterViewI
                                 id: event.id,
                                 name: event.name,
                                 description: event.description,
-                                schemaId: get(event, 'schema.id'),
+                                schemaId: event.schemaId,
                                 optional: event.optional,
                                 cached: event.file ? true : false,
                                 value: (dataSrc === 'UPLOAD' && key === 'inputs') ? get(event, 'file.value') :
@@ -205,7 +188,7 @@ export class CalcuCfgComponent extends NgModelBase implements OnInit, AfterViewI
                 if (sites) {
                     let siteCtrl = chain((this.IOForm.get('std') as any).controls)
                         .find(control => {
-                            return get(control, 'value.schema.structure.type') === 'coordinate-index';
+                            return get(control, 'value.schemaId') === 'coordinate-index';
                         })
                         .value()
 
@@ -301,7 +284,7 @@ export class CalcuCfgComponent extends NgModelBase implements OnInit, AfterViewI
     template: `
         <h2 mat-dialog-title>Select site to simulation</h2>
         <mat-dialog-content>
-            <ogms-global-site [onlyMap]='true' [multiple]='false' [couldSelect]='true' (onSitesChange)='onSitesChange($event)'></ogms-global-site>
+            <ogms-grid-site [onlyMap]='true' [multiple]='false' [couldSelect]='true' (onSitesChange)='onSitesChange($event)'></ogms-grid-site>
         </mat-dialog-content>
         <mat-dialog-actions align='end'>
             <div>

@@ -23,7 +23,13 @@ export class Solution {
     };
     topicIds?: string[];
     msIds?: string[];
+    observationIds?: string[];
+    temporal?:  '1 day' | '8 day' | '1 year';
     cmpObjs: CmpObj[];
+    cmpMethods: {
+        id: string,
+        name: string,
+    }[];
     cid: string;
     subscribed_uids: string[];
     [key: string]: any;
@@ -36,8 +42,11 @@ export class Solution {
             time: new Date().getTime()
         };
         this.cmpObjs = [];
+        this.cmpMethods = [];
+        this.temporal = '1 year';
         this.subscribed_uids = [];
         this.msIds = [];
+        this.observationIds = [];
         if(user) {
             this.auth = {
                 userId: user._id,
@@ -62,31 +71,31 @@ export class CmpObj {
     // 此处的数据参考是比较对象的数据参考，可能是输入，但绝大多数都是输出
     // TODO 对于日期的处理，暂时理解为时间区域内只有一个输出
     dataRefers: Array<DataRefer>;
-    schemaId?: string;
-    temporal?: 'annual' | 'daily' | 'monthly';
-    methods: {
-        id: string,
-        name: string,
-        // 保存结果文件路径
-        result: string
-    }[];
 
     constructor() {
         this.id = ObjectID().toString();
-        this.methods = [];
         this.dataRefers = [];
     }
 }
 
 export class DataRefer {
-    msId: string;
-    msName: string;
-    eventType: 'inputs' | 'outputs';
-    eventId: string;
-    eventName: string;
-    schemaId: string;
+    cachedPosition: 'STD' | 'DB';
+    type: 'simulation' | 'observation';
+    field?: string;         // 对比要素的字段。在 nc 中变量名，在 csv 中为列名
+    value?: string;         // observation 时表示 空间索引或者 文件索引
+    lat?: string;
+    long?: string;
+    // type-simulation: refer from ms-output-event
+    msId?: string;
+    msName?: string;
+    eventType?: 'inputs' | 'outputs';
+    eventId?: string;
+    eventName?: string;
+    schemaId?: string;
     msrName?: string;
     msrId?: string;
-    value?: string;
-    field?: string;
+    // type-observation: refer from std-data
+    stdId?: string;
+    stdName?: string;
+    datasetId?: string;                 // 标准输入数据集 id
 }

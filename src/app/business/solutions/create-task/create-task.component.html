@@ -60,9 +60,17 @@
                 </div>
             </mat-step>
             
-            <mat-step *ngIf='spatialType === "site"' label='Select sites' [stepControl]='sitesFC'>
-                <ogms-global-site [multiple]='multipleSite' [multiple]='true' 
-                    [onlyMap]='true' (onSitesChange)='onSitesChange($event)'></ogms-global-site>
+            <mat-step *ngIf='spatialType === "site"' label='Select simulation site' [stepControl]='sitesFC'>
+                
+                <mat-radio-group [(ngModel)]='siteType' (change)='onSiteTypeChange()'>
+                    <mat-radio-button class='mr-3' value='observation'>Fluxdata site</mat-radio-button>
+                    <mat-radio-button class='mr-3' value='simulation'>Grid point</mat-radio-button>
+                </mat-radio-group>
+                
+                <ogms-grid-site *ngIf='siteType === "simulation"' [multiple]='false'
+                    [onlyMap]='true' (onSitesChange)='onSitesChange($event, "simulation")'></ogms-grid-site>
+                <ogms-observation-site *ngIf='siteType === "observation"' (onSitesChange)='onSitesChange($event, "observation")'></ogms-observation-site>
+                
                 <p class='mt-2 ml-2'>
                     <mat-error *ngIf='regionsFC.invalid && regionsFC.dirty'>Please selected your interested site!</mat-error>
                 </p>

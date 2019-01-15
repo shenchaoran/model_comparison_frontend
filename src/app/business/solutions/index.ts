@@ -32,6 +32,7 @@ import {
     MatSnackBarModule,
     MatStepperModule,
     MatRadioModule,
+    MatSlideToggleModule,
 } from '@angular/material';
 
 import { SolutionListComponent } from './solution-list/solution-list.component';
@@ -64,6 +65,7 @@ const modules = [
     MatButtonModule,
     MatChipsModule,
     MatTabsModule,
+    MatSlideToggleModule,
     MatCardModule,
     MatIconModule,
     MatRadioModule,

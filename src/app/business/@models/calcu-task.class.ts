@@ -34,7 +34,6 @@ export class CalcuTask {
     nodeId: string;
     IO: {
         dataSrc: 'STD' | 'UPLOAD',
-        schemas: any[],
         inputs: Event[],
         parameters: Event[],
         outputs: Event[],
@@ -60,19 +59,6 @@ export class CalcuTask {
             this.IO.dataSrc = 'STD';
             // TODO 选择节点
             this.nodeId = ms.nodeIds[0];
-            let appendSchema = (type, schema) => {
-                map(this.IO[type] as any[], event => {
-                    if (event.schemaId === schema.id) {
-                        event.schema = schema;
-                    }
-                });
-            }
-            map(this.IO.schemas as any[], schema => {
-                appendSchema('inputs', schema);
-                appendSchema('std', schema);
-                appendSchema('parameters', schema);
-                appendSchema('outputs', schema);
-            });
         }
         
         this._id = ObjectID().toString();

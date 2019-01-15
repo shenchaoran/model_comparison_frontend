@@ -1,0 +1,227 @@
+import { Component, OnInit, AfterViewInit, Input, Output, EventEmitter, HostListener, Inject } from '@angular/core';
+import * as uuidv1 from 'uuid/v1';
+import { API } from '@config';
+import { OlService } from '../services/ol.service';
+import { defaults as defaultControls } from 'ol/control/util';
+import ScaleLine from 'ol/control/ScaleLine';
+import FullScreen from 'ol/control/FullScreen';
+import Map from 'ol/Map';
+import View from 'ol/View';
+import Tile from 'ol/layer/Tile';
+import Select from 'ol/interaction/Select';
+import * as condition from 'ol/events/condition';
+import { Group, Tile as TileLayer, Vector as VectorLayer } from 'ol/layer';
+import { Vector as VectorSource, OSM, TileWMS } from 'ol/source';
+import { Circle, Stroke, Style, Fill, Text } from 'ol/style';
+import WMSGetFeatureInfo from 'ol/format/WMSGetFeatureInfo';
+import Point from 'ol/geom/Point'
+import * as proj from 'ol/proj';
+import Feature from 'ol/Feature';
+import * as Draw from 'ol/interaction/Draw';
+
+@Component({
+    selector: 'ogms-grid-site',
+    templateUrl: './grid-site.component.html',
+    styleUrls: ['./grid-site.component.scss']
+})
+export class GridSiteComponent implements OnInit, AfterViewInit {
+    @Input() onlyMap: boolean = false;
+    @Input() couldSelect: boolean = true;
+    @Input() multiple: boolean = true;
+    @Input() 
+    @Output() onSitesChange = new EventEmitter<{
+        value?: any,
+        valid: boolean,
+    }>();
+
+    layerId = 'Carbon_Cycle:grid-site';
+    targetId;
+    map;
+    baseLayerGroup;
+    siteLayer;
+    siteSource;
+
+    highlightSource;
+    highlightLayer;
+
+    sites: {
+        index: number,
+        lat: number,
+        long: number,
+        coor: string,
+    }[] = [];
+
+    constructor(
+        private olService: OlService,
+        @Inject('LAYERS') private layers,
+    ) {
+        this.targetId = uuidv1();
+    }
+
+    ngOnInit() {
+
+    }
+
+    ngAfterViewInit() {
+        setTimeout(() => {
+            this.buildMap();
+        }, 0);
+    }
+
+    buildMap() {
+        this.baseLayerGroup = new Group({
+            layers: [
+                new Tile({
+                    title: 'OSM',
+                    visible: true,
+                    source: new OSM()
+                } as any)
+            ]
+        });
+        this.siteSource = new TileWMS({
+            crossOrigin: 'anonymous',
+            serverType: 'geoserver',
+            url: this.layers.url,
+            params: {
+                // request : 'GetMap',
+                // service : 'WMS',
+                // version : '1.1.0',
+                layers: this.layerId,
+                styles: '',
+                bbox: this.layers.bbox,
+                // 加长宽会变形
+                // width : '768',
+                // height : '330',
+                srs: 'EPSG:4326'
+                // 加下面的不允许跨域
+                // format : 'application/openlayers'
+            }
+        });
+        this.siteLayer = new Tile({
+            title: 'Site',
+            source: this.siteSource
+        } as any);
+        this.highlightSource = new VectorSource();
+        this.highlightLayer = new VectorLayer({
+            title: 'highlight features',
+            source: this.highlightSource,
+            style: new Style({
+                image: new Circle({
+                    radius: 4,
+                    fill: new Fill({
+                        color: [255, 0, 0, 1]
+                    })
+                }),
+            })
+        })
+
+        let view = new View({
+            center: [0, 0],
+            zoom: 1
+        });
+        this.map = new Map({
+            target: this.targetId,
+            layers: [
+                this.baseLayerGroup,
+                this.siteLayer,
+                this.highlightLayer,
+            ],
+            view: view,
+            controls: new defaultControls({
+                // attribution: false,
+                rotate: false,
+                zoom: false
+            }).extend([new FullScreen(), new ScaleLine()])
+        } as any);
+
+        // let draw = new Draw.default({
+        //     source: this.highlightSource,
+        //     type: 'Point',
+        // })
+        // this.map.addInteraction(draw);
+
+        if(!this.couldSelect)
+            return;
+        this.map.on('singleclick', evt => {
+            let url = this.siteSource.getGetFeatureInfoUrl(
+                evt.coordinate,
+                view.getResolution(),
+                'EPSG:3857',
+                {
+                    INFO_FORMAT: 'text/html',   //geoserver支持jsonp才能输出为jsonp的格式
+                    QUERY_LAYERS: this.layerId,
+                    // FEATURE_COUNT: 1     //点击查询能返回的数量上限
+                    // format_options: ()
+                }
+            );
+            if (url) {
+                this.olService.getFeatureInfo(url).subscribe(response => {
+                    try {
+                        console.log('selected site index: ' + response[0].index);
+                        // console.log(response)
+                        let coor = JSON.parse(response[0].coor);
+                        let xy = (proj as any).fromLonLat(coor, 'EPSG:3857')
+                        let geom = new Point(xy)
+                        let feature = new Feature({ 
+                            id: response[0].index,
+                            geometry: geom 
+                        })
+                        
+                        console.log(this.sites)
+                        let siteIndex = _.findIndex(this.sites, site => site.index === response[0].index)
+                        if(siteIndex !== -1) {
+                            this.sites.splice(siteIndex, 1)
+                            this.highlightSource.getFeatures().map(feature => {
+                                if (feature.get('id') === response[0].index) {
+                                    this.highlightSource.removeFeature(feature);
+                                }
+                            })
+                        }
+                        else {
+                            if(!this.multiple) {
+                                this.highlightSource.clear(true);
+                                this.sites = [];
+                            }
+                            this.highlightSource.addFeature(feature);
+                            this.sites.push({
+                                index: response[0].index,
+                                lat: coor[1],
+                                long: coor[0],
+                                coor: response[0].coor
+                            })
+                        }
+
+                        if(this.sites.length) {
+                            this.onSitesChange.emit({
+                                valid: true,
+                                value: this.sites
+                            });
+                        }
+                        else {
+                            this.onSitesChange.emit({ valid: false });
+                        }
+                    }
+                    catch (e) {
+
+                    }
+                })
+            }
+        })
+        this.map.on('pointermove', evt => {
+            if (evt.dragging)
+                return;
+            var pixel = this.map.getEventPixel(evt.originalEvent);
+            var hit = this.map.forEachLayerAtPixel(pixel, layer => {
+                return layer.get('title') === 'Site';
+            });
+            this.map.getTargetElement().style.cursor = hit ? 'pointer' : '';
+        })
+
+        this.resize();
+    }
+
+    @HostListener('window:resize')
+    resize() {
+        this.map.updateSize();
+    }
+}

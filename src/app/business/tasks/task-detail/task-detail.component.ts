@@ -5,7 +5,8 @@ import {
     ViewChildren,
     QueryList,
     ElementRef,
-    Renderer2
+    Renderer2,
+    Inject,
 } from "@angular/core";
 import { TaskService, ConversationService, UserService } from '@services';
 import { Router, ActivatedRoute, Params } from "@angular/router";
@@ -35,6 +36,7 @@ export class CmpDetailComponent extends OgmsBaseComponent implements OnInit {
     spatialType: 'site' | 'region';
     @ViewChildren('echartDOM') echartDOM: QueryList<ElementRef>;
     chartRecord = {};
+    currentChart = 0;
 
     get user() { return this.userService.user; }
     get users() { return this.conversationService.users; }
@@ -45,16 +47,16 @@ export class CmpDetailComponent extends OgmsBaseComponent implements OnInit {
         public route: ActivatedRoute,
         public taskService: TaskService,
         public userService: UserService,
-        private conversationService: ConversationService,
+        public conversationService: ConversationService,
         public title: DynamicTitleService,
         public renderer2: Renderer2,
         public router: Router,
+        @Inject('API') public api,
     ) {
         super();
     }
 
     ngOnInit() {
-        // TODO 懒加载
         this.taskId = this.route.snapshot.paramMap.get('id')
         this.taskService.findOne(this.taskId).subscribe(res => {
             if (!res.error) {
@@ -64,19 +66,16 @@ export class CmpDetailComponent extends OgmsBaseComponent implements OnInit {
                 this.calcuTasks = res.data.calcuTasks;
                 this.metrics = res.data.metrics;
 
-                _.map(this.solution.cmpObjs, cmpObj => {
-                    _.map(cmpObj.methods, method => {
-                        if(method.name === 'Sub-region bias contour map' || method.name === 'Heat map' || method.name === 'Sub-region line chart') {
-                            this.spatialType = 'region';
-                        }
-                        else if(method.name === "table series visualization" || method.name === "Line chart") {
-                            this.spatialType = 'site';
-                        }
-                    })
+                _.map(this.solution.cmpMethods, method => {
+                    if(method.name === 'Sub-region bias contour map' || method.name === 'Heat map' || method.name === 'Sub-region line chart') {
+                        this.spatialType = 'region';
+                    }
+                    else if(method.name === "table series visualization" || method.name === "Line chart") {
+                        this.spatialType = 'site';
+                    }
                 })
 
-                // this.buildChart(0);
-                // this.fetchInterval();
+                this.fetchInterval();
             }
         });
     }
@@ -97,16 +96,16 @@ export class CmpDetailComponent extends OgmsBaseComponent implements OnInit {
                 subscription.unsubscribe();
                 if (this.task.state === OGMSState.FINISHED_SUCCEED ||
                     this.task.state === OGMSState.FINISHED_FAILED)
-                    this.buildChart(0);
+                    this.buildChart();
             }
         });
         this._subscriptions.push(subscription)
     }
 
-    private buildChart(i) {
+    private buildChart() {
         setTimeout(() => {
-            let cmpObj = this.task.cmpObjs[i]
-            _.map(cmpObj.methods, (method, j) => {
+            let refactored = this.task.refactored[this.currentChart]
+            _.map(refactored.methods, (method, j) => {
                 if (
                     method.name === 'Sub-region line chart' ||
                     method.name === 'Heat map' ||
@@ -115,7 +114,7 @@ export class CmpDetailComponent extends OgmsBaseComponent implements OnInit {
                 ) {
                     if (_.get(method, 'result.state') === OGMSState.FINISHED_SUCCEED) {
                         // console.log(this.echartDOM.toArray())
-                        let echartDOM = _.find(this.echartDOM.toArray(), echartDOM => echartDOM.nativeElement.id === `${cmpObj.id}-${method.id}`)
+                        let echartDOM = _.find(this.echartDOM.toArray(), echartDOM => echartDOM.nativeElement.id === `${refactored.metricName}-${method.id}`)
                         if(echartDOM) {
                             if(method.name === 'Sub-region line chart') {
                                 let height = 200 * Math.ceil(this.task.regions.length/4) + 'px'
@@ -128,7 +127,7 @@ export class CmpDetailComponent extends OgmsBaseComponent implements OnInit {
                             echarts
                                 .init(echartDOM.nativeElement)
                                 .setOption(method.result);
-                            this.chartRecord[i] = true;
+                            this.chartRecord[this.currentChart] = true;
                         }
                     }
                 }
@@ -137,7 +136,7 @@ export class CmpDetailComponent extends OgmsBaseComponent implements OnInit {
     }
 
     onTabChange(index) {
-        if (index === this.task.cmpObjs.length+1 && !this.hadTriggeredConversation) {
+        if (index === this.task.refactored.length+1 && !this.hadTriggeredConversation) {
             this.conversationService.findOneByWhere({
                 pid: this.task._id
             }).subscribe(res => {
@@ -154,9 +153,10 @@ export class CmpDetailComponent extends OgmsBaseComponent implements OnInit {
                 }
             })
         }
-        else if(index> 0 && index< this.task.cmpObjs.length+1) {
+        else if(index> 0 && index< this.task.refactored.length+1) {
+            this.currentChart = index - 1
             if(this.chartRecord[index-1] !== true)
-                this.buildChart(index-1);
+                this.buildChart();
         }
     }
 

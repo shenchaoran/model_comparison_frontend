@@ -14,7 +14,7 @@ export class CmpProgressComponent implements OnInit, AfterViewInit, OnDestroy {
     containerId
     @Input() data;
     @Input() taskId;
-    @Input() cmpObjId;
+    @Input() metricName;
     @ViewChild('gridTable') gridTableRef: ElementRef;
     
     constructor(
@@ -62,7 +62,7 @@ export class CmpProgressComponent implements OnInit, AfterViewInit, OnDestroy {
         }
         else {
             method.state = OGMSState.PENDING;
-            this.taskService.startOneCmpMethod(this.taskId, this.cmpObjId, method.id, message).subscribe(res => {
+            this.taskService.startOneCmpMethod(this.taskId, this.metricName, method.name, message).subscribe(res => {
                 if(!res.error) {
                     if(res.data) {
                         if(message === 'start' || message === 'restart') {

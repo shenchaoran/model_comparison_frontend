@@ -18,7 +18,7 @@
                     <div *ngFor='let item of IOForm.controls["std"].controls;let i=index;' [formGroupName]='i' class='form-item std-src-group'>
                         <label>{{item.value.name}}</label>
                         <!-- 选择站点 -->
-                        <mat-form-field *ngIf='item.value?.schema?.structure?.type === "coordinate-index" else stdTemp'>
+                        <mat-form-field *ngIf='item.value?.schemaId === "coordinate-index" else stdTemp'>
                             <input matInput [value]='item.value.temp?.coor' placeholder='Coordinate'>
                             <!-- suffix button -->
                             <button mat-icon-button matSuffix (click)='showSiteDialog()'>
@@ -59,22 +59,7 @@
                 <mat-panel-description>configure the invoke parameters</mat-panel-description>
             </mat-expansion-panel-header>
             <section formArrayName='parameters'>
-                <div *ngFor='let item of IOForm.controls["parameters"].controls;let i=index;' [formGroupName]='i' class='form-item output-group'>
-                    <label>{{item.value.name}}</label>
-                    <ng-container *ngIf='item.value.schema.structure.type === "radio"'>
-                        <mat-form-field class='form-item'>
-                            <mat-select placeholder='' formControlName='value'>
-                                <mat-option *ngFor='let opt of item.value.schema.structure.options' [value]="opt">{{opt}}</mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </ng-container>
-                    <!-- <ng-container *ngIf='item.value.schema.structure.type === "checkbox"'>
-                            <ogms-check-box-form-item formControlName='value' [checkOpts]='item.value.schema.structure.options' [width]='width'></ogms-check-box-form-item>
-                        </ng-container> -->
-                    <ng-container *ngIf='item.value.schema.structure.type === "value"'>
-                        <input matInput formControlName='value'>
-                    </ng-container>
-                </div>
+                
             </section>
         </mat-expansion-panel>
 

@@ -3,10 +3,11 @@ import { NgxSharedModule } from '@shared';
 
 import { API } from '@config';
 import { OlService } from './services/ol.service';
-import { GlobalSiteComponent } from './global-site/global-site.component';
+import { GridSiteComponent } from './grid-site/grid-site.component';
 import { NcDatasetComponent } from './nc-dataset/nc-dataset.component';
 import { SubRegionsComponent } from './sub-regions/sub-regions.component';
 import { SelectedSitesComponent } from './selected-sites/selected-sites.component';
+import { ObservationSiteComponent } from './observation-site/observation-site.component';
 import {
     MatRadioModule,
     MatFormFieldModule,
@@ -20,7 +21,7 @@ import {
 } from '@angular/material';
 ////////////////////////////////////////////////////////////////////////////////
 export * from './services/ol.service'
-export * from './global-site/global-site.component'
+export * from './grid-site/grid-site.component'
 
 const modules = [
     MatRadioModule,
@@ -35,10 +36,11 @@ const modules = [
     NgxSharedModule,
 ];
 const components = [
-    GlobalSiteComponent,
+    GridSiteComponent,
     NcDatasetComponent,
     SubRegionsComponent,
     SelectedSitesComponent,
+    ObservationSiteComponent,
 ];
 var entryComponents = [];
 const services = [

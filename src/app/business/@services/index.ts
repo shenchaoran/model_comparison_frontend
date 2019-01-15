@@ -9,3 +9,4 @@ export * from './list-base.service';
 export * from './conversation.service';
 export * from './topic.service';
 export * from './search.service';
+export * from './schema.service';

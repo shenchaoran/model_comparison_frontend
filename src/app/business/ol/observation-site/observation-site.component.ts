@@ -1,6 +1,7 @@
 import { Component, OnInit, AfterViewInit, Input, Output, EventEmitter, HostListener, Inject } from '@angular/core';
 import * as uuidv1 from 'uuid/v1';
 import { API } from '@config';
+import { ObsSite } from '@models';
 import { OlService } from '../services/ol.service';
 import { defaults as defaultControls } from 'ol/control/util';
 import ScaleLine from 'ol/control/ScaleLine';
@@ -20,20 +21,18 @@ import Feature from 'ol/Feature';
 import * as Draw from 'ol/interaction/Draw';
 
 @Component({
-    selector: 'ogms-global-site',
-    templateUrl: './global-site.component.html',
-    styleUrls: ['./global-site.component.scss']
+  selector: 'ogms-observation-site',
+  templateUrl: './observation-site.component.html',
+  styleUrls: ['./observation-site.component.scss']
 })
-export class GlobalSiteComponent implements OnInit, AfterViewInit {
-    @Input() onlyMap: boolean = false;
+export class ObservationSiteComponent implements OnInit, AfterViewInit {
     @Input() couldSelect: boolean = true;
-    @Input() multiple: boolean = true;
     @Output() onSitesChange = new EventEmitter<{
         value?: any,
         valid: boolean,
     }>();
 
-    layerId = 'Carbon_Cycle:site';
+    layerId = 'Carbon_Cycle:obs-site';
     targetId;
     map;
     baseLayerGroup;
@@ -43,12 +42,7 @@ export class GlobalSiteComponent implements OnInit, AfterViewInit {
     highlightSource;
     highlightLayer;
 
-    sites: {
-        index: number,
-        lat: number,
-        long: number,
-        coor: number[],
-    }[] = [];
+    sites: ObsSite[] = [];
 
     constructor(
         private olService: OlService,
@@ -108,7 +102,7 @@ export class GlobalSiteComponent implements OnInit, AfterViewInit {
                 image: new Circle({
                     radius: 4,
                     fill: new Fill({
-                        color: [255, 0, 0, 1]
+                        color: [0, 0, 255, 1]
                     })
                 }),
             })
@@ -156,38 +150,33 @@ export class GlobalSiteComponent implements OnInit, AfterViewInit {
             if (url) {
                 this.olService.getFeatureInfo(url).subscribe(response => {
                     try {
-                        console.log('selected site index: ' + response[0].index);
-                        // console.log(response)
-                        let coor = JSON.parse(response[0].coor);
+                        // TODO popup
+                        console.log('selected site index: ' + response);
+                        let site = response[0];
+                        site.long = parseFloat(site.long)
+                        site.lat = parseFloat(site.lat)
+                        let coor = [site.long, site.lat];
                         let xy = (proj as any).fromLonLat(coor, 'EPSG:3857')
                         let geom = new Point(xy)
                         let feature = new Feature({ 
-                            id: response[0].index,
+                            id: site.id,
                             geometry: geom 
                         })
                         
-                        console.log(this.sites)
-                        let siteIndex = _.findIndex(this.sites, site => site.index === response[0].index)
-                        if(siteIndex !== -1) {
-                            this.sites.splice(siteIndex, 1)
+                        let siteId = _.findIndex(this.sites, site => site.id === site.id)
+                        if(siteId !== -1) {
+                            this.sites.splice(siteId, 1)
                             this.highlightSource.getFeatures().map(feature => {
-                                if (feature.get('id') === response[0].index) {
+                                if (feature.get('id') === site.index) {
                                     this.highlightSource.removeFeature(feature);
                                 }
                             })
                         }
                         else {
-                            if(!this.multiple) {
-                                this.highlightSource.clear(true);
-                                this.sites = [];
-                            }
+                            this.highlightSource.clear(true);
+                            this.sites = [];
                             this.highlightSource.addFeature(feature);
-                            this.sites.push({
-                                index: response[0].index,
-                                lat: coor[0],
-                                long: coor[1],
-                                coor: response[0].coor
-                            })
+                            this.sites.push(site)
                         }
 
                         if(this.sites.length) {

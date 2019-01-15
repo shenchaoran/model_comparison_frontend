@@ -88,7 +88,7 @@ export class SelectedSitesComponent implements OnInit, AfterViewInit {
         } as any);
 
         this.sites.map(site => {
-            let coor = JSON.parse((site as any).coor);
+            let coor = [parseFloat(site.long), parseFloat(site.lat)];
             let xy = (proj as any).fromLonLat(coor, 'EPSG:3857')
             let geom = new Point(xy)
             let feature = new Feature({ 

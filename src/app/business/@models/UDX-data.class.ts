@@ -1,6 +1,5 @@
 
 import { ResourceSrc } from '@models/resource.enum';
-import { UDXCfg } from '@models/UDX-cfg.class';
 
 export class GeoDataClass {
     _id: string;
@@ -15,6 +14,4 @@ export class GeoDataClass {
         userId: string,
         src: ResourceSrc
     };
-    
-    udxcfg: UDXCfg;
 }

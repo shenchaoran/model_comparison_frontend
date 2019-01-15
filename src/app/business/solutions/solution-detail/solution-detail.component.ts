@@ -3,7 +3,7 @@ import { Router, ActivatedRoute, Params } from "@angular/router";
 import { DynamicTitleService } from "@core/services/dynamic-title.service";
 import { FormBuilder, Validators, FormGroup, FormArray, FormControl } from '@angular/forms';
 import { ConversationService, SolutionService, UserService, MSService } from "@services";
-import { Solution, Task, Topic, MS, CmpMethod, CmpObj, Metric } from "@models";
+import { Solution, Task, Topic, MS, CmpMethod, CmpObj, Metric, STDData } from "@models";
 import { Simplemde } from 'ng2-simplemde';
 import { MatSnackBar, MatSelectionList } from '@angular/material';
 import { Observable, BehaviorSubject, of, Observer } from 'rxjs';
@@ -26,19 +26,18 @@ export class SolutionDetailComponent implements OnInit {
     @ViewChild(MatSelectionList) ptSelect: MatSelectionList;
     @ViewChild('menu') menuRef: ElementRef;
 
-    cmpMethods: CmpMethod[];
+    cmpMethods: CmpMethod[] | any[];
     solution: Solution;
     tasks: Task[];              // { _id, meta, auth }
     metrics: Metric[];
     attached_topics: Topic[];               // { _id, meta, auth }
     mss: MS[] | any[];          // { _id, meta, auth }, 所有的 ms
     topicList: Topic[];         // { _id, meta, auth }[]
-    ptMsFG;
-    cmpObjsFG;
-    cmpMethodsFC;
-
+    observations: STDData[] | any[];
+    ptObs: STDData[] | any[];
     ptMSs;
 
+    slnFG;
     // ptMSs$: BehaviorSubject<MS[]> = new BehaviorSubject(null);
 
     get user() { return this.userService.user; }
@@ -49,11 +48,27 @@ export class SolutionDetailComponent implements OnInit {
     get cmpObjs() { return this.solution.cmpObjs; }
     get myPgGrid() { return $('#grid-table').pqGrid; }
     // get ptMSs() { return _.chain(this.mss).filter(ms => !!ms.selected).value(); }
-    get isPtMsFCInvalid() { return !this.ptMsFG.get('msIds').pristine && this.ptMsFG.get('msIds').invalid;}
-    get isCmpCfgInvalid() { return !this.cmpObjsFG.get('cmpCfg').pristine && this.cmpObjsFG.get('cmpCfg').invalid;}
-    get isCmpMethodsInvalid() { return !this.cmpMethodsFC.get('methods').pristine && this.cmpMethodsFC.get('methods').invalid;}
+    get step1FG() { return this.slnFG.get('step1'); }
+    get step2FG() { return this.slnFG.get('step2'); }
+    get step3FG() { return this.slnFG.get('step3'); }
+    get isPtMsFCInvalid() {
+        let fc = this.slnFG.get('step1').get('msIds')
+        return !fc.pristine && fc.invalid;
+    }
+    get isPtObsFCInvalid() { 
+        let fc = this.slnFG.get('step1').get('obsIds')
+        return !fc.pristine && fc.invalid;
+    }
+    get isCmpCfgInvalid() {
+        let fc = this.slnFG.get('step2').get('cmpCfg')
+        return !fc.pristine && fc.invalid;
+    }
+    get isCmpMethodsInvalid() {
+        let fc = this.slnFG.get('step3').get('methods')
+        return !fc.pristine && fc.invalid;
+    }
     get methods() {
-        let selectedMethods = _.get(this, 'solution.cmpObjs[0].methods');
+        let selectedMethods = _.get(this, 'solution.cmpMethods');
         if(selectedMethods)
             return _.filter(this.cmpMethods, method => {
                 return _.find(selectedMethods, selected => selected.id === method._id)
@@ -75,15 +90,19 @@ export class SolutionDetailComponent implements OnInit {
         public router: Router,
         public fb: FormBuilder,
     ) {
-        this.ptMsFG = this.fb.group({
-            msIds: [[], [Validators.required]]
-        });
-        this.cmpObjsFG = this.fb.group({
-            cmpCfg: [[], [Validators.required]]
-        });
-        this.cmpMethodsFC = this.fb.group({
-            methods: [[], [Validators.required]]
-        });
+        this.slnFG = this.fb.group({
+            step1: this.fb.group({
+                msIds: [[], [Validators.required]],
+                obsIds: [[], [Validators.required]],
+            }),
+            step2: this.fb.group({
+                cmpCfg: [[], [Validators.required]],
+                temporal: [[], [Validators.required]],
+            }),
+            step3: this.fb.group({
+                methods: [[], [Validators.required]]
+            })
+        })
     }
 
     ngOnInit() {
@@ -98,17 +117,32 @@ export class SolutionDetailComponent implements OnInit {
                 this.mss = res.data.mss;
                 this.topicList = res.data.topicList;
                 this.metrics = res.data.metrics;
+                this.observations = res.data.obs;
 
+                this.slnFG.get('step2')
 
                 _.map(this.mss, ms => {
-                    if(_.find(this.solution.msIds, id => id === ms._id)) {
+                    if(_.find(this.solution.msIds, id => id === ms._id.toString())) {
                         ms.selected = true;
-                        this.ptMsFG.get('msIds').value.push(ms._id);
-                        this.ptMsFG.get('msIds').updateValueAndValidity()
+                        let msIdsFC = this.slnFG.get('step1').get('msIds')
+                        msIdsFC.value.push(ms._id);
+                        msIdsFC.updateValueAndValidity();
+                        // this.ptMsFG.get('msIds').value.push(ms._id);
+                        // this.ptMsFG.get('msIds').updateValueAndValidity()
+                    }
+                })
+                _.map(this.observations, obs => {
+                    if(_.find(this.solution.observationIds, id => id === obs._id.toString())) {
+                        obs.selected = true;
+                        let ptObsFC = this.slnFG.get('step1').get('obsIds')
+                        ptObsFC.value.push(obs._id);
+                        ptObsFC.updateValueAndValidity();
                     }
                 })
                 this.ptMSs = _.filter(this.mss, ms => ms.selected);
-                let methods = _.get(this, 'solution.cmpObjs[0].methods')
+                this.ptObs = _.filter(this.observations, obs => obs.selected);
+                
+                let methods = _.get(this, 'solution.cmpMethods')
                 if(methods) {
                     methods.forEach((method) => {
                         let cmpMethod = _.find(this.cmpMethods, cmpMethod => cmpMethod._id === method.id)
@@ -116,74 +150,79 @@ export class SolutionDetailComponent implements OnInit {
                             cmpMethod.checked = true;
                         }
                     })
-                    this.cmpMethodsFC.get('methods').value = _.filter(this.cmpMethods, cmpMethod => cmpMethod.checked);
-                    this.cmpMethodsFC.get('methods').updateValueAndValidity();
+                    let fc = this.slnFG.get('step3').get('methods');
+                    fc.value = _.filter(this.cmpMethods, cmpMethod => cmpMethod.checked);
+                    fc.updateValueAndValidity();
                 }
-
-                // if (this.couldEdit && !this.solution.meta.wikiMD) {
-                //     this._editMode = 'WRITE';
-                //     this.snackBar.open('please improve the wiki documentation as soon as possible!', null, {
-                //         duration: 2000,
-                //         verticalPosition: 'top',
-                //         horizontalPosition: 'end',
-                //     });
-                // }
             }
         });
+    }
+
+    onObservationChange(obs) {
+        obs.selected = !obs.selected;
+        let ptObsIds = _.chain(this.observations).filter(obs => !!obs.selected).map(obs => obs._id.toString()).value();
+        let ptObsFC = this.slnFG.get('step1').get('obsIds')
+        ptObsFC.value = ptObsIds;
+        ptObsFC.updateValueAndValidity();
+        this.ptObs = _.cloneDeep(_.filter(this.observations, obs => !!obs.selected))
     }
 
     onParticipantsChange(ms) {
         ms.selected = !ms.selected;
         let ptMSIds = _.chain(this.mss).filter(ms => !!ms.selected).map(ms => ms._id ).value();
-        this.ptMsFG.get('msIds').value = ptMSIds;
-        this.ptMsFG.get('msIds').updateValueAndValidity();
-        // this.solution.cmpObjs = [];
+        let msIdsFC = this.slnFG.get('step1').get('msIds')
+        msIdsFC.value = ptMSIds;
+        msIdsFC.updateValueAndValidity();
         this.ptMSs = _.cloneDeep(_.filter(this.mss, ms => !!ms.selected));
     }
 
+    onTemporalChange(temporal) {
+        let fc = this.slnFG.get('step2').get('temporal')
+        fc.value = temporal;
+        fc.updateValueAndValidity();
+    }
+
     onCmpCfgChange(cmpObjsFC) {
+        let fc = this.slnFG.get('step2').get('cmpCfg');
         if(cmpObjsFC.valid) {
-            this.cmpObjsFG.get('cmpCfg').value = cmpObjsFC.value;
-            this.cmpObjsFG.get('cmpCfg').updateValueAndValidity();
+            fc.value = cmpObjsFC.value;
+            fc.updateValueAndValidity();
         }
         else {
-            let cmpCfgFC = this.cmpObjsFG.get('cmpCfg');
-            cmpCfgFC.setErrors({
-                invalid: true
-            });
+            fc.setErrors({ invalid: true });
         }
     }
 
     onMethodsChange(cmpMethodsFC) {
+        let fc = this.slnFG.get('step3').get('methods');
         if(cmpMethodsFC.valid) {
-            this.cmpMethodsFC.get('methods').value = cmpMethodsFC.value;
-            this.cmpMethodsFC.get('methods').updateValueAndValidity();
+            fc.value = cmpMethodsFC.value;
+            fc.updateValueAndValidity();
         }
         else {
-            let cmpMethodsFC = this.cmpMethodsFC.get('methods');
-            cmpMethodsFC.setErrors({
-                invalid: true
-            });
+            fc.setErrors({ invalid: true });
         }
     }
 
     onStepperNext(stepIndex) {
-        let fg;
+        let fgs = [];
         if(stepIndex === 0) {
-            fg = this.ptMsFG.get('msIds');
+            fgs.push(this.slnFG.get('step1').get('msIds'));
+            fgs.push(this.slnFG.get('step1').get('obsIds'));
         }
         else if(stepIndex === 1) {
-            fg = this.cmpObjsFG.get('cmpCfg');
+            fgs.push(this.slnFG.get('step2').get('cmpCfg'));
+            fgs.push(this.slnFG.get('step2').get('temporal'));
         }
         else if(stepIndex === 2) {
-            fg = this.cmpMethodsFC.get('methods');
+            fgs.push(this.slnFG.get('step3').get('methods'))
         }
-        fg.markAsTouched();
-        fg.markAsDirty();
-        if(fg.invalid)
-            fg.setErrors({
-                invalid: true
-            });
+        fgs.forEach(fg => {
+            fg.markAsTouched();
+            fg.markAsDirty();
+            if(fg.invalid)
+                fg.setErrors({ invalid: true });
+        })
     }
 
     onEditClick() {
@@ -193,17 +232,19 @@ export class SolutionDetailComponent implements OnInit {
 
     onEditSave() {
         this.solution.meta.wikiHTML = this.simpleMDE.simplemde.markdown(this.solution.meta.wikiMD || '');
-        this.solution.msIds = this.ptMsFG.get('msIds').value;
-        this.solution.cmpObjs = this.cmpObjsFG.get('cmpCfg').value;
-        let methods = this.cmpMethodsFC.get('methods').value
-        _.map(this.solution.cmpObjs, cmpObj => {
-            cmpObj.methods = methods.map(method => {
-                return {
-                    id: method._id,
-                    name: method.meta.name,
-                }
-            })
+        this.solution.msIds = this.slnFG.value.step1.msIds;
+        this.solution.observationIds = this.slnFG.value.step1.obsIds;
+        this.solution.cmpObjs = this.slnFG.value.step2.cmpCfg;
+        this.solution.temporal = this.slnFG.value.step2.temporal;
+        let methods = this.slnFG.value.step3.methods;
+        // _.map(this.solution.cmpObjs, cmpObj => {
+        this.solution.cmpMethods = methods.map(method => {
+            return {
+                id: method._id,
+                name: method.meta.name,
+            }
         })
+        // })
         this.solutionService.patch(this.solution._id, { solution: this.solution }).subscribe(res => { this._editMode = 'READ'; });
     }
 

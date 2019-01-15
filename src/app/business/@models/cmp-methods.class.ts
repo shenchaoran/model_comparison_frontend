@@ -8,7 +8,6 @@ export class CmpMethod {
         time: number
     };
     IO: {
-        schemas: any[],
         inputs: any[],
         outputs: any[]
     };

@@ -18,7 +18,6 @@ export class MS {
             wikiHTML?: string,
         },
         IO: {
-            schemas: UDXSchema[],
             std?: Event[],
             inputs: Event[],
             parameters?: Event[],
@@ -43,6 +42,7 @@ export class Event {
     // 该字段用于 获取文件
     // upload: data id
     // std: index in std
+    temporal?: 'daily' | 'annual';
     value?: string;
     // 如果从计算服务器上下载过来了，就为 true
     cached?: boolean;
@@ -54,5 +54,4 @@ export class Event {
     // 下载链接
     url?: string;
     ext: string;
-    temporal?: 'annual' | 'monthly' | 'daily';
 }
