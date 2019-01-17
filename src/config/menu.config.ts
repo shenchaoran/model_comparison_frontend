@@ -27,6 +27,10 @@ export const HEADER_MENUS: MenuClass[] = [
         path: '/results',
         label: 'Results & Diagnostics'
     }, 
+    {
+        path: '/map',
+        label: 'Application'
+    },
     // {
     //     path: '/test',
     //     label: 'Test'

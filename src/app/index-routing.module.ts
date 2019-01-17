@@ -66,6 +66,10 @@ const routes: Routes = [
         loadChildren: './business/topics/index#TopicsModule'
     },
     {
+        path: 'map',
+        loadChildren: './business/ol/index#OlModule'
+    },
+    {
         path: '**',
         redirectTo: 'home',
         pathMatch: 'full'

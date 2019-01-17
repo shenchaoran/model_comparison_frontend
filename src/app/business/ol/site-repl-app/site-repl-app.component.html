@@ -1,0 +1,82 @@
+<div class="app-container">
+    <mat-toolbar color="primary" class="toolbar">
+        <button matRipple mat-icon-button (click)="lsnav.toggle()">
+            <mat-icon>menu</mat-icon>
+        </button>
+        <h1 >Site level REPL Application</h1>
+        <span class='flex-spacer'></span>
+        <button mat-icon-button routerLink='/home'>
+            <mat-icon>home</mat-icon>
+        </button>
+    </mat-toolbar>
+
+    <mat-sidenav-container class="sidenav-container">
+        <mat-sidenav opened='true' class='left-map-sider map-sider' #lsnav mode="side" fixedTopGap="56">
+            <mat-radio-group [(ngModel)]='selectedMetric'>
+                <mat-radio-button value='GPP'>GPP</mat-radio-button>
+                <mat-radio-button value='NPP'>NPP</mat-radio-button>
+                <mat-radio-button value='NEE'>NEE</mat-radio-button>
+            </mat-radio-group>
+            <br>
+            <mat-radio-group [(ngModel)]='selectedTimeInterval'>
+                <mat-radio-button *ngFor='let sln of slnIds' [value]='sln'>{{sln}}</mat-radio-button>
+            </mat-radio-group>
+
+            <p>site layers:</p>
+            <mat-selection-list (selectionChange)='onLayerChange("site", $event)'>
+                <mat-list-option *ngFor='let layerId of siteLayerIds' [value]='layerId.value' 
+                    [selected]='layerId.value === "obs-site"'>
+                    {{layerId.label}}
+                </mat-list-option>
+            </mat-selection-list>
+
+            <p>geoserver layers:</p>
+            <mat-selection-list (selectionChange)='onLayerChange("global", $event)'>
+                <mat-list-option *ngFor='let layerId of metricLayerIds[selectedMetric]' [value]='layerId.value'>
+                    {{layerId.label}}
+                </mat-list-option>
+            </mat-selection-list>
+
+            <!-- <p>base layer:</p>
+            <mat-radio-group value='OSM'>
+                <mat-radio-button value="OSM">OSM</mat-radio-button>
+            </mat-radio-group> -->
+        </mat-sidenav>
+
+        <mat-sidenav-content>
+            <div class='map-container mb-3' id={{targetId}}></div>
+        </mat-sidenav-content>
+
+        <mat-sidenav #rsnav [(opened)]='rightSideOpen' position='end' class='right-map-sider map-sider' mode='side' fixedTopGap='56'>
+            <div class='right-map-sider-container'>
+                <button class='right-sider-closer' matRipple mat-icon-button (click)="rsnav.toggle()">
+                    <mat-icon>cancel</mat-icon>
+                </button>
+    
+                <ng-template #loadingTemp>
+                    <div class='sider-ogms-loading'>
+                        <mat-spinner></mat-spinner>
+                    </div>
+                </ng-template>
+                <div *ngIf='result else loadingTemp'>
+                    <div *ngFor='let method of result.methods; let i=index;'>
+                        <p class='f3-light mb-3'>{{i+1}}. {{method?.name}}:</p>
+                        
+                        <ng-container *ngIf='method?.state === "FINISHED_SUCCEED" else failedTemp'>
+                            <ng-container *ngIf='method?.name === "Taylor diagram" || 
+                            method?.name === "Box diagram" || 
+                            method?.name === "Scatter diagram" ||
+                            method?.name === "Line chart"'>
+                            <img  *ngIf='method?.state === "FINISHED_SUCCEED"' style='width: 80%'
+                                [src]='api.backend + "/images/std-plots/" + solutionId + "/" + method?.result?.img'>
+                        </ng-container>
+                        </ng-container>
+                        <ng-template #failedTemp>
+                            failed!
+                        </ng-template>
+                    </div>
+                </div>
+            </div>
+        </mat-sidenav>
+    </mat-sidenav-container>
+</div>

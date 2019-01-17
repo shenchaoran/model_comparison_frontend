@@ -5,7 +5,8 @@ export class CmpMethod {
         desc?: string,
         wikiMD?: string,
         wikiHTML?: string,
-        time: number
+        time: number,
+        img: string,
     };
     IO: {
         inputs: any[],

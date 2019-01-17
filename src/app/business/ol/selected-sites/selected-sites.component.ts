@@ -39,7 +39,7 @@ export class SelectedSitesComponent implements OnInit, AfterViewInit {
 
     constructor(
         private olService: OlService,
-        @Inject('LAYERS') private layers,
+        @Inject('GEOSERVER_LAYER_WS') private layers,
     ) {
         this.targetId = uuidv1();
     }
@@ -88,7 +88,7 @@ export class SelectedSitesComponent implements OnInit, AfterViewInit {
         } as any);
 
         this.sites.map(site => {
-            let coor = [parseFloat(site.long), parseFloat(site.lat)];
+            let coor = [parseFloat((site as any).long), parseFloat((site as any).lat)];
             let xy = (proj as any).fromLonLat(coor, 'EPSG:3857')
             let geom = new Point(xy)
             let feature = new Feature({ 

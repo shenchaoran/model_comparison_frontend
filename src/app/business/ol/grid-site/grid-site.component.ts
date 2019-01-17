@@ -48,12 +48,11 @@ export class GridSiteComponent implements OnInit, AfterViewInit {
         index: number,
         lat: number,
         long: number,
-        coor: string,
     }[] = [];
 
     constructor(
         private olService: OlService,
-        @Inject('LAYERS') private layers,
+        @Inject('GEOSERVER_LAYER_WS') private layers,
     ) {
         this.targetId = uuidv1();
     }
@@ -168,7 +167,7 @@ export class GridSiteComponent implements OnInit, AfterViewInit {
                         })
                         
                         console.log(this.sites)
-                        let siteIndex = _.findIndex(this.sites, site => site.index === response[0].index)
+                        let siteIndex = _.findIndex(this.sites, v => v.index === response[0].index)
                         if(siteIndex !== -1) {
                             this.sites.splice(siteIndex, 1)
                             this.highlightSource.getFeatures().map(feature => {
@@ -187,7 +186,6 @@ export class GridSiteComponent implements OnInit, AfterViewInit {
                                 index: response[0].index,
                                 lat: coor[1],
                                 long: coor[0],
-                                coor: response[0].coor
                             })
                         }
 

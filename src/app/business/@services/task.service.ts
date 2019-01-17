@@ -72,4 +72,8 @@ export class TaskService extends ListBaseService {
     public clear() {
         this.taskList = [];
     }
+
+    public getSTDResult(index, metricName, slnId) {
+        return this.http.get(`${this.http.api.backend}/std-result/${index}/${slnId}/${metricName}/state`)
+    }
 }

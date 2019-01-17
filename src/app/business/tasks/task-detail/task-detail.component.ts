@@ -7,6 +7,7 @@ import {
     ElementRef,
     Renderer2,
     Inject,
+    OnDestroy,
 } from "@angular/core";
 import { TaskService, ConversationService, UserService } from '@services';
 import { Router, ActivatedRoute, Params } from "@angular/router";
@@ -25,7 +26,7 @@ import { findIndex, get } from 'lodash';
     styleUrls: ['./task-detail.component.scss'],
     providers: [ConversationService]
 })
-export class CmpDetailComponent extends OgmsBaseComponent implements OnInit {
+export class CmpDetailComponent extends OgmsBaseComponent implements OnInit, OnDestroy {
     taskId;
     task;
     calcuTasks;
@@ -185,5 +186,9 @@ export class CmpDetailComponent extends OgmsBaseComponent implements OnInit {
 
     onEditClick() {
 
+    }
+
+    ngOnDestroy() {
+        this._subscriptions.map(subscription => subscription.unsubscribe());
     }
 }

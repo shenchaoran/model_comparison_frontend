@@ -19,9 +19,9 @@
     li {
         border-radius: 5px;
         border: 1px solid #e8e8e8;
-::ng-deep .mat-checkbox .mat-checkbox-frame {
-    border-color: rgba(255, 255, 255, 0.75);
-}
+        ::ng-deep .mat-checkbox .mat-checkbox-frame {
+            border-color: rgba(255, 255, 255, 0.75);
+        }
     }
 }
 

@@ -1,0 +1,78 @@
+@import "@material/drawer/mdc-drawer";
+@import "@material/list/mdc-list";
+
+// .app-container {
+//     width: 100%;
+//     height: 100%;
+//     display: flex;
+//     flex-direction: column;
+//     position: absolute;
+//     top: 0;
+//     bottom: 0;
+//     left: 0;
+//     right: 0;
+
+//     .toolbar {
+//         z-index: 2;
+//     }
+
+//     .sidenav-container {
+//         flex: 1;
+//         display: flex;
+
+//         .mdc-drawer-app-content {
+//             flex: auto;
+//             overflow: auto;
+//             position: relative;
+//         }
+
+//         .main-content {
+//             overflow: auto;
+//             height: 100%;
+//         }
+
+//         .map-container {
+//             height: 100%;
+//             width: 100%;
+//         }
+//     }
+// }
+
+::ng-deep .app-container {
+    .mat-sidenav-content {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+}
+
+
+.app-container {
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-flow: column;
+    .left-map-sider {
+        width: 300px;
+        padding: 10px;
+    }
+    .right-map-sider {
+        width: 550px;
+        .right-map-sider-container {
+            position: relative;
+            height: 100%;
+            padding: 10px;
+            .right-sider-closer {
+                position: absolute;
+                // left: -10px;
+                // top: -10px;
+                right: 0;
+            }
+            .sider-ogms-loading {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+        }
+    }
+}

@@ -101,7 +101,7 @@ export class NcDatasetComponent implements OnInit, AfterViewInit {
 
     constructor(
         private olService: OlService,
-        @Inject('LAYERS') private layers,
+        @Inject('GEOSERVER_LAYER_WS') private layers,
     ) {
         this.targetId = uuidv1();
     }

@@ -46,7 +46,7 @@ export class ObservationSiteComponent implements OnInit, AfterViewInit {
 
     constructor(
         private olService: OlService,
-        @Inject('LAYERS') private layers,
+        @Inject('GEOSERVER_LAYER_WS') private layers,
     ) {
         this.targetId = uuidv1();
     }
@@ -151,7 +151,7 @@ export class ObservationSiteComponent implements OnInit, AfterViewInit {
                 this.olService.getFeatureInfo(url).subscribe(response => {
                     try {
                         // TODO popup
-                        console.log('selected site index: ' + response);
+                        console.log('selected site index: ' + JSON.stringify(response[0]));
                         let site = response[0];
                         site.long = parseFloat(site.long)
                         site.lat = parseFloat(site.lat)
@@ -163,11 +163,11 @@ export class ObservationSiteComponent implements OnInit, AfterViewInit {
                             geometry: geom 
                         })
                         
-                        let siteId = _.findIndex(this.sites, site => site.id === site.id)
+                        let siteId = _.findIndex(this.sites, v => v.id === site.id)
                         if(siteId !== -1) {
                             this.sites.splice(siteId, 1)
                             this.highlightSource.getFeatures().map(feature => {
-                                if (feature.get('id') === site.index) {
+                                if (feature.get('id') === site.id) {
                                     this.highlightSource.removeFeature(feature);
                                 }
                             })
