@@ -58,6 +58,33 @@
     .left-map-sider {
         width: 300px;
         padding: 10px;
+        .sider-label {
+            font-size: 16px;
+            margin: 20px 0 0 0;
+            background: #eee;
+            padding: 8px;
+            &.radio-label {
+                margin-bottom: 20px;
+            }
+        }
+        #metric-radio {
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: space-between;
+            margin: 0 25px;
+        }
+        #time-radio {
+            display: flex;
+            flex-flow: row wrap;
+            justify-content: space-between;
+            margin: 0 25px;
+            /deep/ {
+                mat-radio-button {
+                    flex: 50%;
+                    margin-bottom: 5px;
+                }
+            }
+        }
     }
     .right-map-sider {
         width: 550px;

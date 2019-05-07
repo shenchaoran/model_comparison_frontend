@@ -4,7 +4,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { HeaderMenuLayoutComponent } from '@shared';
 import { MSService } from '@services/ms.service';
 import { SiteReplAppComponent } from './site-repl-app/site-repl-app.component';
-import { SitesReplAppComponent } from './sites-repl-app/sites-repl-app.component'
 import { RegionReplAppComponent } from './region-repl-app/region-repl-app.component'
 
 const routes: Routes = [

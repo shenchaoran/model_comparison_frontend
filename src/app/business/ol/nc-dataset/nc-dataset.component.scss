@@ -2,9 +2,16 @@
     width: 100%;
 }
 
-.map-container {
-    width: 100%;
-    height: 400px;
+.map-with-legend {
+    display: flex;
+    flex-flow: row nowrap;
+    .map-container {
+        flex: 1;
+        height: 400px;
+    }
+    .legend {
+        width: 120px;
+    }
 }
 
 .variable-radio {

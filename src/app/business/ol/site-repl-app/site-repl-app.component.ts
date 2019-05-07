@@ -46,48 +46,52 @@ export class SiteReplAppComponent implements OnInit, AfterViewInit {
     metricLayerIds = {
         GPP: [
             {
-                label: 'Biome-BGC-annual-output-GPP',
-                value: 'Biome-BGC-annual-output-GPP'
+                label: 'Biome-BGC GPP',
+                value: 'Biome-BGC-daily-average-GPP'
             },
             {
-                label: 'IBIS-annual-output-GPP',
-                value: 'IBIS-annual-output-GPP'
+                label: 'IBIS GPP',
+                value: 'IBIS-adgpptot'
+            },
+            {
+                label: 'LPJ GPP',
+                value: 'LPJ-GPP'
             },
         ],
         NPP: [
             {
-                label: 'Biome-BGC-annual-output-NPP',
-                value: 'Biome-BGC-annual-output-NPP'
+                label: 'Biome-BGC NPP',
+                value: 'Biome-BGC-daily-average-NPP'
             },
             {
-                label: 'IBIS-annual-output-NPP',
-                value: 'IBIS-annual-output-NPP'
+                label: 'IBIS NPP',
+                value: 'IBIS-adnpptot'
             },
         ],
         NEE: [
             {
-                label: 'Biome-BGC-annual-output-NEE',
-                value: 'Biome-BGC-annual-output-NEE'
+                label: 'Biome-BGC NEE',
+                value: 'Biome-BGC-daily-average-NEE'
             },
             {
-                label: 'IBIS-annual-output-NEE',
-                value: 'IBIS-annual-output-NEE'
+                label: 'IBIS NEE',
+                value: 'IBIS-adneetot'
             },
         ],
         NEP: [
             {
-                label: 'Biome-BGC-annual-output-NEP',
-                value: 'Biome-BGC-annual-output-NEP'
+                label: 'Biome-BGC NEP',
+                value: 'Biome-BGC-daily-average-NEP'
             },
         ],
     }
     siteLayerIds = [
         {
-            label: 'grid-site',
+            label: 'Grid site',
             value: 'grid-site',
         },
         {
-            label: 'obs-site',
+            label: 'Observation site',
             value: 'obs-site',
         },
     ]

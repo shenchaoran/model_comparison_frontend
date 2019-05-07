@@ -12,17 +12,19 @@
 
     <mat-sidenav-container class="sidenav-container">
         <mat-sidenav opened='true' class='left-map-sider map-sider' #lsnav mode="side" fixedTopGap="56">
-            <mat-radio-group [(ngModel)]='selectedMetric'>
+            <p class='sider-label radio-label'>Flux metric:</p>
+            <mat-radio-group id='metric-radio' [(ngModel)]='selectedMetric'>
                 <mat-radio-button value='GPP'>GPP</mat-radio-button>
                 <mat-radio-button value='NPP'>NPP</mat-radio-button>
                 <mat-radio-button value='NEE'>NEE</mat-radio-button>
             </mat-radio-group>
-            <br>
-            <mat-radio-group [(ngModel)]='selectedTimeInterval'>
+
+            <p class='sider-label radio-label'>Time interval:</p>
+            <mat-radio-group id='time-radio' [(ngModel)]='selectedTimeInterval'>
                 <mat-radio-button *ngFor='let sln of slnIds' [value]='sln'>{{sln}}</mat-radio-button>
             </mat-radio-group>
 
-            <p>site layers:</p>
+            <p class='sider-label'>Site layers:</p>
             <mat-selection-list (selectionChange)='onLayerChange("site", $event)'>
                 <mat-list-option *ngFor='let layerId of siteLayerIds' [value]='layerId.value'
                     [selected]='layerId.value === "obs-site"'>
@@ -30,7 +32,7 @@
                 </mat-list-option>
             </mat-selection-list>
 
-            <p>geoserver layers:</p>
+            <p class='sider-label'>Global layers:</p>
             <mat-selection-list (selectionChange)='onLayerChange("global", $event)'>
                 <mat-list-option *ngFor='let layerId of metricLayerIds[selectedMetric]' [value]='layerId.value'>
                     {{layerId.label}}

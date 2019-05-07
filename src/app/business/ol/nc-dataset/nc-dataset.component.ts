@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, Input, Output, 
+import { Component, OnInit, AfterViewInit, Input, Output,
     EventEmitter, HostListener, Inject, ElementRef, ViewChild, } from '@angular/core';
 import * as uuidv1 from 'uuid/v1';
 import { API } from '@config';
@@ -24,6 +24,8 @@ import { parseFromTimeZone, formatToTimeZone } from 'date-fns-timezone';
 })
 // 可以选择时间维度，动静图，子区域
 export class NcDatasetComponent implements OnInit, AfterViewInit {
+    timeSeries;
+    timeSeriesNum;
     _v;
     variables;
     dimensions;
@@ -36,16 +38,30 @@ export class NcDatasetComponent implements OnInit, AfterViewInit {
     selectedTime;
     showAnimation = false;
     timer;
-    get selectedDate() { 
-        let timeUnit = _.get(this, 'timeVariable.unit')
-        if(timeUnit) 
-            return this.ISOTime(this.selectedTime, timeUnit); 
-        else 
-            return null;
+    get selectedDate() {
+        return this.timeSeries[this.selectedTime - this.startTime]
+        // let timeUnit = _.get(this, 'timeVariable.unit')
+        // if(timeUnit)
+        //     return this.ISOTime(this.selectedTime, timeUnit);
+        // else
+        //     return null;
     }
-    get selectedDateStr() { return format(this.selectedDate, 'YYYY-MM-DD hh:mm'); }
-    @Input() 
+    // get selectedDateStr() { return format(this.selectedDate, 'YYYY-MM-DD hh:mm'); }
+    @Input()
     set dataset(v: STDData) {
+        let schemaId = _.get(v, 'schema.id')
+        if(schemaId === 'mod17a2-nc') {
+            this.timeSeries = [ '2000-01-01T00:00:00.000Z', '2000-12-31T00:00:00.000Z', '2001-12-31T00:00:00.000Z', '2002-12-31T00:00:00.000Z', '2003-12-31T00:00:00.000Z', '2004-12-30T00:00:00.000Z', '2005-12-30T00:00:00.000Z', '2006-12-30T00:00:00.000Z', '2007-12-30T00:00:00.000Z', '2008-12-29T00:00:00.000Z', '2009-12-29T00:00:00.000Z', '2010-12-29T00:00:00.000Z', '2011-12-29T00:00:00.000Z', '2012-12-28T00:00:00.000Z', '2013-12-28T00:00:00.000Z', '2014-12-28T00:00:00.000Z',]
+            this.timeSeriesNum = new Array(16).fill(2000).map((v, i) => v+i)
+            this.startTime = 2000
+            this.endTime = 2015
+        }
+        else {
+            this.timeSeries = [ '1982-01-01T00:00:00.000Z', '1983-01-01T00:00:00.000Z', '1984-01-01T00:00:00.000Z', '1984-12-31T00:00:00.000Z', '1985-12-31T00:00:00.000Z', '1986-12-31T00:00:00.000Z', '1987-12-31T00:00:00.000Z', '1988-12-30T00:00:00.000Z', '1989-12-30T00:00:00.000Z', '1990-12-30T00:00:00.000Z', '1991-12-30T00:00:00.000Z', '1992-12-29T00:00:00.000Z', '1993-12-29T00:00:00.000Z', '1994-12-29T00:00:00.000Z', '1995-12-29T00:00:00.000Z', '1996-12-28T00:00:00.000Z', '1997-12-28T00:00:00.000Z', '1998-12-28T00:00:00.000Z', '1999-12-28T00:00:00.000Z', '2000-12-27T00:00:00.000Z', '2001-12-27T00:00:00.000Z', '2002-12-27T00:00:00.000Z', '2003-12-27T00:00:00.000Z', '2004-12-26T00:00:00.000Z', '2005-12-26T00:00:00.000Z', '2006-12-26T00:00:00.000Z', '2007-12-26T00:00:00.000Z', '2008-12-25T00:00:00.000Z', '2009-12-25T00:00:00.000Z', '2010-12-25T00:00:00.000Z', '2011-12-25T00:00:00.000Z', '2012-12-24T00:00:00.000Z',];
+            this.timeSeriesNum = new Array(32).fill(1982).map((v, i) => v+i)
+            this.startTime = 1982
+            this.endTime = 2013
+        }
         this._v = v;
         this.variables = _.chain(v)
             .get('schema.structure.variables')
@@ -62,14 +78,14 @@ export class NcDatasetComponent implements OnInit, AfterViewInit {
 
         this.spatialResolution = `${latVariable.step} ° * ${longVariable.step} °`;
 
-        let startTime = _.get(this, 'timeVariable.start')
-        this.selectedTime = startTime;
+        // let startTime = _.get(this, 'timeVariable.start')
+        this.selectedTime = this.startTime;
         let timeUnit = _.get(this, 'timeVariable.unit'),
             timeStep = _.get(this, 'timeVariable.step');
-        if(startTime) {
-            this.startTime = this.ISOTime(_.get(this, 'timeVariable.start'), timeUnit)
-            this.endTime = this.ISOTime(_.get(this, 'timeVariable.end'), timeUnit)
-        }
+        // if(startTime) {
+        //     this.startTime = this.ISOTime(_.get(this, 'timeVariable.start'), timeUnit)
+        //     this.endTime = this.ISOTime(_.get(this, 'timeVariable.end'), timeUnit)
+        // }
         if(timeStep) {
             if(_.startsWith(timeUnit, 'days since')) {
                 let yearStep = timeStep/365
@@ -84,7 +100,7 @@ export class NcDatasetComponent implements OnInit, AfterViewInit {
                 this.timeResolution = timeStep + (timeStep>1?' hours': ' hour');
             }
         }
-        
+
         if(this.map) {
             this.updateMapSource();
         }
@@ -98,6 +114,7 @@ export class NcDatasetComponent implements OnInit, AfterViewInit {
     source;
     view;
     @ViewChild('mapEl') mapEl: ElementRef;
+    legendUrl = ''
 
     constructor(
         private olService: OlService,
@@ -118,9 +135,9 @@ export class NcDatasetComponent implements OnInit, AfterViewInit {
     onShowAnimationChange() {
         if(this.showAnimation) {
             this.timer = setInterval(() => {
-                this.selectedTime += this.timeVariable.step;
-                if(this.selectedTime> this.timeVariable.end) {
-                    this.selectedTime = this.timeVariable.start;
+                this.selectedTime += 1;
+                if(this.selectedTime> this.endTime) {
+                    this.selectedTime = this.startTime;
                 }
                 this.updateMapSource();
             }, 1000);
@@ -137,9 +154,12 @@ export class NcDatasetComponent implements OnInit, AfterViewInit {
             layers: this.selectedVariable.layerId,
             time: this.selectedDate
         })
+        this.legendUrl = `${this.layers.url}?request=GetLegendGraphic&format=image/png&layer=${this.selectedVariable.layerId}&legend_options=forceRule:True;dx:0;dy:0;mx:0.2;my:0.2;fontSize:12;labelMargin:10px;forceLabels:on;border:false`
     }
 
     buildMap() {
+        this.legendUrl = `${this.layers.url}?request=GetLegendGraphic&format=image/png&layer=${this.selectedVariable.layerId}&legend_options=forceRule:True;dx:0;dy:0;mx:0.2;my:0.2;fontSize:12;labelMargin:10px;forceLabels:on;border:false`
+
         if(!this.selectedVariable && !!this.mapEl.nativeElement)
             return;
         let baseLayerGroup = new Group({
@@ -156,17 +176,22 @@ export class NcDatasetComponent implements OnInit, AfterViewInit {
             serverType: 'geoserver',
             url: this.layers.url,
             params: {
-                // request : 'GetMap',
-                // service : 'WMS',
-                // version : '1.1.0',
+                request : 'GetMap',
+                service : 'WMS',
+                version : '1.1.1',
+                transparent: true,
+                format: 'image/gif',
+                // format_options: 'layout:legend',
+                // legend_options: 'forceRule:True;dx:0;dy:0;mx:0.2;my:0.2;fontSize:12;labelMargin:10px;forceLabels:on;border:false'
                 layers: this.selectedVariable.layerId,
                 styles: '',
                 bbox: this.layers.bbox,
                 time: this.selectedDate,
+                tiled: false,
                 // 加长宽会变形
                 // width : '768',
                 // height : '330',
-                srs: 'EPSG:4326'
+                srs: 'EPSG:4326',
                 // 加下面的不允许跨域
                 // format : 'application/openlayers'
             }
@@ -212,7 +237,7 @@ export class NcDatasetComponent implements OnInit, AfterViewInit {
             let deltaDays = time;
             if(deltaYears%1 === 0)
                 endDate = addYears(startDate, deltaYears)
-            else 
+            else
                 endDate = addDays(startDate, deltaDays)
         }
         else if(_.startsWith('hours since')) {

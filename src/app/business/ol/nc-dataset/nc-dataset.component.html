@@ -19,10 +19,11 @@
 
 <div *ngIf='timeVariable' class='mb-3'>
     <h4 class='mb-2'>Times: </h4>
-    <p>Start: {{startTime}}</p>
-    <p>End: {{endTime}}</p>
-    <p>Resolution: {{timeResolution}}</p>
-    <mat-slider class='time-slider' thumbLabel [tickInterval]='timeVariable?.step' [disabled]='showAnimation' [min]='timeVariable?.start' [max]='timeVariable?.end' [step]='timeVariable?.step' [(value)]='selectedTime' (change)='updateMapSource()'></mat-slider>{{selectedDateStr}}
+    <p>Start year: {{startTime}}</p>
+    <p>End year: {{endTime}}</p>
+    <p>Resolution: 1 year</p>
+    <mat-slider class='time-slider' thumbLabel [tickInterval]='timeVariable?.step'
+        [disabled]='showAnimation' [min]='startTime' [max]='endTime' [step]='1' [(value)]='selectedTime' (change)='updateMapSource()'></mat-slider>{{selectedTime}}
 </div>
 
 <div>
@@ -30,4 +31,9 @@
     <p>Resolution: {{spatialResolution}}</p>
 </div>
 
-<div id={{targetId}} class='map-container mb-3' #mapEl></div>
+<div class='map-with-legend'>
+    <div id={{targetId}} class='map-container mb-3' #mapEl></div>
+    <div class='legend'>
+        <img [src]='legendUrl'>
+    </div>
+</div>

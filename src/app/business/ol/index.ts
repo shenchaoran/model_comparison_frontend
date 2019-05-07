@@ -9,7 +9,6 @@ import { SubRegionsComponent } from './sub-regions/sub-regions.component';
 import { SelectedSitesComponent } from './selected-sites/selected-sites.component';
 import { ObservationSiteComponent } from './observation-site/observation-site.component';
 import { SiteReplAppComponent } from './site-repl-app/site-repl-app.component';
-import { SitesReplAppComponent } from './sites-repl-app/sites-repl-app.component';
 import { RegionReplAppComponent } from './region-repl-app/region-repl-app.component';
 import { OlRoutingModule } from './index-routing.module';
 import {
@@ -60,7 +59,6 @@ const components = [
     SelectedSitesComponent,
     ObservationSiteComponent,
     SiteReplAppComponent,
-    SitesReplAppComponent,
     RegionReplAppComponent,
 ];
 var entryComponents = [];
