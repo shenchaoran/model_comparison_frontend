@@ -9,6 +9,7 @@ import { ObsSite } from '@models';
 import { TaskService } from '@services';
 import { OlService } from '../services/ol.service';
 import { defaults as defaultControls } from 'ol/control/util';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import ScaleLine from 'ol/control/ScaleLine';
 import FullScreen from 'ol/control/FullScreen';
 import Map from 'ol/Map';
@@ -34,9 +35,12 @@ export class SiteReplAppComponent implements OnInit, AfterViewInit {
     selectedTimeInterval = '8 days';
     timeIntervalOpts = {
         '1 year': '5c3c70613139ed0427000004',
-        '1 day': '5c3be0f7896f318e14000053',
-        '8 days': '5c3c87243139ed0427000030',
-        '1 day with MODIS': '5c3f4bf02ba038eb47000012',
+        // '1 day': '5c3be0f7896f318e14000053',
+        // '8 days': '5c3f4bf02ba038eb47000012',
+        // '8 day with MODIS': '5c3f4bf02ba038eb47000012',
+        '8 days': '5c41ebb329c7d5df0a000053',
+        '1 month': '5c40b83f6a072dc638000081',
+        '1 quarter': '5c413fbf29c7d5df0a000005',
     }
     selectedMetric = 'GPP'
     metricLayerIds = {
@@ -110,9 +114,9 @@ export class SiteReplAppComponent implements OnInit, AfterViewInit {
     get solutionId() {
         return this.timeIntervalOpts[this.selectedTimeInterval]
     }
-    
-    geoserverLayers
-    siteLayers
+
+    geoserverLayers;
+    siteLayers;
     targetId;
     map;
     baseLayer;
@@ -127,6 +131,7 @@ export class SiteReplAppComponent implements OnInit, AfterViewInit {
     constructor(
         private olService: OlService,
         private taskService: TaskService,
+        private http: HttpClient,
         @Inject('GEOSERVER_LAYER_WS') private geoserverLayerWS,
         @Inject('API') public api,
     ) {
@@ -144,12 +149,12 @@ export class SiteReplAppComponent implements OnInit, AfterViewInit {
     onLayerChange(type: 'site' | 'global', v) {
         let theLayer
         this.map.getLayers().forEach(layer => {
-            if(layer.get('id') === v.option.value) {
+            if (layer.get('id') === v.option.value) {
                 theLayer = layer;
             }
         })
-        if(theLayer)
-            theLayer.setVisible(v.option.selected)
+        if (theLayer)
+            theLayer.setVisible(v.option.selected);
     }
 
     buildMap() {
@@ -212,7 +217,7 @@ export class SiteReplAppComponent implements OnInit, AfterViewInit {
 
         let view = new View({
             center: [0, 0],
-            zoom: 1
+            zoom: 2
         });
         this.map = new Map({
             target: this.targetId,
@@ -228,24 +233,18 @@ export class SiteReplAppComponent implements OnInit, AfterViewInit {
                 zoom: false
             }).extend([new ScaleLine()])
         } as any);
-        
+
         this.map.on('singleclick', evt => {
-            console.log(this.obsLayer.get('id'))
-            let url = this.obsSource.getGetFeatureInfoUrl(
-                evt.coordinate,
-                view.getResolution(),
-                'EPSG:3857',
-                {
-                    INFO_FORMAT: 'text/html',
-                    QUERY_LAYERS: 'obs-site',
-                }
-            );
+            let url = this.obsSource.getGetFeatureInfoUrl(evt.coordinate, view.getResolution(), 'EPSG:3857', {
+                INFO_FORMAT: 'text/html',
+                QUERY_LAYERS: 'obs-site',
+            });
             if (url) {
-                this.olService.getFeatureInfo(url).subscribe(response => {
+                this.http.get(url).subscribe(res => {
                     try {
                         // TODO popup
-                        console.log('selected site index: ' + JSON.stringify(response[0]));
-                        let site = response[0];
+                        console.log('selected site index: ' + JSON.stringify(res[0]));
+                        let site = res[0];
                         let index = site.index;
                         site.long = parseFloat(site.long)
                         site.lat = parseFloat(site.lat)
@@ -265,26 +264,32 @@ export class SiteReplAppComponent implements OnInit, AfterViewInit {
                                     this.highlightSource.removeFeature(feature);
                                 }
                             })
+                            this.rightSideOpen = false;
                         }
                         else {
                             this.highlightSource.clear(true);
                             this.sites = [];
                             this.highlightSource.addFeature(feature);
                             this.sites.push(site)
-                        }
 
-                        this.rightSideOpen = true;
-                        this.result = null;
-                        this.taskService.getSTDResult(index, this.selectedMetric, this.timeIntervalOpts[this.selectedTimeInterval]).subscribe(res => {
-                            if(!res.error) {
-                                this.result = res.data
-                            }
-                        })
+                            this.rightSideOpen = true;
+                            this.result = null;
+                            this.taskService.getSTDResult(index, this.selectedMetric, this.timeIntervalOpts[this.selectedTimeInterval]).subscribe(res => {
+                                if (!res.error) {
+                                    this.result = res.data
+                                }
+                            })
+                        }
                     }
                     catch (e) {
-
+                        console.log('could not found feature', e)
                     }
+                }, err => {
+                    this.rightSideOpen = false;
                 })
+            }
+            else {
+                this.rightSideOpen = false;
             }
         })
         this.map.on('pointermove', evt => {
@@ -301,7 +306,7 @@ export class SiteReplAppComponent implements OnInit, AfterViewInit {
             layer.setVisible(false)
         })
         this.siteLayers.map(layer => {
-            if(layer.get('id') !== 'obs-site')
+            if (layer.get('id') !== 'obs-site')
                 layer.setVisible(false)
             layer.setZIndex(10)
         })

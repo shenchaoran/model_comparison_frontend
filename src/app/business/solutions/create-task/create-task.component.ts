@@ -67,6 +67,7 @@ export class CreateTaskComponent extends OgmsBaseComponent implements OnInit {
                 this.ptMSs = res.data.ptMSs;
                 this.stds = res.data.stds;
                 this.task.cmpMethods = this.sln.cmpMethods;
+                this.task.temporal = this.sln.temporal;
 
                 this.calcuTasksFC.value = this.ptMSs.map(ms => {
                     return new CalcuTask(this.userService.user, ms)

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { 
+import {
     HeaderMenuLayoutModule,
     NgxSharedModule,
     CustomTemplateModule,
@@ -31,6 +31,7 @@ import { ContourMapResultComponent } from './contour-map-result/contour-map-resu
 import { SolutionsModule } from '../solutions';
 import { ServerSideDiagramComponent } from './server-side-diagram/server-side-diagram.component';
 import { CmpProgressComponent } from './cmp-progress/cmp-progress.component'
+import { StatisticResultComponent } from './statistic-result/statistic-result.component';
 
 const modules = [
     NgxSharedModule,
@@ -63,6 +64,7 @@ const components = [
     ContourMapResultComponent,
     ServerSideDiagramComponent,
     CmpProgressComponent,
+    StatisticResultComponent,
 ];
 const services = [];
 @NgModule({

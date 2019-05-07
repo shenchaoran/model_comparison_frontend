@@ -1,4 +1,5 @@
 import { Component, OnInit, AfterViewInit, Input, Output, EventEmitter, HostListener, Inject } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import * as uuidv1 from 'uuid/v1';
 import { API } from '@config';
 import { ObsSite } from '@models';
@@ -46,6 +47,7 @@ export class ObservationSiteComponent implements OnInit, AfterViewInit {
 
     constructor(
         private olService: OlService,
+        private http: HttpClient,
         @Inject('GEOSERVER_LAYER_WS') private layers,
     ) {
         this.targetId = uuidv1();
@@ -148,11 +150,12 @@ export class ObservationSiteComponent implements OnInit, AfterViewInit {
                 }
             );
             if (url) {
-                this.olService.getFeatureInfo(url).subscribe(response => {
+                
+                this.http.get(url).subscribe(res => {
                     try {
                         // TODO popup
-                        console.log('selected site index: ' + JSON.stringify(response[0]));
-                        let site = response[0];
+                        console.log('selected site index: ' + JSON.stringify(res[0]));
+                        let site = res[0];
                         site.long = parseFloat(site.long)
                         site.lat = parseFloat(site.lat)
                         let coor = [site.long, site.lat];

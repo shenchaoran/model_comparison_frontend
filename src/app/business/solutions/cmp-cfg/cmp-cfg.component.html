@@ -5,13 +5,11 @@
     <div *ngIf='mode === "WRITE"'>
         <p class='f4-light my-2'>Time interval:</p>
         <mat-radio-group class='my-2' [(ngModel)]='temporal' (change)='onTimeIntervalChange()'>
-            <mat-radio-button class='mr-3' value='1 day'>1 Day</mat-radio-button>
-            <mat-radio-button class='mr-3' value='8 day'>8 Day</mat-radio-button>
-            <mat-radio-button class='mr-3' value='1 year'>1 Year</mat-radio-button>
+            <mat-radio-button class='mr-3' *ngFor='let item of validTemporalOptions' [value]='item.value'>{{item.label}}</mat-radio-button>
         </mat-radio-group>
     </div>
     <div *ngIf='mode === "READ"'>
-        <p class='f4-light my-2'>Time interval: {{cmpObjs[0]?.temporal}}</p>
+        <p class='f4-light my-2'>Time interval: {{readTemporal}}</p>
     </div>
 
     <div [id]='targetId' class='my-3 jexcel-table' #gridTable></div>

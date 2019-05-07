@@ -29,6 +29,7 @@ import {
     MatRippleModule,
     MatProgressSpinnerModule,
 } from '@angular/material';
+// import { TaskService } from '@services'
 ////////////////////////////////////////////////////////////////////////////////
 export * from './services/ol.service'
 export * from './grid-site/grid-site.component'
@@ -64,7 +65,7 @@ const components = [
 ];
 var entryComponents = [];
 const services = [
-    OlService, 
+    OlService,
     {
         provide: 'GEOSERVER_LAYER_WS',
         useValue: {
@@ -73,6 +74,7 @@ const services = [
             bbox: [-179.75, -54.75, 179.75, 82.25]
         }
     },
+    // TaskService,
 ];
 var exportComponents = [
     GridSiteComponent,

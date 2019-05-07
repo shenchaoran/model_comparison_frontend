@@ -48,14 +48,14 @@ export class NcDatasetComponent implements OnInit, AfterViewInit {
     set dataset(v: STDData) {
         this._v = v;
         this.variables = _.chain(v)
-            .get('schema.variables')
+            .get('schema.structure.variables')
             .filter(variable => !!variable.layerId)
             .value();
         this.dimensions = _.chain(v)
-            .get('schema.dimensions')
+            .get('schema.structure.dimensions')
             .value();
         this.selectedVariable = _.first(this.variables);
-        let variables = _.get(v, 'schema.variables'),
+        let variables = _.get(v, 'schema.structure.variables'),
             latVariable = _.find(variables, variable => variable.name === 'lat'),
             longVariable = _.find(variables, variable => variable.name === 'long');
         this.timeVariable = _.find(variables, variable => variable.name === 'time');

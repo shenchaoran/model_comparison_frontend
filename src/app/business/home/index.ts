@@ -2,9 +2,9 @@ import { NgModule } from '@angular/core';
 import { HomeRoutingModule } from './index-routing.module';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { NguCarouselModule } from '@ngu/carousel';
-import { 
+import {
     NgxSharedModule,
-    HeaderMenuLayoutModule, 
+    HeaderMenuLayoutModule,
     DirectivesModule,
 } from '@shared';
 import {
@@ -15,6 +15,7 @@ import { PipesModule } from '@shared/pipes';
 import { HomeComponent } from './home.component';
 import { HomeBannerComponent } from './home-banner/home-banner.component';
 import { PanelComponent } from './panel/panel.component';
+import { OlService } from '../ol'
 
 const modules = [
     OverlayModule,
@@ -31,7 +32,9 @@ const components = [
     HomeBannerComponent,
     PanelComponent,
 ];
-const services = [];
+const services = [
+    // OlService,
+];
 var exportComponents = [];
 @NgModule({
     imports: [...modules],

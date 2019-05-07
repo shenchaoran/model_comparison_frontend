@@ -12,7 +12,7 @@ export class MasonryMethodsListComponent implements OnInit {
     _withAjax: boolean = true;
     list: CmpMethod[];
     count;
-    @Input() 
+    @Input()
     set methods(v: CmpMethod[]) {
         this.list = v;
         this._withAjax = false;

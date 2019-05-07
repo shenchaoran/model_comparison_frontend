@@ -24,7 +24,7 @@ export class Solution {
     topicIds?: string[];
     msIds?: string[];
     observationIds?: string[];
-    temporal?:  '1 day' | '8 day' | '1 year';
+    temporal?: number;
     cmpObjs: CmpObj[];
     cmpMethods: {
         id: string,
@@ -43,7 +43,7 @@ export class Solution {
         };
         this.cmpObjs = [];
         this.cmpMethods = [];
-        this.temporal = '1 year';
+        this.temporal = 30;
         this.subscribed_uids = [];
         this.msIds = [];
         this.observationIds = [];

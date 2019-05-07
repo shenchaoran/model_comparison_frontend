@@ -1,4 +1,5 @@
 import { Component, OnInit, AfterViewInit, Input, Output, EventEmitter, HostListener, Inject } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import * as uuidv1 from 'uuid/v1';
 import { API } from '@config';
 import { OlService } from '../services/ol.service';
@@ -52,6 +53,7 @@ export class GridSiteComponent implements OnInit, AfterViewInit {
 
     constructor(
         private olService: OlService,
+        private http: HttpClient,
         @Inject('GEOSERVER_LAYER_WS') private layers,
     ) {
         this.targetId = uuidv1();
@@ -154,24 +156,23 @@ export class GridSiteComponent implements OnInit, AfterViewInit {
                 }
             );
             if (url) {
-                this.olService.getFeatureInfo(url).subscribe(response => {
+                this.http.get(url).subscribe(res => {
                     try {
-                        console.log('selected site index: ' + response[0].index);
-                        // console.log(response)
-                        let coor = JSON.parse(response[0].coor);
+                        console.log('selected site index: ' + JSON.stringify(res[0]));
+                        // console.log(res)
+                        let coor = JSON.parse(res[0].coor);
                         let xy = (proj as any).fromLonLat(coor, 'EPSG:3857')
                         let geom = new Point(xy)
                         let feature = new Feature({ 
-                            id: response[0].index,
+                            id: res[0].index,
                             geometry: geom 
                         })
                         
-                        console.log(this.sites)
-                        let siteIndex = _.findIndex(this.sites, v => v.index === response[0].index)
+                        let siteIndex = _.findIndex(this.sites, v => v.index === res[0].index)
                         if(siteIndex !== -1) {
                             this.sites.splice(siteIndex, 1)
                             this.highlightSource.getFeatures().map(feature => {
-                                if (feature.get('id') === response[0].index) {
+                                if (feature.get('id') === res[0].index) {
                                     this.highlightSource.removeFeature(feature);
                                 }
                             })
@@ -183,7 +184,7 @@ export class GridSiteComponent implements OnInit, AfterViewInit {
                             }
                             this.highlightSource.addFeature(feature);
                             this.sites.push({
-                                index: response[0].index,
+                                index: res[0].index,
                                 lat: coor[1],
                                 long: coor[0],
                             })

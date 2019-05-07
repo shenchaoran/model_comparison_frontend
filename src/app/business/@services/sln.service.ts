@@ -25,6 +25,8 @@ var counter = 1;
 })
 export class SolutionService extends ListBaseService {
     public user_solutions: Solution[];
+    private _validTemporalOptions: {label: string; value: number}[];
+    public get validTemporalOptions() {return this._validTemporalOptions}
 
     public get user(): User { return this.userService.user; }
     public get conversation(): Conversation {return this.conversationService.conversation;}
@@ -67,5 +69,50 @@ export class SolutionService extends ListBaseService {
                 ac: 'createTask',
             }
         })
+    }
+
+    public setValidTemporalOptions(msNames, obsNames) {
+        let validIntervals = [
+            {
+                label: '1 day',
+                value: 1,
+            },
+            {
+                label: '8 day',
+                value: 8,
+            },
+            {
+                label: '1 month',
+                value: 30,
+            },
+            {
+                label: '1 season',
+                value: 90
+            },
+            {
+                label: '1 year',
+                value: 365,
+            },
+        ]
+        let timeMap = {
+            'IBIS site': 1,
+            'Biome-BGC site': 1,
+            'LPJ': 1,
+            'MODIS MOD 17 A2': 8,
+            'MODIS MOD 17 A3': 365,
+            'Fluxdata': 1,
+        }
+        let maxTimeInterval = 0;
+        for(let key of msNames.concat(obsNames)) {
+            if(timeMap[key] >  maxTimeInterval)
+                maxTimeInterval = timeMap[key]
+        }
+        for(let i=0; i< validIntervals.length; i++) {
+            if(validIntervals[i].value < maxTimeInterval) {
+                validIntervals.splice(i, 1)
+                i--
+            }
+        }
+        this._validTemporalOptions = validIntervals;
     }
 }

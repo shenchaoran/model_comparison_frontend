@@ -9,6 +9,7 @@ import {
 } from '@services';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
+import { OlService } from '../ol'
 
 // TODO universal
 @Component({
@@ -22,25 +23,25 @@ export class HomeComponent implements OnInit, AfterViewInit {
         url: '/topics'
     };
     topicList;
-    
+
     slnTitle = {
         label: 'Comparison solutions',
         url: '/solutions'
     };
     slnList;
-    
+
     taskTitle = {
         label: 'Results & Diagnostics',
         url: '/results'
     };
     taskList;
-    
+
     modelTitle = {
         label: 'Models',
         url: '/models'
     };
     modelList;
-    
+
     dataTitle = {
         label: 'Datasets',
         url: '/datasets'
@@ -53,6 +54,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
         private taskService: TaskService,
         private datasetService: DatasetService,
         private msService: MSService,
+        private testOlS: OlService,
     ) { }
 
     ngOnInit() {

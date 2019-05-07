@@ -1,9 +1,9 @@
 <div class="app-container">
-    <mat-toolbar color="primary" class="toolbar">
+    <mat-toolbar class="toolbar">
         <button matRipple mat-icon-button (click)="lsnav.toggle()">
             <mat-icon>menu</mat-icon>
         </button>
-        <h1 >Site level REPL Application</h1>
+        <h1 >Comparison results</h1>
         <span class='flex-spacer'></span>
         <button mat-icon-button routerLink='/home'>
             <mat-icon>home</mat-icon>
@@ -24,7 +24,7 @@
 
             <p>site layers:</p>
             <mat-selection-list (selectionChange)='onLayerChange("site", $event)'>
-                <mat-list-option *ngFor='let layerId of siteLayerIds' [value]='layerId.value' 
+                <mat-list-option *ngFor='let layerId of siteLayerIds' [value]='layerId.value'
                     [selected]='layerId.value === "obs-site"'>
                     {{layerId.label}}
                 </mat-list-option>
@@ -52,7 +52,6 @@
                 <button class='right-sider-closer' matRipple mat-icon-button (click)="rsnav.toggle()">
                     <mat-icon>cancel</mat-icon>
                 </button>
-    
                 <ng-template #loadingTemp>
                     <div class='sider-ogms-loading'>
                         <mat-spinner></mat-spinner>
@@ -61,11 +60,12 @@
                 <div *ngIf='result else loadingTemp'>
                     <div *ngFor='let method of result.methods; let i=index;'>
                         <p class='f3-light mb-3'>{{i+1}}. {{method?.name}}:</p>
-                        
+
                         <ng-container *ngIf='method?.state === "FINISHED_SUCCEED" else failedTemp'>
-                            <ng-container *ngIf='method?.name === "Taylor diagram" || 
-                            method?.name === "Box diagram" || 
+                            <ng-container *ngIf='method?.name === "Taylor diagram" ||
+                            method?.name === "Box diagram" ||
                             method?.name === "Scatter diagram" ||
+                            method?.name === "SE" ||
                             method?.name === "Line chart"'>
                             <img  *ngIf='method?.state === "FINISHED_SUCCEED"' style='width: 80%'
                                 [src]='api.backend + "/images/std-plots/" + solutionId + "/" + method?.result?.img'>

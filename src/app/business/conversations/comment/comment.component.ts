@@ -33,10 +33,6 @@ import { Simplemde } from 'ng2-simplemde';
 import {
     ConversationService,
     UserService,
-    TopicService,
-    SolutionService,
-    TaskService,
-    MSRService,
 } from '@services';
 import {
     Solution,

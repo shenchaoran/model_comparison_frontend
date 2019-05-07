@@ -37,6 +37,10 @@
 //         }
 //     }
 // }
+.toolbar {
+    background: #24292e;
+    color: rgba(255, 255, 255, 0.9);
+}
 
 ::ng-deep .app-container {
     .mat-sidenav-content {
@@ -60,7 +64,9 @@
         .right-map-sider-container {
             position: relative;
             height: 100%;
-            padding: 10px;
+            >div {
+                padding: 10px;
+            }
             .right-sider-closer {
                 position: absolute;
                 // left: -10px;

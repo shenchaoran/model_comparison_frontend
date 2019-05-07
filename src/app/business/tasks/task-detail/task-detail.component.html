@@ -57,21 +57,24 @@
                 <div class='my-3'>
                     <ogms-cmp-progress [data]='refactored.methods' [taskId]='task._id' [metricName]='refactored.metricName'></ogms-cmp-progress>
                 </div>
-                
+
                 <!-- <p class='mt-3'>{{refactored.desc}}</p> -->
 
                 <!-- <p class='f3-light my-2'>Comparison methods:</p> -->
                 <div *ngFor='let method of refactored.methods; let i=index;'>
-                    <p class='f3-light my-3'>{{i+1}}. {{method?.name}}:</p>
+                    <ng-container *ngIf='method?.name !== "statistical index"'>
+                        <p class='f3-light my-3'>{{i+1}}. {{method?.name}}:</p>
+                    </ng-container>
 
                     <!-- <ng-container *ngIf='method?.name === "table series visualization" || method?.name === "Line chart"'>
                         <div *ngIf='method?.result?.state === "FINISHED_SUCCEED"' [attr.id]='refactored.metricName.id + "-" + method.id'
                             #echartDOM class='echart-dom'></div>
                     </ng-container> -->
 
-                    <ng-container *ngIf='method?.name === "Taylor diagram" || 
-                        method?.name === "Box diagram" || 
+                    <ng-container *ngIf='method?.name === "Taylor diagram" ||
+                        method?.name === "Box diagram" ||
                         method?.name === "Scatter diagram" ||
+                        method?.name === "SE" ||
                         method?.name === "Line chart"'>
                         <img  *ngIf='method?.state === "FINISHED_SUCCEED"' style='width: 80%'
                             [src]='api.backend + "/images/std-plots/" + task.solutionId + "/" + method?.result?.img'>
@@ -99,6 +102,10 @@
                         <div *ngIf='method?.result?.state === "FINISHED_SUCCEED"' [attr.id]='refactored.metricName.id + "-" + method.id'
                             #echartDOM class='echart-dom'></div>
                     </ng-container>
+
+                    <!-- <ng-container *ngIf='method?.name === "statistical index"'>
+                        <ogms-statistic-result [data]='method'></ogms-statistic-result>
+                    </ng-container> -->
                 </div>
             </mat-tab>
 

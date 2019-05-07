@@ -69,3 +69,4 @@ proxy.conf.json
 /build-prod.rar
 /build-prod-optimizer
 build-aot.rar
+scripts/nginx-1.12.2.rar

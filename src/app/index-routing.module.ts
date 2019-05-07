@@ -66,7 +66,7 @@ const routes: Routes = [
         loadChildren: './business/topics/index#TopicsModule'
     },
     {
-        path: 'map',
+        path: 'application',
         loadChildren: './business/ol/index#OlModule'
     },
     {

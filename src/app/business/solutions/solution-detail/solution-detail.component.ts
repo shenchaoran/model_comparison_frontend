@@ -207,8 +207,21 @@ export class SolutionDetailComponent implements OnInit {
     onStepperNext(stepIndex) {
         let fgs = [];
         if(stepIndex === 0) {
-            fgs.push(this.slnFG.get('step1').get('msIds'));
-            fgs.push(this.slnFG.get('step1').get('obsIds'));
+            let ptMsIdFC = this.slnFG.get('step1').get('msIds')
+            let ptObsIdFC = this.slnFG.get('step1').get('obsIds')
+            fgs.push(ptMsIdFC);
+            fgs.push(ptObsIdFC);
+
+            let msNames, obsNames;
+            msNames = ptMsIdFC.value.map(id => {
+                let ms = _.find(this.mss, ms => ms._id.toString() === id)
+                return ms.MDL.meta.name
+            })
+            obsNames = ptObsIdFC.value.map(id => {
+                let ob = _.find(this.observations, ob => ob._id.toString() === id)
+                return ob.meta.name
+            })
+            this.solutionService.setValidTemporalOptions(msNames, obsNames)
         }
         else if(stepIndex === 1) {
             fgs.push(this.slnFG.get('step2').get('cmpCfg'));
